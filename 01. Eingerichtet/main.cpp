@@ -7,7 +7,7 @@ int main() {
 	int score = 0; // wie oft wird der Ball getroffen
 	int mx = 0;    // Flugrichtung x- Achse >> -5 nach links; +5 nach rechts
 	int my = 0;    // Flugrichtung y- Achse >> -5 nach oben;  +5 nach unten
-	int speed = 5; // speed vom Ball
+	int speed = 5; // speed vom Ball //Test
 
 	// Spielefenster erstellen
 	RenderWindow window(VideoMode(300, 500), "Pong");   // Fenstergröße 300x breit x 500y hoch Pixel
