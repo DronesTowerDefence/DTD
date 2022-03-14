@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Money_Health.cpp" />
     <ClCompile Include="Waypoint.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Drone.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Money_Health.h" />
     <ClInclude Include="Waypoint.h" />
