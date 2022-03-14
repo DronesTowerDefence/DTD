@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp> //Einbinden von Library (SFML-Graphics) nur für Grafiken
 #include <iostream>
-using namespace  ;
+using namespace sf;
 //SFML 2.5.1
 
 int windowSizeX = 750, windowSizeY = 450;
