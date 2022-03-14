@@ -24,15 +24,30 @@
     <ClCompile Include="Waypoint.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Money_Health.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Drone.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Money_Health.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Waypoint.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Money_Health.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Drone.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

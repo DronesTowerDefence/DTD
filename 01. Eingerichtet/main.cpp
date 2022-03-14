@@ -2,17 +2,18 @@
 #include<string>
 #include"Money_Health.h"
 #include "Map.h"
+#include "Tower.h"
 #include<iostream>
 
-using namespace sf; // statt std, hat zur Folge, dass bei String etc. std:: vor gesetzt werden muss
+using namespace sf;
 
 int main() {
-	RenderWindow window(VideoMode(1920, 991), "BrohneTowerDefence"); // 
+	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 
-	RectangleShape test = RectangleShape(Vector2f(40, 40)); 
+	RectangleShape test = RectangleShape(Vector2f(40, 40));
 	test.setFillColor(Color::Magenta);
 
-	Map* map1 = new Map(); 
+	Map* map1 = new Map();
 
 	Vector2f position = map1->getStart();
 	test.setPosition(position);
@@ -31,10 +32,9 @@ int main() {
 
 	float v = 1;
 	Texture* restart = new Texture();
-	restart->loadFromFile("image/Map1.png");
-	RectangleShape background  = RectangleShape(Vector2f(1920, 991));
+	restart->loadFromFile("img/Map1.png");
+	RectangleShape background  = RectangleShape(Vector2f(1920, 1080));
 	background.setTexture(restart);
-
 	while (window.isOpen())
 	{
 		Event event;
@@ -51,6 +51,10 @@ int main() {
 		window.draw(koadinaten);
 		window.draw(test);
 		window.display();
-	}
+		window.draw(test);
+		window.display();
+		}
+	
+	
 	return 0;
 }
