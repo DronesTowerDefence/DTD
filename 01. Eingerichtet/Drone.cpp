@@ -10,6 +10,7 @@ Drone::Drone(int typ)
 	droneTexture.loadFromFile("image/drone2_40x40.png");
 	drone = Sprite();
 	drone.setTexture(droneTexture);
+	drone.setScale(40, 40);
 }
 
 void Drone::setPosition(Vector2f position)
