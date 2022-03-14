@@ -7,7 +7,7 @@
 using namespace sf; // statt std, hat zur Folge, dass bei String etc. std:: vor gesetzt werden muss
 
 int main() {
-	RenderWindow window(VideoMode(1920, 1080), "BrohneTowerDefence"); // 
+	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 
 	RectangleShape test = RectangleShape(Vector2f(40, 40)); 
 	test.setFillColor(Color::Magenta);
