@@ -7,7 +7,7 @@ Drone::Drone(int typ)
 {
 
 	droneTexture = Texture();
-	droneTexture.loadFromFile("image/drone2_40x40.png");
+	droneTexture.loadFromFile("img/drone2_40x40.png");
 	drone = Sprite();
 	drone.setTexture(droneTexture);
 	drone.setScale(40, 40);
