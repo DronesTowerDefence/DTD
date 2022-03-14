@@ -146,14 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Money_Health.cpp" />
     <ClCompile Include="Waypoint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Money_Health.h" />
     <ClInclude Include="Waypoint.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Money_Health.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="fonts\arial.ttf" />
