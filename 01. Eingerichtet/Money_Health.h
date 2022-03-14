@@ -4,10 +4,12 @@ class Money_Health
 private:
 	int money;
 	int health;
+	int round;
 public:
 	Money_Health() {
 		money = 0;
 		health = 0;
+		round = 0;
 	}
 	void addMoney(int _money) {
 		money += _money;
@@ -42,6 +44,12 @@ public:
 		if (_health < 0)
 			return 0;
 		health = _health;
+	}
+	void addRound() {
+		round++;
+	}
+	int getRound() {
+		return round;
 	}
 };
 
