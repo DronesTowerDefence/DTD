@@ -5,72 +5,61 @@
 /// </summary>
 /// <param name="pos"></param>
 /// <returns></returns>
-void Map::chekChanceRichtung(RectangleShape* drohne, int* x, int* y, float v) // x , y , v in Drohne
+void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
 {
+	Waypoint* np = *drohne->getNextPoint();
 	Vector2f pos = drohne->getPosition();
-	for (Waypoint* p : points)
+
+	Vector2f koa = np->getKooadinaten();
+
+
+	switch (np->getCondition())
 	{
-		Vector2f koa = p->getKooadinaten();
-		if (!p->getPass())
+	case 1:
+		if (pos.y == koa.y && pos.x >= koa.x)
 		{
-
-			switch (p->getCondition())
-			{
-			case 1:
-				if (pos.y == koa.y && pos.x >= koa.x)
-				{
-					move(drohne, x, y, v, p, true);
-					return;
-				}
-				break;
-
-			case 2:
-				if (pos.y == koa.y && pos.x <= koa.x)
-				{
-					move(drohne, x, y, v, p, true);
-					return;
-				}
-				break;
-			case 3:
-				if (pos.y >= koa.y && pos.x == koa.x)
-				{
-					move(drohne, x, y, v, p, true);
-					return;
-				}
-				break;
-			case 4:
-				if (pos.y <= koa.y && pos.x == koa.x)
-				{
-					move(drohne, x, y, v, p, true);
-					return;
-				}
-				break;
-			default:
-				break;
-			}
+			move(drohne , np , true);
+			return;
 		}
+		break;
 
-
-
+	case 2:
+		if (pos.y == koa.y && pos.x <= koa.x)
+		{
+			move(drohne , np, true);
+			return;
+		}
+		break;
+	case 3:
+		if (pos.y >= koa.y && pos.x == koa.x)
+		{
+			move(drohne , np, true);
+			return;
+		}
+		break;
+	case 4:
+		if (pos.y <= koa.y && pos.x == koa.x)
+		{
+			move(drohne , np, true);
+			return;
+		}
+		break;
+	default:
+		break;
 	}
-	move(drohne, x, y, v, nullptr, false);
+	move(drohne, np, false);
 
 }
 
-void Map::move(RectangleShape* drohne, int* x, int* y, float v, Waypoint* kp, bool change = false)
+void Map::move(Drone* drohne, Waypoint* wp, bool change)
 {
 	if (change)
 	{
-		drohne->setPosition(kp->getKooadinaten());
-		kp->setPass(true);
-		Vector2f direction = kp->getNewMove();
-		*x = direction.x;
-		*y = direction.y;
-
+		drohne->setMove(wp->getNewMove());
 	}
 	else
 
-		drohne->move(*x * v, *y * v);
+		drohne->move();
 
 
 }
@@ -90,18 +79,18 @@ Vector2f Map::getStartMove()
 Map::Map()
 {
 
-	points.push_back(new Waypoint(Vector2f(4 * 40-20,  4 * 40+31), Vector2f(1, 0), 4));
+	points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 	points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-	points.push_back(new Waypoint(Vector2f(11 * 40 - 20,  19* 40 + 31), Vector2f(1, 0), 3));
+	points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
 	points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
-	points.push_back(new Waypoint(Vector2f(18 * 40 - 20,  4* 40 + 31), Vector2f(1, 0), 4));
+	points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 	points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
 	points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
 	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
 	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
 
-	start = Vector2f(4 * 40-20, 27 * 40);
+	start = Vector2f(4 * 40 - 20, 27 * 40);
 	startMove = Vector2f(0, -1);
-	
+
 }

@@ -33,7 +33,7 @@ int main() {
 	float v = 1;
 	Texture* restart = new Texture();
 	restart->loadFromFile("img/Map1.png");
-	RectangleShape background  = RectangleShape(Vector2f(1920, 1080));
+	RectangleShape background  = RectangleShape(Vector2f(1920, 991));
 	background.setTexture(restart);
 	while (window.isOpen())
 	{
@@ -45,13 +45,12 @@ int main() {
 		}
 		Vector2f pos = test.getPosition();
 		koadinaten.setString(std::to_string(pos.x) + "\n" + std::to_string(pos.y));
-		map1->chekChanceRichtung(&test, &x_richtung, &	y_richtung, v);
+	//	map1->chekChanceRichtung(&test, &x_richtung, &	y_richtung, v);
 		window.clear();
 		window.draw(background);
 		window.draw(koadinaten);
 		window.draw(test);
-		window.display();
-		window.draw(test);
+
 		window.display();
 		}
 	
