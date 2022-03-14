@@ -7,7 +7,7 @@
 using namespace sf; // statt std, hat zur Folge, dass bei String etc. std:: vor gesetzt werden muss
 
 int main() {
-	RenderWindow window(VideoMode(1920, 1080), "BrohneTowerDefence"); // 
+	RenderWindow window(VideoMode(1920, 991), "BrohneTowerDefence"); // 
 
 	RectangleShape test = RectangleShape(Vector2f(40, 40)); 
 	test.setFillColor(Color::Magenta);
@@ -32,7 +32,7 @@ int main() {
 	float v = 1;
 	Texture* restart = new Texture();
 	restart->loadFromFile("image/Map1.png");
-	RectangleShape background  = RectangleShape(Vector2f(1920, 1080));
+	RectangleShape background  = RectangleShape(Vector2f(1920, 991));
 	background.setTexture(restart);
 
 	while (window.isOpen())
