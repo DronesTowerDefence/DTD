@@ -1,10 +1,12 @@
 #pragma once
+#include "Tower.h"
 class Money_Health
 {
 private:
 	int money;
 	int health;
 	int round;
+	int towerPrice[3];
 public:
 	Money_Health();
 
@@ -27,5 +29,7 @@ public:
 	void addRound();
 	
 	int getRound();
+
+	Tower* buyNewTower(int);
 };
 

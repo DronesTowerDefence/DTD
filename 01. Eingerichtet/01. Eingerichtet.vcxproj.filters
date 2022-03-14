@@ -24,7 +24,7 @@
     <ClCompile Include="Waypoint.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="tower.cpp">
+    <ClCompile Include="Tower.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Money_Health.cpp">
@@ -41,7 +41,7 @@
     <ClInclude Include="Money_Health.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="tower.h">
+    <ClInclude Include="Tower.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

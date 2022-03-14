@@ -2,9 +2,12 @@
 
 Money_Health::Money_Health()
 {
-	money = 0;
-	health = 0;
-	round = 0;
+	money = 1000; //Start-Geld
+	health = 0; //Start-Leben
+	round = 0; //Start-Runde
+	towerPrice[0] = 100;
+	towerPrice[1] = 200;
+	towerPrice[2] = 300;
 }
 
 void Money_Health::addMoney(int _money)
@@ -67,4 +70,13 @@ void Money_Health::addRound()
 int Money_Health::getRound()
 {
 	return round;
+}
+
+Tower* Money_Health::buyNewTower(int towerID)
+{
+	if (submoney(towerPrice[towerID + 1]))
+	{
+		return new Tower(towerID);
+	}
+	else return nullptr;
 }
