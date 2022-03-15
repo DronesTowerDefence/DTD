@@ -58,5 +58,17 @@
     <Image Include="image\Map1.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="img\drone2_40x40.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\tower1_50x50.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\tower2_50x50.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\tower3_50x50.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>
