@@ -1,19 +1,24 @@
 
 #include "Drone.h"
-#include <SFML/Graphics.hpp>
 using namespace sf;
 
 Drone::Drone(int typ)
 {
 
-	droneTexture = Texture();
-	droneTexture.loadFromFile("img/drone2_40x40.png");
-	drone = Sprite();
-	drone.setTexture(droneTexture);
-	drone.setScale(1, 1);
-	speed = .5;
-	nextPoint = 0;
+	/*switch(typ) {
 
+	default:*/
+		droneTexture = Texture();
+		droneTexture.loadFromFile("img/drone2_40x40.png");
+		drone = Sprite();
+		drone.setTexture(droneTexture);
+		drone.setScale(1, 1);
+		speed = .5;
+		nextPoint = 0;
+		lives = 3;
+	/*case 1:*/
+
+	/*}*/
 }
 
 void Drone::setPosition(Vector2f position)
@@ -56,6 +61,17 @@ void Drone::pass()
 	nextPoint++;
 }
 
+void Drone::takeDamage(int damage) {
 
+	lives -= damage;
+	if (lives <= 0) {
+		delete this;
+	}
+}
+
+int Drone::getLives()
+{
+	return lives;
+}
 
 

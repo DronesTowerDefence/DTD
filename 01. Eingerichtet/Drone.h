@@ -14,6 +14,7 @@ private:
 	Texture droneTexture;
 	Sprite drone;
 	int nextPoint;
+	int lives;
 
 	Drone();
 
@@ -27,6 +28,8 @@ public:
 	int getNextPoint();
 	void move();
 	void pass();
+	void takeDamage(int damage);
+	int getLives();
 
 };
 
