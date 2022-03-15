@@ -30,6 +30,7 @@ public:
 	void pass();
 	void takeDamage(int damage);
 	int getLives();
+	Vector2i getMove();
 
 };
 
