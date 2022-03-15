@@ -61,7 +61,7 @@ Sprite Tower::getTowerSpr()
 
 void Tower::shoot()
 {
-	//
+	//Test
 }
 
 void Tower::sell()
