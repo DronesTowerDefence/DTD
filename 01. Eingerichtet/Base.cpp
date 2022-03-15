@@ -1,6 +1,6 @@
 #include "Base.h"
 
-Base Base::instance;
+Base* Base::instance = nullptr;
 
 Base::Base()
 {
@@ -12,8 +12,12 @@ Base::Base()
 	towerPrice[2] = 300;
 }
 
-Base& Base::getInstance()
+Base* Base::getInstance()
 {
+	if (instance == nullptr)
+	{
+		instance = new Base;
+	}
 	return instance;
 }
 
@@ -77,13 +81,4 @@ void Base::addRound()
 int Base::getRound()
 {
 	return round;
-}
-
-Tower* Base::buyNewTower(int towerID)
-{
-	if (submoney(towerPrice[towerID + 1]))
-	{
-		return new Tower(towerID);
-	}
-	else return nullptr;
 }

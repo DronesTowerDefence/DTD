@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Base.h"
 using namespace sf;
+
 class Tower
 {
 private:
@@ -9,6 +11,7 @@ private:
 	int speed;
 	int price;
 	int range;
+	int value;
 
 	Texture towerTex;
 	Sprite towerSpr;
@@ -18,6 +21,10 @@ private:
 public:
 
 	Tower(int);
+	Sprite getTowerSpr();
+	void shoot();
+	void sell();
+	Tower* buyNewTower(int);
 	
 };
 

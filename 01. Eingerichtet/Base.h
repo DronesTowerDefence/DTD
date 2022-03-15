@@ -1,5 +1,4 @@
 #pragma once
-#include "Tower.h"
 
 //Singleton
 class Base
@@ -10,13 +9,13 @@ private:
 	int round;
 	int towerPrice[3];
 
-	static Base instance;
+	static Base* instance;
 
 	Base();
 	Base(int a,int b,int c,int d);
 public:
 
-	static Base& getInstance();
+	static Base* getInstance();
 
 	void addMoney(int);
 
@@ -38,6 +37,5 @@ public:
 	
 	int getRound();
 
-	Tower* buyNewTower(int);
 };
 
