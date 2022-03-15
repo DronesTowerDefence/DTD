@@ -73,5 +73,3 @@ int Drone::getLives()
 {
 	return lives;
 }
-
-

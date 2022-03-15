@@ -59,9 +59,12 @@ Sprite Tower::getTowerSpr()
 	return towerSpr;
 }
 
-void Tower::shoot()
+void Tower::shoot(Drone a)
 {
-	//Test
+	if (towerSpr.getGlobalBounds().intersects(a.getDrone().getGlobalBounds()))
+	{
+		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
+	}
 }
 
 void Tower::sell()

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Base.h"
+#include "Drone.h"
 using namespace sf;
 
 class Tower
@@ -22,7 +23,7 @@ public:
 
 	Tower(int);
 	Sprite getTowerSpr();
-	void shoot();
+	void shoot(Drone);
 	void sell();
 	Tower* buyNewTower(int);
 	
