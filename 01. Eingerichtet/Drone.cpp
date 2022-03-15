@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-Drone::Drone(int typ,	std::list<Waypoint*>::iterator np)
+Drone::Drone(int typ)
 {
 
 	droneTexture = Texture();
@@ -11,32 +11,55 @@ Drone::Drone(int typ,	std::list<Waypoint*>::iterator np)
 	drone = Sprite();
 	drone.setTexture(droneTexture);
 	drone.setScale(40, 40);
-	nextPoint = np;
+	
+	nextPoint = 0;
+	
 }
 
 void Drone::setPosition(Vector2f position)
 {
 	this->position = position;
+	drone.setPosition(position); //TODO richtig
 
-}
-
-Vector2f Drone::getPosition()
-{
-	return Vector2f();
-}
-
-std::list<Waypoint*>::iterator Drone::getNextPoint()
-{
-	return nextPoint;
 }
 
 void Drone::setMove(Vector2f v)
 {
-	
+	move_x = v.x;
+	move_y = v.y;
+}
+
+Vector2f Drone::getPosition()
+{
+	return position;
+}
+
+sf::Sprite Drone::getDrone()
+{
+	return drone;
+}
+
+int Drone::getNextPoint()
+{
+	return nextPoint;
+}
+
+
+void Drone::move(Vector2f value)
+{
+	Vector2f pos = getPosition();
+	setPosition(Vector2f(pos.x + value.x , pos.y+value.y));
 }
 
 void Drone::move()
 {
-	//TODO: Drohne Bewegen mit (v*x_richtung   , v*y richtung)
+	position = Vector2f(move_x * speed, move_y * speed);
+	drone.setPosition(position);
 }
+
+void Drone::pass()
+{
+	nextPoint++;
+}
+
 

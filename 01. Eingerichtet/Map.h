@@ -13,7 +13,8 @@ public:
 
 	Vector2f getStart();
 	Vector2f getStartMove();
-
+	std::list<Waypoint*>& getPoints();
+	Waypoint* getWaypoint(int index);
 	Map();
 private:
 	std::list<Waypoint*> points;
