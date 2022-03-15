@@ -1,6 +1,8 @@
-#include "Money_Health.h"
+#include "Base.h"
 
-Money_Health::Money_Health()
+Base Base::instance;
+
+Base::Base()
 {
 	money = 1000; //Start-Geld
 	health = 0; //Start-Leben
@@ -10,12 +12,17 @@ Money_Health::Money_Health()
 	towerPrice[2] = 300;
 }
 
-void Money_Health::addMoney(int _money)
+Base& Base::getInstance()
+{
+	return instance;
+}
+
+void Base::addMoney(int _money)
 {
 	money += _money;
 }
 
-bool Money_Health::submoney(int _money)
+bool Base::submoney(int _money)
 {
 	if (money < _money)
 		return 0;
@@ -23,12 +30,12 @@ bool Money_Health::submoney(int _money)
 	return 1;
 }
 
-int Money_Health::getMoney()
+int Base::getMoney()
 {
 	return money;
 }
 
-bool Money_Health::setMoney(int _money)
+bool Base::setMoney(int _money)
 {
 	if (_money < 0)
 		return 0;
@@ -36,12 +43,12 @@ bool Money_Health::setMoney(int _money)
 	return 1;
 }
 
-void Money_Health::addHealth(int _health)
+void Base::addHealth(int _health)
 {
 	health += _health;
 }
 
-bool Money_Health::subhealth(int _health)
+bool Base::subhealth(int _health)
 {
 	if (health < _health)
 		return 0;
@@ -49,12 +56,12 @@ bool Money_Health::subhealth(int _health)
 	return 1;
 }
 
-int Money_Health::getHealth()
+int Base::getHealth()
 {
 	return health;
 }
 
-bool Money_Health::setHealth(int _health)
+bool Base::setHealth(int _health)
 {
 	if (_health < 0)
 		return 0;
@@ -62,17 +69,17 @@ bool Money_Health::setHealth(int _health)
 	return 1;
 }
 
-void Money_Health::addRound()
+void Base::addRound()
 {
 	round++;
 }
 
-int Money_Health::getRound()
+int Base::getRound()
 {
 	return round;
 }
 
-Tower* Money_Health::buyNewTower(int towerID)
+Tower* Base::buyNewTower(int towerID)
 {
 	if (submoney(towerPrice[towerID + 1]))
 	{
