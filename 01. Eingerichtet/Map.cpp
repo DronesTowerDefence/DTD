@@ -13,7 +13,7 @@ void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
 
 
 	Waypoint* nextWayPoint = getWaypoint(np_index);
-	Vector2f koa= nextWayPoint->getKooadinaten();
+	Vector2f koa = nextWayPoint->getKooadinaten();
 	switch (nextWayPoint->getCondition())
 	{
 	case 1:
@@ -64,13 +64,13 @@ void Map::move(Drone* drohne, Waypoint* wp, bool change)
 		}
 		else
 		{
-			//TODO:: Drohne löschen
+			//delete drohne;
 		}
 
 	}
-	
 
-		drohne->move();
+
+	drohne->move();
 
 
 }
@@ -117,7 +117,7 @@ Map::Map()
 	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
 	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 1)); // endVektor
+	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 3)); // endVektor
 
 	start = Vector2f(4 * 40 - 20, 27 * 40);
 	startMove = Vector2f(0, -1);

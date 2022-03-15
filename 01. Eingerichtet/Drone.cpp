@@ -13,7 +13,7 @@ Drone::Drone(int typ)
 	drone.setScale(1, 1);
 	speed = .5;
 	nextPoint = 0;
-	
+
 }
 
 void Drone::setPosition(Vector2f position)
@@ -48,12 +48,12 @@ int Drone::getNextPoint()
 void Drone::move(Vector2f value)
 {
 	Vector2f pos = getPosition();
-	setPosition(Vector2f(pos.x + value.x , pos.y+value.y));
+	setPosition(Vector2f(pos.x + value.x, pos.y + value.y));
 }
 
 void Drone::move()
 {
-	position = Vector2f(position.x+ move_x * speed, position.y+ move_y * speed);
+	position = Vector2f(position.x + move_x * speed, position.y + move_y * speed);
 	drone.setPosition(position);
 }
 
@@ -61,5 +61,7 @@ void Drone::pass()
 {
 	nextPoint++;
 }
+
+
 
 
