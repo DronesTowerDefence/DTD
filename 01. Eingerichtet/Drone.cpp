@@ -18,8 +18,8 @@ Drone::Drone(int typ)
 
 void Drone::setPosition(Vector2f position)
 {
-	this->position = position;
-	drone.setPosition(position); //TODO richtig
+	
+	drone.setPosition(position); 
 
 }
 
@@ -31,7 +31,7 @@ void Drone::setMove(Vector2f v)
 
 Vector2f Drone::getPosition()
 {
-	return position;
+	return drone.getPosition();
 }
 
 sf::Sprite Drone::getDrone()
@@ -45,16 +45,10 @@ int Drone::getNextPoint()
 }
 
 
-void Drone::move(Vector2f value)
-{
-	Vector2f pos = getPosition();
-	setPosition(Vector2f(pos.x + value.x, pos.y + value.y));
-}
-
 void Drone::move()
 {
-	position = Vector2f(position.x + move_x * speed, position.y + move_y * speed);
-	drone.setPosition(position);
+	
+	drone.setPosition(Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed));
 }
 
 void Drone::pass()

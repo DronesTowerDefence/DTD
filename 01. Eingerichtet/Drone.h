@@ -11,7 +11,6 @@ private:
 	float speed;
 	int move_x;
 	int move_y;
-	Vector2f position;
 	Texture droneTexture;
 	Sprite drone;
 	int nextPoint;
@@ -26,7 +25,6 @@ public:
 	Vector2f getPosition();
 	sf::Sprite getDrone();
 	int getNextPoint();
-	void move(Vector2f value);
 	void move();
 	void pass();
 
