@@ -11,9 +11,9 @@ void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
 	int np_index = drohne->getNextPoint();
 	Vector2f pos = drohne->getPosition();
 
-	Vector2f koa;//= np->getKooadinaten();
 
 	Waypoint* nextWayPoint = getWaypoint(np_index);
+	Vector2f koa= nextWayPoint->getKooadinaten();
 	switch (nextWayPoint->getCondition())
 	{
 	case 1:
@@ -68,7 +68,7 @@ void Map::move(Drone* drohne, Waypoint* wp, bool change)
 		}
 
 	}
-	else
+	
 
 		drohne->move();
 
@@ -108,16 +108,16 @@ Map::Map()
 {
 
 	points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-	//points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-	//points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
-	//points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
-	//points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-	//points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-	//points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
-	//points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
-	//points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-	//points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-	//points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 1)); // endVektor
+	points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
+	points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
+	points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
+	points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
+	points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
+	points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
+	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
+	points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
+	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
+	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 1)); // endVektor
 
 	start = Vector2f(4 * 40 - 20, 27 * 40);
 	startMove = Vector2f(0, -1);
