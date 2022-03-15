@@ -1,14 +1,22 @@
 #pragma once
 #include "Tower.h"
-class Money_Health
+
+//Singleton
+class Base
 {
 private:
 	int money;
 	int health;
 	int round;
 	int towerPrice[3];
+
+	static Base instance;
+
+	Base();
+	Base(int a,int b,int c,int d);
 public:
-	Money_Health();
+
+	static Base& getInstance();
 
 	void addMoney(int);
 

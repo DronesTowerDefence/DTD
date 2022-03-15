@@ -148,7 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Tower.cpp" />
-    <ClCompile Include="Money_Health.cpp" />
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="Waypoint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -156,7 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Tower.h" />
-    <ClInclude Include="Money_Health.h" />
+    <ClInclude Include="Base.h" />
     <ClInclude Include="Waypoint.h" />
     <ClInclude Include="Map.h" />
   </ItemGroup>
