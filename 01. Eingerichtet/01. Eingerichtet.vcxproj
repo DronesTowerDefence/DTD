@@ -146,7 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Drone.cpp" />
+    <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Waypoint.cpp" />
@@ -154,7 +156,9 @@
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Drone.h" />
+    <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="Waypoint.h" />
