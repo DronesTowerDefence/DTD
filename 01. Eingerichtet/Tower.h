@@ -20,14 +20,13 @@ private:
 	Sprite towerSpr;
 
 	Tower();
-	Tower(int);
 
 public:
 
+	Tower(int);
 	Sprite getTowerSpr();
 	void shoot(Drone*);
 	void sell();
-	Tower* buyNewTower(int);
 	std::list<Tower*> getAllTowers();
 	
 };

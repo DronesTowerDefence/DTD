@@ -17,7 +17,7 @@ Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 	range = 0;
 }
 
-Tower::Tower(int a) //NICHT BENUTZEN! Bitte die Funktion "buyNewTower" benutzen
+Tower::Tower(int a) //Neuen Turm kaufen; 0,1,2,3
 {
 	switch (a)
 	{
@@ -60,6 +60,9 @@ Tower::Tower(int a) //NICHT BENUTZEN! Bitte die Funktion "buyNewTower" benutzen
 	towerSpr.setTexture(towerTex);
 	value = price;
 
+	if (!Base::getInstance()->submoney(price))
+		delete this;
+
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
@@ -86,17 +89,6 @@ void Tower::sell() //Tower verkaufen und Verkaufspreis gutgeschrieben bekommen
 	}
 	Base::getInstance()->addMoney(value * 0.9);
 	delete this;
-}
-
-Tower* Tower::buyNewTower(int towerID) //Neuen Tower kaufen/hinzufügen
-{
-	if (Base::getInstance()->submoney(price))
-	{
-		Tower* a = new Tower(towerID);
-		allTowers.push_back(a);
-		return a;
-	}
-	else return nullptr;
 }
 
 std::list<Tower*> Tower::getAllTowers() //Returnt die Liste aller Tower
