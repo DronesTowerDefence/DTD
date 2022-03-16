@@ -22,11 +22,34 @@ private:
 	Tower();
 
 public:
-
+	/// <summary>
+	/// Neuen Turm kaufen; 0,1,2,3
+	/// </summary>
+	/// <param name="int 0,1,2,3"></param>
 	Tower(int);
+
+	/// <summary>
+	/// Returnt die Tower Sprite
+	/// </summary>
+	/// <param name="void"></param>
 	Sprite getTowerSpr();
+
+	/// <summary>
+	/// Tower schieﬂt Drone ab
+	/// </summary>
+	/// <param name="Drone*"></param>
 	void shoot(Drone*);
+
+	/// <summary>
+	/// Tower verkaufen und Verkaufspreis gutgeschrieben bekommen
+	/// </summary>
+	/// <param name="void"></param>
 	void sell();
+
+	/// <summary>
+	/// Returnt die Liste aller Tower
+	/// </summary>
+	/// <param name="void"></param>
 	std::list<Tower*> getAllTowers();
 	
 };
