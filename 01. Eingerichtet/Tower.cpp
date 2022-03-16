@@ -1,6 +1,14 @@
 #include "Tower.h"
 
-Tower::Tower()
+/// <summary>
+/// 
+/// </summary>
+/// <param name="pos"></param>
+/// <returns></returns>
+
+std::list<Tower*> Tower::allTowers;
+
+Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 {
 	name = "0";
 	damage = 0;
@@ -9,7 +17,7 @@ Tower::Tower()
 	range = 0;
 }
 
-Tower::Tower(int a)
+Tower::Tower(int a) //NICHT BENUTZEN! Bitte die Funktion "buyNewTower" benutzen
 {
 	switch (a)
 	{
@@ -54,30 +62,44 @@ Tower::Tower(int a)
 
 }
 
-Sprite Tower::getTowerSpr()
+Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 {
 	return towerSpr;
 }
 
-void Tower::shoot(Drone a)
+void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
-	if (towerSpr.getGlobalBounds().intersects(a.getDrone().getGlobalBounds()))
+	if (towerSpr.getGlobalBounds().intersects(a->getDrone().getGlobalBounds()))
 	{
 		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
 	}
 }
 
-void Tower::sell()
+void Tower::sell() //Tower verkaufen und Verkaufspreis gutgeschrieben bekommen
 {
+	for (auto i : allTowers)
+	{
+		if (i == this)
+		{
+			allTowers.remove(i);
+		}
+	}
 	Base::getInstance()->addMoney(value * 0.9);
-
+	delete this;
 }
 
-Tower* Tower::buyNewTower(int towerID)
+Tower* Tower::buyNewTower(int towerID) //Neuen Tower kaufen/hinzufügen
 {
 	if (Base::getInstance()->submoney(price))
 	{
-		return new Tower(towerID);
+		Tower* a = new Tower(towerID);
+		allTowers.push_back(a);
+		return a;
 	}
 	else return nullptr;
+}
+
+std::list<Tower*> Tower::getAllTowers() //Returnt die Liste aller Tower
+{
+	return allTowers;
 }

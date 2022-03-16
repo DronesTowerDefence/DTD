@@ -14,18 +14,21 @@ private:
 	int range;
 	int value;
 
+	static std::list<Tower*> allTowers;
+
 	Texture towerTex;
 	Sprite towerSpr;
 
 	Tower();
+	Tower(int);
 
 public:
 
-	Tower(int);
 	Sprite getTowerSpr();
-	void shoot(Drone);
+	void shoot(Drone*);
 	void sell();
 	Tower* buyNewTower(int);
+	std::list<Tower*> getAllTowers();
 	
 };
 
