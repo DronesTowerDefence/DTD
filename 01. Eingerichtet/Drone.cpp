@@ -1,25 +1,30 @@
 
 #include "Drone.h"
-#include <SFML/Graphics.hpp>
 using namespace sf;
 
 Drone::Drone(int typ)
 {
 
-	droneTexture = Texture();
-	droneTexture.loadFromFile("img/drone2_40x40.png");
-	drone = Sprite();
-	drone.setTexture(droneTexture);
-	drone.setScale(1, 1);
-	speed = .5;
-	nextPoint = 0;
+	/*switch(typ) {
 
+	default:*/
+		droneTexture = Texture();
+		droneTexture.loadFromFile("img/drone0_40x40.png");
+		drone = Sprite();
+		drone.setTexture(droneTexture);
+		drone.setScale(1, 1);
+		speed = .5;
+		nextPoint = 0;
+		lives = 3;
+	/*case 1:*/
+
+	/*}*/
 }
 
 void Drone::setPosition(Vector2f position)
 {
-	this->position = position;
-	drone.setPosition(position); //TODO richtig
+	
+	drone.setPosition(position); 
 
 }
 
@@ -31,7 +36,7 @@ void Drone::setMove(Vector2f v)
 
 Vector2f Drone::getPosition()
 {
-	return position;
+	return drone.getPosition();
 }
 
 sf::Sprite Drone::getDrone()
@@ -45,16 +50,10 @@ int Drone::getNextPoint()
 }
 
 
-void Drone::move(Vector2f value)
-{
-	Vector2f pos = getPosition();
-	setPosition(Vector2f(pos.x + value.x, pos.y + value.y));
-}
-
 void Drone::move()
 {
-	position = Vector2f(position.x + move_x * speed, position.y + move_y * speed);
-	drone.setPosition(position);
+	
+	drone.setPosition(Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed));
 }
 
 void Drone::pass()
@@ -62,6 +61,28 @@ void Drone::pass()
 	nextPoint++;
 }
 
+void Drone::takeDamage(int damage) {
 
+	lives -= damage;
+	if (lives == 2) {
+		droneTexture.loadFromFile("img/drone0(damage1)40x40.png");
+		drone.setTexture(droneTexture);
+	}
+	else if(lives == 1) {
+		droneTexture.loadFromFile("img/drone0(damage2)40x40.png");
+		drone.setTexture(droneTexture);
+	}
+	if (lives <= 0) {
+		delete this;
+	}
+}
 
+int Drone::getLives()
+{
+	return lives;
+}
 
+Vector2i Drone::getMove()
+{
+	return Vector2i(move_x, move_y);
+}

@@ -1,6 +1,7 @@
 #include "Base.h"
 
-Base Base::instance;
+
+Base* Base::instance = nullptr;
 
 Base::Base()
 {
@@ -12,8 +13,12 @@ Base::Base()
 	towerPrice[2] = 300;
 }
 
-Base& Base::getInstance()
+Base* Base::getInstance()
 {
+	if (instance == nullptr)
+	{
+		instance = new Base;
+	}
 	return instance;
 }
 
@@ -79,11 +84,20 @@ int Base::getRound()
 	return round;
 }
 
-Tower* Base::buyNewTower(int towerID)
+std::list<Tower*> Base::getAllTowers()
 {
-	if (submoney(towerPrice[towerID + 1]))
+	return allTowers;
+}
+
+void Base::sellTower(Tower* a)
+{
+	for (auto i : allTowers)
 	{
-		return new Tower(towerID);
+		if (i == a)
+		{
+			allTowers.remove(i);
+		}
 	}
-	else return nullptr;
+	addMoney(a->getValue() * 0.9);
+	delete a;
 }

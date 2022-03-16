@@ -1,7 +1,7 @@
 #pragma once
+//Singleton
 #include "Tower.h"
 
-//Singleton
 class Base
 {
 private:
@@ -10,13 +10,15 @@ private:
 	int round;
 	int towerPrice[3];
 
-	static Base instance;
+	std::list<Tower*> allTowers;
+
+	static Base* instance;
 
 	Base();
 	Base(int a,int b,int c,int d);
 public:
 
-	static Base& getInstance();
+	static Base* getInstance();
 
 	void addMoney(int);
 
@@ -38,6 +40,9 @@ public:
 	
 	int getRound();
 
-	Tower* buyNewTower(int);
+	std::list<Tower*> getAllTowers();
+
+	void sellTower(Tower*);
+
 };
 
