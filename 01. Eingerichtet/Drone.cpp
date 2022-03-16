@@ -9,7 +9,7 @@ Drone::Drone(int typ)
 
 	default:*/
 		droneTexture = Texture();
-		droneTexture.loadFromFile("img/drone2_40x40.png");
+		droneTexture.loadFromFile("img/drone0_40x40.png");
 		drone = Sprite();
 		drone.setTexture(droneTexture);
 		drone.setScale(1, 1);
@@ -64,6 +64,14 @@ void Drone::pass()
 void Drone::takeDamage(int damage) {
 
 	lives -= damage;
+	if (lives == 2) {
+		droneTexture.loadFromFile("img/drone0(damage1)40x40.png");
+		drone.setTexture(droneTexture);
+	}
+	else if(lives == 1) {
+		droneTexture.loadFromFile("img/drone0(damage2)40x40.png");
+		drone.setTexture(droneTexture);
+	}
 	if (lives <= 0) {
 		delete this;
 	}
