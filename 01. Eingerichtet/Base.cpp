@@ -1,5 +1,6 @@
 #include "Base.h"
 
+
 Base* Base::instance = nullptr;
 
 Base::Base()
@@ -81,4 +82,22 @@ void Base::addRound()
 int Base::getRound()
 {
 	return round;
+}
+
+std::list<Tower*> Base::getAllTowers()
+{
+	return allTowers;
+}
+
+void Base::sellTower(Tower* a)
+{
+	for (auto i : allTowers)
+	{
+		if (i == a)
+		{
+			allTowers.remove(i);
+		}
+	}
+	addMoney(a->getValue() * 0.9);
+	delete a;
 }

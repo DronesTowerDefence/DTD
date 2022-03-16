@@ -14,8 +14,6 @@ private:
 	int range;
 	int value;
 
-	static std::list<Tower*> allTowers;
-
 	Texture towerTex;
 	Sprite towerSpr;
 
@@ -41,16 +39,9 @@ public:
 	void shoot(Drone*);
 
 	/// <summary>
-	/// Tower verkaufen und Verkaufspreis gutgeschrieben bekommen
+	/// Returnt Value
 	/// </summary>
-	/// <param name="void"></param>
-	void sell();
-
-	/// <summary>
-	/// Returnt die Liste aller Tower
-	/// </summary>
-	/// <param name="void"></param>
-	std::list<Tower*> getAllTowers();
-	
+	/// <param name="int"></param>
+	int getValue();
 };
 

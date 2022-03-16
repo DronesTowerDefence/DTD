@@ -6,7 +6,6 @@
 /// <param name="pos"></param>
 /// <returns></returns>
 
-std::list<Tower*> Tower::allTowers;
 
 Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 {
@@ -60,8 +59,9 @@ Tower::Tower(int a) //Neuen Turm kaufen; 0,1,2,3
 	towerSpr.setTexture(towerTex);
 	value = price;
 
-	if (!Base::getInstance()->submoney(price))
-		delete this;
+	if (Base::getInstance()->submoney(price))
+		return; //Base::getInstance().
+	else delete this;
 
 }
 
@@ -78,20 +78,7 @@ void Tower::shoot(Drone* a) //Tower schießt Drone ab
 	}
 }
 
-void Tower::sell() //Tower verkaufen und Verkaufspreis gutgeschrieben bekommen
+int Tower::getValue()
 {
-	for (auto i : allTowers)
-	{
-		if (i == this)
-		{
-			allTowers.remove(i);
-		}
-	}
-	Base::getInstance()->addMoney(value * 0.9);
-	delete this;
-}
-
-std::list<Tower*> Tower::getAllTowers() //Returnt die Liste aller Tower
-{
-	return allTowers;
+	return value;
 }
