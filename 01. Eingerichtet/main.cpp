@@ -68,7 +68,7 @@ int main() {
 			window.draw(test);
 		Sidebar::getInstance()->draw(&window);
 		window.draw(koadinaten);
-		window.draw(drohne->getDrone());
+		window.draw(drohne->getDroneSprite());
 
 		window.display();
 	}

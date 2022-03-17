@@ -2,7 +2,6 @@
 #include "Drone.h"
 using namespace sf;
 
-Drone::Drone() {} //NICHT BENUTZEN  - NOT IN USE -
 
 
 
