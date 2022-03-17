@@ -2,10 +2,17 @@
 #include "Drone.h"
 using namespace sf;
 
-Drone::Drone(int typ)
-{
+Drone::Drone() {} //NICHT BENUTZEN  - NOT IN USE -
 
-	/*switch(typ) {
+
+
+
+
+Drone::Drone(int typSpecifier)
+{
+	droneType = typSpecifier;
+
+	/*switch(droneType) {
 
 	default:*/
 		droneTexture = Texture();
@@ -39,7 +46,7 @@ Vector2f Drone::getPosition()
 	return drone.getPosition();
 }
 
-sf::Sprite Drone::getDrone()
+sf::Sprite Drone::getDroneSprite()
 {
 	return drone;
 }

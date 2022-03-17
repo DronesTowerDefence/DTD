@@ -15,6 +15,7 @@ private:
 	Sprite drone;
 	int nextPoint;
 	int lives;
+	int droneType;
 
 	Drone();
 
@@ -43,7 +44,7 @@ public:
 	/// Gibt die Sprite der Drone zurück
 	/// </summary>
 	/// <returns>sf::Sprite</returns>
-	sf::Sprite getDrone();
+	sf::Sprite getDroneSprite();
 	/// <summary>
 	/// Gibt den nextPoint zurück, den die Drone auf der Map erreichen wird (Map-Relevant)
 	/// </summary>
