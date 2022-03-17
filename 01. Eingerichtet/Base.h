@@ -2,6 +2,7 @@
 //Singleton
 #include "Tower.h"
 
+
 class Base
 {
 private:

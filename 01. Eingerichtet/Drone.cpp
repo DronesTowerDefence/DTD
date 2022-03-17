@@ -92,3 +92,8 @@ Vector2i Drone::getMove()
 {
 	return Vector2i(move_x, move_y);
 }
+
+Vector2f Drone::getNextPosition()
+{
+	return Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed);
+}

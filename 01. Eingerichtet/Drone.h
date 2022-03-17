@@ -73,6 +73,11 @@ public:
 	/// </summary>
 	/// <returns>Vector21</returns>
 	Vector2i getMove();
+	/// <summary>
+	/// Gibt die Position im nächsten "Frame" zurück (Nicht im Frame, aber im nächsten Funktionsaufruf)
+	/// </summary>
+	/// <returns>Vector2f &position</returns>
+	Vector2f getNextPosition();
 
 };
 
