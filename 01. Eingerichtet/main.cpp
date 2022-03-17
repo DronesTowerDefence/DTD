@@ -32,6 +32,7 @@ int main() {
 	background.setTexture(restart);
 	drohne->setPosition(map1->getStart());
 	drohne->setMove(map1->getStartMove());
+	drohne->takeDamage(1);
 
 	while (window.isOpen())
 	{

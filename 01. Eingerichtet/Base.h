@@ -1,6 +1,7 @@
 #pragma once
 //Singleton
 #include "Tower.h"
+#include <list>
 
 
 class Base
