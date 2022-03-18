@@ -1,5 +1,5 @@
 #include "Tower.h"
-
+#include "Base.h"
 /// <summary>
 /// 
 /// </summary>
@@ -72,7 +72,7 @@ Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 
 void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
-	if (towerSpr.getGlobalBounds().intersects(a->getDrone().getGlobalBounds()))
+	if (towerSpr.getGlobalBounds().intersects(a->getDroneSprite().getGlobalBounds()))
 	{
 		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
 	}

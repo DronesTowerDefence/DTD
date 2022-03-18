@@ -32,6 +32,7 @@ int main() {
 	background.setTexture(restart);
 	drohne->setPosition(map1->getStart());
 	drohne->setMove(map1->getStartMove());
+	drohne->takeDamage(1);
 
 	while (window.isOpen())
 	{
@@ -68,7 +69,7 @@ int main() {
 			window.draw(test);
 		Sidebar::getInstance()->draw(&window);
 		window.draw(koadinaten);
-		window.draw(drohne->getDrone());
+		window.draw(drohne->getDroneSprite());
 
 		window.display();
 	}

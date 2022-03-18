@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Base.h"
 #include "Drone.h"
+
 using namespace sf;
 
 class Tower
