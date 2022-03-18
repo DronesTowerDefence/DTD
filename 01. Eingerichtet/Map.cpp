@@ -5,11 +5,11 @@
 /// </summary>
 /// <param name="pos"></param>
 /// <returns></returns>
-void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
+void Map::chekChangeDirection(Drone* drone) // x , y , v in Drohne
 {
 	//Waypoint* np = 
-	int np_index = drohne->getNextPoint();
-	Vector2f pos = drohne->getPosition();
+	int np_index = drone->getNextPoint();
+	Vector2f pos = drone->getPosition();
 
 
 	Waypoint* nextWayPoint = getWaypoint(np_index);
@@ -19,7 +19,7 @@ void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
 	case 1:
 		if (pos.y == koa.y && pos.x >= koa.x)
 		{
-			move(drohne, nextWayPoint, true);
+			ChangDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
@@ -27,52 +27,37 @@ void Map::chekChanceRichtung(Drone* drohne) // x , y , v in Drohne
 	case 2:
 		if (pos.y == koa.y && pos.x <= koa.x)
 		{
-			move(drohne, nextWayPoint, true);
+			ChangDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
 	case 3:
 		if (pos.y >= koa.y && pos.x == koa.x)
 		{
-			move(drohne, nextWayPoint, true);
+			ChangDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
 	case 4:
 		if (pos.y <= koa.y && pos.x == koa.x)
 		{
-			move(drohne, nextWayPoint, true);
+			ChangDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
 	default:
 		break;
 	}
-	move(drohne, nextWayPoint, false);
 
 }
-
-void Map::move(Drone* drohne, Waypoint* wp, bool change)
+void Map::ChangDirection(Drone* drone, Waypoint* wp)
 {
-	if (change)
+
+	drone->setMove(wp->getNewMove());
+	if (getWaypoint(drone->getNextPoint() + 1) != nullptr)
 	{
-
-		drohne->setMove(wp->getNewMove());
-		if (getWaypoint(drohne->getNextPoint() + 1) != nullptr)
-		{
-			drohne->pass();
-		}
-		else
-		{
-			//delete drohne;
-		}
-
+		drone->pass();
 	}
-
-
-	drohne->move();
-
-
 }
 
 Vector2f Map::getStart()
