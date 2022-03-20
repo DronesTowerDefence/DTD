@@ -43,7 +43,7 @@ int main() {
 				window.close();
 		}
 		Vector2f pos = drohne->getPosition();
-		map1->chekChanceRichtung(drohne);
+		map1->chekChangeDirection(drohne);
 		window.clear();
 		window.draw(background);
 
