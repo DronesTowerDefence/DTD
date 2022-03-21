@@ -10,7 +10,8 @@ using namespace sf;
 
 int main() { //test
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
-	//window.setPosition(Vector2i(0,0));
+	window.setPosition(Vector2i(0,0));
+	window.setFramerateLimit(60);
 	//window.setView(View());
 	RectangleShape test = RectangleShape(Vector2f(40, 40));
 	test.setFillColor(Color::Magenta);
