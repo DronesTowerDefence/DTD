@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "Waypoint.h"
 #include "Drone.h"
+#include "Base.h"
 using namespace sf;
 class Map
 {

@@ -16,7 +16,7 @@ Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 	range = 0;
 }
 
-Tower::Tower(int a) //Neuen Turm kaufen; 0,1,2,3
+Tower::Tower(int a ,Vector2f position) //Neuen Turm kaufen; 0,1,2,3
 {
 	switch (a)
 	{
@@ -58,7 +58,7 @@ Tower::Tower(int a) //Neuen Turm kaufen; 0,1,2,3
 
 	towerSpr.setTexture(towerTex);
 	value = price;
-
+	towerSpr.setPosition(position);
 	if (Base::getInstance()->submoney(price))
 		return; //Base::getInstance().
 	else delete this;

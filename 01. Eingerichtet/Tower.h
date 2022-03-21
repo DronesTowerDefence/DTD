@@ -19,12 +19,13 @@ private:
 
 	Tower();
 
+
 public:
 	/// <summary>
 	/// Neuen Turm kaufen; 0,1,2,3
 	/// </summary>
 	/// <param name="int 0,1,2,3"></param>
-	Tower(int);
+	Tower(int a, Vector2f position);
 
 	/// <summary>
 	/// Returnt die Tower Sprite

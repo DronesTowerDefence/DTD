@@ -36,38 +36,62 @@ void Game::checkTowerAlias()
 		{
 			newTower->setPositionMouse(Mouse::getPosition(*window));
 		}
+		else
+		{
+			newTower->CreateNewTower();
+			delete newTower;
+			newTower = nullptr;
+		}
 	}
 }
-Game::Game()
+Game::Game(RenderWindow* window)
 {
 	base = Base::getInstance();
 	sidebar = Sidebar::getInstance();
 	map = new Map();
 	newTower = nullptr;
+	this->window = window;
+	texture = new Texture();
+	texture->loadFromFile("img/Map1.png");
+	background = new RectangleShape(Vector2f(1920, 991));
+	background->setTexture(texture);
 }
 void Game::draw()
 {
+	window->clear();
+	window->draw(*background);
+	sidebar->draw(window);
 	if (newTower != nullptr)
 	{
 		newTower->draw(window);
-		for (Tower* t : base->getAllTowers())
-		{
-			window->draw(t->getTowerSpr());
-		}
-		for (Drone* d : base->getAllDrones())
-		{
-			window->draw(d->getDroneSprite());
-		}
+
 	}
+	for (Tower* t : base->getAllTowers())
+	{
+		window->draw(t->getTowerSpr());
+	}
+	for (Drone* d : base->getAllDrones())
+	{
+		window->draw(d->getDroneSprite());
+	}
+	window->display();
 }
 
 void Game::startGame()
 {
-
 	while (window->isOpen())
 	{
-		moveDrohnes();
-		checkTowerAlias();
+		Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window->close();
 
+		}
+		checkTowerAlias();
+		moveDrohnes();
+		draw();
 	}
+
+	//}
 }

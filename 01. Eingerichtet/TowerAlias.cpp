@@ -2,6 +2,7 @@
 
 TowerAlias::TowerAlias(int index)
 {
+	sprite = new Sprite();
 	texture =new  Texture();
 	switch (index)
 	{
@@ -21,7 +22,7 @@ TowerAlias::TowerAlias(int index)
 		texture->loadFromFile("img/tower3_50x50.png");
 		break;
 	}
-
+	this->index = index;
 	sprite->setTexture(*texture);
 }
 
@@ -38,4 +39,7 @@ void TowerAlias::draw(RenderWindow* window)
 void TowerAlias::CreateNewTower()
 {
 
+	Tower* tower=  new Tower(index, sprite->getPosition());
+	Base::getInstance()->addTower(tower);
 }
+

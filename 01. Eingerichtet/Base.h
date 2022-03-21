@@ -49,5 +49,9 @@ public:
 
 	void sellTower(Tower*);
 
+	void addDrone(Drone* drone);
+
+	void addTower(Tower* tower);
+
 };
 

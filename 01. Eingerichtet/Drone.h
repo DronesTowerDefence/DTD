@@ -49,7 +49,7 @@ public:
 	/// Konstruktor
 	/// </summary>
 	/// <param name="int"></param>
-	Drone(int typ); //Konstruktor
+	Drone(int typSpecifier, Vector2f startPosition, int x, int y); //Konstruktor
 	/// <summary>
 	/// Setzt die Position der Drone mit einem 2-float Vector
 	/// </summary>

@@ -106,3 +106,12 @@ void Base::sellTower(Tower* a)
 	addMoney(a->getValue() * 0.9);
 	delete a;
 }
+	
+void Base::addDrone(Drone* drone)
+{
+	allDrones.push_back(drone);
+}
+void Base::addTower(Tower* tower)
+{
+	allTowers.push_back(tower);
+}

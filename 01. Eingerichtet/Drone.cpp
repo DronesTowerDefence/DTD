@@ -7,7 +7,7 @@ using namespace sf;
 
 
 
-Drone::Drone(int typSpecifier)
+Drone::Drone(int typSpecifier , Vector2f startPosition , int x , int y)
 {
 	droneType = typSpecifier;
 
@@ -22,6 +22,9 @@ Drone::Drone(int typSpecifier)
 		speed = 2.5;
 		nextPoint = 0;
 		lives = 3;
+		drone.setPosition(startPosition);
+		move_x = x;
+		move_y = y;
 	/*case 1:*/
 
 	/*}*/

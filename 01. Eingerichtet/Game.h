@@ -13,13 +13,16 @@ private:
 	Map* map;
 	RenderWindow* window;
 	TowerAlias* newTower;
+	RectangleShape* background;
+	Texture* texture;
 	void newRound();
 	void moveDrohnes();
 	void checkButtonClick();
 	void checkTowerAlias();
 	void draw();
-public:
 	Game();
+public:
+	Game(RenderWindow * window);
 	void startGame();
 };
 
