@@ -8,7 +8,7 @@
 
 using namespace sf;
 
-int main() {
+int main() { //test
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 	//window.setPosition(Vector2i(0,0));
 	//window.setView(View());
