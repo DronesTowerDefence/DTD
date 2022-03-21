@@ -38,10 +38,10 @@ void Sidebar::draw(sf::RenderWindow* window)
 
 Sidebar::Sidebar()
 {
-	towers[0] = new Button(Vector2f(50, 50), Vector2f(1775, 15), "img/drone2_40x40.png");
-	towers[1] = new Button(Vector2f(50, 50), Vector2f(1850, 15), "img/drone2_40x40.png");
-	towers[2] = new Button(Vector2f(50, 50), Vector2f(1775, 100), "img/drone2_40x40.png");
-	towers[3] = new Button(Vector2f(50, 50), Vector2f(1850, 100), "img/drone2_40x40.png");
+	towers[0] = new Button(Vector2f(50, 50), Vector2f(1775, 15), "img/drone0_40x40.png");
+	towers[1] = new Button(Vector2f(50, 50), Vector2f(1850, 15), "img/drone0_40x40.png");
+	towers[2] = new Button(Vector2f(50, 50), Vector2f(1775, 100), "img/drone0_40x40.png");
+	towers[3] = new Button(Vector2f(50, 50), Vector2f(1850, 100), "img/drone0_40x40.png");
 
 	backround = RectangleShape();
 	backround.setFillColor(Color::Yellow);

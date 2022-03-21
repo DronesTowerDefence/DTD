@@ -4,19 +4,44 @@
 #include "SFML/Graphics.hpp"
 #include "Waypoint.h"
 using namespace sf;
+/// <summary>
+/// Zeichenbares Objekt der Klasse Drone                          
+/// <para/> 
+/// Erzeugt eine Drone, die mit einer Sprite dargestellt wird
+/// </summary>
 class Drone
 {
 private:
-
+	/// <summary>
+	/// Geschwindigkeit der Drohne : float
+	/// </summary>
 	float speed;
 	int move_x;
 	int move_y;
+	/// <summary>
+	/// Textur der Drone : Texture
+	/// </summary>
 	Texture droneTexture;
+	/// <summary>
+	/// Sprite der Drone : Sprite
+	/// </summary>
 	Sprite drone;
+	/// <summary>
+	/// Counter für die Liste WayPoint in der Map-Klasse : int
+	/// </summary>
 	int nextPoint;
+	/// <summary>
+	/// Leben der Drone : int
+	/// </summary>
 	int lives;
+	/// <summary>
+	/// Drohnentyp für versch. Atrribute im Parameterkonstruktor : int
+	/// </summary>
 	int droneType;
 
+	/// <summary>
+	/// !NICHT BENUTZEN!
+	/// </summary>
 	Drone();
 
 public:
