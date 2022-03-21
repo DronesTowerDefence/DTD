@@ -18,9 +18,10 @@ int Sidebar::isCklickes(sf::RenderWindow* window)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (towers[i]->isClicked(mouse))
+			if (Base::getInstance()->getMoney()>=towers[i]->getPrice() && towers[i]->isClicked(mouse))
 			{
 				return i;
+				Base::getInstance()->submoney(towers[i]->getPrice());
 			}
 		}
 	}
@@ -38,10 +39,10 @@ void Sidebar::draw(sf::RenderWindow* window)
 
 Sidebar::Sidebar()
 {
-	towers[0] = new Button(Vector2f(50, 50), Vector2f(1775, 15), "img/drone0_40x40.png");
-	towers[1] = new Button(Vector2f(50, 50), Vector2f(1850, 15), "img/drone0_40x40.png");
-	towers[2] = new Button(Vector2f(50, 50), Vector2f(1775, 100), "img/drone0_40x40.png");
-	towers[3] = new Button(Vector2f(50, 50), Vector2f(1850, 100), "img/drone0_40x40.png");
+	towers[0] = new BuyTower(100 , Vector2f(50, 50), Vector2f(1775, 15), "img/drone0_40x40.png");
+	towers[1] = new BuyTower(200,Vector2f(50, 50), Vector2f(1850, 15), "img/drone0_40x40.png");
+	towers[2] = new BuyTower(300,Vector2f(50, 50), Vector2f(1775, 100), "img/drone0_40x40.png");
+	towers[3] = new BuyTower(400,Vector2f(50, 50), Vector2f(1850, 100), "img/drone0_40x40.png");
 
 	backround = RectangleShape();
 	backround.setFillColor(Color::Yellow);

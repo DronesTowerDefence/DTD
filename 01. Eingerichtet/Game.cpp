@@ -68,7 +68,7 @@ void Game::draw()
 	}
 	for (Tower* t : base->getAllTowers())
 	{
-		window->draw(t->getTowerSpr());
+			window->draw(t->getTowerSpr());
 	}
 	for (Drone* d : base->getAllDrones())
 	{

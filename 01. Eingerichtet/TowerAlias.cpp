@@ -40,6 +40,7 @@ void TowerAlias::CreateNewTower()
 {
 
 	Tower* tower=  new Tower(index, sprite->getPosition());
+	if (tower != nullptr)
 	Base::getInstance()->addTower(tower);
 }
 

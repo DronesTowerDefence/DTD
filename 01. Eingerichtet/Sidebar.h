@@ -1,12 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Button.h"
+#include "BuyTower.h"
+#include "Base.h"
 using namespace sf;
 class Sidebar
 {
 private:
 	RectangleShape backround;
-	Button* towers[4];
+	BuyTower* towers[4];
 
 	static Sidebar* instance;
 	Sidebar();
