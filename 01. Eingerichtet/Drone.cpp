@@ -19,7 +19,7 @@ Drone::Drone(int typSpecifier)
 		drone = Sprite();
 		drone.setTexture(droneTexture);
 		drone.setScale(1, 1);
-		speed = .5;
+		speed = 2.5;
 		nextPoint = 0;
 		lives = 3;
 	/*case 1:*/
