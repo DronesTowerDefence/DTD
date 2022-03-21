@@ -1,6 +1,7 @@
 #pragma once
 //Singleton
 #include "Tower.h"
+#include "Drone.h"
 #include <list>
 
 
@@ -13,6 +14,7 @@ private:
 	int towerPrice[3];
 
 	std::list<Tower*> allTowers;
+	std::list<Drone*> allDrones;
 
 	static Base* instance;
 
@@ -43,6 +45,7 @@ public:
 	int getRound();
 
 	std::list<Tower*> getAllTowers();
+	std::list<Drone*> getAllDrones();
 
 	void sellTower(Tower*);
 

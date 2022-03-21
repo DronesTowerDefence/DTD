@@ -4,6 +4,7 @@
 #include "Map.h"
 #include <list>
 #include "Drone.h"
+#include "TowerAlias.h"
 class Game
 {
 private:
@@ -11,10 +12,12 @@ private:
 	Sidebar* sidebar;
 	Map* map;
 	RenderWindow* window;
-	std::list<Drone*> drones;
+	TowerAlias* newTower;
 	void newRound();
 	void moveDrohnes();
 	void checkButtonClick();
+	void checkTowerAlias();
+	void draw();
 public:
 	Game();
 	void startGame();

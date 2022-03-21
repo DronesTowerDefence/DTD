@@ -89,6 +89,11 @@ std::list<Tower*> Base::getAllTowers()
 	return allTowers;
 }
 
+std::list<Drone*> Base::getAllDrones()
+{
+	return allDrones;
+}
+
 void Base::sellTower(Tower* a)
 {
 	for (auto i : allTowers)
