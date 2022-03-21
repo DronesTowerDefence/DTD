@@ -39,7 +39,6 @@ void TowerAlias::draw(RenderWindow* window)
 void TowerAlias::CreateNewTower()
 {
 
-	Tower* tower=  new Tower(index, sprite->getPosition());
-	Base::getInstance()->addTower(tower);
+	Tower* tower = new Tower(index, sprite->getPosition());
 }
 
