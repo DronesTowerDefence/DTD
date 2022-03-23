@@ -9,8 +9,8 @@ using namespace sf;
 class Map
 {
 public:
-	void chekChangeDirection(Drone* drone);
-	void ChangDirection(Drone* drone, Waypoint* wp);
+	void checkChangeDirection(Drone* drone);
+	void changeDirection(Drone* drone, Waypoint* wp);
 	Vector2f getStart();
 	Vector2f getStartMove();
 	std::list<Waypoint*>& getPoints();
