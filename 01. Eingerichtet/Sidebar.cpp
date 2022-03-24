@@ -20,8 +20,8 @@ int Sidebar::isCklickes(sf::RenderWindow* window)
 		{
 			if (Base::getInstance()->getMoney()>=towers[i]->getPrice() && towers[i]->isClicked(mouse))
 			{
-				return i;
 				Base::getInstance()->submoney(towers[i]->getPrice());
+				return i;
 			}
 		}
 	}

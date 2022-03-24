@@ -7,9 +7,20 @@ class TowerAlias
 {
 public:
 	TowerAlias(int index);
+	/// <summary>
+	/// Setzt die Position des Objektes
+	/// </summary>
+	/// <param name="mouse">Position des Mauszeigers</param>
 	void setPositionMouse(Vector2i mouse);
-	void draw(RenderWindow* window);
+	/// <summary>
+	/// Erstellt einen Tower
+	/// </summary>
 	void CreateNewTower();
+	/// <summary>
+	/// Gibt den Sprite zurück
+	/// </summary>
+	/// <returns>Sprite</returns>
+	Sprite* getSprite();
 private:
 	int index;
 	Sprite* sprite;
