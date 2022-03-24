@@ -13,13 +13,13 @@ public:
 	/// Checkt, ob die Drohne den nächsten Wegpunkt erreicht hat
 	/// </summary>
 	/// <param name="drone">zu überprüfende Drone</param>
-	void chekChangeDirection(Drone* drone);
+	void checkChangeDirection(Drone* drone);
 	/// <summary>
 	/// Ändert die Bewegungsrichtung auf die im WegPunkt festgelegte richtung
 	/// </summary>
 	/// <param name="drone">Drone, dessen Richtumg geändert wird</param>
 	/// <param name="wp">Letzter erreichter Wegpunkt</param>
-	void ChangDirection(Drone* drone, Waypoint* wp);
+	void changeDirection(Drone* drone, Waypoint* wp);
 	/// <summary>
 	/// gibt die Startkoadinaten der Karte zurück
 	/// </summary>

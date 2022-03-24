@@ -9,7 +9,7 @@ void Game::moveDrohnes()
 {
 	for (Drone* p : base->getAllDrones())
 	{
-		map->chekChangeDirection(p);
+		map->checkChangeDirection(p);
 		p->move();
 	}
 

@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="pos"></param>
 /// <returns></returns>
-void Map::chekChangeDirection(Drone* drone) // x , y , v in Drohne
+void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 {
 	//Waypoint* np = 
 	int np_index = drone->getNextPoint();
@@ -19,7 +19,7 @@ void Map::chekChangeDirection(Drone* drone) // x , y , v in Drohne
 	case 1:
 		if (pos.y == koa.y && pos.x >= koa.x)
 		{
-			ChangDirection(drone, nextWayPoint);
+			changeDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
@@ -27,21 +27,21 @@ void Map::chekChangeDirection(Drone* drone) // x , y , v in Drohne
 	case 2:
 		if (pos.y == koa.y && pos.x <= koa.x)
 		{
-			ChangDirection(drone, nextWayPoint);
+			changeDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
 	case 3:
 		if (pos.y >= koa.y && pos.x == koa.x)
 		{
-			ChangDirection(drone, nextWayPoint);
+			changeDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
 	case 4:
 		if (pos.y <= koa.y && pos.x == koa.x)
 		{
-			ChangDirection(drone, nextWayPoint);
+			changeDirection(drone, nextWayPoint);
 			return;
 		}
 		break;
@@ -50,7 +50,7 @@ void Map::chekChangeDirection(Drone* drone) // x , y , v in Drohne
 	}
 
 }
-void Map::ChangDirection(Drone* drone, Waypoint* wp)
+void Map::changeDirection(Drone* drone, Waypoint* wp)
 {
 	drone->setPosition(wp->getKooadinaten());
 	drone->setMove(wp->getNewMove());
