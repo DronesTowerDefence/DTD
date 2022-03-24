@@ -63,12 +63,11 @@ void Game::draw()
 	sidebar->draw(window);
 	if (newTower != nullptr)
 	{
-		newTower->draw(window);
-
+		window->draw((*newTower->getSprite()));
 	}
 	for (Tower* t : base->getAllTowers())
 	{
-			window->draw(t->getTowerSpr());
+		window->draw(t->getTowerSpr());
 	}
 	for (Drone* d : base->getAllDrones())
 	{

@@ -3,10 +3,10 @@
 TowerAlias::TowerAlias(int index)
 {
 	sprite = new Sprite();
-	texture =new  Texture();
+	texture = new  Texture();
 	switch (index)
 	{
-	case 0: 
+	case 0:
 		texture->loadFromFile("img/tower0_50x50.png");
 		break;
 
@@ -28,17 +28,19 @@ TowerAlias::TowerAlias(int index)
 
 void TowerAlias::setPositionMouse(Vector2i mouse)
 {
-	sprite->setPosition(mouse.x , mouse.y);
+	sprite->setPosition(mouse.x, mouse.y);
 }
 
-void TowerAlias::draw(RenderWindow* window)
-{
-	window->draw(*sprite);
-}
+
 
 void TowerAlias::CreateNewTower()
 {
 
 	Tower* tower = new Tower(index, sprite->getPosition());
+}
+
+Sprite* TowerAlias::getSprite()
+{
+	return sprite;
 }
 

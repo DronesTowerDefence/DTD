@@ -9,11 +9,37 @@ using namespace sf;
 class Map
 {
 public:
+	/// <summary>
+	/// Checkt, ob die Drohne den nächsten Wegpunkt erreicht hat
+	/// </summary>
+	/// <param name="drone">zu überprüfende Drone</param>
 	void chekChangeDirection(Drone* drone);
+	/// <summary>
+	/// Ändert die Bewegungsrichtung auf die im WegPunkt festgelegte richtung
+	/// </summary>
+	/// <param name="drone">Drone, dessen Richtumg geändert wird</param>
+	/// <param name="wp">Letzter erreichter Wegpunkt</param>
 	void ChangDirection(Drone* drone, Waypoint* wp);
+	/// <summary>
+	/// gibt die Startkoadinaten der Karte zurück
+	/// </summary>
+	/// <returns>Startkoadinaten</returns>
 	Vector2f getStart();
+	/// <summary>
+	/// gibt die erste Bewegungsrichtung zurück
+	/// </summary>
+	/// <returns>Bewegungsrichtung</returns>
 	Vector2f getStartMove();
+	/// <summary>
+	/// Gibt eine Liste mit allen Wegpunkten zurück
+	/// </summary>
+	/// <returns></returns>
 	std::list<Waypoint*>& getPoints();
+	/// <summary>
+	/// gibt den Wegpunkt an an stelle i zurück
+	/// </summary>
+	/// <param name="index">Index</param>
+	/// <returns>Wegpunkt</returns>
 	Waypoint* getWaypoint(int index);
 	Map();
 private:
