@@ -13,8 +13,10 @@ Button::Button(Vector2f size, Vector2f position, std::string image)
 
 bool Button::isClicked(Vector2i mouse)
 {
-	if (mouse.x >= sprite.getPosition().x && mouse.x <= sprite.getPosition().x + size.x &&
-		mouse.y >= sprite.getPosition().y && mouse.y <= sprite.getPosition().y + size.y)
+	Service* service = Service::getInstance();
+	Vector2f pos = service->getObjectPosition(Vector2f(1920,991),  sprite.getPosition());
+	if (mouse.x >= pos.x && mouse.x <= service->getXPosition( 1920, sprite.getPosition().x + size.x)  &&
+		mouse.y >= pos.y && mouse.y <= service->getYPosition(991,sprite.getPosition().y + size.y))
 	{
 		return true;
 	}
