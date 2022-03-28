@@ -102,7 +102,18 @@ Vector2i Drone::getMove()
 	return Vector2i(move_x, move_y);
 }
 
-Vector2f Drone::getNextPosition()
+Vector2f Drone::getNextPosition(int nextFrame)
 {
-	return Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed);
+
+	Vector2f deezNuts;
+
+	for (int i = 0; i < nextFrame; i++) {
+
+		deezNuts.x += drone.getPosition().x + move_x * speed;
+		deezNuts.y += drone.getPosition().y + move_y * speed;
+
+	}
+	
+	return deezNuts;
+
 }
