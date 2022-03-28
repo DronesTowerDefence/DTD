@@ -34,10 +34,9 @@ private:
 	void draw();
 	Game();
 public:
-	Game(RenderWindow * window);
+	Game(RenderWindow* window);
 	/// <summary>
 	/// Startet das Spiel
 	/// </summary>
 	void startGame();
 };
-

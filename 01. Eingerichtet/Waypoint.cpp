@@ -24,8 +24,6 @@ void Waypoint::setPass(bool pass)
 	this->pass = pass;
 }
 
-
-
 Waypoint::Waypoint(Vector2f kooardinaten, Vector2f newMove, int condition)
 {
 	this->kooadinaten = kooardinaten;

@@ -5,27 +5,26 @@ using namespace sf;
 int Drone::droneID = 0;
 
 
-
-Drone::Drone(int typSpecifier , Vector2f startPosition , int x , int y)
+Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 {
 	droneType = typSpecifier;
 
 	/*switch(droneType) {
 
 	default:*/
-		droneTexture = Texture();
-		droneTexture.loadFromFile("img/drone0_40x40.png");
-		drone = Sprite();
-		drone.setTexture(droneTexture);
-		drone.setScale(1, 1);
-		speed = 2.5;
-		nextPoint = 0;
-		lives = 3;
-		drone.setPosition(startPosition);
-		move_x = x;
-		move_y = y;
-		id = droneID;
-		droneID++;
+	droneTexture = Texture();
+	droneTexture.loadFromFile("img/drone0_40x40.png");
+	drone = Sprite();
+	drone.setTexture(droneTexture);
+	drone.setScale(1, 1);
+	speed = 2.5;
+	nextPoint = 0;
+	lives = 3;
+	drone.setPosition(startPosition);
+	move_x = x;
+	move_y = y;
+	id = droneID;
+	droneID++;
 	/*case 1:*/
 
 	/*}*/
@@ -33,8 +32,8 @@ Drone::Drone(int typSpecifier , Vector2f startPosition , int x , int y)
 
 void Drone::setPosition(Vector2f position)
 {
-	
-	drone.setPosition(position); 
+
+	drone.setPosition(position);
 
 }
 
@@ -62,7 +61,7 @@ int Drone::getNextPoint()
 
 void Drone::move()
 {
-	
+
 	drone.setPosition(Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed));
 }
 
@@ -78,7 +77,7 @@ bool Drone::takeDamage(int damage) {
 		droneTexture.loadFromFile("img/drone0(damage1)40x40.png");
 		drone.setTexture(droneTexture);
 	}
-	else if(lives == 1) {
+	else if (lives == 1) {
 		droneTexture.loadFromFile("img/drone0(damage2)40x40.png");
 		drone.setTexture(droneTexture);
 	}
@@ -112,7 +111,7 @@ Vector2f Drone::getNextPosition(int nextFrame)
 		deezNuts.y += drone.getPosition().y + move_y * speed;
 
 	}
-	
+
 	return deezNuts;
 
 }

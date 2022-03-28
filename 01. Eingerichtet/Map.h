@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include <string>
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "Waypoint.h"
 #include "Drone.h"
 //#include "Round.h"
@@ -54,4 +54,3 @@ private:
 	Vector2f startMove;
 
 };
-

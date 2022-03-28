@@ -32,8 +32,6 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 	sprite->setPosition(mouse.x, mouse.y);
 }
 
-
-
 void TowerAlias::CreateNewTower()
 {
 
@@ -44,4 +42,3 @@ Sprite* TowerAlias::getSprite()
 {
 	return sprite;
 }
-

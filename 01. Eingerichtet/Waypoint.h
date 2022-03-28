@@ -1,15 +1,16 @@
 #pragma once
 #include <list>
 #include <string>
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 using namespace sf;
+
 class Waypoint
 {
 private:
 	Vector2f kooadinaten;
 	Vector2f newMove;
 	bool pass;
-	
+
 	int condition;
 public:
 	/// <summary>
@@ -43,6 +44,5 @@ public:
 	/// <param name="kooardinaten">Koadinaten </param>
 	/// <param name="newMove">Bewegung der Drohne x,y</param>
 	/// <param name="condition">überpfüfung</param>
-	Waypoint(Vector2f kooardinaten, Vector2f newMove ,int condition);
+	Waypoint(Vector2f kooardinaten, Vector2f newMove, int condition);
 };
-

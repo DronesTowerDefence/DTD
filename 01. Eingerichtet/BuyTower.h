@@ -12,4 +12,3 @@ public:
 	/// <returns>Preis</returns>
 	int getPrice();
 };
-

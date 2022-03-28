@@ -105,7 +105,7 @@ void Round::sellTower(Tower* a)
 	addMoney(a->getValue() * 0.9);
 	delete a;
 }
-	
+
 void Round::addDrone(Drone* drone)
 {
 	allDrones.push_back(drone);

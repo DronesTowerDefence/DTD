@@ -1,18 +1,17 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 class Service
 {
-private : 
+private:
 	static Service* instance;
 	Service();
-public :
+public:
 	static Service* getInstance();
 	Vector2f getObjectPosition(Vector2f window, Vector2f objectposition);
 
 	float getXPosition(int xWindow, int xObject);
 
 	float getYPosition(int yWindow, int yObject);
-	
-};
 
+};

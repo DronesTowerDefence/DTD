@@ -12,7 +12,6 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 	int np_index = drone->getNextPoint();
 	Vector2f pos = drone->getPosition();
 
-
 	Waypoint* nextWayPoint = getWaypoint(np_index);
 	Vector2f koa = nextWayPoint->getKooadinaten();
 	switch (nextWayPoint->getCondition())
@@ -51,6 +50,7 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 	}
 
 }
+
 void Map::changeDirection(Drone* drone, Waypoint* wp)
 {
 	drone->setPosition(wp->getKooadinaten());
@@ -70,10 +70,12 @@ Vector2f Map::getStartMove()
 {
 	return startMove;
 }
+
 std::list<Waypoint*>& Map::getPoints()
 {
 	return points;
 }
+
 Waypoint* Map::getWaypoint(int index)
 {
 	int i = 0;
@@ -87,6 +89,7 @@ Waypoint* Map::getWaypoint(int index)
 	}
 	return nullptr;
 }
+
 Vector2f Map::getWaypointAsVector(int index)
 {
 	int i = 0;
@@ -100,6 +103,7 @@ Vector2f Map::getWaypointAsVector(int index)
 	}
 	return Vector2f(0, 0);
 }
+
 /// <summary>
 /// Create Map
 /// </summary>
@@ -119,6 +123,6 @@ Map::Map()
 	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 3)); // endVektor
 	start = Vector2f(4 * 40 - 20, 27 * 40);
 	startMove = Vector2f(0, -1);
-	Round::getInstance()->addDrone(new Drone(1 , start , 0,-1) );
+	Round::getInstance()->addDrone(new Drone(1, start, 0, -1));
 
 }

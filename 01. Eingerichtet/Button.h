@@ -13,7 +13,7 @@ protected:
 	Texture texture;
 	Vector2f size;
 public:
-	Button(Vector2f size, Vector2f position,  std::string image);
+	Button(Vector2f size, Vector2f position, std::string image);
 	/// <summary>
 	/// Checkt ob MausPosition innerhalb des Button liegt
 	/// </summary>

@@ -1,7 +1,7 @@
 #pragma once
-//#include <list>
+#include <list>
 #include <string>
-//#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "Waypoint.h"
 using namespace sf;
 /// <summary>
@@ -113,7 +113,6 @@ public:
 	Vector2f getNextPosition(int);
 
 
-	
+
 
 };
-

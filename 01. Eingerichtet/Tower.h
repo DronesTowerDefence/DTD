@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <list>
-//#include "Round.h"
 #include "Map.h"
 using namespace sf;
 
@@ -32,10 +31,6 @@ public:
 	/// </summary>
 	/// <param name="int 0,1,2,3"></param>
 	Tower(int, Vector2f, Map*);
-
-
-
-
 
 	/// <summary>
 	/// Returnt die Tower Sprite

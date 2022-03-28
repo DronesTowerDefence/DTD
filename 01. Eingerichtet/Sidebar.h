@@ -1,7 +1,8 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "BuyTower.h"
 using namespace sf;
+
 class Sidebar
 {
 private:
@@ -30,4 +31,3 @@ public:
 	/// <param name="window"></param>
 	void draw(RenderWindow* window);
 };
-

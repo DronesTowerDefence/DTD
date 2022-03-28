@@ -21,7 +21,7 @@ private:
 	static Round* instance;
 
 	Round();
-	Round(int a,int b,int c,int d);
+	Round(int a, int b, int c, int d);
 public:
 
 	static Round* getInstance();
@@ -29,21 +29,21 @@ public:
 	void addMoney(int);
 
 	bool submoney(int);
-	
+
 	int getMoney();
 
 	bool setMoney(int);
 
 	void addHealth(int);
-	
+
 	bool subhealth(int);
-	
+
 	int getHealth();
-	
+
 	bool setHealth(int);
-	
+
 	void addRound();
-	
+
 	int getRound();
 
 	std::list<Tower*> getAllTowers();
@@ -56,4 +56,3 @@ public:
 	void addTower(Tower* tower);
 
 };
-
