@@ -7,7 +7,7 @@ void Game::newRound()
 
 void Game::moveDrohnes()
 {
-	for (Drone* p : Round->getAllDrones())
+	for (Drone* p : round->getAllDrones())
 	{
 		map->checkChangeDirection(p);
 		p->move();
@@ -46,7 +46,7 @@ void Game::checkTowerAlias()
 }
 Game::Game(RenderWindow* window)
 {
-	base = Round::getInstance();
+	round = Round::getInstance();
 	sidebar = Sidebar::getInstance();
 	map = new Map();
 	newTower = nullptr;
@@ -65,11 +65,11 @@ void Game::draw()
 	{
 		window->draw((*newTower->getSprite()));
 	}
-	for (Tower* t : base->getAllTowers())
+	for (Tower* t : round->getAllTowers())
 	{
 		window->draw(t->getTowerSpr());
 	}
-	for (Drone* d : base->getAllDrones())
+	for (Drone* d : round->getAllDrones())
 	{
 		window->draw(d->getDroneSprite());
 	}

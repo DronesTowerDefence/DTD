@@ -13,11 +13,11 @@ class Drone
 {
 private:
 	/// <summary>
-	/// Static int für Drohnen-ID
+	/// Static int fÃ¼r Drohnen-ID
 	/// </summary>
 	static int droneID;
 	/// <summary>
-	/// NICHT ÄNDERN, einmalige ID der Drohne
+	/// NICHT Ã„NDERN, einmalige ID der Drohne
 	/// </summary>
 	int id;
 	/// <summary>
@@ -35,7 +35,7 @@ private:
 	/// </summary>
 	Sprite drone;
 	/// <summary>
-	/// Counter für die Liste WayPoint in der Map-Klasse : int
+	/// Counter fÃ¼r die Liste WayPoint in der Map-Klasse : int
 	/// </summary>
 	int nextPoint;
 	/// <summary>
@@ -43,7 +43,7 @@ private:
 	/// </summary>
 	int lives;
 	/// <summary>
-	/// Drohnentyp für versch. Atrribute im Parameterkonstruktor : int
+	/// Drohnentyp fÃ¼r versch. Atrribute im Parameterkonstruktor : int
 	/// </summary>
 	int droneType;
 
@@ -74,12 +74,12 @@ public:
 	/// <returns>Vector2f</returns>
 	Vector2f getPosition();
 	/// <summary>
-	/// Gibt die Sprite der Drone zurück
+	/// Gibt die Sprite der Drone zurÃ¼ck
 	/// </summary>
 	/// <returns>sf::Sprite</returns>
 	sf::Sprite getDroneSprite();
 	/// <summary>
-	/// Gibt den nextPoint zurück, den die Drone auf der Map erreichen wird (Map-Relevant)
+	/// Gibt den nextPoint zurÃ¼ck, den die Drone auf der Map erreichen wird (Map-Relevant)
 	/// </summary>
 	/// <returns>int</returns>
 	int getNextPoint();
@@ -97,22 +97,23 @@ public:
 	/// <param name="int damage"></param>
 	bool takeDamage(int damage);
 	/// <summary>
-	/// Gibt die Anzahl der verbleibenden Leben der Drone zurück
+	/// Gibt die Anzahl der verbleibenden Leben der Drone zurÃ¼ck
 	/// </summary>
 	/// <returns>int lives</returns>
 	int getLives();
 	/// <summary>
-	/// Gibt die move_x und move_y Koordinaten mit einem 2-float Vector zurück
+	/// Gibt die move_x und move_y Koordinaten mit einem 2-float Vector zurÃ¼ck
 	/// </summary>
 	/// <returns>Vector21</returns>
 	Vector2i getMove();
 	/// <summary>
-	/// Gibt die Position zurück, in den nächsten Frames (der int ist die Anzahl der Frames)
+	/// Gibt die Position zurÃ¼ck, in den nÃ¤chsten Frames (der int ist die Anzahl der Frames)
 	/// </summary>
 	/// <returns>Vector2f &position</returns>
 	Vector2f getNextPosition(int);
 
 
+	
 
 };
 

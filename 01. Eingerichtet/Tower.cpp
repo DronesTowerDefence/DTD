@@ -69,6 +69,7 @@ Tower::Tower(int a, Vector2f position, Map* map) //Neuen Turm kaufen; 0,1,2,3
 
 void Tower::setCoverableArea(Vector2f pos, Map* map)
 {
+
 	float point = 0.0;
 	Vector2f point2 = Vector2f(0, 0);
 	Vector2f mapPoint1;
@@ -99,6 +100,10 @@ void Tower::setCoverableArea(Vector2f pos, Map* map)
 			}
 		}
 	}
+
+	/*for(auto i : getPoints())
+	coverableArea.push_back();*/
+
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
@@ -106,11 +111,11 @@ Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 	return towerSpr;
 }
 
-void Tower::shoot(Drone* a) //Tower schießt Drone ab
+void Tower::shoot(Drone* a) //Tower schieÃŸt Drone ab
 {
 	if (towerSpr.getGlobalBounds().intersects(a->getDroneSprite().getGlobalBounds()))
 	{
-		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
+		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne Ã¼bergeben
 	}
 }
 
