@@ -86,6 +86,19 @@ Waypoint* Map::getWaypoint(int index)
 	}
 	return nullptr;
 }
+Vector2f Map::getWaypointAsVector(int index)
+{
+	int i = 0;
+	for (auto curser : points)
+	{
+		if (i == index)
+		{
+			return curser->getKooadinaten();
+		}
+		i++;
+	}
+	return Vector2f(0, 0);
+}
 /// <summary>
 /// Create Map
 /// </summary>

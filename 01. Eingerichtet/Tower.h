@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Drone.h"
+#include "Map.h"
 
 using namespace sf;
 
@@ -20,14 +21,14 @@ private:
 	Sprite towerSpr;
 
 	Tower();
-	void setCoverableArea(Vector2f);
+	void setCoverableArea(Vector2f, Map*);
 
 public:
 	/// <summary>
 	/// Neuen Turm kaufen; 0,1,2,3
 	/// </summary>
 	/// <param name="int 0,1,2,3"></param>
-	Tower(int a, Vector2f position);
+	Tower(int a, Vector2f position, Map* map);
 
 
 

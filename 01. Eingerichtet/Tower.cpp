@@ -16,7 +16,7 @@ Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 	range = 0;
 }
 
-Tower::Tower(int a, Vector2f position) //Neuen Turm kaufen; 0,1,2,3
+Tower::Tower(int a, Vector2f position, Map* map) //Neuen Turm kaufen; 0,1,2,3
 {
 	if (a >= 0 && a <= 3)
 	{
@@ -62,15 +62,43 @@ Tower::Tower(int a, Vector2f position) //Neuen Turm kaufen; 0,1,2,3
 		value = price;
 		towerSpr.setPosition(position);
 		Round::getInstance()->addTower(this);
-		setCoverableArea(position);
+		setCoverableArea(position, map);
 	}
 	else delete this;
 }
 
-void Tower::setCoverableArea(Vector2f pos)
+void Tower::setCoverableArea(Vector2f pos, Map* map)
 {
-	for(auto i : getPoints())
-	coverableArea.push_back();
+	float point = 0.0;
+	Vector2f point2 = Vector2f(0, 0);
+	Vector2f mapPoint1;
+	Vector2f mapPoint2;
+	int pointIterator = 0;
+
+	//Vector3f point3 = Vector3f(0, 0, 0);
+	for (auto i : map->getPoints())
+	{
+		mapPoint1 = map->getWaypointAsVector(pointIterator);
+		mapPoint2 = map->getWaypointAsVector(pointIterator + 1);
+
+
+		if (mapPoint1.x == mapPoint2.x)
+		{
+			for (; point2.x < i->getKooadinaten().x; point2.x += 20)
+			{
+				point = std::sqrt(((pos.x - point2.x) * (pos.x - point2.x)) + ((pos.y - point2.y) * (pos.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
+			}
+		}
+		else if (mapPoint1.y == mapPoint2.y)
+		{
+			for (; point2.y < i->getKooadinaten().y; point2.y += 20)
+			{
+				point = std::sqrt(((pos.x - point2.x) * (pos.x - point2.x)) + ((pos.y - point2.y) * (pos.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
+			}
+		}
+	}
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite

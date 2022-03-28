@@ -41,6 +41,12 @@ public:
 	/// <param name="index">Index</param>
 	/// <returns>Wegpunkt</returns>
 	Waypoint* getWaypoint(int index);
+	/// <summary>
+	/// gibt den Wegpunkt der Koordinaten als Vektor an der Stelle i zurück
+	/// </summary>
+	/// <param name="index">Index</param>
+	/// <returns>Wegpunkt</returns>
+	Vector2f getWaypointAsVector(int index);
 	Map();
 private:
 	std::list<Waypoint*> points;
