@@ -150,6 +150,7 @@
     <ClCompile Include="BuyTower.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="BuyTower.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />

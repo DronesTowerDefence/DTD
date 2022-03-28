@@ -83,3 +83,8 @@ int Tower::getValue()
 {
 	return value;
 }
+
+std::list<Vector2f> Tower::getCoverableArea()
+{
+	return coverableArea;
+}

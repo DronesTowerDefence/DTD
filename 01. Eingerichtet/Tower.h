@@ -29,6 +29,10 @@ public:
 	/// <param name="int 0,1,2,3"></param>
 	Tower(int a, Vector2f position);
 
+
+
+
+
 	/// <summary>
 	/// Returnt die Tower Sprite
 	/// </summary>
@@ -46,5 +50,11 @@ public:
 	/// </summary>
 	/// <param name="int"></param>
 	int getValue();
+
+	/// <summary>
+	/// Returnt die Liste CoverableArea
+	/// </summary>
+	/// <param name="int"></param>
+	std::list<Vector2f> getCoverableArea();
 };
 
