@@ -95,7 +95,7 @@ public:
 	/// Zieht Leben von der Drone ab (Standart-Lebenwert (WIP) = 3)
 	/// </summary>
 	/// <param name="int damage"></param>
-	void takeDamage(int damage);
+	bool takeDamage(int damage);
 	/// <summary>
 	/// Gibt die Anzahl der verbleibenden Leben der Drone zurück
 	/// </summary>

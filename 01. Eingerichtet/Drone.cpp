@@ -72,7 +72,7 @@ void Drone::pass()
 	nextPoint++;
 }
 
-void Drone::takeDamage(int damage) {
+bool Drone::takeDamage(int damage) {
 
 	lives -= damage;
 	if (lives == 2) {
@@ -85,7 +85,11 @@ void Drone::takeDamage(int damage) {
 	}
 	if (lives <= 0) {
 		delete this;
+		//True, wenn Drone tot ist
+		return true;
 	}
+
+	return false;
 }
 
 int Drone::getLives()
