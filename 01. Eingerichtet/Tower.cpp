@@ -62,8 +62,15 @@ Tower::Tower(int a, Vector2f position) //Neuen Turm kaufen; 0,1,2,3
 		value = price;
 		towerSpr.setPosition(position);
 		Round::getInstance()->addTower(this);
+		setCoverableArea(position);
 	}
 	else delete this;
+}
+
+void Tower::setCoverableArea(Vector2f pos)
+{
+	for(auto i : getPoints())
+	coverableArea.push_back();
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
@@ -84,7 +91,7 @@ int Tower::getValue()
 	return value;
 }
 
-std::list<Vector2f> Tower::getCoverableArea()
+std::list<Vector3f> Tower::getCoverableArea()
 {
 	return coverableArea;
 }

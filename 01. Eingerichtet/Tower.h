@@ -14,13 +14,13 @@ private:
 	int range;
 	int value;
 
-	std::list<Vector2f> coverableArea;
+	std::list<Vector3f> coverableArea;
 
 	Texture towerTex;
 	Sprite towerSpr;
 
 	Tower();
-
+	void setCoverableArea(Vector2f);
 
 public:
 	/// <summary>
@@ -55,6 +55,6 @@ public:
 	/// Returnt die Liste CoverableArea
 	/// </summary>
 	/// <param name="int"></param>
-	std::list<Vector2f> getCoverableArea();
+	std::list<Vector3f> getCoverableArea();
 };
 
