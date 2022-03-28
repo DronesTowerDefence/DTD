@@ -1,12 +1,16 @@
 #pragma once
 #include<SFML/Graphics.hpp>
-#include "Tower.h"
 #include "Round.h"
 using namespace sf;
 class TowerAlias
 {
+private:
+	int index;
+	Sprite* sprite;
+	Texture* texture;
+	Map* p_map;
 public:
-	TowerAlias(int index);
+	TowerAlias(int index, Map* n_map);
 	/// <summary>
 	/// Setzt die Position des Objektes
 	/// </summary>
@@ -21,8 +25,4 @@ public:
 	/// </summary>
 	/// <returns>Sprite</returns>
 	Sprite* getSprite();
-private:
-	int index;
-	Sprite* sprite;
-	Texture* texture;
 };

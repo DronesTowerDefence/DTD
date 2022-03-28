@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Drone.h"
+#include <list>
+//#include "Round.h"
 #include "Map.h"
-
 using namespace sf;
 
 class Tower
@@ -19,16 +19,19 @@ private:
 
 	Texture towerTex;
 	Sprite towerSpr;
+	Map* p_map;
+	Vector2f position;
 
 	Tower();
-	void setCoverableArea(Vector2f, Map*);
+	void setCoverableArea();
+
 
 public:
 	/// <summary>
 	/// Neuen Turm kaufen; 0,1,2,3
 	/// </summary>
 	/// <param name="int 0,1,2,3"></param>
-	Tower(int a, Vector2f position, Map* map);
+	Tower(int, Vector2f, Map*);
 
 
 
@@ -58,4 +61,3 @@ public:
 	/// <param name="int"></param>
 	std::list<Vector3f> getCoverableArea();
 };
-

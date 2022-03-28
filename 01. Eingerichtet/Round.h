@@ -2,8 +2,8 @@
 //Singleton
 #include "Tower.h"
 #include "Drone.h"
-#include <list>
-
+#include "Map.h"
+using namespace sf;
 
 class Round
 {

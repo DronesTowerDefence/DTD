@@ -1,11 +1,5 @@
 #include "Tower.h"
 #include "Round.h"
-/// <summary>
-/// 
-/// </summary>
-/// <param name="pos"></param>
-/// <returns></returns>
-
 
 Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 {
@@ -14,9 +8,10 @@ Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
 	speed = 0;
 	price = 0;
 	range = 0;
+	p_map = nullptr;
 }
 
-Tower::Tower(int a, Vector2f position, Map* map) //Neuen Turm kaufen; 0,1,2,3
+Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 {
 	if (a >= 0 && a <= 3)
 	{
@@ -58,16 +53,18 @@ Tower::Tower(int a, Vector2f position, Map* map) //Neuen Turm kaufen; 0,1,2,3
 			break;
 		}
 
+		position = pos;
+		p_map = n_map;
 		towerSpr.setTexture(towerTex);
 		value = price;
 		towerSpr.setPosition(position);
 		Round::getInstance()->addTower(this);
-		setCoverableArea(position, map);
+		setCoverableArea();
 	}
 	else delete this;
 }
 
-void Tower::setCoverableArea(Vector2f pos, Map* map)
+void Tower::setCoverableArea()
 {
 
 	float point = 0.0;
@@ -77,17 +74,17 @@ void Tower::setCoverableArea(Vector2f pos, Map* map)
 	int pointIterator = 0;
 
 	//Vector3f point3 = Vector3f(0, 0, 0);
-	for (auto i : map->getPoints())
+	for (auto i : p_map->getPoints())
 	{
-		mapPoint1 = map->getWaypointAsVector(pointIterator);
-		mapPoint2 = map->getWaypointAsVector(pointIterator + 1);
+		mapPoint1 = p_map->getWaypointAsVector(pointIterator);
+		mapPoint2 = p_map->getWaypointAsVector(pointIterator + 1);
 
 
 		if (mapPoint1.x == mapPoint2.x)
 		{
 			for (; point2.x < i->getKooadinaten().x; point2.x += 20)
 			{
-				point = std::sqrt(((pos.x - point2.x) * (pos.x - point2.x)) + ((pos.y - point2.y) * (pos.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
 			}
 		}
@@ -95,7 +92,7 @@ void Tower::setCoverableArea(Vector2f pos, Map* map)
 		{
 			for (; point2.y < i->getKooadinaten().y; point2.y += 20)
 			{
-				point = std::sqrt(((pos.x - point2.x) * (pos.x - point2.x)) + ((pos.y - point2.y) * (pos.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
 			}
 		}

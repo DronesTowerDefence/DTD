@@ -1,4 +1,3 @@
-
 #include "Drone.h"
 using namespace sf;
 

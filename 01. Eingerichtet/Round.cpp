@@ -1,6 +1,5 @@
 #include "Round.h"
 
-
 Round* Round::instance = nullptr;
 
 Round::Round()

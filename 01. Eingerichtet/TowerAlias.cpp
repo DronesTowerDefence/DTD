@@ -1,9 +1,10 @@
 #include "TowerAlias.h"
 
-TowerAlias::TowerAlias(int index)
+TowerAlias::TowerAlias(int index, Map* n_map)
 {
 	sprite = new Sprite();
 	texture = new  Texture();
+	p_map = n_map;
 	switch (index)
 	{
 	case 0:
@@ -36,7 +37,7 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 void TowerAlias::CreateNewTower()
 {
 
-	Tower* tower = new Tower(index, sprite->getPosition());
+	Tower* tower = new Tower(index, sprite->getPosition(), p_map);
 }
 
 Sprite* TowerAlias::getSprite()

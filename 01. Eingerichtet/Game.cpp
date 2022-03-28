@@ -21,7 +21,7 @@ void Game::checkButtonClick()
 	int index = sidebar->isCklickes(window);
 	if (index > -1)
 	{
-		newTower = new TowerAlias(index);
+		newTower = new TowerAlias(index, map);
 	}
 }
 void Game::checkTowerAlias()
