@@ -16,6 +16,8 @@ private:
 	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
 
+	Map* map;
+
 	static Round* instance;
 
 	Round();

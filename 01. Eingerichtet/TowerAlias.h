@@ -26,4 +26,3 @@ private:
 	Sprite* sprite;
 	Texture* texture;
 };
-
