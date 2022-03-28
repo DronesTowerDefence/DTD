@@ -93,5 +93,5 @@ int Tower::getValue()
 
 std::list<Vector3f> Tower::getCoverableArea()
 {
-	return coverableArea;
+	
 }
