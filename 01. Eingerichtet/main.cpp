@@ -14,6 +14,8 @@ int main() { //test
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 	Game game = Game(&window);
+	game.startGame();
+
 	////	window.setView(View());
 	//	RectangleShape test = RectangleShape(Vector2f(40, 40));
 	//	test.setFillColor(Color::Magenta);
@@ -45,7 +47,6 @@ int main() { //test
 			if (event.type == Event::Closed)
 				window.close();
 		}*/
-		game.startGame();
 
 		// 
 		// 	Vector2f pos = drohne->getPosition();
