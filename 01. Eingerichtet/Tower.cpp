@@ -1,5 +1,5 @@
 #include "Tower.h"
-#include "Base.h"
+#include "Round.h"
 /// <summary>
 /// 
 /// </summary>
@@ -61,7 +61,7 @@ Tower::Tower(int a, Vector2f position) //Neuen Turm kaufen; 0,1,2,3
 		towerSpr.setTexture(towerTex);
 		value = price;
 		towerSpr.setPosition(position);
-		Base::getInstance()->addTower(this);
+		Round::getInstance()->addTower(this);
 	}
 	else delete this;
 }

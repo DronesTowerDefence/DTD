@@ -105,6 +105,6 @@ Map::Map()
 	points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 3)); // endVektor
 	start = Vector2f(4 * 40 - 20, 27 * 40);
 	startMove = Vector2f(0, -1);
-	Base::getInstance()->addDrone(new Drone(1 , start , 0,-1) );
+	Round::getInstance()->addDrone(new Drone(1 , start , 0,-1) );
 
 }

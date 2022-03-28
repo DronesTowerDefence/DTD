@@ -1,9 +1,9 @@
-#include "Base.h"
+#include "Round.h"
 
 
-Base* Base::instance = nullptr;
+Round* Round::instance = nullptr;
 
-Base::Base()
+Round::Round()
 {
 	money = 1000; //Start-Geld
 	health = 0; //Start-Leben
@@ -13,21 +13,21 @@ Base::Base()
 	towerPrice[2] = 300;
 }
 
-Base* Base::getInstance()
+Round* Round::getInstance()
 {
 	if (instance == nullptr)
 	{
-		instance = new Base;
+		instance = new Round;
 	}
 	return instance;
 }
 
-void Base::addMoney(int _money)
+void Round::addMoney(int _money)
 {
 	money += _money;
 }
 
-bool Base::submoney(int _money)
+bool Round::submoney(int _money)
 {
 	if (money < _money)
 		return 0;
@@ -35,12 +35,12 @@ bool Base::submoney(int _money)
 	return 1;
 }
 
-int Base::getMoney()
+int Round::getMoney()
 {
 	return money;
 }
 
-bool Base::setMoney(int _money)
+bool Round::setMoney(int _money)
 {
 	if (_money < 0)
 		return 0;
@@ -48,12 +48,12 @@ bool Base::setMoney(int _money)
 	return 1;
 }
 
-void Base::addHealth(int _health)
+void Round::addHealth(int _health)
 {
 	health += _health;
 }
 
-bool Base::subhealth(int _health)
+bool Round::subhealth(int _health)
 {
 	if (health < _health)
 		return 0;
@@ -61,12 +61,12 @@ bool Base::subhealth(int _health)
 	return 1;
 }
 
-int Base::getHealth()
+int Round::getHealth()
 {
 	return health;
 }
 
-bool Base::setHealth(int _health)
+bool Round::setHealth(int _health)
 {
 	if (_health < 0)
 		return 0;
@@ -74,27 +74,27 @@ bool Base::setHealth(int _health)
 	return 1;
 }
 
-void Base::addRound()
+void Round::addRound()
 {
 	round++;
 }
 
-int Base::getRound()
+int Round::getRound()
 {
 	return round;
 }
 
-std::list<Tower*> Base::getAllTowers()
+std::list<Tower*> Round::getAllTowers()
 {
 	return allTowers;
 }
 
-std::list<Drone*> Base::getAllDrones()
+std::list<Drone*> Round::getAllDrones()
 {
 	return allDrones;
 }
 
-void Base::sellTower(Tower* a)
+void Round::sellTower(Tower* a)
 {
 	for (auto i : allTowers)
 	{
@@ -107,11 +107,11 @@ void Base::sellTower(Tower* a)
 	delete a;
 }
 	
-void Base::addDrone(Drone* drone)
+void Round::addDrone(Drone* drone)
 {
 	allDrones.push_back(drone);
 }
-void Base::addTower(Tower* tower)
+void Round::addTower(Tower* tower)
 {
 	allTowers.push_back(tower);
 }

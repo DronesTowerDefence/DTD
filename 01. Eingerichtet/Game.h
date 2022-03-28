@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "Round.h"
 #include "Sidebar.h";
 #include "Map.h"
 #include <list>
@@ -8,7 +8,7 @@
 class Game
 {
 private:
-	Base* base;
+	Round* base;
 	Sidebar* sidebar;
 	Map* map;
 	RenderWindow* window;

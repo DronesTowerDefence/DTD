@@ -5,7 +5,7 @@
 #include <list>
 
 
-class Base
+class Round
 {
 private:
 	int money;
@@ -16,13 +16,13 @@ private:
 	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
 
-	static Base* instance;
+	static Round* instance;
 
-	Base();
-	Base(int a,int b,int c,int d);
+	Round();
+	Round(int a,int b,int c,int d);
 public:
 
-	static Base* getInstance();
+	static Round* getInstance();
 
 	void addMoney(int);
 

@@ -18,9 +18,9 @@ int Sidebar::isCklickes(sf::RenderWindow* window)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if (Base::getInstance()->getMoney()>=towers[i]->getPrice() && towers[i]->isClicked(mouse))
+			if (Round::getInstance()->getMoney()>=towers[i]->getPrice() && towers[i]->isClicked(mouse))
 			{
-				Base::getInstance()->submoney(towers[i]->getPrice());
+				Round::getInstance()->submoney(towers[i]->getPrice());
 				return i;
 			}
 		}
