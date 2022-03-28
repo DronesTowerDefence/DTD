@@ -14,6 +14,8 @@ private:
 	int range;
 	int value;
 
+	std::list<Vector2f> coverableArea;
+
 	Texture towerTex;
 	Sprite towerSpr;
 
