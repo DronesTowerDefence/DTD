@@ -10,5 +10,5 @@ Projectile::Projectile(double _speed, Sprite _projectilesprite, Drone* target)
 
 void Projectile::targeting(Drone* target)
 {
-	target->getMove()
+	target->getMove();
 }

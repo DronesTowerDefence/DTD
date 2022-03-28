@@ -13,6 +13,14 @@ class Drone
 {
 private:
 	/// <summary>
+	/// Static int für Drohnen-ID
+	/// </summary>
+	static int droneID;
+	/// <summary>
+	/// NICHT ÄNDERN, einmalige ID der Drohne
+	/// </summary>
+	int id;
+	/// <summary>
 	/// Geschwindigkeit der Drohne : float
 	/// </summary>
 	float speed;

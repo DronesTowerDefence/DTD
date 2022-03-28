@@ -1,4 +1,5 @@
 #include "Sidebar.h"
+#include "Round.h"
 
 Sidebar* Sidebar::instance = nullptr;
 Sidebar* Sidebar::getInstance()

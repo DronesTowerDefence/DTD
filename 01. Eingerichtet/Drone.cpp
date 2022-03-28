@@ -3,7 +3,7 @@
 using namespace sf;
 
 
-
+int Drone::droneID = 0;
 
 
 
@@ -25,6 +25,8 @@ Drone::Drone(int typSpecifier , Vector2f startPosition , int x , int y)
 		drone.setPosition(startPosition);
 		move_x = x;
 		move_y = y;
+		id = droneID;
+		droneID++;
 	/*case 1:*/
 
 	/*}*/
