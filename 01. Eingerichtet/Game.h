@@ -8,7 +8,7 @@
 class Game
 {
 private:
-	Round* base;
+	Round* round;
 	Sidebar* sidebar;
 	Map* map;
 	RenderWindow* window;
