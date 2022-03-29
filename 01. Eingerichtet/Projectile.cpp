@@ -1,9 +1,8 @@
 #include "Projectile.h"
 
-
-Projectile::Projectile(double _speed, Sprite _projectilesprite, Drone* _target, Tower* _tower)
+Projectile::Projectile(Drone* _target, Tower* _tower)
 {
-	speed = _speed;
+	speed = ´_tower.get;
 	projectilesprite = _projectilesprite;
 	target = targeting(_Drone);
 	tower = _tower;

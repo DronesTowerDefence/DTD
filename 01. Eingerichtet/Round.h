@@ -4,6 +4,7 @@
 #include "ClassMoneyTower.h"
 #include "Drone.h"
 #include "Map.h"
+#include "Projectile.h"
 using namespace sf;
 
 class Round
