@@ -1,6 +1,7 @@
 #pragma once
 //Singleton
 #include "Tower.h"
+#include "ClassMoneyTower.h"
 #include "Drone.h"
 #include "Map.h"
 using namespace sf;
@@ -14,6 +15,7 @@ private:
 	int towerPrice[3];
 
 	std::list<Tower*> allTowers;
+	std::list<ClassMoneyTower*> allMoneyTowers;
 	std::list<Drone*> allDrones;
 
 	Map* map;
@@ -48,11 +50,16 @@ public:
 
 	std::list<Tower*> getAllTowers();
 	std::list<Drone*> getAllDrones();
+	std::list<ClassMoneyTower*> getAllMoneyTower();
 
 	void sellTower(Tower*);
+
+	void sellMoneyTower(ClassMoneyTower*);
 
 	void addDrone(Drone* drone);
 
 	void addTower(Tower* tower);
+
+	void addMoneyTower(ClassMoneyTower* moneyTower);
 
 };
