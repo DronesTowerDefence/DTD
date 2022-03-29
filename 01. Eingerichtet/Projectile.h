@@ -8,12 +8,12 @@ class Projectile
 private:
 	double speed;
 	Sprite projectilesprite;
-	Drone* target;
+	Vector3f target;
 	Tower* tower;
 	Vector2f targetstill;
 public:
-	Projectile(double, Sprite, Drone*, Tower*);
-	Vector3f targeting();
-	void setSpeed(double);
-	void setProjectilesprite();
+	Projectile(double, Sprite, Drone*,Tower*);
+	Vector3f targeting(Drone*);
+	void moveProjectile();
 };
+
