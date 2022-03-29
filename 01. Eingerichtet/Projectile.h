@@ -7,6 +7,7 @@ class Projectile
 {
 private:
 	double speed;
+	Vector2f move;
 	Sprite projectilesprite;
 	Vector3f target;
 	Tower* tower;
@@ -15,5 +16,6 @@ public:
 	Projectile(Drone*,Tower*);
 	Vector3f targeting(Drone*);
 	void moveProjectile();
+	void setmove();
 };
 
