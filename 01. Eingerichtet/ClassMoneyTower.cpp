@@ -5,7 +5,7 @@ ClassMoneyTower::ClassMoneyTower(int index, Vector2f pos)
 {
 	price = 1000;
 	value = price;
-	moneyGeneration = 0.016666; //0.016667 Geld pro Frame = Ein Geld pro Sekunde
+	moneyGeneration = 0.016667; //0.016667 Geld pro Frame = Ein Geld pro Sekunde
 	name = "Plantutsche";
 	position = pos;
 
@@ -43,4 +43,9 @@ Vector2f ClassMoneyTower::getPosition()
 Sprite ClassMoneyTower::getTowerSpr()
 {
 	return towerSpr;
+}
+
+void ClassMoneyTower::addValue(int _value)
+{
+	value += _value;
 }

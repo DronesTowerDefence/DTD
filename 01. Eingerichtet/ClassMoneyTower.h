@@ -31,5 +31,6 @@ public:
 	std::string getName();
 	Vector2f getPosition();
 	Sprite getTowerSpr();
+	void addValue(int);
 };
 
