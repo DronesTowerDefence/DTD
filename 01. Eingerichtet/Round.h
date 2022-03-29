@@ -4,6 +4,7 @@
 #include "ClassMoneyTower.h"
 #include "Drone.h"
 #include "Map.h"
+#include "Game.h"
 using namespace sf;
 
 class Round
@@ -14,6 +15,7 @@ private:
 	int round;
 	int towerPrice[3];
 	Clock droneTimer;
+	Text WinLose;
 	
 
 	std::list<Tower*> allTowers;

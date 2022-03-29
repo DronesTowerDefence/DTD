@@ -1,5 +1,16 @@
 #include "Game.h"
 
+Game* Game::instance = nullptr;
+
+Game* Game::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Game;
+	}
+	return instance;
+}
+
 void Game::newRound()
 {
 
@@ -45,7 +56,9 @@ void Game::checkTowerAlias()
 	}
 }
 Game::Game(RenderWindow* window)
-{
+{	
+	stdFont.loadFromFile("fonts/arial.ttf");
+	eco.setFont(stdFont);
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance();
 	map = new Map();
@@ -55,8 +68,7 @@ Game::Game(RenderWindow* window)
 	texture->loadFromFile("img/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
-	stdFont.loadFromFile("fonts/arial.ttf");
-	eco.setFont(stdFont);
+	
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
 }
@@ -76,9 +88,9 @@ void Game::draw()
 	for (Drone* d : round->getAllDrones())
 	{
 		window->draw(d->getDroneSprite());
-		if (d->getPosition().y > 991){
+		if (d->getPosition().y > 991 && d->getNextPoint() >= 9){
 
-			round->subhealth(1);
+			round->subhealth(d->getLives());
 
 		}
 	}
@@ -113,4 +125,14 @@ void Game::startGame()
 	}
 
 	//}
+}
+
+Font Game::getFont()
+{
+	return stdFont;
+}
+
+RenderWindow* Game::getWindow()
+{
+	return window;
 }

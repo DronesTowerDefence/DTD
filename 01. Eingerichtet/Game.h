@@ -35,10 +35,18 @@ private:
 	/// </summary>
 	void draw();
 	Game();
+
+	static Game* instance;
 public:
+	static Game* getInstance();
+
 	Game(RenderWindow* window);
 	/// <summary>
 	/// Startet das Spiel
 	/// </summary>
 	void startGame();
+
+	Font getFont();
+	
+	RenderWindow* getWindow();
 };

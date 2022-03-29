@@ -10,6 +10,9 @@ Round::Round()
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
+	WinLose.setFont(Game::getInstance()->getFont());
+	WinLose.setCharacterSize(50);
+	WinLose.setPosition(800, 400);
 
 }
 
@@ -55,8 +58,19 @@ void Round::addHealth(int _health)
 
 bool Round::subhealth(int _health)
 {
-	if (health < _health)
-		return 0;
+	if (health < _health) {
+
+		WinLose.setColor(Color::Red);
+		WinLose.setString("YOU DIED");
+
+		while (true) {
+
+			Game::getInstance()->getWindow()->clear();
+			Game::getInstance()->getWindow()->draw(WinLose);
+
+		}
+	}
+
 	health -= _health;
 	return 1;
 }
