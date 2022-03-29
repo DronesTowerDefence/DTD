@@ -92,6 +92,7 @@ std::list<Tower*> Round::getAllTowers()
 std::list<Drone*> Round::getAllDrones()
 {
 	return allDrones;
+	
 }
 
 std::list<ClassMoneyTower*> Round::getAllMoneyTower()

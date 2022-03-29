@@ -76,6 +76,11 @@ void Game::draw()
 	for (Drone* d : round->getAllDrones())
 	{
 		window->draw(d->getDroneSprite());
+		if (d->getPosition().y > 991){
+
+			round->subhealth(1);
+
+		}
 	}
 	
 	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
