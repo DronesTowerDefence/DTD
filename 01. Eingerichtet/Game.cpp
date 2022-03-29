@@ -84,6 +84,7 @@ void Game::draw()
 	if (newTower != nullptr)
 	{
 		window->draw((*newTower->getSprite()));
+		window->draw((*newTower->getCircle()));
 	}
 	for (auto* t : round->getAllTowers())
 	{

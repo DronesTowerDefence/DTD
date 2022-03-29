@@ -15,12 +15,12 @@ ClassMoneyTower::ClassMoneyTower(int index, Vector2f pos)
 	Round::getInstance()->addMoneyTower(this);
 }
 
-int ClassMoneyTower::getValue()
+float ClassMoneyTower::getValue()
 {
 	return value;
 }
 
-int ClassMoneyTower::getPrice()
+float ClassMoneyTower::getPrice()
 {
 	return price;
 }
@@ -45,7 +45,7 @@ Sprite ClassMoneyTower::getTowerSpr()
 	return towerSpr;
 }
 
-void ClassMoneyTower::addValue(int _value)
+void ClassMoneyTower::addValue(float _value)
 {
 	value += _value;
 }

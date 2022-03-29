@@ -7,9 +7,11 @@ class TowerAlias
 {
 private:
 	int index;
+	int range;
 	Sprite* sprite;
 	Texture* texture;
 	Map* p_map;
+	CircleShape circle;
 public:
 	TowerAlias(int index, Map* n_map);
 	/// <summary>
@@ -26,4 +28,9 @@ public:
 	/// </summary>
 	/// <returns>Sprite</returns>
 	Sprite* getSprite();
+	/// <summary>
+	/// Gibt die CircleShape um den Tower zurück
+	/// </summary>
+	/// <returns>CircleShape</returns>
+	CircleShape* getCircle();
 };

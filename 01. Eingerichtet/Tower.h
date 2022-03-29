@@ -68,6 +68,9 @@ public:
 	/// <param name="int"></param>
 	std::list<Vector3f> getCoverableArea();
 
-
+	/// <summary>
+	/// Return die Position des Towers
+	/// </summary>
+	/// <returns>Vector2f</returns>
 	Vector2f getTowerPos();
 };

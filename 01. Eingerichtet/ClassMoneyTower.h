@@ -6,8 +6,8 @@ using namespace sf;
 class ClassMoneyTower
 {
 private:
-	int value; //Wert (Kaufpreis + Upgrades) wird zum verkaufen benötigt
-	int price; //Kaufpreis
+	float value; //Wert (Kaufpreis + Upgrades) wird zum verkaufen benötigt
+	float price; //Kaufpreis
 	float moneyGeneration; //Wie viel Geld pro Frame generiert wird
 	std::string name;
 
@@ -25,12 +25,46 @@ public:
 	/// <param name="int: 0, Vector2f: Position"></param>
 	ClassMoneyTower(int, Vector2f);
 
-	int getValue();
-	int getPrice();
+	/// <summary>
+	/// Return die Value des Towers
+	/// </summary>
+	/// <returns>float</returns>
+	float getValue();
+
+	/// <summary>
+	/// Returnt den Price des Towers
+	/// </summary>
+	/// <returns></returns>
+	float getPrice();
+
+	/// <summary>
+	/// Return wie viel Geld pro Frame generiert wird
+	/// </summary>
+	/// <returns>float</returns>
 	float getMoneyGeneration();
+
+	/// <summary>
+	/// Returnt den Namen des Towers
+	/// </summary>
+	/// <returns>String</returns>
 	std::string getName();
+
+	/// <summary>
+	/// Returnt die Position des Towers
+	/// </summary>
+	/// <returns>Vector2f</returns>
 	Vector2f getPosition();
+
+	/// <summary>
+	/// Returnt die Sprite des Towers
+	/// </summary>
+	/// <returns>Sprite</returns>
 	Sprite getTowerSpr();
-	void addValue(int);
+
+	/// <summary>
+	/// Erhöht die Value des Towers
+	/// </summary>
+	/// <param name="int"></param>
+	void addValue(float);
 };
 
