@@ -94,8 +94,7 @@ void Game::draw()
 		}
 	}
 	
-	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
-	window->draw(eco);
+	
 
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
 
@@ -103,10 +102,19 @@ void Game::draw()
 		round->restartDroneTimer();
 	}
 
-	/*if (round->getLost() == true) {
-		window->draw()
+	if (round->getLost() == true) {
+		eco.setFillColor(Color::Red);
+		eco.setPosition(500, 340);
+		eco.setCharacterSize(240);
+		eco.setString("YOU LOSE");
+		window->draw(eco);
+		window->display();
+		return;
+
 	}
-		*/
+
+	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
+	window->draw(eco);	
 	
 	window->display();
 }
