@@ -55,6 +55,10 @@ Game::Game(RenderWindow* window)
 	texture->loadFromFile("img/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
+	stdFont.loadFromFile("fonts/arial.ttf");
+	eco.setFont(stdFont);
+	eco.setCharacterSize(30);
+	eco.setPosition(20, 20);
 }
 void Game::draw()
 {
@@ -73,6 +77,9 @@ void Game::draw()
 	{
 		window->draw(d->getDroneSprite());
 	}
+	
+	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
+	window->draw(eco);
 
 	
 	window->display();

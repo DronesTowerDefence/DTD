@@ -10,6 +10,7 @@ Round::Round()
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
+
 }
 
 Round* Round::getInstance()

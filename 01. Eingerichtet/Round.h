@@ -12,6 +12,7 @@ private:
 	int health;
 	int round;
 	int towerPrice[3];
+	
 
 	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
@@ -54,5 +55,7 @@ public:
 	void addDrone(Drone* drone);
 
 	void addTower(Tower* tower);
+
+	
 
 };
