@@ -5,7 +5,7 @@ ClassMoneyTower::ClassMoneyTower(int index, Vector2f pos)
 {
 	price = 1000;
 	value = price;
-	moneyGeneration = 0.500000;
+	moneyGeneration = 0.016666; //0.016667 Geld pro Frame = Ein Geld pro Sekunde
 	name = "Plantutsche";
 	position = pos;
 
