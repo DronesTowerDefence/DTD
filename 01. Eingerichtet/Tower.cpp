@@ -1,16 +1,6 @@
 #include "Tower.h"
 #include "Round.h"
 
-Tower::Tower() //NICHT BENUTZEN! Standart-Konstruktor von Tower
-{
-	name = "0";
-	damage = 0;
-	speed = 0;
-	price = 0;
-	range = 0;
-	p_map = nullptr;
-}
-
 Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 {
 	if (a >= 0 && a <= 3)
@@ -108,13 +98,18 @@ void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
 	if (towerSpr.getGlobalBounds().intersects(a->getDroneSprite().getGlobalBounds()))
 	{
-		Projectile(a->getPosition())//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
+		new Projectile(a, this); //Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
 	}
 }
 
-int Tower::getValue()
+float Tower::getValue()
 {
 	return value;
+}
+
+float Tower::getAttackSpeed()
+{
+	return attackspeed;
 }
 
 std::list<Vector3f> Tower::getCoverableArea()

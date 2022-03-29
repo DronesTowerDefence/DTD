@@ -8,11 +8,12 @@ class Tower
 {
 private:
 	std::string name;
-	int damage;
-	int speed;
-	int price;
-	int range;
-	int value;
+	float damage;
+	float speed;
+	float price;
+	float range;
+	float value;
+	float attackspeed;
 
 	std::list<Vector3f> coverableArea;
 
@@ -21,7 +22,7 @@ private:
 	Map* p_map;
 	Vector2f position;
 
-	Tower();
+	Tower() = delete; //Standart-Konstruktor soll nicht benutzt werden
 	void setCoverableArea();
 
 
@@ -47,8 +48,14 @@ public:
 	/// <summary>
 	/// Returnt Value
 	/// </summary>
-	/// <param name="int"></param>
-	int getValue();
+	/// <param name="float"></param>
+	float getValue();
+
+	/// <summary>
+	/// Returnt ProjectileSpeed
+	/// </summary>
+	/// <param name="float"></param>
+	float getAttackSpeed();
 
 	/// <summary>
 	/// Returnt die Liste CoverableArea

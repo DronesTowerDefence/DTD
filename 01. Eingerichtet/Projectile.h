@@ -12,7 +12,7 @@ private:
 	Tower* tower;
 	Vector2f targetstill;
 public:
-	Projectile(double, Sprite, Drone*,Tower*);
+	Projectile(Drone*,Tower*);
 	Vector3f targeting(Drone*);
 	void moveProjectile();
 };

@@ -1,10 +1,11 @@
 #pragma once
-#include "Round.h"
-#include "Sidebar.h";
-#include "Map.h"
 #include <list>
+#include "Sidebar.h"
+#include "Map.h"
 #include "Drone.h"
 #include "TowerAlias.h"
+#include "Round.h"
+
 class Game
 {
 private:
