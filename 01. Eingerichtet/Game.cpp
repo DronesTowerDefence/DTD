@@ -55,7 +55,7 @@ void Game::checkTowerAlias()
 		}
 	}
 }
-Game::Game(RenderWindow* window)
+Game::Game()
 {	
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
@@ -63,7 +63,6 @@ Game::Game(RenderWindow* window)
 	sidebar = Sidebar::getInstance();
 	map = new Map();
 	newTower = nullptr;
-	this->window = window;
 	texture = new Texture();
 	texture->loadFromFile("img/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
@@ -139,4 +138,9 @@ Font Game::getFont()
 RenderWindow* Game::getWindow()
 {
 	return window;
+}
+
+void Game::setWindow(RenderWindow* _window)
+{
+	window = _window;
 }

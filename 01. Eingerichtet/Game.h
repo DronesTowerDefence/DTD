@@ -1,10 +1,8 @@
 #pragma once
 #include <list>
-#include "Sidebar.h"
-#include "Map.h"
-#include "Drone.h"
-#include "TowerAlias.h"
 #include "Round.h"
+#include "Sidebar.h"
+#include "TowerAlias.h"
 
 class Game
 {
@@ -41,9 +39,9 @@ private:
 
 	static Game* instance;
 public:
+
 	static Game* getInstance();
 
-	Game(RenderWindow* window);
 	/// <summary>
 	/// Startet das Spiel
 	/// </summary>
@@ -52,4 +50,6 @@ public:
 	Font getFont();
 	
 	RenderWindow* getWindow();
+
+	void setWindow(RenderWindow*);
 };
