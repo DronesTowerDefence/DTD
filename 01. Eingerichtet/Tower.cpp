@@ -116,3 +116,9 @@ std::list<Vector3f> Tower::getCoverableArea()
 {
 	return coverableArea;
 }
+
+Vector2f Tower::getTowerPos()
+{
+	return position;
+}
+

@@ -3,11 +3,12 @@
 Projectile::Projectile(Drone* _target, Tower* _tower)
 {
 	speed = _tower->getAttackSpeed();
+	tower = _tower;
 	Texture projectileTexture;
 	projectileTexture.loadFromFile("img/projectile0.png");
 	projectilesprite.setTexture(projectileTexture);
 	target = targeting(_target);
-	tower = _tower;
+	
 }
 
 Vector3f Projectile::targeting(Drone* _Drone)
@@ -24,6 +25,8 @@ Vector3f Projectile::targeting(Drone* _Drone)
 
 void Projectile::moveProjectile()
 {
-	
+	float movex = tower->getTowerPos().x - target.x;
+	float movey = tower->getTowerPos().y - target.y;
+	projectilesprite.setPosition(movex / speed, movey / speed);
 }
 
