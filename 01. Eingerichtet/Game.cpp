@@ -81,6 +81,12 @@ void Game::draw()
 	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
 	window->draw(eco);
 
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
+
+		round->addDrone(new Drone(1, map->getStart(), 0, -1));
+		round->restartDroneTimer();
+	}
+		
 	
 	window->display();
 }

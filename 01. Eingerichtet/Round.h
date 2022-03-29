@@ -13,6 +13,7 @@ private:
 	int health;
 	int round;
 	int towerPrice[3];
+	Clock droneTimer;
 	
 
 	std::list<Tower*> allTowers;
@@ -62,5 +63,9 @@ public:
 	void addTower(Tower* tower);
 
 	void addMoneyTower(ClassMoneyTower* moneyTower);
+
+	Clock getDroneTimer();
+
+	void restartDroneTimer();
 
 };

@@ -5,7 +5,7 @@ Round* Round::instance = nullptr;
 Round::Round()
 {
 	money = 1000; //Start-Geld
-	health = 0; //Start-Leben
+	health = 20; //Start-Leben
 	round = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -138,4 +138,14 @@ void Round::addTower(Tower* tower)
 void Round::addMoneyTower(ClassMoneyTower* moneyTower)
 {
 	allMoneyTowers.push_back(moneyTower);
+}
+
+Clock Round::getDroneTimer()
+{
+	return droneTimer;
+}
+
+void Round::restartDroneTimer()
+{
+	droneTimer.restart();
 }
