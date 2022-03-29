@@ -29,6 +29,7 @@ void Projectile::moveProjectile()
 {
 	
 	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y / speed));
+	//std::cout << "Move";
 }
 
 void Projectile::setmove()

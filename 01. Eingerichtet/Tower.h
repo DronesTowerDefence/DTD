@@ -22,6 +22,8 @@ private:
 	Sprite towerSpr;
 	Map* p_map;
 	Vector2f position;
+	Clock timer;
+	bool shootCooldown;
 
 	Tower() = delete; //Standart-Konstruktor soll nicht benutzt werden
 	void setCoverableArea();

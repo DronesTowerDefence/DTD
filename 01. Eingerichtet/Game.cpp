@@ -24,6 +24,11 @@ void Game::moveDrohnes()
 		p->move();
 	}
 
+	for (Projectile* i : round->getAllProjectiles())
+	{
+		i->moveProjectile();
+	}
+
 
 }
 

@@ -47,6 +47,7 @@ Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 		position = pos;
 		p_map = n_map;
 		value = price;
+		shootCooldown = false;
 
 		rangeShape.setRadius(range);
 		rangeShape.setPosition(position.x - range * 0.75, position.y - range * 0.75);
@@ -104,8 +105,17 @@ Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 
 void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
-	new Projectile(a, this); //Konstruktor von Projektil aufrufen
-	//std::cout << "Shoot";
+	if (!shootCooldown)
+	{
+		new Projectile(a, this); //Konstruktor von Projektil aufrufen
+		//std::cout << "Shoot";
+		shootCooldown = true;
+	}
+	else if(timer.getElapsedTime().asSeconds() > 3)
+	{
+		shootCooldown = false;
+		timer.restart();
+	}
 }
 
 float Tower::getValue()
