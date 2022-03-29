@@ -94,6 +94,11 @@ std::list<Drone*> Round::getAllDrones()
 	return allDrones;
 }
 
+std::list<ClassMoneyTower*> Round::getAllMoneyTower()
+{
+	return allMoneyTowers;
+}
+
 void Round::sellTower(Tower* a)
 {
 	for (auto i : allTowers)
@@ -107,11 +112,30 @@ void Round::sellTower(Tower* a)
 	delete a;
 }
 
+void Round::sellMoneyTower(ClassMoneyTower* a)
+{
+	for (auto i : allMoneyTowers)
+	{
+		if (i == a)
+		{
+			allMoneyTowers.remove(i);
+		}
+	}
+	addMoney(a->getValue() * 0.9);
+	delete a;
+}
+
 void Round::addDrone(Drone* drone)
 {
 	allDrones.push_back(drone);
 }
+
 void Round::addTower(Tower* tower)
 {
 	allTowers.push_back(tower);
+}
+
+void Round::addMoneyTower(ClassMoneyTower* moneyTower)
+{
+	allMoneyTowers.push_back(moneyTower);
 }
