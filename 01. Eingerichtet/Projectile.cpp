@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include "Round.h"
 
 Projectile::Projectile(Drone* _target, Tower* _tower)
 {
@@ -7,6 +8,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower)
 	Texture projectileTexture;
 	projectileTexture.loadFromFile("img/projectile0.png");
 	projectilesprite.setTexture(projectileTexture);
+	Round::getInstance()->addProjectile(this);
 	target = targeting(_target);
 	projectilesprite.setPosition(tower->getTowerPos());
 }
@@ -35,3 +37,7 @@ void Projectile::setmove()
 	move.y = tower->getTowerPos().y - target.y;
 }
 
+Sprite* Projectile::getProjectileSprite()
+{
+	return &projectilesprite;
+}

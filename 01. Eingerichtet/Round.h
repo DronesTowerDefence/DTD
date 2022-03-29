@@ -19,7 +19,7 @@ private:
 	bool Lost;
 	bool Won;
 	
-
+	std::list<Projectile*> allProjectiles;
 	std::list<Tower*> allTowers;
 	std::list<ClassMoneyTower*> allMoneyTowers;
 	std::list<Drone*> allDrones;
@@ -57,6 +57,7 @@ public:
 	std::list<Tower*> getAllTowers();
 	std::list<Drone*> getAllDrones();
 	std::list<ClassMoneyTower*> getAllMoneyTower();
+	std::list<Projectile*> getAllProjectiles();
 
 	void sellTower(Tower*);
 
@@ -67,6 +68,8 @@ public:
 	void addTower(Tower* tower);
 
 	void addMoneyTower(ClassMoneyTower* moneyTower);
+
+	void addProjectile(Projectile* _projectile);
 
 	Clock getDroneTimer();
 

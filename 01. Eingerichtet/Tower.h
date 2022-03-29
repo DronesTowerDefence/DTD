@@ -17,6 +17,7 @@ private:
 
 	std::list<Vector3f> coverableArea;
 
+	CircleShape rangeShape;
 	Texture towerTex;
 	Sprite towerSpr;
 	Map* p_map;
@@ -56,6 +57,8 @@ public:
 	/// </summary>
 	/// <param name="float"></param>
 	float getAttackSpeed();
+
+	CircleShape* getRangeShape();
 
 	/// <summary>
 	/// Returnt die Liste CoverableArea

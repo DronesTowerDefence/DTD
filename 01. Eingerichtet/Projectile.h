@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include"Drone.h"
 #include "Tower.h"
+#include "Drone.h"
+
 using namespace sf;
 class Projectile
 {
@@ -16,6 +17,7 @@ public:
 	Projectile(Drone*,Tower*);
 	Vector3f targeting(Drone*);
 	void moveProjectile();
+	Sprite* getProjectileSprite();
 	void setmove();
 };
 

@@ -3,6 +3,7 @@
 
 Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 {
+
 	if (a >= 0 && a <= 3)
 	{
 		switch (a)
@@ -45,8 +46,15 @@ Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 
 		position = pos;
 		p_map = n_map;
-		towerSpr.setTexture(towerTex);
 		value = price;
+
+		rangeShape.setRadius(range);
+		rangeShape.setPosition(position.x - range * 0.75, position.y - range * 0.75);
+		rangeShape.setFillColor(Color::Transparent);
+		rangeShape.setOutlineColor(Color::Black);
+		rangeShape.setOutlineThickness(5);
+
+		towerSpr.setTexture(towerTex);
 		towerSpr.setPosition(position);
 		Round::getInstance()->addTower(this);
 		setCoverableArea();
@@ -96,10 +104,8 @@ Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 
 void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
-	if (towerSpr.getGlobalBounds().intersects(a->getDroneSprite().getGlobalBounds()))
-	{
-		new Projectile(a, this); //Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
-	}
+	new Projectile(a, this); //Konstruktor von Projektil aufrufen
+	//std::cout << "Shoot";
 }
 
 float Tower::getValue()
@@ -120,5 +126,10 @@ std::list<Vector3f> Tower::getCoverableArea()
 Vector2f Tower::getTowerPos()
 {
 	return position;
+}
+
+CircleShape* Tower::getRangeShape()
+{
+	return &rangeShape;
 }
 

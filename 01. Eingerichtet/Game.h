@@ -35,6 +35,9 @@ private:
 	/// Draw alle Elemente
 	/// </summary>
 	void draw();
+
+	void checkShoot();
+
 	Game();
 
 	static Game* instance;

@@ -166,3 +166,13 @@ bool Round::getWon()
 {
 	return Won;
 }
+
+std::list<Projectile*> Round::getAllProjectiles()
+{
+	return allProjectiles;
+}
+
+void Round::addProjectile(Projectile* _projectile)
+{
+	allProjectiles.push_back(_projectile);
+}

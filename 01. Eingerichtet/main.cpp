@@ -12,8 +12,6 @@ int main()
 	window.setFramerateLimit(60);
 	Game::getInstance()->setWindow(&window);
 	Game::getInstance()->startGame();
-	//Game game = Game(&window);
-	//game.startGame();
 
 	return 0;
 }

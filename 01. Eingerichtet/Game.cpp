@@ -80,11 +80,19 @@ void Game::draw()
 	{
 		window->draw((*newTower->getSprite()));
 	}
-	for (Tower* t : round->getAllTowers())
+	for (auto* t : round->getAllTowers())
 	{
 		window->draw(t->getTowerSpr());
 	}
-	for (Drone* d : round->getAllDrones())
+	for (auto* t : round->getAllTowers())
+	{
+		window->draw(*(t->getRangeShape()));
+	}
+	for (auto* t : round->getAllProjectiles())
+	{
+		window->draw(*(t->getProjectileSprite()));
+	}
+	for (auto* d : round->getAllDrones())
 	{
 		window->draw(d->getDroneSprite());
 		if (d->getPosition().y > 991 && d->getNextPoint() >= 9){
@@ -130,6 +138,7 @@ void Game::startGame()
 				window->close();
 
 		}
+		checkShoot();
 		checkTowerAlias();
 		moveDrohnes();
 		draw();
@@ -151,4 +160,18 @@ RenderWindow* Game::getWindow()
 void Game::setWindow(RenderWindow* _window)
 {
 	window = _window;
+}
+
+void Game::checkShoot()
+{
+	for (auto t : Round::getInstance()->getAllTowers())
+	{
+		for (auto d : Round::getInstance()->getAllDrones())
+		{
+			if (t->getRangeShape()->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+			{
+				t->shoot(d);
+			}
+		}
+	}
 }
