@@ -5,7 +5,6 @@
 #include "Drone.h"
 #include "Map.h"
 #include "Projectile.h"
-#include "Game.h"
 using namespace sf;
 
 class Round
@@ -17,6 +16,8 @@ private:
 	int towerPrice[3];
 	Clock droneTimer;
 	Text WinLose;
+	bool Lost;
+	bool Won;
 	
 
 	std::list<Tower*> allTowers;
@@ -70,5 +71,9 @@ public:
 	Clock getDroneTimer();
 
 	void restartDroneTimer();
+
+	bool getLost();
+
+	bool getWon();
 
 };

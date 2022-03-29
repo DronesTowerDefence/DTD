@@ -18,6 +18,8 @@ private:
 	Texture* texture;
 	Font stdFont;
 	Text eco;
+	
+
 	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter

@@ -10,9 +10,8 @@ Round::Round()
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	WinLose.setFont(Game::getInstance()->getFont());
-	WinLose.setCharacterSize(50);
-	WinLose.setPosition(800, 400);
+	Lost = false;
+	Won = true;
 
 }
 
@@ -60,15 +59,8 @@ bool Round::subhealth(int _health)
 {
 	if (health < _health) {
 
-		WinLose.setColor(Color::Red);
-		WinLose.setString("YOU DIED");
+		Lost = true;
 
-		while (true) {
-
-			Game::getInstance()->getWindow()->clear();
-			Game::getInstance()->getWindow()->draw(WinLose);
-
-		}
 	}
 
 	health -= _health;
@@ -163,4 +155,14 @@ Clock Round::getDroneTimer()
 void Round::restartDroneTimer()
 {
 	droneTimer.restart();
+}
+
+bool Round::getLost()
+{
+	return Lost;
+}
+
+bool Round::getWon()
+{
+	return Won;
 }

@@ -103,7 +103,11 @@ void Game::draw()
 		round->addDrone(new Drone(1, map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
-		
+
+	/*if (round->getLost() == true) {
+		window->draw()
+	}
+		*/
 	
 	window->display();
 }
