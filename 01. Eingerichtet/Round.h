@@ -4,6 +4,7 @@
 #include "ClassMoneyTower.h"
 #include "Drone.h"
 #include "Map.h"
+#include "Projectile.h"
 #include "Game.h"
 using namespace sf;
 

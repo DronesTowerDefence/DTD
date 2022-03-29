@@ -97,10 +97,6 @@ void Tower::setCoverableArea()
 			}
 		}
 	}
-
-	/*for(auto i : getPoints())
-	coverableArea.push_back();*/
-
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
@@ -112,7 +108,7 @@ void Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
 	if (towerSpr.getGlobalBounds().intersects(a->getDroneSprite().getGlobalBounds()))
 	{
-		//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
+		Projectile(a->getPosition())//Konstruktor von Projektil aufrufen und die aktuelle Position der Drohne übergeben
 	}
 }
 
