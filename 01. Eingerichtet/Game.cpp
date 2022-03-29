@@ -74,9 +74,7 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	Vector2i mouse = Mouse::getPosition(*window);
-	system("cls");
-	std::cout << mouse.x << std::endl << mouse.y;
+	
 	window->display();
 }
 
