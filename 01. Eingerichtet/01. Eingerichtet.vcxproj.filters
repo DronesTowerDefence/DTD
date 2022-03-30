@@ -36,16 +36,10 @@
     <ClCompile Include="Sidebar.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="TowerAlias.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="BuyTower.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
@@ -77,16 +71,10 @@
     <ClInclude Include="Sidebar.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="TowerAlias.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="BuyTower.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Service.h">

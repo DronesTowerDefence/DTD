@@ -50,14 +50,14 @@ Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 		shootCooldown = false;
 
 		rangeShape.setRadius(range);
-		rangeShape.setPosition(position.x - range * 0.75, position.y - range * 0.75);
+		rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
 		rangeShape.setFillColor(Color::Transparent);
 		rangeShape.setOutlineColor(Color::Black);
 		rangeShape.setOutlineThickness(5);
 
 		towerSpr.setTexture(towerTex);
 		towerSpr.setPosition(position);
-		Round::getInstance()->addTower(this);
+		Round::getInstance()->addTower(this); //Damit alle Tower gedrawt werden können
 		setCoverableArea();
 	}
 	else delete this;
@@ -72,7 +72,6 @@ void Tower::setCoverableArea()
 	Vector2f mapPoint2;
 	int pointIterator = 0;
 
-	//Vector3f point3 = Vector3f(0, 0, 0);
 	for (auto i : p_map->getPoints())
 	{
 		mapPoint1 = p_map->getWaypointAsVector(pointIterator);
@@ -108,10 +107,9 @@ void Tower::shoot(Drone* a) //Tower schießt Drone ab
 	if (!shootCooldown)
 	{
 		new Projectile(a, this); //Konstruktor von Projektil aufrufen
-		//std::cout << "Shoot";
 		shootCooldown = true;
 	}
-	else if(timer.getElapsedTime().asSeconds() > 3)
+	else if (timer.getElapsedTime().asSeconds() > 3)
 	{
 		shootCooldown = false;
 		timer.restart();

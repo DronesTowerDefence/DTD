@@ -36,8 +36,14 @@ private:
 	/// </summary>
 	void draw();
 
+	/// <summary>
+	/// Überprüft ob ein Turm eine Drohne abschießen kann
+	/// </summary>
 	void checkShoot();
 
+	/// <summary>
+	/// Konstruktor von Game
+	/// </summary>
 	Game();
 
 	static Game* instance;
@@ -50,9 +56,21 @@ public:
 	/// </summary>
 	void startGame();
 
+	/// <summary>
+	/// Gibt die Schriftart zurück
+	/// </summary>
+	/// <returns>Font</returns>
 	Font getFont();
 	
+	/// <summary>
+	/// Gibt einen Pointer auf das Fenster zurück
+	/// </summary>
+	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
 
+	/// <summary>
+	/// Legt das Fenster fest
+	/// </summary>
+	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
 };

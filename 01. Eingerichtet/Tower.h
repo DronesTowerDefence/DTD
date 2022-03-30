@@ -7,27 +7,28 @@ using namespace sf;
 class Tower
 {
 private:
-	std::string name;
-	float damage;
-	float speed;
-	float price;
-	float range;
-	float value;
-	float attackspeed;
+	Clock timer; //Zum z‰hlen des Cooldowns
+	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
+	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
+	float speed; //Wie schnell der Turm schieﬂt
+	float value; //Wie hoch der Wert des Turmes ist (erhˆht sich durch Upgrades)
+	float attackspeed; //Wie schnell das Projektil schieﬂt
+	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
+	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
 
-	std::list<Vector3f> coverableArea;
+	std::list<Vector3f> coverableArea; //Welche Wegpunkte der Turm auf der Strecke abdeckt in 20px Schritten
+
+	std::string name; //Der Name des Turmes
+	
 
 	CircleShape rangeShape;
 	Texture towerTex;
 	Sprite towerSpr;
 	Map* p_map;
 	Vector2f position;
-	Clock timer;
-	bool shootCooldown;
 
 	Tower() = delete; //Standart-Konstruktor soll nicht benutzt werden
 	void setCoverableArea();
-
 
 public:
 	/// <summary>

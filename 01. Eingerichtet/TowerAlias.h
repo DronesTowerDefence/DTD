@@ -1,36 +1,62 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include "Round.h"
+#include "Service.h"
 using namespace sf;
 
 class TowerAlias
 {
 private:
+
 	int index;
 	int range;
-	Sprite* sprite;
-	Texture* texture;
+	int price;
+	Vector2f pos;
 	Map* p_map;
-	CircleShape circle;
+	Sprite towerAliasSpr;
+	Texture towerAliasTexture;
+	CircleShape rangeShape;
+
 public:
-	TowerAlias(int index, Map* n_map);
+	/// <summary>
+	/// Konstruktor für TowerAlias
+	/// </summary>
+	/// <param name="int"></param>
+	/// <param name="Map*"></param>
+	TowerAlias(int, Map*);
+
 	/// <summary>
 	/// Setzt die Position des Objektes
 	/// </summary>
 	/// <param name="mouse">Position des Mauszeigers</param>
-	void setPositionMouse(Vector2i mouse);
+	void setPositionMouse(Vector2i);
+
 	/// <summary>
 	/// Erstellt einen Tower
 	/// </summary>
 	void CreateNewTower();
+
 	/// <summary>
-	/// Gibt den Sprite zurück
+	/// Gibt den Preis zurück
+	/// </summary>
+	/// <returns>price</returns>
+	float getPrice();
+
+	/// <summary>
+	/// Gibt einen Zeiger auf die Sprite von TowerAlias zurück
 	/// </summary>
 	/// <returns>Sprite</returns>
-	Sprite* getSprite();
+	Sprite* getSpr();
+
 	/// <summary>
-	/// Gibt die CircleShape um den Tower zurück
+	/// Gibt einen Zeiger auf den Kreis der Reichweite zurück
 	/// </summary>
 	/// <returns>CircleShape</returns>
-	CircleShape* getCircle();
+	CircleShape* getRangeShape();
+
+	/// <summary>
+	/// Gibt die Position von TowerAlias zurück
+	/// </summary>
+	/// <returns>Vector2f</returns>
+	Vector2f getPos();
 };

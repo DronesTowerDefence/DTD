@@ -1,62 +1,72 @@
 #include "TowerAlias.h"
 
-TowerAlias::TowerAlias(int index, Map* n_map)
+TowerAlias::TowerAlias(int _index, Map* _map)
 {
-	sprite = new Sprite();
-	texture = new  Texture();
-	p_map = n_map;
-	range = 0;
+	index = _index;
 
 	switch (index)
 	{
 	case 0:
-		texture->loadFromFile("img/tower0_50x50.png");
 		range = 100;
+		price = 100;
+		towerAliasTexture.loadFromFile("img/tower0_50x50.png");
 		break;
 
 	case 1:
-		texture->loadFromFile("img/tower1_50x50.png");
 		range = 200;
+		price = 200;
+		towerAliasTexture.loadFromFile("img/tower1_50x50.png");
 		break;
 
 	case 2:
-		texture->loadFromFile("img/tower2_50x50.png");
 		range = 300;
+		price = 300;
+		towerAliasTexture.loadFromFile("img/tower2_50x50.png");
 		break;
 
 	case 3:
-		texture->loadFromFile("img/tower3_50x50.png");
 		range = 400;
+		price = 400;
+		towerAliasTexture.loadFromFile("img/tower3_50x50.png");
 		break;
 	}
-	this->index = index;
-	sprite->setTexture(*texture);
 
-	circle.setFillColor(Color::Transparent);
-	circle.setOutlineColor(Color::Black);
-	circle.setOutlineThickness(5);
-	circle.setRadius(range);
+	p_map = _map;
+	towerAliasSpr.setTexture(towerAliasTexture);
 
+	rangeShape.setRadius(range);
+	rangeShape.setFillColor(Color::Transparent);
+	rangeShape.setOutlineColor(Color::Black);
+	rangeShape.setOutlineThickness(5);
 }
 
 void TowerAlias::setPositionMouse(Vector2i mouse)
 {
-	sprite->setPosition(mouse.x, mouse.y);
-	circle.setPosition(mouse.x-range*0.75, mouse.y-range*0.75);
+	towerAliasSpr.setPosition(mouse.x, mouse.y);
+	rangeShape.setPosition(towerAliasSpr.getPosition().x - range + 25, towerAliasSpr.getPosition().y - range + 25); //Damit der Kreis passend um den Turm ist
 }
 
 void TowerAlias::CreateNewTower()
 {
-
-	Tower* tower = new Tower(index, sprite->getPosition(), p_map);
+	new Tower(index, towerAliasSpr.getPosition(), p_map);
 }
 
-Sprite* TowerAlias::getSprite()
+float TowerAlias::getPrice()
 {
-	return sprite;
+	return price;
 }
 
-CircleShape* TowerAlias::getCircle()
+Sprite* TowerAlias::getSpr()
 {
-	return &circle;
+	return &towerAliasSpr;
+}
+
+CircleShape* TowerAlias::getRangeShape()
+{
+	return &rangeShape;
+}
+
+Vector2f TowerAlias::getPos()
+{
+	return pos;
 }

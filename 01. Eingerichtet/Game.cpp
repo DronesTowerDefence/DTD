@@ -34,7 +34,7 @@ void Game::moveDrohnes()
 
 void Game::checkButtonClick()
 {
-	int index = sidebar->isCklickes(window);
+	int index = sidebar->isClicked(window);
 	if (index > -1)
 	{
 		newTower = new TowerAlias(index, map);
@@ -50,11 +50,11 @@ void Game::checkTowerAlias()
 	{
 		if (Mouse::isButtonPressed(Mouse::Button::Left))
 		{
-			newTower->setPositionMouse(Mouse::getPosition(*window));
+			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
 		}
 		else
 		{
-			newTower->CreateNewTower();
+			newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
 			delete newTower;
 			newTower = nullptr;
 		}
@@ -65,7 +65,7 @@ Game::Game()
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
 	round = Round::getInstance();
-	sidebar = Sidebar::getInstance();
+	sidebar = Sidebar::getInstance(map);
 	map = new Map();
 	newTower = nullptr;
 	texture = new Texture();
@@ -81,24 +81,24 @@ void Game::draw()
 	window->clear();
 	window->draw(*background);
 	sidebar->draw(window);
-	if (newTower != nullptr)
+	if (newTower != nullptr) //TowerAlias wird gedrawt
 	{
-		window->draw((*newTower->getSprite()));
-		window->draw((*newTower->getCircle()));
+		window->draw((*newTower->getSpr()));
+		window->draw((*newTower->getRangeShape()));
 	}
-	for (auto* t : round->getAllTowers())
+	for (auto* t : round->getAllTowers()) //Tower werden gedrawt
 	{
 		window->draw(t->getTowerSpr());
 	}
-	for (auto* t : round->getAllTowers())
+	for (auto* t : round->getAllTowers()) //Tower Range wird gedrawt
 	{
 		window->draw(*(t->getRangeShape()));
 	}
-	for (auto* t : round->getAllProjectiles())
+	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
 		window->draw(*(t->getProjectileSprite()));
 	}
-	for (auto* d : round->getAllDrones())
+	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
 		window->draw(d->getDroneSprite());
 		if (d->getPosition().y > 991 && d->getNextPoint() >= 9){
@@ -107,8 +107,6 @@ void Game::draw()
 
 		}
 	}
-	
-	
 
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
 

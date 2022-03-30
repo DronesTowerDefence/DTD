@@ -146,8 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="BuyTower.cpp" />
     <ClCompile Include="ClassMoneyTower.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -162,8 +160,6 @@
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="BuyTower.h" />
     <ClInclude Include="ClassMoneyTower.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />

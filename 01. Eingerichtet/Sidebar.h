@@ -1,13 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "BuyTower.h"
+#include <iostream>
+#include "TowerAlias.h"
+#include "Service.h"
 using namespace sf;
 
 class Sidebar
 {
 private:
 	RectangleShape backround;
-	BuyTower* towers[4];
+	Map* p_map;
+
+	Sprite buttonSpr[4];
+	Texture buttonTexture[4];
+
+	float price[4]; //Wie viel die Tower kosten
 
 	static Sidebar* instance;
 	Sidebar();
@@ -18,13 +25,15 @@ public:
 	/// (Singelton)
 	/// </summary>
 	/// <returns>Instance</returns>
-	static Sidebar* getInstance();
+	static Sidebar* getInstance(Map*);
+
 	/// <summary>
 	/// GIbt zurück, welcher Button geklickt wurde
 	/// </summary>
 	/// <param name="window">Fenster</param>
 	/// <returns>Nummer des Towers</returns>
-	int isCklickes(RenderWindow* window);
+	int isClicked(RenderWindow* window);
+
 	/// <summary>
 	/// Draw Sidebar
 	/// </summary>
