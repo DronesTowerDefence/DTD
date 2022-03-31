@@ -25,6 +25,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
+	
 	/*case 1:*/
 
 	/*}*/
@@ -68,6 +69,7 @@ void Drone::move()
 void Drone::pass()
 {
 	nextPoint++;
+	drone.setRotation(90 + drone.getRotation());
 }
 
 bool Drone::takeDamage(int damage) {

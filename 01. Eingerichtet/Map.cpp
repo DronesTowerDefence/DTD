@@ -20,7 +20,9 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 		if (pos.y == koa.y && pos.x >= koa.x)
 		{
 			changeDirection(drone, nextWayPoint);
+			
 			return;
+
 		}
 		break;
 
@@ -28,6 +30,7 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 		if (pos.y == koa.y && pos.x <= koa.x)
 		{
 			changeDirection(drone, nextWayPoint);
+			
 			return;
 		}
 		break;
@@ -35,6 +38,7 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 		if (pos.y >= koa.y && pos.x == koa.x)
 		{
 			changeDirection(drone, nextWayPoint);
+			
 			return;
 		}
 		break;
@@ -42,6 +46,7 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 		if (pos.y <= koa.y && pos.x == koa.x)
 		{
 			changeDirection(drone, nextWayPoint);
+			
 			return;
 		}
 		break;
