@@ -42,7 +42,7 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 
 void TowerAlias::setPositionMouse(Vector2i mouse)
 {
-	towerAliasSpr.setPosition(mouse.x, mouse.y);
+	towerAliasSpr.setPosition(mouse.x-25, mouse.y-25); //-25 damit der Mauszeiger mittig auf dem Tower ist
 	rangeShape.setPosition(towerAliasSpr.getPosition().x - range + 25, towerAliasSpr.getPosition().y - range + 25); //Damit der Kreis passend um den Turm ist
 }
 
