@@ -6,6 +6,8 @@ using namespace sf;
 class ClassMoneyTower
 {
 private:
+	Clock timer;
+	bool generationCooldown;
 	float value; //Wert (Kaufpreis + Upgrades) wird zum verkaufen benötigt
 	float price; //Kaufpreis
 	float moneyGeneration; //Wie viel Geld pro Frame generiert wird
@@ -66,5 +68,7 @@ public:
 	/// </summary>
 	/// <param name="int"></param>
 	void addValue(float);
+
+	void generateMoney();
 };
 

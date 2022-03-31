@@ -16,7 +16,8 @@ private:
 	Texture* texture;
 	Font stdFont;
 	Text eco;
-	
+	bool lost;
+
 
 	void newRound();
 	/// <summary>
@@ -40,6 +41,13 @@ private:
 	/// Überprüft ob ein Turm eine Drohne abschießen kann
 	/// </summary>
 	void checkShoot();
+
+	/// <summary>
+	/// Lässt MoneyTower Geld generieren
+	/// </summary>
+	void generateMoneyTowers();
+
+	void loseGame();
 
 	/// <summary>
 	/// Konstruktor von Game

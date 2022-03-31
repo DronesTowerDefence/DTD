@@ -11,6 +11,91 @@ Game* Game::getInstance()
 	return instance;
 }
 
+Game::Game()
+{
+	stdFont.loadFromFile("fonts/arial.ttf");
+	eco.setFont(stdFont);
+	round = Round::getInstance();
+	sidebar = Sidebar::getInstance(map);
+	map = new Map();
+	newTower = nullptr;
+	texture = new Texture();
+	texture->loadFromFile("img/Map1.png");
+	background = new RectangleShape(Vector2f(1920, 991));
+	background->setTexture(texture);
+
+	lost = false;
+	eco.setCharacterSize(30);
+	eco.setPosition(20, 20);
+}
+
+void Game::draw()
+{
+	window->clear();
+	window->draw(*background);
+	sidebar->draw(window);
+	if (newTower != nullptr) //TowerAlias wird gedrawt
+	{
+		window->draw((*newTower->getSpr()));
+		window->draw((*newTower->getRangeShape()));
+	}
+	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
+	{
+		window->draw(t->getTowerSpr());
+	}
+	for (auto* t : round->getAllTowers()) //Tower werden gedrawt
+	{
+		window->draw(t->getTowerSpr());
+	}
+	for (auto* t : round->getAllTowers()) //Tower Range wird gedrawt
+	{
+		window->draw(*(t->getRangeShape()));
+	}
+	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
+	{
+		window->draw(*(t->getProjectileSprite()));
+	}
+	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
+	{
+		window->draw(d->getDroneSprite());
+		if (d->getPosition().y > 991 && d->getNextPoint() >= 9) {
+
+			round->subhealth(d->getLives());
+
+		}
+	}
+
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
+
+		round->addDrone(new Drone(1, map->getStart(), 0, -1));
+		round->restartDroneTimer();
+	}
+
+	window->draw(eco);
+
+	window->display();
+}
+
+void Game::startGame()
+{
+	while (window->isOpen())
+	{
+		Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window->close();
+
+		}
+		loseGame();
+		checkShoot();
+		moveDrohnes();
+		checkTowerAlias();
+		generateMoneyTowers();
+		draw();
+	}
+}
+
 void Game::newRound()
 {
 
@@ -28,8 +113,6 @@ void Game::moveDrohnes()
 	{
 		i->moveProjectile();
 	}
-
-
 }
 
 void Game::checkButtonClick()
@@ -40,6 +123,7 @@ void Game::checkButtonClick()
 		newTower = new TowerAlias(index, map);
 	}
 }
+
 void Game::checkTowerAlias()
 {
 	if (newTower == nullptr)
@@ -60,95 +144,45 @@ void Game::checkTowerAlias()
 		}
 	}
 }
-Game::Game()
-{	
-	stdFont.loadFromFile("fonts/arial.ttf");
-	eco.setFont(stdFont);
-	round = Round::getInstance();
-	sidebar = Sidebar::getInstance(map);
-	map = new Map();
-	newTower = nullptr;
-	texture = new Texture();
-	texture->loadFromFile("img/Map1.png");
-	background = new RectangleShape(Vector2f(1920, 991));
-	background->setTexture(texture);
-	
-	eco.setCharacterSize(30);
-	eco.setPosition(20, 20);
-}
-void Game::draw()
+
+void Game::generateMoneyTowers()
 {
-	window->clear();
-	window->draw(*background);
-	sidebar->draw(window);
-	if (newTower != nullptr) //TowerAlias wird gedrawt
+	for (auto i : Round::getInstance()->getAllMoneyTower())
 	{
-		window->draw((*newTower->getSpr()));
-		window->draw((*newTower->getRangeShape()));
+		i->generateMoney();
 	}
-	for (auto* t : round->getAllTowers()) //Tower werden gedrawt
+}
+
+void Game::loseGame()
+{
+	if (round->getLost())
 	{
-		window->draw(t->getTowerSpr());
-	}
-	for (auto* t : round->getAllTowers()) //Tower Range wird gedrawt
-	{
-		window->draw(*(t->getRangeShape()));
-	}
-	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
-	{
-		window->draw(*(t->getProjectileSprite()));
-	}
-	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
-	{
-		window->draw(d->getDroneSprite());
-		if (d->getPosition().y > 991 && d->getNextPoint() >= 9){
-
-			round->subhealth(d->getLives());
-
-		}
-	}
-
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
-
-		round->addDrone(new Drone(1, map->getStart(), 0, -1));
-		round->restartDroneTimer();
-	}
-
-	if (round->getLost() == true) {
 		eco.setFillColor(Color::Red);
-		eco.setPosition(500, 340);
+		eco.setOutlineColor(Color::Black);
+		eco.setOutlineThickness(5);
+		eco.setPosition(350, 340);
 		eco.setCharacterSize(240);
 		eco.setString("YOU LOSE");
-		window->draw(eco);
-		window->display();
-		return;
-
+		lost = true;
 	}
-
-	eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
-	window->draw(eco);	
-	
-	window->display();
+	else
+	{
+		eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
+	}
 }
 
-void Game::startGame()
+void Game::checkShoot()
 {
-	while (window->isOpen())
+	for (auto t : round->getAllTowers())
 	{
-		Event event;
-		while (window->pollEvent(event))
+		for (auto d : round->getAllDrones())
 		{
-			if (event.type == Event::Closed)
-				window->close();
-
+			if (t->getRangeShape()->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+			{
+				t->shoot(d);
+			}
 		}
-		checkShoot();
-		checkTowerAlias();
-		moveDrohnes();
-		draw();
 	}
-
-	//}
 }
 
 Font Game::getFont()
@@ -164,18 +198,4 @@ RenderWindow* Game::getWindow()
 void Game::setWindow(RenderWindow* _window)
 {
 	window = _window;
-}
-
-void Game::checkShoot()
-{
-	for (auto t : Round::getInstance()->getAllTowers())
-	{
-		for (auto d : Round::getInstance()->getAllDrones())
-		{
-			if (t->getRangeShape()->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
-			{
-				t->shoot(d);
-			}
-		}
-	}
 }

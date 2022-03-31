@@ -5,7 +5,7 @@ ClassMoneyTower::ClassMoneyTower(int index, Vector2f pos)
 {
 	price = 1000;
 	value = price;
-	moneyGeneration = 0.016667; //0.016667 Geld pro Frame = Ein Geld pro Sekunde
+	moneyGeneration = 1; // Geld pro 5 Sekunden
 	name = "Plantutsche";
 	position = pos;
 
@@ -48,4 +48,18 @@ Sprite ClassMoneyTower::getTowerSpr()
 void ClassMoneyTower::addValue(float _value)
 {
 	value += _value;
+}
+
+void ClassMoneyTower::generateMoney()
+{
+	if (!generationCooldown)
+	{
+		generationCooldown = true;
+		Round::getInstance()->addMoney(moneyGeneration);
+	}
+	else if (timer.getElapsedTime().asSeconds() > 5)
+	{
+		generationCooldown = false;
+		timer.restart();
+	}
 }
