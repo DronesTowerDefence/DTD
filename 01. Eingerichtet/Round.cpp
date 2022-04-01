@@ -13,6 +13,7 @@ Round::Round()
 	Lost = false;
 	Won = true;
 
+	setDroneCountInRound();
 }
 
 Round* Round::getInstance()
@@ -24,15 +25,27 @@ Round* Round::getInstance()
 	return instance;
 }
 
+void Round::setDroneCountInRound()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		droneCountInRound[i] = i + 1 * 10;
+	}
+}
+
 void Round::addMoney(int _money)
 {
-	money += _money;
+	if (_money > 0)
+		money += _money;
 }
 
 bool Round::submoney(int _money)
 {
-	if (money < _money)
+	if (_money < 0)
 		return 0;
+	else if (money < _money)
+		return 0;
+
 	money -= _money;
 	return 1;
 }
@@ -98,7 +111,7 @@ std::list<Tower*> Round::getAllTowers()
 std::list<Drone*> Round::getAllDrones()
 {
 	return allDrones;
-	
+
 }
 
 std::list<ClassMoneyTower*> Round::getAllMoneyTower()
@@ -175,4 +188,18 @@ std::list<Projectile*> Round::getAllProjectiles()
 void Round::addProjectile(Projectile* _projectile)
 {
 	allProjectiles.push_back(_projectile);
+}
+
+int Round::getDroneCountInRound(int i)
+{
+	return droneCountInRound[i];
+}
+
+void Round::resetRound()
+{
+	money = 1000; //Start-Geld
+	health = 20; //Start-Leben
+	round = 0; //Start-Runde
+	Lost = false;
+	Won = true;
 }

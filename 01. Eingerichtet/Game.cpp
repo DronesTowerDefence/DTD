@@ -24,6 +24,8 @@ Game::Game()
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
 
+	droneCount = 0;
+
 	lost = false;
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
@@ -65,8 +67,9 @@ void Game::draw()
 		}
 	}
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 3.0) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount<round->getDroneCountInRound(round->getRound())) {
 
+		droneCount++;
 		round->addDrone(new Drone(1, map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
@@ -98,7 +101,8 @@ void Game::startGame()
 
 void Game::newRound()
 {
-
+	droneCount = 0;
+	round->addRound();
 }
 
 void Game::moveDrohnes()
@@ -167,7 +171,9 @@ void Game::loseGame()
 	}
 	else
 	{
-		eco.setString("Lives: " + std::to_string(round->getHealth()) + "\nMoney: " + std::to_string(round->getMoney()));
+		eco.setString("Lives: " + std::to_string(round->getHealth()) + 
+			"\nMoney: " + std::to_string(round->getMoney()) + 
+			"\nRound: " + std::to_string(round->getRound()+1));
 	}
 }
 

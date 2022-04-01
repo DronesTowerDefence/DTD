@@ -18,6 +18,7 @@ private:
 	Text WinLose;
 	bool Lost;
 	bool Won;
+	int droneCountInRound[100]; //Runde 1-100 / Index 0-99
 	
 	std::list<Projectile*> allProjectiles;
 	std::list<Tower*> allTowers;
@@ -30,6 +31,9 @@ private:
 
 	Round();
 	Round(int a, int b, int c, int d);
+
+	void setDroneCountInRound();
+
 public:
 
 	static Round* getInstance();
@@ -78,5 +82,9 @@ public:
 	bool getLost();
 
 	bool getWon();
+
+	int getDroneCountInRound(int);
+
+	void resetRound();
 
 };

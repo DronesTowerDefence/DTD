@@ -17,6 +17,7 @@ private:
 	Font stdFont;
 	Text eco;
 	bool lost;
+	int droneCount;
 
 
 	void newRound();
