@@ -85,6 +85,4 @@ public:
 
 	int getDroneCountInRound(int);
 
-	void resetRound();
-
 };

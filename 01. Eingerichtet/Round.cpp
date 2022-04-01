@@ -5,7 +5,7 @@ Round* Round::instance = nullptr;
 Round::Round()
 {
 	money = 1000; //Start-Geld
-	health = 20; //Start-Leben
+	health = 100; //Start-Leben
 	round = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -96,6 +96,8 @@ bool Round::setHealth(int _health)
 void Round::addRound()
 {
 	round++;
+	Lost = false;
+	Won = true;
 }
 
 int Round::getRound()
@@ -193,13 +195,4 @@ void Round::addProjectile(Projectile* _projectile)
 int Round::getDroneCountInRound(int i)
 {
 	return droneCountInRound[i];
-}
-
-void Round::resetRound()
-{
-	money = 1000; //Start-Geld
-	health = 20; //Start-Leben
-	round = 0; //Start-Runde
-	Lost = false;
-	Won = true;
 }

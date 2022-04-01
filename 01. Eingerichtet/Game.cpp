@@ -73,6 +73,10 @@ void Game::draw()
 		round->addDrone(new Drone(1, map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
+	if (droneCount == round->getDroneCountInRound(round->getRound()) && round->getAllDrones().empty())
+	{
+		newRound();
+	}
 
 	window->draw(eco);
 
