@@ -172,6 +172,16 @@ void Round::restartDroneTimer()
 	droneTimer.restart();
 }
 
+Clock Round::getDroneSubHealthTimer()
+{
+	return droneSubHealthTimer;
+}
+
+void Round::restartDroneSubHealthTimer()
+{
+	droneSubHealthTimer.restart();
+}
+
 bool Round::getLost()
 {
 	return Lost;

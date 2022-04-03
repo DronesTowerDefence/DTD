@@ -60,14 +60,9 @@ void Game::draw()
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
 		window->draw(d->getDroneSprite());
-		if (d->getPosition().y > 991 && d->getNextPoint() >= 9) {
-
-			round->subhealth(d->getLives());
-
-		}
 	}
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount<round->getDroneCountInRound(round->getRound())) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getRound())) {
 
 		droneCount++;
 		round->addDrone(new Drone(1, map->getStart(), 0, -1));
@@ -163,6 +158,19 @@ void Game::generateMoneyTowers()
 
 void Game::loseGame()
 {
+	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
+	{
+		for (auto i : round->getAllDrones())
+		{
+			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
+
+				round->subhealth(i->getLives());
+
+			}
+		}
+		round->restartDroneSubHealthTimer();
+	}
+
 	if (round->getLost())
 	{
 		eco.setFillColor(Color::Red);
@@ -175,9 +183,9 @@ void Game::loseGame()
 	}
 	else
 	{
-		eco.setString("Lives: " + std::to_string(round->getHealth()) + 
-			"\nMoney: " + std::to_string(round->getMoney()) + 
-			"\nRound: " + std::to_string(round->getRound()+1));
+		eco.setString("Lives: " + std::to_string(round->getHealth()) +
+			"\nMoney: " + std::to_string(round->getMoney()) +
+			"\nRound: " + std::to_string(round->getRound() + 1));
 	}
 }
 

@@ -15,6 +15,7 @@ private:
 	int round;
 	int towerPrice[3];
 	Clock droneTimer;
+	Clock droneSubHealthTimer;
 	Text WinLose;
 	bool Lost;
 	bool Won;
@@ -78,6 +79,10 @@ public:
 	Clock getDroneTimer();
 
 	void restartDroneTimer();
+
+	Clock getDroneSubHealthTimer();
+
+	void restartDroneSubHealthTimer();
 
 	bool getLost();
 
