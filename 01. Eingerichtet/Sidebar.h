@@ -11,10 +11,10 @@ private:
 	RectangleShape backround;
 	Map* p_map;
 
-	Sprite buttonSpr[4];
-	Texture buttonTexture[4];
+	Sprite buttonSpr[5];
+	Texture buttonTexture[5];
 
-	float price[4]; //Wie viel die Tower kosten
+	float price[5]; //Wie viel die Tower kosten
 
 	static Sidebar* instance;
 	Sidebar();

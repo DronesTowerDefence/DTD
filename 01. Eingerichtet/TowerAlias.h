@@ -9,8 +9,8 @@ class TowerAlias
 private:
 
 	int index;
-	int range;
-	int price;
+	float range;
+	float price;
 	Vector2f pos;
 	Map* p_map;
 	Sprite towerAliasSpr;

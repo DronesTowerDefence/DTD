@@ -5,11 +5,11 @@ ClassMoneyTower::ClassMoneyTower(int index, Vector2f pos)
 {
 	price = 1000;
 	value = price;
-	moneyGeneration = 1; // Geld pro 5 Sekunden
+	moneyGeneration = 1; // Geld pro 2 Sekunden
 	name = "Plantutsche";
 	position = pos;
 
-	towerTex.loadFromFile("img/tower0_50x50.png");
+	towerTex.loadFromFile("img/moneyTower0_50x50.png");
 	towerSpr.setTexture(towerTex);
 	towerSpr.setPosition(position);
 	Round::getInstance()->addMoneyTower(this);
@@ -57,7 +57,7 @@ void ClassMoneyTower::generateMoney()
 		generationCooldown = true;
 		Round::getInstance()->addMoney(moneyGeneration);
 	}
-	else if (timer.getElapsedTime().asSeconds() > 5)
+	else if (timer.getElapsedTime().asSeconds() > 2)
 	{
 		generationCooldown = false;
 		timer.restart();

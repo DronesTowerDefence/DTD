@@ -109,5 +109,8 @@
     <Image Include="img\tower0_50x50.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="img\moneyTower0_50x50.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>

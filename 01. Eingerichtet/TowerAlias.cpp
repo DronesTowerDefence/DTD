@@ -29,6 +29,12 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 		price = 400;
 		towerAliasTexture.loadFromFile("img/tower3_50x50.png");
 		break;
+
+	case 4:
+		range = 0;
+		price = 1000;
+		towerAliasTexture.loadFromFile("img/moneyTower0_50x50.png");
+		break;
 	}
 
 	p_map = _map;
@@ -48,7 +54,14 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 
 void TowerAlias::CreateNewTower()
 {
-	new Tower(index, towerAliasSpr.getPosition(), p_map);
+	if (index < 4)
+	{
+		new Tower(index, towerAliasSpr.getPosition(), p_map);
+	}
+	else if (index > 3)
+	{
+		new ClassMoneyTower(index, towerAliasSpr.getPosition());
+	}
 }
 
 float TowerAlias::getPrice()

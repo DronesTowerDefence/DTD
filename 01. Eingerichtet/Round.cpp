@@ -4,7 +4,7 @@ Round* Round::instance = nullptr;
 
 Round::Round()
 {
-	money = 1000; //Start-Geld
+	money = 2000; //Start-Geld
 	health = 100; //Start-Leben
 	round = 0; //Start-Runde
 	towerPrice[0] = 100;

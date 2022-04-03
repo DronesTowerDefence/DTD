@@ -18,7 +18,7 @@ private:
 	Texture towerTex;
 	Sprite towerSpr;
 
-	ClassMoneyTower() = delete;
+	ClassMoneyTower();
 
 public:
 	/// <summary>
