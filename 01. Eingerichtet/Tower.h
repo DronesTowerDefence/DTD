@@ -7,14 +7,20 @@ using namespace sf;
 class Tower
 {
 private:
-	Clock timer; //Zum z‰hlen des Cooldowns
-	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
+	int index; //Welcher Turm-Typ es ist
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float speed; //Wie schnell der Turm schieﬂt
 	float value; //Wie hoch der Wert des Turmes ist (erhˆht sich durch Upgrades)
 	float attackspeed; //Wie schnell das Projektil schieﬂt
 	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
+	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum generiert wird
+
+	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
+	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird
+
+	Clock shootTimer; //Zum z‰hlen des Schuss-Cooldowns
+	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
 
 	std::list<Vector3f> coverableArea; //Welche Wegpunkte der Turm auf der Strecke abdeckt in 20px Schritten
 
@@ -27,7 +33,7 @@ private:
 	Map* p_map;
 	Vector2f position;
 
-	Tower() = delete; //Standart-Konstruktor soll nicht benutzt werden
+	Tower(); //Standart-Konstruktor soll nicht benutzt werden
 	void setCoverableArea();
 
 public:
@@ -47,7 +53,7 @@ public:
 	/// Tower schieﬂt Drone ab
 	/// </summary>
 	/// <param name="Drone*"></param>
-	void shoot(Drone*);
+	bool shoot(Drone*);
 
 	/// <summary>
 	/// Returnt Value
@@ -74,4 +80,8 @@ public:
 	/// </summary>
 	/// <returns>Vector2f</returns>
 	Vector2f getTowerPos();
+
+	int getIndex();
+
+	bool generateMoney();
 };

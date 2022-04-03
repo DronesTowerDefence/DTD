@@ -41,22 +41,27 @@ void Game::draw()
 		window->draw((*newTower->getSpr()));
 		window->draw((*newTower->getRangeShape()));
 	}
+
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
 	{
 		window->draw(t->getTowerSpr());
 	}
-	for (auto* t : round->getAllTowers()) //Tower werden gedrawt
+
+	for (auto* t : round->getAllAttackTower()) //Tower werden gedrawt
 	{
 		window->draw(t->getTowerSpr());
 	}
-	for (auto* t : round->getAllTowers()) //Tower Range wird gedrawt
+
+	for (auto* t : round->getAllAttackTower()) //Tower Range wird gedrawt
 	{
 		window->draw(*(t->getRangeShape()));
 	}
+
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
 		window->draw(*(t->getProjectileSprite()));
 	}
+
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
 		window->draw(d->getDroneSprite());
@@ -191,7 +196,7 @@ void Game::loseGame()
 
 void Game::checkShoot()
 {
-	for (auto t : round->getAllTowers())
+	for (auto t : round->getAllAttackTower())
 	{
 		for (auto d : round->getAllDrones())
 		{

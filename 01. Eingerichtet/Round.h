@@ -1,7 +1,6 @@
 #pragma once
 //Singleton
 #include "Tower.h"
-#include "ClassMoneyTower.h"
 #include "Drone.h"
 #include "Map.h"
 #include "Projectile.h"
@@ -22,8 +21,8 @@ private:
 	int droneCountInRound[100]; //Runde 1-100 / Index 0-99
 	
 	std::list<Projectile*> allProjectiles;
-	std::list<Tower*> allTowers;
-	std::list<ClassMoneyTower*> allMoneyTowers;
+	std::list<Tower*> allAttackTowers;
+	std::list<Tower*> allMoneyTowers;
 	std::list<Drone*> allDrones;
 
 	Map* map;
@@ -59,20 +58,16 @@ public:
 
 	int getRound();
 
-	std::list<Tower*> getAllTowers();
+	std::list<Tower*> getAllAttackTower();
 	std::list<Drone*> getAllDrones();
-	std::list<ClassMoneyTower*> getAllMoneyTower();
+	std::list<Tower*> getAllMoneyTower();
 	std::list<Projectile*> getAllProjectiles();
 
 	void sellTower(Tower*);
 
-	void sellMoneyTower(ClassMoneyTower*);
-
 	void addDrone(Drone* drone);
 
 	void addTower(Tower* tower);
-
-	void addMoneyTower(ClassMoneyTower* moneyTower);
 
 	void addProjectile(Projectile* _projectile);
 
