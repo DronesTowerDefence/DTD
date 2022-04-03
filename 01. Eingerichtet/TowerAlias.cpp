@@ -48,20 +48,13 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 
 void TowerAlias::setPositionMouse(Vector2i mouse)
 {
-	towerAliasSpr.setPosition(mouse.x-25, mouse.y-25); //-25 damit der Mauszeiger mittig auf dem Tower ist
+	towerAliasSpr.setPosition(mouse.x - 25, mouse.y - 25); //-25 damit der Mauszeiger mittig auf dem Tower ist
 	rangeShape.setPosition(towerAliasSpr.getPosition().x - range + 25, towerAliasSpr.getPosition().y - range + 25); //Damit der Kreis passend um den Turm ist
 }
 
 void TowerAlias::CreateNewTower()
 {
-	if (index < 4)
-	{
-		new Tower(index, towerAliasSpr.getPosition(), p_map);
-	}
-	else if (index > 3)
-	{
-		new ClassMoneyTower(index, towerAliasSpr.getPosition());
-	}
+	new Tower(index, towerAliasSpr.getPosition(), p_map);
 }
 
 float TowerAlias::getPrice()

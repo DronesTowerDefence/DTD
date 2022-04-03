@@ -1,10 +1,11 @@
 #include "Tower.h"
 #include "Round.h"
 
-Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
+Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
+	index = _index;
 
-	if (index >= 0 && index <= 3)
+	if (index >= 0 && index <= 4)
 	{
 		switch (index)
 		{
@@ -13,7 +14,9 @@ Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 			speed = 1;
 			price = 100;
 			range = 100;
+			moneyGeneration = 0;
 			towerTex.loadFromFile("img/tower0_50x50.png");
+			Round::getInstance()->addTower(this);
 			break;
 
 		case 1:
@@ -22,7 +25,9 @@ Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 			speed = 1;
 			price = 200;
 			range = 200;
+			moneyGeneration = 0;
 			towerTex.loadFromFile("img/tower1_50x50.png");
+			Round::getInstance()->addTower(this);
 			break;
 
 		case 2:
@@ -31,7 +36,9 @@ Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 			speed = 1;
 			price = 300;
 			range = 300;
+			moneyGeneration = 0;
 			towerTex.loadFromFile("img/tower2_50x50.png");
+			Round::getInstance()->addTower(this);
 			break;
 
 		case 3:
@@ -40,7 +47,20 @@ Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 			speed = 1;
 			price = 400;
 			range = 400;
+			moneyGeneration = 0;
 			towerTex.loadFromFile("img/tower3_50x50.png");
+			Round::getInstance()->addTower(this);
+			break;
+
+		case 4:
+			name = "Plantutsche";
+			damage = 0;
+			speed = 2;
+			price = 1000;
+			range = 0;
+			moneyGeneration = 1;
+			towerTex.loadFromFile("img/moneyTower0_50x50.png");
+			Round::getInstance()->addTower(this);
 			break;
 		}
 
@@ -48,17 +68,19 @@ Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 		p_map = n_map;
 		value = price;
 		shootCooldown = false;
-
-		rangeShape.setRadius(range);
-		rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
-		rangeShape.setFillColor(Color::Transparent);
-		rangeShape.setOutlineColor(Color::Black);
-		rangeShape.setOutlineThickness(5);
-
+		generationCooldown = false;
 		towerSpr.setTexture(towerTex);
 		towerSpr.setPosition(position);
-		Round::getInstance()->addTower(this); //Damit alle Tower gedrawt werden können
-		setCoverableArea();
+
+		if (index < 4)
+		{
+			rangeShape.setRadius(range);
+			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
+			rangeShape.setFillColor(Color::Transparent);
+			rangeShape.setOutlineColor(Color::Black);
+			rangeShape.setOutlineThickness(5);
+			setCoverableArea();
+		}
 	}
 	else delete this;
 }
@@ -102,18 +124,42 @@ Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 	return towerSpr;
 }
 
-void Tower::shoot(Drone* a) //Tower schießt Drone ab
+bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
-	if (!shootCooldown)
+	if (index < 4)
 	{
-		new Projectile(a, this); //Konstruktor von Projektil aufrufen
-		shootCooldown = true;
+		if (!shootCooldown)
+		{
+			new Projectile(a, this); //Konstruktor von Projektil aufrufen
+			shootCooldown = true;
+		}
+		else if (shootTimer.getElapsedTime().asSeconds() > 3)
+		{
+			shootCooldown = false;
+			shootTimer.restart();
+		}
+		return true;
 	}
-	else if (timer.getElapsedTime().asSeconds() > 3)
+	else return false;
+}
+
+bool Tower::generateMoney()
+{
+	if (index > 3)
 	{
-		shootCooldown = false;
-		timer.restart();
+		if (!generationCooldown)
+		{
+			generationCooldown = true;
+			Round::getInstance()->addMoney(moneyGeneration);
+		}
+		else if (generationTimer.getElapsedTime().asSeconds() > speed)
+		{
+			generationCooldown = false;
+			generationTimer.restart();
+		}
+		return true;
 	}
+	else return false;
 }
 
 float Tower::getValue()
@@ -141,3 +187,7 @@ CircleShape* Tower::getRangeShape()
 	return &rangeShape;
 }
 
+int Tower::getIndex()
+{
+	return index;
+}

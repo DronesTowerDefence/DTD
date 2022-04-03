@@ -105,9 +105,9 @@ int Round::getRound()
 	return round;
 }
 
-std::list<Tower*> Round::getAllTowers()
+std::list<Tower*> Round::getAllAttackTower()
 {
-	return allTowers;
+	return allAttackTowers;
 }
 
 std::list<Drone*> Round::getAllDrones()
@@ -116,26 +116,21 @@ std::list<Drone*> Round::getAllDrones()
 
 }
 
-std::list<ClassMoneyTower*> Round::getAllMoneyTower()
+std::list<Tower*> Round::getAllMoneyTower()
 {
 	return allMoneyTowers;
 }
 
 void Round::sellTower(Tower* a)
 {
-	for (auto i : allTowers)
+	for (auto i : allAttackTowers)
 	{
 		if (i == a)
 		{
-			allTowers.remove(i);
+			allAttackTowers.remove(i);
 		}
 	}
-	addMoney(a->getValue() * 0.9);
-	delete a;
-}
 
-void Round::sellMoneyTower(ClassMoneyTower* a)
-{
 	for (auto i : allMoneyTowers)
 	{
 		if (i == a)
@@ -143,8 +138,11 @@ void Round::sellMoneyTower(ClassMoneyTower* a)
 			allMoneyTowers.remove(i);
 		}
 	}
-	addMoney(a->getValue() * 0.9);
+
+	addMoney(a->getValue() * 0.75);
+
 	delete a;
+	a = nullptr;
 }
 
 void Round::addDrone(Drone* drone)
@@ -154,12 +152,10 @@ void Round::addDrone(Drone* drone)
 
 void Round::addTower(Tower* tower)
 {
-	allTowers.push_back(tower);
-}
-
-void Round::addMoneyTower(ClassMoneyTower* moneyTower)
-{
-	allMoneyTowers.push_back(moneyTower);
+	if (tower->getIndex() < 4)
+		allAttackTowers.push_back(tower);
+	else if (tower->getIndex() == 4)
+		allMoneyTowers.push_back(tower);
 }
 
 Clock Round::getDroneTimer()
