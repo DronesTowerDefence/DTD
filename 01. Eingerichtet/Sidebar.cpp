@@ -37,12 +37,12 @@ Sidebar::Sidebar()
 	backround.setSize(Vector2f(200, 991));
 }
 
-Sidebar* Sidebar::getInstance(Map* _map)
+Sidebar* Sidebar::getInstance(/*Map* _map*/)
 {
 	if (instance == nullptr)
 	{
 		instance = new Sidebar();
-		instance->p_map = _map;
+		//instance->p_map = _map;
 	}
 	return instance;
 }
@@ -79,4 +79,9 @@ void Sidebar::draw(sf::RenderWindow* window)
 	{
 		window->draw(buttonSpr[i]);
 	}
+}
+
+Texture Sidebar::getTowerTexture(int i)
+{
+	return buttonTexture[i];
 }

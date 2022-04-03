@@ -1,12 +1,12 @@
 #include "Tower.h"
 #include "Round.h"
 
-Tower::Tower(int a, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
+Tower::Tower(int index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3
 {
 
-	if (a >= 0 && a <= 3)
+	if (index >= 0 && index <= 3)
 	{
-		switch (a)
+		switch (index)
 		{
 		case 0: name = "Turm 1";
 			damage = 1;

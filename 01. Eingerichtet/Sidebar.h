@@ -9,10 +9,12 @@ class Sidebar
 {
 private:
 	RectangleShape backround;
-	Map* p_map;
+	//Map* p_map;
 
 	Sprite buttonSpr[5];
 	Texture buttonTexture[5];
+
+	Text towerName[5];
 
 	float price[5]; //Wie viel die Tower kosten
 
@@ -25,7 +27,7 @@ public:
 	/// (Singelton)
 	/// </summary>
 	/// <returns>Instance</returns>
-	static Sidebar* getInstance(Map*);
+	static Sidebar* getInstance(/*Map**/);
 
 	/// <summary>
 	/// GIbt zurück, welcher Button geklickt wurde
@@ -39,4 +41,6 @@ public:
 	/// </summary>
 	/// <param name="window"></param>
 	void draw(RenderWindow* window);
+
+	Texture getTowerTexture(int);
 };

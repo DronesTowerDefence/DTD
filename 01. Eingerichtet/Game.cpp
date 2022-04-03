@@ -16,7 +16,7 @@ Game::Game()
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
 	round = Round::getInstance();
-	sidebar = Sidebar::getInstance(map);
+	sidebar = Sidebar::getInstance(/*map*/);
 	map = new Map();
 	newTower = nullptr;
 	texture = new Texture();
