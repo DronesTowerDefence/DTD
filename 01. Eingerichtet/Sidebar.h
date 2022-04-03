@@ -14,7 +14,8 @@ private:
 	Sprite buttonSpr[5];
 	Texture buttonTexture[5];
 
-	Text towerName[5];
+	Text buttonText[5];
+	Font buttonTextFont;
 
 	float price[5]; //Wie viel die Tower kosten
 

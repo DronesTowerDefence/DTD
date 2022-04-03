@@ -34,8 +34,11 @@ Game::Game()
 void Game::draw()
 {
 	window->clear();
-	window->draw(*background);
-	sidebar->draw(window);
+
+	window->draw(*background); //Karte wird gedrawt
+
+	sidebar->draw(window); //Sidebar wird gedrawt
+
 	if (newTower != nullptr) //TowerAlias wird gedrawt
 	{
 		window->draw((*newTower->getSpr()));
