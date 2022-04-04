@@ -124,6 +124,7 @@ void Game::moveDrohnes()
 	{
 		i->moveProjectile();
 	}
+
 }
 
 void Game::checkButtonClick()

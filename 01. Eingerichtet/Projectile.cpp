@@ -1,40 +1,65 @@
 #include "Projectile.h"
 #include "Round.h"
+#include <iostream>
 
-Projectile::Projectile(Drone* _target, Tower* _tower)
+Projectile::Projectile(Drone* _target, Tower* _tower,int _style)
 {
 	speed = _tower->getAttackSpeed();
 	tower = _tower;
-	Texture projectileTexture;
 	projectileTexture.loadFromFile("img/projectile0.png");
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
-	target = targeting(_target);
+	style = _style;
+	dronetarget = _target;
 	projectilesprite.setPosition(tower->getTowerPos());
+	operate();
+	
 }
 
-Vector3f Projectile::targeting(Drone* _Drone)
+void Projectile::operate()
 {
-	for (auto i : tower->getCoverableArea()) {
-			if (_Drone->getNextPosition(i.z/speed).x - i.x<5 && _Drone->getNextPosition(i.z/speed).x - i.x> -5) {
-				if (_Drone->getNextPosition(i.z/speed).y - i.y<5 && _Drone->getNextPosition(i.z/speed).y - i.y > -5) {
+	switch (style) {
+	case 1: {
+		target = targeting();
+		setmove(); }
+	case 2:homing();
+
+	}
+}
+
+Vector3f Projectile::targeting()
+{
+
+	for (auto i: tower->getCoverableArea()) {
+		std::cout<<i.z<< std::endl;
+			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) {
+				if (dronetarget->getNextPosition(i.z/speed).y - i.y<20 && dronetarget->getNextPosition(i.z/speed).y - i.y > -20) {
 					return i;
 				}
 			}
+			
 	}
+	
+	
 }
 
 void Projectile::moveProjectile()
 {
-	
-	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y / speed));
-	//std::cout << "Move";
+	if (style == 2)
+		homing();
+	std::cout << target.x << target.y << std::endl;
+	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y/speed));
+}
+
+void Projectile::homing() {
+	move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
+	move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
 }
 
 void Projectile::setmove()
 {
-	move.x = tower->getTowerPos().x - target.x;
-	move.y = tower->getTowerPos().y - target.y;
+	move.x = -1*(tower->getTowerPos().x - target.x);
+	move.y = -1*(tower->getTowerPos().y - target.y);
 }
 
 Sprite* Projectile::getProjectileSprite()

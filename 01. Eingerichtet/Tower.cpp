@@ -15,6 +15,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			price = 100;
 			range = 100;
 			moneyGeneration = 0;
+			attackspeed = 5;
 			towerTex.loadFromFile("img/tower0_50x50.png");
 			Round::getInstance()->addTower(this);
 			break;
@@ -26,6 +27,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			price = 200;
 			range = 200;
 			moneyGeneration = 0;
+			attackspeed = 10;
 			towerTex.loadFromFile("img/tower1_50x50.png");
 			Round::getInstance()->addTower(this);
 			break;
@@ -132,7 +134,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this, 2); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > 3)

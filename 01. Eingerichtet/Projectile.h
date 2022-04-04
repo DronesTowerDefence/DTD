@@ -7,15 +7,20 @@ using namespace sf;
 class Projectile
 {
 private:
-	double speed;
+	float speed;
+	int style;
 	Vector2f move;
 	Sprite projectilesprite;
 	Vector3f target;
 	Tower* tower;
+	Drone* dronetarget;
 	Vector2f targetstill;
+	Texture projectileTexture;
 public:
-	Projectile(Drone*,Tower*);
-	Vector3f targeting(Drone*);
+	Projectile(Drone*,Tower*,int);
+	void operate();
+	Vector3f targeting();
+	void homing();
 	void moveProjectile();
 	Sprite* getProjectileSprite();
 	void setmove();
