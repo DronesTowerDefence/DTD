@@ -1,4 +1,5 @@
 #include "Drone.h"
+#include "Round.h"
 using namespace sf;
 
 
@@ -25,6 +26,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
+	onTrack = true;
 	
 	/*case 1:*/
 
@@ -69,7 +71,18 @@ void Drone::move()
 void Drone::pass()
 {
 	nextPoint++;
-	drone.setRotation(90 + drone.getRotation());
+	if (nextPoint % 2 == 0) {
+		drone.setRotation(0);
+	}
+	else{drone.setRotation(90);}
+		
+
+	//if (nextPoint == 1) {
+	//	
+	//}
+	//if (nextPoint == 2) {
+	//	
+	//}
 }
 
 bool Drone::takeDamage(int damage) {
@@ -116,4 +129,20 @@ Vector2f Drone::getNextPosition(int nextFrame)
 
 	return deezNuts;
 
+}
+
+void Drone::setOnTrack(bool d)
+{
+	onTrack = d;
+}
+bool Drone::getOnTrack() {
+
+	return onTrack;
+
+}
+
+Drone::~Drone()
+{
+	//Round::getInstance()->deleteDrone(this);
+	delete this;
 }

@@ -47,6 +47,8 @@ private:
 	/// </summary>
 	int droneType;
 
+	bool onTrack;
+
 	/// <summary>
 	/// !NICHT BENUTZEN!
 	/// </summary>
@@ -111,6 +113,12 @@ public:
 	/// </summary>
 	/// <returns>Vector2f &position</returns>
 	Vector2f getNextPosition(int);
+
+	void setOnTrack(bool);
+
+	bool getOnTrack();
+	
+	~Drone();
 
 
 

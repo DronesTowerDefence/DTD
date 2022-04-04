@@ -85,4 +85,6 @@ public:
 
 	int getDroneCountInRound(int);
 
+	//void deleteDrone(Drone* i);
+
 };

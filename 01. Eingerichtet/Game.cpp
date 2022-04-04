@@ -171,9 +171,10 @@ void Game::loseGame()
 		for (auto i : round->getAllDrones())
 		{
 			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
-
-				round->subhealth(i->getLives());
-
+				if (i->getOnTrack() == true) {
+					round->subhealth(i->getLives());
+					i->setOnTrack(false);
+				}
 			}
 		}
 		round->restartDroneSubHealthTimer();
