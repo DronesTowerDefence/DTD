@@ -15,21 +15,31 @@ Service* Service::getInstance()
 	return instance;
 }
 
-Vector2f Service::getObjectPosition(Vector2f window, Vector2f objectposition)
+Vector2f Service::getMousePosition(Vector2i MousePosition)
 {
+	float x = 1920.f / VideoMode::getDesktopMode().width * MousePosition.x;
+	float y = 991.f / VideoMode::getDesktopMode().height * MousePosition.y;
+	return Vector2f(x, y);
+}
 
 
+float Service::getXPosition(int xObject)
+{
+	return  VideoMode::getDesktopMode().width / 1920 * xObject;
+}
+
+float Service::getYPosition( int yObject)
+{
+	return  VideoMode::getDesktopMode().height / 991 * yObject;
+
+}
+
+
+Vector2f Service::getObjectPosition(Vector2f objectposition)
+{
 	//pc  / auflösung *ziel
-	return Vector2f(window.x / 1920 * objectposition.x, window.y / 991 * objectposition.y);
-}
+	//return Vector2f(x_r, y_r);
 
-float Service::getXPosition(int xWindow, int xObject)
-{
-	return xWindow / 1920 * xObject;
-}
 
-float Service::getYPosition(int yWindow, int yObject)
-{
-	return yWindow / 991 * yObject;
-
+	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 991.0 * objectposition.y);
 }

@@ -51,6 +51,13 @@ private:
 	void loseGame();
 
 	/// <summary>
+	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
+	/// Z.B. Die Sidebar oder die Strecke
+	/// </summary>
+	/// <returns></returns>
+	bool towerAliasForbiddenPosition();
+
+	/// <summary>
 	/// Konstruktor von Game
 	/// </summary>
 	Game();

@@ -147,7 +147,7 @@ void Game::checkTowerAlias()
 		{
 			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
 		}
-		else
+		else if (towerAliasForbiddenPosition())
 		{
 			newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
 			delete newTower;
@@ -196,6 +196,31 @@ void Game::loseGame()
 			"\nMoney: " + std::to_string(round->getMoney()) +
 			"\nRound: " + std::to_string(round->getRound() + 1));
 	}
+}
+
+bool Game::towerAliasForbiddenPosition()
+{
+	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700)
+	{
+		for (auto i : map->getPoints())
+		{
+			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
+			{
+				if ((newTower->getPos().x >= i->getKooadinaten().x && newTower->getPos().x <= (i + 1)->getKooadinaten().x)
+					&& (newTower->getPos().y <= i->getKooadinaten().y+50 && newTower->getPos().y >= i->getKooadinaten().y-50))
+					return 0;
+			}
+			else if (i->getKooadinaten().x == (i + 1)->getKooadinaten().x)
+			{
+				if ((newTower->getPos().y >= i->getKooadinaten().y && newTower->getPos().y <= (i + 1)->getKooadinaten().y)
+					&& (newTower->getPos().x <= i->getKooadinaten().x + 50 && newTower->getPos().x >= i->getKooadinaten().x - 50))
+					return 0;
+			}
+		}
+	}
+	else return 0;
+
+	return 1;
 }
 
 void Game::checkShoot()

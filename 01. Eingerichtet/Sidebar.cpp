@@ -79,10 +79,11 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 		Vector2i mouse = Mouse::getPosition(*window);
 		Vector2f pos, pos2;
 
+
 		for (int i = 0; i < 5; i++) //Geht alle Türme durch
 		{
-			pos = Service::getInstance()->getObjectPosition(Vector2f(1920, 991), buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(Vector2f(1920, 991), buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+			pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
+			pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{

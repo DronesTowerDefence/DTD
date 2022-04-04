@@ -8,10 +8,12 @@ private:
 	Service();
 public:
 	static Service* getInstance();
-	Vector2f getObjectPosition(Vector2f window, Vector2f objectposition);
+	Vector2f getMousePosition(Vector2i MousePosition);
+	Vector2f getObjectPosition( Vector2f objectposition);
 
-	float getXPosition(int xWindow, int xObject);
+	float getXPosition( int xObject);
 
-	float getYPosition(int yWindow, int yObject);
+	float getYPosition( int yObject);
+
 
 };

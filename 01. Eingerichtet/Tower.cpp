@@ -102,6 +102,7 @@ void Tower::setCoverableArea()
 
 		if (mapPoint1.x == mapPoint2.x)
 		{
+			point2.y = mapPoint1.y;
 			for (; point2.x < i->getKooadinaten().x; point2.x += 20)
 			{
 				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
@@ -110,6 +111,7 @@ void Tower::setCoverableArea()
 		}
 		else if (mapPoint1.y == mapPoint2.y)
 		{
+			point2.x = mapPoint1.x;
 			for (; point2.y < i->getKooadinaten().y; point2.y += 20)
 			{
 				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
