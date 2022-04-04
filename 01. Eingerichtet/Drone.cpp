@@ -26,7 +26,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
-	onTrack = true;
+	alive = true;
 	
 	/*case 1:*/
 
@@ -97,8 +97,9 @@ bool Drone::takeDamage(int damage) {
 		drone.setTexture(droneTexture);
 	}
 	if (lives <= 0) {
-		delete this;
+		//delete this;
 		//True, wenn Drone tot ist
+		alive = false;
 		return true;
 	}
 
@@ -131,13 +132,13 @@ Vector2f Drone::getNextPosition(int nextFrame)
 
 }
 
-void Drone::setOnTrack(bool d)
+void Drone::setAlive(bool d)
 {
-	onTrack = d;
+	alive = d;
 }
-bool Drone::getOnTrack() {
+bool Drone::getAlive() {
 
-	return onTrack;
+	return alive;
 
 }
 
