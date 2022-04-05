@@ -1,5 +1,6 @@
 #include "Tower.h"
 #include "Round.h"
+#include <iostream>
 
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
@@ -55,7 +56,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 4:
-			name = "Plantutsche";
+			name = "\224lbohrer";
 			damage = 0;
 			speed = 2;
 			price = 1000;
@@ -66,6 +67,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 		}
 
+		projectileSpeed = speed * 3;
 		position = pos;
 		p_map = n_map;
 		value = price;
@@ -89,38 +91,77 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 void Tower::setCoverableArea()
 {
-
-	float point = 0.0;
-	Vector2f point2 = Vector2f(0, 0);
+	Vector3f point = Vector3f(0, 0, 0);
 	Vector2f mapPoint1;
 	Vector2f mapPoint2;
 	int pointIterator = 0;
 
 	for (auto i : p_map->getPoints())
 	{
-		mapPoint1 = p_map->getWaypointAsVector(pointIterator);
-		mapPoint2 = p_map->getWaypointAsVector(pointIterator + 1);
-
-
-		if (mapPoint1.x == mapPoint2.x)
+		if (pointIterator == 0) //Muss bei anderer Map angepasst werden
 		{
-			point2.y = mapPoint1.y;
-			for (; point2.x < i->getKooadinaten().x; point2.x += 20)
+			mapPoint1.y = 991;
+			mapPoint1.x = p_map->getWaypointAsVector(pointIterator).x;
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+		else
+		{
+			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1);
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+
+		pointIterator++;
+
+		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x <= mapPoint2.x; point.x += 20)
 			{
-				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
-				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
+				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableAreaAll.push_back(point);
 			}
 		}
-		else if (mapPoint1.y == mapPoint2.y)
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y)
 		{
-			point2.x = mapPoint1.x;
-			for (; point2.y < i->getKooadinaten().y; point2.y += 20)
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y >= mapPoint2.y; point.y -= 20)
 			{
-				point = std::sqrt(((position.x - point2.x) * (position.x - point2.x)) + ((position.y - point2.y) * (position.y - point2.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
-				coverableArea.push_back(Vector3f(point2.x, point2.y, point));
+				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableAreaAll.push_back(point);
+			}
+		}
+		else if (mapPoint1.y == mapPoint2.y && mapPoint1.x > mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x >= mapPoint2.x; point.x -= 20)
+			{
+				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableAreaAll.push_back(point);
+			}
+		}
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y < mapPoint2.y)
+		{
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y <= mapPoint2.y; point.y += 20)
+			{
+				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+				coverableAreaAll.push_back(point);
 			}
 		}
 	}
+
+
+	CircleShape tmpCircle;
+	tmpCircle.setRadius(15);
+	tmpCircle.setFillColor(Color::Transparent);
+	for (auto i : coverableAreaAll)
+	{
+		tmpCircle.setPosition(Vector2f(i.x, i.y));
+		if (rangeShape.getGlobalBounds().intersects(tmpCircle.getGlobalBounds()))
+		{
+			coverableArea.push_back(i);
+		}
+	}	
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
@@ -171,11 +212,6 @@ float Tower::getValue()
 	return value;
 }
 
-float Tower::getAttackSpeed()
-{
-	return attackspeed;
-}
-
 std::list<Vector3f> Tower::getCoverableArea()
 {
 	return coverableArea;
@@ -194,4 +230,9 @@ CircleShape* Tower::getRangeShape()
 int Tower::getIndex()
 {
 	return index;
+}
+
+float Tower::getProjectileSpeed()
+{
+	return projectileSpeed;
 }

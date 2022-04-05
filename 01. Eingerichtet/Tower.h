@@ -11,7 +11,7 @@ private:
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float speed; //Wie schnell der Turm schießt
 	float value; //Wie hoch der Wert des Turmes ist (erhöht sich durch Upgrades)
-	float attackspeed; //Wie schnell das Projektil schießt
+	float projectileSpeed; //Wie schnell das Projektil fliegt
 	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum generiert wird
@@ -22,11 +22,11 @@ private:
 	Clock shootTimer; //Zum zählen des Schuss-Cooldowns
 	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
 
-	std::list<Vector3f> coverableArea; //Welche Wegpunkte der Turm auf der Strecke abdeckt in 20px Schritten
+	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
+	std::list<Vector3f> coverableAreaAll; //Alle Punkte auf der Strecke in 20px Schritten
 
 	std::string name; //Der Name des Turmes
 	
-
 	CircleShape rangeShape;
 	Texture towerTex;
 	Sprite towerSpr;
@@ -62,11 +62,9 @@ public:
 	float getValue();
 
 	/// <summary>
-	/// Returnt ProjectileSpeed
+	/// Return nen Pointer auf die Shape für den Kreis der Range
 	/// </summary>
-	/// <param name="float"></param>
-	float getAttackSpeed();
-
+	/// <returns>CircleShape*</returns>
 	CircleShape* getRangeShape();
 
 	/// <summary>
@@ -81,7 +79,22 @@ public:
 	/// <returns>Vector2f</returns>
 	Vector2f getTowerPos();
 
+	/// <summary>
+	/// Returnt den Index, um welchen Turm es sich handelt
+	/// </summary>
+	/// <returns>int</returns>
 	int getIndex();
 
+	/// <summary>
+	/// Generiert Geld. Funktioniert nur bei MoneyTowers
+	/// </summary>
+	/// <returns>bool</returns>
 	bool generateMoney();
+
+	/// <summary>
+	/// Returnt die Geschwindigkeit des Projectiles
+	/// </summary>
+	/// <returns>flaot</returns>
+	float getProjectileSpeed();
+
 };
