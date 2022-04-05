@@ -108,27 +108,28 @@ void Tower::setCoverableArea()
 			mapPoint2 = p_map->getWaypointAsVector(pointIterator + 1);
 		}
 
-		if (mapPoint1.y == mapPoint2.y)
+		pointIterator++;
+
+		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x)
 		{
 			point.y = mapPoint1.y;
-			for (point.x=mapPoint1.x; point.x < mapPoint2.x; point.x += 20)
+			for (point.x = mapPoint1.x; point.x <= mapPoint2.x; point.x += 20)
 			{
 				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 				coverableArea.push_back(point);
 			}
 		}
-		else if (mapPoint1.x == mapPoint2.x)
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y)
 		{
 			point.x = mapPoint1.x;
-			for (point.y=mapPoint1.y; point.y < mapPoint2.y; point.y += 20)
+			for (point.y = mapPoint1.y; point.y >= mapPoint2.y; point.y -= 20)
 			{
 				point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 				coverableArea.push_back(point);
 			}
 		}
-		pointIterator++;
 	}
-	
+
 	for (auto i : coverableArea)
 	{
 		std::cout << i.x << "\t" << i.y << "\t" << i.z << std::endl;
