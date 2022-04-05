@@ -148,17 +148,18 @@ void Tower::setCoverableArea()
 		}
 	}
 
+
 	CircleShape tmpCircle;
-	tmpCircle.setFillColor(Color::Transparent);
 	tmpCircle.setRadius(15);
+	tmpCircle.setFillColor(Color::Transparent);
 	for (auto i : coverableAreaAll)
 	{
 		tmpCircle.setPosition(Vector2f(i.x, i.y));
-		if (rangeShape.getGlobalBounds() == tmpCircle.getGlobalBounds())
+		if (rangeShape.getGlobalBounds().intersects(tmpCircle.getGlobalBounds()))
 		{
 			coverableArea.push_back(i);
 		}
-	}
+	}	
 }
 
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite

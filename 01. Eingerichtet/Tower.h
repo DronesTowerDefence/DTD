@@ -24,7 +24,6 @@ private:
 
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 	std::list<Vector3f> coverableAreaAll; //Alle Punkte auf der Strecke in 20px Schritten
-	std::list<CircleShape*> coverableAreaCircle;
 
 	std::string name; //Der Name des Turmes
 	
@@ -97,4 +96,5 @@ public:
 	/// </summary>
 	/// <returns>flaot</returns>
 	float getProjectileSpeed();
+
 };
