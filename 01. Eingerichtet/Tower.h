@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include "Map.h"
+#include "Service.h"
+#include "Updates.h"
+
 using namespace sf;
 
 class Tower
@@ -18,7 +21,6 @@ private:
 
 	bool shootCooldown; //Damit der Turm nicht dauerhaft schießen kann
 	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird
-
 	Clock shootTimer; //Zum zählen des Schuss-Cooldowns
 	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
 
@@ -26,13 +28,19 @@ private:
 
 	std::string name; //Der Name des Turmes
 	
+	float price1[4];
+	float price2[4];
 
+	float damageUpdate[4];
+	float attackspeedUpdate[4];
+
+	
 	CircleShape rangeShape;
 	Texture towerTex;
 	Sprite towerSpr;
 	Map* p_map;
 	Vector2f position;
-
+	Updates* update;
 	Tower(); //Standart-Konstruktor soll nicht benutzt werden
 	void setCoverableArea();
 
@@ -84,4 +92,13 @@ public:
 	int getIndex();
 
 	bool generateMoney();
+	/// <summary>
+	/// Prüft, ob das Element angeklickt wird
+	/// </summary>
+	/// <returns>ist geklickt</returns>
+	bool isClicked(RenderWindow* window);
+	Updates* getUpdates();
+
+	void manageUpdate(RenderWindow* window);
+
 };

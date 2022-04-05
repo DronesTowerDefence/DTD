@@ -154,6 +154,7 @@
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Round.cpp" />
     <ClCompile Include="TowerAlias.cpp" />
+    <ClCompile Include="Updates.cpp" />
     <ClCompile Include="Waypoint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Round.h" />
     <ClInclude Include="TowerAlias.h" />
+    <ClInclude Include="Updates.h" />
     <ClInclude Include="Waypoint.h" />
     <ClInclude Include="Map.h" />
   </ItemGroup>

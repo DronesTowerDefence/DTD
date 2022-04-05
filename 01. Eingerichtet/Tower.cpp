@@ -18,6 +18,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			attackspeed = 5;
 			towerTex.loadFromFile("img/tower0_50x50.png");
 			Round::getInstance()->addTower(this);
+
 			break;
 
 		case 1:
@@ -65,7 +66,14 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			Round::getInstance()->addTower(this);
 			break;
 		}
-
+		float x = 1;
+		for (int i = 0; i < 4; i++, x += .5)
+		{
+			price2[i] = price * x;
+			price1[i] = price * x;
+			damageUpdate[i] = damage * x;
+			attackspeedUpdate[i] = attackspeed * x;
+		}
 		position = pos;
 		p_map = n_map;
 		value = price;
@@ -83,6 +91,8 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			rangeShape.setOutlineThickness(5);
 			setCoverableArea();
 		}
+
+		update = new Updates();
 	}
 	else delete this;
 }
@@ -165,6 +175,49 @@ bool Tower::generateMoney()
 	}
 	else return false;
 }
+
+bool   Tower::isClicked(RenderWindow* window)
+{
+	if (Mouse::isButtonPressed(Mouse::Button::Left)) //Ob die linke Maustaste gedrückt wurde
+	{
+		Vector2i mouse = Mouse::getPosition(*window);
+		Vector2f pos, pos2;
+
+
+		pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			return true;
+		}
+
+	}
+	return false;
+}
+
+Updates* Tower::getUpdates()
+{
+	return update;
+}
+
+void Tower::manageUpdate(RenderWindow* window)
+{
+
+	int indexUpdate = update->isClicked(window, price1[update->getIndex1()], price2[update->getIndex2()]);
+	// index wird in der Methode erhöht
+	if (indexUpdate == 1)
+	{
+		damage = damageUpdate[update->getIndex1()];
+	}
+	else if (indexUpdate == 2)
+	{
+		attackspeed = attackspeedUpdate[update->getIndex2()];
+
+	}
+}
+
+
 
 float Tower::getValue()
 {

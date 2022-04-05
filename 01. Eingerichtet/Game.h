@@ -18,6 +18,8 @@ private:
 	Text eco;
 	bool lost;
 	int droneCount;
+	Tower* tower;		
+	RectangleShape toolbar;
 
 
 	void newRound();

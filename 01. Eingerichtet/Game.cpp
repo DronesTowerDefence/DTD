@@ -29,6 +29,11 @@ Game::Game()
 	lost = false;
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
+	tower = nullptr;
+	toolbar = RectangleShape();
+	toolbar.setFillColor(Color::Blue);
+	toolbar.setPosition(1720, 0);
+	toolbar.setSize(Vector2f(200, 991));
 }
 
 void Game::draw()
@@ -36,8 +41,16 @@ void Game::draw()
 	window->clear();
 
 	window->draw(*background); //Karte wird gedrawt
+	window->draw(toolbar);
 
-	sidebar->draw(window); //Sidebar wird gedrawt
+	if (tower != nullptr)
+	{
+		tower->getUpdates()->draw(window);
+	}
+	else
+	{
+		sidebar->draw(window); //Sidebar wird gedrawt
+	}
 
 	if (newTower != nullptr) //TowerAlias wird gedrawt
 	{
@@ -129,10 +142,27 @@ void Game::moveDrohnes()
 
 void Game::checkButtonClick()
 {
-	int index = sidebar->isClicked(window);
-	if (index > -1)
+
+	for (auto* t : round->getAllAttackTower())
 	{
-		newTower = new TowerAlias(index, map);
+		if (t->isClicked(window))
+			tower = t;
+	}
+	if (tower != nullptr)
+	{
+		tower->manageUpdate(window);
+		if (tower->getUpdates()->IsCloses(window))
+		{
+			tower = nullptr;
+		}
+	}
+	else
+	{
+		int index = sidebar->isClicked(window);
+		if (index > -1)
+		{
+			newTower = new TowerAlias(index, map);
+		}
 	}
 }
 
@@ -208,7 +238,7 @@ bool Game::towerAliasForbiddenPosition()
 			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
 			{
 				if ((newTower->getPos().x >= i->getKooadinaten().x && newTower->getPos().x <= (i + 1)->getKooadinaten().x)
-					&& (newTower->getPos().y <= i->getKooadinaten().y+50 && newTower->getPos().y >= i->getKooadinaten().y-50))
+					&& (newTower->getPos().y <= i->getKooadinaten().y + 50 && newTower->getPos().y >= i->getKooadinaten().y - 50))
 					return 0;
 			}
 			else if (i->getKooadinaten().x == (i + 1)->getKooadinaten().x)

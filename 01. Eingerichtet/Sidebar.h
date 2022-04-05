@@ -8,7 +8,6 @@ using namespace sf;
 class Sidebar
 {
 private:
-	RectangleShape backround;
 	//Map* p_map;
 
 	Sprite buttonSpr[5];

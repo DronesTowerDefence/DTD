@@ -19,16 +19,12 @@ Sidebar::Sidebar()
 	buttonTexture[3].loadFromFile("img/tower3_50x50.png");
 	buttonTexture[4].loadFromFile("img/moneyTower0_50x50.png");
 
-	buttonSpr[0].setTexture(buttonTexture[0]);
-	buttonSpr[1].setTexture(buttonTexture[1]);
-	buttonSpr[2].setTexture(buttonTexture[2]);
-	buttonSpr[3].setTexture(buttonTexture[3]);
-	buttonSpr[4].setTexture(buttonTexture[4]);
 
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
 	for (int i = 0; i < 5; i++)
 	{
+	buttonSpr[i].setTexture(buttonTexture[i]);
 		buttonText[i].setFont(buttonTextFont);
 		buttonText[i].setCharacterSize(20);
 		buttonText[i].setFillColor(Color::White);
@@ -44,22 +40,18 @@ Sidebar::Sidebar()
 
 	//std::cout << "Sidebar::Sidebar: \224"; //224
 
-	buttonText[0].setPosition(Vector2f(1770, 65)); //Position des Button-Textes
-	buttonText[1].setPosition(Vector2f(1845, 65));
-	buttonText[2].setPosition(Vector2f(1770, 170));
-	buttonText[3].setPosition(Vector2f(1845, 170));
-	buttonText[4].setPosition(Vector2f(1770, 275));
+	buttonText[0].setPosition(Vector2f(1757, 65)); //Position des Button-Textes
+	buttonText[1].setPosition(Vector2f(1832, 65));
+	buttonText[2].setPosition(Vector2f(1757, 170));
+	buttonText[3].setPosition(Vector2f(1832, 170));
+	buttonText[4].setPosition(Vector2f(1757, 275));
 
-	buttonSpr[0].setPosition(Vector2f(1775, 15)); //Position der Buttons
-	buttonSpr[1].setPosition(Vector2f(1850, 15));
-	buttonSpr[2].setPosition(Vector2f(1775, 120));
-	buttonSpr[3].setPosition(Vector2f(1850, 120));
-	buttonSpr[4].setPosition(Vector2f(1775, 225));
+	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
+	buttonSpr[1].setPosition(Vector2f(1837, 15));
+	buttonSpr[2].setPosition(Vector2f(1762, 120));
+	buttonSpr[3].setPosition(Vector2f(1837, 120));
+	buttonSpr[4].setPosition(Vector2f(1762, 225));
 
-	backround = RectangleShape();
-	backround.setFillColor(Color::Blue);
-	backround.setPosition(1750, 0);
-	backround.setSize(Vector2f(200, 991));
 }
 
 Sidebar* Sidebar::getInstance(/*Map* _map*/)
@@ -100,7 +92,6 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 
 void Sidebar::draw(sf::RenderWindow* window)
 {
-	window->draw(backround);
 	for (int i = 0; i < 5; i++)
 	{
 		window->draw(buttonSpr[i]);
