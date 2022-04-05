@@ -53,7 +53,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 4:
-			name = "Plantutsche";
+			name = "\224lbohrer";
 			damage = 0;
 			speed = 2;
 			price = 1000;
@@ -64,6 +64,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 		}
 
+		projectileSpeed = speed * 3;
 		position = pos;
 		p_map = n_map;
 		value = price;
@@ -169,11 +170,6 @@ float Tower::getValue()
 	return value;
 }
 
-float Tower::getAttackSpeed()
-{
-	return attackspeed;
-}
-
 std::list<Vector3f> Tower::getCoverableArea()
 {
 	return coverableArea;
@@ -192,4 +188,9 @@ CircleShape* Tower::getRangeShape()
 int Tower::getIndex()
 {
 	return index;
+}
+
+float Tower::getProjectileSpeed()
+{
+	return projectileSpeed;
 }
