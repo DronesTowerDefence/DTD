@@ -3,7 +3,7 @@
 
 Projectile::Projectile(Drone* _target, Tower* _tower)
 {
-	speed = _tower->getAttackSpeed();
+	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	Texture projectileTexture;
 	projectileTexture.loadFromFile("img/projectile0.png");
