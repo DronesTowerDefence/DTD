@@ -207,7 +207,7 @@ bool Game::towerAliasForbiddenPosition()
 			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
 			{
 				if ((newTower->getPos().x >= i->getKooadinaten().x && newTower->getPos().x <= (i + 1)->getKooadinaten().x)
-					&& (newTower->getPos().y <= i->getKooadinaten().y+50 && newTower->getPos().y >= i->getKooadinaten().y-50))
+					&& (newTower->getPos().y <= i->getKooadinaten().y + 50 && newTower->getPos().y >= i->getKooadinaten().y - 50))
 					return 0;
 			}
 			else if (i->getKooadinaten().x == (i + 1)->getKooadinaten().x)
