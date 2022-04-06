@@ -17,6 +17,7 @@ private:
 	Drone* dronetarget;
 	Vector2f targetstill;
 	Texture projectileTexture;
+	bool collided;
 public:
 	Projectile(Drone*,Tower*,int);
 	void operate();
@@ -26,5 +27,6 @@ public:
 	void colission();
 	Sprite* getProjectileSprite();
 	void setmove();
+	bool getcollided();
 };
 

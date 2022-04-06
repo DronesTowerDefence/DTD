@@ -98,6 +98,7 @@ bool Drone::takeDamage(int damage) {
 	}
 	if (lives <= 0) {
 		//delete this;
+		std::cout << "tot";
 		//True, wenn Drone tot ist
 		alive = false;
 		return true;

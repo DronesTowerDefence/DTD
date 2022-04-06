@@ -62,7 +62,9 @@ void Game::draw()
 
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
-		window->draw(*(t->getProjectileSprite()));
+		if(t->getcollided() == 0)
+			window->draw(*(t->getProjectileSprite()));
+		
 	}
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
