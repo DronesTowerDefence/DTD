@@ -123,6 +123,7 @@ void Game::moveDrohnes()
 	for (Projectile* i : round->getAllProjectiles())
 	{
 		i->moveProjectile();
+		i->colission();
 	}
 
 }

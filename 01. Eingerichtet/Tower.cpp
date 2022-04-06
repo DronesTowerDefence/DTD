@@ -206,6 +206,11 @@ bool Tower::generateMoney()
 	else return false;
 }
 
+float Tower::getDamage()
+{
+	return damage;
+}
+
 float Tower::getValue()
 {
 	return value;

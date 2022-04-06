@@ -1,5 +1,6 @@
 #include "Drone.h"
 #include "Round.h"
+#include<iostream>
 using namespace sf;
 
 
@@ -86,7 +87,6 @@ void Drone::pass()
 }
 
 bool Drone::takeDamage(int damage) {
-
 	lives -= damage;
 	if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0(damage1)40x40.png");

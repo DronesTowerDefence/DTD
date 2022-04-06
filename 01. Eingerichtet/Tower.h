@@ -82,6 +82,7 @@ public:
 	/// <summary>
 	/// Returnt den Index, um welchen Turm es sich handelt
 	/// </summary>
+	float getProjectileSpeed();
 	/// <returns>int</returns>
 	int getIndex();
 
@@ -91,10 +92,6 @@ public:
 	/// <returns>bool</returns>
 	bool generateMoney();
 
-	/// <summary>
-	/// Returnt die Geschwindigkeit des Projectiles
-	/// </summary>
-	/// <returns>flaot</returns>
-	float getProjectileSpeed();
+	float getDamage();
 
 };

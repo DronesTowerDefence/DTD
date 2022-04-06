@@ -47,8 +47,21 @@ void Projectile::moveProjectile()
 {
 	if (style == 2)
 		homing();
-	std::cout << target.x << target.y << std::endl;
+	//std::cout << target.x << target.y << std::endl;
 	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y/speed));
+
+
+}
+
+void Projectile::colission()
+{
+	if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 5 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -5) {
+		if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 5 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -5) {
+			dronetarget->takeDamage(tower->getDamage());
+			//delete this;
+		}
+
+	}
 }
 
 void Projectile::homing() {

@@ -9,6 +9,7 @@ class Projectile
 private:
 	float speed;
 	int style;
+	int damage;
 	Vector2f move;
 	Sprite projectilesprite;
 	Vector3f target;
@@ -22,6 +23,7 @@ public:
 	Vector3f targeting();
 	void homing();
 	void moveProjectile();
+	void colission();
 	Sprite* getProjectileSprite();
 	void setmove();
 };
