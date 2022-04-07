@@ -23,7 +23,6 @@ private:
 	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
 
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
-	std::list<Vector3f> coverableAreaAll; //Alle Punkte auf der Strecke in 20px Schritten
 
 	std::string name; //Der Name des Turmes
 	

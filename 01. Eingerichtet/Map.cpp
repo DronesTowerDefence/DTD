@@ -114,6 +114,7 @@ Vector2f Map::getWaypointAsVector(int index)
 /// </summary>
 Map::Map()
 {
+	Round::getInstance()->setP_map(this);
 
 	points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 	points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
