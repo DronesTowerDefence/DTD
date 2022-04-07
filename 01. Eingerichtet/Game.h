@@ -18,8 +18,6 @@ private:
 	Text eco;
 	bool lost;
 	int droneCount;
-	CircleShape collisionShape;
-
 
 	void newRound();
 	/// <summary>

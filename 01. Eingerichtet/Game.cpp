@@ -46,8 +46,6 @@ void Game::draw()
 		window->draw((*newTower->getRangeShape()));
 	}
 
-	window->draw(collisionShape);
-
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
 	{
 		window->draw(t->getTowerSpr());
@@ -212,6 +210,7 @@ bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700)
 	{
+		CircleShape collisionShape;
 		collisionShape.setFillColor(Color::Transparent);
 		collisionShape.setRadius(20);
 		for (auto i : round->getAllCoverablePoints())
