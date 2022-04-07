@@ -88,14 +88,14 @@ void Drone::pass()
 
 bool Drone::takeDamage(int damage) {
 	lives -= damage;
-	if (lives == 2) {
+	/*if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0(damage1)40x40.png");
 		drone.setTexture(droneTexture);
 	}
 	else if (lives == 1) {
 		droneTexture.loadFromFile("img/drone0(damage2)40x40.png");
 		drone.setTexture(droneTexture);
-	}
+	}*/
 	if (lives <= 0) {
 		//delete this;
 		//std::cout << "tot";
