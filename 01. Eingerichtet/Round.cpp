@@ -1,5 +1,6 @@
 #include "Round.h"
 
+
 Round* Round::instance = nullptr;
 
 Round::Round()
@@ -261,6 +262,13 @@ int Round::getDroneCountInRound(int i)
 	return droneCountInRound[i];
 }
 
+void Round::deleteDrone(Drone* drone)
+{
+	
+	allDrones.remove(drone);
+	
+}
+
 std::list<Vector2f> Round::getAllCoverablePoints()
 {
 	return allCoverablePoints;
@@ -271,42 +279,3 @@ void Round::setP_map(Map *_map)
 	p_map = _map;
 }
 
-//void Round::deleteDrone(Drone* drone)
-//{
-//	std::list<Drone*>::iterator it;
-//	
-//	for (auto* i : allDrones) {
-//
-//		if (i == drone) {
-//			*it = i;
-//			break;
-//
-//		}
-//	}
-//	allDrones.erase(it);
-//
-//	std::list<Drone*> ersatz;
-//
-//	for (auto g : allDrones) {
-//		for (auto h : ersatz) {
-//			if (g != nullptr) {
-//				h = g;
-//			}
-//		}
-//	}
-//
-//	allDrones.clear();
-//
-//	for (auto g : ersatz) {
-//		for (auto h : allDrones) {
-//
-//				h = g;
-//			
-//		}
-//	}
-//
-//	//Bei dieser Methode erstelle ich eine Kopie ohne nullptr, und cleare die alte und setze wieder in die alte ein
-//	//Funktioniert trotzdem nicht
-//
-//}
-////std::list<Drone*>::iterator

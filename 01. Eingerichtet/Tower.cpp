@@ -116,7 +116,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
 	if (index < 4)
 	{
-		if (!shootCooldown && a->getAlive())
+		if (!shootCooldown)
 		{
 			new Projectile(a, this, 2); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
