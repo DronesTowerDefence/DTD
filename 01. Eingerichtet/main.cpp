@@ -1,6 +1,7 @@
-#include<SFML/Graphics.hpp>
-#include<string>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <string>
+#include <iostream>
 #include "Game.h"
 
 using namespace sf;

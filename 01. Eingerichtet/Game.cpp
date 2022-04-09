@@ -26,10 +26,13 @@ Game::Game()
 	round->setAllCoverablePoints();
 
 	droneCount = 0;
+	chooseMusic = 0;
 
 	lost = false;
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
+
+	setMusicSound();
 }
 
 void Game::draw()
@@ -63,9 +66,9 @@ void Game::draw()
 
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
-		if(t->getcollided() == 0)
+		if (t->getcollided() == 0)
 			window->draw(*(t->getProjectileSprite()));
-		
+
 	}
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
@@ -108,6 +111,7 @@ void Game::startGame()
 		moveDrohnes();
 		checkTowerAlias();
 		generateMoneyTowers();
+		changeBackgroundMusic();
 		draw();
 	}
 }
@@ -116,6 +120,35 @@ void Game::newRound()
 {
 	droneCount = 0;
 	round->addRound();
+}
+
+void Game::setMusicSound()
+{
+	musicBuffer[0].loadFromFile("music/1-0.mp3");
+	musicBuffer[1].loadFromFile("music/1-1.mp3");
+	music[0].setBuffer(musicBuffer[0]);
+	music[1].setBuffer(musicBuffer[1]);
+
+	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
+	music[chooseMusic].play();
+	music[chooseMusic].setLoop(true);
+}
+
+void Game::changeBackgroundMusic()
+{
+	if (chooseMusic == 0 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		chooseMusic = 1;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+	}
+	else if (chooseMusic == 1 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		chooseMusic = 0;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+	}
+	
 }
 
 void Game::moveDrohnes()

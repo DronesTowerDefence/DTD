@@ -21,9 +21,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Waypoint.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Tower.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -46,6 +43,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Waypoint.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,5 +106,13 @@
     <Image Include="img\moneyTower0_50x50.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="music\1-0.mp3">
+      <Filter>Ressourcendateien</Filter>
+    </Media>
+    <Media Include="music\1-1.mp3">
+      <Filter>Ressourcendateien</Filter>
+    </Media>
   </ItemGroup>
 </Project>
