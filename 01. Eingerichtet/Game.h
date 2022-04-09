@@ -19,7 +19,6 @@ private:
 	bool lost;
 	int droneCount;
 
-
 	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter

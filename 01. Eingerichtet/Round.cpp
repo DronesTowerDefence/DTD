@@ -26,6 +26,64 @@ Round* Round::getInstance()
 	return instance;
 }
 
+void Round::setAllCoverablePoints()
+{
+	Vector2f point = Vector2f(0, 0);
+	Vector2f mapPoint1;
+	Vector2f mapPoint2;
+	int pointIterator = 0;
+
+	for (auto i : p_map->getPoints())
+	{
+		if (pointIterator == 0)
+		{
+			mapPoint1.y = 991; //Muss bei anderer Map angepasst werden
+			mapPoint1.x = p_map->getWaypointAsVector(pointIterator).x;
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+		else
+		{
+			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1);
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+
+		pointIterator++;
+
+		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x <= mapPoint2.x; point.x += 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y)
+		{
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y >= mapPoint2.y; point.y -= 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.y == mapPoint2.y && mapPoint1.x > mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x >= mapPoint2.x; point.x -= 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y < mapPoint2.y)
+		{
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y <= mapPoint2.y; point.y += 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+	}
+}
+
 void Round::setDroneCountInRound()
 {
 	for (int i = 0; i < 100; i++)
@@ -210,9 +268,14 @@ void Round::deleteDrone(Drone* drone)
 	allDrones.remove(drone);
 	
 }
-//
-//	//Bei dieser Methode erstelle ich eine Kopie ohne nullptr, und cleare die alte und setze wieder in die alte ein
-//	//Funktioniert trotzdem nicht
-//
-//}
-////std::list<Drone*>::iterator
+
+std::list<Vector2f> Round::getAllCoverablePoints()
+{
+	return allCoverablePoints;
+}
+
+void Round::setP_map(Map *_map)
+{
+	p_map = _map;
+}
+

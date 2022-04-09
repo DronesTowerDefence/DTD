@@ -7,7 +7,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower,int _style)
 	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	collided = 0;
-	projectileTexture.loadFromFile("img/projectile0.png");
+	projectileTexture.loadFromFile("img/projectile.png");
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
 	style = _style;
@@ -56,8 +56,8 @@ void Projectile::moveProjectile()
 
 void Projectile::colission()
 {
-	if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 5 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -5) {
-		if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 5 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -5) {
+	if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 10 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -10) {
+		if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 10 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -10) {
 			dronetarget->takeDamage(tower->getDamage());
 			collided = 1;
 			//delete this;

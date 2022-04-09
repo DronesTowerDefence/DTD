@@ -15,14 +15,15 @@ Game::Game()
 {
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
+	map = new Map();
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance(/*map*/);
-	map = new Map();
 	newTower = nullptr;
 	texture = new Texture();
 	texture->loadFromFile("img/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
+	round->setAllCoverablePoints();
 
 	droneCount = 0;
 
@@ -206,20 +207,14 @@ bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700)
 	{
-		for (auto i : map->getPoints())
+		CircleShape collisionShape;
+		collisionShape.setFillColor(Color::Transparent);
+		collisionShape.setRadius(20);
+		for (auto i : round->getAllCoverablePoints())
 		{
-			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
-			{
-				if ((newTower->getPos().x >= i->getKooadinaten().x && newTower->getPos().x <= (i + 1)->getKooadinaten().x)
-					&& (newTower->getPos().y <= i->getKooadinaten().y + 50 && newTower->getPos().y >= i->getKooadinaten().y - 50))
-					return 0;
-			}
-			else if (i->getKooadinaten().x == (i + 1)->getKooadinaten().x)
-			{
-				if ((newTower->getPos().y >= i->getKooadinaten().y && newTower->getPos().y <= (i + 1)->getKooadinaten().y)
-					&& (newTower->getPos().x <= i->getKooadinaten().x + 50 && newTower->getPos().x >= i->getKooadinaten().x - 50))
-					return 0;
-			}
+			collisionShape.setPosition(i);
+			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
+				return 0;
 		}
 	}
 	else return 0;
