@@ -27,7 +27,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
-	alive = true;
+	
 	
 	/*case 1:*/
 
@@ -100,7 +100,7 @@ bool Drone::takeDamage(int damage) {
 		//delete this;
 		//std::cout << "tot";
 		//True, wenn Drone tot ist
-		alive = false;
+		delete this;
 		return true;
 	}
 
@@ -133,18 +133,9 @@ Vector2f Drone::getNextPosition(int nextFrame)
 
 }
 
-void Drone::setAlive(bool d)
-{
-	alive = d;
-}
-bool Drone::getAlive() {
-
-	return alive;
-
-}
 
 Drone::~Drone()
 {
-	//Round::getInstance()->deleteDrone(this);
-	delete this;
+	Round::getInstance()->deleteDrone(this);
+	
 }

@@ -69,9 +69,6 @@ void Game::draw()
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
-		if (d->getAlive() == false) {
-			continue;
-		}
 		window->draw(d->getDroneSprite());
 	}
 
@@ -178,10 +175,10 @@ void Game::loseGame()
 		for (auto i : round->getAllDrones())
 		{
 			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
-				if (i->getAlive() == true) {
+				
 					round->subhealth(i->getLives());
-					i->setAlive(false);
-				}
+					i->~Drone();
+				
 			}
 		}
 		round->restartDroneSubHealthTimer();
