@@ -183,8 +183,8 @@
     <Image Include="img\tower3_50x50.png" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="music\1-0.mp3" />
-    <Media Include="music\1-1.mp3" />
+    <Media Include="music\1-0.wav" />
+    <Media Include="music\1-1.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

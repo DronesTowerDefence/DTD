@@ -108,10 +108,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="music\1-0.mp3">
+    <Media Include="music\1-0.wav">
       <Filter>Ressourcendateien</Filter>
     </Media>
-    <Media Include="music\1-1.mp3">
+    <Media Include="music\1-1.wav">
       <Filter>Ressourcendateien</Filter>
     </Media>
   </ItemGroup>

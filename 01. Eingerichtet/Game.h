@@ -1,6 +1,6 @@
 #pragma once
-#include <list>
 #include <SFML/Audio.hpp>
+#include <list>
 #include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
@@ -22,7 +22,6 @@ private:
 	Sound music[2];
 	int chooseMusic;
 	Clock changeMusicTimer;
-
 
 	bool lost;
 	int droneCount;

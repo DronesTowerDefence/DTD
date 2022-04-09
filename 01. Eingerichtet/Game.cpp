@@ -124,8 +124,8 @@ void Game::newRound()
 
 void Game::setMusicSound()
 {
-	musicBuffer[0].loadFromFile("music/1-0.mp3");
-	musicBuffer[1].loadFromFile("music/1-1.mp3");
+	musicBuffer[0].loadFromFile("music/1-0.wav");
+	musicBuffer[1].loadFromFile("music/1-1.wav");
 	music[0].setBuffer(musicBuffer[0]);
 	music[1].setBuffer(musicBuffer[1]);
 
