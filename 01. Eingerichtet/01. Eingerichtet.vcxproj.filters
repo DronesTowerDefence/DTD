@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Ressourcendateien\sounds">
+      <UniqueIdentifier>{7de1acb6-19a3-40aa-a4e6-f85eb1d1f781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\music">
+      <UniqueIdentifier>{69537bb6-9544-4e9e-9bb8-f54172c2ca4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\fonts">
+      <UniqueIdentifier>{51606159-3628-4c18-82ab-402863a532b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img">
+      <UniqueIdentifier>{a92aa2bf-5578-49b3-ad83-5e142ea0b5b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -82,60 +94,78 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="fonts\arial.ttf">
-      <Filter>Ressourcendateien</Filter>
-    </Font>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="img\drone0(damage1)40x40.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\drone0(damage2)40x40.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\drone0(damage3)40x40.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\drone0_40x40.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\Map1.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\moneyTower0_50x50.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\projectile.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\projectile0.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\tower0_50x50.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\tower1_50x50.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\tower2_50x50.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
     <Image Include="img\tower3_50x50.png">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\img</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="music\1-0.wav">
-      <Filter>Ressourcendateien</Filter>
+    <Media Include="sounds\hit-0.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
     </Media>
-    <Media Include="music\1-1.wav">
-      <Filter>Ressourcendateien</Filter>
+    <Media Include="sounds\hit-1.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
     </Media>
-    <Media Include="music\2-0.wav">
-      <Filter>Ressourcendateien</Filter>
+    <Media Include="sounds\shot-0.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
+    </Media>
+    <Media Include="sounds\shot-1.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
+    </Media>
+    <Media Include="sounds\shot-2.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
+    </Media>
+    <Media Include="sounds\shot-3.wav">
+      <Filter>Ressourcendateien\sounds</Filter>
     </Media>
     <Media Include="music\3-0.wav">
-      <Filter>Ressourcendateien</Filter>
+      <Filter>Ressourcendateien\music</Filter>
     </Media>
+    <Media Include="music\1-0.wav">
+      <Filter>Ressourcendateien\music</Filter>
+    </Media>
+    <Media Include="music\1-1.wav">
+      <Filter>Ressourcendateien\music</Filter>
+    </Media>
+    <Media Include="music\2-0.wav">
+      <Filter>Ressourcendateien\music</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\arial.ttf">
+      <Filter>Ressourcendateien\fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>
