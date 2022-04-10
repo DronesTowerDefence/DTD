@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Audio.hpp>
 #include <list>
 #include "Round.h"
 #include "Sidebar.h"
@@ -16,8 +17,19 @@ private:
 	Texture* texture;
 	Font stdFont;
 	Text eco;
+
+	SoundBuffer musicBuffer[2];
+	Sound music[2];
+	int chooseMusic;
+	Clock changeMusicTimer;
+
 	bool lost;
 	int droneCount;
+
+	/// <summary>
+	/// Ver‰ndert regelm‰ﬂig die Musik
+	/// </summary>
+	void changeBackgroundMusic();
 
 	void newRound();
 	/// <summary>
@@ -60,6 +72,11 @@ private:
 	/// Konstruktor von Game
 	/// </summary>
 	Game();
+
+	/// <summary>
+	/// Musik und Sounds werden initialisiert
+	/// </summary>
+	void setMusicSound();
 
 	static Game* instance;
 public:
