@@ -24,7 +24,6 @@
     <ProjectGuid>{d6487713-ba72-49f4-bef7-cb72a5a1ce36}</ProjectGuid>
     <RootNamespace>My01Eingerichtet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>5-Scrum-Team</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -123,7 +122,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,41 +141,46 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Round.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />
-    <ClCompile Include="Round.cpp" />
     <ClCompile Include="TowerAlias.cpp" />
     <ClCompile Include="Waypoint.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Round.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
-    <ClInclude Include="Round.h" />
     <ClInclude Include="TowerAlias.h" />
     <ClInclude Include="Waypoint.h" />
-    <ClInclude Include="Map.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="image\Map1.png" />
-    <Image Include="img\drone2_40x40.png" />
+    <Image Include="img\drone0(damage1)40x40.png" />
+    <Image Include="img\drone0(damage2)40x40.png" />
+    <Image Include="img\drone0(damage3)40x40.png" />
+    <Image Include="img\drone0_40x40.png" />
+    <Image Include="img\Map1.png" />
     <Image Include="img\moneyTower0_50x50.png" />
+    <Image Include="img\projectile.png" />
+    <Image Include="img\projectile0.png" />
     <Image Include="img\tower0_50x50.png" />
     <Image Include="img\tower1_50x50.png" />
     <Image Include="img\tower2_50x50.png" />

@@ -18,31 +18,31 @@
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Tower.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Round.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Drone.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Sidebar.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="TowerAlias.cpp">
+    <ClCompile Include="Map.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Round.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
+    <ClCompile Include="Sidebar.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerAlias.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Waypoint.cpp">
@@ -50,45 +50,68 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Map.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Waypoint.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Round.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Tower.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Drone.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Sidebar.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="TowerAlias.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Service.h">
+    <ClInclude Include="Map.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Round.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Sidebar.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerAlias.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Waypoint.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="fonts\arial.ttf" />
+    <Font Include="fonts\arial.ttf">
+      <Filter>Ressourcendateien</Filter>
+    </Font>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="image\Map1.png">
+    <Image Include="img\drone0(damage1)40x40.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
-    <Image Include="img\drone2_40x40.png">
+    <Image Include="img\drone0(damage2)40x40.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\drone0(damage3)40x40.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\drone0_40x40.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\Map1.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\moneyTower0_50x50.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\projectile.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\projectile0.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="img\tower0_50x50.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
     <Image Include="img\tower1_50x50.png">
@@ -98,12 +121,6 @@
       <Filter>Ressourcendateien</Filter>
     </Image>
     <Image Include="img\tower3_50x50.png">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
-    <Image Include="img\tower0_50x50.png">
-      <Filter>Ressourcendateien</Filter>
-    </Image>
-    <Image Include="img\moneyTower0_50x50.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>
