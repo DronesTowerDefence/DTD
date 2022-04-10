@@ -123,8 +123,12 @@ void Game::setMusicSound()
 {
 	musicBuffer[0].loadFromFile("music/1-0.wav");
 	musicBuffer[1].loadFromFile("music/1-1.wav");
+	musicBuffer[2].loadFromFile("music/2-0.wav");
+	musicBuffer[3].loadFromFile("music/3-0.wav");
 	music[0].setBuffer(musicBuffer[0]);
 	music[1].setBuffer(musicBuffer[1]);
+	music[2].setBuffer(musicBuffer[2]);
+	music[3].setBuffer(musicBuffer[3]);
 
 	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
 	music[chooseMusic].play();
@@ -135,17 +139,29 @@ void Game::changeBackgroundMusic()
 {
 	if (chooseMusic == 0 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
 	{
+		music[chooseMusic].setLoop(false);
 		chooseMusic = 1;
 		music[chooseMusic].play();
 		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
 	}
-	else if (chooseMusic == 1 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	else if (changeMusicTimer.getElapsedTime().asSeconds() >= 30)
 	{
+		music[chooseMusic].setLoop(false);
+		chooseMusic++;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
+	}
+	else if (chooseMusic == 3 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		music[chooseMusic].setLoop(false);
 		chooseMusic = 0;
 		music[chooseMusic].play();
 		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
 	}
-	
+
 }
 
 void Game::moveDrohnes()
@@ -209,10 +225,10 @@ void Game::loseGame()
 		for (auto i : round->getAllDrones())
 		{
 			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
-				
-					round->subhealth(i->getLives());
-					i->~Drone();
-				
+
+				round->subhealth(i->getLives());
+				i->~Drone();
+
 			}
 		}
 		round->restartDroneSubHealthTimer();

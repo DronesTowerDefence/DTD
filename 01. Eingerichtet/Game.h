@@ -18,8 +18,8 @@ private:
 	Font stdFont;
 	Text eco;
 
-	SoundBuffer musicBuffer[2];
-	Sound music[2];
+	SoundBuffer musicBuffer[4];
+	Sound music[4];
 	int chooseMusic;
 	Clock changeMusicTimer;
 

@@ -131,5 +131,11 @@
     <Media Include="music\1-1.wav">
       <Filter>Ressourcendateien</Filter>
     </Media>
+    <Media Include="music\2-0.wav">
+      <Filter>Ressourcendateien</Filter>
+    </Media>
+    <Media Include="music\3-0.wav">
+      <Filter>Ressourcendateien</Filter>
+    </Media>
   </ItemGroup>
 </Project>
