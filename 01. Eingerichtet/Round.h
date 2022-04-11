@@ -11,7 +11,7 @@ class Round
 private:
 	int money;
 	int health;
-	int round;
+	int index;
 	int towerPrice[3];
 	Clock droneTimer;
 	Clock droneSubHealthTimer;
@@ -59,9 +59,9 @@ public:
 
 	bool setHealth(int);
 
-	void addRound();
+	void nextRound();
 
-	int getRound();
+	int getIndex();
 
 	std::list<Tower*> getAllAttackTower();
 	std::list<Drone*> getAllDrones();

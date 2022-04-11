@@ -7,7 +7,7 @@ Round::Round()
 {
 	money = 2000; //Start-Geld
 	health = 100; //Start-Leben
-	round = 0; //Start-Runde
+	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
@@ -152,16 +152,16 @@ bool Round::setHealth(int _health)
 	return 1;
 }
 
-void Round::addRound()
+void Round::nextRound()
 {
-	round++;
+	index++;
 	Lost = false;
 	Won = true;
 }
 
-int Round::getRound()
+int Round::getIndex()
 {
-	return round;
+	return index;
 }
 
 std::list<Tower*> Round::getAllAttackTower()

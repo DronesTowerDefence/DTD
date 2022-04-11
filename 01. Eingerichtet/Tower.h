@@ -81,16 +81,25 @@ public:
 	/// <summary>
 	/// Returnt den Index, um welchen Turm es sich handelt
 	/// </summary>
-	float getProjectileSpeed();
 	/// <returns>int</returns>
 	int getIndex();
+
+	/// <summary>
+	/// Return die Geschwindigkeit des Projektiels
+	/// </summary>
+	/// <returns></returns>
+	float getProjectileSpeed();
+
+	/// <summary>
+	/// Return den Schaden, welchen der Turm mit einem Projektiel macht
+	/// </summary>
+	/// <returns></returns>
+	float getDamage();
 
 	/// <summary>
 	/// Generiert Geld. Funktioniert nur bei MoneyTowers
 	/// </summary>
 	/// <returns>bool</returns>
 	bool generateMoney();
-
-	float getDamage();
 
 };

@@ -10,7 +10,7 @@ class Game
 private:
 	Round* round;
 	Sidebar* sidebar;
-	Map* map;
+	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
 	RectangleShape* background;
@@ -78,10 +78,23 @@ private:
 	/// </summary>
 	void setMusicSound();
 
+	/// <summary>
+	/// Speichert das Spiel
+	/// </summary>
+	void saveGame();
+
+	/// <summary>
+	/// Lädt einen gespeicherten Spielstand
+	/// NOCH NICHT FERTIG!
+	/// </summary>
+	/// <param name="Map Index"></param>
+	/// <returns>Erfolgreich?</returns>
+	bool loadGame(int);
+
 	static Game* instance;
 public:
 
-	static Game* getInstance();
+	static Game* getInstance(); 
 
 	/// <summary>
 	/// Startet das Spiel

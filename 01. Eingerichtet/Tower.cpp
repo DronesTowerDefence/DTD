@@ -133,7 +133,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 
 bool Tower::generateMoney()
 {
-	if (index > 3)
+	if (index == 4)
 	{
 		if (!generationCooldown)
 		{
