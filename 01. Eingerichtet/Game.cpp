@@ -102,7 +102,7 @@ void Game::startGame()
 		{
 			if (event.type == Event::Closed)
 			{
-				safeGame();
+				saveGame();
 				window->close();
 			}
 			if (event.type == Event::LostFocus)
@@ -127,18 +127,20 @@ void Game::newRound()
 	round->nextRound();
 }
 
-void Game::safeGame()
+
+void Game::saveGame()
+
 {
 	if (round->getIndex() <= 0)
 		return;
 
 	std::string datei;
-	datei = "saves/safegame" + std::to_string(p_map->getIndex()); //Dateiname
-	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
+	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geÃ¶ffnet werden
 
 	system("md saves >nul 2>&1");
-	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
-	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
+	//Erstellt den Ordner, wo die SpielstÃ¤nde gespeichert werden,
+	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurÃ¼ckgegeben, diese wird aber mit ">nul 2>&1" unterdrÃ¼ckt
 
 	std::ofstream wdatei;
 	wdatei.open(datei);
@@ -170,11 +172,11 @@ void Game::safeGame()
 bool Game::loadGame(int mapIndex)
 {
 	std::string datei; //Dateipfad
-	datei = "saves/safegame" + std::to_string(mapIndex);
+	datei = "saves/savegame" + std::to_string(mapIndex);
 	datei += ".sav";
 
 
-	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	std::ifstream FileTest(datei); //ÃœberprÃ¼ft ob die Datei existiert, wenn nicht, wird false zurÃ¼ckgegeben
 	if (!FileTest)
 		return false;
 
@@ -185,7 +187,7 @@ bool Game::loadGame(int mapIndex)
 
 	while (!rdatei.eof())
 	{
-		for (int i = 0; i < 50; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+		for (int i = 0; i < 50; i++, buffer[i] = '\0'); //LÃ¶scht den Inhalt des Buffers
 
 		for (int i = 0; i < 50; i++)
 		{
@@ -218,7 +220,7 @@ void Game::setMusicSound()
 	music[2].setBuffer(musicBuffer[2]);
 	music[3].setBuffer(musicBuffer[3]);
 
-	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
+	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geÃ¤ndert
 	music[chooseMusic].play();
 	music[chooseMusic].setLoop(true);
 }
