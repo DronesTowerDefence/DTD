@@ -11,6 +11,11 @@ int main()
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
+
+	Image icon;
+	icon.loadFromFile("img/icon.png");
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
 	Game::getInstance()->setWindow(&window);
 	Game::getInstance()->startGame();
 

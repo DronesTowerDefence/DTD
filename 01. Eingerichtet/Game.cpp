@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <fstream>
 
 Game* Game::instance = nullptr;
 
@@ -15,7 +16,7 @@ Game::Game()
 {
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
-	map = new Map();
+	p_map = new Map();
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance(/*map*/);
 	newTower = nullptr;
@@ -76,13 +77,13 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getRound())) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
-		round->addDrone(new Drone(1, map->getStart(), 0, -1));
+		round->addDrone(new Drone(1, p_map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
-	if (droneCount == round->getDroneCountInRound(round->getRound()) && round->getAllDrones().empty())
+	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())
 	{
 		newRound();
 	}
@@ -100,12 +101,19 @@ void Game::startGame()
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
+			{
+				safeGame();
 				window->close();
+			}
+			if (event.type == Event::LostFocus)
+			{
+				window->requestFocus();
+			}
 
 		}
 		loseGame();
-		checkShoot();
 		moveDrohnes();
+		checkShoot();
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
@@ -116,7 +124,87 @@ void Game::startGame()
 void Game::newRound()
 {
 	droneCount = 0;
-	round->addRound();
+	round->nextRound();
+}
+
+void Game::safeGame()
+{
+	if (round->getIndex() <= 0)
+		return;
+
+	std::string datei;
+	datei = "saves/safegame" + std::to_string(p_map->getIndex()); //Dateiname
+	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+
+	system("md saves >nul 2>&1");
+	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
+	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
+
+	std::ofstream wdatei;
+	wdatei.open(datei);
+
+	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
+	wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
+	wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
+	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
+
+	int j = 0;
+	for (auto i : round->getAllAttackTower())
+	{
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
+	}
+
+	for (auto i : round->getAllMoneyTower())
+	{
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
+	}
+
+	wdatei << "\n";
+	wdatei.close();
+}
+
+bool Game::loadGame(int mapIndex)
+{
+	std::string datei; //Dateipfad
+	datei = "saves/safegame" + std::to_string(mapIndex);
+	datei += ".sav";
+
+
+	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	if (!FileTest)
+		return false;
+
+	std::ifstream rdatei;
+	rdatei.open(datei);
+
+	char buffer[50];
+
+	while (!rdatei.eof())
+	{
+		for (int i = 0; i < 50; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+
+		for (int i = 0; i < 50; i++)
+		{
+			if (buffer[i] != '\0') //Jeder Buchstabe einer Zeile wird im Array gespeichert
+			{
+				rdatei.get(buffer[i]);
+			}
+			else if (i != 0) //Nullterminierung am Ende der Zeile
+			{
+				buffer[i - 1] = '\0';
+			}
+			else //Wenn die Zeile leer ist
+			{
+				buffer[i] = '\0';
+			}
+		}
+	}
+	rdatei.close();
+	return true;
 }
 
 void Game::setMusicSound()
@@ -168,7 +256,7 @@ void Game::moveDrohnes()
 {
 	for (Drone* p : round->getAllDrones())
 	{
-		map->checkChangeDirection(p);
+		p_map->checkChangeDirection(p);
 		p->move();
 	}
 
@@ -185,7 +273,7 @@ void Game::checkButtonClick()
 	int index = sidebar->isClicked(window);
 	if (index > -1)
 	{
-		newTower = new TowerAlias(index, map);
+		newTower = new TowerAlias(index, p_map);
 	}
 }
 
@@ -248,7 +336,7 @@ void Game::loseGame()
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
 			"\nMoney: " + std::to_string(round->getMoney()) +
-			"\nRound: " + std::to_string(round->getRound() + 1));
+			"\nRound: " + std::to_string(round->getIndex() + 1));
 	}
 }
 
