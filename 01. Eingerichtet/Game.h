@@ -27,7 +27,7 @@ private:
 	int droneCount;
 
 	/// <summary>
-	/// Ver‰ndert regelm‰ﬂig die Musik
+	/// Ver√§ndert regelm√§√üig die Musik
 	/// </summary>
 	void changeBackgroundMusic();
 
@@ -50,19 +50,19 @@ private:
 	void draw();
 
 	/// <summary>
-	/// ‹berpr¸ft ob ein Turm eine Drohne abschieﬂen kann
+	/// √úberpr√ºft ob ein Turm eine Drohne abschie√üen kann
 	/// </summary>
 	void checkShoot();
 
 	/// <summary>
-	/// L‰sst MoneyTower Geld generieren
+	/// L√§sst MoneyTower Geld generieren
 	/// </summary>
 	void generateMoneyTowers();
 
 	void loseGame();
 
 	/// <summary>
-	/// ‹berpr¸ft, ob der towerAlias an einer verbotenen Position ist.
+	/// √úberpr√ºft, ob der towerAlias an einer verbotenen Position ist.
 	/// Z.B. Die Sidebar oder die Strecke
 	/// </summary>
 	/// <returns></returns>
@@ -84,7 +84,7 @@ private:
 	void saveGame();
 
 	/// <summary>
-	/// L‰dt einen gespeicherten Spielstand
+	/// L√§dt einen gespeicherten Spielstand
 	/// NOCH NICHT FERTIG!
 	/// </summary>
 	/// <param name="Map Index"></param>
@@ -102,13 +102,13 @@ public:
 	void startGame();
 
 	/// <summary>
-	/// Gibt die Schriftart zur¸ck
+	/// Gibt die Schriftart zur√ºck
 	/// </summary>
 	/// <returns>Font</returns>
 	Font getFont();
 	
 	/// <summary>
-	/// Gibt einen Pointer auf das Fenster zur¸ck
+	/// Gibt einen Pointer auf das Fenster zur√ºck
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
