@@ -89,7 +89,7 @@ private:
 	/// </summary>
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
-	bool loadGame(int);
+	bool loadGame();
 
 	static Game* instance;
 public:

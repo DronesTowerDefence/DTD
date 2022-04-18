@@ -83,6 +83,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			rangeShape.setOutlineColor(Color::Black);
 			rangeShape.setOutlineThickness(5);
 			setCoverableArea();
+			int test = 0;
 		}
 	}
 	else delete this;

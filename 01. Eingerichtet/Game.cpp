@@ -34,6 +34,7 @@ Game::Game()
 	eco.setPosition(20, 20);
 
 	setMusicSound();
+	loadGame();
 }
 
 void Game::draw()
@@ -168,10 +169,10 @@ void Game::saveGame()
 	wdatei.close();
 }
 
-bool Game::loadGame(int mapIndex)
+bool Game::loadGame()
 {
 	std::string datei; //Dateipfad
-	datei = "saves/savegame" + std::to_string(mapIndex);
+	datei = "saves/savegame" + std::to_string(p_map->getIndex());
 	datei += ".sav";
 
 	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
@@ -182,30 +183,29 @@ bool Game::loadGame(int mapIndex)
 	rdatei.open(datei);
 
 	bool defaultCounter = 0;
-	char buffer[50], bufferValue1[20], bufferValue2[20];
+	char buffer[50], bufferValue1[30], bufferValue2[30];
 	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
-	for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
 
 
 	while (!rdatei.eof())
 	{
-		for (int i = 0; i < 50; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
 
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 49; i++)
 		{
-			if (buffer[i] != '\0') //Jeder Buchstabe einer Zeile wird im Array gespeichert
+			rdatei.get(buffer[i]);
+
+			if (buffer[i] == '\n') //Ende der Zeile
 			{
-				rdatei.get(buffer[i]);
-			}
-			else if (i != 0) //Nullterminierung am Ende der Zeile
-			{
-				buffer[i - 1] = '\0';
-			}
-			else //Wenn die Zeile leer ist
-			{
-				buffer[i] = '\0';
+				break;
 			}
 		}
+
+	if (buffer[1] == '\0') //Ende der Datei
+	{
+		goto end;
+	}
 
 		first = std::string(buffer).find("\"");
 		second = std::string(buffer).find("\"", first + 1);
@@ -215,14 +215,16 @@ bool Game::loadGame(int mapIndex)
 		switch (counter)
 		{
 		case 0:
+			break;
+		case 1:
 			round->setIndex(std::stoi(bufferValue1));
 			break;
 
-		case 1:
+		case 2:
 			round->setMoney(std::stoi(bufferValue1));
 			break;
 
-		case 2:
+		case 3:
 			round->setHealth(std::stoi(bufferValue1));
 			break;
 
@@ -235,7 +237,7 @@ bool Game::loadGame(int mapIndex)
 			else if (defaultCounter)
 			{
 				first = std::string(buffer).find("\"");
-				second = std::string(buffer).find("\,", first + 1);
+				second = std::string(buffer).find(",", first + 1);
 				third = std::string(buffer).find("\"", second + 1);
 				length1 = second - first - 1;
 				length2 = third - second - 1;
@@ -243,12 +245,14 @@ bool Game::loadGame(int mapIndex)
 				std::string(buffer).copy(bufferValue2, length2, second + 1);
 
 				defaultCounter = 0;
-				new Tower(towerIndex, Vector2f(std::stoi(bufferValue1), std::stoi(bufferValue2)), p_map);
+				new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
 			}
 			break;
 		}
 		counter++;
 	}
+
+end:
 	rdatei.close();
 	return true;
 }
