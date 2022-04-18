@@ -93,4 +93,6 @@ public:
 
 	void deleteDrone(Drone*);
 
+	void setIndex(int);
+
 };

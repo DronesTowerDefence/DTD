@@ -279,3 +279,7 @@ void Round::setP_map(Map *_map)
 	p_map = _map;
 }
 
+void Round::setIndex(int _index)
+{
+	index = _index;
+}

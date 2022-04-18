@@ -18,7 +18,7 @@ Game::Game()
 	eco.setFont(stdFont);
 	p_map = new Map();
 	round = Round::getInstance();
-	sidebar = Sidebar::getInstance(/*map*/);
+	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
 	texture = new Texture();
 	texture->loadFromFile("img/Map1.png");
@@ -127,7 +127,6 @@ void Game::newRound()
 	round->nextRound();
 }
 
-
 void Game::saveGame()
 
 {
@@ -175,7 +174,6 @@ bool Game::loadGame(int mapIndex)
 	datei = "saves/savegame" + std::to_string(mapIndex);
 	datei += ".sav";
 
-
 	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTest)
 		return false;
@@ -183,7 +181,11 @@ bool Game::loadGame(int mapIndex)
 	std::ifstream rdatei;
 	rdatei.open(datei);
 
-	char buffer[50];
+	bool defaultCounter = 0;
+	char buffer[50], bufferValue1[20], bufferValue2[20];
+	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
+	for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
+
 
 	while (!rdatei.eof())
 	{
@@ -204,6 +206,48 @@ bool Game::loadGame(int mapIndex)
 				buffer[i] = '\0';
 			}
 		}
+
+		first = std::string(buffer).find("\"");
+		second = std::string(buffer).find("\"", first + 1);
+		length1 = second - first - 1;
+		std::string(buffer).copy(bufferValue1, length1, first + 1);
+
+		switch (counter)
+		{
+		case 0:
+			round->setIndex(std::stoi(bufferValue1));
+			break;
+
+		case 1:
+			round->setMoney(std::stoi(bufferValue1));
+			break;
+
+		case 2:
+			round->setHealth(std::stoi(bufferValue1));
+			break;
+
+		default:
+			if (!defaultCounter)
+			{
+				towerIndex = std::stoi(bufferValue1);
+				defaultCounter = 1;
+			}
+			else if (defaultCounter)
+			{
+				first = std::string(buffer).find("\"");
+				second = std::string(buffer).find("\,", first + 1);
+				third = std::string(buffer).find("\"", second + 1);
+				length1 = second - first - 1;
+				length2 = third - second - 1;
+				std::string(buffer).copy(bufferValue1, length1, first + 1);
+				std::string(buffer).copy(bufferValue2, length2, second + 1);
+
+				defaultCounter = 0;
+				new Tower(towerIndex, Vector2f(std::stoi(bufferValue1), std::stoi(bufferValue2)), p_map);
+			}
+			break;
+		}
+		counter++;
 	}
 	rdatei.close();
 	return true;
