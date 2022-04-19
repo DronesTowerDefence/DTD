@@ -211,6 +211,8 @@ void Round::addDrone(Drone* drone)
 
 void Round::addTower(Tower* tower)
 {
+	allTowers.push_back(tower);
+
 	if (tower->getIndex() < 4)
 		allAttackTowers.push_back(tower);
 	else if (tower->getIndex() == 4)
@@ -282,4 +284,9 @@ void Round::setP_map(Map *_map)
 void Round::setIndex(int _index)
 {
 	index = _index;
+}
+
+std::list<Tower*> Round::getAllTowers()
+{
+	return allTowers;
 }

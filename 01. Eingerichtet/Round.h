@@ -24,6 +24,7 @@ private:
 	std::list<Projectile*> allProjectiles;
 	std::list<Tower*> allAttackTowers;
 	std::list<Tower*> allMoneyTowers;
+	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
 
 	Map* p_map;
@@ -94,5 +95,7 @@ public:
 	void deleteDrone(Drone*);
 
 	void setIndex(int);
+
+	std::list<Tower*> getAllTowers();
 
 };

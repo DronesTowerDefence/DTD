@@ -29,4 +29,3 @@ public:
 	void setmove();
 	bool getcollided();
 };
-

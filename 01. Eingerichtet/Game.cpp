@@ -392,17 +392,24 @@ void Game::loseGame()
 
 bool Game::towerAliasForbiddenPosition()
 {
-	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700)
+	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
 		CircleShape collisionShape;
 		collisionShape.setFillColor(Color::Transparent);
-		collisionShape.setRadius(20);
-		for (auto i : round->getAllCoverablePoints())
+		collisionShape.setRadius(25);
+		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 			collisionShape.setPosition(i);
 			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
 				return 0;
 		}
+
+		for (auto i : round->getAllTowers()) //Überprüfung ob auf anderem Turm
+		{
+			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
+				return 0;
+		}
+
 	}
 	else return 0;
 
