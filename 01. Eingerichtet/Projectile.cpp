@@ -7,7 +7,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower,int _style)
 	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	collided = 0;
-	projectileTexture.loadFromFile("img/projectile0.png");
+	projectileTexture.loadFromFile("img/projectiles/projectile0.png");
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
 	style = _style;

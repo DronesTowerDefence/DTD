@@ -17,10 +17,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			range = 100;
 			moneyGeneration = 0;
 			projectileSpeed = 5;
-			towerTex[0].loadFromFile("img/tower0/tower0_50x50_0.png");
-			towerTex[1].loadFromFile("img/tower0/tower0_50x50_1.png");
-			towerTex[2].loadFromFile("img/tower0/tower0_50x50_2.png");
-			towerTex[3].loadFromFile("img/tower0/tower0_50x50_1.png");
+			towerTex[0].loadFromFile("img/tower0/tower0_0.png");
+			towerTex[1].loadFromFile("img/tower0/tower0_1.png");
+			towerTex[2].loadFromFile("img/tower0/tower0_2.png");
+			towerTex[3].loadFromFile("img/tower0/tower0_1.png");
 			Round::getInstance()->addTower(this);
 			break;
 
@@ -31,10 +31,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				price = 200;
 				range = 200;
 				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower1/tower1_50x50_0.png");
-				towerTex[1].loadFromFile("img/tower1/tower1_50x50_0.png");
-				towerTex[2].loadFromFile("img/tower1/tower1_50x50_0.png");
-				towerTex[3].loadFromFile("img/tower1/tower1_50x50_0.png");
+				towerTex[0].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[1].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[2].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[3].loadFromFile("img/tower1/tower1_0.png");
 				Round::getInstance()->addTower(this);
 				break;
 
@@ -45,10 +45,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				price = 300;
 				range = 300;
 				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower2/tower2_50x50_0.png");
-				towerTex[1].loadFromFile("img/tower2/tower2_50x50_0.png");
-				towerTex[2].loadFromFile("img/tower2/tower2_50x50_0.png");
-				towerTex[3].loadFromFile("img/tower2/tower2_50x50_0.png");
+				towerTex[0].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[1].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[2].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[3].loadFromFile("img/tower2/tower2_0.png");
 				Round::getInstance()->addTower(this);
 				break;
 
@@ -59,10 +59,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				price = 400;
 				range = 400;
 				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower3/tower3_50x50_0.png");
-				towerTex[1].loadFromFile("img/tower3/tower3_50x50_0.png");
-				towerTex[2].loadFromFile("img/tower3/tower3_50x50_0.png");
-				towerTex[3].loadFromFile("img/tower3/tower3_50x50_0.png");
+				towerTex[0].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[1].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[2].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[3].loadFromFile("img/tower3/tower3_0.png");
 				Round::getInstance()->addTower(this);
 				break;
 
@@ -73,10 +73,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				price = 1000;
 				range = 0;
 				moneyGeneration = 1;
-				towerTex[0].loadFromFile("img/tower4/tower4_50x50_0.png");
-				towerTex[1].loadFromFile("img/tower4/tower4_50x50_0.png");
-				towerTex[2].loadFromFile("img/tower4/tower4_50x50_0.png");
-				towerTex[3].loadFromFile("img/tower4/tower4_50x50_0.png");
+				towerTex[0].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[1].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[2].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[3].loadFromFile("img/tower4/tower4_0.png");
 				Round::getInstance()->addTower(this);
 				break;
 		}
@@ -204,7 +204,7 @@ float Tower::getProjectileSpeed()
 
 Sprite* Tower::getDrawSprite()
 {
-	if (animationTimer.getElapsedTime().asMilliseconds() >= 500)
+	if (animationTimer.getElapsedTime().asMilliseconds() >= 300)
 	{
 		switch (animationCounter)
 		{

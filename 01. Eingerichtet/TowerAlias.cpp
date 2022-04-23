@@ -9,31 +9,31 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 	case 0:
 		range = 100;
 		price = 100;
-		towerAliasTexture.loadFromFile("img/tower0_50x50.png");
+		towerAliasTexture.loadFromFile("img/tower0/tower0_alias.png");
 		break;
 
 	case 1:
 		range = 200;
 		price = 200;
-		towerAliasTexture.loadFromFile("img/tower1_50x50.png");
+		towerAliasTexture.loadFromFile("img/tower1/tower1_alias.png");
 		break;
 
 	case 2:
 		range = 300;
 		price = 300;
-		towerAliasTexture.loadFromFile("img/tower2_50x50.png");
+		towerAliasTexture.loadFromFile("img/tower2/tower2_alias.png");
 		break;
 
 	case 3:
 		range = 400;
 		price = 400;
-		towerAliasTexture.loadFromFile("img/tower3_50x50.png");
+		towerAliasTexture.loadFromFile("img/tower3/tower3_alias.png");
 		break;
 
 	case 4:
 		range = 0;
 		price = 1000;
-		towerAliasTexture.loadFromFile("img/moneyTower0_50x50.png");
+		towerAliasTexture.loadFromFile("img/tower4/tower4_alias.png");
 		break;
 	}
 

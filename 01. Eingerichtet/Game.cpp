@@ -21,7 +21,7 @@ Game::Game()
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
 	texture = new Texture();
-	texture->loadFromFile("img/Map1.png");
+	texture->loadFromFile("img/maps/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
 	round->setAllCoverablePoints();
