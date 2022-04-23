@@ -53,12 +53,12 @@ void Game::draw()
 
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
 	{
-		window->draw(t->getTowerSpr());
+		window->draw(*(t->getDrawSprite()));
 	}
 
 	for (auto* t : round->getAllAttackTower()) //Tower werden gedrawt
 	{
-		window->draw(t->getTowerSpr());
+		window->draw(*(t->getDrawSprite()));
 	}
 
 	for (auto* t : round->getAllAttackTower()) //Tower Range wird gedrawt

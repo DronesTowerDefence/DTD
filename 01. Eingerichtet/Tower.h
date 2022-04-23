@@ -15,19 +15,21 @@ private:
 	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum generiert wird
+	int animationCounter; //Welcher Frame ausgew‰hlt ist
 
 	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
 	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird
 
 	Clock shootTimer; //Zum z‰hlen des Schuss-Cooldowns
 	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
+	Clock animationTimer; //Der Timer zum wechseln des Frames
 
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 
 	std::string name; //Der Name des Turmes
 	
 	CircleShape rangeShape;
-	Texture towerTex;
+	Texture towerTex[4];
 	Sprite towerSpr;
 	Map* p_map;
 	Vector2f position;
@@ -45,7 +47,7 @@ public:
 	/// <summary>
 	/// Returnt die Tower Sprite
 	/// </summary>
-	/// <param name="void"></param>
+	/// <returns>Sprite*</returns>
 	Sprite getTowerSpr();
 
 	/// <summary>
@@ -101,5 +103,11 @@ public:
 	/// </summary>
 	/// <returns>bool</returns>
 	bool generateMoney();
+
+	/// <summary>
+	/// Funktion zum drawen, wegen der Animation
+	/// </summary>
+	/// <returns>Einzelnen Sprite-Frame</returns>
+	Sprite* getDrawSprite();
 
 };
