@@ -49,7 +49,7 @@ int fileVerification()
 	assets.push_back("img/drone0(damage2)40x40.png");
 	assets.push_back("img/drone0(damage3)40x40.png");
 	assets.push_back("img/Map1.png");
-	assets.push_back("img/projectile.png");
+	assets.push_back("img/projectile0.png");
 	assets.push_back("music/1-0.wav");
 	assets.push_back("music/1-1.wav");
 	assets.push_back("music/2-0.wav");
