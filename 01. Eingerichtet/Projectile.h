@@ -21,7 +21,7 @@ private:
 public:
 	Projectile(Drone*,Tower*,int);
 	void operate();
-	Vector3f targeting();
+	void targeting();
 	void homing();
 	void moveProjectile();
 	void colission();

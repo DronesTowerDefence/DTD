@@ -135,7 +135,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this, 2); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this, 1); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > 3)
