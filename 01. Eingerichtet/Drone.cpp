@@ -88,7 +88,7 @@ void Drone::pass()
 }
 
 bool Drone::takeDamage(int damage) {
-	lives -= damage;
+	lives -= damage; //.
 	std::cout <<damage<< std::endl;
 	if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0/drone0_damage1.png");
