@@ -75,7 +75,8 @@ void Drone::pass()
 	if (nextPoint % 2 == 0) {
 		drone.setRotation(0);
 	}
-	else{drone.setRotation(90);}
+	else {
+		drone.setRotation(90); drone.move(50, 0);}
 		
 
 	//if (nextPoint == 1) {

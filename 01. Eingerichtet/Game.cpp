@@ -34,7 +34,7 @@ Game::Game()
 	eco.setPosition(20, 20);
 
 	setMusicSound();
-	loadGame();
+	//loadGame();
 }
 
 void Game::draw()
