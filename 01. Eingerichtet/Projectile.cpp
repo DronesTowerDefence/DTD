@@ -32,7 +32,6 @@ void Projectile::targeting()
 {
 
 	for (auto i: tower->getCoverableArea()) {
-		std::cout<<i.z<< std::endl;
 			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) {
 				if (dronetarget->getNextPosition(i.z/speed).y - i.y<20 && dronetarget->getNextPosition(i.z/speed).y - i.y > -20) {
 					target = i;
