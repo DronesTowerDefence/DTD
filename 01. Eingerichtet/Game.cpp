@@ -326,6 +326,11 @@ void Game::checkTowerAlias()
 		{
 			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
 		}
+		else if (newTower->getSpr()->getPosition().x > 1700)
+		{
+			delete newTower;
+			newTower = nullptr;
+		}
 		else if (towerAliasForbiddenPosition())
 		{
 			newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
