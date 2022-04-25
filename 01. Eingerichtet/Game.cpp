@@ -102,10 +102,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			if (event.type == Event::LostFocus)
-			{
-				window->requestFocus();
-			}
+			
 
 		}
 		loseGame();
