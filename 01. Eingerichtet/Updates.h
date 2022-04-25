@@ -11,9 +11,10 @@ private :
 	Texture* textureUpdate1;
 	Texture* textureUpdate2;
 	Texture* textureclose;
+	RectangleShape* shoowUpdate1[4] ;
+	RectangleShape* shoowUpdate2[4] ;
 	int index1;
 	int index2;
-	bool closedClicked;	
 
 public:
 	Updates();

@@ -24,7 +24,7 @@ Sidebar::Sidebar()
 
 	for (int i = 0; i < 5; i++)
 	{
-	buttonSpr[i].setTexture(buttonTexture[i]);
+		buttonSpr[i].setTexture(buttonTexture[i]);
 		buttonText[i].setFont(buttonTextFont);
 		buttonText[i].setCharacterSize(20);
 		buttonText[i].setFillColor(Color::White);
@@ -66,23 +66,20 @@ Sidebar* Sidebar::getInstance(/*Map* _map*/)
 
 int Sidebar::isClicked(sf::RenderWindow* window)
 {
-	if (Mouse::isButtonPressed(Mouse::Button::Left)) //Ob die linke Maustaste gedrückt wurde
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+
+
+	for (int i = 0; i < 5; i++) //Geht alle Türme durch
 	{
-		Vector2i mouse = Mouse::getPosition(*window);
-		Vector2f pos, pos2;
+		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
-
-		for (int i = 0; i < 5; i++) //Geht alle Türme durch
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+			if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
 			{
-				if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
-				{
-					return i;
-				}
+				return i;
 			}
 		}
 	}

@@ -37,6 +37,7 @@ Game::Game()
 	toolbar.setFillColor(Color::Blue);
 	toolbar.setPosition(1720, 0);
 	toolbar.setSize(Vector2f(200, 991));
+	isMouseClicked = false;
 
 	setMusicSound();
 	loadGame();
@@ -215,10 +216,10 @@ bool Game::loadGame()
 			}
 		}
 
-	if (buffer[1] == '\0') //Ende der Datei
-	{
-		goto end;
-	}
+		if (buffer[1] == '\0') //Ende der Datei
+		{
+			goto end;
+		}
 
 		first = std::string(buffer).find("\"");
 		second = std::string(buffer).find("\"", first + 1);
@@ -333,26 +334,40 @@ void Game::moveDrohnes()
 
 void Game::checkButtonClick()
 {
-
-	for (auto* t : round->getAllAttackTower())
-	{
-		if (t->isClicked(window))
-			tower = t;
-	}
-	if (tower != nullptr)
-	{
-		tower->manageUpdate(window);
-		if (tower->getUpdates()->IsCloses(window))
-		{
-			tower = nullptr;
-		}
-	}
-	else
+	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
 		int index = sidebar->isClicked(window);
 		if (index > -1)
 		{
-			newTower = new TowerAlias(index, map);
+			newTower = new TowerAlias(index, p_map);
+		}
+		else if(newTower ==nullptr)
+		{
+			isMouseClicked = true;
+		}
+	}
+
+	if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
+	{
+		isMouseClicked = false;
+
+		for (auto* t : round->getAllAttackTower())
+		{
+			if (t->isClicked(window))
+				tower = t;
+		}
+		if (tower != nullptr)
+		{
+
+			tower->manageUpdate(window);
+			if (tower->getUpdates()->IsCloses(window))
+			{
+				tower = nullptr;
+			}
+		}
+		else
+		{
+
 		}
 	}
 }
@@ -429,18 +444,6 @@ bool Game::towerAliasForbiddenPosition()
 		collisionShape.setRadius(25);
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
-			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
-			{
-				if ((newTower->getPos().x >= i->getKooadinaten().x && newTower->getPos().x <= (i + 1)->getKooadinaten().x)
-					&& (newTower->getPos().y <= i->getKooadinaten().y + 50 && newTower->getPos().y >= i->getKooadinaten().y - 50))
-					return 0;
-			}
-			else if (i->getKooadinaten().x == (i + 1)->getKooadinaten().x)
-			{
-				if ((newTower->getPos().y >= i->getKooadinaten().y && newTower->getPos().y <= (i + 1)->getKooadinaten().y)
-					&& (newTower->getPos().x <= i->getKooadinaten().x + 50 && newTower->getPos().x >= i->getKooadinaten().x - 50))
-					return 0;
-			}
 
 			collisionShape.setPosition(i);
 			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
