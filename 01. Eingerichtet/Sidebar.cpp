@@ -19,16 +19,12 @@ Sidebar::Sidebar()
 	buttonTexture[3].loadFromFile("img/tower3/tower3_preview.png");
 	buttonTexture[4].loadFromFile("img/tower4/tower4_preview.png");
 
-	buttonSpr[0].setTexture(buttonTexture[0]);
-	buttonSpr[1].setTexture(buttonTexture[1]);
-	buttonSpr[2].setTexture(buttonTexture[2]);
-	buttonSpr[3].setTexture(buttonTexture[3]);
-	buttonSpr[4].setTexture(buttonTexture[4]);
 
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
 	for (int i = 0; i < 5; i++)
 	{
+		buttonSpr[i].setTexture(buttonTexture[i]);
 		buttonText[i].setFont(buttonTextFont);
 		buttonText[i].setCharacterSize(20);
 		buttonText[i].setFillColor(Color::White);
@@ -44,22 +40,18 @@ Sidebar::Sidebar()
 
 	//std::cout << "Sidebar::Sidebar: \224"; //224
 
-	buttonText[0].setPosition(Vector2f(1770, 65)); //Position des Button-Textes
-	buttonText[1].setPosition(Vector2f(1845, 65));
-	buttonText[2].setPosition(Vector2f(1770, 170));
-	buttonText[3].setPosition(Vector2f(1845, 170));
-	buttonText[4].setPosition(Vector2f(1770, 275));
+	buttonText[0].setPosition(Vector2f(1757, 65)); //Position des Button-Textes
+	buttonText[1].setPosition(Vector2f(1832, 65));
+	buttonText[2].setPosition(Vector2f(1757, 170));
+	buttonText[3].setPosition(Vector2f(1832, 170));
+	buttonText[4].setPosition(Vector2f(1757, 275));
 
-	buttonSpr[0].setPosition(Vector2f(1775, 15)); //Position der Buttons
-	buttonSpr[1].setPosition(Vector2f(1850, 15));
-	buttonSpr[2].setPosition(Vector2f(1775, 120));
-	buttonSpr[3].setPosition(Vector2f(1850, 120));
-	buttonSpr[4].setPosition(Vector2f(1775, 225));
+	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
+	buttonSpr[1].setPosition(Vector2f(1837, 15));
+	buttonSpr[2].setPosition(Vector2f(1762, 120));
+	buttonSpr[3].setPosition(Vector2f(1837, 120));
+	buttonSpr[4].setPosition(Vector2f(1762, 225));
 
-	backround = RectangleShape();
-	backround.setFillColor(Color::Blue);
-	backround.setPosition(1750, 0);
-	backround.setSize(Vector2f(200, 991));
 }
 
 Sidebar* Sidebar::getInstance(/*Map* _map*/)
@@ -74,23 +66,20 @@ Sidebar* Sidebar::getInstance(/*Map* _map*/)
 
 int Sidebar::isClicked(sf::RenderWindow* window)
 {
-	if (Mouse::isButtonPressed(Mouse::Button::Left)) //Ob die linke Maustaste gedrückt wurde
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+
+
+	for (int i = 0; i < 5; i++) //Geht alle Türme durch
 	{
-		Vector2i mouse = Mouse::getPosition(*window);
-		Vector2f pos, pos2;
+		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
-
-		for (int i = 0; i < 5; i++) //Geht alle Türme durch
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+			if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
 			{
-				if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
-				{
-					return i;
-				}
+				return i;
 			}
 		}
 	}
@@ -100,7 +89,6 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 
 void Sidebar::draw(sf::RenderWindow* window)
 {
-	window->draw(backround);
 	for (int i = 0; i < 5; i++)
 	{
 		window->draw(buttonSpr[i]);

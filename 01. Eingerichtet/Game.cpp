@@ -28,6 +28,12 @@ Game::Game()
 	lost = false;
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
+	tower = nullptr;
+	toolbar = RectangleShape();
+	toolbar.setFillColor(Color::Blue);
+	toolbar.setPosition(1720, 0);
+	toolbar.setSize(Vector2f(200, 991));
+	isMouseClicked = false;
 
 	setMusicSound();
 	//loadGame();
@@ -37,9 +43,17 @@ void Game::draw()
 {
 	window->clear();
 
+	window->draw(toolbar);
 	window->draw(*p_map->getBackround()); //Karte wird gedrawt
 
-	sidebar->draw(window); //Sidebar wird gedrawt
+	if (tower != nullptr)
+	{
+		tower->getUpdates()->draw(window);
+	}
+	else
+	{
+		sidebar->draw(window); //Sidebar wird gedrawt
+	}
 
 	if (newTower != nullptr) //TowerAlias wird gedrawt
 	{
@@ -306,10 +320,41 @@ void Game::moveDrohnes()
 
 void Game::checkButtonClick()
 {
-	int index = sidebar->isClicked(window);
-	if (index > -1)
+	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
-		newTower = new TowerAlias(index, p_map);
+		int index = sidebar->isClicked(window);
+		if (index > -1)
+		{
+			newTower = new TowerAlias(index, p_map);
+		}
+		else if(newTower ==nullptr)
+		{
+			isMouseClicked = true;
+		}
+	}
+
+	if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
+	{
+		isMouseClicked = false;
+
+		for (auto* t : round->getAllAttackTower())
+		{
+			if (t->isClicked(window))
+				tower = t;
+		}
+		if (tower != nullptr)
+		{
+
+			tower->manageUpdate(window);
+			if (tower->getUpdates()->IsCloses(window))
+			{
+				tower = nullptr;
+			}
+		}
+		else
+		{
+
+		}
 	}
 }
 
@@ -402,6 +447,7 @@ bool Game::towerAliasForbiddenPosition()
 		collisionShape.setRadius(25);
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
+
 			collisionShape.setPosition(i);
 			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
 				return 0;

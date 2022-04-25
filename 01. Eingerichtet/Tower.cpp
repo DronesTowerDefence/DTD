@@ -22,8 +22,8 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			towerTex[2].loadFromFile("img/tower0/tower0_2.png");
 			towerTex[3].loadFromFile("img/tower0/tower0_1.png");
 			Round::getInstance()->addTower(this);
-			break;
 
+			break;
 			case 1:
 				name = "Turm 2";
 				damage = 2;
@@ -79,6 +79,13 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				towerTex[3].loadFromFile("img/tower4/tower4_0.png");
 				Round::getInstance()->addTower(this);
 				break;
+  float x = 1;
+		for (int i = 0; i < 4; i++, x += .5)
+		{
+			price2[i] = price * x;
+			price1[i] = price * x;
+			damageUpdate[i] = damage * x;
+			attackspeedUpdate[i] = speed * x;
 		}
 
 		animationCounter = 0;
@@ -101,6 +108,8 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			setCoverableArea();
 			int test = 0;
 		}
+
+		update = new Updates();
 	}
 	else delete this;
 }
@@ -166,6 +175,47 @@ bool Tower::generateMoney()
 	}
 	else return false;
 }
+
+bool   Tower::isClicked(RenderWindow* window)
+{
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+
+
+	pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition()); //Holt sich die Position des Turmes i
+	pos2 = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	{
+		return true;
+	}
+
+	return false;
+}
+
+Updates* Tower::getUpdates()
+{
+	return update;
+}
+
+void Tower::manageUpdate(RenderWindow* window)
+{
+
+	int indexUpdate = update->isClicked(window, price1[update->getIndex1()], price2[update->getIndex2()]);
+	// index wird in der Methode erhöht
+	if (indexUpdate == 1)
+	{
+		damage = damageUpdate[update->getIndex1()];
+
+	}
+	else if (indexUpdate == 2)
+	{
+		speed = attackspeedUpdate[update->getIndex2()];
+
+	}
+}
+
+
 
 float Tower::getDamage()
 {

@@ -29,7 +29,11 @@ private:
 	Clock changeMusicTimer;
 
 	bool lost;
+	bool isMouseClicked;
+
 	int droneCount;
+	Tower* tower;		
+	RectangleShape toolbar;
 
 	/// <summary>
 	/// Verändert regelmäßig die Musik
