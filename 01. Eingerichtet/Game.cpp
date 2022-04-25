@@ -20,10 +20,6 @@ Game::Game()
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
-	texture = new Texture();
-	texture->loadFromFile("img/maps/Map1.png");
-	background = new RectangleShape(Vector2f(1920, 991));
-	background->setTexture(texture);
 	round->setAllCoverablePoints();
 
 	droneCount = 0;
@@ -41,7 +37,7 @@ void Game::draw()
 {
 	window->clear();
 
-	window->draw(*background); //Karte wird gedrawt
+	window->draw(*p_map->getBackround()); //Karte wird gedrawt
 
 	sidebar->draw(window); //Sidebar wird gedrawt
 

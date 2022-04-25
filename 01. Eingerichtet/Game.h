@@ -13,8 +13,8 @@ private:
 	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
-	RectangleShape* background;
-	Texture* texture;
+	//RectangleShape* background;
+	//Texture* texture;
 	Font stdFont;
 	Text eco;
 
