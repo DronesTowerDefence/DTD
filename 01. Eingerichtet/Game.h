@@ -13,10 +13,15 @@ private:
 	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
-	//RectangleShape* background;
-	//Texture* texture;
 	Font stdFont;
 	Text eco;
+
+	Texture gameOverRestartButtonTexture;
+	Texture gameOverHomeButtonTexture;
+	RectangleShape gameOverBackground;
+	RectangleShape gameOverRestartButton;
+	RectangleShape gameOverHomeButton;
+	Text gameOverText;
 
 	SoundBuffer musicBuffer[4];
 	Sound music[4];

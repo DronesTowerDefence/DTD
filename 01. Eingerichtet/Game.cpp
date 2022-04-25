@@ -85,6 +85,14 @@ void Game::draw()
 		newRound();
 	}
 
+	if (lost)
+	{
+		window->draw(gameOverBackground);
+		window->draw(gameOverHomeButton);
+		window->draw(gameOverRestartButton);
+		window->draw(gameOverText);
+	}
+
 	window->draw(eco);
 
 	window->display();
@@ -357,12 +365,24 @@ void Game::loseGame()
 
 	if (round->getLost())
 	{
-		eco.setFillColor(Color::Red);
-		eco.setOutlineColor(Color::Black);
-		eco.setOutlineThickness(5);
-		eco.setPosition(350, 340);
-		eco.setCharacterSize(240);
-		eco.setString("YOU LOSE");
+		gameOverBackground.setPosition(Vector2f(500, 300));
+		gameOverBackground.setSize(Vector2f(500, 300));
+		gameOverBackground.setFillColor(Color::Blue);
+
+		gameOverHomeButtonTexture.loadFromFile("img/homeButton.png");
+		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
+		gameOverHomeButton.setPosition(Vector2f(0,0));
+
+		gameOverRestartButtonTexture.loadFromFile("img/restartButton.png");
+		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);
+		gameOverRestartButton.setPosition(Vector2f(0, 0));
+
+		gameOverText.setPosition(Vector2f(500, 300));
+		gameOverText.setCharacterSize(40);
+		gameOverText.setFillColor(Color::Red);
+		gameOverText.setFont(stdFont);
+		gameOverText.setString("Game Over!");
+
 		lost = true;
 	}
 	else

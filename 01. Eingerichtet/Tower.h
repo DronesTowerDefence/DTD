@@ -9,12 +9,12 @@ class Tower
 private:
 	int index; //Welcher Turm-Typ es ist
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float speed; //Wie schnell der Turm schieﬂt
+	float speed; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
 	float value; //Wie hoch der Wert des Turmes ist (erhˆht sich durch Upgrades)
-	float projectileSpeed; //Wie schnell das Projektil fliegt
+	int projectileSpeed; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
-	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum generiert wird
+	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
 	int animationCounter; //Welcher Frame ausgew‰hlt ist
 
 	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
