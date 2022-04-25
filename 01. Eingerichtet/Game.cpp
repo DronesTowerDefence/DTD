@@ -292,9 +292,11 @@ void Game::moveDrohnes()
 	for (Projectile* i : round->getAllProjectiles())
 	{
 		i->moveProjectile();
-		i->colission();
 	}
-
+	for (Projectile* i : round->getAllProjectiles())
+	{
+		i->collission();
+	}
 }
 
 void Game::checkButtonClick()

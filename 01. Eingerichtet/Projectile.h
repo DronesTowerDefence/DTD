@@ -24,7 +24,7 @@ public:
 	void targeting();
 	void homing();
 	void moveProjectile();
-	void colission();
+	void collission();
 	Sprite* getProjectileSprite();
 	void setmove();
 	bool getcollided();
