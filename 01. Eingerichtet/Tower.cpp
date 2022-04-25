@@ -72,7 +72,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 				speed = 2;
 				price = 1000;
 				range = 0;
-				moneyGeneration = 1;
+				moneyGeneration = 50;
 				towerTex[0].loadFromFile("img/tower4/tower4_0.png");
 				towerTex[1].loadFromFile("img/tower4/tower4_0.png");
 				towerTex[2].loadFromFile("img/tower4/tower4_0.png");
