@@ -202,10 +202,10 @@ bool Game::loadGame()
 			}
 		}
 
-	if (buffer[1] == '\0') //Ende der Datei
-	{
-		goto end;
-	}
+		if (buffer[1] == '\0') //Ende der Datei
+		{
+			goto end;
+		}
 
 		first = std::string(buffer).find("\"");
 		second = std::string(buffer).find("\"", first + 1);
@@ -275,31 +275,18 @@ void Game::setMusicSound()
 
 void Game::changeBackgroundMusic()
 {
-	if (chooseMusic == 0 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	if (music[chooseMusic].getStatus() != music[chooseMusic].Playing)
 	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic = 1;
+		if (chooseMusic == 3)
+		{
+			chooseMusic = 0;
+		}
+		else
+		{
+			chooseMusic++;
+		}
 		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
 	}
-	else if (changeMusicTimer.getElapsedTime().asSeconds() >= 30)
-	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic++;
-		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
-	}
-	else if (chooseMusic == 3 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
-	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic = 0;
-		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
-	}
-
 }
 
 void Game::moveDrohnes()
