@@ -13,6 +13,8 @@ private:
 	std::list<Waypoint*> points;
 	Vector2f start;
 	Vector2f startMove;
+	Texture texture;
+	RectangleShape background;
 public:
 	Map();
 
@@ -60,4 +62,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int getIndex();
+
+	RectangleShape* getBackround();
 };

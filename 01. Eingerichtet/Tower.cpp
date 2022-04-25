@@ -24,64 +24,62 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			Round::getInstance()->addTower(this);
 
 			break;
+			case 1:
+				name = "Turm 2";
+				damage = 2;
+				speed = 1;
+				price = 200;
+				range = 200;
+				moneyGeneration = 0;
+				towerTex[0].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[1].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[2].loadFromFile("img/tower1/tower1_0.png");
+				towerTex[3].loadFromFile("img/tower1/tower1_0.png");
+				Round::getInstance()->addTower(this);
+				break;
 
-		case 1:
-			name = "Turm 2";
-			damage = 2;
-			speed = 1;
-			price = 200;
-			range = 200;
-			moneyGeneration = 0;
-			towerTex[0].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[1].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[2].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[3].loadFromFile("img/tower1/tower1_0.png");
-			Round::getInstance()->addTower(this);
-			break;
+			case 2:
+				name = "Turm 3";
+				damage = 3;
+				speed = 1;
+				price = 300;
+				range = 300;
+				moneyGeneration = 0;
+				towerTex[0].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[1].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[2].loadFromFile("img/tower2/tower2_0.png");
+				towerTex[3].loadFromFile("img/tower2/tower2_0.png");
+				Round::getInstance()->addTower(this);
+				break;
 
-		case 2:
-			name = "Turm 3";
-			damage = 3;
-			speed = 1;
-			price = 300;
-			range = 300;
-			moneyGeneration = 0;
-			towerTex[0].loadFromFile("img/tower2/tower2_0.png");
-			towerTex[1].loadFromFile("img/tower2/tower2_0.png");
-			towerTex[2].loadFromFile("img/tower2/tower2_0.png");
-			towerTex[3].loadFromFile("img/tower2/tower2_0.png");
-			Round::getInstance()->addTower(this);
-			break;
+			case 3:
+				name = "Turm 4";
+				damage = 4;
+				speed = 1;
+				price = 400;
+				range = 400;
+				moneyGeneration = 0;
+				towerTex[0].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[1].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[2].loadFromFile("img/tower3/tower3_0.png");
+				towerTex[3].loadFromFile("img/tower3/tower3_0.png");
+				Round::getInstance()->addTower(this);
+				break;
 
-		case 3:
-			name = "Turm 4";
-			damage = 4;
-			speed = 1;
-			price = 400;
-			range = 400;
-			moneyGeneration = 0;
-			towerTex[0].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[1].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[2].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[3].loadFromFile("img/tower3/tower3_0.png");
-			Round::getInstance()->addTower(this);
-			break;
-
-		case 4:
-			name = "\224lbohrer";
-			damage = 0;
-			speed = 2;
-			price = 1000;
-			range = 0;
-			moneyGeneration = 1;
-			towerTex[0].loadFromFile("img/tower4/tower4_0.png");
-			towerTex[1].loadFromFile("img/tower4/tower4_0.png");
-			towerTex[2].loadFromFile("img/tower4/tower4_0.png");
-			towerTex[3].loadFromFile("img/tower4/tower4_0.png");
-			Round::getInstance()->addTower(this);
-			break;
-		}
-		float x = 1;
+			case 4:
+				name = "\224lbohrer";
+				damage = 0;
+				speed = 2;
+				price = 1000;
+				range = 0;
+				moneyGeneration = 50;
+				towerTex[0].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[1].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[2].loadFromFile("img/tower4/tower4_0.png");
+				towerTex[3].loadFromFile("img/tower4/tower4_0.png");
+				Round::getInstance()->addTower(this);
+				break;
+  float x = 1;
 		for (int i = 0; i < 4; i++, x += .5)
 		{
 			price2[i] = price * x;
@@ -146,7 +144,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this, 2); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this, 1); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > 3)

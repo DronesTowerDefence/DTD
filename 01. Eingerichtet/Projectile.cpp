@@ -21,21 +21,22 @@ void Projectile::operate()
 {
 	switch (style) {
 	case 1: {
-		target = targeting();
+		targeting();
 		setmove(); }
 	case 2:homing();
 
 	}
 }
 
-Vector3f Projectile::targeting()
+void Projectile::targeting()
 {
 
 	for (auto i: tower->getCoverableArea()) {
-		std::cout<<i.z<< std::endl;
+		//std::cout<<i.z<< std::endl;
 			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) {
 				if (dronetarget->getNextPosition(i.z/speed).y - i.y<20 && dronetarget->getNextPosition(i.z/speed).y - i.y > -20) {
-					return i;
+					target = i;
+					return;
 				}
 			}
 			
@@ -54,15 +55,18 @@ void Projectile::moveProjectile()
 
 }
 
-void Projectile::colission()
+void Projectile::collission()
 {
-	if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 10 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -10) {
-		if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 10 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -10) {
-			dronetarget->takeDamage(tower->getDamage());
-			collided = 1;
-			//delete this;
-		}
+	if (collided ==0) {
+		if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 30 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -30) {
+			if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 30 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -30) {
+				std::cout << "hit" << std::endl;
+				dronetarget->takeDamage(tower->getDamage());
+				collided = 1;
+				//delete this;
+			}
 
+		}
 	}
 }
 

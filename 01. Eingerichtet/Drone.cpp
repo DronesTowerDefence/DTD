@@ -75,7 +75,8 @@ void Drone::pass()
 	if (nextPoint % 2 == 0) {
 		drone.setRotation(0);
 	}
-	else{drone.setRotation(90);}
+	else {
+		drone.setRotation(90); drone.move(50, 0);}
 		
 
 	//if (nextPoint == 1) {
@@ -87,17 +88,17 @@ void Drone::pass()
 }
 
 bool Drone::takeDamage(int damage) {
-	lives -= damage;
-	/*if (lives == 2) {
+	lives -= damage; //.
+	std::cout <<damage<< std::endl;
+	if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0/drone0_damage1.png");
 		drone.setTexture(droneTexture);
 	}
 	else if (lives == 1) {
 		droneTexture.loadFromFile("img/drone0/drone0_damage2.png");
 		drone.setTexture(droneTexture);
-	}*/
+	}
 	if (lives <= 0) {
-		//delete this;
 		//std::cout << "tot";
 		//True, wenn Drone tot ist
 		delete this;
@@ -136,6 +137,5 @@ Vector2f Drone::getNextPosition(int nextFrame)
 
 Drone::~Drone()
 {
-	Round::getInstance()->deleteDrone(this);
-	
+	Round::getInstance()->deleteDrone(this);	
 }

@@ -20,10 +20,6 @@ Game::Game()
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
-	texture = new Texture();
-	texture->loadFromFile("img/maps/Map1.png");
-	background = new RectangleShape(Vector2f(1920, 991));
-	background->setTexture(texture);
 	round->setAllCoverablePoints();
 
 	droneCount = 0;
@@ -40,15 +36,15 @@ Game::Game()
 	isMouseClicked = false;
 
 	setMusicSound();
-	loadGame();
+	//loadGame();
 }
 
 void Game::draw()
 {
 	window->clear();
 
-	window->draw(*background); //Karte wird gedrawt
 	window->draw(toolbar);
+	window->draw(*p_map->getBackround()); //Karte wird gedrawt
 
 	if (tower != nullptr)
 	{
@@ -120,10 +116,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			if (event.type == Event::LostFocus)
-			{
-				window->requestFocus();
-			}
+			
 
 		}
 		loseGame();
@@ -281,39 +274,22 @@ void Game::setMusicSound()
 	music[1].setBuffer(musicBuffer[1]);
 	music[2].setBuffer(musicBuffer[2]);
 	music[3].setBuffer(musicBuffer[3]);
-
-	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
-	music[chooseMusic].play();
-	music[chooseMusic].setLoop(true);
 }
 
 void Game::changeBackgroundMusic()
 {
-	if (chooseMusic == 0 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	if (music[chooseMusic].getStatus() != music[chooseMusic].Playing)
 	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic = 1;
+		if (chooseMusic == 3)
+		{
+			chooseMusic = 0;
+		}
+		else
+		{
+			chooseMusic++;
+		}
 		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
 	}
-	else if (changeMusicTimer.getElapsedTime().asSeconds() >= 30)
-	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic++;
-		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
-	}
-	else if (chooseMusic == 3 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
-	{
-		music[chooseMusic].setLoop(false);
-		chooseMusic = 0;
-		music[chooseMusic].play();
-		music[chooseMusic].setLoop(true);
-		changeMusicTimer.restart();
-	}
-
 }
 
 void Game::moveDrohnes()
@@ -327,9 +303,11 @@ void Game::moveDrohnes()
 	for (Projectile* i : round->getAllProjectiles())
 	{
 		i->moveProjectile();
-		i->colission();
 	}
-
+	for (Projectile* i : round->getAllProjectiles())
+	{
+		i->collission();
+	}
 }
 
 void Game::checkButtonClick()
@@ -383,6 +361,11 @@ void Game::checkTowerAlias()
 		if (Mouse::isButtonPressed(Mouse::Button::Left))
 		{
 			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
+		}
+		else if (newTower->getSpr()->getPosition().x > 1700)
+		{
+			delete newTower;
+			newTower = nullptr;
 		}
 		else if (towerAliasForbiddenPosition())
 		{

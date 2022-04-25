@@ -13,6 +13,10 @@ Map::Map()
 	case 1:
 		Round::getInstance()->setP_map(this);
 
+		texture.loadFromFile("img/maps/Map1.png");
+		background.setSize(Vector2f(1920, 991));
+		background.setTexture(&texture);
+
 		points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
 		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
@@ -140,4 +144,9 @@ Vector2f Map::getWaypointAsVector(int index)
 int Map::getIndex()
 {
 	return index;
+}
+
+RectangleShape* Map::getBackround()
+{
+	return &background;
 }
