@@ -27,7 +27,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			case 1:
 				name = "Turm 2";
 				damage = 2;
-				speed = 1;
+				speed = 2;
 				price = 200;
 				range = 200;
 				moneyGeneration = 0;
@@ -41,7 +41,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			case 2:
 				name = "Turm 3";
 				damage = 3;
-				speed = 1;
+				speed = 2;
 				price = 300;
 				range = 300;
 				moneyGeneration = 0;
@@ -55,7 +55,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			case 3:
 				name = "Turm 4";
 				damage = 4;
-				speed = 1;
+				speed = 4;
 				price = 400;
 				range = 400;
 				moneyGeneration = 0;
@@ -89,7 +89,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		}
 
 		animationCounter = 0;
-		projectileSpeed = speed * 3;
+		projectileSpeed = 3;
 		position = pos;
 		p_map = n_map;
 		value = price;
@@ -147,7 +147,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 			new Projectile(a, this, 1); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
-		else if (shootTimer.getElapsedTime().asSeconds() > 3)
+		else if (shootTimer.getElapsedTime().asSeconds() > speed)
 		{
 			shootCooldown = false;
 			shootTimer.restart();
