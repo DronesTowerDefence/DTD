@@ -4,9 +4,10 @@
 
 Projectile::Projectile(Drone* _target, Tower* _tower,int _style)
 {
-	speed = _tower->getAttackSpeed();
+	speed = _tower->getProjectileSpeed();
 	tower = _tower;
-	projectileTexture.loadFromFile("img/projectile0.png");
+	collided = 0;
+	projectileTexture.loadFromFile("img/projectiles/projectile0.png");
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
 	style = _style;
@@ -47,8 +48,22 @@ void Projectile::moveProjectile()
 {
 	if (style == 2)
 		homing();
-	std::cout << target.x << target.y << std::endl;
+	//std::cout << target.x << target.y << std::endl;
 	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y/speed));
+
+
+}
+
+void Projectile::colission()
+{
+	if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 10 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -10) {
+		if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 10 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -10) {
+			dronetarget->takeDamage(tower->getDamage());
+			collided = 1;
+			//delete this;
+		}
+
+	}
 }
 
 void Projectile::homing() {
@@ -60,6 +75,11 @@ void Projectile::setmove()
 {
 	move.x = -1*(tower->getTowerPos().x - target.x);
 	move.y = -1*(tower->getTowerPos().y - target.y);
+}
+
+bool Projectile::getcollided()
+{
+	return collided;
 }
 
 Sprite* Projectile::getProjectileSprite()

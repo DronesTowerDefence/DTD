@@ -8,7 +8,14 @@
 using namespace sf;
 class Map
 {
+private:
+	int index;
+	std::list<Waypoint*> points;
+	Vector2f start;
+	Vector2f startMove;
 public:
+	Map();
+
 	/// <summary>
 	/// Checkt, ob die Drohne den nächsten Wegpunkt erreicht hat
 	/// </summary>
@@ -47,10 +54,10 @@ public:
 	/// <param name="index">Index</param>
 	/// <returns>Wegpunkt</returns>
 	Vector2f getWaypointAsVector(int index);
-	Map();
-private:
-	std::list<Waypoint*> points;
-	Vector2f start;
-	Vector2f startMove;
 
+	/// <summary>
+	/// Gibt den Index der Map zurück
+	/// </summary>
+	/// <returns></returns>
+	int getIndex();
 };

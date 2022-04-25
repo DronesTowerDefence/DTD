@@ -13,11 +13,11 @@ Sidebar::Sidebar()
 	price[3] = 400;
 	price[4] = 1000;
 
-	buttonTexture[0].loadFromFile("img/tower0_50x50.png");
-	buttonTexture[1].loadFromFile("img/tower1_50x50.png");
-	buttonTexture[2].loadFromFile("img/tower2_50x50.png");
-	buttonTexture[3].loadFromFile("img/tower3_50x50.png");
-	buttonTexture[4].loadFromFile("img/moneyTower0_50x50.png");
+	buttonTexture[0].loadFromFile("img/tower0/tower0_preview.png");
+	buttonTexture[1].loadFromFile("img/tower1/tower1_preview.png");
+	buttonTexture[2].loadFromFile("img/tower2/tower2_preview.png");
+	buttonTexture[3].loadFromFile("img/tower3/tower3_preview.png");
+	buttonTexture[4].loadFromFile("img/tower4/tower4_preview.png");
 
 
 	buttonTextFont.loadFromFile("fonts/arial.ttf");

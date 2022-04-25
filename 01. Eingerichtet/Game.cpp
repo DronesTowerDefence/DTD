@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <fstream>
 
 Game* Game::instance = nullptr;
 
@@ -15,16 +16,18 @@ Game::Game()
 {
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
+	p_map = new Map();
 	round = Round::getInstance();
-	sidebar = Sidebar::getInstance(/*map*/);
-	map = new Map();
+	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
 	texture = new Texture();
-	texture->loadFromFile("img/Map1.png");
+	texture->loadFromFile("img/maps/Map1.png");
 	background = new RectangleShape(Vector2f(1920, 991));
 	background->setTexture(texture);
+	round->setAllCoverablePoints();
 
 	droneCount = 0;
+	chooseMusic = 0;
 
 	lost = false;
 	eco.setCharacterSize(30);
@@ -34,6 +37,9 @@ Game::Game()
 	toolbar.setFillColor(Color::Blue);
 	toolbar.setPosition(1720, 0);
 	toolbar.setSize(Vector2f(200, 991));
+
+	setMusicSound();
+	loadGame();
 }
 
 void Game::draw()
@@ -60,12 +66,12 @@ void Game::draw()
 
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
 	{
-		window->draw(t->getTowerSpr());
+		window->draw(*(t->getDrawSprite()));
 	}
 
 	for (auto* t : round->getAllAttackTower()) //Tower werden gedrawt
 	{
-		window->draw(t->getTowerSpr());
+		window->draw(*(t->getDrawSprite()));
 	}
 
 	for (auto* t : round->getAllAttackTower()) //Tower Range wird gedrawt
@@ -75,7 +81,9 @@ void Game::draw()
 
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
-		window->draw(*(t->getProjectileSprite()));
+		if (t->getcollided() == 0)
+			window->draw(*(t->getProjectileSprite()));
+
 	}
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
@@ -83,13 +91,13 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getRound())) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
-		round->addDrone(new Drone(1, map->getStart(), 0, -1));
+		round->addDrone(new Drone(1, p_map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
-	if (droneCount == round->getDroneCountInRound(round->getRound()) && round->getAllDrones().empty())
+	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())
 	{
 		newRound();
 	}
@@ -107,14 +115,22 @@ void Game::startGame()
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
+			{
+				saveGame();
 				window->close();
+			}
+			if (event.type == Event::LostFocus)
+			{
+				window->requestFocus();
+			}
 
 		}
 		loseGame();
-		checkShoot();
 		moveDrohnes();
+		checkShoot();
 		checkTowerAlias();
 		generateMoneyTowers();
+		changeBackgroundMusic();
 		draw();
 	}
 }
@@ -122,20 +138,195 @@ void Game::startGame()
 void Game::newRound()
 {
 	droneCount = 0;
-	round->addRound();
+	round->nextRound();
+}
+
+void Game::saveGame()
+
+{
+	if (round->getIndex() <= 0)
+		return;
+
+	std::string datei;
+	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
+	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+
+	system("md saves >nul 2>&1");
+	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
+	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
+
+	std::ofstream wdatei;
+	wdatei.open(datei);
+
+	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
+	wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
+	wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
+	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
+
+	int j = 0;
+	for (auto i : round->getAllAttackTower())
+	{
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
+	}
+
+	for (auto i : round->getAllMoneyTower())
+	{
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
+	}
+
+	wdatei << "\n";
+	wdatei.close();
+}
+
+bool Game::loadGame()
+{
+	std::string datei; //Dateipfad
+	datei = "saves/savegame" + std::to_string(p_map->getIndex());
+	datei += ".sav";
+
+	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	if (!FileTest)
+		return false;
+
+	std::ifstream rdatei;
+	rdatei.open(datei);
+
+	bool defaultCounter = 0;
+	char buffer[50], bufferValue1[30], bufferValue2[30];
+	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
+
+
+	while (!rdatei.eof())
+	{
+		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
+
+		for (int i = 0; i < 49; i++)
+		{
+			rdatei.get(buffer[i]);
+
+			if (buffer[i] == '\n') //Ende der Zeile
+			{
+				break;
+			}
+		}
+
+	if (buffer[1] == '\0') //Ende der Datei
+	{
+		goto end;
+	}
+
+		first = std::string(buffer).find("\"");
+		second = std::string(buffer).find("\"", first + 1);
+		length1 = second - first - 1;
+		std::string(buffer).copy(bufferValue1, length1, first + 1);
+
+		switch (counter)
+		{
+		case 0:
+			break;
+		case 1:
+			round->setIndex(std::stoi(bufferValue1));
+			break;
+
+		case 2:
+			round->setMoney(std::stoi(bufferValue1));
+			break;
+
+		case 3:
+			round->setHealth(std::stoi(bufferValue1));
+			break;
+
+		default:
+			if (!defaultCounter)
+			{
+				towerIndex = std::stoi(bufferValue1);
+				defaultCounter = 1;
+			}
+			else if (defaultCounter)
+			{
+				first = std::string(buffer).find("\"");
+				second = std::string(buffer).find(",", first + 1);
+				third = std::string(buffer).find("\"", second + 1);
+				length1 = second - first - 1;
+				length2 = third - second - 1;
+				std::string(buffer).copy(bufferValue1, length1, first + 1);
+				std::string(buffer).copy(bufferValue2, length2, second + 1);
+
+				defaultCounter = 0;
+				new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
+			}
+			break;
+		}
+		counter++;
+	}
+
+end:
+	rdatei.close();
+	return true;
+}
+
+void Game::setMusicSound()
+{
+	musicBuffer[0].loadFromFile("music/1-0.wav");
+	musicBuffer[1].loadFromFile("music/1-1.wav");
+	musicBuffer[2].loadFromFile("music/2-0.wav");
+	musicBuffer[3].loadFromFile("music/3-0.wav");
+	music[0].setBuffer(musicBuffer[0]);
+	music[1].setBuffer(musicBuffer[1]);
+	music[2].setBuffer(musicBuffer[2]);
+	music[3].setBuffer(musicBuffer[3]);
+
+	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
+	music[chooseMusic].play();
+	music[chooseMusic].setLoop(true);
+}
+
+void Game::changeBackgroundMusic()
+{
+	if (chooseMusic == 0 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		music[chooseMusic].setLoop(false);
+		chooseMusic = 1;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
+	}
+	else if (changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		music[chooseMusic].setLoop(false);
+		chooseMusic++;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
+	}
+	else if (chooseMusic == 3 && changeMusicTimer.getElapsedTime().asSeconds() >= 30)
+	{
+		music[chooseMusic].setLoop(false);
+		chooseMusic = 0;
+		music[chooseMusic].play();
+		music[chooseMusic].setLoop(true);
+		changeMusicTimer.restart();
+	}
+
 }
 
 void Game::moveDrohnes()
 {
 	for (Drone* p : round->getAllDrones())
 	{
-		map->checkChangeDirection(p);
+		p_map->checkChangeDirection(p);
 		p->move();
 	}
 
 	for (Projectile* i : round->getAllProjectiles())
 	{
 		i->moveProjectile();
+		i->colission();
 	}
 
 }
@@ -202,10 +393,10 @@ void Game::loseGame()
 		for (auto i : round->getAllDrones())
 		{
 			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
-				if (i->getAlive() == true) {
-					round->subhealth(i->getLives());
-					i->setAlive(false);
-				}
+
+				round->subhealth(i->getLives());
+				i->~Drone();
+
 			}
 		}
 		round->restartDroneSubHealthTimer();
@@ -225,15 +416,18 @@ void Game::loseGame()
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
 			"\nMoney: " + std::to_string(round->getMoney()) +
-			"\nRound: " + std::to_string(round->getRound() + 1));
+			"\nRound: " + std::to_string(round->getIndex() + 1));
 	}
 }
 
 bool Game::towerAliasForbiddenPosition()
 {
-	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700)
+	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
-		for (auto i : map->getPoints())
+		CircleShape collisionShape;
+		collisionShape.setFillColor(Color::Transparent);
+		collisionShape.setRadius(25);
+		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 			if (i->getKooadinaten().y == (i + 1)->getKooadinaten().y)
 			{
@@ -247,7 +441,18 @@ bool Game::towerAliasForbiddenPosition()
 					&& (newTower->getPos().x <= i->getKooadinaten().x + 50 && newTower->getPos().x >= i->getKooadinaten().x - 50))
 					return 0;
 			}
+
+			collisionShape.setPosition(i);
+			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
+				return 0;
 		}
+
+		for (auto i : round->getAllTowers()) //Überprüfung ob auf anderem Turm
+		{
+			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
+				return 0;
+		}
+
 	}
 	else return 0;
 

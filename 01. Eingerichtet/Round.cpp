@@ -1,12 +1,13 @@
 #include "Round.h"
 
+
 Round* Round::instance = nullptr;
 
 Round::Round()
 {
 	money = 2000; //Start-Geld
 	health = 100; //Start-Leben
-	round = 0; //Start-Runde
+	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
@@ -23,6 +24,64 @@ Round* Round::getInstance()
 		instance = new Round;
 	}
 	return instance;
+}
+
+void Round::setAllCoverablePoints()
+{
+	Vector2f point = Vector2f(0, 0);
+	Vector2f mapPoint1;
+	Vector2f mapPoint2;
+	int pointIterator = 0;
+
+	for (auto i : p_map->getPoints())
+	{
+		if (pointIterator == 0)
+		{
+			mapPoint1.y = 991; //Muss bei anderer Map angepasst werden
+			mapPoint1.x = p_map->getWaypointAsVector(pointIterator).x;
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+		else
+		{
+			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1);
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+		}
+
+		pointIterator++;
+
+		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x <= mapPoint2.x; point.x += 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y)
+		{
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y >= mapPoint2.y; point.y -= 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.y == mapPoint2.y && mapPoint1.x > mapPoint2.x)
+		{
+			point.y = mapPoint1.y;
+			for (point.x = mapPoint1.x; point.x >= mapPoint2.x; point.x -= 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y < mapPoint2.y)
+		{
+			point.x = mapPoint1.x;
+			for (point.y = mapPoint1.y; point.y <= mapPoint2.y; point.y += 20)
+			{
+				allCoverablePoints.push_back(point);
+			}
+		}
+	}
 }
 
 void Round::setDroneCountInRound()
@@ -93,16 +152,16 @@ bool Round::setHealth(int _health)
 	return 1;
 }
 
-void Round::addRound()
+void Round::nextRound()
 {
-	round++;
+	index++;
 	Lost = false;
 	Won = true;
 }
 
-int Round::getRound()
+int Round::getIndex()
 {
-	return round;
+	return index;
 }
 
 std::list<Tower*> Round::getAllAttackTower()
@@ -152,6 +211,8 @@ void Round::addDrone(Drone* drone)
 
 void Round::addTower(Tower* tower)
 {
+	allTowers.push_back(tower);
+
 	if (tower->getIndex() < 4)
 		allAttackTowers.push_back(tower);
 	else if (tower->getIndex() == 4)
@@ -203,42 +264,29 @@ int Round::getDroneCountInRound(int i)
 	return droneCountInRound[i];
 }
 
-//void Round::deleteDrone(Drone* drone)
-//{
-//	std::list<Drone*>::iterator it;
-//	
-//	for (auto* i : allDrones) {
-//
-//		if (i == drone) {
-//			*it = i;
-//			break;
-//
-//		}
-//	}
-//	allDrones.erase(it);
-//
-//	std::list<Drone*> ersatz;
-//
-//	for (auto g : allDrones) {
-//		for (auto h : ersatz) {
-//			if (g != nullptr) {
-//				h = g;
-//			}
-//		}
-//	}
-//
-//	allDrones.clear();
-//
-//	for (auto g : ersatz) {
-//		for (auto h : allDrones) {
-//
-//				h = g;
-//			
-//		}
-//	}
-//
-//	//Bei dieser Methode erstelle ich eine Kopie ohne nullptr, und cleare die alte und setze wieder in die alte ein
-//	//Funktioniert trotzdem nicht
-//
-//}
-////std::list<Drone*>::iterator
+void Round::deleteDrone(Drone* drone)
+{
+	
+	allDrones.remove(drone);
+	
+}
+
+std::list<Vector2f> Round::getAllCoverablePoints()
+{
+	return allCoverablePoints;
+}
+
+void Round::setP_map(Map *_map)
+{
+	p_map = _map;
+}
+
+void Round::setIndex(int _index)
+{
+	index = _index;
+}
+
+std::list<Tower*> Round::getAllTowers()
+{
+	return allTowers;
+}

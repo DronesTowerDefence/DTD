@@ -12,19 +12,21 @@ class Tower
 private:
 	int index; //Welcher Turm-Typ es ist
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float speed; //Wie schnell der Turm schieﬂt
-	float value; //Wie hoch der Wert des Turmes ist (erhˆht sich durch Upgrades)
-	float attackspeed; //Wie schnell das Projektil schieﬂt
+	float speed; //Wie schnell der Turm schie√üt
+	float value; //Wie hoch der Wert des Turmes ist (erh√∂ht sich durch Upgrades)
+	float projectileSpeed; //Wie schnell das Projektil fliegt
 	float price; //Wie viel der Turm zum stellen kostet (Kaufpreis)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum generiert wird
+	int animationCounter; //Welcher Frame ausgew√§hlt ist
 
-	bool shootCooldown; //Damit der Turm nicht dauerhaft schieﬂen kann
+	bool shootCooldown; //Damit der Turm nicht dauerhaft schie√üen kann
 	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird
-	Clock shootTimer; //Zum z‰hlen des Schuss-Cooldowns
+	Clock shootTimer; //Zum z√§hlen des Schuss-Cooldowns
 	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
+	Clock animationTimer; //Der Timer zum wechseln des Frames
 
-	std::list<Vector3f> coverableArea; //Welche Wegpunkte der Turm auf der Strecke abdeckt in 20px Schritten
+	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 
 	std::string name; //Der Name des Turmes
 	
@@ -36,7 +38,7 @@ private:
 
 	
 	CircleShape rangeShape;
-	Texture towerTex;
+	Texture towerTex[4];
 	Sprite towerSpr;
 	Map* p_map;
 	Vector2f position;
@@ -54,11 +56,11 @@ public:
 	/// <summary>
 	/// Returnt die Tower Sprite
 	/// </summary>
-	/// <param name="void"></param>
+	/// <returns>Sprite*</returns>
 	Sprite getTowerSpr();
 
 	/// <summary>
-	/// Tower schieﬂt Drone ab
+	/// Tower schie√üt Drone ab
 	/// </summary>
 	/// <param name="Drone*"></param>
 	bool shoot(Drone*);
@@ -70,11 +72,9 @@ public:
 	float getValue();
 
 	/// <summary>
-	/// Returnt ProjectileSpeed
+	/// Return nen Pointer auf die Shape f√ºr den Kreis der Range
 	/// </summary>
-	/// <param name="float"></param>
-	float getAttackSpeed();
-
+	/// <returns>CircleShape*</returns>
 	CircleShape* getRangeShape();
 
 	/// <summary>
@@ -89,16 +89,42 @@ public:
 	/// <returns>Vector2f</returns>
 	Vector2f getTowerPos();
 
+	/// <summary>
+	/// Returnt den Index, um welchen Turm es sich handelt
+	/// </summary>
+	/// <returns>int</returns>
 	int getIndex();
 
+	/// <summary>
+	/// Return die Geschwindigkeit des Projektiels
+	/// </summary>
+	/// <returns></returns>
+	float getProjectileSpeed();
+
+	/// <summary>
+	/// Return den Schaden, welchen der Turm mit einem Projektiel macht
+	/// </summary>
+	/// <returns></returns>
+	float getDamage();
+
+	/// <summary>
+	/// Generiert Geld. Funktioniert nur bei MoneyTowers
+	/// </summary>
+	/// <returns>bool</returns>
 	bool generateMoney();
 	/// <summary>
-	/// Pr¸ft, ob das Element angeklickt wird
+	/// Pr√ºft, ob das Element angeklickt wird
 	/// </summary>
 	/// <returns>ist geklickt</returns>
 	bool isClicked(RenderWindow* window);
 	Updates* getUpdates();
 
 	void manageUpdate(RenderWindow* window);
+
+	/// <summary>
+	/// Funktion zum drawen, wegen der Animation
+	/// </summary>
+	/// <returns>Einzelnen Sprite-Frame</returns>
+	Sprite* getDrawSprite();
 
 };

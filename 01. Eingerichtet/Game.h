@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Audio.hpp>
 #include <list>
 #include "Round.h"
 #include "Sidebar.h"
@@ -9,18 +10,28 @@ class Game
 private:
 	Round* round;
 	Sidebar* sidebar;
-	Map* map;
+	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
 	RectangleShape* background;
 	Texture* texture;
 	Font stdFont;
 	Text eco;
+
+	SoundBuffer musicBuffer[4];
+	Sound music[4];
+	int chooseMusic;
+	Clock changeMusicTimer;
+
 	bool lost;
 	int droneCount;
 	Tower* tower;		
 	RectangleShape toolbar;
 
+	/// <summary>
+	/// VerÃ¤ndert regelmÃ¤ÃŸig die Musik
+	/// </summary>
+	void changeBackgroundMusic();
 
 	void newRound();
 	/// <summary>
@@ -41,19 +52,19 @@ private:
 	void draw();
 
 	/// <summary>
-	/// Überprüft ob ein Turm eine Drohne abschießen kann
+	/// ÃœberprÃ¼ft ob ein Turm eine Drohne abschieÃŸen kann
 	/// </summary>
 	void checkShoot();
 
 	/// <summary>
-	/// Lässt MoneyTower Geld generieren
+	/// LÃ¤sst MoneyTower Geld generieren
 	/// </summary>
 	void generateMoneyTowers();
 
 	void loseGame();
 
 	/// <summary>
-	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
+	/// ÃœberprÃ¼ft, ob der towerAlias an einer verbotenen Position ist.
 	/// Z.B. Die Sidebar oder die Strecke
 	/// </summary>
 	/// <returns></returns>
@@ -64,10 +75,28 @@ private:
 	/// </summary>
 	Game();
 
+	/// <summary>
+	/// Musik und Sounds werden initialisiert
+	/// </summary>
+	void setMusicSound();
+
+	/// <summary>
+	/// Speichert das Spiel
+	/// </summary>
+	void saveGame();
+
+	/// <summary>
+	/// LÃ¤dt einen gespeicherten Spielstand
+	/// NOCH NICHT FERTIG!
+	/// </summary>
+	/// <param name="Map Index"></param>
+	/// <returns>Erfolgreich?</returns>
+	bool loadGame();
+
 	static Game* instance;
 public:
 
-	static Game* getInstance();
+	static Game* getInstance(); 
 
 	/// <summary>
 	/// Startet das Spiel
@@ -75,13 +104,13 @@ public:
 	void startGame();
 
 	/// <summary>
-	/// Gibt die Schriftart zurück
+	/// Gibt die Schriftart zurÃ¼ck
 	/// </summary>
 	/// <returns>Font</returns>
 	Font getFont();
 	
 	/// <summary>
-	/// Gibt einen Pointer auf das Fenster zurück
+	/// Gibt einen Pointer auf das Fenster zurÃ¼ck
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();

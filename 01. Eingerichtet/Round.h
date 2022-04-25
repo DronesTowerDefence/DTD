@@ -11,7 +11,7 @@ class Round
 private:
 	int money;
 	int health;
-	int round;
+	int index;
 	int towerPrice[3];
 	Clock droneTimer;
 	Clock droneSubHealthTimer;
@@ -19,24 +19,30 @@ private:
 	bool Lost;
 	bool Won;
 	int droneCountInRound[100]; //Runde 1-100 / Index 0-99
-	
+
+	std::list<Vector2f> allCoverablePoints; //Strecke eingeteilt in Punkte, alle 20px
 	std::list<Projectile*> allProjectiles;
 	std::list<Tower*> allAttackTowers;
 	std::list<Tower*> allMoneyTowers;
+	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
 
-	Map* map;
+	Map* p_map;
 
 	static Round* instance;
 
 	Round();
 	Round(int a, int b, int c, int d);
 
-	void setDroneCountInRound();
+	void setDroneCountInRound(); //Wie viele Drohnen pro Runde spawnen
 
 public:
 
 	static Round* getInstance();
+
+	void setAllCoverablePoints(); //Strecke eingeteilt in Punkte, alle 20px
+
+	void setP_map(Map* _map);
 
 	void addMoney(int);
 
@@ -54,14 +60,15 @@ public:
 
 	bool setHealth(int);
 
-	void addRound();
+	void nextRound();
 
-	int getRound();
+	int getIndex();
 
 	std::list<Tower*> getAllAttackTower();
 	std::list<Drone*> getAllDrones();
 	std::list<Tower*> getAllMoneyTower();
 	std::list<Projectile*> getAllProjectiles();
+	std::list<Vector2f> getAllCoverablePoints();
 
 	void sellTower(Tower*);
 
@@ -85,6 +92,10 @@ public:
 
 	int getDroneCountInRound(int);
 
-	//void deleteDrone(Drone* i);
+	void deleteDrone(Drone*);
+
+	void setIndex(int);
+
+	std::list<Tower*> getAllTowers();
 
 };
