@@ -24,94 +24,98 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			Round::getInstance()->addTower(this);
 
 			break;
-			case 1:
-				name = "Turm 2";
-				damage = 2;
-				speed = 2;
-				price = 200;
-				range = 200;
-				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower1/tower1_0.png");
-				towerTex[1].loadFromFile("img/tower1/tower1_0.png");
-				towerTex[2].loadFromFile("img/tower1/tower1_0.png");
-				towerTex[3].loadFromFile("img/tower1/tower1_0.png");
-				Round::getInstance()->addTower(this);
-				break;
+		case 1:
+			name = "Turm 2";
+			damage = 2;
+			speed = 2;
+			price = 200;
+			range = 200;
+			moneyGeneration = 0;
+			towerTex[0].loadFromFile("img/tower1/tower1_0.png");
+			towerTex[1].loadFromFile("img/tower1/tower1_0.png");
+			towerTex[2].loadFromFile("img/tower1/tower1_0.png");
+			towerTex[3].loadFromFile("img/tower1/tower1_0.png");
+			Round::getInstance()->addTower(this);
+			break;
 
-			case 2:
-				name = "Turm 3";
-				damage = 3;
-				speed = 2;
-				price = 300;
-				range = 300;
-				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower2/tower2_0.png");
-				towerTex[1].loadFromFile("img/tower2/tower2_0.png");
-				towerTex[2].loadFromFile("img/tower2/tower2_0.png");
-				towerTex[3].loadFromFile("img/tower2/tower2_0.png");
-				Round::getInstance()->addTower(this);
-				break;
+		case 2:
+			name = "Turm 3";
+			damage = 3;
+			speed = 2;
+			price = 300;
+			range = 300;
+			moneyGeneration = 0;
+			towerTex[0].loadFromFile("img/tower2/tower2_0.png");
+			towerTex[1].loadFromFile("img/tower2/tower2_0.png");
+			towerTex[2].loadFromFile("img/tower2/tower2_0.png");
+			towerTex[3].loadFromFile("img/tower2/tower2_0.png");
+			Round::getInstance()->addTower(this);
+			break;
 
-			case 3:
-				name = "Turm 4";
-				damage = 4;
-				speed = 4;
-				price = 400;
-				range = 400;
-				moneyGeneration = 0;
-				towerTex[0].loadFromFile("img/tower3/tower3_0.png");
-				towerTex[1].loadFromFile("img/tower3/tower3_0.png");
-				towerTex[2].loadFromFile("img/tower3/tower3_0.png");
-				towerTex[3].loadFromFile("img/tower3/tower3_0.png");
-				Round::getInstance()->addTower(this);
-				break;
+		case 3:
+			name = "Turm 4";
+			damage = 4;
+			speed = 4;
+			price = 400;
+			range = 400;
+			moneyGeneration = 0;
+			towerTex[0].loadFromFile("img/tower3/tower3_0.png");
+			towerTex[1].loadFromFile("img/tower3/tower3_0.png");
+			towerTex[2].loadFromFile("img/tower3/tower3_0.png");
+			towerTex[3].loadFromFile("img/tower3/tower3_0.png");
+			Round::getInstance()->addTower(this);
+			break;
 
-			case 4:
-				name = "\224lbohrer";
-				damage = 0;
-				speed = 2;
-				price = 1000;
-				range = 0;
-				moneyGeneration = 50;
-				towerTex[0].loadFromFile("img/tower4/tower4_0.png");
-				towerTex[1].loadFromFile("img/tower4/tower4_0.png");
-				towerTex[2].loadFromFile("img/tower4/tower4_0.png");
-				towerTex[3].loadFromFile("img/tower4/tower4_0.png");
-				Round::getInstance()->addTower(this);
-				break;
-  float x = 1;
-		for (int i = 0; i < 4; i++, x += .5)
-		{
-			price2[i] = price * x;
-			price1[i] = price * x;
-			damageUpdate[i] = damage * x;
-			attackspeedUpdate[i] = speed * x;
+		case 4:
+			name = "\224lbohrer";
+			damage = 0;
+			speed = 2;
+			price = 1000;
+			range = 0;
+			moneyGeneration = 50;
+			towerTex[0].loadFromFile("img/tower4/tower4_0.png");
+			towerTex[1].loadFromFile("img/tower4/tower4_0.png");
+			towerTex[2].loadFromFile("img/tower4/tower4_0.png");
+			towerTex[3].loadFromFile("img/tower4/tower4_0.png");
+			Round::getInstance()->addTower(this);
+			break;
+			float x = 1;
+			for (int i = 0; i < 4; i++, x += .5)
+			{
+				price2[i] = price * x;
+				price1[i] = price * x;
+				damageUpdate[i] = damage * x;
+				attackspeedUpdate[i] = speed * x;
+			}
+
+			animationCounter = 0;
+			projectileSpeed = 3;
+			position = pos;
+			p_map = n_map;
+			value = price;
+			shootCooldown = false;
+			generationCooldown = false;
+			towerSpr.setTexture(towerTex[animationCounter]);
+			towerSpr.setPosition(position);
+
+			if (index < 4)
+			{
+				rangeShape.setRadius(range);
+				rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
+				rangeShape.setFillColor(Color::Transparent);
+				rangeShape.setOutlineColor(Color::Black);
+				rangeShape.setOutlineThickness(5);
+				setCoverableArea();
+				int test = 0;
+			}
+
+			update = new Updates();
 		}
-
-		animationCounter = 0;
-		projectileSpeed = 3;
-		position = pos;
-		p_map = n_map;
-		value = price;
-		shootCooldown = false;
-		generationCooldown = false;
-		towerSpr.setTexture(towerTex[animationCounter]);
-		towerSpr.setPosition(position);
-
-		if (index < 4)
-		{
-			rangeShape.setRadius(range);
-			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
-			rangeShape.setFillColor(Color::Transparent);
-			rangeShape.setOutlineColor(Color::Black);
-			rangeShape.setOutlineThickness(5);
-			setCoverableArea();
-			int test = 0;
-		}
-
-		update = new Updates();
 	}
-	else delete this;
+	else
+	{
+		delete this;
+	}
 }
 
 void Tower::setCoverableArea()
