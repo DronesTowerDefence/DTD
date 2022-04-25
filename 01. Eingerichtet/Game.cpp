@@ -267,10 +267,6 @@ void Game::setMusicSound()
 	music[1].setBuffer(musicBuffer[1]);
 	music[2].setBuffer(musicBuffer[2]);
 	music[3].setBuffer(musicBuffer[3]);
-
-	//Anfangsmusik wird in changeBackgroundMusic nach einer bestimmten Zeit geändert
-	music[chooseMusic].play();
-	music[chooseMusic].setLoop(true);
 }
 
 void Game::changeBackgroundMusic()
