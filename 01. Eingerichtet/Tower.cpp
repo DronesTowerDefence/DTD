@@ -79,38 +79,39 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			towerTex[3].loadFromFile("img/tower4/tower4_0.png");
 			Round::getInstance()->addTower(this);
 			break;
-			float x = 1;
-			for (int i = 0; i < 4; i++, x += .5)
-			{
-				price2[i] = price * x;
-				price1[i] = price * x;
-				damageUpdate[i] = damage * x;
-				attackspeedUpdate[i] = speed * x;
-			}
-
-			animationCounter = 0;
-			projectileSpeed = 3;
-			position = pos;
-			p_map = n_map;
-			value = price;
-			shootCooldown = false;
-			generationCooldown = false;
-			towerSpr.setTexture(towerTex[animationCounter]);
-			towerSpr.setPosition(position);
-
-			if (index < 4)
-			{
-				rangeShape.setRadius(range);
-				rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
-				rangeShape.setFillColor(Color::Transparent);
-				rangeShape.setOutlineColor(Color::Black);
-				rangeShape.setOutlineThickness(5);
-				setCoverableArea();
-				int test = 0;
-			}
-
-			update = new Updates();
 		}
+		float x = 1;
+		for (int i = 0; i < 4; i++, x += .5)
+		{
+			price2[i] = price * x;
+			price1[i] = price * x;
+			damageUpdate[i] = damage * x;
+			attackspeedUpdate[i] = speed * x;
+		}
+
+		animationCounter = 0;
+		projectileSpeed = 3;
+		position = pos;
+		p_map = n_map;
+		value = price;
+		shootCooldown = false;
+		generationCooldown = false;
+		towerSpr.setTexture(towerTex[animationCounter]);
+		towerSpr.setPosition(position);
+
+		if (index < 4)
+		{
+			rangeShape.setRadius(range);
+			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
+			rangeShape.setFillColor(Color::Transparent);
+			rangeShape.setOutlineColor(Color::Black);
+			rangeShape.setOutlineThickness(5);
+			setCoverableArea();
+			int test = 0;
+		}
+
+		update = new Updates();
+
 	}
 	else
 	{

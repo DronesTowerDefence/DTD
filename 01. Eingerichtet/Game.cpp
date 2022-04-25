@@ -43,8 +43,8 @@ void Game::draw()
 {
 	window->clear();
 
-	window->draw(toolbar);
 	window->draw(*p_map->getBackround()); //Karte wird gedrawt
+	window->draw(toolbar);
 
 	if (tower != nullptr)
 	{
@@ -346,15 +346,12 @@ void Game::checkButtonClick()
 		{
 
 			tower->manageUpdate(window);
-			if (tower->getUpdates()->IsCloses(window))
+			/*if (tower->getUpdates()->IsCloses(window))
 			{
 				tower = nullptr;
-			}
+			}*/
 		}
-		else
-		{
-
-		}
+		
 	}
 }
 
