@@ -124,7 +124,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			
+
 
 		}
 		loseGame();
@@ -322,12 +322,17 @@ void Game::checkButtonClick()
 {
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
-		int index = sidebar->isClicked(window);
-		if (index > -1)
+		int index = -1;
+		if (tower == nullptr) // wenn die Toolbar nicht die Updates anzeigt
 		{
-			newTower = new TowerAlias(index, p_map);
+			index= sidebar->isClicked(window);
+			if (index > -1)
+			{
+				newTower = new TowerAlias(index, p_map);
+			}
+			//else clicked = true;
 		}
-		else if(newTower ==nullptr)
+		 if (newTower == nullptr || index == -1)
 		{
 			isMouseClicked = true;
 		}
@@ -346,12 +351,12 @@ void Game::checkButtonClick()
 		{
 
 			tower->manageUpdate(window);
-			/*if (tower->getUpdates()->IsCloses(window))
+			if (tower->getUpdates()->IsCloses(window))
 			{
 				tower = nullptr;
-			}*/
+			}
 		}
-		
+
 	}
 }
 
@@ -413,7 +418,7 @@ void Game::loseGame()
 
 		gameOverHomeButtonTexture.loadFromFile("img/homeButton.png");
 		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
-		gameOverHomeButton.setPosition(Vector2f(0,0));
+		gameOverHomeButton.setPosition(Vector2f(0, 0));
 
 		gameOverRestartButtonTexture.loadFromFile("img/restartButton.png");
 		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);

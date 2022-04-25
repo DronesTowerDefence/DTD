@@ -1,7 +1,7 @@
 Map.Index="1"
 Round.Index="1"
-Round.Money="1600"
-Round.Health="10"
-Tower0_index="3"
-Tower0_position="501,453.291"
+Round.Money="1900"
+Round.Health="-20"
+Tower0_index="0"
+Tower0_position="568,132.133"
 

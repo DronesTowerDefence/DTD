@@ -93,6 +93,10 @@ bool Updates::IsCloses(RenderWindow* window)
 	{
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 
 }
 int Updates::getIndex1()
