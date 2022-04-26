@@ -5,7 +5,7 @@ Round* Round::instance = nullptr;
 
 Round::Round()
 {
-	money = 2000; //Start-Geld
+	money = 450; //Start-Geld
 	health = 10; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
@@ -269,6 +269,12 @@ void Round::deleteDrone(Drone* drone)
 	
 	allDrones.remove(drone);
 	
+}
+
+void Round::deleteProjectile(Projectile* p)
+{
+	allProjectiles.remove(p);
+
 }
 
 std::list<Vector2f> Round::getAllCoverablePoints()

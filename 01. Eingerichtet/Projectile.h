@@ -28,4 +28,5 @@ public:
 	Sprite* getProjectileSprite();
 	void setmove();
 	bool getcollided();
+	~Projectile();
 };

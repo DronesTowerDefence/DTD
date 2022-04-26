@@ -374,6 +374,7 @@ void Game::checkTowerAlias()
 		}
 		else if (newTower->getSpr()->getPosition().x > 1700)
 		{
+			round->addMoney(newTower->getPrice());
 			delete newTower;
 			newTower = nullptr;
 		}
@@ -473,11 +474,19 @@ void Game::checkShoot()
 {
 	for (auto t : round->getAllAttackTower())
 	{
-		for (auto d : round->getAllDrones())
+		for (auto iter : t->getCoverableArea())
 		{
-			if (t->getRangeShape()->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+			CircleShape *tmp = new CircleShape;
+			tmp->setFillColor(Color::Transparent);
+			tmp->setRadius(15);
+			tmp->setPosition(Vector2f(iter.x,iter.y));
+
+			for (auto d : round->getAllDrones())
 			{
-				t->shoot(d);
+				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+				{
+					t->shoot(d);
+				}
 			}
 		}
 	}

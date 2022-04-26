@@ -94,6 +94,8 @@ public:
 
 	void deleteDrone(Drone*);
 
+	void deleteProjectile(Projectile*);
+
 	void setIndex(int);
 
 	std::list<Tower*> getAllTowers();

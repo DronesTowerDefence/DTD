@@ -60,10 +60,10 @@ void Projectile::collission()
 	if (collided ==0) {
 		if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 30 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -30) {
 			if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 30 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -30) {
-				std::cout << "hit" << std::endl;
+				//std::cout << "hit" << std::endl;
 				dronetarget->takeDamage(tower->getDamage());
 				collided = 1;
-				//delete this;
+				delete this;
 			}
 
 		}
@@ -84,6 +84,11 @@ void Projectile::setmove()
 bool Projectile::getcollided()
 {
 	return collided;
+}
+
+Projectile::~Projectile()
+{
+	Round::getInstance()->deleteProjectile(this);
 }
 
 Sprite* Projectile::getProjectileSprite()
