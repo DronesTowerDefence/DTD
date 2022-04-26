@@ -9,18 +9,23 @@ Updates::Updates(int towerIndex)
 	close = new Sprite();
 	update1 = new Sprite();
 	update2 = new Sprite();
+	sell = new Sprite();
 	textureUpdate1 = new Texture();
 	textureUpdate2 = new Texture();
 	textureclose = new Texture();
+	textureSell= new Texture();
 	textureUpdate1->loadFromFile("img/update.png");
 	textureUpdate2->loadFromFile("img/update.png");
 	textureclose->loadFromFile("img/close.png");
+	textureSell->loadFromFile("img/trash.png");
 	update1->setPosition(Vector2f(1745, 100));
 	update2->setPosition(Vector2f(1745, 250));
 	close->setPosition(Vector2f(1850, 25));
+	sell->setPosition(Vector2f(1745, 25));
 	update1->setTexture(*textureUpdate1);
 	update2->setTexture(*textureUpdate2);
 	close->setTexture(*textureclose);
+	sell->setTexture(*textureSell);
 	for (int i = 0, x = 1745; i < 4; i++, x += 15)
 	{
 		shoowUpdate1[i] = new RectangleShape(Vector2f(10, 10));
@@ -55,6 +60,7 @@ void Updates::draw(RenderWindow* window)
 	window->draw(*close);
 	window->draw(*text1);
 	window->draw(*text2);
+	window->draw(*sell);
 	for (int i = 0; i < 4; i++)
 	{
 		if (index1 > i)
@@ -65,7 +71,7 @@ void Updates::draw(RenderWindow* window)
 
 }
 
-int Updates::isClicked(RenderWindow* window, float price1, float price2)
+int Updates::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
@@ -75,7 +81,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
-		if (Round::getInstance()->submoney(price1))
+		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1)))
 		{
 			index1++;
 			text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
@@ -90,7 +96,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			if (Round::getInstance()->submoney(price2))
+			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2)))
 			{
 				index2++;
 				text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))); //TODO updatepeis
@@ -102,7 +108,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 	return -1;
 }
 
-bool Updates::IsCloses(RenderWindow* window)
+bool Updates::IsClosed(RenderWindow* window)
 {
 
 	Vector2i mouse = Mouse::getPosition(*window);
@@ -118,6 +124,21 @@ bool Updates::IsCloses(RenderWindow* window)
 		return false;
 	}
 
+}
+bool Updates::isSell(RenderWindow* window)
+{
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f	pos = Service::getInstance()->getObjectPosition(sell->getPosition()); //Holt sich die Position des Turmes i
+	Vector2f	pos2 = Service::getInstance()->getObjectPosition(sell->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 int Updates::getIndex1()
 {

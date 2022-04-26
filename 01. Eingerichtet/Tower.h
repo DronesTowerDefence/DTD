@@ -32,12 +32,7 @@ private:
 
 	std::string name; //Der Name des Turmes
 	
-	float price1[4];
-	float price2[4];
-
-	float damageUpdate[4];
-	float attackspeedUpdate[4];
-
+	
 	
 	CircleShape rangeShape;
 	Texture towerTex[4];

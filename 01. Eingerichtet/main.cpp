@@ -27,6 +27,7 @@ int main()
 	}
 
 	Game::getInstance()->setWindow(&window);
+	
 	Game::getInstance()->startGame();
 
 	return 0;

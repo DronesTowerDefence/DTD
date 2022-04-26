@@ -6,11 +6,13 @@ class Updates
 {
 private:
 	Sprite* close;
+	Sprite* sell;
 	Sprite* update2;
 	Sprite* update1;
 	Texture* textureUpdate1;
 	Texture* textureUpdate2;
 	Texture* textureclose;
+	Texture* textureSell;
 	RectangleShape* shoowUpdate1[4];
 	RectangleShape* shoowUpdate2[4];
 	int index1;
@@ -23,10 +25,10 @@ private:
 public:
 	Updates(int towerIndex);
 	void draw(RenderWindow* window);
-	int isClicked(RenderWindow* window, float price1, float price2);
+	int isClicked(RenderWindow* window);
 
-	bool IsCloses(RenderWindow* window);
-
+	bool IsClosed(RenderWindow* window);
+	bool isSell(RenderWindow* window);
 	int getIndex1();
 	int getIndex2();
 

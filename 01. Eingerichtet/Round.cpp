@@ -187,6 +187,7 @@ void Round::sellTower(Tower* a)
 		if (i == a)
 		{
 			allAttackTowers.remove(i);
+			break;
 		}
 	}
 
@@ -195,9 +196,18 @@ void Round::sellTower(Tower* a)
 		if (i == a)
 		{
 			allMoneyTowers.remove(i);
+			break;
 		}
 	}
 
+	for (auto i : allTowers)
+	{
+		if (i == a)
+		{
+			allTowers.remove(i);
+			break;
+		}
+	}
 	addMoney(a->getValue() * 0.75);
 
 	delete a;

@@ -14,6 +14,8 @@ Ressources* Ressources::getInstance()
 Ressources::Ressources()
 {
 	towerCount = 5;
+	towerAttackTowerCount = 4;
+	towerMoneyTowerCount = 1;
 
 	towerProjectileIndex[0] = 1;
 	towerProjectileIndex[1] = 1;
@@ -68,19 +70,19 @@ Ressources::Ressources()
 	p[3] = 1 / 6;
 	p[3] = 1 / 5;
 	float x = 1;
-	for (int j = 0; j < 4; j++, x =1)
+	//settz speed und Schaden
+	for (int j = 0; j < towerCount; j++, x = 1)
 	{
-		for (int i = 0; i < 4; i++ , x+=0.5)
+		for (int i = 0; i < 4; i++, x += 0.5)
 		{
-			towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
-			towerUpgradePrice2[j][i] = towerPrice[j] + (towerPrice[j] * x);
 			towerUpdateDamage[j][i] = towerDamage[j] + (towerDamage[j] * x);
 			towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j] * i);
+			towerUpdateMoneyGeneration[j][i] = towerMoneyGeneration[j] + (towerMoneyGeneration[j] * x);
+			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
+
 		}
 	}
-		
 }
-
 int Ressources::getTowerCount()
 {
 	return towerCount;
@@ -132,4 +134,8 @@ float Ressources::getTowerUpdateDamage(int i, int j)
 float Ressources::getTowerUpdateSpeed(int i, int j)
 {
 	return towerUpdateSpeed[i][j];
+}
+float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
+{
+	return towerUpdateMoneyGeneration[i][j];
 }

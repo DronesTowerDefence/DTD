@@ -60,11 +60,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		moneyGeneration = Ressources::getInstance()->getTowerMoneyGeneration(index);
 		name = Ressources::getInstance()->getTowerName(index);
 
-		for (int i = 0; i < 4; i++)
-		{
-			price1[i] = Ressources::getInstance()->getTowerUpgradesPrice1(index, i);
-			price2[i] = Ressources::getInstance()->getTowerUpgradesPrice2(index, i);
-		}
+
 
 		animationCounter = 0;
 		position = pos;
@@ -177,17 +173,35 @@ Updates* Tower::getUpdates()
 void Tower::manageUpdate(RenderWindow* window)
 {
 
-	int indexUpdate = update->isClicked(window, price1[update->getIndex1()], price2[update->getIndex2()]);
+	int indexUpdate = update->isClicked(window);
 	// index wird in der Methode erhöht
-	if (indexUpdate == 1)
+	if (index < 4)
 	{
-		damage = damageUpdate[update->getIndex1()];
 
+		if (indexUpdate == 1)
+		{
+			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			damage = Ressources::getInstance()->getTowerUpdateDamage(index, update->getIndex1());
+		}
+		else if (indexUpdate == 2)
+		{
+			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2());
+
+		}
 	}
-	else if (indexUpdate == 2)
+	else if (index == 4)
 	{
-		speed = attackspeedUpdate[update->getIndex2()];
-
+		if (indexUpdate == 1)
+		{
+			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			moneyGeneration = Ressources::getInstance()->getTowerUpdateMoneyGeneration(index, update->getIndex2());
+		}
+		else if (indexUpdate == 2)
+		{
+			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2());
+		}
 	}
 }
 

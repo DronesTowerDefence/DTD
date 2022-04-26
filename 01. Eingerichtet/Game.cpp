@@ -343,7 +343,7 @@ void Game::checkButtonClick()
 	{
 		isMouseClicked = false;
 
-		for (auto* t : round->getAllAttackTower())
+		for (auto* t : round->getAllTowers())
 		{
 			if (t->isClicked(window))
 				tower = t;
@@ -352,8 +352,13 @@ void Game::checkButtonClick()
 		{
 
 			tower->manageUpdate(window);
-			if (tower->getUpdates()->IsCloses(window))
+			if (tower->getUpdates()->IsClosed(window))
 			{
+				tower = nullptr;
+			}
+			else if (tower->getUpdates()->isSell(window))
+			{
+				Round::getInstance()->sellTower(tower);
 				tower = nullptr;
 			}
 		}
