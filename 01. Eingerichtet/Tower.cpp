@@ -11,13 +11,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 	{
 		switch (index)
 		{
-		case 0: name = "Turm 1";
-			damage = 1;
-			speed = 1;
-			price = 100;
-			range = 100;
-			moneyGeneration = 0;
-			projectileSpeed = 5;
+		case 0:
 			towerTex[0].loadFromFile("img/tower0/tower0_0.png");
 			towerTex[1].loadFromFile("img/tower0/tower0_1.png");
 			towerTex[2].loadFromFile("img/tower0/tower0_2.png");
@@ -26,12 +20,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 			break;
 		case 1:
-			name = "Turm 2";
-			damage = 2;
-			speed = 2;
-			price = 200;
-			range = 200;
-			moneyGeneration = 0;
 			towerTex[0].loadFromFile("img/tower1/tower1_0.png");
 			towerTex[1].loadFromFile("img/tower1/tower1_0.png");
 			towerTex[2].loadFromFile("img/tower1/tower1_0.png");
@@ -40,12 +28,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 2:
-			name = "Turm 3";
-			damage = 3;
-			speed = 2;
-			price = 300;
-			range = 300;
-			moneyGeneration = 0;
 			towerTex[0].loadFromFile("img/tower2/tower2_0.png");
 			towerTex[1].loadFromFile("img/tower2/tower2_0.png");
 			towerTex[2].loadFromFile("img/tower2/tower2_0.png");
@@ -54,12 +36,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 3:
-			name = "Turm 4";
-			damage = 4;
-			speed = 4;
-			price = 400;
-			range = 400;
-			moneyGeneration = 0;
 			towerTex[0].loadFromFile("img/tower3/tower3_0.png");
 			towerTex[1].loadFromFile("img/tower3/tower3_0.png");
 			towerTex[2].loadFromFile("img/tower3/tower3_0.png");
@@ -68,12 +44,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 4:
-			name = "\224lbohrer";
-			damage = 0;
-			speed = 2;
-			price = 500;
-			range = 0;
-			moneyGeneration = 50;
 			towerTex[0].loadFromFile("img/tower4/tower4_0.png");
 			towerTex[1].loadFromFile("img/tower4/tower4_0.png");
 			towerTex[2].loadFromFile("img/tower4/tower4_0.png");
@@ -81,17 +51,22 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			Round::getInstance()->addTower(this);
 			break;
 		}
-		float x = 1;
-		for (int i = 0; i < 4; i++, x += .5)//
+
+		damage = Ressources::getInstance()->getTowerDamage(index);
+		speed = Ressources::getInstance()->getTowerSpeed(index);
+		price = Ressources::getInstance()->getTowerPrice(index);
+		projectileSpeed = Ressources::getInstance()->getTowerProjectileSpeed(index);
+		range = Ressources::getInstance()->getTowerRange(index);
+		moneyGeneration = Ressources::getInstance()->getTowerMoneyGeneration(index);
+		name = Ressources::getInstance()->getTowerName(index);
+
+		for (int i = 0; i < 4; i++)
 		{
-			price2[i] = price * x;
-			price1[i] = price * x;
-			damageUpdate[i] = damage * x;
-			attackspeedUpdate[i] = speed * x;
+			price1[i] = Ressources::getInstance()->getTowerUpgradesPrice1(index,i);
+			price2[i] = Ressources::getInstance()->getTowerUpgradesPrice2(index,i);
 		}
 
 		animationCounter = 0;
-		projectileSpeed = 3;
 		position = pos;
 		p_map = n_map;
 		value = price;
@@ -100,7 +75,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		towerSpr.setTexture(towerTex[animationCounter]);
 		towerSpr.setPosition(position);
 
-		if (index < 4)
+		if (index < Ressources::getInstance()->getTowerCount())
 		{
 			rangeShape.setRadius(range);
 			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist

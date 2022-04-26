@@ -14,6 +14,7 @@ Game* Game::getInstance()
 
 Game::Game()
 {
+	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
 	p_map = new Map();
