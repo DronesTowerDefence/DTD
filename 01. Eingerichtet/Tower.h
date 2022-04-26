@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <list>
+#include "Ressources.h"
 #include "Map.h"
 #include "Service.h"
 #include "Updates.h"
@@ -15,10 +16,10 @@ private:
 	float speed; //Wie schnell der Turm schießt, je kleiner desto schneller
 	float price;
 	float value; //Wie hoch der Wert des Turmes ist (erhöht sich durch Upgrades)
-	int projectileSpeed; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
-
+	float projectileSpeed; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
+	
 	int animationCounter; //Welcher Frame ausgewählt ist
 
 	bool shootCooldown; //Damit der Turm nicht dauerhaft schieÃen kann
@@ -127,5 +128,7 @@ public:
 	/// </summary>
 	/// <returns>Einzelnen Sprite-Frame</returns>
 	Sprite* getDrawSprite();
+
+	int getRange();
 
 };
