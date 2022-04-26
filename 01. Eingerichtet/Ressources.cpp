@@ -33,10 +33,10 @@ Ressources::Ressources()
 	towerSpeed[3] = 2;
 	towerSpeed[4] = 1;
 
-	towerProjectileSpeed[0] = 1;
-	towerProjectileSpeed[1] = 1;
-	towerProjectileSpeed[2] = 1;
-	towerProjectileSpeed[3] = 1;
+	towerProjectileSpeed[0] = 4;
+	towerProjectileSpeed[1] = 4;
+	towerProjectileSpeed[2] = 4;
+	towerProjectileSpeed[3] = 4;
 	towerProjectileSpeed[4] = 0;
 
 	towerRange[0] = 100;
