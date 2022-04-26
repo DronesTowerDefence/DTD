@@ -125,12 +125,14 @@ void Tower::setCoverableArea()
 	CircleShape tmpCircle;
 	tmpCircle.setRadius(15);
 	tmpCircle.setFillColor(Color::Transparent);
+	float distanz =0;
 	for (auto i : Round::getInstance()->getAllCoverablePoints())
 	{
 		tmpCircle.setPosition(Vector2f(i.x, i.y));
-		if (rangeShape.getGlobalBounds().intersects(tmpCircle.getGlobalBounds()))
+			distanz = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y)));
+		if (distanz <= range)
 		{
-			point.z = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y))); //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 			point.x = i.x;
 			point.y = i.y;
 			coverableArea.push_back(point);
@@ -184,9 +186,7 @@ bool Tower::generateMoney()
 bool   Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f pos, pos2;
-
-
+	Vector2f pos, pos2;	
 	pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition()); //Holt sich die Position des Turmes i
 	pos2 = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
@@ -251,6 +251,7 @@ int Tower::getIndex()
 {
 	return index;
 }
+
 
 float Tower::getProjectileSpeed()
 {

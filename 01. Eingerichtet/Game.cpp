@@ -60,6 +60,10 @@ void Game::draw()
 		window->draw((*newTower->getSpr()));
 		window->draw((*newTower->getRangeShape()));
 	}
+	if (tower != nullptr)
+	{
+		window->draw(*tower->getRangeShape());
+	}
 
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
 	{
@@ -71,10 +75,6 @@ void Game::draw()
 		window->draw(*(t->getDrawSprite()));
 	}
 
-	for (auto* t : round->getAllAttackTower()) //Tower Range wird gedrawt
-	{
-		window->draw(*(t->getRangeShape()));
-	}
 
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
@@ -325,14 +325,14 @@ void Game::checkButtonClick()
 		int index = -1;
 		if (tower == nullptr) // wenn die Toolbar nicht die Updates anzeigt
 		{
-			index= sidebar->isClicked(window);
+			index = sidebar->isClicked(window);
 			if (index > -1)
 			{
 				newTower = new TowerAlias(index, p_map);
 			}
 			//else clicked = true;
 		}
-		 if (newTower == nullptr || index == -1)
+		if (newTower == nullptr || index == -1)
 		{
 			isMouseClicked = true;
 		}
@@ -436,7 +436,9 @@ void Game::loseGame()
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
 			"\nMoney: " + std::to_string(round->getMoney()) +
-			"\nRound: " + std::to_string(round->getIndex() + 1));
+			"\nRound: " + std::to_string(round->getIndex() + 1) +
+			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
+			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
 	}
 }
 

@@ -31,7 +31,6 @@ float Service::getXPosition(int xObject)
 float Service::getYPosition( int yObject)
 {
 	return  VideoMode::getDesktopMode().height / 991 * yObject;
-
 }
 
 
@@ -40,6 +39,6 @@ Vector2f Service::getObjectPosition(Vector2f objectposition)
 	//pc  / auflösung *ziel
 	//return Vector2f(x_r, y_r);
 
-
-	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 991.0 * objectposition.y);
+	float x = VideoMode::getDesktopMode().height;
+	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 1080 * objectposition.y);
 }
