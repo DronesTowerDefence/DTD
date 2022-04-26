@@ -13,7 +13,13 @@ Ressources* Ressources::getInstance()
 
 Ressources::Ressources()
 {
-	towerCount = 4;
+	towerCount = 5;
+
+	towerProjectileIndex[0] = 1;
+	towerProjectileIndex[1] = 1;
+	towerProjectileIndex[2] = 1;
+	towerProjectileIndex[3] = 3;
+	towerProjectileIndex[4] = 0;
 
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -62,18 +68,25 @@ Ressources::Ressources()
 	p[3] = 1 / 6;
 	p[3] = 1 / 5;
 	float x = 1;
-	for (int i = 0, j = 0; j < 4; i++, j++, x += .5)
+	for (int j = 0; j < 4; j++, x += .5)
 	{
-		towerUpgradePrice1[j][i] = towerPrice[j] * x;
-		towerUpgradePrice2[j][i] = towerPrice[j] * x;
-		towerUpdateDamage[j][i] = towerDamage[j] * x;
-		towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j]*i);
+		for (int i = 0; i < 4; i++)
+		{
+			towerUpgradePrice1[j][i] = towerPrice[j] * x;
+			towerUpgradePrice2[j][i] = towerPrice[j] * x;
+			towerUpdateDamage[j][i] = towerDamage[j] * x;
+			towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j] * i);
+		}
 	}
 }
 
 int Ressources::getTowerCount()
 {
 	return towerCount;
+}
+int Ressources::getTowerProjectileIndex(int i)
+{
+	return towerProjectileIndex[i];
 }
 int Ressources::getTowerPrice(int i)
 {
