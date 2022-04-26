@@ -26,11 +26,11 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 		towerAliasTexture.loadFromFile("img/tower4/tower4_alias.png");
 		break;
 	}
-
+	range = Ressources::getInstance()->getTowerRange(index);
+	price = Ressources::getInstance()->getTowerPrice(index);
 	p_map = _map;
 	towerAliasSpr.setTexture(towerAliasTexture);
-
-	rangeShape.setRadius(range);
+	rangeShape.setRadius(Ressources::getInstance()->getTowerRange(index));
 	rangeShape.setFillColor(Color::Transparent);
 	rangeShape.setOutlineColor(Color::Black);
 	rangeShape.setOutlineThickness(5);
