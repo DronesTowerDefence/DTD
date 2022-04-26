@@ -380,7 +380,7 @@ void Game::checkTowerAlias()
 		}
 		else if (newTower->getSpr()->getPosition().x > 1700)
 		{
-			round->addMoney(newTower->getPrice());
+			round->addMoney(Ressources::getInstance()->getTowerPrice(newTower->getIndex()));
 			delete newTower;
 			newTower = nullptr;
 		}

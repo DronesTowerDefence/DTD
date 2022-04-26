@@ -13,6 +13,7 @@
 #ignore savegames
 *.sav
 savegame1.sav
+[].sav
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -47,11 +47,6 @@ void TowerAlias::CreateNewTower()
 	new Tower(index, towerAliasSpr.getPosition(), p_map);
 }
 
-float TowerAlias::getPrice()
-{
-	return price;
-}
-
 Sprite* TowerAlias::getSpr()
 {
 	return &towerAliasSpr;
@@ -65,4 +60,9 @@ CircleShape* TowerAlias::getRangeShape()
 Vector2f TowerAlias::getPos()
 {
 	return pos;
+}
+
+int TowerAlias::getIndex()
+{
+	return index;
 }

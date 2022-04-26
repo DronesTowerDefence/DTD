@@ -19,9 +19,9 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	drone = Sprite();
 	drone.setTexture(droneTexture);
 	drone.setScale(1, 1);
-	speed = 2.5;
+	speed = Ressources::getInstance()->getDroneSpeed(typSpecifier);
 	nextPoint = 0;
-	lives = 3;
+	lives = Ressources::getInstance()->getDroneLives(typSpecifier);
 	drone.setPosition(startPosition);
 	move_x = x;
 	move_y = y;

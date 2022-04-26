@@ -7,8 +7,8 @@ private:
 	static Ressources* instance;
 
 	//Tower
-	int towerCount;
-	int towerProjectileIndex[5];
+	int towerCount; //Wie viele Turm-Typen es gibt
+	int towerProjectileIndex[5]; //Welches Projektil verwendet werden soll
 	int towerPrice[5]; //Wie viel der Tower kostet
 	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[5]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
@@ -21,7 +21,10 @@ private:
 	float towerUpdateDamage[5][4];
 	float towerUpdateSpeed[5][4];
 	float towerUpdateMoney[5][4];
-	float towerUpdateMoneyGeneration[4][4];
+	float towerUpdateMoneyGeneration[5][4];
+
+	float droneSpeed[1];
+	int droneLives[1];
 public:
 
 	static Ressources* getInstance();
@@ -41,6 +44,10 @@ public:
 	float getTowerUpgradesPrice2(int, int);
 	float getTowerUpdateDamage(int, int);
 	float getTowerUpdateSpeed(int, int);
+
+	float getDroneSpeed(int);
+	int getDroneLives(int);
 	float getTowerUpdateMoneyGeneration(int i, int j);
+
 };
 

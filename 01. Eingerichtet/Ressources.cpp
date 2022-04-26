@@ -70,7 +70,7 @@ Ressources::Ressources()
 	p[3] = 1 / 6;
 	p[3] = 1 / 5;
 	float x = 1;
-	//settz speed und Schaden
+	//Setzt speed und Schaden
 	for (int j = 0; j < towerCount; j++, x = 1)
 	{
 		for (int i = 0; i < 4; i++, x += 0.5)
@@ -82,6 +82,9 @@ Ressources::Ressources()
 
 		}
 	}
+
+	droneSpeed[0] = 2.5;
+	droneLives[0] = 3;
 }
 int Ressources::getTowerCount()
 {
@@ -135,7 +138,11 @@ float Ressources::getTowerUpdateSpeed(int i, int j)
 {
 	return towerUpdateSpeed[i][j];
 }
-float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
+float Ressources::getDroneSpeed(int i)
 {
-	return towerUpdateMoneyGeneration[i][j];
+	return droneSpeed[i];
+}
+int Ressources::getDroneLives(int i)
+{
+	return droneLives[i];
 }
