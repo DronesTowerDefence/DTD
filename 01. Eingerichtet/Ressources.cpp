@@ -146,3 +146,7 @@ int Ressources::getDroneLives(int i)
 {
 	return droneLives[i];
 }
+float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
+{
+	return towerUpdateMoneyGeneration[i][j];
+}
