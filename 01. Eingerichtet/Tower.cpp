@@ -81,14 +81,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			Round::getInstance()->addTower(this);
 			break;
 		}
-		float x = 1;
-		for (int i = 0; i < 4; i++, x += .5)
-		{
-			price2[i] = price * x;
-			price1[i] = price * x;
-			damageUpdate[i] = damage * x;
-			attackspeedUpdate[i] = speed * x;
-		}
 
 		animationCounter = 0;
 		projectileSpeed = 3;
@@ -100,6 +92,14 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		towerSpr.setTexture(towerTex[animationCounter]);
 		towerSpr.setPosition(position);
 
+		float x = 1;
+		for (int i = 0; i < 4; i++, x += .5)
+		{
+			price2[i] = price * x;
+			price1[i] = price * x;
+			damageUpdate[i] = damage * x;
+			attackspeedUpdate[i] = - speed * x;
+		}
 		if (index < 4)
 		{
 			rangeShape.setRadius(range);
@@ -126,11 +126,11 @@ void Tower::setCoverableArea()
 	CircleShape tmpCircle;
 	tmpCircle.setRadius(15);
 	tmpCircle.setFillColor(Color::Transparent);
-	float distanz =0;
+	float distanz = 0;
 	for (auto i : Round::getInstance()->getAllCoverablePoints())
 	{
 		tmpCircle.setPosition(Vector2f(i.x, i.y));
-			distanz = std::sqrt(((position.x - point.x) * (position.x - point.x)) + ((position.y - point.y) * (position.y - point.y)));
+		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
 		if (distanz <= range)
 		{
 			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
@@ -187,7 +187,7 @@ bool Tower::generateMoney()
 bool   Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f pos, pos2;	
+	Vector2f pos, pos2;
 	pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition()); //Holt sich die Position des Turmes i
 	pos2 = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 

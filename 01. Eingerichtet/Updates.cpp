@@ -30,6 +30,20 @@ Updates::Updates()
 		shoowUpdate1[i]->setFillColor(Color::Green);
 		shoowUpdate2[i]->setFillColor(Color::Green);
 	}
+	arial.loadFromFile("fonts/arial.ttf");
+	text1 = new Text();
+	text2= new Text();
+	text1->setString("100"); //TODO updatepeis
+	text2->setString("100");
+
+	text1->setPosition(1745,100);
+	text2->setPosition(1745,250);
+	
+	text1->setFont(arial);
+	text2->setFont(arial);
+	
+	text1->setCharacterSize(20);
+	text2->setCharacterSize(20);
 
 }
 
@@ -38,6 +52,8 @@ void Updates::draw(RenderWindow* window)
 	window->draw(*update1);
 	window->draw(*update2);
 	window->draw(*close);
+	window->draw(*text1);
+	window->draw(*text2);
 	for (int i = 0; i < 4; i++)
 	{
 		if (index1 > i)
@@ -45,6 +61,7 @@ void Updates::draw(RenderWindow* window)
 		if (index2 > i)
 			window->draw(*shoowUpdate2[i]);
 	}
+
 }
 
 int Updates::isClicked(RenderWindow* window, float price1, float price2)
@@ -57,7 +74,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
-		if (Round::getInstance()->getMoney() >= price1)
+		if (Round::getInstance()->submoney(price1))
 		{
 			index1++;
 			return 1;
@@ -71,7 +88,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			if (Round::getInstance()->getMoney() >= price2)
+			if (Round::getInstance()->submoney(price2))
 			{
 				index2++;
 				return 2;
