@@ -82,7 +82,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 		}
 		float x = 1;
-		for (int i = 0; i < 4; i++, x += .5)
+		for (int i = 0; i < 4; i++, x += .5)//
 		{
 			price2[i] = price * x;
 			price1[i] = price * x;
