@@ -38,12 +38,6 @@ public:
 	void CreateNewTower();
 
 	/// <summary>
-	/// Gibt den Preis zurück
-	/// </summary>
-	/// <returns>price</returns>
-	float getPrice();
-
-	/// <summary>
 	/// Gibt einen Zeiger auf die Sprite von TowerAlias zurück
 	/// </summary>
 	/// <returns>Sprite</returns>
@@ -60,4 +54,6 @@ public:
 	/// </summary>
 	/// <returns>Vector2f</returns>
 	Vector2f getPos();
+
+	int getIndex();
 };

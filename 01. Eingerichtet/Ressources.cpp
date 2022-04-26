@@ -78,7 +78,9 @@ Ressources::Ressources()
 			towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j] * i);
 		}
 	}
-		
+
+	droneSpeed[0] = 2.5;
+	droneLives[0] = 3;
 }
 
 int Ressources::getTowerCount()
@@ -132,4 +134,12 @@ float Ressources::getTowerUpdateDamage(int i, int j)
 float Ressources::getTowerUpdateSpeed(int i, int j)
 {
 	return towerUpdateSpeed[i][j];
+}
+float Ressources::getDroneSpeed(int i)
+{
+	return droneSpeed[i];
+}
+int Ressources::getDroneLives(int i)
+{
+	return droneLives[i];
 }

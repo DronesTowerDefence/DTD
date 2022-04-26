@@ -7,8 +7,8 @@ private:
 	static Ressources* instance;
 
 	//Tower
-	int towerCount;
-	int towerProjectileIndex[5];
+	int towerCount; //Wie viele Turm-Typen es gibt
+	int towerProjectileIndex[5]; //Welches Projektil verwendet werden soll
 	int towerPrice[5]; //Wie viel der Tower kostet
 	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[5]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
@@ -18,8 +18,12 @@ private:
 	std::string towerName[5]; //Der Name des Turmes
 	int towerUpgradePrice1[4][4]; //Preise der Upgrades des ersten Pfades
 	int towerUpgradePrice2[4][4]; //Preise der Upgrades des zweiten Pfades
-	float towerUpdateDamage[4][4];
-	float towerUpdateSpeed[4][4];
+	float towerUpdateDamage[4][4]; //Der Wert um den der Damage verbesesrt wird
+	float towerUpdateSpeed[4][4]; //Der Wert um den die Angriffsgeschwindigkeit verbessert wird
+
+	//Drone
+	float droneSpeed[1];
+	int droneLives[1];
 
 public:
 
@@ -38,5 +42,8 @@ public:
 	float getTowerUpgradesPrice2(int, int);
 	float getTowerUpdateDamage(int, int);
 	float getTowerUpdateSpeed(int, int);
+
+	float getDroneSpeed(int);
+	int getDroneLives(int);
 };
 
