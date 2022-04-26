@@ -9,6 +9,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+
+#ignore savegames
 *.sav
 savegame1.sav
 
