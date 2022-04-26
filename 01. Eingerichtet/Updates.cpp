@@ -79,7 +79,6 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 		{
 			index1++;
 			text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
-
 			return 1;
 		}
 
