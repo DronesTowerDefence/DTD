@@ -5,6 +5,7 @@
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	index = _index;
+	int price;
 
 	if (index >= 0 && index <= 4)
 	{
@@ -70,7 +71,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			name = "\224lbohrer";
 			damage = 0;
 			speed = 2;
-			price = 250;
+			price = 500;
 			range = 0;
 			moneyGeneration = 50;
 			towerTex[0].loadFromFile("img/tower4/tower4_0.png");

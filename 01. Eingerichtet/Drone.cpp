@@ -92,7 +92,7 @@ bool Drone::takeDamage(int damage) {
 	lives -= damage; //.
 	//std::cout <<damage<< std::endl;
 	livesDiff -= lives;
-	Round::getInstance()->addMoney(livesDiff);
+	Round::getInstance()->addMoney(livesDiff*2);
 
 	if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0/drone0_damage1.png");
