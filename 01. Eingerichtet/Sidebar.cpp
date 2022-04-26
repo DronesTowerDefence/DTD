@@ -11,7 +11,7 @@ Sidebar::Sidebar()
 	price[1] = 200;
 	price[2] = 300;
 	price[3] = 400;
-	price[4] = 1000;
+	price[4] = 250;
 
 	buttonTexture[0].loadFromFile("img/tower0/tower0_preview.png");
 	buttonTexture[1].loadFromFile("img/tower1/tower1_preview.png");
@@ -36,7 +36,7 @@ Sidebar::Sidebar()
 	buttonText[1].setString("Turm 2\n200G");
 	buttonText[2].setString("Turm 3\n300G");
 	buttonText[3].setString("Turm 4\n400G");
-	buttonText[4].setString("Ölbohrer\n1000G");
+	buttonText[4].setString("Ölbohrer\n250G");
 
 	//std::cout << "Sidebar::Sidebar: \224"; //224
 

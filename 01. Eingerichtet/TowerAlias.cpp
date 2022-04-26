@@ -32,7 +32,7 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 
 	case 4:
 		range = 0;
-		price = 1000;
+		price = 250;
 		towerAliasTexture.loadFromFile("img/tower4/tower4_alias.png");
 		break;
 	}
