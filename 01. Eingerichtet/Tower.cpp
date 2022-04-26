@@ -58,7 +58,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			damage = 4;
 			speed = 4;
 			price = 400;
-			range = 400;
+			range = 100;
 			moneyGeneration = 0;
 			towerTex[0].loadFromFile("img/tower3/tower3_0.png");
 			towerTex[1].loadFromFile("img/tower3/tower3_0.png");
@@ -283,4 +283,9 @@ Sprite* Tower::getDrawSprite()
 	}
 
 	return &towerSpr;
+}
+
+int Tower::getRange()
+{
+	return range;
 }

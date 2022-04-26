@@ -9,7 +9,6 @@ class Projectile
 private:
 	float speed;
 	int style;
-	int damage;
 	Vector2f move;
 	Sprite projectilesprite;
 	Vector3f target;
