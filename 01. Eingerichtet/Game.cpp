@@ -325,14 +325,14 @@ void Game::checkButtonClick()
 		int index = -1;
 		if (tower == nullptr) // wenn die Toolbar nicht die Updates anzeigt
 		{
-			index= sidebar->isClicked(window);
+			index = sidebar->isClicked(window);
 			if (index > -1)
 			{
 				newTower = new TowerAlias(index, p_map);
 			}
 			//else clicked = true;
 		}
-		 if (newTower == nullptr || index == -1)
+		if (newTower == nullptr || index == -1)
 		{
 			isMouseClicked = true;
 		}
@@ -471,11 +471,19 @@ void Game::checkShoot()
 {
 	for (auto t : round->getAllAttackTower())
 	{
-		for (auto d : round->getAllDrones())
+		for (auto iter : t->getCoverableArea())
 		{
-			if (t->getRangeShape()->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+			CircleShape *tmp = new CircleShape;
+			tmp->setFillColor(Color::Transparent);
+			tmp->setRadius(15);
+			tmp->setPosition(Vector2f(iter.x,iter.y));
+
+			for (auto d : round->getAllDrones())
 			{
-				t->shoot(d);
+				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+				{
+					t->shoot(d);
+				}
 			}
 		}
 	}
