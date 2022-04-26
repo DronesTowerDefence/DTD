@@ -129,4 +129,6 @@ public:
 	/// <returns>Einzelnen Sprite-Frame</returns>
 	Sprite* getDrawSprite();
 
+	int getRange();
+
 };

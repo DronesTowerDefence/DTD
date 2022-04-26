@@ -24,8 +24,9 @@ void Projectile::operate()
 		targeting();
 		setmove(); }
 	case 2:homing();
-
 	}
+	
+
 }
 
 void Projectile::targeting()
@@ -49,6 +50,15 @@ void Projectile::moveProjectile()
 {
 	if (style == 2)
 		homing();
+	if (style == 3) {
+		for (auto i : Round::getInstance()->getAllDrones()) {
+			if (tower->getRangeShape()->getGlobalBounds().intersects(i->getDroneSprite().getGlobalBounds())) {
+				i->takeDamage(tower->getDamage());
+			}
+		}
+		delete this;
+		return;
+	}
 	//std::cout << target.x << target.y << std::endl;
 	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y/speed));
 
@@ -57,18 +67,17 @@ void Projectile::moveProjectile()
 
 void Projectile::collission()
 {
-	if (collided ==0) {
-		if ((projectilesprite.getPosition().x - dronetarget->getPosition().x) < 30 && (projectilesprite.getPosition().x - dronetarget->getPosition().x) > -30) {
-			if ((projectilesprite.getPosition().y - dronetarget->getPosition().y) < 30 && (projectilesprite.getPosition().y - dronetarget->getPosition().y) > -30) {
-				//std::cout << "hit" << std::endl;
-				dronetarget->takeDamage(tower->getDamage());
-				collided = 1;
-				delete this;
-			}
-
+	if (collided == 0) {
+		if (projectilesprite.getGlobalBounds().intersects(dronetarget->getDroneSprite().getGlobalBounds())) {
+			std::cout << "hit" << std::endl;
+			dronetarget->takeDamage(tower->getDamage());
+			collided = 1;
+			delete this;
 		}
 	}
 }
+
+
 
 void Projectile::homing() {
 	move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
