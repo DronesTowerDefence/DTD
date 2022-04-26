@@ -62,8 +62,8 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 		for (int i = 0; i < 4; i++)
 		{
-			price1[i] = Ressources::getInstance()->getTowerUpgradesPrice1(index,i);
-			price2[i] = Ressources::getInstance()->getTowerUpgradesPrice2(index,i);
+			price1[i] = Ressources::getInstance()->getTowerUpgradesPrice1(index, i);
+			price2[i] = Ressources::getInstance()->getTowerUpgradesPrice2(index, i);
 		}
 
 		animationCounter = 0;
@@ -98,13 +98,9 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 void Tower::setCoverableArea()
 {
 	Vector3f point = Vector3f(0, 0, 0);
-	CircleShape tmpCircle;
-	tmpCircle.setRadius(15);
-	tmpCircle.setFillColor(Color::Transparent);
 	float distanz = 0;
 	for (auto i : Round::getInstance()->getAllCoverablePoints())
 	{
-		tmpCircle.setPosition(Vector2f(i.x, i.y));
 		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
 		if (distanz <= range)
 		{
