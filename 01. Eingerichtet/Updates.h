@@ -18,9 +18,10 @@ private:
 	Text* text1;
 	Text* text2;
 	Font arial;
+	int towerIndex;
 
 public:
-	Updates();
+	Updates(int towerIndex);
 	void draw(RenderWindow* window);
 	int isClicked(RenderWindow* window, float price1, float price2);
 

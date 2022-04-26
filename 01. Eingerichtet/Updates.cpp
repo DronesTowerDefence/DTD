@@ -1,8 +1,9 @@
 #include "Updates.h"
 #include "Round.h"
 
-Updates::Updates()
+Updates::Updates(int towerIndex)
 {
+	this->towerIndex = towerIndex;
 	index1 = 0;
 	index2 = 0;
 	close = new Sprite();
@@ -32,16 +33,16 @@ Updates::Updates()
 	}
 	arial.loadFromFile("fonts/arial.ttf");
 	text1 = new Text();
-	text2= new Text();
-	text1->setString("100"); //TODO updatepeis
-	text2->setString("100");
+	text2 = new Text();
+	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
+	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))); //TODO updatepeis
 
-	text1->setPosition(1745,100);
-	text2->setPosition(1745,250);
-	
+	text1->setPosition(1745, 100);
+	text2->setPosition(1745, 250);
+
 	text1->setFont(arial);
 	text2->setFont(arial);
-	
+
 	text1->setCharacterSize(20);
 	text2->setCharacterSize(20);
 
@@ -77,6 +78,8 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 		if (Round::getInstance()->submoney(price1))
 		{
 			index1++;
+			text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
+
 			return 1;
 		}
 
@@ -91,6 +94,7 @@ int Updates::isClicked(RenderWindow* window, float price1, float price2)
 			if (Round::getInstance()->submoney(price2))
 			{
 				index2++;
+				text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))); //TODO updatepeis
 				return 2;
 			}
 		}

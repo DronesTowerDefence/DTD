@@ -56,14 +56,18 @@ Ressources::Ressources()
 	towerName[2] = "Tower 3";
 	towerName[3] = "Tower 4";
 	towerName[4] = "Ölbohrer";
-
+	double p[4];
+	p[1] = 1 / 8;
+	p[2] = 1 / 7;
+	p[3] = 1 / 6;
+	p[3] = 1 / 5;
 	float x = 1;
 	for (int i = 0, j = 0; j < 4; i++, j++, x += .5)
 	{
 		towerUpgradePrice1[j][i] = towerPrice[j] * x;
 		towerUpgradePrice2[j][i] = towerPrice[j] * x;
 		towerUpdateDamage[j][i] = towerDamage[j] * x;
-		towerUpdateSpeed[j][i] = towerSpeed[j] * x;
+		towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j]*i);
 	}
 }
 
