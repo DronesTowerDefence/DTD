@@ -88,8 +88,12 @@ void Drone::pass()
 }
 
 bool Drone::takeDamage(int damage) {
+	int livesDiff = lives;
 	lives -= damage; //.
-	std::cout <<damage<< std::endl;
+	//std::cout <<damage<< std::endl;
+	livesDiff -= lives;
+	Round::getInstance()->addMoney(livesDiff);
+
 	if (lives == 2) {
 		droneTexture.loadFromFile("img/drone0/drone0_damage1.png");
 		drone.setTexture(droneTexture);
