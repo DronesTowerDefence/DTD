@@ -2,6 +2,7 @@
 #include <list>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Ressources.h"
 #include "Waypoint.h"
 using namespace sf;
 /// <summary>
