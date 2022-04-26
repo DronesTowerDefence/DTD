@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
 #include <list>
+#include "Ressources.h"
 #include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
@@ -8,6 +9,7 @@
 class Game
 {
 private:
+	Ressources* p_ressources;
 	Round* round;
 	Sidebar* sidebar;
 	Map* p_map;
