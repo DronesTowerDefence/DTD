@@ -63,7 +63,7 @@ void Projectile::collission()
 				std::cout << "hit" << std::endl;
 				dronetarget->takeDamage(tower->getDamage());
 				collided = 1;
-				//delete this;
+				delete this;
 			}
 
 		}
@@ -84,6 +84,11 @@ void Projectile::setmove()
 bool Projectile::getcollided()
 {
 	return collided;
+}
+
+Projectile::~Projectile()
+{
+	Round::getInstance()->deleteProjectile(this);
 }
 
 Sprite* Projectile::getProjectileSprite()

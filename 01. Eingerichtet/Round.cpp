@@ -271,6 +271,12 @@ void Round::deleteDrone(Drone* drone)
 	
 }
 
+void Round::deleteProjectile(Projectile* p)
+{
+	allProjectiles.remove(p);
+
+}
+
 std::list<Vector2f> Round::getAllCoverablePoints()
 {
 	return allCoverablePoints;
