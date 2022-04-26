@@ -15,6 +15,48 @@ Ressources::Ressources()
 {
 	towerCount = 4;
 
+	towerPrice[0] = 100;
+	towerPrice[1] = 200;
+	towerPrice[2] = 300;
+	towerPrice[3] = 400;
+	towerPrice[4] = 500;
+
+	towerDamage[0] = 1;
+	towerDamage[1] = 2;
+	towerDamage[2] = 3;
+	towerDamage[3] = 4;
+	towerDamage[4] = 0;
+
+	towerSpeed[0] = 0.5;
+	towerSpeed[1] = 1;
+	towerSpeed[2] = 1.5;
+	towerSpeed[3] = 2;
+	towerSpeed[4] = 1;
+
+	towerProjectileSpeed[0] = 1;
+	towerProjectileSpeed[1] = 1;
+	towerProjectileSpeed[2] = 1;
+	towerProjectileSpeed[3] = 1;
+	towerProjectileSpeed[4] = 0;
+
+	towerRange[0] = 100;
+	towerRange[1] = 200;
+	towerRange[2] = 300;
+	towerRange[3] = 100;
+	towerRange[4] = 0;
+
+	towerMoneyGeneration[0] = 0;
+	towerMoneyGeneration[1] = 0;
+	towerMoneyGeneration[2] = 0;
+	towerMoneyGeneration[3] = 0;
+	towerMoneyGeneration[4] = 50;
+
+	towerName[0] = "Tower 1";
+	towerName[1] = "Tower 2";
+	towerName[2] = "Tower 3";
+	towerName[3] = "Tower 4";
+	towerName[4] = "Ölbohrer";
+
 	float x = 1;
 	for (int i = 0, j = 0; j < 4; i++, j++, x += .5)
 	{
