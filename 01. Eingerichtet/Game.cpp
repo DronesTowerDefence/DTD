@@ -40,8 +40,8 @@ Game::Game()
 	pauseText.setPosition(Vector2f(500, 300));
 	pauseText.setFont(stdFont);
 
-	pauseBackground.setPosition(Vector2f(500, 300));
-	pauseBackground.setSize(Vector2f(700, 500));
+	pauseBackground.setPosition(Vector2f(0, 0));
+	pauseBackground.setSize(Vector2f(300, 500));
 	pauseBackground.setFillColor(Color::Blue);
 
 
@@ -464,7 +464,7 @@ void Game::loseGame()
 	else
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
-			"\nMoney: " + std::to_string(round->getMoney()) +
+			"\nMoney: " + std::to_string(round->getMoney()) + " C"
 			"\nRound: " + std::to_string(round->getIndex() + 1) +
 			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
@@ -568,6 +568,7 @@ void Game::pauseGame(Event event1)
 			pauseText.setPosition(20, 20);
 			pauseText.setFillColor(Color::Yellow);
 
+			pauseScreen.draw(pauseBackground);
 			pauseScreen.draw(pauseText);
 			pauseScreen.display();
 		}
