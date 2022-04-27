@@ -18,6 +18,10 @@ private:
 	Font stdFont;
 	Text eco;
 
+	RenderWindow pauseScreen;
+	RectangleShape pauseBackground;
+	Text pauseText;
+
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
 	RectangleShape gameOverBackground;
@@ -123,6 +127,12 @@ public:
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
+
+	/// <summary>
+	/// Pausiert das Spiel und gibt Optionen frei
+	/// </summary>
+	/// <param name=""></param>
+	void pauseGame(Event);
 
 	/// <summary>
 	/// Legt das Fenster fest

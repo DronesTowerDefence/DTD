@@ -36,6 +36,19 @@ Game::Game()
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
 
+	pauseText.setCharacterSize(25);
+	pauseText.setPosition(Vector2f(500, 300));
+	pauseText.setFont(stdFont);
+
+	pauseBackground.setPosition(Vector2f(500, 300));
+	pauseBackground.setSize(Vector2f(700, 500));
+	pauseBackground.setFillColor(Color::Blue);
+
+	pauseScreen.setTitle("Pause-Menu");
+	pauseScreen.setPosition(Vector2i(500, 300));
+	pauseScreen.setSize(Vector2u(400, 400));
+	pauseScreen.setFramerateLimit(60);
+
 	setMusicSound();
 	//loadGame();
 }
@@ -120,6 +133,8 @@ void Game::startGame()
 	while (window->isOpen())
 	{
 		Event event;
+
+		
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -136,6 +151,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
+		pauseGame(event);
 		draw();
 	}
 }
@@ -366,6 +382,8 @@ void Game::checkButtonClick()
 		}
 
 	}
+
+	
 }
 
 void Game::checkTowerAlias()
@@ -508,6 +526,37 @@ Font Game::getFont()
 RenderWindow* Game::getWindow()
 {
 	return window;
+}
+
+void Game::pauseGame(Event event1)
+{
+	while (pauseScreen.isOpen()) {
+	
+		pauseScreen.draw(pauseBackground);
+		pauseScreen.display();
+	};
+	
+	
+
+	/*if (event1.KeyReleased == Keyboard::Escape) {
+
+		
+		while (window->pollEvent(event1)) {
+
+			
+
+			window->draw(pauseBackground);
+			window->draw(pauseText);
+
+
+
+
+		}
+
+	}
+
+	window->display();*/
+
 }
 
 void Game::setWindow(RenderWindow* _window)
