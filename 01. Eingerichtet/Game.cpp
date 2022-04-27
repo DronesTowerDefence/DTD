@@ -37,7 +37,7 @@ Game::Game()
 	isMouseClicked = false;
 
 	setMusicSound();
-	//loadGame();
+	loadGame();
 }
 
 void Game::draw()
@@ -124,7 +124,7 @@ void Game::startGame()
 		{
 			if (event.type == Event::Closed)
 			{
-				saveGame();
+				//saveGame();
 				window->close();
 			}
 
