@@ -18,7 +18,7 @@ private:
 	Font stdFont;
 	Text eco;
 
-	RenderWindow pauseScreen;
+	RenderWindow* pauseScreen;
 	RectangleShape pauseBackground;
 	Text pauseText;
 
@@ -139,4 +139,9 @@ public:
 	/// </summary>
 	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
+	/// <summary>
+	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
+	/// </summary>
+	/// <param name=""></param>
+	void setPauseScreen(RenderWindow*);
 };
