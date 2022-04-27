@@ -298,6 +298,11 @@ void Game::setMusicSound()
 	music[1].setBuffer(musicBuffer[1]);
 	music[2].setBuffer(musicBuffer[2]);
 	music[3].setBuffer(musicBuffer[3]);
+	music[0].setVolume(40);
+	music[1].setVolume(40);
+	music[2].setVolume(40);
+	music[3].setVolume(40);
+
 }
 
 void Game::changeBackgroundMusic()
