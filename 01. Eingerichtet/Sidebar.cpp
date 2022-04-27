@@ -6,24 +6,19 @@ Sidebar* Sidebar::instance = nullptr;
 
 Sidebar::Sidebar()
 {
-
-	price[0] = 100;
-	price[1] = 200;
-	price[2] = 300;
-	price[3] = 400;
-	price[4] = 250;
-
 	buttonTexture[0].loadFromFile("img/tower0/tower0_preview.png");
 	buttonTexture[1].loadFromFile("img/tower1/tower1_preview.png");
 	buttonTexture[2].loadFromFile("img/tower2/tower2_preview.png");
 	buttonTexture[3].loadFromFile("img/tower3/tower3_preview.png");
 	buttonTexture[4].loadFromFile("img/tower4/tower4_preview.png");
 
-
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{
+		price[i] = Ressources::getInstance()->getTowerPrice(i);
+		buttonText[i].setString(Ressources::getInstance()->getTowerName(i) + "\n" + std::to_string(price[i]));
+
 		buttonSpr[i].setTexture(buttonTexture[i]);
 		buttonText[i].setFont(buttonTextFont);
 		buttonText[i].setCharacterSize(20);
@@ -31,14 +26,6 @@ Sidebar::Sidebar()
 		buttonText[i].setOutlineColor(Color::Black);
 		buttonText[i].setOutlineThickness(2);
 	}
-
-	buttonText[0].setString("Turm 1\n100G");
-	buttonText[1].setString("Turm 2\n200G");
-	buttonText[2].setString("Turm 3\n300G");
-	buttonText[3].setString("Turm 4\n400G");
-	buttonText[4].setString("Ölbohrer\n250G");
-
-	//std::cout << "Sidebar::Sidebar: \224"; //224
 
 	buttonText[0].setPosition(Vector2f(1757, 65)); //Position des Button-Textes
 	buttonText[1].setPosition(Vector2f(1832, 65));
@@ -54,12 +41,11 @@ Sidebar::Sidebar()
 
 }
 
-Sidebar* Sidebar::getInstance(/*Map* _map*/)
+Sidebar* Sidebar::getInstance()
 {
 	if (instance == nullptr)
 	{
 		instance = new Sidebar();
-		//instance->p_map = _map;
 	}
 	return instance;
 }
