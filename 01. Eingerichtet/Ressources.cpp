@@ -1,5 +1,6 @@
 #include "Ressources.h"
 
+
 Ressources* Ressources::instance = nullptr;
 
 Ressources* Ressources::getInstance()
@@ -85,6 +86,10 @@ Ressources::Ressources()
 
 	droneSpeed[0] = 2.5;
 	droneLives[0] = 3;
+
+	icon.loadFromFile("img/icon.png");
+	
+	
 }
 int Ressources::getTowerCount()
 {
@@ -149,4 +154,9 @@ int Ressources::getDroneLives(int i)
 float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 {
 	return towerUpdateMoneyGeneration[i][j];
+}
+
+sf::Image Ressources::getIcon()
+{
+	return icon;
 }

@@ -36,6 +36,16 @@ Game::Game()
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
 
+	pauseText.setCharacterSize(25);
+	pauseText.setPosition(Vector2f(500, 300));
+	pauseText.setFont(stdFont);
+
+	pauseBackground.setPosition(Vector2f(500, 300));
+	pauseBackground.setSize(Vector2f(700, 500));
+	pauseBackground.setFillColor(Color::Blue);
+
+
+
 	setMusicSound();
 	loadGame();
 }
@@ -89,9 +99,9 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds()  > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
+
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
@@ -120,6 +130,8 @@ void Game::startGame()
 	while (window->isOpen())
 	{
 		Event event;
+
+
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -136,6 +148,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
+		pauseGame(event);
 		draw();
 	}
 }
@@ -366,6 +379,8 @@ void Game::checkButtonClick()
 		}
 
 	}
+
+
 }
 
 void Game::checkTowerAlias()
@@ -484,10 +499,10 @@ void Game::checkShoot()
 	{
 		for (auto iter : t->getCoverableArea())
 		{
-			CircleShape *tmp = new CircleShape;
+			CircleShape* tmp = new CircleShape;
 			tmp->setFillColor(Color::Transparent);
 			tmp->setRadius(15);
-			tmp->setPosition(Vector2f(iter.x,iter.y));
+			tmp->setPosition(Vector2f(iter.x, iter.y));
 
 			for (auto d : round->getAllDrones())
 			{
@@ -510,7 +525,59 @@ RenderWindow* Game::getWindow()
 	return window;
 }
 
-void Game::setWindow(RenderWindow* _window)
+void Game::pauseGame(Event event1)
 {
+
+
+
+	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) {
+
+
+		RenderWindow pauseScreen(VideoMode(300, 500), "Pause-Screen");
+		pauseScreen.setPosition(Vector2i(500, 200));
+		pauseScreen.setFramerateLimit(60);
+		pauseScreen.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
+
+		Event eventPause;
+
+		while (pauseScreen.isOpen()) {
+
+			pauseScreen.clear();
+
+			while (pauseScreen.pollEvent(eventPause))
+			{
+				if (eventPause.type == Event::Closed) {
+					pauseScreen.close();
+				}
+
+				if (eventPause.type == Event::KeyReleased && eventPause.key.code == Keyboard::Escape) {
+					pauseScreen.close();
+
+				}
+
+
+
+
+			}
+			pauseText.setString("PAUSE");
+			pauseText.setPosition(20, 20);
+			pauseText.setFillColor(Color::Yellow);
+
+			pauseScreen.draw(pauseText);
+			pauseScreen.display();
+		}
+
+	}
+
+
+}
+
+
+void Game::setWindow(RenderWindow* _window) {
 	window = _window;
+}
+
+void Game::setPauseScreen(RenderWindow* i)
+{
+	pauseScreen = i;
 }
