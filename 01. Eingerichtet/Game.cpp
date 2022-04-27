@@ -89,10 +89,12 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
+	
+
+	if (round->getDroneTimer().getElapsedTime().asSeconds()  > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
-		round->addDrone(new Drone(1, p_map->getStart(), 0, -1));
+		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
 	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())

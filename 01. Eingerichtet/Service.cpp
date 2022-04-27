@@ -40,5 +40,5 @@ Vector2f Service::getObjectPosition(Vector2f objectposition)
 	//return Vector2f(x_r, y_r);
 
 	float x = VideoMode::getDesktopMode().height;
-	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 1080 * objectposition.y);
+	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 1080.f * objectposition.y);
 }

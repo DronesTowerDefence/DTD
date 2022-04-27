@@ -39,7 +39,7 @@ Ressources::Ressources()
 	towerSpeed[1] = 1;
 	towerSpeed[2] = 1.5;
 	towerSpeed[3] = 2;
-	towerSpeed[4] = 1;
+	towerSpeed[4] = 4;
 
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
@@ -57,7 +57,7 @@ Ressources::Ressources()
 	towerMoneyGeneration[1] = 0;
 	towerMoneyGeneration[2] = 0;
 	towerMoneyGeneration[3] = 0;
-	towerMoneyGeneration[4] = 50;
+	towerMoneyGeneration[4] = 20;
 
 	towerName[0] = "Tower 1";
 	towerName[1] = "Tower 2";
