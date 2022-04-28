@@ -464,7 +464,7 @@ void Game::loseGame()
 	else
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
-			"\nMoney: " + std::to_string(round->getMoney()) + " C"
+			"\nMoney: " + std::to_string(round->getMoney()) + " $"
 			"\nRound: " + std::to_string(round->getIndex() + 1) +
 			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
@@ -538,6 +538,8 @@ void Game::pauseGame(Event event1)
 	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) {
 
 
+		Clock pause = Round::getInstance()->getDroneTimer();
+
 		RenderWindow pauseScreen(VideoMode(300, 500), "Pause-Screen");
 		pauseScreen.setPosition(Vector2i(500, 200));
 		pauseScreen.setFramerateLimit(60);
@@ -548,6 +550,8 @@ void Game::pauseGame(Event event1)
 		while (pauseScreen.isOpen()) {
 
 			pauseScreen.clear();
+
+			Round::getInstance()->setDroneTimer(pause);
 
 			while (pauseScreen.pollEvent(eventPause))
 			{
@@ -564,7 +568,7 @@ void Game::pauseGame(Event event1)
 
 
 			}
-			pauseText.setString("PAUSE");
+			pauseText.setString("PAUSE\n\n\n\n Placeholder ");
 			pauseText.setPosition(20, 20);
 			pauseText.setFillColor(Color::Yellow);
 

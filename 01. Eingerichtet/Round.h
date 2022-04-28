@@ -100,4 +100,6 @@ public:
 
 	std::list<Tower*> getAllTowers();
 
+	void setDroneTimer(Clock);
+
 };
