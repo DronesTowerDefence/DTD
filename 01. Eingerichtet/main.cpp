@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "Game.h"
+#include "Ressources.h"
 #include "HomeMenu.h"
 
 using namespace sf;
@@ -16,10 +17,8 @@ int main()
 	
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
-
-	Image icon;
-	icon.loadFromFile("img/icon.png");
-	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+	
+	window.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
 
 	int fileError = fileVerification();
 	if (fileError != -1)

@@ -36,6 +36,16 @@ Game::Game()
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
 
+	pauseText.setCharacterSize(25);
+	pauseText.setPosition(Vector2f(500, 300));
+	pauseText.setFont(stdFont);
+
+	pauseBackground.setPosition(Vector2f(0, 0));
+	pauseBackground.setSize(Vector2f(300, 500));
+	pauseBackground.setFillColor(Color::Blue);
+
+
+
 	setMusicSound();
 	loadGame();
 }
@@ -89,9 +99,9 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
-	
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds()  > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
+
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
@@ -120,6 +130,8 @@ void Game::startGame()
 	while (window->isOpen())
 	{
 		Event event;
+
+
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -136,6 +148,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
+		pauseGame(event);
 		draw();
 	}
 }
@@ -285,6 +298,11 @@ void Game::setMusicSound()
 	music[1].setBuffer(musicBuffer[1]);
 	music[2].setBuffer(musicBuffer[2]);
 	music[3].setBuffer(musicBuffer[3]);
+	music[0].setVolume(40);
+	music[1].setVolume(40);
+	music[2].setVolume(40);
+	music[3].setVolume(40);
+
 }
 
 void Game::changeBackgroundMusic()
@@ -366,6 +384,8 @@ void Game::checkButtonClick()
 		}
 
 	}
+
+
 }
 
 void Game::checkTowerAlias()
@@ -425,11 +445,11 @@ void Game::loseGame()
 		gameOverBackground.setSize(Vector2f(500, 300));
 		gameOverBackground.setFillColor(Color::Blue);
 
-		gameOverHomeButtonTexture.loadFromFile("img/homeButton.png");
+		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
 		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
 		gameOverHomeButton.setPosition(Vector2f(0, 0));
 
-		gameOverRestartButtonTexture.loadFromFile("img/restartButton.png");
+		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
 		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);
 		gameOverRestartButton.setPosition(Vector2f(0, 0));
 
@@ -444,7 +464,7 @@ void Game::loseGame()
 	else
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
-			"\nMoney: " + std::to_string(round->getMoney()) +
+			"\nMoney: " + std::to_string(round->getMoney()) + " $"
 			"\nRound: " + std::to_string(round->getIndex() + 1) +
 			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
@@ -484,10 +504,10 @@ void Game::checkShoot()
 	{
 		for (auto iter : t->getCoverableArea())
 		{
-			CircleShape *tmp = new CircleShape;
+			CircleShape* tmp = new CircleShape;
 			tmp->setFillColor(Color::Transparent);
 			tmp->setRadius(15);
-			tmp->setPosition(Vector2f(iter.x,iter.y));
+			tmp->setPosition(Vector2f(iter.x, iter.y));
 
 			for (auto d : round->getAllDrones())
 			{
@@ -510,7 +530,64 @@ RenderWindow* Game::getWindow()
 	return window;
 }
 
-void Game::setWindow(RenderWindow* _window)
+void Game::pauseGame(Event event1)
 {
+
+
+
+	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) {
+
+
+		Clock pause = Round::getInstance()->getDroneTimer();
+
+		RenderWindow pauseScreen(VideoMode(300, 500), "Pause-Screen");
+		pauseScreen.setPosition(Vector2i(500, 200));
+		pauseScreen.setFramerateLimit(60);
+		pauseScreen.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
+
+		Event eventPause;
+
+		while (pauseScreen.isOpen()) {
+
+			pauseScreen.clear();
+
+			Round::getInstance()->setDroneTimer(pause);
+
+			while (pauseScreen.pollEvent(eventPause))
+			{
+				if (eventPause.type == Event::Closed) {
+					pauseScreen.close();
+				}
+
+				if (eventPause.type == Event::KeyReleased && eventPause.key.code == Keyboard::Escape) {
+					pauseScreen.close();
+
+				}
+
+
+
+
+			}
+			pauseText.setString("PAUSE\n\n\n\n Placeholder ");
+			pauseText.setPosition(20, 20);
+			pauseText.setFillColor(Color::Yellow);
+
+			pauseScreen.draw(pauseBackground);
+			pauseScreen.draw(pauseText);
+			pauseScreen.display();
+		}
+
+	}
+
+
+}
+
+
+void Game::setWindow(RenderWindow* _window) {
 	window = _window;
+}
+
+void Game::setPauseScreen(RenderWindow* i)
+{
+	pauseScreen = i;
 }

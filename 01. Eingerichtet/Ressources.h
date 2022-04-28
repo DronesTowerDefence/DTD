@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <SFML/Graphics/Image.hpp>
+
+
 class Ressources
 {
 private:
@@ -25,6 +28,9 @@ private:
 
 	float droneSpeed[1];
 	int droneLives[1];
+	
+	sf::Image icon;
+
 public:
 
 	static Ressources* getInstance();
@@ -48,6 +54,10 @@ public:
 	float getDroneSpeed(int);
 	int getDroneLives(int);
 	float getTowerUpdateMoneyGeneration(int i, int j);
+
+	sf::Image getIcon();
+
+	
 
 };
 

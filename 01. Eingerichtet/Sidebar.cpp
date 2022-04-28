@@ -17,7 +17,7 @@ Sidebar::Sidebar()
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{
 		price[i] = Ressources::getInstance()->getTowerPrice(i);
-		buttonText[i].setString(Ressources::getInstance()->getTowerName(i) + "\n" + std::to_string(price[i]));
+		buttonText[i].setString(Ressources::getInstance()->getTowerName(i) + "\n" + std::to_string(int(price[i])) + " $");
 
 		buttonSpr[i].setTexture(buttonTexture[i]);
 		buttonText[i].setFont(buttonTextFont);

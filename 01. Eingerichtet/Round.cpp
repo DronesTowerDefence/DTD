@@ -306,3 +306,10 @@ std::list<Tower*> Round::getAllTowers()
 {
 	return allTowers;
 }
+
+void Round::setDroneTimer(Clock f)
+{
+
+	droneTimer = f;
+
+}
