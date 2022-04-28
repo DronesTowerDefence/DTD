@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Game.h"
 #include "Ressources.h"
+#include "HomeMenu.h"
 
 using namespace sf;
 
@@ -13,6 +14,7 @@ int fileVerification();
 int main()
 {
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
+	
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 	
@@ -25,9 +27,7 @@ int main()
 		return 404;
 	}
 
-	Game::getInstance()->setWindow(&window);
-	
-	Game::getInstance()->startGame();
+	HomeMenu::getInstance(&window)->HomeMenuStart();
 
 	return 0;
 }
