@@ -219,6 +219,8 @@
     <Image Include="img\tower4\tower4_alias.png" />
     <Image Include="img\tower4\tower4_preview.png" />
     <Image Include="img\upgrades\sell.png" />
+    <Image Include="img\upgrades\upgradeAttackspeed.png" />
+    <Image Include="img\upgrades\upgradeDamage.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

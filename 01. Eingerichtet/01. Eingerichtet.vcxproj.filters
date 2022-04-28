@@ -263,5 +263,11 @@
     <Image Include="img\titleText.png">
       <Filter>Ressourcendateien\img</Filter>
     </Image>
+    <Image Include="img\upgrades\upgradeAttackspeed.png">
+      <Filter>Ressourcendateien\img\upgrades</Filter>
+    </Image>
+    <Image Include="img\upgrades\upgradeDamage.png">
+      <Filter>Ressourcendateien\img\upgrades</Filter>
+    </Image>
   </ItemGroup>
 </Project>

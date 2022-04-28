@@ -14,18 +14,24 @@ Updates::Updates(int towerIndex)
 	textureUpdate2 = new Texture();
 	textureclose = new Texture();
 	textureSell= new Texture();
+
 	textureUpdate1->loadFromFile("img/upgrades/upgradeAttackspeed.png");
 	textureUpdate2->loadFromFile("img/upgrades/upgradeDamage.png");
 	textureclose->loadFromFile("img/buttons/closeButton.png");
 	textureSell->loadFromFile("img/upgrades/sell.png");
-	update1->setPosition(Vector2f(1745, 100));
-	update2->setPosition(Vector2f(1745, 250));
-	close->setPosition(Vector2f(1850, 25));
-	sell->setPosition(Vector2f(1745, 25));
+
 	update1->setTexture(*textureUpdate1);
 	update2->setTexture(*textureUpdate2);
 	close->setTexture(*textureclose);
 	sell->setTexture(*textureSell);
+
+	update1->setPosition(Vector2f(1745, 100));
+	update2->setPosition(Vector2f(1745, 250));
+	close->setPosition(Vector2f(1850, 25));
+	sell->setPosition(Vector2f(1745, 25));
+
+	close->setScale(Vector2f(0.5, 0.5));
+
 	for (int i = 0, x = 1745; i < 4; i++, x += 15)
 	{
 		shoowUpdate1[i] = new RectangleShape(Vector2f(10, 10));
