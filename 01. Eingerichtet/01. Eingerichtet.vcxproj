@@ -177,20 +177,6 @@
     <Font Include="fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\drone0(damage1)40x40.png" />
-    <Image Include="img\drone0(damage2)40x40.png" />
-    <Image Include="img\drone0(damage3)40x40.png" />
-    <Image Include="img\drone0_40x40.png" />
-    <Image Include="img\Map1.png" />
-    <Image Include="img\moneyTower0_50x50.png" />
-    <Image Include="img\projectile.png" />
-    <Image Include="img\projectile0.png" />
-    <Image Include="img\tower0_50x50.png" />
-    <Image Include="img\tower1_50x50.png" />
-    <Image Include="img\tower2_50x50.png" />
-    <Image Include="img\tower3_50x50.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="music\1-0.wav" />
     <Media Include="music\1-1.wav" />
     <Media Include="music\2-0.wav" />
@@ -201,6 +187,38 @@
     <Media Include="sounds\shot-1.wav" />
     <Media Include="sounds\shot-2.wav" />
     <Media Include="sounds\shot-3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\buttons\closeButton.png" />
+    <Image Include="img\buttons\homeButton.png" />
+    <Image Include="img\buttons\restartButton.png" />
+    <Image Include="img\buttons\startButton.png" />
+    <Image Include="img\drone0\drone0.png" />
+    <Image Include="img\drone0\drone0_damage1.png" />
+    <Image Include="img\drone0\drone0_damage2.png" />
+    <Image Include="img\drone0\drone0_damage3.png" />
+    <Image Include="img\icon.png" />
+    <Image Include="img\maps\Map1.png" />
+    <Image Include="img\projectiles\projectile0.png" />
+    <Image Include="img\titleText.png" />
+    <Image Include="img\tower0\tower0_0.png" />
+    <Image Include="img\tower0\tower0_1.png" />
+    <Image Include="img\tower0\tower0_2.png" />
+    <Image Include="img\tower0\tower0_alias.png" />
+    <Image Include="img\tower0\tower0_preview.png" />
+    <Image Include="img\tower1\tower1_0.png" />
+    <Image Include="img\tower1\tower1_alias.png" />
+    <Image Include="img\tower1\tower1_preview.png" />
+    <Image Include="img\tower2\tower2_0.png" />
+    <Image Include="img\tower2\tower2_alias.png" />
+    <Image Include="img\tower2\tower2_preview.png" />
+    <Image Include="img\tower3\tower3_0.png" />
+    <Image Include="img\tower3\tower3_alias.png" />
+    <Image Include="img\tower3\tower3_preview.png" />
+    <Image Include="img\tower4\tower4_0.png" />
+    <Image Include="img\tower4\tower4_alias.png" />
+    <Image Include="img\tower4\tower4_preview.png" />
+    <Image Include="img\upgrades\sell.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

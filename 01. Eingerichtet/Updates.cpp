@@ -14,10 +14,10 @@ Updates::Updates(int towerIndex)
 	textureUpdate2 = new Texture();
 	textureclose = new Texture();
 	textureSell= new Texture();
-	textureUpdate1->loadFromFile("img/update.png");
-	textureUpdate2->loadFromFile("img/update.png");
-	textureclose->loadFromFile("img/close.png");
-	textureSell->loadFromFile("img/trash.png");
+	textureUpdate1->loadFromFile("img/upgrades/upgradeAttackspeed.png");
+	textureUpdate2->loadFromFile("img/upgrades/upgradeDamage.png");
+	textureclose->loadFromFile("img/buttons/closeButton.png");
+	textureSell->loadFromFile("img/upgrades/sell.png");
 	update1->setPosition(Vector2f(1745, 100));
 	update2->setPosition(Vector2f(1745, 250));
 	close->setPosition(Vector2f(1850, 25));

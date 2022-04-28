@@ -445,11 +445,11 @@ void Game::loseGame()
 		gameOverBackground.setSize(Vector2f(500, 300));
 		gameOverBackground.setFillColor(Color::Blue);
 
-		gameOverHomeButtonTexture.loadFromFile("img/homeButton.png");
+		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
 		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
 		gameOverHomeButton.setPosition(Vector2f(0, 0));
 
-		gameOverRestartButtonTexture.loadFromFile("img/restartButton.png");
+		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
 		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);
 		gameOverRestartButton.setPosition(Vector2f(0, 0));
 

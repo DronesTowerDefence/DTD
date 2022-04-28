@@ -25,6 +25,36 @@
     <Filter Include="Ressourcendateien\img">
       <UniqueIdentifier>{a92aa2bf-5578-49b3-ad83-5e142ea0b5b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ressourcendateien\img\buttons">
+      <UniqueIdentifier>{92d96798-f774-4f06-965a-a7039049a509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\drone0">
+      <UniqueIdentifier>{78dad855-596d-499d-9ca6-067a9bfc0683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\maps">
+      <UniqueIdentifier>{d3cbe161-f3ed-452d-9345-596fd07feb1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\projectiles">
+      <UniqueIdentifier>{005f7f5c-96af-41a9-a7f9-86646dc34a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\tower0">
+      <UniqueIdentifier>{030b53c0-4128-4405-89e5-9a2fef7ada08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\tower1">
+      <UniqueIdentifier>{e9d811a6-b1f4-4b63-96a1-d36f6ce8bf27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\tower2">
+      <UniqueIdentifier>{ffb7fd00-c407-4df4-b733-64f6ca0aed64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\tower3">
+      <UniqueIdentifier>{4812b204-c1bf-464d-862d-e294e3c3d0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\tower4">
+      <UniqueIdentifier>{7ac429ee-faf5-4d02-b430-f08bd71dcd32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ressourcendateien\img\upgrades">
+      <UniqueIdentifier>{0665bb5a-5ccd-450e-84c9-e44ea3456ccb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -106,44 +136,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\drone0(damage1)40x40.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\drone0(damage2)40x40.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\drone0(damage3)40x40.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\drone0_40x40.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\Map1.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\moneyTower0_50x50.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\projectile.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\projectile0.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\tower0_50x50.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\tower1_50x50.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\tower2_50x50.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\tower3_50x50.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="sounds\hit-0.wav">
       <Filter>Ressourcendateien\sounds</Filter>
     </Media>
@@ -179,5 +171,97 @@
     <Font Include="fonts\arial.ttf">
       <Filter>Ressourcendateien\fonts</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\buttons\closeButton.png">
+      <Filter>Ressourcendateien\img\buttons</Filter>
+    </Image>
+    <Image Include="img\buttons\homeButton.png">
+      <Filter>Ressourcendateien\img\buttons</Filter>
+    </Image>
+    <Image Include="img\buttons\restartButton.png">
+      <Filter>Ressourcendateien\img\buttons</Filter>
+    </Image>
+    <Image Include="img\buttons\startButton.png">
+      <Filter>Ressourcendateien\img\buttons</Filter>
+    </Image>
+    <Image Include="img\drone0\drone0.png">
+      <Filter>Ressourcendateien\img\drone0</Filter>
+    </Image>
+    <Image Include="img\drone0\drone0_damage1.png">
+      <Filter>Ressourcendateien\img\drone0</Filter>
+    </Image>
+    <Image Include="img\drone0\drone0_damage2.png">
+      <Filter>Ressourcendateien\img\drone0</Filter>
+    </Image>
+    <Image Include="img\drone0\drone0_damage3.png">
+      <Filter>Ressourcendateien\img\drone0</Filter>
+    </Image>
+    <Image Include="img\maps\Map1.png">
+      <Filter>Ressourcendateien\img\maps</Filter>
+    </Image>
+    <Image Include="img\projectiles\projectile0.png">
+      <Filter>Ressourcendateien\img\projectiles</Filter>
+    </Image>
+    <Image Include="img\tower0\tower0_0.png">
+      <Filter>Ressourcendateien\img\tower0</Filter>
+    </Image>
+    <Image Include="img\tower0\tower0_1.png">
+      <Filter>Ressourcendateien\img\tower0</Filter>
+    </Image>
+    <Image Include="img\tower0\tower0_2.png">
+      <Filter>Ressourcendateien\img\tower0</Filter>
+    </Image>
+    <Image Include="img\tower0\tower0_alias.png">
+      <Filter>Ressourcendateien\img\tower0</Filter>
+    </Image>
+    <Image Include="img\tower0\tower0_preview.png">
+      <Filter>Ressourcendateien\img\tower0</Filter>
+    </Image>
+    <Image Include="img\tower1\tower1_0.png">
+      <Filter>Ressourcendateien\img\tower1</Filter>
+    </Image>
+    <Image Include="img\tower1\tower1_alias.png">
+      <Filter>Ressourcendateien\img\tower1</Filter>
+    </Image>
+    <Image Include="img\tower1\tower1_preview.png">
+      <Filter>Ressourcendateien\img\tower1</Filter>
+    </Image>
+    <Image Include="img\tower2\tower2_0.png">
+      <Filter>Ressourcendateien\img\tower2</Filter>
+    </Image>
+    <Image Include="img\tower2\tower2_alias.png">
+      <Filter>Ressourcendateien\img\tower2</Filter>
+    </Image>
+    <Image Include="img\tower2\tower2_preview.png">
+      <Filter>Ressourcendateien\img\tower2</Filter>
+    </Image>
+    <Image Include="img\tower3\tower3_0.png">
+      <Filter>Ressourcendateien\img\tower3</Filter>
+    </Image>
+    <Image Include="img\tower3\tower3_alias.png">
+      <Filter>Ressourcendateien\img\tower3</Filter>
+    </Image>
+    <Image Include="img\tower3\tower3_preview.png">
+      <Filter>Ressourcendateien\img\tower3</Filter>
+    </Image>
+    <Image Include="img\tower4\tower4_0.png">
+      <Filter>Ressourcendateien\img\tower4</Filter>
+    </Image>
+    <Image Include="img\tower4\tower4_alias.png">
+      <Filter>Ressourcendateien\img\tower4</Filter>
+    </Image>
+    <Image Include="img\tower4\tower4_preview.png">
+      <Filter>Ressourcendateien\img\tower4</Filter>
+    </Image>
+    <Image Include="img\upgrades\sell.png">
+      <Filter>Ressourcendateien\img\upgrades</Filter>
+    </Image>
+    <Image Include="img\icon.png">
+      <Filter>Ressourcendateien\img</Filter>
+    </Image>
+    <Image Include="img\titleText.png">
+      <Filter>Ressourcendateien\img</Filter>
+    </Image>
   </ItemGroup>
 </Project>
