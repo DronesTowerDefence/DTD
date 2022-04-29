@@ -127,11 +127,11 @@ std::string Ressources::getTowerName(int i)
 {
 	return towerName[i];
 }
-float Ressources::getTowerUpgradesPrice1(int i, int j)
+int Ressources::getTowerUpgradesPrice1(int i, int j)
 {
 	return towerUpgradePrice1[i][j];
 }
-float Ressources::getTowerUpgradesPrice2(int i, int j)
+int Ressources::getTowerUpgradesPrice2(int i, int j)
 {
 	return towerUpgradePrice2[i][j];
 }

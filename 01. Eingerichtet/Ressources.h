@@ -46,8 +46,8 @@ public:
 	float getTowerRange(int);
 	float getTowerMoneyGeneration(int);
 	std::string getTowerName(int);
-	float getTowerUpgradesPrice1(int, int);
-	float getTowerUpgradesPrice2(int, int);
+	int getTowerUpgradesPrice1(int, int);
+	int getTowerUpgradesPrice2(int, int);
 	float getTowerUpdateDamage(int, int);
 	float getTowerUpdateSpeed(int, int);
 

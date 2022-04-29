@@ -32,6 +32,7 @@ Updates::Updates(int towerIndex)
 
 	close->setScale(Vector2f(0.5, 0.5));
 
+	
 	for (int i = 0, x = 1745; i < 4; i++, x += 15)
 	{
 		shoowUpdate1[i] = new RectangleShape(Vector2f(10, 10));
@@ -48,14 +49,20 @@ Updates::Updates(int towerIndex)
 	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
 	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))); //TODO updatepeis
 
-	text1->setPosition(1745, 100);
-	text2->setPosition(1745, 250);
+	text1->setPosition(1745, 200);
+	text2->setPosition(1745, 350);
 
 	text1->setFont(arial);
 	text2->setFont(arial);
 
 	text1->setCharacterSize(20);
 	text2->setCharacterSize(20);
+
+	text1->setOutlineThickness(2);
+	text2->setOutlineThickness(2);
+
+	text1->setOutlineColor(Color::Black);
+	text2->setOutlineColor(Color::Black);
 
 }
 
@@ -83,7 +90,7 @@ int Updates::isClicked(RenderWindow* window)
 	Vector2f pos, pos2;
 
 	pos = Service::getInstance()->getObjectPosition(update1->getPosition()); //Holt sich die Position des Turmes i
-	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(150, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
@@ -98,7 +105,7 @@ int Updates::isClicked(RenderWindow* window)
 	else
 	{
 		pos = Service::getInstance()->getObjectPosition(update2->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(150, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{

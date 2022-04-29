@@ -15,24 +15,22 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	isClicked = false;
 	window = win;
 	startButton = new Sprite;
-	//choseMap = new Sprite;
+	font = new Font();
 	titel = new Sprite;
 	backround = new Sprite();
 	drone = new Sprite();
 	textureStartButton = new Texture();
-	textureChoseMap = new Texture();
 	textureTitel = new Texture();
 	textureBackround = new Texture();
 	textureDrone = new Texture();
 	pointer = new RectangleShape;
 
 	textureStartButton->loadFromFile("img/buttons/startButton.png");
-	textureChoseMap->loadFromFile("img/close.png");
 	textureTitel->loadFromFile("img/title_text.png");
 	textureDrone->loadFromFile("img/drone0/drone0.png");
+	font->loadFromFile("fonts/arial.ttf");
 
 	startButton->setTexture(*textureStartButton);
-//	choseMap->setTexture(*textureChoseMap);
 	titel->setTexture(*textureTitel);
 	textureBackround->loadFromFile("img/backround.jpg");
 	backround->setTexture(*textureBackround);
@@ -40,8 +38,7 @@ HomeMenu::HomeMenu(RenderWindow* win)
 
 	choseIndex = -1;
 
-	startButton->setPosition(Vector2f(900, 800));
-//	choseMap->setPosition(Vector2f(400, 525));
+	startButton->setPosition(Vector2f(900, 600));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 
@@ -112,7 +109,8 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	pointer->setOutlineThickness(10);
 	pointer->setOutlineColor(Color::Magenta);
 	pointer->setFillColor(Color::Transparent);
-
+	choseText = new Text("Waehle eine Karte aus", *font, 40);
+	choseText->setPosition(Vector2f(500, 450));
 }
 
 void HomeMenu::HomeMenuStart()
@@ -151,6 +149,7 @@ void HomeMenu::draw()
 	window->draw(*titel);
 	window->draw(*startButton);
 	window->draw(*drone);
+	window->draw(*choseText);
 	for (int i = 0; i < 1; i++)
 	{
 		window->draw(*map[i]);
