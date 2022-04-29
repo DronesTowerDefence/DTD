@@ -114,10 +114,9 @@ void Game::draw()
 
 	if (lost)
 	{
-		window->draw(gameOverBackground);
+		window->draw(gameOverBackround);
 		window->draw(gameOverHomeButton);
 		window->draw(gameOverRestartButton);
-		window->draw(gameOverText);
 	}
 
 	window->draw(eco);
@@ -441,23 +440,17 @@ void Game::loseGame()
 
 	if (round->getLost())
 	{
-		gameOverBackground.setPosition(Vector2f(500, 300));
-		gameOverBackground.setSize(Vector2f(500, 300));
-		gameOverBackground.setFillColor(Color::Blue);
+		gameOverBackgroundTexture.loadFromFile("img/gameOverBackround.png");
+		gameOverBackround.setTexture(gameOverBackgroundTexture);
+		gameOverBackround.setPosition(Vector2f(500, 300));
 
 		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
-		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
-		gameOverHomeButton.setPosition(Vector2f(0, 0));
+		gameOverHomeButton.setTexture(gameOverHomeButtonTexture);
+		gameOverHomeButton.setPosition(Vector2f(600, 500));
 
 		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
-		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);
-		gameOverRestartButton.setPosition(Vector2f(0, 0));
-
-		gameOverText.setPosition(Vector2f(500, 300));
-		gameOverText.setCharacterSize(40);
-		gameOverText.setFillColor(Color::Red);
-		gameOverText.setFont(stdFont);
-		gameOverText.setString("Game Over!");
+		gameOverRestartButton.setTexture(gameOverRestartButtonTexture);
+		gameOverRestartButton.setPosition(Vector2f(700, 500));
 
 		lost = true;
 	}
