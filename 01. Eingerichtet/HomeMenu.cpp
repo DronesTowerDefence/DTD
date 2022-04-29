@@ -27,8 +27,8 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	pointer = new RectangleShape;
 
 	textureStartButton->loadFromFile("img/buttons/startButton.png");
-	textureChoseMap->loadFromFile("img/close.png");
-	textureTitel->loadFromFile("img/title_text.png");
+	textureChoseMap->loadFromFile("img/buttons/closeButton.png");
+	textureTitel->loadFromFile("img/titleText.png");
 	textureDrone->loadFromFile("img/drone0/drone0.png");
 
 	startButton->setTexture(*textureStartButton);
