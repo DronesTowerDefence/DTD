@@ -23,12 +23,13 @@ PauseMenu::PauseMenu() {
 	edge.setFillColor(Color::Blue);
 	edge.setScale(1.f, 1.f);
 	edge.setPosition(0.f, 0.f);
+	//edge.setSize();
 
 	backgroundTexture.loadFromFile("img/backround.jpg");
 	background.setTexture(backgroundTexture);
-	background.setScale(0.99, 0.99);
+	background.setScale(0.57, 0.57);
 	//Scale kleiner, Position anpassen
-	background.setPosition(5.f, 5.f);
+	background.setPosition(500.f, 300.f);
 	
 
 	text.setFont(Game::getInstance()->getFont());
@@ -59,10 +60,6 @@ void PauseMenu::checkPause(Event event1)
 				}
 
 			}
-
-			//if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) {
-			//	return;
-			//}
 
 
 			draw();
