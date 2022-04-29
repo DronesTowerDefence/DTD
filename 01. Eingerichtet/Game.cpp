@@ -148,7 +148,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
-		pauseGame(event);
+		PauseMenu::getInstance()->checkPause(event);
 		draw();
 	}
 }
@@ -530,64 +530,8 @@ RenderWindow* Game::getWindow()
 	return window;
 }
 
-void Game::pauseGame(Event event1)
-{
-
-
-
-	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) {
-
-
-		Clock pause = Round::getInstance()->getDroneTimer();
-
-		RenderWindow pauseScreen(VideoMode(300, 500), "Pause-Screen");
-		pauseScreen.setPosition(Vector2i(500, 200));
-		pauseScreen.setFramerateLimit(60);
-		pauseScreen.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
-
-		Event eventPause;
-
-		while (pauseScreen.isOpen()) {
-
-			pauseScreen.clear();
-
-			Round::getInstance()->setDroneTimer(pause);
-
-			while (pauseScreen.pollEvent(eventPause))
-			{
-				if (eventPause.type == Event::Closed) {
-					pauseScreen.close();
-				}
-
-				if (eventPause.type == Event::KeyReleased && eventPause.key.code == Keyboard::Escape) {
-					pauseScreen.close();
-
-				}
-
-
-
-
-			}
-			pauseText.setString("PAUSE\n\n\n\n Placeholder ");
-			pauseText.setPosition(20, 20);
-			pauseText.setFillColor(Color::Yellow);
-
-			pauseScreen.draw(pauseBackground);
-			pauseScreen.draw(pauseText);
-			pauseScreen.display();
-		}
-
-	}
-
-
-}
 
 
 void Game::setWindow(RenderWindow* _window) {
 	window = _window;
-}
-
-void Game::setPauseScreen(RenderWindow* i)
-{
-	pauseScreen = i;
 }
