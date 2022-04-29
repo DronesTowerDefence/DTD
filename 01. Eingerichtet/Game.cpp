@@ -500,11 +500,11 @@ bool Game::towerAliasForbiddenPosition()
 
 void Game::checkShoot()
 {
+	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
 		for (auto iter : t->getCoverableArea())
 		{
-			CircleShape* tmp = new CircleShape;
 			tmp->setFillColor(Color::Transparent);
 			tmp->setRadius(15);
 			tmp->setPosition(Vector2f(iter.x, iter.y));
@@ -518,6 +518,7 @@ void Game::checkShoot()
 			}
 		}
 	}
+	delete tmp;
 }
 
 Font Game::getFont()
