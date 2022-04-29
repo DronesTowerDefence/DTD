@@ -66,18 +66,20 @@ Ressources::Ressources()
 	towerName[3] = "Tower 4";
 	towerName[4] = "Ölbohrer";
 	double p[4];
-	p[1] = 1 / 8;
-	p[2] = 1 / 7;
-	p[3] = 1 / 6;
-	p[3] = 1 / 5;
-	float x = 1;
+	p[0] = 1.f / 8.f;
+	p[1] = 1.f / 7.f;
+	p[2] = 1.f / 6.f;
+	p[3] = 1.f / 5.f;
+	float berechneterSpeed;
+	float x = 1.5;
 	//Setzt speed und Schaden
-	for (int j = 0; j < towerCount; j++, x = 1)
+	for (int j = 0; j < towerCount; j++, x = 1.5)
 	{
 		for (int i = 0; i < 4; i++, x += 0.5)
 		{
 			towerUpdateDamage[j][i] = towerDamage[j] + (towerDamage[j] * x);
-			towerUpdateSpeed[j][i] = towerSpeed[j] - (towerSpeed[j] * p[j] * i);
+			berechneterSpeed =  towerSpeed[j] - (towerSpeed[j] * p[j] * x);
+			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = towerMoneyGeneration[j] + (towerMoneyGeneration[j] * x);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
 

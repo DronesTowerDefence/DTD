@@ -181,13 +181,13 @@ void Tower::manageUpdate(RenderWindow* window)
 		if (indexUpdate == 1)
 		{
 			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			damage = Ressources::getInstance()->getTowerUpdateDamage(index, update->getIndex1());
+			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+			speed;
 		}
 		else if (indexUpdate == 2)
 		{
 			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2());
-
+			damage = Ressources::getInstance()->getTowerUpdateDamage(index, update->getIndex2() - 1);
 		}
 	}
 	else if (index == 4)
@@ -195,12 +195,12 @@ void Tower::manageUpdate(RenderWindow* window)
 		if (indexUpdate == 1)
 		{
 			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			moneyGeneration = Ressources::getInstance()->getTowerUpdateMoneyGeneration(index, update->getIndex2());
+			moneyGeneration = Ressources::getInstance()->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
 		}
 		else if (indexUpdate == 2)
 		{
 			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2());
+			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
 	}
 }

@@ -46,8 +46,8 @@ Updates::Updates(int towerIndex)
 	arial.loadFromFile("fonts/arial.ttf");
 	text1 = new Text();
 	text2 = new Text();
-	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1))); //TODO updatepeis
-	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))); //TODO updatepeis
+	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1)) + " $"); //TODO updatepeis
+	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2))+ " $"); //TODO updatepeis
 
 	text1->setPosition(1745, 200);
 	text2->setPosition(1745, 350);
