@@ -465,9 +465,9 @@ void Game::loseGame()
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
 			"\nMoney: " + std::to_string(round->getMoney()) + " $"
-			"\nRound: " + std::to_string(round->getIndex() + 1) +
-			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
-			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
+			"\nRound: " + std::to_string(round->getIndex() + 1)
+			/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
+			"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/ );
 	}
 }
 
@@ -475,14 +475,14 @@ bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
-		CircleShape collisionShape;
-		collisionShape.setFillColor(Color::Transparent);
-		collisionShape.setRadius(25);
+		CircleShape* collisionShape = new CircleShape();
+		collisionShape->setFillColor(Color::Transparent);
+		collisionShape->setRadius(25);
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 
-			collisionShape.setPosition(i);
-			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
+			collisionShape->setPosition(i);
+			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
 				return 0;
 		}
 
@@ -491,7 +491,7 @@ bool Game::towerAliasForbiddenPosition()
 			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
 				return 0;
 		}
-
+		delete collisionShape;
 	}
 	else return 0;
 
@@ -500,11 +500,11 @@ bool Game::towerAliasForbiddenPosition()
 
 void Game::checkShoot()
 {
+	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
 		for (auto iter : t->getCoverableArea())
 		{
-			CircleShape* tmp = new CircleShape;
 			tmp->setFillColor(Color::Transparent);
 			tmp->setRadius(15);
 			tmp->setPosition(Vector2f(iter.x, iter.y));
@@ -518,6 +518,7 @@ void Game::checkShoot()
 			}
 		}
 	}
+	delete tmp;
 }
 
 Font Game::getFont()
