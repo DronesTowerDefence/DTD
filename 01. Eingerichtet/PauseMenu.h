@@ -19,12 +19,17 @@ class PauseMenu
 	
 
 	
-	void draw();
+	
 	void click();
 
 public:
 
 	static PauseMenu* getInstance();
     void checkPause(Event);
+	void draw();
+
+	RectangleShape getEdge();
+	Sprite getBackground();
+	Text getText();
 };
 

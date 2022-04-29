@@ -21,13 +21,15 @@ PauseMenu::PauseMenu() {
 	window = Game::getInstance()->getWindow();
 
 	edge.setFillColor(Color::Blue);
-	edge.setScale(300.f, 500.f);
-	edge.setPosition(500.f, 200.f);
+	edge.setScale(1.f, 1.f);
+	edge.setPosition(0.f, 0.f);
 
 	backgroundTexture.loadFromFile("img/backround.jpg");
 	background.setTexture(backgroundTexture);
-
-	background.setScale(499.f, 199.f);
+	background.setScale(0.99, 0.99);
+	//Scale kleiner, Position anpassen
+	background.setPosition(5.f, 5.f);
+	
 
 	text.setFont(Game::getInstance()->getFont());
 
@@ -52,21 +54,18 @@ void PauseMenu::checkPause(Event event1)
 					//saveGame();
 					window->close();
 				}
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) {
+					return;
+				}
+
 			}
 
-			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) {
-				return;
-			}
+			//if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) {
+			//	return;
+			//}
 
-			window->clear();
 
-			window->draw(edge);
-			window->draw(background);
-			window->draw(text);
-
-			window->display();
-
-			//draw();
+			draw();
 
 
 
@@ -82,18 +81,31 @@ void PauseMenu::checkPause(Event event1)
 
 void PauseMenu::draw()
 {
-	window->clear();
 
 	window->draw(edge);
 	window->draw(background);
-	window->draw(text);
 
-	//k
-	std::cout << "haha";
+
 
 	window->display();
 
 
+
+}
+
+RectangleShape PauseMenu::getEdge()
+{
+	return edge;
+}
+
+Sprite PauseMenu::getBackground()
+{
+	return background;
+}
+
+Text PauseMenu::getText()
+{
+	return text;
 }
 
 void PauseMenu::click()

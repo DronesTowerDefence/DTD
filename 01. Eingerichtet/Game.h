@@ -19,10 +19,6 @@ private:
 	Font stdFont;
 	Text eco;
 
-	RenderWindow* pauseScreen;
-	RectangleShape pauseBackground;
-	Text pauseText;
-
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
 	RectangleShape gameOverBackground;

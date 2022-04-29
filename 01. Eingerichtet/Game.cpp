@@ -36,13 +36,6 @@ Game::Game()
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
 
-	pauseText.setCharacterSize(25);
-	pauseText.setPosition(Vector2f(500, 300));
-	pauseText.setFont(stdFont);
-
-	pauseBackground.setPosition(Vector2f(0, 0));
-	pauseBackground.setSize(Vector2f(300, 500));
-	pauseBackground.setFillColor(Color::Blue);
 
 
 
@@ -140,7 +133,7 @@ void Game::startGame()
 				window->close();
 			}
 
-
+			PauseMenu::getInstance()->checkPause(event);
 		}
 		loseGame();
 		moveDrohnes();
@@ -148,7 +141,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
-		PauseMenu::getInstance()->checkPause(event);
+
 		draw();
 	}
 }
