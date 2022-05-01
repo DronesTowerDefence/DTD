@@ -60,11 +60,18 @@ Ressources::Ressources()
 	towerMoneyGeneration[3] = 0;
 	towerMoneyGeneration[4] = 20;
 
-	towerName[0] = "Tower 1";
+	towerChangeFrame[0] = 300;
+	towerChangeFrame[1] = 300;
+	towerChangeFrame[2] = 300;
+	towerChangeFrame[3] = 300;
+	towerChangeFrame[4] = towerSpeed[4]*1000;
+
+	towerName[0] = "Feuer-Turm";
 	towerName[1] = "Tower 2";
 	towerName[2] = "Tower 3";
 	towerName[3] = "Tower 4";
-	towerName[4] = "Ölbohrer";
+	towerName[4] = "Goldmine";
+
 	double p[4];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
@@ -124,6 +131,10 @@ float Ressources::getTowerRange(int i)
 float Ressources::getTowerMoneyGeneration(int i)
 {
 	return towerMoneyGeneration[i];
+}
+int Ressources::getTowerChangeFrame(int i)
+{
+	return towerChangeFrame[i];
 }
 std::string Ressources::getTowerName(int i)
 {
