@@ -66,7 +66,7 @@ Ressources::Ressources()
 	towerChangeFrame[3] = 300;
 	towerChangeFrame[4] = towerSpeed[4]*1000;
 
-	towerName[0] = "Feuer-Turm";
+	towerName[0] = "Feuer\nTurm";
 	towerName[1] = "Tower 2";
 	towerName[2] = "Tower 3";
 	towerName[3] = "Tower 4";
