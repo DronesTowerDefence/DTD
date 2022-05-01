@@ -7,7 +7,18 @@ Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	collided = 0;
-	projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+	switch (_style)
+	{
+	case 1:
+		projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+		break;
+	case 2:
+		projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+		break;
+	case 3:
+		projectileTexture.loadFromFile("img/projectiles/projectile1.png");
+		break;
+	}
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
 	style = _style;
@@ -69,7 +80,7 @@ void Projectile::collission()
 {
 	if (collided == 0) {
 		if (projectilesprite.getGlobalBounds().intersects(dronetarget->getDroneSprite().getGlobalBounds())) {
-			std::cout << "hit" << std::endl;
+			//std::cout << "hit" << std::endl;
 			dronetarget->takeDamage(tower->getDamage());
 			collided = 1;
 			delete this;

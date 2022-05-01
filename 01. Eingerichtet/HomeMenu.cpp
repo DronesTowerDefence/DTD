@@ -78,9 +78,9 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	textureTower[1][3]->loadFromFile("img/tower1/tower1_0.png");
 
 	textureTower[2][0]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][1]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][2]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][3]->loadFromFile("img/tower2/tower2_0.png");
+	textureTower[2][1]->loadFromFile("img/tower2/tower2_1.png");
+	textureTower[2][2]->loadFromFile("img/tower2/tower2_2.png");
+	textureTower[2][3]->loadFromFile("img/tower2/tower2_1.png");
 
 	textureTower[3][0]->loadFromFile("img/tower3/tower3_0.png");
 	textureTower[3][1]->loadFromFile("img/tower3/tower3_0.png");
@@ -88,9 +88,9 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	textureTower[3][3]->loadFromFile("img/tower3/tower3_0.png");
 
 	textureTower[4][0]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][1]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][2]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][3]->loadFromFile("img/tower4/tower4_0.png");
+	textureTower[4][1]->loadFromFile("img/tower4/tower4_1.png");
+	textureTower[4][2]->loadFromFile("img/tower4/tower4_2.png");
+	textureTower[4][3]->loadFromFile("img/tower4/tower4_3.png");
 	
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{

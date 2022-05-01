@@ -101,13 +101,13 @@ void Game::draw()
 
 
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > round->getDroneSpawnTime() && droneCount < round->getDroneCountInRound()) {
 
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
-	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())
+	if (droneCount == round->getDroneCountInRound() && round->getAllDrones().empty())
 	{
 		newRound();
 	}
@@ -130,7 +130,6 @@ void Game::startGame()
 	{
 		Event event;
 
-
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -138,9 +137,8 @@ void Game::startGame()
 				//saveGame();
 				window->close();
 			}
-
-
 		}
+
 		loseGame();
 		moveDrohnes();
 		checkShoot();

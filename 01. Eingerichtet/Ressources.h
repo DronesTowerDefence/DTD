@@ -11,6 +11,8 @@ private:
 
 	//Tower
 	int towerCount; //Wie viele Turm-Typen es gibt
+	int towerAttackTowerCount;
+	int towerMoneyTowerCount;
 	int towerProjectileIndex[5]; //Welches Projektil verwendet werden soll
 	int towerPrice[5]; //Wie viel der Tower kostet
 	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
@@ -36,9 +38,9 @@ public:
 
 	static Ressources* getInstance();
 
-	int towerAttackTowerCount;
-	int towerMoneyTowerCount;
 	int getTowerCount();
+	int getTowerAttackTowerCount();
+	int getTowerMoneyTowerCount();
 	int getTowerProjectileIndex(int);
 	int getTowerPrice(int);
 	float getTowerDamage(int);

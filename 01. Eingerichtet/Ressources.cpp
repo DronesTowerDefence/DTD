@@ -20,26 +20,26 @@ Ressources::Ressources()
 
 	towerProjectileIndex[0] = 1;
 	towerProjectileIndex[1] = 1;
-	towerProjectileIndex[2] = 1;
-	towerProjectileIndex[3] = 3;
+	towerProjectileIndex[2] = 3;
+	towerProjectileIndex[3] = 0;
 	towerProjectileIndex[4] = 0;
 
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	towerPrice[3] = 400;
+	towerPrice[3] = 2000;
 	towerPrice[4] = 500;
 
 	towerDamage[0] = 1;
 	towerDamage[1] = 2;
-	towerDamage[2] = 3;
+	towerDamage[2] = 2;
 	towerDamage[3] = 4;
 	towerDamage[4] = 0;
 
 	towerSpeed[0] = 0.5;
 	towerSpeed[1] = 1;
 	towerSpeed[2] = 1.5;
-	towerSpeed[3] = 2;
+	towerSpeed[3] = 1;
 	towerSpeed[4] = 4;
 
 	towerProjectileSpeed[0] = 4;
@@ -50,8 +50,8 @@ Ressources::Ressources()
 
 	towerRange[0] = 100;
 	towerRange[1] = 200;
-	towerRange[2] = 300;
-	towerRange[3] = 100;
+	towerRange[2] = 100;
+	towerRange[3] = 1000;
 	towerRange[4] = 0;
 
 	towerMoneyGeneration[0] = 0;
@@ -62,14 +62,14 @@ Ressources::Ressources()
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
-	towerChangeFrame[2] = 300;
+	towerChangeFrame[2] = 200;
 	towerChangeFrame[3] = 300;
 	towerChangeFrame[4] = towerSpeed[4]*1000;
 
-	towerName[0] = "Feuer\nTurm";
+	towerName[0] = "Feuer-Turm";
 	towerName[1] = "Tower 2";
-	towerName[2] = "Tower 3";
-	towerName[3] = "Tower 4";
+	towerName[2] = "EMP-Sender";
+	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
 	double p[4];
@@ -97,12 +97,18 @@ Ressources::Ressources()
 	droneLives[0] = 3;
 
 	icon.loadFromFile("img/icon.png");
-	
-	
 }
 int Ressources::getTowerCount()
 {
 	return towerCount;
+}
+int Ressources::getTowerAttackTowerCount()
+{
+	return towerAttackTowerCount;
+}
+int Ressources::getTowerMoneyTowerCount()
+{
+	return towerMoneyTowerCount;
 }
 int Ressources::getTowerProjectileIndex(int i)
 {
