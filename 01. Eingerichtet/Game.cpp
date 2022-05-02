@@ -89,28 +89,27 @@ void Game::draw()
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
-		window->draw(d->getDroneSprite());
+		window->draw(*d->getDrawSprite());
 	}
 
 
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > round->getDroneSpawnTime() && droneCount < round->getDroneCountInRound()) {
 
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
 		round->restartDroneTimer();
 	}
-	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())
+	if (droneCount == round->getDroneCountInRound() && round->getAllDrones().empty())
 	{
 		newRound();
 	}
 
 	if (lost)
 	{
-		window->draw(gameOverBackground);
+		window->draw(gameOverBackround);
 		window->draw(gameOverHomeButton);
 		window->draw(gameOverRestartButton);
-		window->draw(gameOverText);
 	}
 
 	window->draw(eco);
@@ -124,7 +123,6 @@ void Game::startGame()
 	{
 		Event event;
 
-
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -133,8 +131,11 @@ void Game::startGame()
 				window->close();
 			}
 
+
 			PauseMenu::getInstance()->checkPause(event);
+
 		}
+
 		loseGame();
 		moveDrohnes();
 		checkShoot();
@@ -434,23 +435,17 @@ void Game::loseGame()
 
 	if (round->getLost())
 	{
-		gameOverBackground.setPosition(Vector2f(500, 300));
-		gameOverBackground.setSize(Vector2f(500, 300));
-		gameOverBackground.setFillColor(Color::Blue);
+		gameOverBackgroundTexture.loadFromFile("img/gameOverBackround.png");
+		gameOverBackround.setTexture(gameOverBackgroundTexture);
+		gameOverBackround.setPosition(Vector2f(500, 300));
 
 		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
-		gameOverHomeButton.setTexture(&gameOverHomeButtonTexture);
-		gameOverHomeButton.setPosition(Vector2f(0, 0));
+		gameOverHomeButton.setTexture(gameOverHomeButtonTexture);
+		gameOverHomeButton.setPosition(Vector2f(600, 500));
 
 		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
-		gameOverRestartButton.setTexture(&gameOverRestartButtonTexture);
-		gameOverRestartButton.setPosition(Vector2f(0, 0));
-
-		gameOverText.setPosition(Vector2f(500, 300));
-		gameOverText.setCharacterSize(40);
-		gameOverText.setFillColor(Color::Red);
-		gameOverText.setFont(stdFont);
-		gameOverText.setString("Game Over!");
+		gameOverRestartButton.setTexture(gameOverRestartButtonTexture);
+		gameOverRestartButton.setPosition(Vector2f(700, 500));
 
 		lost = true;
 	}
@@ -458,9 +453,9 @@ void Game::loseGame()
 	{
 		eco.setString("Lives: " + std::to_string(round->getHealth()) +
 			"\nMoney: " + std::to_string(round->getMoney()) + " $"
-			"\nRound: " + std::to_string(round->getIndex() + 1) +
-			"\nx: " + std::to_string(Mouse::getPosition(*window).x) +
-			"\ny: " + std::to_string(Mouse::getPosition(*window).y));
+			"\nRound: " + std::to_string(round->getIndex() + 1)
+			/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
+			"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/ );
 	}
 }
 
@@ -468,14 +463,14 @@ bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
-		CircleShape collisionShape;
-		collisionShape.setFillColor(Color::Transparent);
-		collisionShape.setRadius(25);
+		CircleShape* collisionShape = new CircleShape();
+		collisionShape->setFillColor(Color::Transparent);
+		collisionShape->setRadius(25);
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 
-			collisionShape.setPosition(i);
-			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape.getGlobalBounds()))
+			collisionShape->setPosition(i);
+			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
 				return 0;
 		}
 
@@ -484,7 +479,7 @@ bool Game::towerAliasForbiddenPosition()
 			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
 				return 0;
 		}
-
+		delete collisionShape;
 	}
 	else return 0;
 
@@ -493,11 +488,11 @@ bool Game::towerAliasForbiddenPosition()
 
 void Game::checkShoot()
 {
+	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
 		for (auto iter : t->getCoverableArea())
 		{
-			CircleShape* tmp = new CircleShape;
 			tmp->setFillColor(Color::Transparent);
 			tmp->setRadius(15);
 			tmp->setPosition(Vector2f(iter.x, iter.y));
@@ -511,6 +506,7 @@ void Game::checkShoot()
 			}
 		}
 	}
+	delete tmp;
 }
 
 Font Game::getFont()

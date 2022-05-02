@@ -13,6 +13,7 @@ private:
 
 	Sprite buttonSpr[5];
 	Texture buttonTexture[5];
+	Texture buttonTextureNoBuy[5];
 
 	Text buttonText[5];
 	Font buttonTextFont;

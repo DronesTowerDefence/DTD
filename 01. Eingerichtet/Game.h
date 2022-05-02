@@ -21,10 +21,10 @@ private:
 
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
-	RectangleShape gameOverBackground;
-	RectangleShape gameOverRestartButton;
-	RectangleShape gameOverHomeButton;
-	Text gameOverText;
+	Texture gameOverBackgroundTexture;
+	Sprite gameOverBackround;
+	Sprite gameOverRestartButton;
+	Sprite gameOverHomeButton;
 
 	SoundBuffer musicBuffer[4];
 	Sound music[4];

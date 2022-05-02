@@ -8,7 +8,6 @@ class HomeMenu
 {
 private:
 	Sprite* startButton;
-	//Sprite* choseMap;
 	RectangleShape* pointer;
 	Sprite* map[1];
 	Sprite* titel;
@@ -17,7 +16,6 @@ private:
 
 	Sprite* towers[5];
 	Texture* textureStartButton;
-	Texture* textureChoseMap;
 	Texture* textureMap[1];
 	Texture* textureTitel;
 	Texture* textureTower[5][4];
@@ -35,6 +33,8 @@ private:
 	void draw();
 	bool CheckClicked();
 	void 	setTowerTexture();
+	Font *font;
+	Text *choseText;
 public:
 	static HomeMenu* getInstance(RenderWindow* win);
 	void HomeMenuStart();
