@@ -28,7 +28,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 		droneTexture[2].loadFromFile("img/drone1/drone1_0.png");
 		droneTexture[3].loadFromFile("img/drone1/drone1_0.png");
 		break;
-		
+
 	case 2:
 		droneTexture[0].loadFromFile("img/drone2/drone2_0.png");
 		droneTexture[1].loadFromFile("img/drone2/drone2_0.png");
@@ -54,6 +54,10 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
+
+	if (HomeMenu::getInstance()->getChoseIndex() != 0) {
+		drone.setRotation(90);
+	}
 }
 
 Sprite* Drone::getDrawSprite()
@@ -124,21 +128,41 @@ void Drone::pass()
 {
 	//Wegpunkte in der Map, wenn die Drone einen Wegpunkt passiert, erhöht sich der Counter als Index für die Liste der Wegpunkte
 
-	
+
 
 
 	nextPoint++;
-	if (nextPoint % 2 == 0) {
 
-		drone.setRotation(0);
-	}
-	else {
-		drone.setRotation(90); 
-		//Nur, wenn die erste Map ausgewählt ist
-		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
+
+	if (HomeMenu::getInstance()->getChoseIndex() == 0) {
+
+
+		if (nextPoint % 2 == 0) {
+
+			drone.setRotation(0);
+		}
+		else {
+			drone.setRotation(90);
 			drone.move(50, 0);
 		}
+		return;
 	}
+	else {
+
+
+		if (nextPoint % 2 == 0) {
+
+			drone.setRotation(90);
+			drone.move(50, 0);
+		}
+		else {
+			drone.setRotation(0);
+
+		}
+
+
+	}
+
 
 
 	//if (nextPoint == 1) {
@@ -158,7 +182,7 @@ bool Drone::takeDamage(int damage) {
 
 	if (lives < 0)
 		lives = 0;
-  
+
 	switch (lives)
 	{
 	case 0:
