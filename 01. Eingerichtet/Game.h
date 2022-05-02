@@ -132,4 +132,7 @@ public:
 	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
 
+
+	Sound getMusic();
+
 };

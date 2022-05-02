@@ -1,4 +1,6 @@
 #include "PauseMenu.h"
+#include <iostream>
+
 
 PauseMenu* PauseMenu::instance = nullptr;
 
@@ -13,27 +15,32 @@ PauseMenu* PauseMenu::getInstance() {
 
 	return instance;
 
-
 }
 
 PauseMenu::PauseMenu() {
 
 	window = Game::getInstance()->getWindow();
 
+	font.loadFromFile("fonts/arial.ttf");
+
 	edge.setFillColor(Color::Blue);
-	edge.setScale(1.f, 1.f);
-	edge.setPosition(0.f, 0.f);
+	edge.setSize(Vector2f(690.f,700.f));
+	edge.setPosition(548.f, 148.f);
 	//edge.setSize();
 
 	backgroundTexture.loadFromFile("img/backround.jpg");
 	background.setTexture(backgroundTexture);
-	background.setScale(0.57, 0.57);
+	
 	//Scale kleiner, Position anpassen
-	background.setPosition(500.f, 300.f);
+	background.setPosition(553.f, 150.f);
+	background.setScale(Vector2f(float(0.3555), float(0.5405)));
 	
 
-	text.setFont(Game::getInstance()->getFont());
-
+	text1.setFont(font);
+	text1.setCharacterSize(unsigned(55));
+	text1.setString("   Pause Menu:\n\n   Lautstärke:  " + std::to_string(int(Game::getInstance()->getMusic().getVolume()))+ " %");
+	text1.setPosition(Vector2f(550.f, 170.f));
+	text1.setFillColor(Color::Black);
 
 
 }
@@ -81,12 +88,9 @@ void PauseMenu::draw()
 
 	window->draw(edge);
 	window->draw(background);
-
-
+	window->draw(text1);
 
 	window->display();
-
-
 
 }
 
@@ -102,7 +106,7 @@ Sprite PauseMenu::getBackground()
 
 Text PauseMenu::getText()
 {
-	return text;
+	return text1;
 }
 
 void PauseMenu::click()

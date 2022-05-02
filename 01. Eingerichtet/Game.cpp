@@ -528,3 +528,8 @@ RenderWindow* Game::getWindow()
 void Game::setWindow(RenderWindow* _window) {
 	window = _window;
 }
+
+Sound Game::getMusic()
+{
+	return music[0];
+}

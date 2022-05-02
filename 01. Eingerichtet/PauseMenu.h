@@ -8,11 +8,11 @@ class PauseMenu
 	static PauseMenu* instance;
 
 	RenderWindow* window;
-	Text text;
+	Text text1;
 	Texture backgroundTexture;
 	Sprite background;
 	RectangleShape edge;
-
+	Font font;
 
 
 	PauseMenu();
