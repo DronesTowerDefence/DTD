@@ -123,7 +123,6 @@ void Game::draw()
 	}
 
 	window->draw(eco);
-	window->draw(pixel);
 	window->display();
 }
 
