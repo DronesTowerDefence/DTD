@@ -1,6 +1,7 @@
 #include "Drone.h"
 #include "Round.h"
 #include "HomeMenu.h"
+#include "Game.h"
 #include<iostream>
 using namespace sf;
 
@@ -134,7 +135,7 @@ void Drone::pass()
 	else {
 		drone.setRotation(90); 
 		//Nur, wenn die erste Map ausgewählt ist
-		if (HomeMenu::getInstance(Game::getInstance()->getWindow())->getChooseIndex() == 0) {
+		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
 			drone.move(50, 0);
 		}
 	}
