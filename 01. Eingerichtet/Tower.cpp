@@ -36,10 +36,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			break;
 
 		case 3:
-			towerTex[0].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[1].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[2].loadFromFile("img/tower3/tower3_0.png");
-			towerTex[3].loadFromFile("img/tower3/tower3_0.png");
+			towerTex[0].loadFromFile("img/Flughafen.jpg");
+			towerTex[1].loadFromFile("img/Flughafen.jpg");
+			towerTex[2].loadFromFile("img/Flughafen.jpg");
+			towerTex[3].loadFromFile("img/Flughafen.jpg");
 			Round::getInstance()->addTower(this);
 			break;
 
