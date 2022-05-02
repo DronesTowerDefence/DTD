@@ -11,7 +11,6 @@
 class Game
 {
 private:
-	RectangleShape pixel;
 
 	Ressources* p_ressources;
 	Round* round;

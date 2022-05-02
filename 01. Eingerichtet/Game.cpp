@@ -14,9 +14,7 @@ Game* Game::getInstance()
 
 Game::Game()
 {
-	pixel = RectangleShape(Vector2f(40, 40));
-	pixel.setPosition(Vector2f(1470, 210));
-	pixel.setFillColor(Color::Yellow); 
+
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
