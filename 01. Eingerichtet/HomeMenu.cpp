@@ -142,6 +142,11 @@ void HomeMenu::HomeMenuStart()
 	}
 }
 
+int HomeMenu::getChooseIndex()
+{
+	return choseIndex;
+}
+
 void HomeMenu::draw()
 {
 	window->clear();

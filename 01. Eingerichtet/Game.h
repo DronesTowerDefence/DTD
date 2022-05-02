@@ -40,10 +40,7 @@ private:
 	Tower* tower;
 	RectangleShape toolbar;
 
-	/// <summary>
-	/// Verändert regelmäßig die Musik
-	/// </summary>
-	void changeBackgroundMusic();
+	
 
 	void newRound();
 	/// <summary>
@@ -87,10 +84,7 @@ private:
 	/// </summary>
 	Game();
 
-	/// <summary>
-	/// Musik und Sounds werden initialisiert
-	/// </summary>
-	void setMusicSound();
+	
 
 	/// <summary>
 	/// Speichert das Spiel
@@ -107,6 +101,11 @@ private:
 
 	static Game* instance;
 public:
+/// <summary>
+	/// Verändert regelmäßig die Musik
+	/// </summary>
+	void changeBackgroundMusic();
+
 
 	static Game* getInstance();
 
@@ -134,8 +133,17 @@ public:
 	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
 
-
+	/// <summary>
+	/// Gibt erstes Feld der Music wieder
+	/// </summary>
+	/// <returns></returns>
 	Sound getMusic();
+
+	/// <summary>
+	/// Setzt die Musik Lautstärke
+	/// </summary>
+	/// <param name=""></param>
+	void setMusicVolume(float);
 
 	/// <summary>
 	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)

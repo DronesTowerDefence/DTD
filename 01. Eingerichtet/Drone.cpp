@@ -1,5 +1,6 @@
 #include "Drone.h"
 #include "Round.h"
+#include "HomeMenu.h"
 #include<iostream>
 using namespace sf;
 
@@ -11,6 +12,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 {
 	droneType = typSpecifier;
 
+	//Dronen-Texturen werden geladen
 	switch (droneType) {
 	case 0:
 		droneTexture[0].loadFromFile("img/drone0/drone0_0.png");
@@ -41,8 +43,10 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	}
 
 	drone.setTexture(droneTexture[0]);
+	//In Ressoucen gespeichert
 	speed = Ressources::getInstance()->getDroneSpeed(typSpecifier);
 	nextPoint = 0;
+	//""
 	lives = Ressources::getInstance()->getDroneLives(typSpecifier);
 	drone.setPosition(startPosition);
 	move_x = x;
@@ -53,6 +57,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 
 Sprite* Drone::getDrawSprite()
 {
+	//Animationsdings von Jonas?
 	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
 	{
 		switch (animationCounter)
@@ -110,18 +115,28 @@ int Drone::getNextPoint()
 
 void Drone::move()
 {
-
+	//x,y-Position der Drone plus die Richtung mal die Geschwindigkeit der Drone
 	drone.setPosition(Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed));
 }
 
 void Drone::pass()
 {
+	//Wegpunkte in der Map, wenn die Drone einen Wegpunkt passiert, erhöht sich der Counter als Index für die Liste der Wegpunkte
+
+	
+
+
 	nextPoint++;
 	if (nextPoint % 2 == 0) {
+
 		drone.setRotation(0);
 	}
 	else {
-		drone.setRotation(90); drone.move(50, 0);
+		drone.setRotation(90); 
+		//Nur, wenn die erste Map ausgewählt ist
+		if (HomeMenu::getInstance(Game::getInstance()->getWindow())->getChooseIndex() == 0) {
+			drone.move(50, 0);
+		}
 	}
 
 
@@ -138,7 +153,7 @@ bool Drone::takeDamage(int damage) {
 	lives -= damage;
 	livesDiff -= lives;
 
-	Round::getInstance()->addMoney(livesDiff * 3);
+	Round::getInstance()->addMoney(livesDiff * 3); // mal 3, da Geld wenig
 
 	if (lives < 0)
 		lives = 0;
@@ -177,6 +192,7 @@ Vector2i Drone::getMove()
 
 Vector2f Drone::getNextPosition(int nextFrame)
 {
+	//Wird die überhaupt noch benutzt?
 
 	Vector2f deezNuts;
 

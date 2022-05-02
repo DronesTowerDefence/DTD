@@ -37,10 +37,19 @@ Game::Game()
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
 
+	musicBuffer[0].loadFromFile("music/1-0.wav");
+	musicBuffer[1].loadFromFile("music/1-1.wav");
+	musicBuffer[2].loadFromFile("music/2-0.wav");
+	musicBuffer[3].loadFromFile("music/3-0.wav");
+	music[0].setBuffer(musicBuffer[0]);
+	music[1].setBuffer(musicBuffer[1]);
+	music[2].setBuffer(musicBuffer[2]);
+	music[3].setBuffer(musicBuffer[3]);
+	music[0].setVolume(50);
+	music[1].setVolume(50);
+	music[2].setVolume(50);
+	music[3].setVolume(50);
 
-
-
-	setMusicSound();
 	loadGame();
 }
 
@@ -283,22 +292,7 @@ end:
 	return true;
 }
 
-void Game::setMusicSound()
-{
-	musicBuffer[0].loadFromFile("music/1-0.wav");
-	musicBuffer[1].loadFromFile("music/1-1.wav");
-	musicBuffer[2].loadFromFile("music/2-0.wav");
-	musicBuffer[3].loadFromFile("music/3-0.wav");
-	music[0].setBuffer(musicBuffer[0]);
-	music[1].setBuffer(musicBuffer[1]);
-	music[2].setBuffer(musicBuffer[2]);
-	music[3].setBuffer(musicBuffer[3]);
-	music[0].setVolume(40);
-	music[1].setVolume(40);
-	music[2].setVolume(40);
-	music[3].setVolume(40);
 
-}
 
 void Game::changeBackgroundMusic()
 {
@@ -530,3 +524,16 @@ Sound Game::getMusic()
 {
 	return music[0];
 }
+
+void Game::setMusicVolume(float v)
+{
+	for (int i = 0; i < 4; i++) {
+
+		music[i].setVolume(v);
+
+	}
+
+
+
+}
+	
