@@ -68,18 +68,12 @@ void PauseMenu::checkPause(Event event1)
 
 			}
 
-
 			draw();
-
-
-
 
 		}
 	}
 
 	return;
-
-
 
 }
 
