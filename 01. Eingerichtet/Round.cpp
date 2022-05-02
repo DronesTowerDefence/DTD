@@ -5,7 +5,7 @@ Round* Round::instance = nullptr;
 
 Round::Round()
 {
-	money = 450; //Start-Geld
+	money = 50000; //Start-Geld
 	health = 10; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
@@ -14,7 +14,7 @@ Round::Round()
 	Lost = false;
 	Won = true;
 
-	setDroneCountInRound();
+	setDroneInRound();
 }
 
 Round* Round::getInstance()
@@ -84,11 +84,13 @@ void Round::setAllCoverablePoints()
 	}
 }
 
-void Round::setDroneCountInRound()
+void Round::setDroneInRound()
 {
 	for (int i = 0; i < 100; i++)
 	{
 		droneCountInRound[i] = i + 1 * 10;
+		
+		droneSpawnTime[i] = 1;
 	}
 }
 
@@ -269,9 +271,14 @@ void Round::addProjectile(Projectile* _projectile)
 	allProjectiles.push_back(_projectile);
 }
 
-int Round::getDroneCountInRound(int i)
+int Round::getDroneCountInRound()
 {
-	return droneCountInRound[i];
+	return droneCountInRound[index];
+}
+
+int Round::getDroneSpawnTime()
+{
+	return droneSpawnTime[index];
 }
 
 void Round::deleteDrone(Drone* drone)

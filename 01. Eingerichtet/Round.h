@@ -19,6 +19,7 @@ private:
 	bool Lost;
 	bool Won;
 	int droneCountInRound[100]; //Runde 1-100 / Index 0-99
+	int droneSpawnTime[100]; //Runde 1-100 / Index 0-99 / In Sekunden
 
 	std::list<Vector2f> allCoverablePoints; //Strecke eingeteilt in Punkte, alle 20px
 	std::list<Projectile*> allProjectiles;
@@ -34,7 +35,7 @@ private:
 	Round();
 	Round(int a, int b, int c, int d);
 
-	void setDroneCountInRound(); //Wie viele Drohnen pro Runde spawnen
+	void setDroneInRound(); //Wie viele Drohnen pro Runde spawnen
 
 public:
 
@@ -90,7 +91,9 @@ public:
 
 	bool getWon();
 
-	int getDroneCountInRound(int);
+	int getDroneCountInRound();
+
+	int getDroneSpawnTime();
 
 	void deleteDrone(Drone*);
 
@@ -101,5 +104,4 @@ public:
 	std::list<Tower*> getAllTowers();
 
 	void setDroneTimer(Clock);
-
 };

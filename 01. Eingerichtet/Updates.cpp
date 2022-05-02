@@ -15,8 +15,17 @@ Updates::Updates(int towerIndex)
 	textureclose = new Texture();
 	textureSell= new Texture();
 
+	if (towerIndex == 4)
+	{
+		textureUpdate1->loadFromFile("img/upgrades/upgradeMoney.png");
+		textureUpdate2->loadFromFile("img/upgrades/upgradeMoneyTime.png");
+	}
+	else
+	{
 	textureUpdate1->loadFromFile("img/upgrades/upgradeAttackspeed.png");
 	textureUpdate2->loadFromFile("img/upgrades/upgradeDamage.png");
+	}
+
 	textureclose->loadFromFile("img/buttons/closeButton.png");
 	textureSell->loadFromFile("img/upgrades/sell.png");
 

@@ -2,6 +2,7 @@
 #include <list>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Ressources.h"
 #include "Waypoint.h"
 using namespace sf;
@@ -28,9 +29,13 @@ private:
 	int move_x;
 	int move_y;
 	/// <summary>
-	/// Textur der Drone : Texture
+	/// Textur der Drone, animiert in 4 Frames : Texture
 	/// </summary>
-	Texture droneTexture;
+	Texture droneTexture[4];
+	/// <summary>
+	/// Textur für den Damage, ist nicht mehr animiert : Textur
+	/// </summary>
+	Texture droneTextureDmg;
 	/// <summary>
 	/// Sprite der Drone : Sprite
 	/// </summary>
@@ -47,7 +52,21 @@ private:
 	/// Drohnentyp für versch. Atrribute im Parameterkonstruktor : int
 	/// </summary>
 	int droneType;
+	/// <summary>
+	/// Welcher Frame ausgewählt ist
+	/// </summary>
+	int animationCounter;
+	/// <summary>
+	/// Wann der Frame wechselt in Millisekunden
+	/// </summary>
+	int droneChangeFrame;
+	/// <summary>
+	/// Clock für den Wechsel der animation
+	/// </summary>
+	Clock animationTimer;
 
+	SoundBuffer deathSoundBuffer;
+	Sound deathSound;
 	
 
 	/// <summary>
@@ -115,6 +134,11 @@ public:
 	/// <returns>Vector2f &position</returns>
 	Vector2f getNextPosition(int);
 
+	/// <summary>
+	/// Gibt die Sprite zum drawen zurück
+	/// </summary>
+	/// <returns></returns>
+	Sprite* getDrawSprite();
 	
 	
 	~Drone();
