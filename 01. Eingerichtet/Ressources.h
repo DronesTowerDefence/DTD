@@ -10,6 +10,7 @@ private:
 	static Ressources* instance;
 
 	//Tower
+	int mapCount; // wieviele Maps es gibt	
 	int towerCount; //Wie viele Turm-Typen es gibt
 	int towerProjectileIndex[5]; //Welches Projektil verwendet werden soll
 	int towerPrice[5]; //Wie viel der Tower kostet
@@ -37,6 +38,7 @@ public:
 
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
+	int getMapCount();
 	int getTowerCount();
 	int getTowerProjectileIndex(int);
 	int getTowerPrice(int);

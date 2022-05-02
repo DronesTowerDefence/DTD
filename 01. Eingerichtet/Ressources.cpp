@@ -14,6 +14,7 @@ Ressources* Ressources::getInstance()
 
 Ressources::Ressources()
 {
+	mapCount = 2;
 	towerCount = 5;
 	towerAttackTowerCount = 4;
 	towerMoneyTowerCount = 1;
@@ -92,6 +93,10 @@ Ressources::Ressources()
 	icon.loadFromFile("img/icon.png");
 	
 	
+}
+int Ressources::getMapCount()
+{
+	return mapCount;
 }
 int Ressources::getTowerCount()
 {

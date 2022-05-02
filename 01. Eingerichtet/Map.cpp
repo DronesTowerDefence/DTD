@@ -4,19 +4,18 @@
 /// <summary>
 /// Create Map
 /// </summary>
-Map::Map()
+Map::Map(int index)
 {
-	index = 1; //Muss bei mehreren Maps angepasst werden. Mit einem Übergabe Parameter
 
-	switch (index)
-	{
-	case 1:
+	this->index = index; //Muss bei mehreren Maps angepasst werden. Mit einem Übergabe Parameter
+
 		Round::getInstance()->setP_map(this);
-
-		texture.loadFromFile("img/maps/Map1.png");
+		texture.loadFromFile("img/maps/map"+std::to_string(index)+".png");
 		background.setSize(Vector2f(1920, 991));
 		background.setTexture(&texture);
-
+	switch (index)
+	{
+	case 0:
 		points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
 		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
@@ -27,9 +26,25 @@ Map::Map()
 		points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
 		points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
 		points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 27 * 40), Vector2f(0, 1), 3)); // endVektor
+		points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 73 * 40 + 31), Vector2f(0, 1),3));
+		
+		
 		start = Vector2f(4 * 40 - 20, 27 * 40);
 		startMove = Vector2f(0, -1);
+		break;
+
+	case 1:
+		points.push_back(new Waypoint(Vector2f(1470, 210), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(1470, 830), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(330, 830), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(330, 390), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(1270, 390), Vector2f(0, 1),1));
+		points.push_back(new Waypoint(Vector2f(1270, 570), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(0, 570), Vector2f(-1, 0), 2));
+		
+		start = Vector2f(-50,210);
+		startMove = Vector2f(1, 0);
+
 		break;
 	}
 }

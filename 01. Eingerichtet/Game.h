@@ -5,10 +5,13 @@
 #include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
+#include "HomeMenu.h"
 
 class Game
 {
 private:
+	RectangleShape pixel;
+
 	Ressources* p_ressources;
 	Round* round;
 	Sidebar* sidebar;
@@ -38,7 +41,7 @@ private:
 	bool isMouseClicked;
 
 	int droneCount;
-	Tower* tower;		
+	Tower* tower;
 	RectangleShape toolbar;
 
 	/// <summary>
@@ -109,7 +112,7 @@ private:
 	static Game* instance;
 public:
 
-	static Game* getInstance(); 
+	static Game* getInstance();
 
 	/// <summary>
 	/// Startet das Spiel
@@ -121,7 +124,7 @@ public:
 	/// </summary>
 	/// <returns>Font</returns>
 	Font getFont();
-	
+
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
@@ -144,4 +147,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	void setPauseScreen(RenderWindow*);
+
+
+
 };

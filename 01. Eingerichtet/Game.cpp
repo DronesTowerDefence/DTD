@@ -14,10 +14,13 @@ Game* Game::getInstance()
 
 Game::Game()
 {
+	pixel = RectangleShape(Vector2f(40, 40));
+	pixel.setPosition(Vector2f(1470, 210));
+	pixel.setFillColor(Color::Yellow); 
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
-	p_map = new Map();
+	p_map = new Map(HomeMenu::getInstance()->getChoseIndex());
 	round = Round::getInstance();
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
@@ -104,7 +107,7 @@ void Game::draw()
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
 
 		droneCount++;
-		round->addDrone(new Drone(0, p_map->getStart(), 0, -1));
+		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
 		round->restartDroneTimer();
 	}
 	if (droneCount == round->getDroneCountInRound(round->getIndex()) && round->getAllDrones().empty())
@@ -120,7 +123,7 @@ void Game::draw()
 	}
 
 	window->draw(eco);
-
+	window->draw(pixel);
 	window->display();
 }
 

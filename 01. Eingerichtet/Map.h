@@ -15,8 +15,9 @@ private:
 	Vector2f startMove;
 	Texture texture;
 	RectangleShape background;
-public:
 	Map();
+public:
+	Map(int index);
 
 	/// <summary>
 	/// Checkt, ob die Drohne den nächsten Wegpunkt erreicht hat

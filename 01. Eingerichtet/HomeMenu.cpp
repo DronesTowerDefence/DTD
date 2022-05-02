@@ -1,19 +1,19 @@
 #include "HomeMenu.h"
 HomeMenu* HomeMenu::instance = nullptr;
 
-HomeMenu* HomeMenu::getInstance(RenderWindow* win)
+HomeMenu* HomeMenu::getInstance()
 {
 	if (instance == nullptr)
 	{
-		instance = new HomeMenu(win);
+		instance = new HomeMenu();
 	}
 	return instance;
 }
 
-HomeMenu::HomeMenu(RenderWindow* win)
+HomeMenu::HomeMenu()
 {
 	isClicked = false;
-	window = win;
+	window = nullptr;
 	startButton = new Sprite;
 	font = new Font();
 	titel = new Sprite;
@@ -37,21 +37,21 @@ HomeMenu::HomeMenu(RenderWindow* win)
 
 	choseIndex = -1;
 
-	startButton->setPosition(Vector2f(900, 600));
+	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 
 	drone->setScale(2, 2);
 	//
-	for (int i = 0; i < 1; i++)
+	int x = 500;
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++ , x+= 242)
 	{
 		map[i] = new Sprite;
 		textureMap[i] = new Texture();
 		map[i]->setScale(0.1, 0.1);
-		textureMap[i]->loadFromFile("img/maps/Map" + std::to_string(i + 1) + ".png");
+		textureMap[i]->loadFromFile("img/maps/map" + std::to_string(i) + ".png");
 		map[i]->setTexture(*textureMap[i]);
-		map[0]->setPosition(Vector2f(500, 500));
-		positionMap[0] = Vector2f(400, 500);
+		map[i]->setPosition(Vector2f(x, 500));
 
 	}
 	positionTower[0] = Vector2f(100, 400);
@@ -134,6 +134,7 @@ void HomeMenu::HomeMenuStart()
 		if (CheckClicked() && choseIndex != -1)
 		{
 			Game::getInstance()->setWindow(&*window);
+
 			Game::getInstance()->startGame();
 		}
 		draw();
@@ -149,7 +150,7 @@ void HomeMenu::draw()
 	window->draw(*startButton);
 	window->draw(*drone);
 	window->draw(*choseText);
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
 	}
@@ -178,7 +179,7 @@ bool  HomeMenu::CheckClicked()
 		isClicked = false;
 		Vector2i mouse = Mouse::getPosition(*window);
 		Vector2f pos, pos2;
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
@@ -221,5 +222,16 @@ void HomeMenu::setTowerTexture()
 		}
 		animation->restart();
 	}
+
+}
+
+int HomeMenu::getChoseIndex()
+{
+	return choseIndex;
+}
+
+void HomeMenu::setWindow(RenderWindow* window)
+{
+	this->window = window;	HomeMenu();
 
 }
