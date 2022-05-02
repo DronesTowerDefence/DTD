@@ -415,14 +415,55 @@ void Game::loseGame()
 {
 	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
 	{
+		Vector2f pos_drohne = Vector2f(0, 0);
+		Vector2f pos_waypoint = Vector2f(0, 0);
 		for (auto i : round->getAllDrones())
 		{
-			if (i->getPosition().y > 991 && i->getNextPoint() >= 9) {
+			pos_drohne = i->getPosition();
+			pos_waypoint = p_map->getWaypoint(p_map->getWayPointCount() - 1)->getKooadinaten();
 
-				round->subhealth(i->getLives());
-				i->~Drone();
+			if (i->getNextPoint() >= p_map->getWayPointCount() - 1)
+			{
+				switch (p_map->getWaypoint(p_map->getWayPointCount() - 1)->getCondition())
+				{
+				case 1:
+					if (pos_drohne.y == pos_waypoint.y && pos_drohne.x >= pos_waypoint.x)
+					{
+						round->subhealth(i->getLives());
+						i->~Drone();
+						return;
+					}
+					break;
 
+				case 2:
+					if (pos_drohne.y == pos_waypoint.y && pos_drohne.x <= pos_waypoint.x)
+					{
+						round->subhealth(i->getLives());
+						i->~Drone();
+						return;
+					}
+					break;
+				case 3:
+					if (pos_drohne.y >= pos_waypoint.y && pos_drohne.x == pos_waypoint.x)
+					{
+						round->subhealth(i->getLives());
+						i->~Drone();
+						return;
+					}
+					break;
+				case 4:
+					if (pos_drohne.y <= pos_waypoint.y && pos_drohne.x == pos_waypoint.x)
+					{
+						round->subhealth(i->getLives());
+						i->~Drone();
+						return;
+					}
+					break;
+				default:
+					break;
+				}
 			}
+
 		}
 		round->restartDroneSubHealthTimer();
 	}
@@ -449,9 +490,10 @@ void Game::loseGame()
 			"\nMoney: " + std::to_string(round->getMoney()) + " $"
 			"\nRound: " + std::to_string(round->getIndex() + 1)
 			/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
-			"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/ );
+			"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
 	}
 }
+
 
 bool Game::towerAliasForbiddenPosition()
 {
@@ -531,8 +573,4 @@ void Game::setMusicVolume(float v)
 		music[i].setVolume(v);
 
 	}
-
-
-
 }
-	

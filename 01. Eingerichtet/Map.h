@@ -10,6 +10,8 @@ class Map
 {
 private:
 	int index;
+
+	int wayPointCount;
 	std::list<Waypoint*> points;
 	Vector2f start;
 	Vector2f startMove;
@@ -17,8 +19,8 @@ private:
 	RectangleShape background;
 	Map();
 public:
+	int getWayPointCount();
 	Map(int index);
-
 	/// <summary>
 	/// Checkt, ob die Drohne den nächsten Wegpunkt erreicht hat
 	/// </summary>
