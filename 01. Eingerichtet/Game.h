@@ -5,6 +5,7 @@
 #include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
+#include "PauseMenu.h"
 
 class Game
 {
@@ -17,10 +18,6 @@ private:
 	TowerAlias* newTower;
 	Font stdFont;
 	Text eco;
-
-	RenderWindow* pauseScreen;
-	RectangleShape pauseBackground;
-	Text pauseText;
 
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
@@ -128,20 +125,14 @@ public:
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
 
-	/// <summary>
-	/// Pausiert das Spiel und gibt Optionen frei
-	/// </summary>
-	/// <param name=""></param>
-	void pauseGame(Event);
-
+	
 	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>
 	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
-	/// <summary>
-	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
-	/// </summary>
-	/// <param name=""></param>
-	void setPauseScreen(RenderWindow*);
+
+
+	Sound getMusic();
+
 };
