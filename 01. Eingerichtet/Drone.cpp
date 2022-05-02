@@ -11,14 +11,36 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 {
 	droneType = typSpecifier;
 
-	/*switch(droneType) {
+	switch (droneType) {
+	case 0:
+		droneTexture[0].loadFromFile("img/drone0/drone0_0.png");
+		droneTexture[1].loadFromFile("img/drone0/drone0_0.png");
+		droneTexture[2].loadFromFile("img/drone0/drone0_0.png");
+		droneTexture[3].loadFromFile("img/drone0/drone0_0.png");
+		break;
 
-	default:*/
-	droneTexture = Texture();
-	droneTexture.loadFromFile("img/drone0/drone0.png");
-	drone = Sprite();
-	drone.setTexture(droneTexture);
-	drone.setScale(1, 1);
+	case 1:
+		droneTexture[0].loadFromFile("img/drone1/drone1_0.png");
+		droneTexture[1].loadFromFile("img/drone1/drone1_0.png");
+		droneTexture[2].loadFromFile("img/drone1/drone1_0.png");
+		droneTexture[3].loadFromFile("img/drone1/drone1_0.png");
+		break;
+		
+	case 2:
+		droneTexture[0].loadFromFile("img/drone2/drone2_0.png");
+		droneTexture[1].loadFromFile("img/drone2/drone2_0.png");
+		droneTexture[2].loadFromFile("img/drone2/drone2_0.png");
+		droneTexture[3].loadFromFile("img/drone2/drone2_0.png");
+		break;
+	case 3:
+		droneTexture[0].loadFromFile("img/drone3/drone3_0.png");
+		droneTexture[1].loadFromFile("img/drone3/drone3_0.png");
+		droneTexture[2].loadFromFile("img/drone3/drone3_0.png");
+		droneTexture[3].loadFromFile("img/drone3/drone3_0.png");
+		break;
+	}
+
+	drone.setTexture(droneTexture[0]);
 	speed = Ressources::getInstance()->getDroneSpeed(typSpecifier);
 	nextPoint = 0;
 	lives = Ressources::getInstance()->getDroneLives(typSpecifier);
@@ -27,11 +49,35 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
-	
-	
-	/*case 1:*/
+}
 
-	/*}*/
+Sprite* Drone::getDrawSprite()
+{
+	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
+	{
+		switch (animationCounter)
+		{
+		case -1:
+			return &drone;
+			break;
+		case 0:
+			animationCounter = 1;
+			break;
+		case 1:
+			animationCounter = 2;
+			break;
+		case 2:
+			animationCounter = 3;
+			break;
+		case 3:
+			animationCounter = 0;
+			break;
+		}
+		drone.setTexture(droneTexture[animationCounter]);
+		animationTimer.restart();
+	}
+
+	return &drone;
 }
 
 void Drone::setPosition(Vector2f position)
@@ -43,8 +89,8 @@ void Drone::setPosition(Vector2f position)
 
 void Drone::setMove(Vector2f v)
 {
-	move_x = v.x;
-	move_y = v.y;
+	move_x = int(v.x);
+	move_y = int(v.y);
 }
 
 Vector2f Drone::getPosition()
@@ -76,8 +122,9 @@ void Drone::pass()
 		drone.setRotation(0);
 	}
 	else {
-		drone.setRotation(90); drone.move(50, 0);}
-		
+		drone.setRotation(90); drone.move(50, 0);
+	}
+
 
 	//if (nextPoint == 1) {
 	//	
@@ -89,25 +136,32 @@ void Drone::pass()
 
 bool Drone::takeDamage(int damage) {
 	int livesDiff = lives;
-	lives -= damage; //.
-	//std::cout <<damage<< std::endl;
+	lives -= damage;
 	livesDiff -= lives;
-	Round::getInstance()->addMoney(livesDiff*3);
 
-	if (lives == 2) {
-		droneTexture.loadFromFile("img/drone0/drone0_damage1.png");
-		drone.setTexture(droneTexture);
-	}
-	else if (lives == 1) {
-		droneTexture.loadFromFile("img/drone0/drone0_damage2.png");
-		drone.setTexture(droneTexture);
-	}
-	if (lives <= 0) {
-		//std::cout << "tot";
+	Round::getInstance()->addMoney(livesDiff * 3);
+
+	if (lives < 0)
+		lives = 0;
+
+	switch (lives)
+	{
+	case 0:
 		//True, wenn Drone tot ist
 		delete this;
 		return true;
+		break;
+	case 1:
+		droneTextureDmg.loadFromFile("img/drone0/drone0_0_d2.png");
+		break;
+
+	case 2:
+		droneTextureDmg.loadFromFile("img/drone0/drone0_0_d1.png");
+		break;
 	}
+
+	animationCounter = -1;
+	drone.setTexture(droneTextureDmg);
 
 	return false;
 }
@@ -141,5 +195,5 @@ Vector2f Drone::getNextPosition(int nextFrame)
 
 Drone::~Drone()
 {
-	Round::getInstance()->deleteDrone(this);	
+	Round::getInstance()->deleteDrone(this);
 }

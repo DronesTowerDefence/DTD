@@ -96,7 +96,7 @@ void Game::draw()
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
 	{
-		window->draw(d->getDroneSprite());
+		window->draw(*d->getDrawSprite());
 	}
 
 

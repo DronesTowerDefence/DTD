@@ -27,7 +27,7 @@ HomeMenu::HomeMenu(RenderWindow* win)
 
 	textureStartButton->loadFromFile("img/buttons/startButton.png");
 	textureTitel->loadFromFile("img/titleText.png");
-	textureDrone->loadFromFile("img/drone0/drone0.png");
+	textureDrone->loadFromFile("img/drone0/drone0_0.png");
 	font->loadFromFile("fonts/arial.ttf");
 	startButton->setTexture(*textureStartButton);
 	titel->setTexture(*textureTitel);
