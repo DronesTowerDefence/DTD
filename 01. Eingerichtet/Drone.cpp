@@ -76,7 +76,6 @@ Sprite* Drone::getDrawSprite()
 		drone.setTexture(droneTexture[animationCounter]);
 		animationTimer.restart();
 	}
-
 	return &drone;
 }
 
@@ -141,6 +140,9 @@ bool Drone::takeDamage(int damage) {
 
 	Round::getInstance()->addMoney(livesDiff * 3);
 
+	if (lives < 0)
+		lives = 0;
+  
 	switch (lives)
 	{
 	case 0:
