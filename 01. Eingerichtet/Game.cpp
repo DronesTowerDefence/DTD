@@ -542,13 +542,11 @@ void Game::checkLoseGame()
 				else if (((mousePos.x >= gameOverRestartButton.getPosition().x) && (mousePos.x <= gameOverRestartButton.getPosition().x + 100)) &&
 					((mousePos.y >= gameOverRestartButton.getPosition().y) && (mousePos.y <= gameOverRestartButton.getPosition().y + 100)))
 				{
-					delete Round::getInstance();
-					Round::getInstance();
+					//Neue Funktion in Round zum resetten anlegen
 				}
 				if (homeMenu)
 				{
 					lost = false;
-					//Neue Funktion in Round zum resetten
 					HomeMenu::getInstance()->HomeMenuStart();
 				}
 			}
