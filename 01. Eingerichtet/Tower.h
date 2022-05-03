@@ -23,6 +23,7 @@ private:
 	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
 	
 	int animationCounter; //Welcher Frame ausgewählt ist
+	int towerChangeFrame;
 
 	bool shootCooldown; //Damit der Turm nicht dauerhaft schieÃen kann
 	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird

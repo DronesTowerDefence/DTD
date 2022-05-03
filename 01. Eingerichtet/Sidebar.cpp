@@ -12,6 +12,12 @@ Sidebar::Sidebar()
 	buttonTexture[3].loadFromFile("img/tower3/tower3_preview.png");
 	buttonTexture[4].loadFromFile("img/tower4/tower4_preview.png");
 
+	buttonTextureNoBuy[0].loadFromFile("img/tower0/tower0_noBuy.png");
+	buttonTextureNoBuy[1].loadFromFile("img/tower1/tower1_noBuy.png");
+	buttonTextureNoBuy[2].loadFromFile("img/tower2/tower2_noBuy.png");
+	buttonTextureNoBuy[3].loadFromFile("img/tower3/tower3_noBuy.png");
+	buttonTextureNoBuy[4].loadFromFile("img/tower4/tower4_noBuy.png");
+
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
@@ -77,6 +83,15 @@ void Sidebar::draw(sf::RenderWindow* window)
 {
 	for (int i = 0; i < 5; i++)
 	{
+		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i))
+		{
+			buttonSpr[i].setTexture(buttonTexture[i]);
+		}
+		else
+		{
+			buttonSpr[i].setTexture(buttonTextureNoBuy[i]);
+
+		}
 		window->draw(buttonSpr[i]);
 		window->draw(buttonText[i]);
 	}

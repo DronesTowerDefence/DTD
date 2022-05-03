@@ -5,10 +5,13 @@
 #include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
+#include "PauseMenu.h"
+#include "HomeMenu.h"
 
 class Game
 {
 private:
+
 	Ressources* p_ressources;
 	Round* round;
 	Sidebar* sidebar;
@@ -18,16 +21,12 @@ private:
 	Font stdFont;
 	Text eco;
 
-	RenderWindow* pauseScreen;
-	RectangleShape pauseBackground;
-	Text pauseText;
-
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
-	RectangleShape gameOverBackground;
-	RectangleShape gameOverRestartButton;
-	RectangleShape gameOverHomeButton;
-	Text gameOverText;
+	Texture gameOverBackgroundTexture;
+	Sprite gameOverBackround;
+	Sprite gameOverRestartButton;
+	Sprite gameOverHomeButton;
 
 	SoundBuffer musicBuffer[4];
 	Sound music[4];
@@ -38,13 +37,10 @@ private:
 	bool isMouseClicked;
 
 	int droneCount;
-	Tower* tower;		
+	Tower* tower;
 	RectangleShape toolbar;
 
-	/// <summary>
-	/// Verändert regelmäßig die Musik
-	/// </summary>
-	void changeBackgroundMusic();
+	
 
 	void newRound();
 	/// <summary>
@@ -88,10 +84,7 @@ private:
 	/// </summary>
 	Game();
 
-	/// <summary>
-	/// Musik und Sounds werden initialisiert
-	/// </summary>
-	void setMusicSound();
+	
 
 	/// <summary>
 	/// Speichert das Spiel
@@ -108,8 +101,13 @@ private:
 
 	static Game* instance;
 public:
+/// <summary>
+	/// Verändert regelmäßig die Musik
+	/// </summary>
+	void changeBackgroundMusic();
 
-	static Game* getInstance(); 
+
+	static Game* getInstance();
 
 	/// <summary>
 	/// Startet das Spiel
@@ -121,27 +119,38 @@ public:
 	/// </summary>
 	/// <returns>Font</returns>
 	Font getFont();
-	
+
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
 
-	/// <summary>
-	/// Pausiert das Spiel und gibt Optionen frei
-	/// </summary>
-	/// <param name=""></param>
-	void pauseGame(Event);
-
+	
 	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>
 	/// <param name="RenderWindow*"></param>
 	void setWindow(RenderWindow*);
+
+	/// <summary>
+	/// Gibt erstes Feld der Music wieder
+	/// </summary>
+	/// <returns></returns>
+	Sound getMusic();
+
+	/// <summary>
+	/// Setzt die Musik Lautstärke
+	/// </summary>
+	/// <param name=""></param>
+	void setMusicVolume(float);
+
 	/// <summary>
 	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
 	/// </summary>
 	/// <param name=""></param>
 	void setPauseScreen(RenderWindow*);
+
+
+
 };

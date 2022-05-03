@@ -1,38 +1,35 @@
 #include "HomeMenu.h"
 HomeMenu* HomeMenu::instance = nullptr;
 
-HomeMenu* HomeMenu::getInstance(RenderWindow* win)
+HomeMenu* HomeMenu::getInstance()
 {
 	if (instance == nullptr)
 	{
-		instance = new HomeMenu(win);
+		instance = new HomeMenu();
 	}
 	return instance;
 }
 
-HomeMenu::HomeMenu(RenderWindow* win)
+HomeMenu::HomeMenu()
 {
 	isClicked = false;
-	window = win;
+	window = nullptr;
 	startButton = new Sprite;
-	//choseMap = new Sprite;
+	font = new Font();
 	titel = new Sprite;
 	backround = new Sprite();
 	drone = new Sprite();
 	textureStartButton = new Texture();
-	textureChoseMap = new Texture();
 	textureTitel = new Texture();
 	textureBackround = new Texture();
 	textureDrone = new Texture();
 	pointer = new RectangleShape;
 
 	textureStartButton->loadFromFile("img/buttons/startButton.png");
-	textureChoseMap->loadFromFile("img/buttons/closeButton.png");
 	textureTitel->loadFromFile("img/titleText.png");
-	textureDrone->loadFromFile("img/drone0/drone0.png");
-
+	textureDrone->loadFromFile("img/drone0/drone0_0.png");
+	font->loadFromFile("fonts/arial.ttf");
 	startButton->setTexture(*textureStartButton);
-//	choseMap->setTexture(*textureChoseMap);
 	titel->setTexture(*textureTitel);
 	textureBackround->loadFromFile("img/backround.jpg");
 	backround->setTexture(*textureBackround);
@@ -40,22 +37,21 @@ HomeMenu::HomeMenu(RenderWindow* win)
 
 	choseIndex = -1;
 
-	startButton->setPosition(Vector2f(900, 800));
-//	choseMap->setPosition(Vector2f(400, 525));
+	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 
 	drone->setScale(2, 2);
 	//
-	for (int i = 0; i < 1; i++)
+	int x = 500;
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++ , x+= 242)
 	{
 		map[i] = new Sprite;
 		textureMap[i] = new Texture();
 		map[i]->setScale(0.1, 0.1);
-		textureMap[i]->loadFromFile("img/maps/Map" + std::to_string(i + 1) + ".png");
+		textureMap[i]->loadFromFile("img/maps/map" + std::to_string(i) + ".png");
 		map[i]->setTexture(*textureMap[i]);
-		map[0]->setPosition(Vector2f(500, 500));
-		positionMap[0] = Vector2f(400, 500);
+		map[i]->setPosition(Vector2f(x, 500));
 
 	}
 	positionTower[0] = Vector2f(100, 400);
@@ -82,9 +78,9 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	textureTower[1][3]->loadFromFile("img/tower1/tower1_0.png");
 
 	textureTower[2][0]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][1]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][2]->loadFromFile("img/tower2/tower2_0.png");
-	textureTower[2][3]->loadFromFile("img/tower2/tower2_0.png");
+	textureTower[2][1]->loadFromFile("img/tower2/tower2_1.png");
+	textureTower[2][2]->loadFromFile("img/tower2/tower2_2.png");
+	textureTower[2][3]->loadFromFile("img/tower2/tower2_1.png");
 
 	textureTower[3][0]->loadFromFile("img/tower3/tower3_0.png");
 	textureTower[3][1]->loadFromFile("img/tower3/tower3_0.png");
@@ -92,9 +88,9 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	textureTower[3][3]->loadFromFile("img/tower3/tower3_0.png");
 
 	textureTower[4][0]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][1]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][2]->loadFromFile("img/tower4/tower4_0.png");
-	textureTower[4][3]->loadFromFile("img/tower4/tower4_0.png");
+	textureTower[4][1]->loadFromFile("img/tower4/tower4_1.png");
+	textureTower[4][2]->loadFromFile("img/tower4/tower4_2.png");
+	textureTower[4][3]->loadFromFile("img/tower4/tower4_3.png");
 	
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{
@@ -112,7 +108,8 @@ HomeMenu::HomeMenu(RenderWindow* win)
 	pointer->setOutlineThickness(10);
 	pointer->setOutlineColor(Color::Magenta);
 	pointer->setFillColor(Color::Transparent);
-
+	choseText = new Text("Waehle eine Karte aus", *font, 40);
+	choseText->setPosition(Vector2f(500, 450));
 }
 
 void HomeMenu::HomeMenuStart()
@@ -137,12 +134,14 @@ void HomeMenu::HomeMenuStart()
 		if (CheckClicked() && choseIndex != -1)
 		{
 			Game::getInstance()->setWindow(&*window);
+
 			Game::getInstance()->startGame();
 		}
 		draw();
 
 	}
 }
+
 
 void HomeMenu::draw()
 {
@@ -151,7 +150,8 @@ void HomeMenu::draw()
 	window->draw(*titel);
 	window->draw(*startButton);
 	window->draw(*drone);
-	for (int i = 0; i < 1; i++)
+	window->draw(*choseText);
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
 	}
@@ -180,7 +180,7 @@ bool  HomeMenu::CheckClicked()
 		isClicked = false;
 		Vector2i mouse = Mouse::getPosition(*window);
 		Vector2f pos, pos2;
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
@@ -223,5 +223,16 @@ void HomeMenu::setTowerTexture()
 		}
 		animation->restart();
 	}
+
+}
+
+int HomeMenu::getChoseIndex()
+{
+	return choseIndex;
+}
+
+void HomeMenu::setWindow(RenderWindow* window)
+{
+	this->window = window;	HomeMenu();
 
 }

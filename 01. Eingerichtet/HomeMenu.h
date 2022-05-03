@@ -3,21 +3,20 @@
 #include "Game.h"
 #include "Service.h"
 using namespace sf;
+
 class HomeMenu
 {
 private:
 	Sprite* startButton;
-	//Sprite* choseMap;
 	RectangleShape* pointer;
-	Sprite* map[1];
+	Sprite* map[2];
 	Sprite* titel;
 	Sprite* backround;
 	Sprite* drone;
 
 	Sprite* towers[5];
 	Texture* textureStartButton;
-	Texture* textureChoseMap;
-	Texture* textureMap[1];
+	Texture* textureMap[2];
 	Texture* textureTitel;
 	Texture* textureTower[5][4];
 	Texture* textureBackround;
@@ -25,8 +24,6 @@ private:
 	int choseIndex;
 	static HomeMenu* instance;
 	RenderWindow* window;
-	HomeMenu(RenderWindow* win);
-	Vector2f positionMap[1];
 	Vector2f positionTower[5];
 	bool isClicked;
 	Clock* animation;
@@ -34,10 +31,15 @@ private:
 	void draw();
 	bool CheckClicked();
 	void 	setTowerTexture();
+	Font *font;
+	Text *choseText;
 public:
-	static HomeMenu* getInstance(RenderWindow* win);
+	static HomeMenu* getInstance();
 	void HomeMenuStart();
+	int getChoseIndex();
+	void setWindow(RenderWindow* window);
 
+	HomeMenu();
 
 };
 

@@ -14,10 +14,10 @@ int fileVerification();
 int main()
 {
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
-	
+
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
-	
+
 	window.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
 
 	int fileError = fileVerification();
@@ -27,8 +27,8 @@ int main()
 		return 404;
 	}
 
-	HomeMenu::getInstance(&window)->HomeMenuStart();
-
+	HomeMenu::getInstance()->setWindow(&window);
+	HomeMenu::getInstance()->HomeMenuStart();
 	return 0;
 }
 

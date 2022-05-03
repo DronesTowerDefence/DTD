@@ -2,19 +2,30 @@
 #include "Round.h"
 #include <iostream>
 
-Projectile::Projectile(Drone* _target, Tower* _tower,int _style)
+Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 {
 	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	collided = 0;
-	projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+	switch (_style)
+	{
+	case 1:
+		projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+		break;
+	case 2:
+		projectileTexture.loadFromFile("img/projectiles/projectile0.png");
+		break;
+	case 3:
+		projectileTexture.loadFromFile("img/projectiles/projectile1.png");
+		break;
+	}
 	projectilesprite.setTexture(projectileTexture);
 	Round::getInstance()->addProjectile(this);
 	style = _style;
 	dronetarget = _target;
 	projectilesprite.setPosition(tower->getTowerPos());
 	operate();
-	
+
 }
 
 void Projectile::operate()
@@ -25,25 +36,25 @@ void Projectile::operate()
 		setmove(); }
 	case 2:homing();
 	}
-	
+
 
 }
 
 void Projectile::targeting()
 {
 
-	for (auto i: tower->getCoverableArea()) {
+	for (auto i : tower->getCoverableArea()) {
 		//std::cout<<i.z<< std::endl;
-			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) {
-				if (dronetarget->getNextPosition(i.z/speed).y - i.y<20 && dronetarget->getNextPosition(i.z/speed).y - i.y > -20) {
-					target = i;
-					return;
-				}
+		if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) {
+			if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20) {
+				target = i;
+				return;
 			}
-			
+		}
+
 	}
-	
-	
+
+
 }
 
 void Projectile::moveProjectile()
@@ -60,7 +71,7 @@ void Projectile::moveProjectile()
 		return;
 	}
 	//std::cout << target.x << target.y << std::endl;
-	projectilesprite.setPosition(projectilesprite.getPosition().x+(move.x/speed), projectilesprite.getPosition().y + (move.y/speed));
+	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / speed), projectilesprite.getPosition().y + (move.y / speed));
 
 
 }
@@ -69,7 +80,7 @@ void Projectile::collission()
 {
 	if (collided == 0) {
 		if (projectilesprite.getGlobalBounds().intersects(dronetarget->getDroneSprite().getGlobalBounds())) {
-			std::cout << "hit" << std::endl;
+			//std::cout << "hit" << std::endl;
 			dronetarget->takeDamage(tower->getDamage());
 			collided = 1;
 			delete this;
@@ -86,8 +97,8 @@ void Projectile::homing() {
 
 void Projectile::setmove()
 {
-	move.x = -1*(tower->getTowerPos().x - target.x);
-	move.y = -1*(tower->getTowerPos().y - target.y);
+	move.x = -1 * (tower->getTowerPos().x - target.x);
+	move.y = -1 * (tower->getTowerPos().y - target.y);
 }
 
 bool Projectile::getcollided()

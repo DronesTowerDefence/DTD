@@ -150,6 +150,7 @@
     <ClCompile Include="HomeMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />
     <ClCompile Include="Round.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
