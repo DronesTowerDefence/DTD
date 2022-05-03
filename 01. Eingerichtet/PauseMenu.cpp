@@ -34,7 +34,7 @@ PauseMenu::PauseMenu() {
 
 	volumeSlider.setFillColor(Color::Green);
 	volumeSlider.setSize(Vector2f(400.f, 14.f));
-	volumeSlider.setPosition(Vector2f(565.f, 377.f));
+	volumeSlider.setPosition(Vector2f(565.f, 390.f));
 
 	//Anfangslautstärke beträgt 50%
 	sliderHelper = 50.f;
@@ -42,10 +42,12 @@ PauseMenu::PauseMenu() {
 	//für Maus-Click
 	isClicked = false;
 
-	backgroundTexture.loadFromFile("img/backround.jpg");
+	backgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	background.setTexture(backgroundTexture);
-	background.setPosition(553.f, 150.f);
-	background.setScale(Vector2f(float(0.3555), float(0.5405)));
+	background.setPosition(530.f, 150.f);
+	background.setScale(Vector2f(float(1.36), float(0.7)));
+
+
 
 	//Socials
 	twitterTexture.loadFromFile("img/socials/twitter.png");
@@ -62,7 +64,7 @@ PauseMenu::PauseMenu() {
 	//Buttons
 	homebtnTexture.loadFromFile("img/buttons/homeButton.png");
 	homebtn.setTexture(homebtnTexture);
-	homebtn.setPosition(Vector2f(700.f, 660.f));
+	homebtn.setPosition(Vector2f(630.f, 750.f));
 
 	//Überschriften
 	text1.setFont(font);
@@ -109,7 +111,7 @@ void PauseMenu::checkPause(Event event1)
 			}
 			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
 			text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
-			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			//Pfeiltasten Druck = Änderung Lautstärke
 			if (Keyboard::isKeyPressed(Keyboard::Left)) 
@@ -150,7 +152,7 @@ void PauseMenu::checkPause(Event event1)
 void PauseMenu::draw()
 {
 
-	window->draw(edge);
+	//window->draw(edge);
 	window->draw(background);
 	window->draw(text1);
 	window->draw(text2);
@@ -158,10 +160,7 @@ void PauseMenu::draw()
 	window->draw(socialsBorder);
 	window->draw(homebtn);
 
-
 	window->draw(volumeSlider);
-
-	//window->draw(mouse);
 
 	window->display();
 
