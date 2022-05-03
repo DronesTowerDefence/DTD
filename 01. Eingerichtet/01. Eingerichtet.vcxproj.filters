@@ -99,7 +99,10 @@
     <ClCompile Include="HomeMenu.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="TowerSpawn.cpp">
+
     <ClCompile Include="PauseMenu.cpp">
+
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,7 +146,10 @@
     <ClInclude Include="HomeMenu.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+
+    <ClInclude Include="TowerSpawn.h">
     <ClInclude Include="PauseMenu.h">
+
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
