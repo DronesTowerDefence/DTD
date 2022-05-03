@@ -44,6 +44,11 @@ Sidebar::Sidebar()
 	doubleSpeed.setPosition(Vector2f(1750, 500));
 }
 
+Sidebar::~Sidebar()
+{
+	instance = nullptr;
+}
+
 Sidebar* Sidebar::getInstance()
 {
 	if (instance == nullptr)

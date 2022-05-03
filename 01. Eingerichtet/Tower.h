@@ -6,6 +6,8 @@
 #include "Service.h"
 #include "Updates.h"
 
+class TowerSpawn;
+
 using namespace sf;
 
 class Tower
@@ -32,6 +34,8 @@ private:
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 
 	std::string name; //Der Name des Turmes
+
+	std::list<TowerSpawn*> boundSpawns;
 	
 	
 	
@@ -129,4 +133,7 @@ public:
 	void setSpeed(float speed);
 	void setProjektilSpeed(float speed);
 	void setTowerChangeFrame(int frame);
+
+	void spawnSpawn(int);
+
 };

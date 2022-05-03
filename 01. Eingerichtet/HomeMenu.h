@@ -33,6 +33,8 @@ private:
 	void 	setTowerTexture();
 	Font *font;
 	Text *choseText;
+
+	int callCount;
 public:
 	static HomeMenu* getInstance();
 	void HomeMenuStart();

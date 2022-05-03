@@ -26,6 +26,8 @@ private:
 	Sidebar();
 
 public:
+
+	~Sidebar();
 	/// <summary>
 	/// Gibt die Instance zurück
 	/// (Singelton)

@@ -17,6 +17,11 @@ Round::Round()
 	setDroneInRound();
 }
 
+Round::~Round()
+{
+	instance = nullptr;
+}
+
 Round* Round::getInstance()
 {
 	if (instance == nullptr)
@@ -231,6 +236,11 @@ void Round::addTower(Tower* tower)
 		allMoneyTowers.push_back(tower);
 }
 
+void Round::addSpawn(TowerSpawn* spawn)
+{
+	allSpawns.push_back(spawn);
+}
+
 Clock Round::getDroneTimer()
 {
 	return droneTimer;
@@ -297,6 +307,11 @@ void Round::deleteProjectile(Projectile* p)
 std::list<Vector2f> Round::getAllCoverablePoints()
 {
 	return allCoverablePoints;
+}
+
+std::list<TowerSpawn*> Round::getAllSpawns()
+{
+	return allSpawns;
 }
 
 void Round::setP_map(Map *_map)

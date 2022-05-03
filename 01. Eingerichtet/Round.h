@@ -4,6 +4,7 @@
 #include "Drone.h"
 #include "Map.h"
 #include "Projectile.h"
+#include "TowerSpawn.h"
 using namespace sf;
 
 class Round
@@ -27,6 +28,7 @@ private:
 	std::list<Tower*> allMoneyTowers;
 	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
+	std::list<TowerSpawn*> allSpawns;
 
 	Map* p_map;
 
@@ -38,6 +40,8 @@ private:
 	void setDroneInRound(); //Wie viele Drohnen pro Runde spawnen
 
 public:
+
+	~Round();
 
 	static Round* getInstance();
 
@@ -70,12 +74,15 @@ public:
 	std::list<Tower*> getAllMoneyTower();
 	std::list<Projectile*> getAllProjectiles();
 	std::list<Vector2f> getAllCoverablePoints();
+	std::list<TowerSpawn*> getAllSpawns();
 
 	void sellTower(Tower*);
 
 	void addDrone(Drone* drone);
 
 	void addTower(Tower* tower);
+
+	void addSpawn(TowerSpawn* spawn);
 
 	void addProjectile(Projectile* _projectile);
 

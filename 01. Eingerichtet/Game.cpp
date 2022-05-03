@@ -12,6 +12,36 @@ Game* Game::getInstance()
 	return instance;
 }
 
+Game::~Game()
+{
+	if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllProjectiles().empty())
+	{
+		for (auto i : round->getAllProjectiles())
+		{
+			delete i;
+		}
+	}
+	delete newTower;
+	delete sidebar;
+	delete p_map;
+	delete round;
+	instance = nullptr;
+}
+
 Game::Game()
 {
 	doubleSpeed = false;
@@ -102,6 +132,10 @@ void Game::draw()
 		window->draw(*d->getDrawSprite());
 	}
 
+	for (auto* q : round->getAllSpawns())
+	{
+		window->draw(q->getSpawnSprite());
+	}
 
 
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > round->getDroneSpawnTime() && droneCount < round->getDroneCountInRound()) {
@@ -142,10 +176,10 @@ void Game::startGame()
 
 
 			PauseMenu::getInstance()->checkPause(event);
-
 		}
 
-		loseGame();
+		getNewEco();
+		checkLoseGame();
 		moveDrohnes();
 		checkShoot();
 		checkTowerAlias();
@@ -422,7 +456,7 @@ void Game::generateMoneyTowers()
 	}
 }
 
-void Game::loseGame()
+void Game::checkLoseGame()
 {
 	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
 	{
@@ -481,6 +515,8 @@ void Game::loseGame()
 
 	if (round->getLost())
 	{
+		round->setHealth(0);
+
 		gameOverBackgroundTexture.loadFromFile("img/gameOverBackround.png");
 		gameOverBackround.setTexture(gameOverBackgroundTexture);
 		gameOverBackround.setPosition(Vector2f(500, 300));
@@ -494,15 +530,52 @@ void Game::loseGame()
 		gameOverRestartButton.setPosition(Vector2f(700, 500));
 
 		lost = true;
+
+		if (lost)
+		{
+			Vector2i mousePos = Vector2i(0, 0);
+			bool homeMenu = false;
+			gameOverRound.setString(std::to_string(round->getIndex()));
+			gameOverRound.setFont(stdFont);
+			gameOverRound.setCharacterSize(50);
+			gameOverRound.setFillColor(Color::White);
+			gameOverRound.setOutlineColor(Color::Black);
+			gameOverRound.setOutlineThickness(3);
+			gameOverRound.setPosition(Vector2f(500,500));
+
+			while (lost)
+			{
+				window->draw(gameOverBackround);
+				window->draw(gameOverRound);
+				window->draw(gameOverHomeButton);
+				window->draw(gameOverRestartButton);
+				window->display();
+
+				mousePos = Mouse::getPosition();
+
+				if (Mouse::isButtonPressed(Mouse::Left))
+				{
+					if (((mousePos.x >= gameOverHomeButton.getPosition().x) && (mousePos.x <= gameOverHomeButton.getPosition().x + 100)) &&
+						((mousePos.y >= gameOverHomeButton.getPosition().y) && (mousePos.y <= gameOverHomeButton.getPosition().y + 100)))
+					{
+						homeMenu = true;
+					}
+					else if (((mousePos.x >= gameOverRestartButton.getPosition().x) && (mousePos.x <= gameOverRestartButton.getPosition().x + 100)) &&
+						((mousePos.y >= gameOverRestartButton.getPosition().y) && (mousePos.y <= gameOverRestartButton.getPosition().y + 100)))
+					{
+						//Neue Funktion in Round zum resetten anlegen
+					}
+					if (homeMenu)
+					{
+						lost = false;
+						HomeMenu::getInstance()->HomeMenuStart();
+					}
+				}
+
+			}
+		}
 	}
-	else
-	{
-		eco.setString("Lives: " + std::to_string(round->getHealth()) +
-			"\nMoney: " + std::to_string(round->getMoney()) + " $"
-			"\nRound: " + std::to_string(round->getIndex() + 1)
-			/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
-			"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
-	}
+
 }
 
 
@@ -584,4 +657,13 @@ void Game::setMusicVolume(float v)
 		music[i].setVolume(v);
 
 	}
+}
+
+void Game::getNewEco()
+{
+	eco.setString("Lives: " + std::to_string(round->getHealth()) +
+		"\nMoney: " + std::to_string(round->getMoney()) + " $"
+		"\nRound: " + std::to_string(round->getIndex() + 1)
+		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
+		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
 }
