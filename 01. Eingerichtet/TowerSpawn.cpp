@@ -15,7 +15,7 @@ TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 
 void TowerSpawn::moveSpawn()
 {
-    s
+    
 }
 
 void TowerSpawn::operate()

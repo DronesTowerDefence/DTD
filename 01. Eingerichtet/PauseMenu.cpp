@@ -59,6 +59,11 @@ PauseMenu::PauseMenu() {
 	socialsBorder.setSize(Vector2f(100.f,100.f));
 	socialsBorder.setPosition(1120.f, 165.f);
 
+	//Buttons
+	homebtnTexture.loadFromFile("img/buttons/homeButton.png");
+	homebtn.setTexture(homebtnTexture);
+	homebtn.setPosition(Vector2f(700.f, 660.f));
+
 	//Überschriften
 	text1.setFont(font);
 	text1.setCharacterSize(unsigned(40));
@@ -151,6 +156,7 @@ void PauseMenu::draw()
 	window->draw(text2);
 	window->draw(twitter);
 	window->draw(socialsBorder);
+	window->draw(homebtn);
 
 
 	window->draw(volumeSlider);
@@ -198,6 +204,17 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			{
 				system("start www.twitter.com/DronesTD");
 			}
+		}
+
+		mouse = Mouse::getPosition(*window);
+		pos, pos2;
+
+		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			HomeMenu::getInstance()->HomeMenuStart();
 		}
 	}
 }

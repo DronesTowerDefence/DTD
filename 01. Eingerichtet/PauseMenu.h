@@ -31,6 +31,9 @@ class PauseMenu
 	Sprite twitter;
 	RectangleShape socialsBorder;
 
+	Texture homebtnTexture;
+	Sprite homebtn;
+
 	RectangleShape mouseRect;
 
 	PauseMenu();
