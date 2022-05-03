@@ -6,18 +6,11 @@ Sidebar* Sidebar::instance = nullptr;
 
 Sidebar::Sidebar()
 {
-	buttonTexture[0].loadFromFile("img/tower0/tower0_preview.png");
-	buttonTexture[1].loadFromFile("img/tower1/tower1_preview.png");
-	buttonTexture[2].loadFromFile("img/tower2/tower2_preview.png");
-	buttonTexture[3].loadFromFile("img/tower3/tower3_preview.png");
-	buttonTexture[4].loadFromFile("img/tower4/tower4_preview.png");
-
-	buttonTextureNoBuy[0].loadFromFile("img/tower0/tower0_noBuy.png");
-	buttonTextureNoBuy[1].loadFromFile("img/tower1/tower1_noBuy.png");
-	buttonTextureNoBuy[2].loadFromFile("img/tower2/tower2_noBuy.png");
-	buttonTextureNoBuy[3].loadFromFile("img/tower3/tower3_noBuy.png");
-	buttonTextureNoBuy[4].loadFromFile("img/tower4/tower4_noBuy.png");
-
+	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	{
+		buttonTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_preview.png");
+		buttonTextureNoBuy[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
+	}
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
@@ -45,6 +38,10 @@ Sidebar::Sidebar()
 	buttonSpr[3].setPosition(Vector2f(1837, 120));
 	buttonSpr[4].setPosition(Vector2f(1762, 225));
 
+	doubleSpeedTexture = Texture();
+	doubleSpeedTexture.loadFromFile("img/buttons/closeButton.png");
+	doubleSpeed.setTexture(doubleSpeedTexture);
+	doubleSpeed.setPosition(Vector2f(1750, 500));
 }
 
 Sidebar* Sidebar::getInstance()
@@ -95,9 +92,26 @@ void Sidebar::draw(sf::RenderWindow* window)
 		window->draw(buttonSpr[i]);
 		window->draw(buttonText[i]);
 	}
+	window->draw(doubleSpeed);
+
 }
 
 Texture Sidebar::getTowerTexture(int i)
 {
 	return buttonTexture[i];
 }
+
+bool Sidebar::isChangeSpeed(RenderWindow * window)
+{
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
+	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	{
+		return true;
+	}
+	return false;
+}
+

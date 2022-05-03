@@ -10,7 +10,9 @@ private:
 	Sprite* update2;
 	Sprite* update1;
 	Texture* textureUpdate1;
+	Texture* textureUpdate1NoBuy;
 	Texture* textureUpdate2;
+	Texture* textureUpdate2NoBuy;
 	Texture* textureclose;
 	Texture* textureSell;
 	RectangleShape* shoowUpdate1[4];
@@ -31,6 +33,6 @@ public:
 	bool isSell(RenderWindow* window);
 	int getIndex1();
 	int getIndex2();
-
+	void canBuy();	
 };
 

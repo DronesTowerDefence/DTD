@@ -233,6 +233,11 @@ Vector2f Drone::getNextPosition(int nextFrame)
 }
 
 
+void Drone::setSeed(float speed)
+{
+	this->speed = speed;
+}
+
 Drone::~Drone()
 {
 	Round::getInstance()->deleteDrone(this);

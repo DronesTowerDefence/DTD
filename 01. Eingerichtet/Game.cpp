@@ -14,7 +14,7 @@ Game* Game::getInstance()
 
 Game::Game()
 {
-
+	doubleSpeed = false;
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
@@ -350,7 +350,18 @@ void Game::checkButtonClick()
 	if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
 	{
 		isMouseClicked = false;
-
+		if (Sidebar::getInstance()->isChangeSpeed(window))
+		{
+			if (doubleSpeed)
+			{
+				Ressources::getInstance()->normalSpeed();
+			}
+			else
+			{
+				Ressources::getInstance()->doubleSpeed();
+			}
+			doubleSpeed = !doubleSpeed;
+		}
 		for (auto* t : round->getAllTowers())
 		{
 			if (t->isClicked(window))
@@ -370,7 +381,7 @@ void Game::checkButtonClick()
 				tower = nullptr;
 			}
 		}
-
+		Sidebar::getInstance()->isChangeSpeed(window);
 	}
 
 

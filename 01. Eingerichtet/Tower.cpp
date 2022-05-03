@@ -189,6 +189,7 @@ void Tower::manageUpdate(RenderWindow* window)
 {
 
 	int indexUpdate = update->isClicked(window);
+
 	// index wird in der Methode erhöht
 	if (index < 4)
 	{
@@ -218,6 +219,8 @@ void Tower::manageUpdate(RenderWindow* window)
 			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
 	}
+
+	update->canBuy();
 }
 
 Updates* Tower::getUpdates()
@@ -269,4 +272,17 @@ float Tower::getProjectileSpeed()
 int Tower::getRange()
 {
 	return range;
+}
+
+void Tower::setSpeed(float speed)
+{
+	this->speed = speed;
+}
+void Tower::setProjektilSpeed(float speed)
+{
+	projectileSpeed = speed;
+}
+void Tower::setTowerChangeFrame(int frame)
+{
+	towerChangeFrame = frame;
 }

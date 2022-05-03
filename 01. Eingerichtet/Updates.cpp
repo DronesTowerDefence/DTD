@@ -15,15 +15,23 @@ Updates::Updates(int towerIndex)
 	textureclose = new Texture();
 	textureSell = new Texture();
 
+	textureUpdate1NoBuy = new Texture();
+	textureUpdate2NoBuy = new Texture();
 	if (towerIndex == 4)
 	{
 		textureUpdate1->loadFromFile("img/upgrades/upgradeMoney.png");
 		textureUpdate2->loadFromFile("img/upgrades/upgradeMoneyTime.png");
+		textureUpdate1NoBuy->loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
+		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
+
+
 	}
 	else
 	{
 		textureUpdate1->loadFromFile("img/upgrades/upgradeAttackspeed.png");
 		textureUpdate2->loadFromFile("img/upgrades/upgradeDamage.png");
+		textureUpdate1NoBuy->loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
+		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
 	}
 
 	textureclose->loadFromFile("img/buttons/closeButton.png");
@@ -177,4 +185,23 @@ int Updates::getIndex1()
 int Updates::getIndex2()
 {
 	return index2;
+}
+void Updates::canBuy()
+{
+	if (Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1) > Round::getInstance()->getMoney())
+	{
+		update1->setTexture(*textureUpdate1NoBuy);
+	}
+	else
+	{
+		update1->setTexture(*textureUpdate1);
+	}
+	if (Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2) > Round::getInstance()->getMoney())
+	{
+		update1->setTexture(*textureUpdate2NoBuy);
+	}
+	else
+	{
+		update1->setTexture(*textureUpdate2);
+	}
 }

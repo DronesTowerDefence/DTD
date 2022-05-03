@@ -140,7 +140,7 @@ public:
 	/// <returns></returns>
 	Sprite* getDrawSprite();
 	
-	
+	void setSeed(float speed);
 	~Drone();
 
 

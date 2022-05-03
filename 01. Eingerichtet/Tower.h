@@ -126,5 +126,7 @@ public:
 	Sprite* getDrawSprite();
 
 	int getRange();
-
+	void setSpeed(float speed);
+	void setProjektilSpeed(float speed);
+	void setTowerChangeFrame(int frame);
 };

@@ -10,10 +10,12 @@ class Sidebar
 {
 private:
 	//Map* p_map;
-
 	Sprite buttonSpr[5];
+	Sprite doubleSpeed;
+
 	Texture buttonTexture[5];
 	Texture buttonTextureNoBuy[5];
+	Texture doubleSpeedTexture;
 
 	Text buttonText[5];
 	Font buttonTextFont;
@@ -45,4 +47,5 @@ public:
 	void draw(RenderWindow* window);
 
 	Texture getTowerTexture(int);
+	bool isChangeSpeed(RenderWindow* window);
 };

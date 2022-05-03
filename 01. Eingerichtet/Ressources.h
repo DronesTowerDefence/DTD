@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
-#include <SFML/Graphics/Image.hpp>
-
+#include "SFML/Graphics.hpp"
 
 class Ressources
 {
@@ -59,7 +58,9 @@ public:
 	float getDroneSpeed(int);
 	int getDroneLives(int);
 	float getTowerUpdateMoneyGeneration(int i, int j);
-
+	void doubleSpeed();
+	void normalSpeed();
+	void setSpeed();
 	sf::Image getIcon();
 
 	

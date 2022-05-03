@@ -1,5 +1,5 @@
 #include "Ressources.h"
-
+#include "Round.h"
 
 Ressources* Ressources::instance = nullptr;
 
@@ -65,7 +65,7 @@ Ressources::Ressources()
 	towerChangeFrame[1] = 300;
 	towerChangeFrame[2] = 200;
 	towerChangeFrame[3] = 300;
-	towerChangeFrame[4] = towerSpeed[4]*1000;
+	towerChangeFrame[4] = towerSpeed[4] * 1000;
 
 	towerName[0] = "Feuer-Turm";
 	towerName[1] = "Tower 2";
@@ -86,7 +86,7 @@ Ressources::Ressources()
 		for (int i = 0; i < 4; i++, x += 0.5)
 		{
 			towerUpdateDamage[j][i] = towerDamage[j] + (towerDamage[j] * x);
-			berechneterSpeed =  towerSpeed[j] - (towerSpeed[j] * p[j] * x);
+			berechneterSpeed = towerSpeed[j] - (towerSpeed[j] * p[j] * x);
 			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = towerMoneyGeneration[j] + (towerMoneyGeneration[j] * x);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
@@ -180,6 +180,92 @@ float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 	return towerUpdateMoneyGeneration[i][j];
 }
 
+void Ressources::doubleSpeed()
+{
+	towerSpeed[0] /= 2;
+	towerSpeed[1] /= 2;
+	towerSpeed[2] /= 2;
+	towerSpeed[3] /= 2;
+	towerSpeed[4] /= 2;
+
+	towerProjectileSpeed[0] /= 2;
+	towerProjectileSpeed[1] /= 2;
+	towerProjectileSpeed[2] /= 2;
+	towerProjectileSpeed[3] /= 2;
+	towerProjectileSpeed[4] /= 2;
+
+	towerChangeFrame[0] /= 2;
+	towerChangeFrame[1] /= 2;
+	towerChangeFrame[2] /= 2;
+	towerChangeFrame[3] /= 2;
+	towerChangeFrame[4] /= 2;
+
+	for (int j = 0; j < towerCount; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			towerUpdateSpeed[j][i] /= 2;
+
+		}
+	}
+	droneSpeed[0] = droneSpeed[0] * 2;
+	setSpeed();
+}
+
+void Ressources::normalSpeed()
+{
+	towerSpeed[0] *= 2;
+	towerSpeed[1] *= 2;
+	towerSpeed[2] *= 2;
+	towerSpeed[3] *= 2;
+	towerSpeed[4] *= 2;
+
+	towerProjectileSpeed[0] *= 2;
+	towerProjectileSpeed[1] *= 2;
+	towerProjectileSpeed[2] *= 2;
+	towerProjectileSpeed[3] *= 2;
+	towerProjectileSpeed[4] *= 2;
+
+	towerChangeFrame[0] *= 2;
+	towerChangeFrame[1] *= 2;
+	towerChangeFrame[2] *= 2;
+	towerChangeFrame[3] *= 2;
+	towerChangeFrame[4] *= 2;
+
+	for (int j = 0; j < towerCount; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			towerUpdateSpeed[j][i] *= 2;
+
+		}
+	}
+	droneSpeed[0] = droneSpeed[0] / 2;
+	setSpeed();
+}
+
+
+
+void Ressources::setSpeed()
+{
+	Ressources* res = Ressources::getInstance();
+	for (auto i : Round::getInstance()->getAllAttackTower())
+	{
+		if (i->getUpdates()->getIndex1() == 0)
+		{
+			i->setSpeed(res->getTowerSpeed(i->getIndex()));	//standart
+		}
+		else
+		{
+			i->setSpeed(res->getTowerUpdateSpeed(i->getIndex(), i->getUpdates()->getIndex1()));	//standart
+		}
+		i->setProjektilSpeed(res->getTowerProjectileSpeed(i->getIndex()));
+	}
+	for (auto i : Round::getInstance()->getAllDrones())
+	{
+		i->setSeed(res->getDroneSpeed(0));
+	}
+}
 sf::Image Ressources::getIcon()
 {
 	return icon;

@@ -35,7 +35,7 @@ private:
 
 	bool lost;
 	bool isMouseClicked;
-
+	bool doubleSpeed;
 	int droneCount;
 	Tower* tower;
 	RectangleShape toolbar;
