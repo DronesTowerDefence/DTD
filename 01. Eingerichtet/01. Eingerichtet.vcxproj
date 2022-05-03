@@ -157,6 +157,7 @@
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerAlias.cpp" />
+    <ClCompile Include="TowerSpawn.cpp" />
     <ClCompile Include="Updates.cpp" />
     <ClCompile Include="Waypoint.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerAlias.h" />
+    <ClInclude Include="TowerSpawn.h" />
     <ClInclude Include="Updates.h" />
     <ClInclude Include="Waypoint.h" />
   </ItemGroup>

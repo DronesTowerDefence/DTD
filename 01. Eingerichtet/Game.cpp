@@ -99,6 +99,10 @@ void Game::draw()
 		window->draw(d->getDroneSprite());
 	}
 
+	for (auto* q : round->getAllSpawns()) 
+	{
+		window->draw(q->getSpawnSprite());
+	}
 
 
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > 2.0 && droneCount < round->getDroneCountInRound(round->getIndex())) {
