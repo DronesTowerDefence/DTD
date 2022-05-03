@@ -222,7 +222,6 @@ void Tower::manageUpdate(RenderWindow* window)
 		}
 	}
 
-	update->canBuy();
 }
 
 Updates* Tower::getUpdates()

@@ -1,15 +1,8 @@
+
 #include "HomeMenu.h"
 HomeMenu* HomeMenu::instance = nullptr;
 
-HomeMenu* HomeMenu::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new HomeMenu();
-	}
-	return instance;
-}
-
+#pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
 	callCount = 1;
@@ -112,70 +105,32 @@ HomeMenu::HomeMenu()
 	choseText = new Text("Waehle eine Karte aus", *font, 40);
 	choseText->setPosition(Vector2f(500, 450));
 }
+#pragma endregion
 
-void HomeMenu::HomeMenuStart()
+#pragma region getter
+HomeMenu* HomeMenu::getInstance()
 {
-	if (callCount > 1)
+	if (instance == nullptr)
 	{
-		delete Game::getInstance();
+		instance = new HomeMenu();
 	}
-	callCount++;
-
-	while (window->isOpen())
-	{
-		Event event;
-		while (window->pollEvent(event))
-		{
-			if (event.type == Event::Closed)
-			{
-				//saveGame();
-				window->close();
-			}
-		}
-		drone->move(2, 0);
-		setTowerTexture();
-		if (drone->getPosition().x > 1920)
-		{
-			drone->setPosition(Vector2f(0, 300));
-		}
-		if (CheckClicked() && choseIndex != -1)
-		{
-			break;
-		}
-		draw();
-
-	}
-	Game::getInstance()->setWindow(&*window);
-
-	Game::getInstance()->startGame();
+	return instance;
 }
-
-
-void HomeMenu::draw()
+int HomeMenu::getChoseIndex()
 {
-	window->clear();
-	window->draw(*backround);
-	window->draw(*titel);
-	window->draw(*startButton);
-	window->draw(*drone);
-	window->draw(*choseText);
-	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
-	{
-		window->draw(*map[i]);
-	}
-
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
-	{
-		window->draw(*towers[i]);
-	}
-	if (choseIndex > -1)
-	{
-		window->draw(*pointer);
-	}
-
-	window->display();
+	return choseIndex;
 }
+#pragma endregion
 
+#pragma region setter
+void HomeMenu::setWindow(RenderWindow* window)
+{
+	this->window = window;	HomeMenu();
+
+}
+#pragma endregion
+
+#pragma region Funktionen
 bool  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
@@ -216,7 +171,66 @@ bool  HomeMenu::CheckClicked()
 
 
 }
+void HomeMenu::HomeMenuStart()
+{
+	if (callCount > 1)
+	{
+		delete Game::getInstance();
+	}
+	callCount++;
 
+	while (window->isOpen())
+	{
+		Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				//saveGame();
+				window->close();
+			}
+		}
+		drone->move(2, 0);
+		setTowerTexture();
+		if (drone->getPosition().x > 1920)
+		{
+			drone->setPosition(Vector2f(0, 300));
+		}
+		if (CheckClicked() && choseIndex != -1)
+		{
+			break;
+		}
+		draw();
+
+	}
+	Game::getInstance()->setWindow(&*window);
+
+	Game::getInstance()->startGame();
+}
+void HomeMenu::draw()
+{
+	window->clear();
+	window->draw(*backround);
+	window->draw(*titel);
+	window->draw(*startButton);
+	window->draw(*drone);
+	window->draw(*choseText);
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
+	{
+		window->draw(*map[i]);
+	}
+
+	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	{
+		window->draw(*towers[i]);
+	}
+	if (choseIndex > -1)
+	{
+		window->draw(*pointer);
+	}
+
+	window->display();
+}
 void HomeMenu::setTowerTexture()
 {
 	if (animation->getElapsedTime().asMilliseconds() >= 300)
@@ -233,14 +247,7 @@ void HomeMenu::setTowerTexture()
 	}
 
 }
+#pragma endregion
 
-int HomeMenu::getChoseIndex()
-{
-	return choseIndex;
-}
-
-void HomeMenu::setWindow(RenderWindow* window)
-{
-	this->window = window;	HomeMenu();
-
-}
+#pragma region Desturktor
+#pragma endregion

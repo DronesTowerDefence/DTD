@@ -11,6 +11,35 @@
 class Game
 {
 private:
+	static Game* instance;
+
+	int chooseMusic;
+	int droneCount;
+
+	bool lost;
+	bool isMouseClicked;
+	bool doubleSpeed;
+
+
+	Texture gameOverRestartButtonTexture;
+	Texture gameOverHomeButtonTexture;
+	Texture gameOverBackgroundTexture;
+
+	RectangleShape toolbar;
+
+	Sprite gameOverBackround;
+	Sprite gameOverRestartButton;
+	Sprite gameOverHomeButton;
+
+	Clock changeMusicTimer;
+	SoundBuffer musicBuffer[4];
+	Sound music[4];
+
+	Tower* tower;
+
+	Font stdFont;
+	Text eco;
+	Text gameOverRound;
 
 	Ressources* p_ressources;
 	Round* round;
@@ -18,29 +47,19 @@ private:
 	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
-	Font stdFont;
-	Text eco;
-
-	Texture gameOverRestartButtonTexture;
-	Texture gameOverHomeButtonTexture;
-	Texture gameOverBackgroundTexture;
-	Sprite gameOverBackround;
-	Sprite gameOverRestartButton;
-	Sprite gameOverHomeButton;
-
-	SoundBuffer musicBuffer[4];
-	Sound music[4];
-	int chooseMusic;
-	Clock changeMusicTimer;
-
-	bool lost;
-	bool isMouseClicked;
-	bool doubleSpeed;
-	int droneCount;
-	Tower* tower;
-	RectangleShape toolbar;
-
-	Text gameOverRound;
+	/// <summary>
+	/// Lädt einen gespeicherten Spielstand
+	/// NOCH NICHT FERTIG!
+	/// </summary>
+	/// <param name="Map Index"></param>
+	/// <returns>Erfolgreich?</returns>
+	bool loadGame();
+	/// <summary>
+	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
+	/// Z.B. Die Sidebar oder die Strecke
+	/// </summary>
+	/// <returns></returns>
+	bool towerAliasForbiddenPosition();
 
 	void newRound();
 	/// <summary>
@@ -59,102 +78,73 @@ private:
 	/// Draw alle Elemente
 	/// </summary>
 	void draw();
-
 	/// <summary>
 	/// Überprüft ob ein Turm eine Drohne abschießen kann
 	/// </summary>
 	void checkShoot();
-
 	/// <summary>
 	/// Lässt MoneyTower Geld generieren
 	/// </summary>
 	void generateMoneyTowers();
-
 	void checkLoseGame();
-
 	/// <summary>
-	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
-	/// Z.B. Die Sidebar oder die Strecke
+	/// Speichert das Spiel
 	/// </summary>
-	/// <returns></returns>
-	bool towerAliasForbiddenPosition();
+	void saveGame();
+
 
 	/// <summary>
 	/// Konstruktor von Game
 	/// </summary>
 	Game();
 
-
-
-	/// <summary>
-	/// Speichert das Spiel
-	/// </summary>
-	void saveGame();
-
-	/// <summary>
-	/// Lädt einen gespeicherten Spielstand
-	/// NOCH NICHT FERTIG!
-	/// </summary>
-	/// <param name="Map Index"></param>
-	/// <returns>Erfolgreich?</returns>
-	bool loadGame();
-
-	void getNewEco();
-
-	static Game* instance;
 public:
 	~Game();
 
-	/// <summary>
-	/// Verändert regelmäßig die Musik
-	/// </summary>
-	void changeBackgroundMusic();
-
-
 	static Game* getInstance();
 
-	/// <summary>
-	/// Startet das Spiel
-	/// </summary>
-	void startGame();
 
-	/// <summary>
-	/// Gibt die Schriftart zurück
-	/// </summary>
-	/// <returns>Font</returns>
-	Font getFont();
-
+	
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
-
-
 	/// <summary>
-	/// Legt das Fenster fest
+	/// Gibt die Schriftart zurück
 	/// </summary>
-	/// <param name="RenderWindow*"></param>
-	void setWindow(RenderWindow*);
-
+	/// <returns>Font</returns>
+	Font getFont();
 	/// <summary>
 	/// Gibt erstes Feld der Music wieder
 	/// </summary>
 	/// <returns></returns>
 	Sound getMusic();
-
+	
 	/// <summary>
 	/// Setzt die Musik Lautstärke
 	/// </summary>
 	/// <param name=""></param>
 	void setMusicVolume(float);
-
+	/// <summary>
+	/// Legt das Fenster fest
+	/// </summary>
+	/// <param name="RenderWindow*"></param>
+	void setWindow(RenderWindow*);
 	/// <summary>
 	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
 	/// </summary>
 	/// <param name=""></param>
-	void setPauseScreen(RenderWindow*);
+	//void setPauseScreen(RenderWindow*);
 
-
+	/// <summary>
+	/// Startet das Spiel
+	/// </summary>
+	void startGame();
+	/// <summary>
+	/// Verändert regelmäßig die Musik
+	/// </summary>
+	void changeBackgroundMusic();
+	void getNewEco();
 
 };

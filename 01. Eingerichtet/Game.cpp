@@ -3,45 +3,7 @@
 
 Game* Game::instance = nullptr;
 
-Game* Game::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Game;
-	}
-	return instance;
-}
-
-Game::~Game()
-{
-	if (!round->getAllTowers().empty())
-	{
-		for (auto i : round->getAllTowers())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllDrones().empty())
-	{
-		for (auto i : round->getAllDrones())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllProjectiles().empty())
-	{
-		for (auto i : round->getAllProjectiles())
-		{
-			delete i;
-		}
-	}
-	delete newTower;
-	delete sidebar;
-	delete p_map;
-	delete round;
-	instance = nullptr;
-}
-
+#pragma region Konstruktor
 Game::Game()
 {
 	doubleSpeed = false;
@@ -82,161 +44,46 @@ Game::Game()
 
 	loadGame();
 }
+#pragma endregion
 
-void Game::draw()
+#pragma region getter
+Game* Game::getInstance()
 {
-	window->clear();
-
-	window->draw(*p_map->getBackround()); //Karte wird gedrawt
-	window->draw(toolbar);
-
-	if (tower != nullptr)
+	if (instance == nullptr)
 	{
-		tower->getUpdates()->draw(window);
+		instance = new Game;
 	}
-	else
-	{
-		sidebar->draw(window); //Sidebar wird gedrawt
-	}
-
-	if (newTower != nullptr) //TowerAlias wird gedrawt
-	{
-		window->draw((*newTower->getSpr()));
-		window->draw((*newTower->getRangeShape()));
-	}
-	if (tower != nullptr)
-	{
-		window->draw(*tower->getRangeShape());
-	}
-
-	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
-	{
-		window->draw(*(t->getDrawSprite()));
-	}
-
-	for (auto* t : round->getAllAttackTower()) //Tower werden gedrawt
-	{
-		window->draw(*(t->getDrawSprite()));
-	}
-
-
-	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
-	{
-		if (t->getcollided() == 0)
-			window->draw(*(t->getProjectileSprite()));
-
-	}
-
-	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
-	{
-		window->draw(*d->getDrawSprite());
-	}
-
-	for (auto* q : round->getAllSpawns())
-	{
-		window->draw(q->getSpawnSprite());
-	}
-
-
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
-
-		droneCount++;
-		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->restartDroneTimer();
-	}
-	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
-	{
-		newRound();
-	}
-
-	if (lost)
-	{
-		window->draw(gameOverBackround);
-		window->draw(gameOverHomeButton);
-		window->draw(gameOverRestartButton);
-	}
-
-	window->draw(eco);
-	window->display();
+	return instance;
 }
-
-void Game::startGame()
+RenderWindow* Game::getWindow()
 {
-	while (window->isOpen())
-	{
-		Event event;
+	return window;
+}
+Font Game::getFont()
+{
+	return stdFont;
+}
+Sound Game::getMusic()
+{
+	return music[0];
+}
+#pragma endregion
 
-		while (window->pollEvent(event))
-		{
-			if (event.type == Event::Closed)
-			{
-				//saveGame();
-				window->close();
-			}
+#pragma region setter
+void Game::setMusicVolume(float v)
+{
+	for (int i = 0; i < 4; i++) {
 
+		music[i].setVolume(v);
 
-			PauseMenu::getInstance()->checkPause(event);
-		}
-
-		getNewEco();
-		checkLoseGame();
-		moveDrohnes();
-		checkShoot();
-		checkTowerAlias();
-		generateMoneyTowers();
-		changeBackgroundMusic();
-
-		draw();
 	}
 }
-
-void Game::newRound()
-{
-	droneCount = 0;
-	round->nextRound();
+void Game::setWindow(RenderWindow* _window) {
+	window = _window;
 }
+#pragma endregion
 
-void Game::saveGame()
-
-{
-	if (round->getIndex() <= 0)
-		return;
-
-	std::string datei;
-	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
-	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
-
-	system("md saves >nul 2>&1");
-	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
-	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
-
-	std::ofstream wdatei;
-	wdatei.open(datei);
-
-	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
-	wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
-	wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
-	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
-
-	int j = 0;
-	for (auto i : round->getAllAttackTower())
-	{
-		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
-		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
-		j++;
-	}
-
-	for (auto i : round->getAllMoneyTower())
-	{
-		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
-		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
-		j++;
-	}
-
-	wdatei << "\n";
-	wdatei.close();
-}
-
+#pragma region Funktionen
 bool Game::loadGame()
 {
 	std::string datei; //Dateipfad
@@ -324,9 +171,67 @@ end:
 	rdatei.close();
 	return true;
 }
+bool Game::towerAliasForbiddenPosition()
+{
+	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
+	{
+		CircleShape* collisionShape = new CircleShape();
+		collisionShape->setFillColor(Color::Transparent);
+		collisionShape->setRadius(25);
+		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
+		{
+
+			collisionShape->setPosition(i);
+			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
+				return 0;
+		}
+
+		for (auto i : round->getAllTowers()) //Überprüfung ob auf anderem Turm
+		{
+			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
+				return 0;
+		}
+		delete collisionShape;
+	}
+	else return 0;
+
+	return 1;
+}
+
+void Game::startGame()
+{
+	while (window->isOpen())
+	{
+		Event event;
+
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				//saveGame();
+				window->close();
+			}
 
 
+			PauseMenu::getInstance()->checkPause(event);
+		}
 
+		getNewEco();
+		checkLoseGame();
+		moveDrohnes();
+		checkShoot();
+		checkTowerAlias();
+		generateMoneyTowers();
+		changeBackgroundMusic();
+		for (auto i : Round::getInstance()->getAllAttackTower())
+		{
+			i->getUpdates()->canBuy();
+
+		}
+
+		draw();
+	}
+}
 void Game::changeBackgroundMusic()
 {
 	if (music[chooseMusic].getStatus() != music[chooseMusic].Playing)
@@ -342,7 +247,19 @@ void Game::changeBackgroundMusic()
 		music[chooseMusic].play();
 	}
 }
-
+void Game::getNewEco()
+{
+	eco.setString("Lives: " + std::to_string(round->getHealth()) +
+		"\nMoney: " + std::to_string(round->getMoney()) + " $"
+		"\nRound: " + std::to_string(round->getIndex() + 1)
+		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
+		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
+}
+void Game::newRound()
+{
+	droneCount = 0;
+	round->nextRound();
+}
 void Game::moveDrohnes()
 {
 	for (Drone* p : round->getAllDrones())
@@ -360,7 +277,6 @@ void Game::moveDrohnes()
 		i->collission();
 	}
 }
-
 void Game::checkButtonClick()
 {
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
@@ -420,7 +336,6 @@ void Game::checkButtonClick()
 
 
 }
-
 void Game::checkTowerAlias()
 {
 	if (newTower == nullptr)
@@ -447,7 +362,104 @@ void Game::checkTowerAlias()
 		}
 	}
 }
+void Game::draw()
+{
+	window->clear();
 
+	window->draw(*p_map->getBackround()); //Karte wird gedrawt
+	window->draw(toolbar);
+
+	if (tower != nullptr)
+	{
+		tower->getUpdates()->draw(window);
+	}
+	else
+	{
+		sidebar->draw(window); //Sidebar wird gedrawt
+	}
+
+	if (newTower != nullptr) //TowerAlias wird gedrawt
+	{
+		window->draw((*newTower->getSpr()));
+		window->draw((*newTower->getRangeShape()));
+	}
+	if (tower != nullptr)
+	{
+		window->draw(*tower->getRangeShape());
+	}
+
+	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt
+	{
+		window->draw(*(t->getDrawSprite()));
+	}
+
+	for (auto* t : round->getAllAttackTower()) //Tower werden gedrawt
+	{
+		window->draw(*(t->getDrawSprite()));
+	}
+
+
+	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
+	{
+		if (t->getcollided() == 0)
+			window->draw(*(t->getProjectileSprite()));
+
+	}
+
+	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
+	{
+		window->draw(*d->getDrawSprite());
+	}
+
+	for (auto* q : round->getAllSpawns())
+	{
+		window->draw(q->getSpawnSprite());
+	}
+
+
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
+
+		droneCount++;
+		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		round->restartDroneTimer();
+	}
+	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
+	{
+		newRound();
+	}
+
+	if (lost)
+	{
+		window->draw(gameOverBackround);
+		window->draw(gameOverHomeButton);
+		window->draw(gameOverRestartButton);
+	}
+
+	window->draw(eco);
+	window->display();
+}
+void Game::checkShoot()
+{
+	CircleShape* tmp = new CircleShape;
+	for (auto t : round->getAllAttackTower())
+	{
+		for (auto iter : t->getCoverableArea())
+		{
+			tmp->setFillColor(Color::Transparent);
+			tmp->setRadius(15);
+			tmp->setPosition(Vector2f(iter.x, iter.y));
+
+			for (auto d : round->getAllDrones())
+			{
+				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+				{
+					t->shoot(d);
+				}
+			}
+		}
+	}
+	delete tmp;
+}
 void Game::generateMoneyTowers()
 {
 	for (auto i : Round::getInstance()->getAllMoneyTower())
@@ -455,7 +467,6 @@ void Game::generateMoneyTowers()
 		i->generateMoney();
 	}
 }
-
 void Game::checkLoseGame()
 {
 	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
@@ -541,7 +552,7 @@ void Game::checkLoseGame()
 			gameOverRound.setFillColor(Color::White);
 			gameOverRound.setOutlineColor(Color::Black);
 			gameOverRound.setOutlineThickness(3);
-			gameOverRound.setPosition(Vector2f(500,500));
+			gameOverRound.setPosition(Vector2f(500, 500));
 
 			while (lost)
 			{
@@ -577,93 +588,76 @@ void Game::checkLoseGame()
 	}
 
 }
+void Game::saveGame()
 
-
-bool Game::towerAliasForbiddenPosition()
 {
-	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
+	if (round->getIndex() <= 0)
+		return;
+
+	std::string datei;
+	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
+	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+
+	system("md saves >nul 2>&1");
+	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
+	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
+
+	std::ofstream wdatei;
+	wdatei.open(datei);
+
+	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
+	wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
+	wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
+	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
+
+	int j = 0;
+	for (auto i : round->getAllAttackTower())
 	{
-		CircleShape* collisionShape = new CircleShape();
-		collisionShape->setFillColor(Color::Transparent);
-		collisionShape->setRadius(25);
-		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
-		{
-
-			collisionShape->setPosition(i);
-			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
-				return 0;
-		}
-
-		for (auto i : round->getAllTowers()) //Überprüfung ob auf anderem Turm
-		{
-			if (newTower->getSpr()->getGlobalBounds().intersects(i->getTowerSpr().getGlobalBounds()))
-				return 0;
-		}
-		delete collisionShape;
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
 	}
-	else return 0;
 
-	return 1;
-}
-
-void Game::checkShoot()
-{
-	CircleShape* tmp = new CircleShape;
-	for (auto t : round->getAllAttackTower())
+	for (auto i : round->getAllMoneyTower())
 	{
-		for (auto iter : t->getCoverableArea())
-		{
-			tmp->setFillColor(Color::Transparent);
-			tmp->setRadius(15);
-			tmp->setPosition(Vector2f(iter.x, iter.y));
+		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		j++;
+	}
 
-			for (auto d : round->getAllDrones())
-			{
-				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
-				{
-					t->shoot(d);
-				}
-			}
+	wdatei << "\n";
+	wdatei.close();
+}
+#pragma endregion
+
+#pragma region Destruktor
+Game::~Game()
+{
+	if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers())
+		{
+			delete i;
 		}
 	}
-	delete tmp;
-}
-
-Font Game::getFont()
-{
-	return stdFont;
-}
-
-RenderWindow* Game::getWindow()
-{
-	return window;
-}
-
-
-
-void Game::setWindow(RenderWindow* _window) {
-	window = _window;
-}
-
-Sound Game::getMusic()
-{
-	return music[0];
-}
-
-void Game::setMusicVolume(float v)
-{
-	for (int i = 0; i < 4; i++) {
-
-		music[i].setVolume(v);
-
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones())
+		{
+			delete i;
+		}
 	}
+	if (!round->getAllProjectiles().empty())
+	{
+		for (auto i : round->getAllProjectiles())
+		{
+			delete i;
+		}
+	}
+	delete newTower;
+	delete sidebar;
+	delete p_map;
+	delete round;
+	instance = nullptr;
 }
-
-void Game::getNewEco()
-{
-	eco.setString("Lives: " + std::to_string(round->getHealth()) +
-		"\nMoney: " + std::to_string(round->getMoney()) + " $"
-		"\nRound: " + std::to_string(round->getIndex() + 1)
-		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
-		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
-}
+#pragma endregion

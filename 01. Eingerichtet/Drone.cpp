@@ -8,7 +8,7 @@ using namespace sf;
 
 int Drone::droneID = 0;
 
-
+#pragma region Konstruktor
 Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 {
 	droneType = typSpecifier;
@@ -59,7 +59,63 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 		drone.setRotation(90);
 	}
 }
+#pragma endregion
 
+#pragma region setter
+void Drone::setSeed(float speed)
+{
+	this->speed = speed;
+}
+void Drone::setPosition(Vector2f position)
+{
+
+	drone.setPosition(position);
+
+}
+void Drone::setMove(Vector2f v)
+{
+	move_x = int(v.x);
+	move_y = int(v.y);
+}
+#pragma endregion
+
+#pragma region getter
+int Drone::getNextPoint()
+{
+	return nextPoint;
+}
+int Drone::getLives()
+{
+	return lives;
+}
+Vector2i Drone::getMove()
+{
+	return Vector2i(move_x, move_y);
+}
+Vector2f Drone::getPosition()
+{
+	return drone.getPosition();
+}
+Vector2f Drone::getNextPosition(int nextFrame)
+{
+	//Wird die überhaupt noch benutzt?
+
+	Vector2f deezNuts;
+
+	for (int i = 0; i < nextFrame; i++) {
+
+		deezNuts.x += drone.getPosition().x + move_x * speed;
+		deezNuts.y += drone.getPosition().y + move_y * speed;
+
+	}
+
+	return deezNuts;
+
+}
+Sprite Drone::getDroneSprite()
+{
+	return drone;
+}
 Sprite* Drone::getDrawSprite()
 {
 	//Animationsdings von Jonas?
@@ -88,42 +144,14 @@ Sprite* Drone::getDrawSprite()
 	}
 	return &drone;
 }
+#pragma endregion
 
-void Drone::setPosition(Vector2f position)
-{
-
-	drone.setPosition(position);
-
-}
-
-void Drone::setMove(Vector2f v)
-{
-	move_x = int(v.x);
-	move_y = int(v.y);
-}
-
-Vector2f Drone::getPosition()
-{
-	return drone.getPosition();
-}
-
-sf::Sprite Drone::getDroneSprite()
-{
-	return drone;
-}
-
-int Drone::getNextPoint()
-{
-	return nextPoint;
-}
-
-
+#pragma region Funktionen
 void Drone::move()
 {
 	//x,y-Position der Drone plus die Richtung mal die Geschwindigkeit der Drone
 	drone.setPosition(Vector2f(drone.getPosition().x + move_x * speed, drone.getPosition().y + move_y * speed));
 }
-
 void Drone::pass()
 {
 	//Wegpunkte in der Map, wenn die Drone einen Wegpunkt passiert, erhöht sich der Counter als Index für die Liste der Wegpunkte
@@ -172,7 +200,6 @@ void Drone::pass()
 	//	
 	//}
 }
-
 bool Drone::takeDamage(int damage) {
 	int livesDiff = lives;
 	lives -= damage;
@@ -204,41 +231,19 @@ bool Drone::takeDamage(int damage) {
 
 	return false;
 }
+#pragma endregion
 
-int Drone::getLives()
-{
-	return lives;
-}
-
-Vector2i Drone::getMove()
-{
-	return Vector2i(move_x, move_y);
-}
-
-Vector2f Drone::getNextPosition(int nextFrame)
-{
-	//Wird die überhaupt noch benutzt?
-
-	Vector2f deezNuts;
-
-	for (int i = 0; i < nextFrame; i++) {
-
-		deezNuts.x += drone.getPosition().x + move_x * speed;
-		deezNuts.y += drone.getPosition().y + move_y * speed;
-
-	}
-
-	return deezNuts;
-
-}
-
-
-void Drone::setSeed(float speed)
-{
-	this->speed = speed;
-}
-
+#pragma region Destruktor
 Drone::~Drone()
 {
 	Round::getInstance()->deleteDrone(this);
 }
+#pragma endregion
+
+
+
+
+
+
+
+

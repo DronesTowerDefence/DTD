@@ -198,10 +198,10 @@ void Updates::canBuy()
 	}
 	if (Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2) > Round::getInstance()->getMoney())
 	{
-		update1->setTexture(*textureUpdate2NoBuy);
+		update2->setTexture(*textureUpdate2NoBuy);
 	}
 	else
 	{
-		update1->setTexture(*textureUpdate2);
+		update2->setTexture(*textureUpdate2);
 	}
 }

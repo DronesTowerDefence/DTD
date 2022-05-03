@@ -7,41 +7,52 @@ using namespace sf;
 class HomeMenu
 {
 private:
-	Sprite* startButton;
-	RectangleShape* pointer;
-	Sprite* map[2];
-	Sprite* titel;
-	Sprite* backround;
-	Sprite* drone;
+	
+	static HomeMenu* instance;
+	
+	int choseIndex;
+	int animationIndex;
+	int callCount;
+	
+	bool isClicked;
+	
+	Vector2f positionTower[5];
 
-	Sprite* towers[5];
+	RenderWindow* window;
+	
 	Texture* textureStartButton;
 	Texture* textureMap[2];
 	Texture* textureTitel;
 	Texture* textureTower[5][4];
 	Texture* textureBackround;
 	Texture* textureDrone;
-	int choseIndex;
-	static HomeMenu* instance;
-	RenderWindow* window;
-	Vector2f positionTower[5];
-	bool isClicked;
+	
+	RectangleShape* pointer;
+	
+	Sprite* startButton;
+	Sprite* towers[5];
+	Sprite* map[2];
+	Sprite* titel;
+	Sprite* backround;
+	Sprite* drone;
+	
 	Clock* animation;
-	int animationIndex;
-	void draw();
-	bool CheckClicked();
-	void 	setTowerTexture();
+	
 	Font *font;
 	Text *choseText;
+	
+	bool CheckClicked();
+	void draw();
+	
+	void setTowerTexture();
 
-	int callCount;
 public:
+	HomeMenu();
+	
 	static HomeMenu* getInstance();
-	void HomeMenuStart();
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
-
-	HomeMenu();
-
+	
+	void HomeMenuStart();
 };
 
