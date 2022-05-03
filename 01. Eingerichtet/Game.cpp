@@ -132,7 +132,7 @@ void Game::draw()
 		window->draw(*d->getDrawSprite());
 	}
 
-	for (auto* q : round->getAllSpawns()) 
+	for (auto* q : round->getAllSpawns())
 	{
 		window->draw(q->getSpawnSprite());
 	}
@@ -520,37 +520,48 @@ void Game::checkLoseGame()
 
 		lost = true;
 
-		Vector2i mousePos = Vector2i(0, 0);
-		bool homeMenu = false;
-
-		while (lost)
+		if (lost)
 		{
-			window->draw(gameOverBackround);
-			window->draw(gameOverHomeButton);
-			window->draw(gameOverRestartButton);
-			window->display();
+			Vector2i mousePos = Vector2i(0, 0);
+			bool homeMenu = false;
+			gameOverRound.setString(std::to_string(round->getIndex()));
+			gameOverRound.setFont(stdFont);
+			gameOverRound.setCharacterSize(50);
+			gameOverRound.setFillColor(Color::White);
+			gameOverRound.setOutlineColor(Color::Black);
+			gameOverRound.setOutlineThickness(3);
+			gameOverRound.setPosition(Vector2f(500,500));
 
-			mousePos = Mouse::getPosition();
-
-			if (Mouse::isButtonPressed(Mouse::Left))
+			while (lost)
 			{
-				if (((mousePos.x >= gameOverHomeButton.getPosition().x) && (mousePos.x <= gameOverHomeButton.getPosition().x + 100)) &&
-					((mousePos.y >= gameOverHomeButton.getPosition().y) && (mousePos.y <= gameOverHomeButton.getPosition().y + 100)))
-				{
-					homeMenu = true;
-				}
-				else if (((mousePos.x >= gameOverRestartButton.getPosition().x) && (mousePos.x <= gameOverRestartButton.getPosition().x + 100)) &&
-					((mousePos.y >= gameOverRestartButton.getPosition().y) && (mousePos.y <= gameOverRestartButton.getPosition().y + 100)))
-				{
-					//Neue Funktion in Round zum resetten anlegen
-				}
-				if (homeMenu)
-				{
-					lost = false;
-					HomeMenu::getInstance()->HomeMenuStart();
-				}
-			}
+				window->draw(gameOverBackround);
+				window->draw(gameOverRound);
+				window->draw(gameOverHomeButton);
+				window->draw(gameOverRestartButton);
+				window->display();
 
+				mousePos = Mouse::getPosition();
+
+				if (Mouse::isButtonPressed(Mouse::Left))
+				{
+					if (((mousePos.x >= gameOverHomeButton.getPosition().x) && (mousePos.x <= gameOverHomeButton.getPosition().x + 100)) &&
+						((mousePos.y >= gameOverHomeButton.getPosition().y) && (mousePos.y <= gameOverHomeButton.getPosition().y + 100)))
+					{
+						homeMenu = true;
+					}
+					else if (((mousePos.x >= gameOverRestartButton.getPosition().x) && (mousePos.x <= gameOverRestartButton.getPosition().x + 100)) &&
+						((mousePos.y >= gameOverRestartButton.getPosition().y) && (mousePos.y <= gameOverRestartButton.getPosition().y + 100)))
+					{
+						//Neue Funktion in Round zum resetten anlegen
+					}
+					if (homeMenu)
+					{
+						lost = false;
+						HomeMenu::getInstance()->HomeMenuStart();
+					}
+				}
+
+			}
 		}
 	}
 

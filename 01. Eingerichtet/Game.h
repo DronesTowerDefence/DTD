@@ -40,7 +40,7 @@ private:
 	Tower* tower;
 	RectangleShape toolbar;
 
-
+	Text gameOverRound;
 
 	void newRound();
 	/// <summary>
