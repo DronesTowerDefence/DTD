@@ -14,6 +14,13 @@ Ressources* Ressources::getInstance()
 
 Ressources::Ressources()
 {
+
+	for (int i = 0; i < 100; i++)
+	{
+		droneCountInRound[i] = i + 1 * 10;
+
+		droneSpawnTime[i] = 1;
+	}
 	mapCount = 2;
 	towerCount = 5;
 	towerAttackTowerCount = 4;
@@ -182,6 +189,7 @@ float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 
 void Ressources::doubleSpeed()
 {
+	waitSubHealth /= 2;
 	towerSpeed[0] /= 2;
 	towerSpeed[1] /= 2;
 	towerSpeed[2] /= 2;
@@ -209,11 +217,17 @@ void Ressources::doubleSpeed()
 		}
 	}
 	droneSpeed[0] = droneSpeed[0] * 2;
+	for (int i = 0; i < 100; i++)
+	{
+		droneSpawnTime[i] /= 2;
+	}
 	setSpeed();
 }
 
 void Ressources::normalSpeed()
 {
+	waitSubHealth *= 2;
+
 	towerSpeed[0] *= 2;
 	towerSpeed[1] *= 2;
 	towerSpeed[2] *= 2;
@@ -225,6 +239,7 @@ void Ressources::normalSpeed()
 	towerProjectileSpeed[2] *= 2;
 	towerProjectileSpeed[3] *= 2;
 	towerProjectileSpeed[4] *= 2;
+
 
 	towerChangeFrame[0] *= 2;
 	towerChangeFrame[1] *= 2;
@@ -241,6 +256,10 @@ void Ressources::normalSpeed()
 		}
 	}
 	droneSpeed[0] = droneSpeed[0] / 2;
+	for (int i = 0; i < 100; i++)
+	{
+		droneSpawnTime[i] *= 2;
+	}
 	setSpeed();
 }
 
@@ -269,4 +288,18 @@ void Ressources::setSpeed()
 sf::Image Ressources::getIcon()
 {
 	return icon;
+}
+int Ressources::getDroneCountInRound()
+{
+	return droneCountInRound[Round::getInstance()->getIndex()];
+}
+
+float Ressources::getDroneSpawnTime()
+{
+	return droneSpawnTime[Round::getInstance()->getIndex()];
+}
+
+float Ressources::getWaitSubHealth()
+{
+	return waitSubHealth;
 }

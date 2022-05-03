@@ -14,7 +14,6 @@ Round::Round()
 	Lost = false;
 	Won = true;
 
-	setDroneInRound();
 }
 
 Round::~Round()
@@ -89,15 +88,7 @@ void Round::setAllCoverablePoints()
 	}
 }
 
-void Round::setDroneInRound()
-{
-	for (int i = 0; i < 100; i++)
-	{
-		droneCountInRound[i] = i + 1 * 10;
-		
-		droneSpawnTime[i] = 1;
-	}
-}
+
 
 void Round::addMoney(int _money)
 {
@@ -281,15 +272,7 @@ void Round::addProjectile(Projectile* _projectile)
 	allProjectiles.push_back(_projectile);
 }
 
-int Round::getDroneCountInRound()
-{
-	return droneCountInRound[index];
-}
 
-int Round::getDroneSpawnTime()
-{
-	return droneSpawnTime[index];
-}
 
 void Round::deleteDrone(Drone* drone)
 {

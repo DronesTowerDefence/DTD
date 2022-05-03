@@ -138,13 +138,13 @@ void Game::draw()
 	}
 
 
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > round->getDroneSpawnTime() && droneCount < round->getDroneCountInRound()) {
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
 
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
 		round->restartDroneTimer();
 	}
-	if (droneCount == round->getDroneCountInRound() && round->getAllDrones().empty())
+	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
 	{
 		newRound();
 	}

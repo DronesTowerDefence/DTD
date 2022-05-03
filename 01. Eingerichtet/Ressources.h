@@ -9,6 +9,10 @@ private:
 	static Ressources* instance;
 
 	//Tower
+
+	int droneCountInRound[100];
+	float droneSpawnTime[100];
+
 	int mapCount; // wieviele Maps es gibt	
 	int towerCount; //Wie viele Turm-Typen es gibt
 	int towerAttackTowerCount;
@@ -33,7 +37,7 @@ private:
 	int droneLives[1];
 	
 	sf::Image icon;
-
+	float waitSubHealth;
 public:
 
 	static Ressources* getInstance();
@@ -62,7 +66,9 @@ public:
 	void normalSpeed();
 	void setSpeed();
 	sf::Image getIcon();
-
+	int getDroneCountInRound();
+	float getDroneSpawnTime();
+	float getWaitSubHealth();
 	
 
 };
