@@ -47,6 +47,11 @@ Sidebar::Sidebar()
 
 }
 
+Sidebar::~Sidebar()
+{
+	instance = nullptr;
+}
+
 Sidebar* Sidebar::getInstance()
 {
 	if (instance == nullptr)

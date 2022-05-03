@@ -12,6 +12,7 @@ HomeMenu* HomeMenu::getInstance()
 
 HomeMenu::HomeMenu()
 {
+	callCount = 1;
 	isClicked = false;
 	window = nullptr;
 	startButton = new Sprite;
@@ -44,7 +45,7 @@ HomeMenu::HomeMenu()
 	drone->setScale(2, 2);
 	//
 	int x = 500;
-	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++ , x+= 242)
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, x += 242)
 	{
 		map[i] = new Sprite;
 		textureMap[i] = new Texture();
@@ -91,7 +92,7 @@ HomeMenu::HomeMenu()
 	textureTower[4][1]->loadFromFile("img/tower4/tower4_1.png");
 	textureTower[4][2]->loadFromFile("img/tower4/tower4_2.png");
 	textureTower[4][3]->loadFromFile("img/tower4/tower4_3.png");
-	
+
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{
 		towers[i] = new Sprite();
@@ -114,6 +115,12 @@ HomeMenu::HomeMenu()
 
 void HomeMenu::HomeMenuStart()
 {
+	if (callCount > 1)
+	{
+		delete Game::getInstance();
+	}
+	callCount++;
+
 	while (window->isOpen())
 	{
 		Event event;
@@ -133,13 +140,14 @@ void HomeMenu::HomeMenuStart()
 		}
 		if (CheckClicked() && choseIndex != -1)
 		{
-			Game::getInstance()->setWindow(&*window);
-
-			Game::getInstance()->startGame();
+			break;
 		}
 		draw();
 
 	}
+	Game::getInstance()->setWindow(&*window);
+
+	Game::getInstance()->startGame();
 }
 
 
@@ -188,7 +196,7 @@ bool  HomeMenu::CheckClicked()
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{
-				pointer->setPosition(Vector2f(map[i]->getPosition().x , map[i]->getPosition().y ));
+				pointer->setPosition(Vector2f(map[i]->getPosition().x, map[i]->getPosition().y));
 				choseIndex = i;
 			}
 		}

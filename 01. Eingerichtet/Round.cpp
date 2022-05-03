@@ -17,6 +17,11 @@ Round::Round()
 	setDroneInRound();
 }
 
+Round::~Round()
+{
+	instance = nullptr;
+}
+
 Round* Round::getInstance()
 {
 	if (instance == nullptr)

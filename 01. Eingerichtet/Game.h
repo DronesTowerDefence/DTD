@@ -40,7 +40,7 @@ private:
 	Tower* tower;
 	RectangleShape toolbar;
 
-	
+
 
 	void newRound();
 	/// <summary>
@@ -70,7 +70,7 @@ private:
 	/// </summary>
 	void generateMoneyTowers();
 
-	void loseGame();
+	void checkLoseGame();
 
 	/// <summary>
 	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
@@ -84,7 +84,7 @@ private:
 	/// </summary>
 	Game();
 
-	
+
 
 	/// <summary>
 	/// Speichert das Spiel
@@ -99,9 +99,13 @@ private:
 	/// <returns>Erfolgreich?</returns>
 	bool loadGame();
 
+	void getNewEco();
+
 	static Game* instance;
 public:
-/// <summary>
+	~Game();
+
+	/// <summary>
 	/// Verändert regelmäßig die Musik
 	/// </summary>
 	void changeBackgroundMusic();
@@ -126,7 +130,7 @@ public:
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
 
-	
+
 	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>

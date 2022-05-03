@@ -41,6 +41,8 @@ private:
 
 public:
 
+	~Round();
+
 	static Round* getInstance();
 
 	void setAllCoverablePoints(); //Strecke eingeteilt in Punkte, alle 20px
