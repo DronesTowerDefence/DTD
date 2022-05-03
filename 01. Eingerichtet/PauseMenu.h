@@ -22,6 +22,17 @@ class PauseMenu
 	RectangleShape volumeSlider;
 	float sliderHelper;
 
+
+	bool isClicked;
+	Vector2i mouse;
+	Vector2f pos, pos2;
+
+	Texture twitterTexture;
+	Sprite twitter;
+	RectangleShape socialsBorder;
+
+	RectangleShape mouseRect;
+
 	PauseMenu();
 	
 	void click();
@@ -30,7 +41,7 @@ public:
 
 	static PauseMenu* getInstance();
     /// <summary>
-    /// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft
+    /// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft (wird in Game::startGame() aufgerufen)
     /// </summary>
     /// <param name="">Event event</param>
     void checkPause(Event);
