@@ -34,8 +34,6 @@ class PauseMenu
 	Texture homebtnTexture;
 	Sprite homebtn;
 
-	RectangleShape mouseRect;
-
 	PauseMenu();
 	
 	void click();
@@ -48,6 +46,8 @@ public:
     /// </summary>
     /// <param name="">Event event</param>
     void checkPause(Event);
+
+	void checkPause();
 	/// <summary>
 	/// Wird nur für das Pause-Menu verwendet
 	/// </summary>
