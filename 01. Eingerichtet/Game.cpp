@@ -501,7 +501,6 @@ void Game::checkLoseGame()
 		gameOverHomeButton.setTexture(gameOverHomeButtonTexture);
 		gameOverHomeButton.setPosition(Vector2f(760, 650));
 
-
 		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
 		gameOverRestartButton.setTexture(gameOverRestartButtonTexture);
 		gameOverRestartButton.setPosition(Vector2f(1060, 650));
@@ -549,8 +548,10 @@ void Game::checkLoseGame()
 				Service* serv = Service::getInstance();
 				homeButtonPos = serv->getObjectPosition(gameOverHomeButton.getPosition());
 				homeButtonPos2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f));
-				restartButton = serv->getObjectPosition(gameOverHomeButton.getPosition());
-				restartButton2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f));
+				//restartButton = serv->getObjectPosition(gameOverHomeButton.getPosition());
+				//restartButton2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f)); //Muss noch bearbeitet werden
+				restartButton = gameOverRestartButton.getPosition();
+				restartButton2 = restartButton + Vector2f(gameOverRestartButtonTexture.getSize());
 
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
 					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
