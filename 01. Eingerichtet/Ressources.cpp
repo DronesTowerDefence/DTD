@@ -97,7 +97,7 @@ Ressources::Ressources()
 	droneSpeed[0] = 2.5;
 	droneLives[0] = 3;
 
-	icon.loadFromFile("img/icon.png");
+	//icon.loadFromFile("img/icon.png");
 }
 #pragma endregion
 
@@ -206,7 +206,7 @@ std::string Ressources::getTowerName(int i)
 }
 sf::Image Ressources::getIcon()
 {
-	return icon;
+	return Image();
 }
 #pragma endregion
 

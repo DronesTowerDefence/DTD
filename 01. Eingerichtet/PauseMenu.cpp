@@ -4,7 +4,6 @@
 
 PauseMenu* PauseMenu::instance = nullptr;
 
-
 #pragma region Konstruktor
 PauseMenu::PauseMenu() {
 
@@ -47,7 +46,7 @@ PauseMenu::PauseMenu() {
 	socialsBorder.setFillColor(Color::Transparent);
 	socialsBorder.setOutlineColor(Color::Black);
 	socialsBorder.setOutlineThickness(float(0.77));
-	socialsBorder.setSize(Vector2f(100.f,100.f));
+	socialsBorder.setSize(Vector2f(100.f, 100.f));
 	socialsBorder.setPosition(1120.f, 165.f);
 
 	//Buttons
@@ -61,7 +60,7 @@ PauseMenu::PauseMenu() {
 	text1.setPosition(Vector2f(565.f, 171.f));
 	text1.setFillColor(Color::Black);
 	text1.setOutlineThickness(float(0.3));
-	
+
 
 	//Beschreibungen
 	text2.setFont(font);
@@ -103,7 +102,6 @@ Text PauseMenu::getText()
 #pragma endregion
 
 #pragma region setter
-
 #pragma endregion
 
 #pragma region Funktionen
@@ -131,8 +129,6 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			}
 		}
 
-		mouse = Mouse::getPosition(*window);
-		pos, pos2;
 
 		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
 		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
@@ -142,6 +138,22 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			HomeMenu::getInstance()->HomeMenuStart();
 		}
 	}
+}
+void PauseMenu::draw()
+{
+
+	//window->draw(edge);
+	window->draw(background);
+	window->draw(text1);
+	window->draw(text2);
+	window->draw(twitter);
+	window->draw(socialsBorder);
+	window->draw(homebtn);
+
+	window->draw(volumeSlider);
+
+	window->display();
+
 }
 void PauseMenu::checkPause(Event event1)
 {
@@ -170,18 +182,18 @@ void PauseMenu::checkPause(Event event1)
 			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			//Pfeiltasten Druck = Änderung Lautstärke
-			if (Keyboard::isKeyPressed(Keyboard::Left)) 
+			if (Keyboard::isKeyPressed(Keyboard::Left))
 			{
-				if (sliderHelper == 0.f) 
+				if (sliderHelper == 0.f)
 				{
 					sliderHelper = 1.f;
 				}
 				sliderHelper--;
 			}
 
-			if (Keyboard::isKeyPressed(Keyboard::Right)) 
+			if (Keyboard::isKeyPressed(Keyboard::Right))
 			{
-				if (sliderHelper == 100.f) 
+				if (sliderHelper == 100.f)
 				{
 					sliderHelper = 99.f;
 				}
@@ -204,20 +216,62 @@ void PauseMenu::checkPause(Event event1)
 	return;
 
 }
-void PauseMenu::draw()
+void PauseMenu::checkPause()
 {
+	while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
+	{
 
-	//window->draw(edge);
-	window->draw(background);
-	window->draw(text1);
-	window->draw(text2);
-	window->draw(twitter);
-	window->draw(socialsBorder);
-	window->draw(homebtn);
+		Event event;
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window->close();
+			}
+			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) { // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+				return;
+			}
 
-	window->draw(volumeSlider);
 
-	window->display();
+
+		}
+		//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
+		text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
+		text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+
+		//Pfeiltasten Druck = Änderung Lautstärke
+		if (Keyboard::isKeyPressed(Keyboard::Left))
+		{
+			if (sliderHelper == 0.f)
+			{
+				sliderHelper = 1.f;
+			}
+			sliderHelper--;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Right))
+		{
+			if (sliderHelper == 100.f)
+			{
+				sliderHelper = 99.f;
+			}
+			sliderHelper++;
+		}
+
+
+		/*mousePos = Mouse::getPosition();
+		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
+
+		Game::getInstance()->setMusicVolume(sliderHelper);
+		volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+		Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
+		click();
+		draw(); //Texte und Objekte werden gezeichnet
+
+	}
+
+
+	return;
 
 }
 #pragma endregion
@@ -225,8 +279,3 @@ void PauseMenu::draw()
 #pragma region Desturktor
 
 #pragma endregion
-
-
-
-
-

@@ -202,7 +202,6 @@ void Game::startGame()
 {
 	while (window->isOpen())
 	{
-		Event event;
 
 		while (window->pollEvent(event))
 		{
@@ -216,7 +215,7 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
-		getNewEco();
+		updateEco();
 		checkLoseGame();
 		moveDrohnes();
 		checkShoot();
@@ -247,7 +246,7 @@ void Game::changeBackgroundMusic()
 		music[chooseMusic].play();
 	}
 }
-void Game::getNewEco()
+void Game::updateEco()
 {
 	eco.setString("Lives: " + std::to_string(round->getHealth()) +
 		"\nMoney: " + std::to_string(round->getMoney()) + " $"
@@ -527,66 +526,130 @@ void Game::checkLoseGame()
 	if (round->getLost())
 	{
 		round->setHealth(0);
+		updateEco();
 
-		gameOverBackgroundTexture.loadFromFile("img/gameOverBackround.png");
+		gameOverBackgroundTexture.loadFromFile("img/gameOverScreen.png");
 		gameOverBackround.setTexture(gameOverBackgroundTexture);
-		gameOverBackround.setPosition(Vector2f(500, 300));
+		Vector2f gameOverPos(window->getSize().x / 2 - gameOverBackgroundTexture.getSize().x / 2, window->getSize().y / 2 - gameOverBackgroundTexture.getSize().y / 2);
+		//gameOverPos: Rechnung, um das Bild in der Mitte vom Bildschirm zu haben
+		gameOverBackround.setPosition(gameOverPos);
 
 		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
 		gameOverHomeButton.setTexture(gameOverHomeButtonTexture);
-		gameOverHomeButton.setPosition(Vector2f(600, 500));
+		gameOverHomeButton.setPosition(Vector2f(760, 650));
+
 
 		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
 		gameOverRestartButton.setTexture(gameOverRestartButtonTexture);
-		gameOverRestartButton.setPosition(Vector2f(700, 500));
+		gameOverRestartButton.setPosition(Vector2f(1060, 650));
+
+		Vector2i mousePos = Vector2i(0, 0);
+		bool homeMenu = false, restart = false;
+		gameOverRound.setString(std::to_string(round->getIndex() + 1));
+		gameOverRound.setFont(stdFont);
+		gameOverRound.setCharacterSize(70);
+		gameOverRound.setFillColor(Color::White);
+		gameOverRound.setOutlineColor(Color::Black);
+		gameOverRound.setOutlineThickness(3);
+		gameOverRound.setPosition(Vector2f(970, 467));
 
 		lost = true;
 
-		if (lost)
+		while (lost)
 		{
-			Vector2i mousePos = Vector2i(0, 0);
-			bool homeMenu = false;
-			gameOverRound.setString(std::to_string(round->getIndex()));
-			gameOverRound.setFont(stdFont);
-			gameOverRound.setCharacterSize(50);
-			gameOverRound.setFillColor(Color::White);
-			gameOverRound.setOutlineColor(Color::Black);
-			gameOverRound.setOutlineThickness(3);
-			gameOverRound.setPosition(Vector2f(500, 500));
-
-			while (lost)
+			while (window->pollEvent(event))
 			{
-				window->draw(gameOverBackround);
-				window->draw(gameOverRound);
-				window->draw(gameOverHomeButton);
-				window->draw(gameOverRestartButton);
-				window->display();
-
-				mousePos = Mouse::getPosition();
-
-				if (Mouse::isButtonPressed(Mouse::Left))
+				if (event.type == Event::Closed)
 				{
-					if (((mousePos.x >= gameOverHomeButton.getPosition().x) && (mousePos.x <= gameOverHomeButton.getPosition().x + 100)) &&
-						((mousePos.y >= gameOverHomeButton.getPosition().y) && (mousePos.y <= gameOverHomeButton.getPosition().y + 100)))
-					{
-						homeMenu = true;
-					}
-					else if (((mousePos.x >= gameOverRestartButton.getPosition().x) && (mousePos.x <= gameOverRestartButton.getPosition().x + 100)) &&
-						((mousePos.y >= gameOverRestartButton.getPosition().y) && (mousePos.y <= gameOverRestartButton.getPosition().y + 100)))
-					{
-						//Neue Funktion in Round zum resetten anlegen
-					}
-					if (homeMenu)
-					{
-						lost = false;
-						HomeMenu::getInstance()->HomeMenuStart();
-					}
+					//saveGame();
+					window->close();
+					return;
 				}
-
 			}
+
+			window->draw(gameOverBackround);
+			window->draw(gameOverRound);
+			window->draw(gameOverHomeButton);
+			window->draw(gameOverRestartButton);
+			window->display();
+
+			mousePos = Mouse::getPosition();
+
+			if (Mouse::isButtonPressed(Mouse::Left))
+			{
+				Vector2f homeButtonPos, homeButtonPos2, restartButton, restartButton2;
+				Service* serv = Service::getInstance();
+				homeButtonPos = serv->getObjectPosition(gameOverHomeButton.getPosition());
+				homeButtonPos2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f));
+				restartButton = serv->getObjectPosition(gameOverHomeButton.getPosition());
+				restartButton2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f));
+
+				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
+					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
+				{
+					homeMenu = true;
+				}
+				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
+					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
+				{
+					std::cout << "Restart";
+					restart = true;
+				}
+				if (homeMenu)
+				{
+					saveGame();
+					HomeMenu::getInstance()->HomeMenuStart();
+				}
+				else if (restart)
+				{
+					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
+					resetAll();
+					round = Round::getInstance();
+					p_map = new Map(mapIndex);
+					sidebar = Sidebar::getInstance();
+					restart = false;
+					return;
+				}
+			}
+
 		}
+
 	}
 
+}
+void Game::resetAll()
+{
+	//Zurücksetzen der Attribute von Game
+	lost = false;
+	droneCount = 0;
+	isMouseClicked = false;
+	doubleSpeed = false;
+
+	if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllProjectiles().empty())
+	{
+		for (auto i : round->getAllProjectiles())
+		{
+			delete i;
+		}
+	}
+	delete newTower;
+	delete sidebar;
+	delete p_map;
+	delete round;
 }
 void Game::saveGame()
 
@@ -633,31 +696,7 @@ void Game::saveGame()
 #pragma region Destruktor
 Game::~Game()
 {
-	if (!round->getAllTowers().empty())
-	{
-		for (auto i : round->getAllTowers())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllDrones().empty())
-	{
-		for (auto i : round->getAllDrones())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllProjectiles().empty())
-	{
-		for (auto i : round->getAllProjectiles())
-		{
-			delete i;
-		}
-	}
-	delete newTower;
-	delete sidebar;
-	delete p_map;
-	delete round;
+	resetAll();
 	instance = nullptr;
 }
 #pragma endregion

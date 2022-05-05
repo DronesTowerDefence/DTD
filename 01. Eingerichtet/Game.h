@@ -41,6 +41,8 @@ private:
 	Text eco;
 	Text gameOverRound;
 
+	Event event;
+
 	Ressources* p_ressources;
 	Round* round;
 	Sidebar* sidebar;
@@ -145,6 +147,7 @@ public:
 	/// Verändert regelmäßig die Musik
 	/// </summary>
 	void changeBackgroundMusic();
-	void getNewEco();
+	void updateEco();
+	void resetAll();
 
 };

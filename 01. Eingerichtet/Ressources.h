@@ -38,7 +38,7 @@ private:
 
 	std::string towerName[5]; //Der Name des Turmes
 	
-	Image icon;
+	//Image icon;
 	
 public:
 

@@ -61,23 +61,6 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 }
 #pragma endregion
 
-#pragma region setter
-void Drone::setSeed(float speed)
-{
-	this->speed = speed;
-}
-void Drone::setPosition(Vector2f position)
-{
-
-	drone.setPosition(position);
-
-}
-void Drone::setMove(Vector2f v)
-{
-	move_x = int(v.x);
-	move_y = int(v.y);
-}
-#pragma endregion
 
 #pragma region getter
 int Drone::getNextPoint()
@@ -143,6 +126,24 @@ Sprite* Drone::getDrawSprite()
 		animationTimer.restart();
 	}
 	return &drone;
+}
+#pragma endregion
+
+#pragma region setter
+void Drone::setSeed(float speed)
+{
+	this->speed = speed;
+}
+void Drone::setPosition(Vector2f position)
+{
+
+	drone.setPosition(position);
+
+}
+void Drone::setMove(Vector2f v)
+{
+	move_x = int(v.x);
+	move_y = int(v.y);
 }
 #pragma endregion
 

@@ -84,4 +84,3 @@ public:
 	void addHealth(int);
 	bool subhealth(int);
 };
-};
