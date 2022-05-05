@@ -18,7 +18,9 @@ int main()
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
-	//window.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr());
+	Ressources* ressources = Ressources::getInstance();
+
+	window.setIcon(ressources->getIcon().getSize().x, ressources->getIcon().getSize().y, ressources->getIcon().getPixelsPtr());
 
 	int fileError = fileVerification();
 	if (fileError != -1)

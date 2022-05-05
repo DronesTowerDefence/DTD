@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "SFML/Graphics.hpp"
+using namespace sf;
 
 class Ressources
 {
@@ -38,7 +39,7 @@ private:
 
 	std::string towerName[5]; //Der Name des Turmes
 	
-	//Image icon;
+	Image icon;
 	
 public:
 
@@ -69,7 +70,7 @@ public:
 	
 	std::string getTowerName(int);
 
-	sf::Image getIcon();
+	Image getIcon();
 	
 	void setSpeed();
 	
