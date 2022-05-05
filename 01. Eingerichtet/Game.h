@@ -148,5 +148,6 @@ public:
 	/// </summary>
 	void changeBackgroundMusic();
 	void updateEco();
+	void resetAll();
 
 };

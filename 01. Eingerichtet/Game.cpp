@@ -527,7 +527,6 @@ void Game::checkLoseGame()
 	{
 		round->setHealth(0);
 		updateEco();
-		window->draw(eco);
 
 		gameOverBackgroundTexture.loadFromFile("img/gameOverScreen.png");
 		gameOverBackround.setTexture(gameOverBackgroundTexture);
@@ -545,7 +544,7 @@ void Game::checkLoseGame()
 		gameOverRestartButton.setPosition(Vector2f(1060, 650));
 
 		Vector2i mousePos = Vector2i(0, 0);
-		bool homeMenu = false;
+		bool homeMenu = false, restart = false;
 		gameOverRound.setString(std::to_string(round->getIndex() + 1));
 		gameOverRound.setFont(stdFont);
 		gameOverRound.setCharacterSize(70);
@@ -593,13 +592,23 @@ void Game::checkLoseGame()
 				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
 					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
 				{
-					//Neue Funktion in Round zum resetten anlegen
-					return; //Nur temporär
+					std::cout << "Restart";
+					restart = true;
 				}
 				if (homeMenu)
 				{
-					lost = false;
+					saveGame();
 					HomeMenu::getInstance()->HomeMenuStart();
+				}
+				else if (restart)
+				{
+					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
+					resetAll();
+					round = Round::getInstance();
+					p_map = new Map(mapIndex);
+					sidebar = Sidebar::getInstance();
+					restart = false;
+					return;
 				}
 			}
 
@@ -607,6 +616,40 @@ void Game::checkLoseGame()
 
 	}
 
+}
+void Game::resetAll()
+{
+	//Zurücksetzen der Attribute von Game
+	lost = false;
+	droneCount = 0;
+	isMouseClicked = false;
+	doubleSpeed = false;
+
+	if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllProjectiles().empty())
+	{
+		for (auto i : round->getAllProjectiles())
+		{
+			delete i;
+		}
+	}
+	delete newTower;
+	delete sidebar;
+	delete p_map;
+	delete round;
 }
 void Game::saveGame()
 
@@ -653,31 +696,7 @@ void Game::saveGame()
 #pragma region Destruktor
 Game::~Game()
 {
-	if (!round->getAllTowers().empty())
-	{
-		for (auto i : round->getAllTowers())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllDrones().empty())
-	{
-		for (auto i : round->getAllDrones())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllProjectiles().empty())
-	{
-		for (auto i : round->getAllProjectiles())
-		{
-			delete i;
-		}
-	}
-	delete newTower;
-	delete sidebar;
-	delete p_map;
-	delete round;
+	resetAll();
 	instance = nullptr;
 }
 #pragma endregion
