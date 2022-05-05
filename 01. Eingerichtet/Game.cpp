@@ -518,6 +518,11 @@ void Game::checkLoseGame()
 
 		lost = true;
 
+		if (doubleSpeed)
+		{
+			Ressources::getInstance()->normalSpeed();
+			doubleSpeed = false;
+		}
 		while (lost)
 		{
 			while (window->pollEvent(event))
