@@ -46,43 +46,6 @@ Game::Game()
 }
 #pragma endregion
 
-#pragma region getter
-Game* Game::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Game;
-	}
-	return instance;
-}
-RenderWindow* Game::getWindow()
-{
-	return window;
-}
-Font Game::getFont()
-{
-	return stdFont;
-}
-Sound Game::getMusic()
-{
-	return music[0];
-}
-#pragma endregion
-
-#pragma region setter
-void Game::setMusicVolume(float v)
-{
-	for (int i = 0; i < 4; i++) {
-
-		music[i].setVolume(v);
-
-	}
-}
-void Game::setWindow(RenderWindow* _window) {
-	window = _window;
-}
-#pragma endregion
-
 #pragma region Funktionen
 bool Game::loadGame()
 {
@@ -692,6 +655,44 @@ void Game::saveGame()
 	wdatei.close();
 }
 #pragma endregion
+
+#pragma region getter
+Game* Game::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Game;
+	}
+	return instance;
+}
+RenderWindow* Game::getWindow()
+{
+	return window;
+}
+Font Game::getFont()
+{
+	return stdFont;
+}
+Sound Game::getMusic()
+{
+	return music[0];
+}
+#pragma endregion
+
+#pragma region setter
+void Game::setMusicVolume(float v)
+{
+	for (int i = 0; i < 4; i++) {
+
+		music[i].setVolume(v);
+
+	}
+}
+void Game::setWindow(RenderWindow* _window) {
+	window = _window;
+}
+#pragma endregion
+
 
 #pragma region Destruktor
 Game::~Game()

@@ -61,92 +61,6 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 }
 #pragma endregion
 
-
-#pragma region getter
-int Drone::getNextPoint()
-{
-	return nextPoint;
-}
-int Drone::getLives()
-{
-	return lives;
-}
-Vector2i Drone::getMove()
-{
-	return Vector2i(move_x, move_y);
-}
-Vector2f Drone::getPosition()
-{
-	return drone.getPosition();
-}
-Vector2f Drone::getNextPosition(int nextFrame)
-{
-	//Wird die überhaupt noch benutzt?
-
-	Vector2f deezNuts;
-
-	for (int i = 0; i < nextFrame; i++) {
-
-		deezNuts.x += drone.getPosition().x + move_x * speed;
-		deezNuts.y += drone.getPosition().y + move_y * speed;
-
-	}
-
-	return deezNuts;
-
-}
-Sprite Drone::getDroneSprite()
-{
-	return drone;
-}
-Sprite* Drone::getDrawSprite()
-{
-	//Animationsdings von Jonas?
-	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
-	{
-		switch (animationCounter)
-		{
-		case -1:
-			return &drone;
-			break;
-		case 0:
-			animationCounter = 1;
-			break;
-		case 1:
-			animationCounter = 2;
-			break;
-		case 2:
-			animationCounter = 3;
-			break;
-		case 3:
-			animationCounter = 0;
-			break;
-		}
-		drone.setTexture(droneTexture[animationCounter]);
-		animationTimer.restart();
-	}
-	return &drone;
-}
-#pragma endregion
-
-#pragma region setter
-void Drone::setSeed(float speed)
-{
-	this->speed = speed;
-}
-void Drone::setPosition(Vector2f position)
-{
-
-	drone.setPosition(position);
-
-}
-void Drone::setMove(Vector2f v)
-{
-	move_x = int(v.x);
-	move_y = int(v.y);
-}
-#pragma endregion
-
 #pragma region Funktionen
 void Drone::move()
 {
@@ -233,6 +147,92 @@ bool Drone::takeDamage(int damage) {
 	return false;
 }
 #pragma endregion
+
+#pragma region getter
+int Drone::getNextPoint()
+{
+	return nextPoint;
+}
+int Drone::getLives()
+{
+	return lives;
+}
+Vector2i Drone::getMove()
+{
+	return Vector2i(move_x, move_y);
+}
+Vector2f Drone::getPosition()
+{
+	return drone.getPosition();
+}
+Vector2f Drone::getNextPosition(int nextFrame)
+{
+	//Wird die überhaupt noch benutzt?
+
+	Vector2f deezNuts;
+
+	for (int i = 0; i < nextFrame; i++) {
+
+		deezNuts.x += drone.getPosition().x + move_x * speed;
+		deezNuts.y += drone.getPosition().y + move_y * speed;
+
+	}
+
+	return deezNuts;
+
+}
+Sprite Drone::getDroneSprite()
+{
+	return drone;
+}
+Sprite* Drone::getDrawSprite()
+{
+	//Animationsdings von Jonas?
+	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
+	{
+		switch (animationCounter)
+		{
+		case -1:
+			return &drone;
+			break;
+		case 0:
+			animationCounter = 1;
+			break;
+		case 1:
+			animationCounter = 2;
+			break;
+		case 2:
+			animationCounter = 3;
+			break;
+		case 3:
+			animationCounter = 0;
+			break;
+		}
+		drone.setTexture(droneTexture[animationCounter]);
+		animationTimer.restart();
+	}
+	return &drone;
+}
+#pragma endregion
+
+#pragma region setter
+void Drone::setSeed(float speed)
+{
+	this->speed = speed;
+}
+void Drone::setPosition(Vector2f position)
+{
+
+	drone.setPosition(position);
+
+}
+void Drone::setMove(Vector2f v)
+{
+	move_x = int(v.x);
+	move_y = int(v.y);
+}
+#pragma endregion
+
 
 #pragma region Destruktor
 Drone::~Drone()

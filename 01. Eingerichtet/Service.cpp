@@ -8,26 +8,12 @@ Service::Service()
 }
 #pragma endregion
 
-#pragma region getter
-Service* Service::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Service();
-	}
-	return instance;
-}
-#pragma endregion
-
-#pragma region setter
-#pragma endregion
-
 #pragma region Funktionen
 float Service::getXPosition(int xObject)
 {
 	return  VideoMode::getDesktopMode().width / 1920 * xObject;
 }
-float Service::getYPosition( int yObject)
+float Service::getYPosition(int yObject)
 {
 	return  VideoMode::getDesktopMode().height / 991 * yObject;
 }
@@ -46,6 +32,20 @@ Vector2f Service::getObjectPosition(Vector2f objectposition)
 	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 1080.f * objectposition.y);
 }
 #pragma endregion
+#pragma region getter
+Service* Service::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Service();
+	}
+	return instance;
+}
+#pragma endregion
+
+#pragma region setter
+#pragma endregion
+
 
 #pragma region Desturktor
 

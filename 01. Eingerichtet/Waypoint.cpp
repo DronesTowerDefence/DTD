@@ -10,6 +10,10 @@ Waypoint::Waypoint(Vector2f kooardinaten, Vector2f newMove, int condition)
 }
 #pragma endregion
 
+#pragma region Funktionen
+
+#pragma endregion
+
 #pragma region getter
 int Waypoint::getCondition()
 {
@@ -34,10 +38,6 @@ void Waypoint::setPass(bool pass)
 {
 	this->pass = pass;
 }
-#pragma endregion
-
-#pragma region Funktionen
-
 #pragma endregion
 
 #pragma region Desturktor

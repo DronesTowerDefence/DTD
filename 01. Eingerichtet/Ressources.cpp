@@ -101,6 +101,83 @@ Ressources::Ressources()
 }
 #pragma endregion
 
+#pragma region Funktionen
+void Ressources::normalSpeed()
+{
+	waitSubHealth *= 2;
+
+	towerSpeed[0] *= 2;
+	towerSpeed[1] *= 2;
+	towerSpeed[2] *= 2;
+	towerSpeed[3] *= 2;
+	towerSpeed[4] *= 2;
+
+	towerProjectileSpeed[0] *= 2;
+	towerProjectileSpeed[1] *= 2;
+	towerProjectileSpeed[2] *= 2;
+	towerProjectileSpeed[3] *= 2;
+	towerProjectileSpeed[4] *= 2;
+
+
+	towerChangeFrame[0] *= 2;
+	towerChangeFrame[1] *= 2;
+	towerChangeFrame[2] *= 2;
+	towerChangeFrame[3] *= 2;
+	towerChangeFrame[4] *= 2;
+
+	for (int j = 0; j < towerCount; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			towerUpdateSpeed[j][i] *= 2;
+
+		}
+	}
+	droneSpeed[0] = droneSpeed[0] / 2;
+	for (int i = 0; i < 100; i++)
+	{
+		droneSpawnTime[i] *= 2;
+	}
+	setSpeed();
+}
+void Ressources::doubleSpeed()
+{
+	waitSubHealth /= 2;
+	towerSpeed[0] /= 2;
+	towerSpeed[1] /= 2;
+	towerSpeed[2] /= 2;
+	towerSpeed[3] /= 2;
+	towerSpeed[4] /= 2;
+
+	towerProjectileSpeed[0] /= 2;
+	towerProjectileSpeed[1] /= 2;
+	towerProjectileSpeed[2] /= 2;
+	towerProjectileSpeed[3] /= 2;
+	towerProjectileSpeed[4] /= 2;
+
+	towerChangeFrame[0] /= 2;
+	towerChangeFrame[1] /= 2;
+	towerChangeFrame[2] /= 2;
+	towerChangeFrame[3] /= 2;
+	towerChangeFrame[4] /= 2;
+
+	for (int j = 0; j < towerCount; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			towerUpdateSpeed[j][i] /= 2;
+
+		}
+	}
+	droneSpeed[0] = droneSpeed[0] * 2;
+	for (int i = 0; i < 100; i++)
+	{
+		droneSpawnTime[i] /= 2;
+	}
+	setSpeed();
+}
+#pragma endregion
+
 #pragma region getter
 Ressources* Ressources::getInstance()
 {
@@ -234,82 +311,6 @@ void Ressources::setSpeed()
 
 #pragma endregion
 
-#pragma region Funktionen
-void Ressources::normalSpeed()
-{
-	waitSubHealth *= 2;
-
-	towerSpeed[0] *= 2;
-	towerSpeed[1] *= 2;
-	towerSpeed[2] *= 2;
-	towerSpeed[3] *= 2;
-	towerSpeed[4] *= 2;
-
-	towerProjectileSpeed[0] *= 2;
-	towerProjectileSpeed[1] *= 2;
-	towerProjectileSpeed[2] *= 2;
-	towerProjectileSpeed[3] *= 2;
-	towerProjectileSpeed[4] *= 2;
-
-
-	towerChangeFrame[0] *= 2;
-	towerChangeFrame[1] *= 2;
-	towerChangeFrame[2] *= 2;
-	towerChangeFrame[3] *= 2;
-	towerChangeFrame[4] *= 2;
-
-	for (int j = 0; j < towerCount; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			towerUpdateSpeed[j][i] *= 2;
-
-		}
-	}
-	droneSpeed[0] = droneSpeed[0] / 2;
-	for (int i = 0; i < 100; i++)
-	{
-		droneSpawnTime[i] *= 2;
-	}
-	setSpeed();
-}
-void Ressources::doubleSpeed()
-{
-	waitSubHealth /= 2;
-	towerSpeed[0] /= 2;
-	towerSpeed[1] /= 2;
-	towerSpeed[2] /= 2;
-	towerSpeed[3] /= 2;
-	towerSpeed[4] /= 2;
-
-	towerProjectileSpeed[0] /= 2;
-	towerProjectileSpeed[1] /= 2;
-	towerProjectileSpeed[2] /= 2;
-	towerProjectileSpeed[3] /= 2;
-	towerProjectileSpeed[4] /= 2;
-
-	towerChangeFrame[0] /= 2;
-	towerChangeFrame[1] /= 2;
-	towerChangeFrame[2] /= 2;
-	towerChangeFrame[3] /= 2;
-	towerChangeFrame[4] /= 2;
-
-	for (int j = 0; j < towerCount; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			towerUpdateSpeed[j][i] /= 2;
-
-		}
-	}
-	droneSpeed[0] = droneSpeed[0] * 2;
-	for (int i = 0; i < 100; i++)
-	{
-		droneSpawnTime[i] /= 2;
-	}
-	setSpeed();
-}
-#pragma endregion
 
 
 

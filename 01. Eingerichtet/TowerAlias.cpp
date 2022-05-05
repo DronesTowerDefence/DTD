@@ -38,6 +38,17 @@ TowerAlias::TowerAlias(int _index, Map* _map)
 }
 #pragma endregion
 
+#pragma region Funktionen
+void TowerAlias::setPositionMouse(Vector2i mouse)
+{
+	towerAliasSpr.setPosition(Service::getInstance()->getMousePosition((mouse - Vector2i(25, 25)))); //-25 damit der Mauszeiger mittig auf dem Tower ist
+	rangeShape.setPosition(towerAliasSpr.getPosition().x - range + 25, towerAliasSpr.getPosition().y - range + 25); //Damit der Kreis passend um den Turm ist
+}
+void TowerAlias::CreateNewTower()
+{
+	new Tower(index, towerAliasSpr.getPosition(), p_map);
+}
+#pragma endregion
 #pragma region getter
 int TowerAlias::getIndex()
 {
@@ -59,18 +70,6 @@ Sprite* TowerAlias::getSpr()
 
 #pragma region setter
 
-#pragma endregion
-
-#pragma region Funktionen
-void TowerAlias::setPositionMouse(Vector2i mouse)
-{
-	towerAliasSpr.setPosition(Service::getInstance()->getMousePosition((mouse - Vector2i(25, 25)))); //-25 damit der Mauszeiger mittig auf dem Tower ist
-	rangeShape.setPosition(towerAliasSpr.getPosition().x - range + 25, towerAliasSpr.getPosition().y - range + 25); //Damit der Kreis passend um den Turm ist
-}
-void TowerAlias::CreateNewTower()
-{
-	new Tower(index, towerAliasSpr.getPosition(), p_map);
-}
 #pragma endregion
 
 #pragma region Desturktor

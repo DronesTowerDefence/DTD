@@ -93,89 +93,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 }
 #pragma endregion
 
-#pragma region getter
-int Tower::getIndex()
-{
-	return index;
-}
-int Tower::getRange()
-{
-	return range;
-}
-float Tower::getDamage()
-{
-	return damage;
-}
-float Tower::getProjectileSpeed()
-{
-	return projectileSpeed;
-}
-float Tower::getValue()
-{
-	return value;
-}
-Vector2f Tower::getTowerPos()
-{
-	return position;
-}
-std::list<Vector3f> Tower::getCoverableArea()
-{
-	return coverableArea;
-}
-CircleShape* Tower::getRangeShape()
-{
-	return &rangeShape;
-}
-Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
-{
-	return towerSpr;
-}
-Sprite* Tower::getDrawSprite()
-{
-	if (animationTimer.getElapsedTime().asMilliseconds() >= towerChangeFrame)
-	{
-		switch (animationCounter)
-		{
-		case 0:
-			animationCounter = 1;
-			break;
-		case 1:
-			animationCounter = 2;
-			break;
-		case 2:
-			animationCounter = 3;
-			break;
-		case 3:
-			animationCounter = 0;
-			break;
-		}
-		towerSpr.setTexture(towerTex[animationCounter]);
-		animationTimer.restart();
-	}
-
-	return &towerSpr;
-}
-Updates* Tower::getUpdates()
-{
-	return update;
-}
-#pragma endregion
-
-#pragma region setter
-void Tower::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Tower::setProjektilSpeed(float speed)
-{
-	projectileSpeed = speed;
-}
-void Tower::setTowerChangeFrame(int frame)
-{
-	towerChangeFrame = frame;
-}
-#pragma endregion
-
 #pragma region Funktionen
 void Tower::setCoverableArea()
 {
@@ -282,6 +199,88 @@ void Tower::manageUpdate(RenderWindow* window)
 void Tower::spawnSpawn(int art)
 {
 	boundSpawns.push_back(new TowerSpawn(art, this));
+}
+#pragma endregion
+#pragma region getter
+int Tower::getIndex()
+{
+	return index;
+}
+int Tower::getRange()
+{
+	return range;
+}
+float Tower::getDamage()
+{
+	return damage;
+}
+float Tower::getProjectileSpeed()
+{
+	return projectileSpeed;
+}
+float Tower::getValue()
+{
+	return value;
+}
+Vector2f Tower::getTowerPos()
+{
+	return position;
+}
+std::list<Vector3f> Tower::getCoverableArea()
+{
+	return coverableArea;
+}
+CircleShape* Tower::getRangeShape()
+{
+	return &rangeShape;
+}
+Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
+{
+	return towerSpr;
+}
+Sprite* Tower::getDrawSprite()
+{
+	if (animationTimer.getElapsedTime().asMilliseconds() >= towerChangeFrame)
+	{
+		switch (animationCounter)
+		{
+		case 0:
+			animationCounter = 1;
+			break;
+		case 1:
+			animationCounter = 2;
+			break;
+		case 2:
+			animationCounter = 3;
+			break;
+		case 3:
+			animationCounter = 0;
+			break;
+		}
+		towerSpr.setTexture(towerTex[animationCounter]);
+		animationTimer.restart();
+	}
+
+	return &towerSpr;
+}
+Updates* Tower::getUpdates()
+{
+	return update;
+}
+#pragma endregion
+
+#pragma region setter
+void Tower::setSpeed(float speed)
+{
+	this->speed = speed;
+}
+void Tower::setProjektilSpeed(float speed)
+{
+	projectileSpeed = speed;
+}
+void Tower::setTowerChangeFrame(int frame)
+{
+	towerChangeFrame = frame;
 }
 #pragma endregion
 

@@ -47,27 +47,8 @@ Sidebar::Sidebar()
 
 #pragma endregion
 
-#pragma region getter
-Sidebar* Sidebar::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Sidebar();
-	}
-	return instance;
-}
-Texture Sidebar::getTowerTexture(int i)
-{
-	return buttonTexture[i];
-}
-#pragma endregion
-
-#pragma region setter
-
-#pragma endregion
-
 #pragma region Funktionen
-bool Sidebar::isChangeSpeed(RenderWindow * window)
+bool Sidebar::isChangeSpeed(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
@@ -122,6 +103,25 @@ void Sidebar::draw(sf::RenderWindow* window)
 
 }
 #pragma endregion
+#pragma region getter
+Sidebar* Sidebar::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Sidebar();
+	}
+	return instance;
+}
+Texture Sidebar::getTowerTexture(int i)
+{
+	return buttonTexture[i];
+}
+#pragma endregion
+
+#pragma region setter
+
+#pragma endregion
+
 
 #pragma region Desturktor
 Sidebar::~Sidebar()

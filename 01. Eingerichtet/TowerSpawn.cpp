@@ -13,17 +13,6 @@ TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 }
 #pragma endregion
 
-#pragma region getter
-Sprite TowerSpawn::getSpawnSprite()
-{
-	return spawnsprite;
-}
-#pragma endregion
-
-#pragma region setter
-
-#pragma endregion
-
 #pragma region Funktionen
 void TowerSpawn::moveSpawn()
 {
@@ -38,6 +27,16 @@ void TowerSpawn::operate()
 		spawnsprite.setTexture(spawntexture);
 	}
 }
+#pragma endregion
+#pragma region getter
+Sprite TowerSpawn::getSpawnSprite()
+{
+	return spawnsprite;
+}
+#pragma endregion
+
+#pragma region setter
+
 #pragma endregion
 
 #pragma region Desturktor

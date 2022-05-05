@@ -50,63 +50,6 @@ Map::Map(int index)
 }
 #pragma endregion
 
-#pragma region getter
-int Map::getIndex()
-{
-	return index;
-}
-int Map::getWayPointCount()
-{
-	return wayPointCount;
-}
-Vector2f Map::getStart()
-{
-	return start;
-}
-Vector2f Map::getStartMove()
-{
-	return startMove;
-}
-Vector2f Map::getWaypointAsVector(int index)
-{
-	int i = 0;
-	for (auto curser : points)
-	{
-		if (i == index)
-		{
-			return curser->getKooadinaten();
-		}
-		i++;
-	}
-	return Vector2f(0, 0);
-}
-RectangleShape* Map::getBackround()
-{
-	return &background;
-}
-Waypoint* Map::getWaypoint(int index)
-{
-	int i = 0;
-	for (auto curser : points)
-	{
-		if (i == index)
-		{
-			return curser;
-		}
-		i++;
-	}
-	return nullptr;
-}
-std::list<Waypoint*>& Map::getPoints()
-{
-	return points;
-}
-#pragma endregion
-
-#pragma region setter
-
-#pragma endregion
-
 #pragma region Funktionen
 /// <summary>
 /// 
@@ -171,6 +114,63 @@ void Map::changeDirection(Drone* drone, Waypoint* wp)
 		drone->pass();
 	}
 }
+#pragma endregion
+
+#pragma region getter
+int Map::getIndex()
+{
+	return index;
+}
+int Map::getWayPointCount()
+{
+	return wayPointCount;
+}
+Vector2f Map::getStart()
+{
+	return start;
+}
+Vector2f Map::getStartMove()
+{
+	return startMove;
+}
+Vector2f Map::getWaypointAsVector(int index)
+{
+	int i = 0;
+	for (auto curser : points)
+	{
+		if (i == index)
+		{
+			return curser->getKooadinaten();
+		}
+		i++;
+	}
+	return Vector2f(0, 0);
+}
+RectangleShape* Map::getBackround()
+{
+	return &background;
+}
+Waypoint* Map::getWaypoint(int index)
+{
+	int i = 0;
+	for (auto curser : points)
+	{
+		if (i == index)
+		{
+			return curser;
+		}
+		i++;
+	}
+	return nullptr;
+}
+std::list<Waypoint*>& Map::getPoints()
+{
+	return points;
+}
+#pragma endregion
+
+#pragma region setter
+
 #pragma endregion
 
 #pragma region Desturktor

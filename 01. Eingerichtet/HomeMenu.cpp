@@ -107,29 +107,6 @@ HomeMenu::HomeMenu()
 }
 #pragma endregion
 
-#pragma region getter
-HomeMenu* HomeMenu::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new HomeMenu();
-	}
-	return instance;
-}
-int HomeMenu::getChoseIndex()
-{
-	return choseIndex;
-}
-#pragma endregion
-
-#pragma region setter
-void HomeMenu::setWindow(RenderWindow* window)
-{
-	this->window = window;	HomeMenu();
-
-}
-#pragma endregion
-
 #pragma region Funktionen
 bool  HomeMenu::CheckClicked()
 {
@@ -248,6 +225,30 @@ void HomeMenu::setTowerTexture()
 
 }
 #pragma endregion
+
+#pragma region getter
+HomeMenu* HomeMenu::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new HomeMenu();
+	}
+	return instance;
+}
+int HomeMenu::getChoseIndex()
+{
+	return choseIndex;
+}
+#pragma endregion
+
+#pragma region setter
+void HomeMenu::setWindow(RenderWindow* window)
+{
+	this->window = window;	HomeMenu();
+
+}
+#pragma endregion
+
 
 #pragma region Desturktor
 #pragma endregion

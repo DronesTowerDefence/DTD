@@ -18,127 +18,6 @@ Round::Round()
 
 #pragma endregion
 
-#pragma region getter
-Round* Round::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Round;
-	}
-	return instance;
-}
-int Round::getIndex()
-{
-	return index;
-}
-int Round::getHealth()
-{
-	return health;
-}
-int Round::getMoney()
-{
-	return money;
-}
-bool Round::getLost()
-{
-	return Lost;
-}
-bool Round::getWon()
-{
-	return Won;
-}
-Clock Round::getDroneTimer()
-{
-	return droneTimer;
-}
-Clock Round::getDroneSubHealthTimer()
-{
-	return droneSubHealthTimer;
-}
-std::list<Tower*> Round::getAllAttackTower()
-{
-	return allAttackTowers;
-}
-std::list<Tower*> Round::getAllTowers()
-{
-	return allTowers;
-}
-std::list<Tower*> Round::getAllMoneyTower()
-{
-	return allMoneyTowers;
-}
-std::list<Drone*> Round::getAllDrones()
-{
-	return allDrones;
-
-}
-std::list<Projectile*> Round::getAllProjectiles()
-{
-	return allProjectiles;
-}
-std::list<Vector2f> Round::getAllCoverablePoints()
-{
-	return allCoverablePoints;
-}
-std::list<TowerSpawn*> Round::getAllSpawns()
-{
-	return allSpawns;
-}
-
-#pragma endregion
-
-#pragma region setter
-void Round::setIndex(int _index)
-{
-	index = _index;
-}
-bool Round::setHealth(int _health)
-{
-	if (_health < 0)
-		return 0;
-	health = _health;
-	return 1;
-}
-bool Round::setMoney(int _money)
-{
-	if (_money < 0)
-		return 0;
-	money = _money;
-	return 1;
-}
-void Round::setDroneTimer(Clock f)
-{
-
-	droneTimer = f;
-
-}
-void Round::setP_map(Map* _map)
-{
-	p_map = _map;
-}
-void Round::addDrone(Drone* drone)
-{
-	allDrones.push_back(drone);
-}
-void Round::addTower(Tower* tower)
-{
-	allTowers.push_back(tower);
-
-	if (tower->getIndex() < 4)
-		allAttackTowers.push_back(tower);
-	else if (tower->getIndex() == 4)
-		allMoneyTowers.push_back(tower);
-}
-void Round::addSpawn(TowerSpawn* spawn)
-{
-	allSpawns.push_back(spawn);
-}
-void Round::addProjectile(Projectile* _projectile)
-{
-	allProjectiles.push_back(_projectile);
-}
-#pragma endregion
-
 #pragma region Funktionen
 void Round::setAllCoverablePoints()
 {
@@ -284,6 +163,127 @@ bool Round::subhealth(int _health)
 
 	health -= _health;
 	return 1;
+}
+#pragma endregion
+
+#pragma region getter
+Round* Round::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Round;
+	}
+	return instance;
+}
+int Round::getIndex()
+{
+	return index;
+}
+int Round::getHealth()
+{
+	return health;
+}
+int Round::getMoney()
+{
+	return money;
+}
+bool Round::getLost()
+{
+	return Lost;
+}
+bool Round::getWon()
+{
+	return Won;
+}
+Clock Round::getDroneTimer()
+{
+	return droneTimer;
+}
+Clock Round::getDroneSubHealthTimer()
+{
+	return droneSubHealthTimer;
+}
+std::list<Tower*> Round::getAllAttackTower()
+{
+	return allAttackTowers;
+}
+std::list<Tower*> Round::getAllTowers()
+{
+	return allTowers;
+}
+std::list<Tower*> Round::getAllMoneyTower()
+{
+	return allMoneyTowers;
+}
+std::list<Drone*> Round::getAllDrones()
+{
+	return allDrones;
+
+}
+std::list<Projectile*> Round::getAllProjectiles()
+{
+	return allProjectiles;
+}
+std::list<Vector2f> Round::getAllCoverablePoints()
+{
+	return allCoverablePoints;
+}
+std::list<TowerSpawn*> Round::getAllSpawns()
+{
+	return allSpawns;
+}
+
+#pragma endregion
+
+#pragma region setter
+void Round::setIndex(int _index)
+{
+	index = _index;
+}
+bool Round::setHealth(int _health)
+{
+	if (_health < 0)
+		return 0;
+	health = _health;
+	return 1;
+}
+bool Round::setMoney(int _money)
+{
+	if (_money < 0)
+		return 0;
+	money = _money;
+	return 1;
+}
+void Round::setDroneTimer(Clock f)
+{
+
+	droneTimer = f;
+
+}
+void Round::setP_map(Map* _map)
+{
+	p_map = _map;
+}
+void Round::addDrone(Drone* drone)
+{
+	allDrones.push_back(drone);
+}
+void Round::addTower(Tower* tower)
+{
+	allTowers.push_back(tower);
+
+	if (tower->getIndex() < 4)
+		allAttackTowers.push_back(tower);
+	else if (tower->getIndex() == 4)
+		allMoneyTowers.push_back(tower);
+}
+void Round::addSpawn(TowerSpawn* spawn)
+{
+	allSpawns.push_back(spawn);
+}
+void Round::addProjectile(Projectile* _projectile)
+{
+	allProjectiles.push_back(_projectile);
 }
 #pragma endregion
 

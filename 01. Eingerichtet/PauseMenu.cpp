@@ -75,35 +75,6 @@ PauseMenu::PauseMenu() {
 }
 #pragma endregion
 
-#pragma region getter
-PauseMenu* PauseMenu::getInstance() {
-
-	if (instance == nullptr) {
-
-		instance = new PauseMenu();
-
-	}
-
-	return instance;
-
-}
-RectangleShape PauseMenu::getEdge()
-{
-	return edge;
-}
-Sprite PauseMenu::getBackground()
-{
-	return background;
-}
-Text PauseMenu::getText()
-{
-	return text1;
-}
-#pragma endregion
-
-#pragma region setter
-#pragma endregion
-
 #pragma region Funktionen
 void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 {
@@ -274,6 +245,35 @@ void PauseMenu::checkPause()
 	return;
 
 }
+#pragma endregion
+
+#pragma region getter
+PauseMenu* PauseMenu::getInstance() {
+
+	if (instance == nullptr) {
+
+		instance = new PauseMenu();
+
+	}
+
+	return instance;
+
+}
+RectangleShape PauseMenu::getEdge()
+{
+	return edge;
+}
+Sprite PauseMenu::getBackground()
+{
+	return background;
+}
+Text PauseMenu::getText()
+{
+	return text1;
+}
+#pragma endregion
+
+#pragma region setter
 #pragma endregion
 
 #pragma region Desturktor

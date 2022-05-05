@@ -34,25 +34,6 @@ Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 }
 #pragma endregion
 
-#pragma region getter
-bool Projectile::getcollided()
-{
-	return collided;
-}
-Sprite* Projectile::getProjectileSprite()
-{
-	return &projectilesprite;
-}
-#pragma endregion
-
-#pragma region setter
-void Projectile::setmove()
-{
-	move.x = -1 * (tower->getTowerPos().x - target.x);
-	move.y = -1 * (tower->getTowerPos().y - target.y);
-}
-#pragma endregion
-
 #pragma region Funktionen
 void Projectile::operate()
 {
@@ -113,6 +94,25 @@ void Projectile::collission()
 			delete this;
 		}
 	}
+}
+#pragma endregion
+
+#pragma region getter
+bool Projectile::getcollided()
+{
+	return collided;
+}
+Sprite* Projectile::getProjectileSprite()
+{
+	return &projectilesprite;
+}
+#pragma endregion
+
+#pragma region setter
+void Projectile::setmove()
+{
+	move.x = -1 * (tower->getTowerPos().x - target.x);
+	move.y = -1 * (tower->getTowerPos().y - target.y);
 }
 #pragma endregion
 

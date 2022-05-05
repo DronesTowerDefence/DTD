@@ -87,22 +87,6 @@ Updates::Updates(int towerIndex)
 }
 #pragma endregion
 
-#pragma region getter
-int Updates::getIndex1()
-{
-	return index1;
-}
-int Updates::getIndex2()
-{
-	return index2;
-}
-
-#pragma endregion
-
-#pragma region setter
-
-#pragma endregion
-
 #pragma region Funktionen
 void Updates::draw(RenderWindow* window)
 {
@@ -215,6 +199,21 @@ void Updates::canBuy()
 		update2->setTexture(*textureUpdate2);
 	}
 }
+#pragma endregion
+#pragma region getter
+int Updates::getIndex1()
+{
+	return index1;
+}
+int Updates::getIndex2()
+{
+	return index2;
+}
+
+#pragma endregion
+
+#pragma region setter
+
 #pragma endregion
 
 #pragma region Desturktor
