@@ -83,7 +83,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			setCoverableArea();
 		}
 
-		update = new Updates(index);
+		update = new Updates(this);
 
 	}
 	else
@@ -173,7 +173,6 @@ void Tower::manageUpdate(RenderWindow* window)
 		{
 			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex1() - 1);
-			speed;
 		}
 		else if (indexUpdate == 2)
 		{
@@ -194,6 +193,7 @@ void Tower::manageUpdate(RenderWindow* window)
 			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
 	}
+	update->setStringPrice();
 
 }
 void Tower::spawnSpawn(int art)
@@ -201,6 +201,7 @@ void Tower::spawnSpawn(int art)
 	boundSpawns.push_back(new TowerSpawn(art, this));
 }
 #pragma endregion
+
 #pragma region getter
 int Tower::getIndex()
 {

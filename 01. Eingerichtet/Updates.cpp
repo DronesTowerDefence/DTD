@@ -1,12 +1,11 @@
 #include "Updates.h"
 #include "Round.h"
-
-
+#include "Game.h"
 
 #pragma region Konstruktor
-Updates::Updates(int towerIndex)
+Updates::Updates(Tower* tower)
 {
-	this->towerIndex = towerIndex;
+	this->tower = tower;
 	index1 = 0;
 	index2 = 0;
 	close = new Sprite();
@@ -20,7 +19,7 @@ Updates::Updates(int towerIndex)
 
 	textureUpdate1NoBuy = new Texture();
 	textureUpdate2NoBuy = new Texture();
-	if (towerIndex == 4)
+	if (tower->getIndex() == 4)
 	{
 		textureUpdate1->loadFromFile("img/upgrades/upgradeMoney.png");
 		textureUpdate2->loadFromFile("img/upgrades/upgradeMoneyTime.png");
@@ -45,8 +44,8 @@ Updates::Updates(int towerIndex)
 	close->setTexture(*textureclose);
 	sell->setTexture(*textureSell);
 
-	update1->setPosition(Vector2f(1745, 100));
-	update2->setPosition(Vector2f(1745, 250));
+	update1->setPosition(Vector2f(1745, 200));
+	update2->setPosition(Vector2f(1745, 350));
 	close->setPosition(Vector2f(1850, 25));
 	sell->setPosition(Vector2f(1745, 25));
 
@@ -58,31 +57,40 @@ Updates::Updates(int towerIndex)
 		shoowUpdate1[i] = new RectangleShape(Vector2f(10, 10));
 		shoowUpdate2[i] = new RectangleShape(Vector2f(10, 10));
 
-		shoowUpdate1[i]->setPosition(x, 80);
-		shoowUpdate2[i]->setPosition(x, 230);
+		shoowUpdate1[i]->setPosition(x, 180);
+		shoowUpdate2[i]->setPosition(x, 330);
 		shoowUpdate1[i]->setFillColor(Color::Green);
 		shoowUpdate2[i]->setFillColor(Color::Green);
 	}
 	arial.loadFromFile("fonts/arial.ttf");
 	text1 = new Text();
 	text2 = new Text();
-	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1)) + " $"); //TODO updatepeis
-	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2)) + " $"); //TODO updatepeis
+	price = new Text();
 
-	text1->setPosition(1745, 200);
-	text2->setPosition(1745, 350);
+	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $");
+	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
+	price->setString(std::to_string((int)(tower->getValue() * 0.75f)) + " $");
+
+
+	text1->setPosition(1745, 300);
+	text2->setPosition(1745, 450);
+	price->setPosition(1745, 100);
 
 	text1->setFont(arial);
 	text2->setFont(arial);
+	price->setFont(arial);
 
 	text1->setCharacterSize(20);
 	text2->setCharacterSize(20);
+	price->setCharacterSize(20);
 
 	text1->setOutlineThickness(2);
+	price->setOutlineThickness(2);
 	text2->setOutlineThickness(2);
 
 	text1->setOutlineColor(Color::Black);
 	text2->setOutlineColor(Color::Black);
+	price->setOutlineColor(Color::Black);
 
 }
 #pragma endregion
@@ -96,6 +104,7 @@ void Updates::draw(RenderWindow* window)
 	window->draw(*text1);
 	window->draw(*text2);
 	window->draw(*sell);
+	window->draw(*price);
 	for (int i = 0; i < 4; i++)
 	{
 		if (index1 > i)
@@ -115,11 +124,11 @@ int Updates::isClicked(RenderWindow* window)
 
 	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
-		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1)))
+		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
 		{
 			index1++;
 			if (index1 < 4)
-				text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1)) + " $"); //TODO updatepeis
+				text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $"); //TODO updatepeis
 			else
 				text1->setString("CLOSE"); //TODO updatepeis
 			return 1;
@@ -134,11 +143,11 @@ int Updates::isClicked(RenderWindow* window)
 
 		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2)))
+			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
 			{
 				index2++;
 				if (index2 < 4)
-					text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2)) + " $"); //TODO updatepeis
+					text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $"); //TODO updatepeis
 				else
 					text2->setString("CLOSE"); //TODO updatepeis
 				return 2;
@@ -182,7 +191,7 @@ bool Updates::isSell(RenderWindow* window)
 }
 void Updates::canBuy()
 {
-	if (Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1) > Round::getInstance()->getMoney())
+	if (Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1) > Round::getInstance()->getMoney())
 	{
 		update1->setTexture(*textureUpdate1NoBuy);
 	}
@@ -190,7 +199,7 @@ void Updates::canBuy()
 	{
 		update1->setTexture(*textureUpdate1);
 	}
-	if (Ressources::getInstance()->getTowerUpgradesPrice2(towerIndex, index2) > Round::getInstance()->getMoney())
+	if (Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2) > Round::getInstance()->getMoney())
 	{
 		update2->setTexture(*textureUpdate2NoBuy);
 	}
@@ -198,6 +207,10 @@ void Updates::canBuy()
 	{
 		update2->setTexture(*textureUpdate2);
 	}
+}
+void Updates::setStringPrice()
+{
+	price->setString(std::to_string((int)(tower->getValue()*0.75f)) + " $");
 }
 #pragma endregion
 #pragma region getter

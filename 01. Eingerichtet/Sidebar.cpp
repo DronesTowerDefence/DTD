@@ -50,10 +50,11 @@ Sidebar::Sidebar()
 #pragma region Funktionen
 bool Sidebar::isChangeSpeed(RenderWindow* window)
 {
+	
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
-	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{

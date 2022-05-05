@@ -2,10 +2,10 @@
 #include "SFML/Graphics.hpp"
 //#include "Round.h"
 using namespace sf;
+class Tower;
 class Updates
 {
 private:
-	int towerIndex;
 	int index1;
 	int index2;
 	
@@ -25,17 +25,24 @@ private:
 	Font arial;
 	Text* text1;
 	Text* text2;
+	Text* price;
+
+	Tower* tower;
 
 public:
-	Updates(int towerIndex);
+	Updates(Tower * tower);
 	
 	int getIndex1();
 	int getIndex2();
+
+	
+
 	
 	void draw(RenderWindow* window);
 	int isClicked(RenderWindow* window);
 	bool IsClosed(RenderWindow* window);
 	bool isSell(RenderWindow* window);
 	void canBuy();	
+	void setStringPrice();
 };
 
