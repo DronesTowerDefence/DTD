@@ -13,10 +13,10 @@ private:
 	float range;
 	float price;
 	Vector2f pos;
-	Map* p_map;
-	Sprite towerAliasSpr;
 	Texture towerAliasTexture;
 	CircleShape rangeShape;
+	Sprite towerAliasSpr;
+	Map* p_map;
 
 public:
 	/// <summary>
@@ -26,34 +26,31 @@ public:
 	/// <param name="Map*"></param>
 	TowerAlias(int, Map*);
 
+	int getIndex();
 	/// <summary>
-	/// Setzt die Position des Objektes
+	/// Gibt die Position von TowerAlias zurück
 	/// </summary>
-	/// <param name="mouse">Position des Mauszeigers</param>
-	void setPositionMouse(Vector2i);
-
+	/// <returns>Vector2f</returns>
+	Vector2f getPos();
 	/// <summary>
-	/// Erstellt einen Tower
+	/// Gibt einen Zeiger auf den Kreis der Reichweite zurück
 	/// </summary>
-	void CreateNewTower();
-
+	/// <returns>CircleShape</returns>
+	CircleShape* getRangeShape();
 	/// <summary>
 	/// Gibt einen Zeiger auf die Sprite von TowerAlias zurück
 	/// </summary>
 	/// <returns>Sprite</returns>
 	Sprite* getSpr();
 
-	/// <summary>
-	/// Gibt einen Zeiger auf den Kreis der Reichweite zurück
-	/// </summary>
-	/// <returns>CircleShape</returns>
-	CircleShape* getRangeShape();
 
 	/// <summary>
-	/// Gibt die Position von TowerAlias zurück
+	/// Setzt die Position des Objektes
 	/// </summary>
-	/// <returns>Vector2f</returns>
-	Vector2f getPos();
-
-	int getIndex();
+	/// <param name="mouse">Position des Mauszeigers</param>
+	void setPositionMouse(Vector2i);
+	/// <summary>
+	/// Erstellt einen Tower
+	/// </summary>
+	void CreateNewTower();
 };

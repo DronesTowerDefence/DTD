@@ -7,25 +7,28 @@ using namespace sf;
 class Projectile
 {
 private:
-	float speed;
 	int style;
-	Vector2f move;
-	Sprite projectilesprite;
-	Vector3f target;
-	Tower* tower;
-	Drone* dronetarget;
-	Vector2f targetstill;
-	Texture projectileTexture;
+	float speed;
 	bool collided;
+	Vector2f move;
+	Vector2f targetstill;
+	Vector3f target;
+	Texture projectileTexture;
+	Sprite projectilesprite;
+	Drone* dronetarget;
+	Tower* tower;
 public:
 	Projectile(Drone*,Tower*,int);
+	
+	bool getcollided();
+	Sprite* getProjectileSprite();
+	
+	void setmove();
+	
 	void operate();
 	void targeting();
 	void homing();
 	void moveProjectile();
 	void collission();
-	Sprite* getProjectileSprite();
-	void setmove();
-	bool getcollided();
 	~Projectile();
 };

@@ -2,6 +2,11 @@
 #include "Round.h"
 #include <iostream>
 
+
+
+
+
+#pragma region Konstruktor
 Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 {
 	speed = _tower->getProjectileSpeed();
@@ -27,7 +32,28 @@ Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 	operate();
 
 }
+#pragma endregion
 
+#pragma region getter
+bool Projectile::getcollided()
+{
+	return collided;
+}
+Sprite* Projectile::getProjectileSprite()
+{
+	return &projectilesprite;
+}
+#pragma endregion
+
+#pragma region setter
+void Projectile::setmove()
+{
+	move.x = -1 * (tower->getTowerPos().x - target.x);
+	move.y = -1 * (tower->getTowerPos().y - target.y);
+}
+#pragma endregion
+
+#pragma region Funktionen
 void Projectile::operate()
 {
 	switch (style) {
@@ -39,7 +65,6 @@ void Projectile::operate()
 
 
 }
-
 void Projectile::targeting()
 {
 
@@ -56,7 +81,10 @@ void Projectile::targeting()
 
 
 }
-
+void Projectile::homing() {
+	move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
+	move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
+}
 void Projectile::moveProjectile()
 {
 	if (style == 2)
@@ -75,7 +103,6 @@ void Projectile::moveProjectile()
 
 
 }
-
 void Projectile::collission()
 {
 	if (collided == 0) {
@@ -87,31 +114,11 @@ void Projectile::collission()
 		}
 	}
 }
+#pragma endregion
 
-
-
-void Projectile::homing() {
-	move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
-	move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
-}
-
-void Projectile::setmove()
-{
-	move.x = -1 * (tower->getTowerPos().x - target.x);
-	move.y = -1 * (tower->getTowerPos().y - target.y);
-}
-
-bool Projectile::getcollided()
-{
-	return collided;
-}
-
+#pragma region Desturktor
 Projectile::~Projectile()
 {
 	Round::getInstance()->deleteProjectile(this);
 }
-
-Sprite* Projectile::getProjectileSprite()
-{
-	return &projectilesprite;
-}
+#pragma endregion

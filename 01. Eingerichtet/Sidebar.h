@@ -10,19 +10,19 @@ class Sidebar
 {
 private:
 	//Map* p_map;
-	Sprite buttonSpr[5];
-	Sprite doubleSpeed;
-
+	static Sidebar* instance;
+	float price[5]; //Wie viel die Tower kosten
 	Texture buttonTexture[5];
 	Texture buttonTextureNoBuy[5];
 	Texture doubleSpeedTexture;
+	Sprite buttonSpr[5];
+	Sprite doubleSpeed;
 
-	Text buttonText[5];
+
 	Font buttonTextFont;
+	Text buttonText[5];
 
-	float price[5]; //Wie viel die Tower kosten
 
-	static Sidebar* instance;
 	Sidebar();
 
 public:
@@ -34,20 +34,19 @@ public:
 	/// </summary>
 	/// <returns>Instance</returns>
 	static Sidebar* getInstance(/*Map**/);
+	Texture getTowerTexture(int);
 
+	bool isChangeSpeed(RenderWindow* window);
 	/// <summary>
 	/// GIbt zurück, welcher Button geklickt wurde
 	/// </summary>
 	/// <param name="window">Fenster</param>
 	/// <returns>Nummer des Towers</returns>
 	int isClicked(RenderWindow* window);
-
 	/// <summary>
 	/// Draw Sidebar
 	/// </summary>
 	/// <param name="window"></param>
 	void draw(RenderWindow* window);
 
-	Texture getTowerTexture(int);
-	bool isChangeSpeed(RenderWindow* window);
 };

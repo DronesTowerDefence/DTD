@@ -3,15 +3,8 @@
 
 Ressources* Ressources::instance = nullptr;
 
-Ressources* Ressources::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Ressources;
-	}
-	return instance;
-}
 
+#pragma region Konstruktor
 Ressources::Ressources()
 {
 
@@ -106,6 +99,17 @@ Ressources::Ressources()
 
 	icon.loadFromFile("img/icon.png");
 }
+#pragma endregion
+
+#pragma region getter
+Ressources* Ressources::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Ressources;
+	}
+	return instance;
+}
 int Ressources::getMapCount()
 {
 	return mapCount;
@@ -130,6 +134,27 @@ int Ressources::getTowerPrice(int i)
 {
 	return towerPrice[i];
 }
+int Ressources::getTowerChangeFrame(int i)
+{
+	return towerChangeFrame[i];
+}
+int Ressources::getTowerUpgradesPrice1(int i, int j)
+{
+	return towerUpgradePrice1[i][j];
+}
+int Ressources::getTowerUpgradesPrice2(int i, int j)
+{
+	return towerUpgradePrice2[i][j];
+}
+int Ressources::getDroneLives(int i)
+{
+	return droneLives[i];
+}
+int Ressources::getDroneCountInRound()
+{
+	return droneCountInRound[Round::getInstance()->getIndex()];
+}
+
 float Ressources::getTowerDamage(int i)
 {
 	return towerDamage[i];
@@ -150,22 +175,6 @@ float Ressources::getTowerMoneyGeneration(int i)
 {
 	return towerMoneyGeneration[i];
 }
-int Ressources::getTowerChangeFrame(int i)
-{
-	return towerChangeFrame[i];
-}
-std::string Ressources::getTowerName(int i)
-{
-	return towerName[i];
-}
-int Ressources::getTowerUpgradesPrice1(int i, int j)
-{
-	return towerUpgradePrice1[i][j];
-}
-int Ressources::getTowerUpgradesPrice2(int i, int j)
-{
-	return towerUpgradePrice2[i][j];
-}
 float Ressources::getTowerUpdateDamage(int i, int j)
 {
 	return towerUpdateDamage[i][j];
@@ -178,52 +187,54 @@ float Ressources::getDroneSpeed(int i)
 {
 	return droneSpeed[i];
 }
-int Ressources::getDroneLives(int i)
-{
-	return droneLives[i];
-}
 float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 {
 	return towerUpdateMoneyGeneration[i][j];
 }
-
-void Ressources::doubleSpeed()
+float Ressources::getDroneSpawnTime()
 {
-	waitSubHealth /= 2;
-	towerSpeed[0] /= 2;
-	towerSpeed[1] /= 2;
-	towerSpeed[2] /= 2;
-	towerSpeed[3] /= 2;
-	towerSpeed[4] /= 2;
-
-	towerProjectileSpeed[0] /= 2;
-	towerProjectileSpeed[1] /= 2;
-	towerProjectileSpeed[2] /= 2;
-	towerProjectileSpeed[3] /= 2;
-	towerProjectileSpeed[4] /= 2;
-
-	towerChangeFrame[0] /= 2;
-	towerChangeFrame[1] /= 2;
-	towerChangeFrame[2] /= 2;
-	towerChangeFrame[3] /= 2;
-	towerChangeFrame[4] /= 2;
-
-	for (int j = 0; j < towerCount; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			towerUpdateSpeed[j][i] /= 2;
-
-		}
-	}
-	droneSpeed[0] = droneSpeed[0] * 2;
-	for (int i = 0; i < 100; i++)
-	{
-		droneSpawnTime[i] /= 2;
-	}
-	setSpeed();
+	return droneSpawnTime[Round::getInstance()->getIndex()];
+}
+float Ressources::getWaitSubHealth()
+{
+	return waitSubHealth;
 }
 
+std::string Ressources::getTowerName(int i)
+{
+	return towerName[i];
+}
+sf::Image Ressources::getIcon()
+{
+	return icon;
+}
+#pragma endregion
+
+#pragma region setter
+void Ressources::setSpeed()
+{
+	Ressources* res = Ressources::getInstance();
+	for (auto i : Round::getInstance()->getAllAttackTower())
+	{
+		if (i->getUpdates()->getIndex1() == 0)
+		{
+			i->setSpeed(res->getTowerSpeed(i->getIndex()));	//standart
+		}
+		else
+		{
+			i->setSpeed(res->getTowerUpdateSpeed(i->getIndex(), i->getUpdates()->getIndex1()));	//standart
+		}
+		i->setProjektilSpeed(res->getTowerProjectileSpeed(i->getIndex()));
+	}
+	for (auto i : Round::getInstance()->getAllDrones())
+	{
+		i->setSeed(res->getDroneSpeed(0));
+	}
+}
+
+#pragma endregion
+
+#pragma region Funktionen
 void Ressources::normalSpeed()
 {
 	waitSubHealth *= 2;
@@ -262,44 +273,43 @@ void Ressources::normalSpeed()
 	}
 	setSpeed();
 }
-
-
-
-void Ressources::setSpeed()
+void Ressources::doubleSpeed()
 {
-	Ressources* res = Ressources::getInstance();
-	for (auto i : Round::getInstance()->getAllAttackTower())
+	waitSubHealth /= 2;
+	towerSpeed[0] /= 2;
+	towerSpeed[1] /= 2;
+	towerSpeed[2] /= 2;
+	towerSpeed[3] /= 2;
+	towerSpeed[4] /= 2;
+
+	towerProjectileSpeed[0] /= 2;
+	towerProjectileSpeed[1] /= 2;
+	towerProjectileSpeed[2] /= 2;
+	towerProjectileSpeed[3] /= 2;
+	towerProjectileSpeed[4] /= 2;
+
+	towerChangeFrame[0] /= 2;
+	towerChangeFrame[1] /= 2;
+	towerChangeFrame[2] /= 2;
+	towerChangeFrame[3] /= 2;
+	towerChangeFrame[4] /= 2;
+
+	for (int j = 0; j < towerCount; j++)
 	{
-		if (i->getUpdates()->getIndex1() == 0)
+		for (int i = 0; i < 4; i++)
 		{
-			i->setSpeed(res->getTowerSpeed(i->getIndex()));	//standart
+			towerUpdateSpeed[j][i] /= 2;
+
 		}
-		else
-		{
-			i->setSpeed(res->getTowerUpdateSpeed(i->getIndex(), i->getUpdates()->getIndex1()));	//standart
-		}
-		i->setProjektilSpeed(res->getTowerProjectileSpeed(i->getIndex()));
 	}
-	for (auto i : Round::getInstance()->getAllDrones())
+	droneSpeed[0] = droneSpeed[0] * 2;
+	for (int i = 0; i < 100; i++)
 	{
-		i->setSeed(res->getDroneSpeed(0));
+		droneSpawnTime[i] /= 2;
 	}
+	setSpeed();
 }
-sf::Image Ressources::getIcon()
-{
-	return icon;
-}
-int Ressources::getDroneCountInRound()
-{
-	return droneCountInRound[Round::getInstance()->getIndex()];
-}
+#pragma endregion
 
-float Ressources::getDroneSpawnTime()
-{
-	return droneSpawnTime[Round::getInstance()->getIndex()];
-}
 
-float Ressources::getWaitSubHealth()
-{
-	return waitSubHealth;
-}
+

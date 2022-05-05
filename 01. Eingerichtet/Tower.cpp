@@ -3,6 +3,7 @@
 #include "Round.h"
 #include <iostream>
 
+#pragma region Konstruktor
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	index = _index;
@@ -90,24 +91,45 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		delete this;
 	}
 }
+#pragma endregion
 
-void Tower::setCoverableArea()
+#pragma region getter
+int Tower::getIndex()
 {
-	Vector3f point = Vector3f(0, 0, 0);
-	float distanz = 0;
-	for (auto i : Round::getInstance()->getAllCoverablePoints())
-	{
-		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
-		if (distanz <= range)
-		{
-			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
-			point.x = i.x;
-			point.y = i.y;
-			coverableArea.push_back(point);
-		}
-	}
+	return index;
 }
-
+int Tower::getRange()
+{
+	return range;
+}
+float Tower::getDamage()
+{
+	return damage;
+}
+float Tower::getProjectileSpeed()
+{
+	return projectileSpeed;
+}
+float Tower::getValue()
+{
+	return value;
+}
+Vector2f Tower::getTowerPos()
+{
+	return position;
+}
+std::list<Vector3f> Tower::getCoverableArea()
+{
+	return coverableArea;
+}
+CircleShape* Tower::getRangeShape()
+{
+	return &rangeShape;
+}
+Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
+{
+	return towerSpr;
+}
 Sprite* Tower::getDrawSprite()
 {
 	if (animationTimer.getElapsedTime().asMilliseconds() >= towerChangeFrame)
@@ -133,26 +155,44 @@ Sprite* Tower::getDrawSprite()
 
 	return &towerSpr;
 }
-
-bool Tower::shoot(Drone* a) //Tower schießt Drone ab
+Updates* Tower::getUpdates()
 {
-	if (index < 4)
-	{
-		if (!shootCooldown)
-		{
-			new Projectile(a, this, Ressources::getInstance()->getTowerProjectileIndex(index)); //Konstruktor von Projektil aufrufen
-			shootCooldown = true;
-		}
-		else if (shootTimer.getElapsedTime().asSeconds() > speed)
-		{
-			shootCooldown = false;
-			shootTimer.restart();
-		}
-		return true;
-	}
-	else return false;
+	return update;
 }
+#pragma endregion
 
+#pragma region setter
+void Tower::setSpeed(float speed)
+{
+	this->speed = speed;
+}
+void Tower::setProjektilSpeed(float speed)
+{
+	projectileSpeed = speed;
+}
+void Tower::setTowerChangeFrame(int frame)
+{
+	towerChangeFrame = frame;
+}
+#pragma endregion
+
+#pragma region Funktionen
+void Tower::setCoverableArea()
+{
+	Vector3f point = Vector3f(0, 0, 0);
+	float distanz = 0;
+	for (auto i : Round::getInstance()->getAllCoverablePoints())
+	{
+		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
+		if (distanz <= range)
+		{
+			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
+			point.x = i.x;
+			point.y = i.y;
+			coverableArea.push_back(point);
+		}
+	}
+}
 bool Tower::generateMoney()
 {
 	if (index == 4)
@@ -171,7 +211,24 @@ bool Tower::generateMoney()
 	}
 	else return false;
 }
-
+bool Tower::shoot(Drone* a) //Tower schießt Drone ab
+{
+	if (index < 4)
+	{
+		if (!shootCooldown)
+		{
+			new Projectile(a, this, Ressources::getInstance()->getTowerProjectileIndex(index)); //Konstruktor von Projektil aufrufen
+			shootCooldown = true;
+		}
+		else if (shootTimer.getElapsedTime().asSeconds() > speed)
+		{
+			shootCooldown = false;
+			shootTimer.restart();
+		}
+		return true;
+	}
+	else return false;
+}
 bool   Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
@@ -186,7 +243,6 @@ bool   Tower::isClicked(RenderWindow* window)
 
 	return false;
 }
-
 void Tower::manageUpdate(RenderWindow* window)
 {
 
@@ -223,71 +279,12 @@ void Tower::manageUpdate(RenderWindow* window)
 	}
 
 }
-
-Updates* Tower::getUpdates()
-{
-	return update;
-}
-
-Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
-{
-	return towerSpr;
-}
-
-float Tower::getDamage()
-{
-	return damage;
-}
-
-float Tower::getValue()
-{
-	return value;
-}
-
-std::list<Vector3f> Tower::getCoverableArea()
-{
-	return coverableArea;
-}
-
-Vector2f Tower::getTowerPos()
-{
-	return position;
-}
-
-CircleShape* Tower::getRangeShape()
-{
-	return &rangeShape;
-}
-
-int Tower::getIndex()
-{
-	return index;
-}
-
-
-float Tower::getProjectileSpeed()
-{
-	return projectileSpeed;
-}
-
-int Tower::getRange()
-{
-	return range;
-}
-
-void Tower::setSpeed(float speed)
-{
-	this->speed = speed;
-}
-void Tower::setProjektilSpeed(float speed)
-{
-	projectileSpeed = speed;
-}
-void Tower::setTowerChangeFrame(int frame)
-{
-	towerChangeFrame = frame;
-}
 void Tower::spawnSpawn(int art)
 {
 	boundSpawns.push_back(new TowerSpawn(art, this));
 }
+#pragma endregion
+
+#pragma region Desturktor
+
+#pragma endregion

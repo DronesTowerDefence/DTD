@@ -5,18 +5,7 @@
 PauseMenu* PauseMenu::instance = nullptr;
 
 
-PauseMenu* PauseMenu::getInstance() {
-
-	if (instance == nullptr) {
-
-		instance = new PauseMenu();
-
-	}
-
-	return instance;
-
-}
-
+#pragma region Konstruktor
 PauseMenu::PauseMenu() {
 
 	window = Game::getInstance()->getWindow();
@@ -85,8 +74,75 @@ PauseMenu::PauseMenu() {
 
 
 }
+#pragma endregion
 
+#pragma region getter
+PauseMenu* PauseMenu::getInstance() {
 
+	if (instance == nullptr) {
+
+		instance = new PauseMenu();
+
+	}
+
+	return instance;
+
+}
+RectangleShape PauseMenu::getEdge()
+{
+	return edge;
+}
+Sprite PauseMenu::getBackground()
+{
+	return background;
+}
+Text PauseMenu::getText()
+{
+	return text1;
+}
+#pragma endregion
+
+#pragma region setter
+
+#pragma endregion
+
+#pragma region Funktionen
+void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
+{
+
+	if (Mouse::isButtonPressed(Mouse::Left))
+	{
+		isClicked = true;
+	}
+	if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
+	{
+		isClicked = false;
+		mouse = Mouse::getPosition(*window);
+
+		for (int i = 0; i < 1; i++)
+		{
+
+			pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
+			pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+			{
+				system("start www.twitter.com/DronesTD");
+			}
+		}
+
+		mouse = Mouse::getPosition(*window);
+		pos, pos2;
+
+		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			HomeMenu::getInstance()->HomeMenuStart();
+		}
+	}
+}
 void PauseMenu::checkPause(Event event1)
 {
 	/*Vector2i mousePos;*/
@@ -148,7 +204,6 @@ void PauseMenu::checkPause(Event event1)
 	return;
 
 }
-
 void PauseMenu::draw()
 {
 
@@ -165,55 +220,13 @@ void PauseMenu::draw()
 	window->display();
 
 }
+#pragma endregion
 
-RectangleShape PauseMenu::getEdge()
-{
-	return edge;
-}
+#pragma region Desturktor
 
-Sprite PauseMenu::getBackground()
-{
-	return background;
-}
+#pragma endregion
 
-Text PauseMenu::getText()
-{
-	return text1;
-}
 
-void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
-{
 
-	if (Mouse::isButtonPressed(Mouse::Left))
-	{
-		isClicked = true;
-	}
-	if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
-	{
-		isClicked = false;
-		mouse = Mouse::getPosition(*window);
 
-		for (int i = 0; i < 1; i++)
-		{
 
-			pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-			{
-				system("start www.twitter.com/DronesTD");
-			}
-		}
-
-		mouse = Mouse::getPosition(*window);
-		pos, pos2;
-
-		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			HomeMenu::getInstance()->HomeMenuStart();
-		}
-	}
-}

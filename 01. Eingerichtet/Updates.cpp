@@ -1,6 +1,9 @@
 #include "Updates.h"
 #include "Round.h"
 
+
+
+#pragma region Konstruktor
 Updates::Updates(int towerIndex)
 {
 	this->towerIndex = towerIndex;
@@ -82,7 +85,25 @@ Updates::Updates(int towerIndex)
 	text2->setOutlineColor(Color::Black);
 
 }
+#pragma endregion
 
+#pragma region getter
+int Updates::getIndex1()
+{
+	return index1;
+}
+int Updates::getIndex2()
+{
+	return index2;
+}
+
+#pragma endregion
+
+#pragma region setter
+
+#pragma endregion
+
+#pragma region Funktionen
 void Updates::draw(RenderWindow* window)
 {
 	window->draw(*update1);
@@ -100,7 +121,6 @@ void Updates::draw(RenderWindow* window)
 	}
 
 }
-
 int Updates::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
@@ -144,7 +164,6 @@ int Updates::isClicked(RenderWindow* window)
 
 	return -1;
 }
-
 bool Updates::IsClosed(RenderWindow* window)
 {
 
@@ -177,15 +196,6 @@ bool Updates::isSell(RenderWindow* window)
 		return false;
 	}
 }
-int Updates::getIndex1()
-{
-	return index1;
-}
-
-int Updates::getIndex2()
-{
-	return index2;
-}
 void Updates::canBuy()
 {
 	if (Ressources::getInstance()->getTowerUpgradesPrice1(towerIndex, index1) > Round::getInstance()->getMoney())
@@ -205,3 +215,8 @@ void Updates::canBuy()
 		update2->setTexture(*textureUpdate2);
 	}
 }
+#pragma endregion
+
+#pragma region Desturktor
+
+#pragma endregion

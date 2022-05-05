@@ -8,12 +8,12 @@ private:
 	Service();
 public:
 	static Service* getInstance();
+	
+	float getXPosition( int xObject);
+	float getYPosition( int yObject);
 	Vector2f getMousePosition(Vector2i MousePosition);
 	Vector2f getObjectPosition( Vector2f objectposition);
 
-	float getXPosition( int xObject);
-
-	float getYPosition( int yObject);
 
 
 };

@@ -1,11 +1,7 @@
 #include "Map.h"
 #include "Round.h"
 
-int Map::getWayPointCount()
-{
-	return wayPointCount;
-}
-
+#pragma region Konstruktor
 /// <summary>
 /// Create Map
 /// </summary>
@@ -52,6 +48,66 @@ Map::Map(int index)
 		break;
 	}
 }
+#pragma endregion
+
+#pragma region getter
+int Map::getIndex()
+{
+	return index;
+}
+int Map::getWayPointCount()
+{
+	return wayPointCount;
+}
+Vector2f Map::getStart()
+{
+	return start;
+}
+Vector2f Map::getStartMove()
+{
+	return startMove;
+}
+Vector2f Map::getWaypointAsVector(int index)
+{
+	int i = 0;
+	for (auto curser : points)
+	{
+		if (i == index)
+		{
+			return curser->getKooadinaten();
+		}
+		i++;
+	}
+	return Vector2f(0, 0);
+}
+RectangleShape* Map::getBackround()
+{
+	return &background;
+}
+Waypoint* Map::getWaypoint(int index)
+{
+	int i = 0;
+	for (auto curser : points)
+	{
+		if (i == index)
+		{
+			return curser;
+		}
+		i++;
+	}
+	return nullptr;
+}
+std::list<Waypoint*>& Map::getPoints()
+{
+	return points;
+}
+#pragma endregion
+
+#pragma region setter
+
+#pragma endregion
+
+#pragma region Funktionen
 /// <summary>
 /// 
 /// </summary>
@@ -106,7 +162,6 @@ void Map::checkChangeDirection(Drone* drone) // x , y , v in Drohne
 	}
 
 }
-
 void Map::changeDirection(Drone* drone, Waypoint* wp)
 {
 	drone->setPosition(wp->getKooadinaten());
@@ -116,56 +171,8 @@ void Map::changeDirection(Drone* drone, Waypoint* wp)
 		drone->pass();
 	}
 }
+#pragma endregion
 
-Vector2f Map::getStart()
-{
-	return start;
-}
+#pragma region Desturktor
 
-Vector2f Map::getStartMove()
-{
-	return startMove;
-}
-
-std::list<Waypoint*>& Map::getPoints()
-{
-	return points;
-}
-
-Waypoint* Map::getWaypoint(int index)
-{
-	int i = 0;
-	for (auto curser : points)
-	{
-		if (i == index)
-		{
-			return curser;
-		}
-		i++;
-	}
-	return nullptr;
-}
-
-Vector2f Map::getWaypointAsVector(int index)
-{
-	int i = 0;
-	for (auto curser : points)
-	{
-		if (i == index)
-		{
-			return curser->getKooadinaten();
-		}
-		i++;
-	}
-	return Vector2f(0, 0);
-}
-
-int Map::getIndex()
-{
-	return index;
-}
-
-RectangleShape* Map::getBackround()
-{
-	return &background;
-}
+#pragma endregion

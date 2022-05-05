@@ -2,7 +2,7 @@
 
 
 Round* Round::instance = nullptr;
-
+#pragma region Konstruktor
 Round::Round()
 {
 	money = 1000; //Start-Geld
@@ -16,11 +16,9 @@ Round::Round()
 
 }
 
-Round::~Round()
-{
-	instance = nullptr;
-}
+#pragma endregion
 
+#pragma region getter
 Round* Round::getInstance()
 {
 	if (instance == nullptr)
@@ -29,7 +27,119 @@ Round* Round::getInstance()
 	}
 	return instance;
 }
+int Round::getIndex()
+{
+	return index;
+}
+int Round::getHealth()
+{
+	return health;
+}
+int Round::getMoney()
+{
+	return money;
+}
+bool Round::getLost()
+{
+	return Lost;
+}
+bool Round::getWon()
+{
+	return Won;
+}
+Clock Round::getDroneTimer()
+{
+	return droneTimer;
+}
+Clock Round::getDroneSubHealthTimer()
+{
+	return droneSubHealthTimer;
+}
+std::list<Tower*> Round::getAllAttackTower()
+{
+	return allAttackTowers;
+}
+std::list<Tower*> Round::getAllTowers()
+{
+	return allTowers;
+}
+std::list<Tower*> Round::getAllMoneyTower()
+{
+	return allMoneyTowers;
+}
+std::list<Drone*> Round::getAllDrones()
+{
+	return allDrones;
 
+}
+std::list<Projectile*> Round::getAllProjectiles()
+{
+	return allProjectiles;
+}
+std::list<Vector2f> Round::getAllCoverablePoints()
+{
+	return allCoverablePoints;
+}
+std::list<TowerSpawn*> Round::getAllSpawns()
+{
+	return allSpawns;
+}
+
+#pragma endregion
+
+#pragma region setter
+void Round::setIndex(int _index)
+{
+	index = _index;
+}
+bool Round::setHealth(int _health)
+{
+	if (_health < 0)
+		return 0;
+	health = _health;
+	return 1;
+}
+bool Round::setMoney(int _money)
+{
+	if (_money < 0)
+		return 0;
+	money = _money;
+	return 1;
+}
+void Round::setDroneTimer(Clock f)
+{
+
+	droneTimer = f;
+
+}
+void Round::setP_map(Map* _map)
+{
+	p_map = _map;
+}
+void Round::addDrone(Drone* drone)
+{
+	allDrones.push_back(drone);
+}
+void Round::addTower(Tower* tower)
+{
+	allTowers.push_back(tower);
+
+	if (tower->getIndex() < 4)
+		allAttackTowers.push_back(tower);
+	else if (tower->getIndex() == 4)
+		allMoneyTowers.push_back(tower);
+}
+void Round::addSpawn(TowerSpawn* spawn)
+{
+	allSpawns.push_back(spawn);
+}
+void Round::addProjectile(Projectile* _projectile)
+{
+	allProjectiles.push_back(_projectile);
+}
+#pragma endregion
+
+#pragma region Funktionen
 void Round::setAllCoverablePoints()
 {
 	Vector2f point = Vector2f(0, 0);
@@ -87,97 +197,6 @@ void Round::setAllCoverablePoints()
 		}
 	}
 }
-
-
-
-void Round::addMoney(int _money)
-{
-	if (_money > 0)
-		money += _money;
-}
-
-bool Round::submoney(int _money)
-{
-	if (_money < 0)
-		return 0;
-	else if (money < _money)
-		return 0;
-
-	money -= _money;
-	return 1;
-}
-
-int Round::getMoney()
-{
-	return money;
-}
-
-bool Round::setMoney(int _money)
-{
-	if (_money < 0)
-		return 0;
-	money = _money;
-	return 1;
-}
-
-void Round::addHealth(int _health)
-{
-	health += _health;
-}
-
-bool Round::subhealth(int _health)
-{
-	if (health < _health) {
-
-		Lost = true;
-
-	}
-
-	health -= _health;
-	return 1;
-}
-
-int Round::getHealth()
-{
-	return health;
-}
-
-bool Round::setHealth(int _health)
-{
-	if (_health < 0)
-		return 0;
-	health = _health;
-	return 1;
-}
-
-void Round::nextRound()
-{
-	index++;
-	Lost = false;
-	Won = true;
-}
-
-int Round::getIndex()
-{
-	return index;
-}
-
-std::list<Tower*> Round::getAllAttackTower()
-{
-	return allAttackTowers;
-}
-
-std::list<Drone*> Round::getAllDrones()
-{
-	return allDrones;
-
-}
-
-std::list<Tower*> Round::getAllMoneyTower()
-{
-	return allMoneyTowers;
-}
-
 void Round::sellTower(Tower* a)
 {
 	for (auto i : allAttackTowers)
@@ -211,110 +230,73 @@ void Round::sellTower(Tower* a)
 	delete a;
 	a = nullptr;
 }
-
-void Round::addDrone(Drone* drone)
-{
-	allDrones.push_back(drone);
-}
-
-void Round::addTower(Tower* tower)
-{
-	allTowers.push_back(tower);
-
-	if (tower->getIndex() < 4)
-		allAttackTowers.push_back(tower);
-	else if (tower->getIndex() == 4)
-		allMoneyTowers.push_back(tower);
-}
-
-void Round::addSpawn(TowerSpawn* spawn)
-{
-	allSpawns.push_back(spawn);
-}
-
-Clock Round::getDroneTimer()
-{
-	return droneTimer;
-}
-
 void Round::restartDroneTimer()
 {
 	droneTimer.restart();
 }
-
-Clock Round::getDroneSubHealthTimer()
-{
-	return droneSubHealthTimer;
-}
-
 void Round::restartDroneSubHealthTimer()
 {
 	droneSubHealthTimer.restart();
 }
-
-bool Round::getLost()
-{
-	return Lost;
-}
-
-bool Round::getWon()
-{
-	return Won;
-}
-
-std::list<Projectile*> Round::getAllProjectiles()
-{
-	return allProjectiles;
-}
-
-void Round::addProjectile(Projectile* _projectile)
-{
-	allProjectiles.push_back(_projectile);
-}
-
-
-
 void Round::deleteDrone(Drone* drone)
 {
-	
-	allDrones.remove(drone);
-	
-}
 
+	allDrones.remove(drone);
+
+}
 void Round::deleteProjectile(Projectile* p)
 {
 	allProjectiles.remove(p);
 
 }
-
-std::list<Vector2f> Round::getAllCoverablePoints()
+void Round::nextRound()
 {
-	return allCoverablePoints;
+	index++;
+	Lost = false;
+	Won = true;
 }
-
-std::list<TowerSpawn*> Round::getAllSpawns()
+void Round::addMoney(int _money)
 {
-	return allSpawns;
+	if (_money > 0)
+		money += _money;
 }
-
-void Round::setP_map(Map *_map)
+bool Round::submoney(int _money)
 {
-	p_map = _map;
-}
+	if (_money < 0)
+		return 0;
+	else if (money < _money)
+		return 0;
 
-void Round::setIndex(int _index)
+	money -= _money;
+	return 1;
+}
+void Round::addHealth(int _health)
 {
-	index = _index;
+	health += _health;
 }
-
-std::list<Tower*> Round::getAllTowers()
+bool Round::subhealth(int _health)
 {
-	return allTowers;
-}
+	if (health < _health) {
 
-void Round::setDroneTimer(Clock f)
+		Lost = true;
+
+	}
+
+	health -= _health;
+	return 1;
+}
+#pragma endregion
+
+#pragma region Desturktor
+Round::~Round() 
 {
-
-	droneTimer = f;
-
+	instance = nullptr;
 }
+#pragma endregion
+
+
+
+
+
+
+

@@ -8,33 +8,32 @@ class PauseMenu
 	//Singleton
 	static PauseMenu* instance;
 
+	float sliderHelper;
+
+	bool isClicked;
 	RenderWindow* window;
+	
+	Vector2i mouse;
+	Vector2f pos, pos2;
+
+	Texture backgroundTexture;
+	Texture homebtnTexture;
+	Texture twitterTexture;
+	
+	RectangleShape mouseRect;
+	RectangleShape edge;
+	RectangleShape volumeSlider;
+	RectangleShape socialsBorder;
+
+	Sprite background;
+	Sprite homebtn;
+	Sprite twitter;
+
 
 	Font font;
 
 	Text text1;
 	Text text2;
-
-	Texture backgroundTexture;
-	Sprite background;
-	RectangleShape edge;
-	
-	RectangleShape volumeSlider;
-	float sliderHelper;
-
-
-	bool isClicked;
-	Vector2i mouse;
-	Vector2f pos, pos2;
-
-	Texture twitterTexture;
-	Sprite twitter;
-	RectangleShape socialsBorder;
-
-	Texture homebtnTexture;
-	Sprite homebtn;
-
-	RectangleShape mouseRect;
 
 	PauseMenu();
 	
@@ -43,7 +42,11 @@ class PauseMenu
 public:
 
 	static PauseMenu* getInstance();
-    /// <summary>
+	RectangleShape getEdge();
+	Sprite getBackground();
+	Text getText();
+    
+	/// <summary>
     /// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft (wird in Game::startGame() aufgerufen)
     /// </summary>
     /// <param name="">Event event</param>
@@ -53,8 +56,5 @@ public:
 	/// </summary>
 	void draw();
 
-	RectangleShape getEdge();
-	Sprite getBackground();
-	Text getText();
 };
 

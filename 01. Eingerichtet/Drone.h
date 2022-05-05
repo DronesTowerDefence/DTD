@@ -19,7 +19,7 @@ private:
 	/// </summary>
 	static int droneID;
 
- 	/// <summary>
+	/// <summary>
 	/// NICHT ÄNDERN, einmalige ID der Drohne
 	/// </summary>
 	int id;
@@ -53,7 +53,7 @@ private:
 	/// </summary>
 
 	float speed;
-	
+
 	/// <summary>
 	/// Textur der Drone, animiert in 4 Frames : Texture
 	/// </summary>
@@ -71,7 +71,7 @@ private:
 	Clock animationTimer;
 
 	SoundBuffer deathSoundBuffer;
-	
+
 	Sound deathSound;
 
 	/// <summary>
@@ -87,17 +87,7 @@ public:
 	Drone(int typSpecifier, Vector2f startPosition, int x, int y); //Konstruktor
 
 
-	/// <summary>
-	/// Setzt die Position der Drone mit einem 2-float Vector
-	/// </summary>
-	/// <param name="Vector2f position"></param>
-	void setSeed(float speed);
-	void setPosition(Vector2f position);
-	/// <summary>
-	/// Setzt die move_x und move_y Koordinaten mit einem 2-float Vector
-	/// </summary>
-	/// <param name="Vector2f v"></param>
-	void setMove(Vector2f v);
+
 
 	/// <summary>
 	/// Gibt die Sprite der Drone zurück
@@ -113,7 +103,7 @@ public:
 	/// </summary>
 	/// <returns>int lives</returns>
 	int getLives();
-	
+
 	/// <summary>
 	/// Gibt die move_x und move_y Koordinaten mit einem 2-float Vector zurück
 	/// </summary>
@@ -135,6 +125,18 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Sprite* getDrawSprite();
+
+	/// <summary>
+/// Setzt die Position der Drone mit einem 2-float Vector
+/// </summary>
+/// <param name="Vector2f position"></param>
+	void setSeed(float speed);
+	void setPosition(Vector2f position);
+	/// <summary>
+	/// Setzt die move_x und move_y Koordinaten mit einem 2-float Vector
+	/// </summary>
+	/// <param name="Vector2f v"></param>
+	void setMove(Vector2f v);
 
 	/// <summary>
 	/// Bewegt die Drone, indem die aktuelle Position + die move-Werte * der Geschwindigkeit gesetzt wird

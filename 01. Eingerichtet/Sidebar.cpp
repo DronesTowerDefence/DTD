@@ -4,6 +4,7 @@
 
 Sidebar* Sidebar::instance = nullptr;
 
+#pragma region Konstruktor
 Sidebar::Sidebar()
 {
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
@@ -44,11 +45,9 @@ Sidebar::Sidebar()
 	doubleSpeed.setPosition(Vector2f(1750, 500));
 }
 
-Sidebar::~Sidebar()
-{
-	instance = nullptr;
-}
+#pragma endregion
 
+#pragma region getter
 Sidebar* Sidebar::getInstance()
 {
 	if (instance == nullptr)
@@ -57,7 +56,30 @@ Sidebar* Sidebar::getInstance()
 	}
 	return instance;
 }
+Texture Sidebar::getTowerTexture(int i)
+{
+	return buttonTexture[i];
+}
+#pragma endregion
 
+#pragma region setter
+
+#pragma endregion
+
+#pragma region Funktionen
+bool Sidebar::isChangeSpeed(RenderWindow * window)
+{
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
+	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	{
+		return true;
+	}
+	return false;
+}
 int Sidebar::isClicked(sf::RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
@@ -80,7 +102,6 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 
 	return -1;
 }
-
 void Sidebar::draw(sf::RenderWindow* window)
 {
 	for (int i = 0; i < 5; i++)
@@ -100,23 +121,11 @@ void Sidebar::draw(sf::RenderWindow* window)
 	window->draw(doubleSpeed);
 
 }
+#pragma endregion
 
-Texture Sidebar::getTowerTexture(int i)
+#pragma region Desturktor
+Sidebar::~Sidebar()
 {
-	return buttonTexture[i];
+	instance = nullptr;
 }
-
-bool Sidebar::isChangeSpeed(RenderWindow * window)
-{
-	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f pos, pos2;
-	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
-	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-	{
-		return true;
-	}
-	return false;
-}
-
+#pragma endregion
