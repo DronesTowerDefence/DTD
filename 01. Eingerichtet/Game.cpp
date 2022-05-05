@@ -506,7 +506,6 @@ void Game::checkLoseGame()
 		gameOverRestartButton.setPosition(Vector2f(1060, 650));
 
 		Vector2i mousePos = Vector2i(0, 0);
-		bool homeMenu = false, restart = false;
 		gameOverRound.setString(std::to_string(round->getIndex() + 1));
 		gameOverRound.setFont(stdFont);
 		gameOverRound.setCharacterSize(70);
@@ -556,20 +555,11 @@ void Game::checkLoseGame()
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
 					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
 				{
-					homeMenu = true;
-				}
-				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
-					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
-				{
-					std::cout << "Restart";
-					restart = true;
-				}
-				if (homeMenu)
-				{
 					saveGame();
 					HomeMenu::getInstance()->HomeMenuStart();
 				}
-				else if (restart)
+				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
+					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
 				{
 					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 					resetAll();
