@@ -128,8 +128,8 @@ Ressources::Ressources()
 		}
 	}
 
-	projectileTexture[0];
-	projectileTexture[1];
+	projectileTexture[0].loadFromFile("img/projectiles/projectile0.png");
+	projectileTexture[1].loadFromFile("img/projectiles/projectile1.png");
 	buttonHomeTexture.loadFromFile("img/buttons/homeButton.png");
 	buttonRestartTexture.loadFromFile("img/buttons/restartButton.png");
 	buttonCloseTexture.loadFromFile("img/buttons/closeButton.png");
