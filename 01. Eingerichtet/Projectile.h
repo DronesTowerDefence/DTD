@@ -13,10 +13,10 @@ private:
 	Vector2f move;
 	Vector2f targetstill;
 	Vector3f target;
-	Texture projectileTexture;
 	Sprite projectilesprite;
 	Drone* dronetarget;
 	Tower* tower;
+	Ressources* res;
 public:
 	Projectile(Drone*,Tower*,int);
 	

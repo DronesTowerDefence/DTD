@@ -7,11 +7,8 @@ Sidebar* Sidebar::instance = nullptr;
 #pragma region Konstruktor
 Sidebar::Sidebar()
 {
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
-	{
-		buttonTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_preview.png");
-		buttonTextureNoBuy[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
-	}
+	res = Ressources::getInstance();
+
 	buttonTextFont.loadFromFile("fonts/arial.ttf");
 
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
@@ -19,7 +16,7 @@ Sidebar::Sidebar()
 		price[i] = Ressources::getInstance()->getTowerPrice(i);
 		buttonText[i].setString(Ressources::getInstance()->getTowerName(i) + "\n" + std::to_string(int(price[i])) + " $");
 
-		buttonSpr[i].setTexture(buttonTexture[i]);
+		buttonSpr[i].setTexture(*res->getTowerPreviewTexture(i));
 		buttonText[i].setFont(buttonTextFont);
 		buttonText[i].setCharacterSize(20);
 		buttonText[i].setFillColor(Color::White);
@@ -39,9 +36,7 @@ Sidebar::Sidebar()
 	buttonSpr[3].setPosition(Vector2f(1837, 120));
 	buttonSpr[4].setPosition(Vector2f(1762, 225));
 
-	doubleSpeedTexture = Texture();
-	doubleSpeedTexture.loadFromFile("img/buttons/closeButton.png");
-	doubleSpeed.setTexture(doubleSpeedTexture);
+	doubleSpeed.setTexture(*res->getButtonCloseTexture());
 	doubleSpeed.setPosition(Vector2f(1750, 500));
 }
 
@@ -90,11 +85,11 @@ void Sidebar::draw(sf::RenderWindow* window)
 	{
 		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i))
 		{
-			buttonSpr[i].setTexture(buttonTexture[i]);
+			buttonSpr[i].setTexture(*res->getTowerPreviewTexture(i));
 		}
 		else
 		{
-			buttonSpr[i].setTexture(buttonTextureNoBuy[i]);
+			buttonSpr[i].setTexture(*res->getTowerNoBuyTexture(i));
 
 		}
 		window->draw(buttonSpr[i]);
@@ -112,10 +107,6 @@ Sidebar* Sidebar::getInstance()
 		instance = new Sidebar();
 	}
 	return instance;
-}
-Texture Sidebar::getTowerTexture(int i)
-{
-	return buttonTexture[i];
 }
 #pragma endregion
 

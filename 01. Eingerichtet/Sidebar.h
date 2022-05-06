@@ -12,16 +12,13 @@ private:
 	//Map* p_map;
 	static Sidebar* instance;
 	float price[5]; //Wie viel die Tower kosten
-	Texture buttonTexture[5];
-	Texture buttonTextureNoBuy[5];
-	Texture doubleSpeedTexture;
 	Sprite buttonSpr[5];
 	Sprite doubleSpeed;
-
 
 	Font buttonTextFont;
 	Text buttonText[5];
 
+	Ressources* res;
 
 	Sidebar();
 
@@ -34,7 +31,6 @@ public:
 	/// </summary>
 	/// <returns>Instance</returns>
 	static Sidebar* getInstance(/*Map**/);
-	Texture getTowerTexture(int);
 
 	bool isChangeSpeed(RenderWindow* window);
 	/// <summary>

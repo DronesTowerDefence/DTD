@@ -4,34 +4,13 @@
 TowerAlias::TowerAlias(int _index, Map* _map)
 {
 	index = _index;
+	res = Ressources::getInstance();
 
-	switch (index)
-	{
-	case 0:
-		towerAliasTexture.loadFromFile("img/tower0/tower0_alias.png");
-		break;
-
-	case 1:
-		towerAliasTexture.loadFromFile("img/tower1/tower1_alias.png");
-		break;
-
-	case 2:
-		towerAliasTexture.loadFromFile("img/tower2/tower2_alias.png");
-		break;
-
-	case 3:
-		towerAliasTexture.loadFromFile("img/tower3/tower3_alias.png");
-		break;
-
-	case 4:
-		towerAliasTexture.loadFromFile("img/tower4/tower4_alias.png");
-		break;
-	}
-	range = Ressources::getInstance()->getTowerRange(index);
-	price = Ressources::getInstance()->getTowerPrice(index);
+	range = res->getTowerRange(index);
+	price = res->getTowerPrice(index);
 	p_map = _map;
-	towerAliasSpr.setTexture(towerAliasTexture);
-	rangeShape.setRadius(Ressources::getInstance()->getTowerRange(index));
+	towerAliasSpr.setTexture(*res->getTowerAliasTexture(index));
+	rangeShape.setRadius(res->getTowerRange(index));
 	rangeShape.setFillColor(Color::Transparent);
 	rangeShape.setOutlineColor(Color::Black);
 	rangeShape.setOutlineThickness(5);

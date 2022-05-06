@@ -13,21 +13,18 @@ HomeMenu::HomeMenu()
 	titel = new Sprite;
 	backround = new Sprite();
 	drone = new Sprite();
-	textureStartButton = new Texture();
-	textureTitel = new Texture();
-	textureBackround = new Texture();
-	textureDrone = new Texture();
 	pointer = new RectangleShape;
+	textureTitel = new Texture;
+	textureBackround = new Texture;
+	res = Ressources::getInstance();
 
-	textureStartButton->loadFromFile("img/buttons/startButton.png");
 	textureTitel->loadFromFile("img/titleText.png");
-	textureDrone->loadFromFile("img/drone0/drone0_0.png");
-	font->loadFromFile("fonts/arial.ttf");
-	startButton->setTexture(*textureStartButton);
-	titel->setTexture(*textureTitel);
 	textureBackround->loadFromFile("img/backround.jpg");
+	font->loadFromFile("fonts/arial.ttf");
+	startButton->setTexture(*res->getButtonStartTexture());
+	titel->setTexture(*textureTitel);
 	backround->setTexture(*textureBackround);
-	drone->setTexture(*textureDrone);;
+	drone->setTexture(*res->getDroneTexture(1,0));;
 
 	choseIndex = -1;
 
@@ -41,10 +38,8 @@ HomeMenu::HomeMenu()
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, x += 242)
 	{
 		map[i] = new Sprite;
-		textureMap[i] = new Texture();
 		map[i]->setScale(0.1, 0.1);
-		textureMap[i]->loadFromFile("img/maps/map" + std::to_string(i) + ".png");
-		map[i]->setTexture(*textureMap[i]);
+		map[i]->setTexture(*res->getMapTexture(i));
 		map[i]->setPosition(Vector2f(x, 500));
 
 	}

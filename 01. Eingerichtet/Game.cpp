@@ -555,18 +555,20 @@ void Game::checkLoseGame()
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
 					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
 				{
-					saveGame();
+					//saveGame();
+					lost = false;
 					HomeMenu::getInstance()->HomeMenuStart();
+					return;
 				}
 				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
 					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
 				{
+					lost = false;
 					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 					resetAll();
 					round = Round::getInstance();
 					p_map = new Map(mapIndex);
 					sidebar = Sidebar::getInstance();
-					//restart = false;
 					return;
 				}
 			}

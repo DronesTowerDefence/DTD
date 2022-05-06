@@ -97,6 +97,49 @@ Ressources::Ressources()
 	droneSpeed[0] = 2.5;
 	droneLives[0] = 3;
 
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			towerTexture[i][j].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_" + std::to_string(j) + ".png");
+		}
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		towerAliasTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_alias.png");
+		towerPreviewTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_preview.png");
+		towerNoBuyTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
+	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			droneTexture[i][j].loadFromFile("img/drone" + std::to_string(i) + "/drone" + std::to_string(i) + "_" + std::to_string(j) + "_d0.png");
+		}
+	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			droneDmgTexture[i][j].loadFromFile("img/drone" + std::to_string(i) + "/drone" + std::to_string(i) + "_0_d" + std::to_string(j) + ".png");
+		}
+	}
+
+	projectileTexture[0];
+	projectileTexture[1];
+	buttonHomeTexture.loadFromFile("img/buttons/homeButton.png");
+	buttonRestartTexture.loadFromFile("img/buttons/restartButton.png");
+	buttonCloseTexture.loadFromFile("img/buttons/closeButton.png");
+	buttonStartTexture.loadFromFile("img/buttons/startButton.png");
+
+	for (int i = 0; i < 2; i++)
+	{
+		map[i].loadFromFile("img/maps/map" + std::to_string(i) + ".png");
+	}
+
 	icon.loadFromFile("img/icon.png");
 }
 #pragma endregion
@@ -281,9 +324,57 @@ std::string Ressources::getTowerName(int i)
 {
 	return towerName[i];
 }
-sf::Image Ressources::getIcon()
+Image Ressources::getIcon()
 {
 	return icon;
+}
+Texture* Ressources::getTowerTexture(int i, int j)
+{
+	return &towerTexture[i][j];
+}
+Texture* Ressources::getTowerAliasTexture(int i)
+{
+	return &towerAliasTexture[i];
+}
+Texture* Ressources::getTowerPreviewTexture(int i)
+{
+	return &towerPreviewTexture[i];
+}
+Texture* Ressources::getTowerNoBuyTexture(int i)
+{
+	return &towerNoBuyTexture[i];
+}
+Texture* Ressources::getProjectileTexture(int i)
+{
+	return &projectileTexture[i];
+}
+Texture* Ressources::getDroneTexture(int i, int j)
+{
+	return &droneTexture[i][j];
+}
+Texture* Ressources::getDroneDmgTexture(int i, int j)
+{
+	return &droneDmgTexture[i][j];
+}
+Texture* Ressources::getButtonHomeTexture()
+{
+	return &buttonHomeTexture;
+}
+Texture* Ressources::getButtonRestartTexture()
+{
+	return &buttonStartTexture;
+}
+Texture* Ressources::getButtonCloseTexture()
+{
+	return &buttonCloseTexture;
+}
+Texture* Ressources::getButtonStartTexture()
+{
+	return &buttonStartTexture;
+}
+Texture* Ressources::getMapTexture(int i)
+{
+	return &map[i];
 }
 #pragma endregion
 

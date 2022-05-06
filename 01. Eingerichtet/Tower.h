@@ -32,7 +32,6 @@ private:
 	Vector2f position;
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 	
-	Texture towerTex[4];
 	CircleShape rangeShape;
 	Sprite towerSpr;
 	
@@ -45,6 +44,7 @@ private:
 	std::list<TowerSpawn*> boundSpawns;
 	Map* p_map;
 	Updates* update;
+	Ressources* res;
 	
 	Tower(); //Standart-Konstruktor soll nicht benutzt werden
 	

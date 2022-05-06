@@ -13,10 +13,10 @@ private:
 	float range;
 	float price;
 	Vector2f pos;
-	Texture towerAliasTexture;
 	CircleShape rangeShape;
 	Sprite towerAliasSpr;
 	Map* p_map;
+	Ressources* res;
 
 public:
 	/// <summary>

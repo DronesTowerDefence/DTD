@@ -11,58 +11,21 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 	if (index >= 0 && index <= 4)
 	{
-		switch (index)
+		if (index == 3)
 		{
-		case 0:
-			towerTex[0].loadFromFile("img/tower0/tower0_0.png");
-			towerTex[1].loadFromFile("img/tower0/tower0_1.png");
-			towerTex[2].loadFromFile("img/tower0/tower0_2.png");
-			towerTex[3].loadFromFile("img/tower0/tower0_1.png");
-			Round::getInstance()->addTower(this);
-
-			break;
-		case 1:
-			towerTex[0].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[1].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[2].loadFromFile("img/tower1/tower1_0.png");
-			towerTex[3].loadFromFile("img/tower1/tower1_0.png");
-			Round::getInstance()->addTower(this);
-			break;
-
-		case 2:
-			towerTex[0].loadFromFile("img/tower2/tower2_0.png");
-			towerTex[1].loadFromFile("img/tower2/tower2_1.png");
-			towerTex[2].loadFromFile("img/tower2/tower2_2.png");
-			towerTex[3].loadFromFile("img/tower2/tower2_1.png");
-			Round::getInstance()->addTower(this);
-			break;
-
-		case 3:
-			towerTex[0].loadFromFile("img/Flughafen.jpg");
-			towerTex[1].loadFromFile("img/Flughafen.jpg");
-			towerTex[2].loadFromFile("img/Flughafen.jpg");
-			towerTex[3].loadFromFile("img/Flughafen.jpg");
 			spawnSpawn(1);
-			Round::getInstance()->addTower(this);
-			break;
-
-		case 4:
-			towerTex[0].loadFromFile("img/tower4/tower4_0.png");
-			towerTex[1].loadFromFile("img/tower4/tower4_1.png");
-			towerTex[2].loadFromFile("img/tower4/tower4_2.png");
-			towerTex[3].loadFromFile("img/tower4/tower4_3.png");
-			Round::getInstance()->addTower(this);
-			break;
 		}
 
-		damage = Ressources::getInstance()->getTowerDamage(index);
-		speed = Ressources::getInstance()->getTowerSpeed(index);
-		price = Ressources::getInstance()->getTowerPrice(index);
-		projectileSpeed = Ressources::getInstance()->getTowerProjectileSpeed(index);
-		range = Ressources::getInstance()->getTowerRange(index);
-		moneyGeneration = Ressources::getInstance()->getTowerMoneyGeneration(index);
-		towerChangeFrame = Ressources::getInstance()->getTowerChangeFrame(index);
-		name = Ressources::getInstance()->getTowerName(index);
+		Round::getInstance()->addTower(this);
+		res = Ressources::getInstance();
+		damage = res->getTowerDamage(index);
+		speed = res->getTowerSpeed(index);
+		price = res->getTowerPrice(index);
+		projectileSpeed = res->getTowerProjectileSpeed(index);
+		range = res->getTowerRange(index);
+		moneyGeneration = res->getTowerMoneyGeneration(index);
+		towerChangeFrame = res->getTowerChangeFrame(index);
+		name = res->getTowerName(index);
 
 		animationCounter = 0;
 		position = pos;
@@ -70,10 +33,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		value = price;
 		shootCooldown = false;
 		generationCooldown = false;
-		towerSpr.setTexture(towerTex[animationCounter]);
+		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
 
-		if (index < Ressources::getInstance()->getTowerCount())
+		if (index < res->getTowerCount())
 		{
 			rangeShape.setRadius(range);
 			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
@@ -134,7 +97,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this, Ressources::getInstance()->getTowerProjectileIndex(index)); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this, res->getTowerProjectileIndex(index)); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > speed)
@@ -171,26 +134,26 @@ void Tower::manageUpdate(RenderWindow* window)
 
 		if (indexUpdate == 1)
 		{
-			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
 		}
 		else if (indexUpdate == 2)
 		{
-			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			damage = Ressources::getInstance()->getTowerUpdateDamage(index, update->getIndex2() - 1);
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
 		}
 	}
 	else if (index == 4)
 	{
 		if (indexUpdate == 1)
 		{
-			value += Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			moneyGeneration = Ressources::getInstance()->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
 		}
 		else if (indexUpdate == 2)
 		{
-			value += Ressources::getInstance()->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			speed = Ressources::getInstance()->getTowerUpdateSpeed(index, update->getIndex2() - 1);
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
 	}
 	update->setStringPrice();
@@ -258,7 +221,7 @@ Sprite* Tower::getDrawSprite()
 			animationCounter = 0;
 			break;
 		}
-		towerSpr.setTexture(towerTex[animationCounter]);
+		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		animationTimer.restart();
 	}
 

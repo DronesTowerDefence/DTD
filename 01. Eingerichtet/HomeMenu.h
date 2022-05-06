@@ -20,13 +20,10 @@ private:
 
 	RenderWindow* window;
 	
-	Texture* textureStartButton;
-	Texture* textureMap[2];
+	Texture* textureTower[5][4];	
 	Texture* textureTitel;
-	Texture* textureTower[5][4];
 	Texture* textureBackround;
-	Texture* textureDrone;
-	
+
 	RectangleShape* pointer;
 	
 	Sprite* startButton;
@@ -40,6 +37,8 @@ private:
 	
 	Font *font;
 	Text *choseText;
+
+	Ressources* res;
 	
 	bool CheckClicked();
 	void draw();

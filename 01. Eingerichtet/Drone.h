@@ -55,15 +55,6 @@ private:
 	float speed;
 
 	/// <summary>
-	/// Textur der Drone, animiert in 4 Frames : Texture
-	/// </summary>
-	Texture droneTexture[4];
-	/// <summary>
-	/// Textur für den Damage, ist nicht mehr animiert : Textur
-	/// </summary>
-	Texture droneTextureDmg;
-
-	/// <summary>
 	/// Sprite der Drone : Sprite
 	/// </summary>
 	Sprite drone;
@@ -73,6 +64,8 @@ private:
 	SoundBuffer deathSoundBuffer;
 
 	Sound deathSound;
+
+	Ressources* res;
 
 	/// <summary>
 	/// !NICHT BENUTZEN!

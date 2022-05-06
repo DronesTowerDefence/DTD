@@ -39,6 +39,19 @@ private:
 
 	std::string towerName[5]; //Der Name des Turmes
 	
+	Texture towerTexture[5][4];
+	Texture towerAliasTexture[5];
+	Texture towerPreviewTexture[5];
+	Texture towerNoBuyTexture[5];
+	Texture projectileTexture[2];
+	Texture droneTexture[1][3];
+	Texture droneDmgTexture[1][2];
+	Texture buttonHomeTexture;
+	Texture buttonRestartTexture;
+	Texture buttonCloseTexture;
+	Texture buttonStartTexture;
+	Texture map[2];
+
 	Image icon;
 	
 public:
@@ -71,6 +84,19 @@ public:
 	std::string getTowerName(int);
 
 	Image getIcon();
+
+	Texture* getTowerTexture(int,int);
+	Texture* getTowerAliasTexture(int);
+	Texture* getTowerPreviewTexture(int);
+	Texture* getTowerNoBuyTexture(int);
+	Texture* getProjectileTexture(int);
+	Texture* getDroneTexture(int,int);
+	Texture* getDroneDmgTexture(int, int);
+	Texture* getButtonHomeTexture();
+	Texture* getButtonRestartTexture();
+	Texture* getButtonCloseTexture();
+	Texture* getButtonStartTexture();
+	Texture* getMapTexture(int);
 	
 	void setSpeed();
 	
