@@ -122,14 +122,14 @@ Ressources::Ressources()
 
 	for (int i = 0; i < 1; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			droneDmgTexture[i][j].loadFromFile("img/drone" + std::to_string(i) + "/drone" + std::to_string(i) + "_0_d" + std::to_string(j) + ".png");
 		}
 	}
 
-	projectileTexture[0];
-	projectileTexture[1];
+	projectileTexture[0].loadFromFile("img/projectiles/projectile0.png");
+	projectileTexture[1].loadFromFile("img/projectiles/projectile1.png");
 	buttonHomeTexture.loadFromFile("img/buttons/homeButton.png");
 	buttonRestartTexture.loadFromFile("img/buttons/restartButton.png");
 	buttonCloseTexture.loadFromFile("img/buttons/closeButton.png");

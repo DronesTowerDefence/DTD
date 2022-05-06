@@ -45,7 +45,7 @@ private:
 	Texture towerNoBuyTexture[5];
 	Texture projectileTexture[2];
 	Texture droneTexture[1][3];
-	Texture droneDmgTexture[1][2];
+	Texture droneDmgTexture[1][4];
 	Texture buttonHomeTexture;
 	Texture buttonRestartTexture;
 	Texture buttonCloseTexture;
