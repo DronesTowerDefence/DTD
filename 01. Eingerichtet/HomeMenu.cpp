@@ -24,7 +24,7 @@ HomeMenu::HomeMenu()
 	startButton->setTexture(*res->getButtonStartTexture());
 	titel->setTexture(*textureTitel);
 	backround->setTexture(*textureBackround);
-	drone->setTexture(*res->getDroneTexture(1,0));;
+	drone->setTexture(*res->getDroneTexture(1, 0));;
 
 	choseIndex = -1;
 
@@ -119,7 +119,7 @@ bool  HomeMenu::CheckClicked()
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(150, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920*0.1, 991*0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{
