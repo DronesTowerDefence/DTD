@@ -24,7 +24,7 @@ Updates::Updates(Tower* tower)
 		textureUpdate1->loadFromFile("img/upgrades/upgradeMoney.png");
 		textureUpdate2->loadFromFile("img/upgrades/upgradeMoneyTime.png");
 		textureUpdate1NoBuy->loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
-		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
+		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 
 
 	}

@@ -185,7 +185,7 @@ void Game::startGame()
 		checkTowerAlias();
 		generateMoneyTowers();
 		changeBackgroundMusic();
-		for (auto i : Round::getInstance()->getAllAttackTower())
+		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			i->getUpdates()->canBuy();
 
