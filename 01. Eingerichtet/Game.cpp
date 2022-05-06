@@ -49,6 +49,8 @@ Game::Game()
 #pragma region Funktionen
 bool Game::loadGame()
 {
+	return 0; //DELETE WHEN DONE : Nur solange die Funktion noch nicht fertig ist
+
 	std::string datei; //Dateipfad
 	datei = "saves/savegame" + std::to_string(p_map->getIndex());
 	datei += ".sav";
@@ -56,8 +58,8 @@ bool Game::loadGame()
 	std::ifstream rdatei;
 	char buffer[50];
 
-	//Funktioniert noch nicht
-	/*rdatei.open("saves/settings.sav");
+	//WIP - Funktioniert noch nicht
+	rdatei.open("saves/settings.sav");
 	while (!rdatei.eof())
 	{
 		for (int i = 0; i < 49; i++, buffer[i] = '\0');
@@ -65,7 +67,9 @@ bool Game::loadGame()
 	}
 	rdatei.close();
 
-	PauseMenu::getInstance()->setSliderHelper(std::stof(buffer));*/
+	PauseMenu::getInstance()->setSliderHelper(std::stof(buffer));
+
+	//
 
 	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTest)
