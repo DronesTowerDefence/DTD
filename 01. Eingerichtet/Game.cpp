@@ -550,7 +550,7 @@ void Game::checkLoseGame()
 				restartButton = serv->getObjectPosition(gameOverRestartButton.getPosition());
 				restartButton2 = serv->getObjectPosition(gameOverRestartButton.getPosition() + Vector2f(100.f, 100.f)); //Muss noch bearbeitet werden
 				//restartButton = gameOverRestartButton.getPosition();
-				//restartButton2 = restartButton + Vector2f(gameOverRestartButtonTexture.getSize());
+				//restartButton2 = restartButton + Vector2f(gameOverRes				tartButtonTexture.getSize());
 
 
 
