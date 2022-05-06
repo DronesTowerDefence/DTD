@@ -88,12 +88,11 @@ private:
 	/// Lässt MoneyTower Geld generieren
 	/// </summary>
 	void generateMoneyTowers();
-	void checkLoseGame();
-	/// <summary>
-	/// Speichert das Spiel
-	/// </summary>
-	void saveGame();
 
+	/// <summary>
+	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat und überprüft ob man verloren hat
+	/// </summary>
+	void checkLoseGame();
 
 	/// <summary>
 	/// Konstruktor von Game
@@ -143,11 +142,25 @@ public:
 	/// Startet das Spiel
 	/// </summary>
 	void startGame();
+
 	/// <summary>
 	/// Verändert regelmäßig die Musik
 	/// </summary>
 	void changeBackgroundMusic();
+
+	/// <summary>
+	/// Aktualisiert die Infos oben Links (Geld, Leben, Runde)
+	/// </summary>
 	void updateEco();
+
+	/// <summary>
+	/// Klassen, welche von Game verwaltet werden, werden gelöscht
+	/// </summary>
 	void resetAll();
+
+	/// <summary>
+	/// Speichert das Spiel
+	/// </summary>
+	void saveGame();
 
 };

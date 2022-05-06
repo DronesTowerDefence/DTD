@@ -158,7 +158,6 @@ void HomeMenu::HomeMenuStart()
 		{
 			if (event.type == Event::Closed)
 			{
-				//saveGame();
 				window->close();
 			}
 		}

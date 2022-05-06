@@ -42,10 +42,12 @@ class PauseMenu
 public:
 
 	static PauseMenu* getInstance();
+	float getSliderHelper();
 	RectangleShape getEdge();
 	Sprite getBackground();
 	Text getText();
 
+	void setSliderHelper(float);
 
 	/// <summary>
 		/// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft (wird in Game::startGame() aufgerufen)

@@ -123,18 +123,19 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 		
 
 
-		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
+			Game::getInstance()->saveGame();
 			HomeMenu::getInstance()->HomeMenuStart();
 		}
 
 		pos = Service::getInstance()->getObjectPosition(playbtn.getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(playbtn.getPosition() + Vector2f(100.f, 100.f));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			play = true;
 		}
@@ -306,6 +307,10 @@ PauseMenu* PauseMenu::getInstance() {
 	return instance;
 
 }
+float PauseMenu::getSliderHelper()
+{
+	return sliderHelper;
+}
 RectangleShape PauseMenu::getEdge()
 {
 	return edge;
@@ -321,6 +326,10 @@ Text PauseMenu::getText()
 #pragma endregion
 
 #pragma region setter
+void PauseMenu::setSliderHelper(float i)
+{
+	sliderHelper = i;
+}
 #pragma endregion
 
 #pragma region Desturktor

@@ -53,15 +53,28 @@ bool Game::loadGame()
 	datei = "saves/savegame" + std::to_string(p_map->getIndex());
 	datei += ".sav";
 
+	std::ifstream rdatei;
+	char buffer[50];
+
+	//Funktioniert noch nicht
+	/*rdatei.open("saves/settings.sav");
+	while (!rdatei.eof())
+	{
+		for (int i = 0; i < 49; i++, buffer[i] = '\0');
+		for (int i = 0; i < 48; i++, rdatei.get(buffer[i]));
+	}
+	rdatei.close();
+
+	PauseMenu::getInstance()->setSliderHelper(std::stof(buffer));*/
+
 	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTest)
 		return false;
 
-	std::ifstream rdatei;
 	rdatei.open(datei);
 
 	bool defaultCounter = 0;
-	char buffer[50], bufferValue1[30], bufferValue2[30];
+	char bufferValue1[30], bufferValue2[30];
 	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
 
 
@@ -170,7 +183,7 @@ void Game::startGame()
 		{
 			if (event.type == Event::Closed)
 			{
-				//saveGame();
+				saveGame();
 				window->close();
 			}
 
@@ -219,6 +232,7 @@ void Game::updateEco()
 }
 void Game::newRound()
 {
+	saveGame();
 	droneCount = 0;
 	round->nextRound();
 }
@@ -527,7 +541,7 @@ void Game::checkLoseGame()
 			{
 				if (event.type == Event::Closed)
 				{
-					//saveGame();
+					saveGame();
 					window->close();
 					return;
 				}
@@ -557,7 +571,7 @@ void Game::checkLoseGame()
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
 					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
 				{
-					//saveGame();
+					saveGame();
 					lost = false;
 					HomeMenu::getInstance()->HomeMenuStart();
 					return;
@@ -565,6 +579,7 @@ void Game::checkLoseGame()
 				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
 					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
 				{
+					saveGame();
 					lost = false;
 					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 					resetAll();
@@ -615,20 +630,37 @@ void Game::resetAll()
 	delete round;
 }
 void Game::saveGame()
-
 {
-	if (round->getIndex() <= 0)
-		return;
-
-	std::string datei;
-	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
-	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
-
 	system("md saves >nul 2>&1");
 	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
 	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
 
 	std::ofstream wdatei;
+
+	wdatei.open("saves/settings.sav");
+
+	wdatei << "Volume=\"" << PauseMenu::getInstance()->getSliderHelper() << "\"\n";
+
+	wdatei.close();
+
+	return; //DELETE WHEN DONE : Nur zum testen, damit das nicht nervt
+
+	if (round->getIndex() <= 0)
+	{
+		return;
+	}
+	else if (lost && round->getIndex() > 0)
+	{
+		std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
+		const char* cmd_cc = cmd_s.c_str();
+		system(cmd_cc);
+		return;
+	}
+
+	std::string datei;
+	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
+	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+
 	wdatei.open(datei);
 
 	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
