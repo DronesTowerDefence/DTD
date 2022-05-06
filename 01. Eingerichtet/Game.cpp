@@ -566,7 +566,7 @@ void Game::checkLoseGame()
 					round = Round::getInstance();
 					p_map = new Map(mapIndex);
 					sidebar = Sidebar::getInstance();
-					restart = false;
+					//restart = false;
 					return;
 				}
 			}
