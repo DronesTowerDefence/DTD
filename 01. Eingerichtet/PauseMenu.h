@@ -10,6 +10,7 @@ class PauseMenu
 
 	float sliderHelper;
 	bool isClicked;
+	bool play;
 	RenderWindow* window;
 
 	Vector2i mouse;
@@ -18,12 +19,16 @@ class PauseMenu
 	Texture backgroundTexture;
 	Texture twitterTexture;
 	Texture homebtnTexture;
+	Texture playbtnTexture;
 	Sprite background;
 	Sprite twitter;
 	Sprite homebtn;
+	Sprite playbtn;
 	RectangleShape edge;
 	RectangleShape volumeSlider;
 	RectangleShape socialsBorder;
+	RectangleShape volumeOutline;
+	RectangleShape btnoutlines[2];
 
 	Font font;
 

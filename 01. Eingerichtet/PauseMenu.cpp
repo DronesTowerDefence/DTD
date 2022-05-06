@@ -17,18 +17,17 @@ PauseMenu::PauseMenu() {
 	edge.setSize(Vector2f(690.f, 700.f));
 	edge.setPosition(548.f, 148.f);
 
-	/*mouse.setFillColor(Color::Red);
-	mouse.setSize(Vector2f(50.f,50.f));*/
-
 	volumeSlider.setFillColor(Color::Green);
-	volumeSlider.setSize(Vector2f(400.f, 14.f));
+	volumeSlider.setSize(Vector2f(400.f, 15.f));
 	volumeSlider.setPosition(Vector2f(565.f, 390.f));
+
 
 	//Anfangslautstärke beträgt 50%
 	sliderHelper = 50.f;
 
 	//für Maus-Click
 	isClicked = false;
+	play = false;
 
 	backgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	background.setTexture(backgroundTexture);
@@ -53,6 +52,11 @@ PauseMenu::PauseMenu() {
 	homebtnTexture.loadFromFile("img/buttons/homeButton.png");
 	homebtn.setTexture(homebtnTexture);
 	homebtn.setPosition(Vector2f(630.f, 750.f));
+	
+
+	playbtnTexture.loadFromFile("img/buttons/startButton.png");
+	playbtn.setTexture(playbtnTexture);
+	playbtn.setPosition(Vector2f(1030.f, 750.f));
 
 	//Überschriften
 	text1.setFont(font);
@@ -71,6 +75,25 @@ PauseMenu::PauseMenu() {
 	text2.setOutlineColor(Color::White);*/
 
 
+	for (int i = 0; i < 2; i++) {
+
+		btnoutlines[i].setFillColor(Color::Transparent);
+		btnoutlines[i].setSize(Vector2f(100.f, 100.f));
+		btnoutlines[i].setOutlineColor(Color::Black);
+		btnoutlines[i].setOutlineThickness(1.f);
+
+	}
+
+	btnoutlines[0].setPosition(homebtn.getPosition());
+	btnoutlines[1].setPosition(playbtn.getPosition());
+
+	//
+
+	volumeOutline.setFillColor(Color::Transparent);
+	volumeOutline.setOutlineColor(Color::Black);
+	volumeOutline.setOutlineThickness(float(1));
+	volumeOutline.setSize(Vector2f(402.f, 15.f));
+	volumeOutline.setPosition(volumeSlider.getPosition()-Vector2f(1.f,0.f)); 
 
 }
 #pragma endregion
@@ -88,9 +111,8 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 		isClicked = false;
 		mouse = Mouse::getPosition(*window);
 
-		for (int i = 0; i < 1; i++)
-		{
-
+		
+		
 			pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
 			pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
@@ -98,15 +120,23 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			{
 				system("start www.twitter.com/DronesTD");
 			}
-		}
+		
 
 
 		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			HomeMenu::getInstance()->HomeMenuStart();
+		}
+
+		pos = Service::getInstance()->getObjectPosition(playbtn.getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(playbtn.getPosition() + Vector2f(100.f, 100.f));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			play = true;
 		}
 	}
 }
@@ -120,8 +150,15 @@ void PauseMenu::draw()
 	window->draw(twitter);
 	window->draw(socialsBorder);
 	window->draw(homebtn);
+	window->draw(playbtn);
+
+	for (int i = 0; i < 2; i++) {
+		window->draw(btnoutlines[i]);
+	}
 
 	window->draw(volumeSlider);
+
+	window->draw(volumeOutline);
 
 	window->display();
 
@@ -146,11 +183,16 @@ void PauseMenu::checkPause(Event event1)
 				}
 
 
-
 			}
 			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
 			text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
 			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+
+			if (play == true) {
+				play = false;
+				return;
+			}
+
 
 			//Pfeiltasten Druck = Änderung Lautstärke
 			if (Keyboard::isKeyPressed(Keyboard::Left))
@@ -209,6 +251,11 @@ void PauseMenu::checkPause()
 		//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
 		text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
 		text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+
+		if (play == true) {
+			play = false;
+			return;
+		}
 
 		//Pfeiltasten Druck = Änderung Lautstärke
 		if (Keyboard::isKeyPressed(Keyboard::Left))
