@@ -41,46 +41,50 @@ Game::Game()
 	music[1].setVolume(50);
 	music[2].setVolume(50);
 	music[3].setVolume(50);
-
-	loadGame();
 }
 #pragma endregion
 
 #pragma region Funktionen
 bool Game::loadGame()
 {
-	return 0; //DELETE WHEN DONE : Nur solange die Funktion noch nicht fertig ist
+	return 0; //DELETE WHEN DONE : Nur zum testen, im Final-Build entfernen!
+
+	std::ifstream rdatei;
+
+	bool defaultCounter = 0;
+	char bufferValue1[30], bufferValue2[30], buffer[50];
+	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
+
+	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	if (!FileTestSettings)
+		return false;
+
+	rdatei.open("saves/settings.sav");
+	while (!rdatei.eof())
+	{
+		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
+		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
+
+		for (int i = 0; i < 48; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
+
+		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
+		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
+		length1 = second - first - 1;
+		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
+	}
+	rdatei.close();
+
+	PauseMenu::getInstance()->setSliderHelper(std::stof(bufferValue1));
 
 	std::string datei; //Dateipfad
 	datei = "saves/savegame" + std::to_string(p_map->getIndex());
 	datei += ".sav";
 
-	std::ifstream rdatei;
-	char buffer[50];
-
-	//WIP - Funktioniert noch nicht
-	rdatei.open("saves/settings.sav");
-	while (!rdatei.eof())
-	{
-		for (int i = 0; i < 49; i++, buffer[i] = '\0');
-		for (int i = 0; i < 48; i++, rdatei.get(buffer[i]));
-	}
-	rdatei.close();
-
-	PauseMenu::getInstance()->setSliderHelper(std::stof(buffer));
-
-	//
-
-	std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	std::ifstream FileTest(datei);//Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTest)
 		return false;
 
 	rdatei.open(datei);
-
-	bool defaultCounter = 0;
-	char bufferValue1[30], bufferValue2[30];
-	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
-
 
 	while (!rdatei.eof())
 	{
@@ -180,6 +184,8 @@ bool Game::towerAliasForbiddenPosition()
 
 void Game::startGame()
 {
+	loadGame();
+
 	while (window->isOpen())
 	{
 
