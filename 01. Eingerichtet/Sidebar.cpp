@@ -36,7 +36,7 @@ Sidebar::Sidebar()
 	buttonSpr[3].setPosition(Vector2f(1837, 120));
 	buttonSpr[4].setPosition(Vector2f(1762, 225));
 
-	doubleSpeed.setTexture(*res->getButtonCloseTexture());
+	doubleSpeed.setTexture(*res->getButtonSpeedTexture());
 	doubleSpeed.setPosition(Vector2f(1750, 500));
 }
 

@@ -50,6 +50,8 @@ private:
 	Texture buttonRestartTexture;
 	Texture buttonCloseTexture;
 	Texture buttonStartTexture;
+	Texture buttonExitTexture;
+	Texture buttonSpeedTexture;
 	Texture map[2];
 
 	Image icon;
@@ -96,6 +98,8 @@ public:
 	Texture* getButtonRestartTexture();
 	Texture* getButtonCloseTexture();
 	Texture* getButtonStartTexture();
+	Texture* getButtonExitTexture();
+	Texture* getButtonSpeedTexture();
 	Texture* getMapTexture(int);
 	
 	void setSpeed();

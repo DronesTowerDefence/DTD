@@ -134,6 +134,8 @@ Ressources::Ressources()
 	buttonRestartTexture.loadFromFile("img/buttons/restartButton.png");
 	buttonCloseTexture.loadFromFile("img/buttons/closeButton.png");
 	buttonStartTexture.loadFromFile("img/buttons/startButton.png");
+	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
+	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -371,6 +373,14 @@ Texture* Ressources::getButtonCloseTexture()
 Texture* Ressources::getButtonStartTexture()
 {
 	return &buttonStartTexture;
+}
+Texture* Ressources::getButtonExitTexture()
+{
+	return &buttonExitTexture;
+}
+Texture* Ressources::getButtonSpeedTexture()
+{
+	return &buttonSpeedTexture;
 }
 Texture* Ressources::getMapTexture(int i)
 {
