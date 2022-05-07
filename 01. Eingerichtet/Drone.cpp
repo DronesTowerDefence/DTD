@@ -16,7 +16,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	res = Ressources::getInstance();
 
 	//In Ressoucen gespeichert
-	drone.setTexture(*res->getDroneTexture(droneType, 0));
+	drone.setTexture(*res->getDroneDmgTexture(droneType, 0));
 	speed = res->getDroneSpeed(typSpecifier);
 	nextPoint = 0;
 	//""
@@ -147,6 +147,9 @@ Sprite Drone::getDroneSprite()
 }
 Sprite* Drone::getDrawSprite()
 {
+	animationCounter = -1; //Animationen kommen irgendwann
+	return &drone; 
+
 	//Animationsdings von Jonas
 	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
 	{

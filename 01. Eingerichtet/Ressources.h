@@ -9,11 +9,10 @@ private:
 	Ressources();
 	static Ressources* instance;
 
-	//Tower
-
 	int droneCountInRound[100];
 
-	int mapCount; // wieviele Maps es gibt	
+	int mapCount; //Wie viele Maps es gibt	
+	int droneCount; //Wie viele Drohnen-Typen es gibt
 	int towerCount; //Wie viele Turm-Typen es gibt
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
@@ -44,8 +43,8 @@ private:
 	Texture towerPreviewTexture[5];
 	Texture towerNoBuyTexture[5];
 	Texture projectileTexture[2];
-	Texture droneTexture[1][3];
-	Texture droneDmgTexture[1][4];
+	Texture droneTexture[4][2];
+	Texture droneDmgTexture[4][4];
 	Texture buttonHomeTexture;
 	Texture buttonRestartTexture;
 	Texture buttonCloseTexture;
@@ -60,6 +59,7 @@ public:
 
 	static Ressources* getInstance();
 	int getMapCount();
+	int getDroneCount();
 	int getTowerCount();
 	int getTowerAttackTowerCount();
 	int getTowerMoneyTowerCount();

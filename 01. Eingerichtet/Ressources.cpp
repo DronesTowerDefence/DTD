@@ -15,6 +15,7 @@ Ressources::Ressources()
 		droneSpawnTime[i] = 1;
 	}
 	mapCount = 2;
+	droneCount = 4;
 	towerCount = 5;
 	towerAttackTowerCount = 4;
 	towerMoneyTowerCount = 1;
@@ -112,15 +113,15 @@ Ressources::Ressources()
 		towerNoBuyTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
 	}
 
-	for (int i = 0; i < 1; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			droneTexture[i][j].loadFromFile("img/drone" + std::to_string(i) + "/drone" + std::to_string(i) + "_" + std::to_string(j) + "_d0.png");
-		}
-	}
+	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
+	//{
+	//	for (int j = 0; j < 2; j++)
+	//	{
+	//		droneTexture[i][j].loadFromFile("img/drone" + std::to_string(i) + "/drone" + std::to_string(i) + "_" + std::to_string(j) + "_d0.png");
+	//	}
+	//}
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < droneCount; i++) //Ohne Animation dafür mit Damage
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -235,6 +236,10 @@ Ressources* Ressources::getInstance()
 int Ressources::getMapCount()
 {
 	return mapCount;
+}
+int Ressources::getDroneCount()
+{
+	return droneCount;
 }
 int Ressources::getTowerCount()
 {
