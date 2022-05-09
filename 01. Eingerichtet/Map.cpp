@@ -46,10 +46,21 @@ Map::Map(int index)
 		startMove = Vector2f(1, 0);
 		wayPointCount = 7;
 		break;
+	case 2:
+		points.push_back(new Waypoint(Vector2f(445, 77), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(445,518), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(887,518), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(887,78), Vector2f(1,0), 4));
+		points.push_back(new Waypoint(Vector2f(1328,78), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(1328, 810), Vector2f(-1,0), 3));
+		points.push_back(new Waypoint(Vector2f(675, 810), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(675, 211), Vector2f(1,0), 4));
+		start = Vector2f(-50, 77);
+		startMove = Vector2f(1, 0);
+		wayPointCount = 8;
 	}
 }
 #pragma endregion
-
 #pragma region Funktionen
 /// <summary>
 /// 

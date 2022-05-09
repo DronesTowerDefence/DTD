@@ -28,7 +28,7 @@ private:
 	
 	Sprite* startButton;
 	Sprite* towers[5];
-	Sprite* map[2];
+	Sprite* map[3];
 	Sprite* titel;
 	Sprite* backround;
 	Sprite* drone;

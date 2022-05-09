@@ -14,7 +14,7 @@ Ressources::Ressources()
 
 		droneSpawnTime[i] = 1;
 	}
-	mapCount = 2;
+	mapCount = 3;
 	droneCount = 4;
 	towerCount = 5;
 	towerAttackTowerCount = 4;
@@ -138,7 +138,7 @@ Ressources::Ressources()
 	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
 	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < mapCount; i++)
 	{
 		map[i].loadFromFile("img/maps/map" + std::to_string(i) + ".png");
 	}

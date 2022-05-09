@@ -51,7 +51,7 @@ private:
 	Texture buttonStartTexture;
 	Texture buttonExitTexture;
 	Texture buttonSpeedTexture;
-	Texture map[2];
+	Texture map[3];
 
 	Image icon;
 	
