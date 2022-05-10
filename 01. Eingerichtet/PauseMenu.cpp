@@ -28,6 +28,7 @@ PauseMenu::PauseMenu() {
 	//für Maus-Click
 	isClicked = false;
 	play = false;
+	mute = false;
 
 	backgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	background.setTexture(backgroundTexture);
@@ -58,6 +59,10 @@ PauseMenu::PauseMenu() {
 	playbtn.setTexture(playbtnTexture);
 	playbtn.setPosition(Vector2f(1030.f, 750.f));
 
+	mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+	mutebtn.setTexture(mutebtnTexture);
+	mutebtn.setPosition(Vector2f(1050.f, 340.f));
+
 	//Überschriften
 	text1.setFont(font);
 	text1.setCharacterSize(unsigned(40));
@@ -75,7 +80,7 @@ PauseMenu::PauseMenu() {
 	text2.setOutlineColor(Color::White);*/
 
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 
 		btnoutlines[i].setFillColor(Color::Transparent);
 		btnoutlines[i].setSize(Vector2f(100.f, 100.f));
@@ -86,6 +91,7 @@ PauseMenu::PauseMenu() {
 
 	btnoutlines[0].setPosition(homebtn.getPosition());
 	btnoutlines[1].setPosition(playbtn.getPosition());
+	btnoutlines[2].setPosition(mutebtn.getPosition());
 
 	//
 
@@ -95,6 +101,8 @@ PauseMenu::PauseMenu() {
 	volumeOutline.setSize(Vector2f(402.f, 15.f));
 	volumeOutline.setPosition(volumeSlider.getPosition()-Vector2f(1.f,0.f)); 
 
+
+	
 }
 #pragma endregion
 
@@ -112,7 +120,7 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 		mouse = Mouse::getPosition(*window);
 
 		
-		
+		//twitter
 			pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
 			pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
@@ -122,7 +130,7 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			}
 		
 
-
+			//Home Button
 		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f)); 
 
@@ -132,12 +140,25 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 			HomeMenu::getInstance()->HomeMenuStart();
 		}
 
+		//Resume - Button Weiter
 		pos = Service::getInstance()->getObjectPosition(playbtn.getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(playbtn.getPosition() + Vector2f(100.f, 100.f));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			play = true;
+		}
+		//mute button
+
+		pos = Service::getInstance()->getObjectPosition(mutebtn.getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(mutebtn.getPosition() + Vector2f(100.f, 100.f));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) {
+			if (mute == true) {
+				mute = false;
+				return;
+			}
+			mute = true;
 		}
 	}
 }
@@ -152,10 +173,12 @@ void PauseMenu::draw()
 	window->draw(socialsBorder);
 	window->draw(homebtn);
 	window->draw(playbtn);
+	window->draw(mutebtn);
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		window->draw(btnoutlines[i]);
 	}
+
 
 	window->draw(volumeSlider);
 
@@ -214,6 +237,23 @@ void PauseMenu::checkPause(Event event1)
 				sliderHelper++;
 			}
 
+			if (mute == false) {
+
+				if (sliderHelper < 33) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+				}
+				else if (sliderHelper > 33 && sliderHelper < 66) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+				}
+				else if (sliderHelper > 66) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+
+				}
+			}
+			else {
+				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+				Game::getInstance()->setMusicVolume(0.f);
+			}
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
@@ -277,6 +317,23 @@ void PauseMenu::checkPause()
 			sliderHelper++;
 		}
 
+		if (mute == false) {
+
+			if (sliderHelper < 33) {
+				mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+			}
+			else if (sliderHelper > 33 && sliderHelper < 66) {
+				mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+			}
+			else if (sliderHelper > 66) {
+				mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+
+			}
+		}
+		else {
+			mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+			Game::getInstance()->setMusicVolume(0.f);
+		}
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
