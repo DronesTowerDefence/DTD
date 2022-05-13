@@ -250,15 +250,16 @@ void PauseMenu::checkPause(Event event1)
 
 				}
 			}
-			else {
+			else if(mute == true){
 				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
 				Game::getInstance()->setMusicVolume(0.f);
 			}
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
-
-			Game::getInstance()->setMusicVolume(sliderHelper);
+			if (mute == false) {
+				Game::getInstance()->setMusicVolume(sliderHelper);
+			}
 			volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
 			Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
 			click();
@@ -337,8 +338,9 @@ void PauseMenu::checkPause()
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
-
-		Game::getInstance()->setMusicVolume(sliderHelper);
+		if (mute == false) {
+			Game::getInstance()->setMusicVolume(sliderHelper);
+		}
 		volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
 		Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
 		click();
