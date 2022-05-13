@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include "SFML/Network.hpp"
 using namespace sf;
 
 class Ressources
@@ -36,6 +37,8 @@ private:
 	float towerUpdateMoneyGeneration[5][4];
 	float droneSpeed[1];
 
+
+	//TcpSocket client;
 	std::string towerName[5]; //Der Name des Turmes
 	
 	Texture towerTexture[5][4];
@@ -87,6 +90,7 @@ public:
 
 	Image getIcon();
 
+//	TcpSocket getSocket();
 	Texture* getTowerTexture(int,int);
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);

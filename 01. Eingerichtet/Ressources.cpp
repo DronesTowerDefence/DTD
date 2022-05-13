@@ -14,6 +14,7 @@ Ressources::Ressources()
 
 		droneSpawnTime[i] = 1;
 	}
+	
 	mapCount = 3;
 	droneCount = 4;
 	towerCount = 5;
@@ -335,6 +336,10 @@ Image Ressources::getIcon()
 {
 	return icon;
 }
+//TcpSocket Ressources::getSocket()
+//{
+//	return  client;
+//}
 Texture* Ressources::getTowerTexture(int i, int j)
 {
 	return &towerTexture[i][j];

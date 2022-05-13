@@ -17,7 +17,14 @@ HomeMenu::HomeMenu()
 	textureTitel = new Texture;
 	textureBackround = new Texture;
 	res = Ressources::getInstance();
+	textureClient = new Texture();
+	textureHost = new Texture();
+	ipAdressText = new Text();
 
+	ipAdress = "";
+
+	client = new Sprite();
+	host = new Sprite();
 	textureTitel->loadFromFile("img/titleText.png");
 	textureBackround->loadFromFile("img/backround.jpg");
 	font->loadFromFile("fonts/arial.ttf");
@@ -25,13 +32,17 @@ HomeMenu::HomeMenu()
 	titel->setTexture(*textureTitel);
 	backround->setTexture(*textureBackround);
 	drone->setTexture(*res->getDroneTexture(1, 0));;
-
+	textureClient->loadFromFile("img/buttons/host.png");
+	textureHost->loadFromFile("img/buttons/host.png");
 	choseIndex = -1;
 
+	host->setTexture(*textureHost);
+	client->setTexture(*textureClient);
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
-
+	host->setPosition(Vector2f(800, 900));
+	client->setPosition(Vector2f(900, 900));
 	drone->setScale(2, 2);
 	//
 	int x = 500;
@@ -99,10 +110,73 @@ HomeMenu::HomeMenu()
 	pointer->setFillColor(Color::Transparent);
 	choseText = new Text("Waehle eine Karte aus", *font, 40);
 	choseText->setPosition(Vector2f(500, 450));
+	ipAdressText->setFont(*font);
+	ipAdressText->setPosition(Vector2f(0, 0));
+	ipAdressText->setFillColor(Color::Black);
+	ipAdressText->setCharacterSize(30);
 }
 #pragma endregion
 
 #pragma region Funktionen
+void HomeMenu::eingabe(Event event) {
+	if (event.type == Event::KeyReleased)
+	{
+
+		switch (event.key.code)
+		{
+		case Keyboard::Num0:
+		case Keyboard::Numpad0:
+			ipAdress += "0";
+			break;
+
+		case Keyboard::Num1:
+		case Keyboard::Numpad1:
+			ipAdress += "1";
+			break;
+
+		case Keyboard::Num2:
+		case Keyboard::Numpad2:
+			ipAdress += "2";
+			break;
+
+		case Keyboard::Num3:
+		case Keyboard::Numpad3:
+			ipAdress += "3";
+			break;
+		case Keyboard::Num4:
+		case Keyboard::Numpad4:
+			ipAdress += "4";
+			break;
+		case Keyboard::Num5:
+		case Keyboard::Numpad5:
+			ipAdress += "5";
+			break;
+		case Keyboard::Num6:
+		case Keyboard::Numpad6:
+			ipAdress += "6";
+			break;
+		case Keyboard::Num7:
+		case Keyboard::Numpad7:
+			ipAdress += "7";
+			break;
+		case Keyboard::Num8:
+		case Keyboard::Numpad8:
+			ipAdress += "8";
+			break;
+		case Keyboard::Num9:
+		case Keyboard::Numpad9:
+			ipAdress += "9";
+			break;
+		case Keyboard::Period:
+			ipAdress += ".";
+			break;
+		default:
+			break;
+		}
+		ipAdressText->setString(ipAdress);
+	}
+}
+
 bool  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
@@ -119,7 +193,7 @@ bool  HomeMenu::CheckClicked()
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920*0.1, 991*0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{
@@ -127,6 +201,30 @@ bool  HomeMenu::CheckClicked()
 				choseIndex = i;
 			}
 		}
+
+
+		mouse = Mouse::getPosition(*window);
+
+		pos = Service::getInstance()->getObjectPosition(host->getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+
+			
+			//Todo als Host
+			return true;
+		}
+		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			//TODO als client
+			return true;
+		}
+
+
 		//startclicked
 		mouse = Mouse::getPosition(*window);
 		pos, pos2;
@@ -140,6 +238,7 @@ bool  HomeMenu::CheckClicked()
 		}
 	}
 	return false;
+
 
 
 }
@@ -160,7 +259,10 @@ void HomeMenu::HomeMenuStart()
 			{
 				window->close();
 			}
+			eingabe(event);
 		}
+
+
 		drone->move(2, 0);
 		setTowerTexture();
 		if (drone->getPosition().x > 1920)
@@ -182,6 +284,7 @@ void HomeMenu::draw()
 {
 	window->clear();
 	window->draw(*backround);
+	window->draw(*ipAdressText);
 	window->draw(*titel);
 	window->draw(*startButton);
 	window->draw(*drone);
