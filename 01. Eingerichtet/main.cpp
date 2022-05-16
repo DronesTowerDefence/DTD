@@ -6,7 +6,6 @@
 #include "Game.h"
 #include "Ressources.h"
 #include "HomeMenu.h"
-#define  _CRT_SECURE_NO_WARNINGS
 
 using namespace sf;
 

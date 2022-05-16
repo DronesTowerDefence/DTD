@@ -199,11 +199,7 @@ void Game::startGame()
 
 
 			PauseMenu::getInstance()->checkPause(event);
-
-
 		}
-
-
 
 		updateEco();
 		checkLoseGame();
@@ -334,8 +330,6 @@ void Game::checkTowerAlias()
 	}
 	else
 	{
-
-
 		if (Mouse::isButtonPressed(Mouse::Button::Left))
 		{
 			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
@@ -351,11 +345,6 @@ void Game::checkTowerAlias()
 			newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
 			delete newTower;
 			newTower = nullptr;
-			// todo Ubergebn
-		}
-		else
-		{
-
 		}
 	}
 }
@@ -432,7 +421,8 @@ void Game::draw()
 		window->draw(gameOverRestartButton);
 	}
 
-
+	window->draw(eco);
+	window->display();
 }
 void Game::checkShoot()
 {
