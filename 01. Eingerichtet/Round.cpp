@@ -30,8 +30,8 @@ void Round::setAllCoverablePoints()
 	{
 		if (pointIterator == 0)
 		{
-			mapPoint1.y = p_map->getStart().x; //Muss bei anderer Map angepasst werden // eingang
-			mapPoint1.x = p_map->getStart().y;  // eingang
+			mapPoint1.x = p_map->getStart().x; //Muss bei anderer Map angepasst werden // eingang
+			mapPoint1.y = p_map->getStart().y;  // eingang
 			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
 		}
 		else
