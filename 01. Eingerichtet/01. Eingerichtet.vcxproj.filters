@@ -1,291 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Header">
+      <UniqueIdentifier>{78800a7f-faa0-4be3-a337-901ed19b2f74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Quellen">
+      <UniqueIdentifier>{a6923db6-edd6-4871-80b5-c6b619431f02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ressourcendateien">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Ressourcendateien\sounds">
-      <UniqueIdentifier>{7de1acb6-19a3-40aa-a4e6-f85eb1d1f781}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\music">
-      <UniqueIdentifier>{69537bb6-9544-4e9e-9bb8-f54172c2ca4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\fonts">
-      <UniqueIdentifier>{51606159-3628-4c18-82ab-402863a532b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img">
-      <UniqueIdentifier>{a92aa2bf-5578-49b3-ad83-5e142ea0b5b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\buttons">
-      <UniqueIdentifier>{92d96798-f774-4f06-965a-a7039049a509}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\drone0">
-      <UniqueIdentifier>{78dad855-596d-499d-9ca6-067a9bfc0683}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\maps">
-      <UniqueIdentifier>{d3cbe161-f3ed-452d-9345-596fd07feb1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\projectiles">
-      <UniqueIdentifier>{005f7f5c-96af-41a9-a7f9-86646dc34a62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\tower0">
-      <UniqueIdentifier>{030b53c0-4128-4405-89e5-9a2fef7ada08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\tower1">
-      <UniqueIdentifier>{e9d811a6-b1f4-4b63-96a1-d36f6ce8bf27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\tower2">
-      <UniqueIdentifier>{ffb7fd00-c407-4df4-b733-64f6ca0aed64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\tower3">
-      <UniqueIdentifier>{4812b204-c1bf-464d-862d-e294e3c3d0a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\tower4">
-      <UniqueIdentifier>{7ac429ee-faf5-4d02-b430-f08bd71dcd32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ressourcendateien\img\upgrades">
-      <UniqueIdentifier>{0665bb5a-5ccd-450e-84c9-e44ea3456ccb}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Drone.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Round.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Service.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Sidebar.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Tower.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TowerAlias.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Waypoint.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Updates.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Ressources.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="HomeMenu.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseMenu.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TowerSpawn.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Round.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Service.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Sidebar.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Tower.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="TowerAlias.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Waypoint.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Updates.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Ressources.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="HomeMenu.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="rekursion.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Ressources.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Round.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Sidebar.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerAlias.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="TowerSpawn.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Transmit.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Updates.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Waypoint.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="sounds\hit-0.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\hit-1.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-0.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-1.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-2.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-3.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="music\3-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\1-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\1-1.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\2-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="fonts\arial.ttf">
-      <Filter>Ressourcendateien\fonts</Filter>
-    </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="img\buttons\closeButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\homeButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\restartButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\startButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage1.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage2.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage3.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\maps\Map1.png">
-      <Filter>Ressourcendateien\img\maps</Filter>
-    </Image>
-    <Image Include="img\projectiles\projectile0.png">
-      <Filter>Ressourcendateien\img\projectiles</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_0.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_1.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_2.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_alias.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_preview.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_0.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_alias.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_preview.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_0.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_alias.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_preview.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_0.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_alias.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_preview.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_0.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_alias.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_preview.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\upgrades\sell.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
-    <Image Include="img\icon.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\titleText.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\upgrades\upgradeAttackspeed.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
-    <Image Include="img\upgrades\upgradeDamage.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
+    <ClCompile Include="Drone.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeMenu.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Ressources.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Round.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Sidebar.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerAlias.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerSpawn.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Transmit.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Updates.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
+    <ClCompile Include="Waypoint.cpp">
+      <Filter>Quellen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

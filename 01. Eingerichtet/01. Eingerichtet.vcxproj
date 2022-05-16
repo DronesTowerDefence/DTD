@@ -18,6 +18,44 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Drone.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="HomeMenu.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="rekursion.h" />
+    <ClInclude Include="Ressources.h" />
+    <ClInclude Include="Round.h" />
+    <ClInclude Include="Service.h" />
+    <ClInclude Include="Sidebar.h" />
+    <ClInclude Include="Tower.h" />
+    <ClInclude Include="TowerAlias.h" />
+    <ClInclude Include="TowerSpawn.h" />
+    <ClInclude Include="Transmit.h" />
+    <ClInclude Include="Updates.h" />
+    <ClInclude Include="Waypoint.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Drone.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HomeMenu.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Ressources.cpp" />
+    <ClCompile Include="Round.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Sidebar.cpp" />
+    <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="TowerAlias.cpp" />
+    <ClCompile Include="TowerSpawn.cpp" />
+    <ClCompile Include="Transmit.cpp" />
+    <ClCompile Include="Updates.cpp" />
+    <ClCompile Include="Waypoint.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -122,7 +160,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;ws2_32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,90 +182,6 @@
       <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;opengl32.lib;winmm.lib;gdi32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Drone.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="HomeMenu.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="PauseMenu.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Ressources.cpp" />
-    <ClCompile Include="Round.cpp" />
-    <ClCompile Include="Service.cpp" />
-    <ClCompile Include="Sidebar.cpp" />
-    <ClCompile Include="Tower.cpp" />
-    <ClCompile Include="TowerAlias.cpp" />
-    <ClCompile Include="TowerSpawn.cpp" />
-    <ClCompile Include="Updates.cpp" />
-    <ClCompile Include="Waypoint.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Drone.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="HomeMenu.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="PauseMenu.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="Ressources.h" />
-    <ClInclude Include="Round.h" />
-    <ClInclude Include="Service.h" />
-    <ClInclude Include="Sidebar.h" />
-    <ClInclude Include="Tower.h" />
-    <ClInclude Include="TowerAlias.h" />
-    <ClInclude Include="TowerSpawn.h" />
-    <ClInclude Include="Updates.h" />
-    <ClInclude Include="Waypoint.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="fonts\arial.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="music\1-0.wav" />
-    <Media Include="music\1-1.wav" />
-    <Media Include="music\2-0.wav" />
-    <Media Include="music\3-0.wav" />
-    <Media Include="sounds\hit-0.wav" />
-    <Media Include="sounds\hit-1.wav" />
-    <Media Include="sounds\shot-0.wav" />
-    <Media Include="sounds\shot-1.wav" />
-    <Media Include="sounds\shot-2.wav" />
-    <Media Include="sounds\shot-3.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="img\buttons\closeButton.png" />
-    <Image Include="img\buttons\homeButton.png" />
-    <Image Include="img\buttons\restartButton.png" />
-    <Image Include="img\buttons\startButton.png" />
-    <Image Include="img\drone0\drone0.png" />
-    <Image Include="img\drone0\drone0_damage1.png" />
-    <Image Include="img\drone0\drone0_damage2.png" />
-    <Image Include="img\drone0\drone0_damage3.png" />
-    <Image Include="img\icon.png" />
-    <Image Include="img\maps\Map1.png" />
-    <Image Include="img\projectiles\projectile0.png" />
-    <Image Include="img\titleText.png" />
-    <Image Include="img\tower0\tower0_0.png" />
-    <Image Include="img\tower0\tower0_1.png" />
-    <Image Include="img\tower0\tower0_2.png" />
-    <Image Include="img\tower0\tower0_alias.png" />
-    <Image Include="img\tower0\tower0_preview.png" />
-    <Image Include="img\tower1\tower1_0.png" />
-    <Image Include="img\tower1\tower1_alias.png" />
-    <Image Include="img\tower1\tower1_preview.png" />
-    <Image Include="img\tower2\tower2_0.png" />
-    <Image Include="img\tower2\tower2_alias.png" />
-    <Image Include="img\tower2\tower2_preview.png" />
-    <Image Include="img\tower3\tower3_0.png" />
-    <Image Include="img\tower3\tower3_alias.png" />
-    <Image Include="img\tower3\tower3_preview.png" />
-    <Image Include="img\tower4\tower4_0.png" />
-    <Image Include="img\tower4\tower4_alias.png" />
-    <Image Include="img\tower4\tower4_preview.png" />
-    <Image Include="img\upgrades\sell.png" />
-    <Image Include="img\upgrades\upgradeAttackspeed.png" />
-    <Image Include="img\upgrades\upgradeDamage.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
