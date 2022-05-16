@@ -1,7 +1,41 @@
+#include "Transmit.h"
 #include "Game.h"
 #include <fstream>
 
 Game* Game::instance = nullptr;
+
+#pragma region Packet_Operator
+
+//Transmit Klasse
+Packet& operator <<(Packet& packet, const Transmit& t)
+{
+	return packet << t.mapIndex << t.roundIndex << t.live << t.money; //TODO: Dronen und Tower hinzufügen
+}
+Packet& operator >>(Packet& packet, Transmit& t)
+{
+	return packet >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //TODO: Dronen und Tower hinzufügen
+}
+
+//DroneTransmit Klasse
+Packet& operator <<(Packet& packet, const DroneTransmit& d)
+{
+	return packet << d.index << d.position.x << d.position.y << d.lives;
+}
+Packet& operator >>(Packet& packet, DroneTransmit& d)
+{
+	return packet >> d.index >> d.position.x >> d.position.y >> d.lives;
+}
+
+//TowerTransmit Klasse
+Packet& operator <<(Packet& packet, const TowerTransmit& t)
+{
+	return packet << t.index << t.position.x << t.position.y << t.update1 << t.update2;
+}
+Packet& operator >>(Packet& packet, TowerTransmit& t)
+{
+	return packet >> t.index >> t.position.x >> t.position.y >> t.update1 >> t.update2;
+}
+#pragma endregion
 
 #pragma region Konstruktor
 Game::Game()
@@ -695,6 +729,23 @@ void Game::saveGame()
 
 	wdatei << "\n";
 	wdatei.close();
+}
+bool Game::sendPackets()
+{
+	Packet pac;
+	pac << new Transmit();
+	p_ressources->getClient()->send(pac);
+
+	return true;
+}
+bool Game::receivePackets()
+{
+	Packet pac;
+	Transmit* tra = new Transmit();
+	p_ressources->getClient()->receive(pac);
+	pac >> *tra;
+
+	return true;
 }
 #pragma endregion
 

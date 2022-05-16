@@ -1,8 +1,8 @@
 #include "Ressources.h"
+#include "Transmit.h"
 #include "Round.h"
 
 Ressources* Ressources::instance = nullptr;
-
 
 #pragma region Konstruktor
 Ressources::Ressources()
@@ -144,6 +144,7 @@ Ressources::Ressources()
 	}
 
 	icon.loadFromFile("img/icon.png");
+	client = new TcpSocket();
 }
 #pragma endregion
 
@@ -335,6 +336,10 @@ Image Ressources::getIcon()
 {
 	return icon;
 }
+TcpSocket* Ressources::getClient()
+{
+	return client;
+}
 Texture* Ressources::getTowerTexture(int i, int j)
 {
 	return &towerTexture[i][j];
@@ -416,7 +421,3 @@ void Ressources::setSpeed()
 }
 
 #pragma endregion
-
-
-
-

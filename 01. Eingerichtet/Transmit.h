@@ -21,12 +21,20 @@ public:
 class Transmit
 {
 public:
+	static int dronesCount;
+	static int towerCount;
+
 	int mapIndex;
 	int roundIndex;
 	int live;
 	int money;
 	
-	std::list<DroneTransmit> dronen;
-	std::list<TowerTransmit> tower;
+	DroneTransmit* drones[300];
+	TowerTransmit* tower[100];
+
+	Transmit();
+
+	void addTransmit(DroneTransmit*);
+	void addTransmit(TowerTransmit*);
 };
 

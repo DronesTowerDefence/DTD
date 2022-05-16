@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Audio.hpp>
 #include <list>
 #include "Ressources.h"
 #include "Round.h"
@@ -121,7 +120,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Sound getMusic();
-	
+
 	/// <summary>
 	/// Setzt die Musik Lautstärke
 	/// </summary>
@@ -162,5 +161,17 @@ public:
 	/// Speichert das Spiel
 	/// </summary>
 	void saveGame();
+
+	/// <summary>
+	/// Sendet Informationen
+	/// </summary>
+	/// <returns> True wenn erfolgreich</returns>
+	bool sendPackets();
+
+	/// <summary>
+	/// Empfängt informationen
+	/// </summary>
+	/// <returns>True wenn was angekommen ist</returns>
+	bool receivePackets();
 
 };
