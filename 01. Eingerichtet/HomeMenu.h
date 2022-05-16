@@ -16,6 +16,7 @@ private:
 	
 	bool isClicked;
 	
+	std::string ipAdress;
 	Vector2f positionTower[5];
 
 	RenderWindow* window;
@@ -23,6 +24,8 @@ private:
 	Texture* textureTower[5][4];	
 	Texture* textureTitel;
 	Texture* textureBackround;
+	Texture* textureHost;
+	Texture* textureClient;
 
 	RectangleShape* pointer;
 	
@@ -32,14 +35,19 @@ private:
 	Sprite* titel;
 	Sprite* backround;
 	Sprite* drone;
+	Sprite* host;
+	Sprite* client;
 	
 	Clock* animation;
 	
 	Font *font;
 	Text *choseText;
+	Text *ipAdressText;
 
 	Ressources* res;
 	
+
+	void eingabe(Event event);
 	bool CheckClicked();
 	void draw();
 	
