@@ -145,6 +145,7 @@ Ressources::Ressources()
 
 	icon.loadFromFile("img/icon.png");
 	client = new TcpSocket();
+	listener = new TcpListener();
 }
 #pragma endregion
 
@@ -339,6 +340,10 @@ Image Ressources::getIcon()
 TcpSocket* Ressources::getClient()
 {
 	return client;
+}
+TcpListener* Ressources::getListener()
+{
+	return listener;
 }
 Texture* Ressources::getTowerTexture(int i, int j)
 {

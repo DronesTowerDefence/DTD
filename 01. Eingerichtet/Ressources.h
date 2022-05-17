@@ -25,7 +25,7 @@ private:
 	int towerUpgradePrice2[5][4]; //Preise der Upgrades des zweiten Pfades
 	int droneLives[1];
 	float waitSubHealth;
-	
+
 	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[5]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
 	float towerProjectileSpeed[5]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
@@ -41,7 +41,8 @@ private:
 
 	std::string towerName[5]; //Der Name des Turmes
 	TcpSocket* client;
-	
+	TcpListener* listener;
+
 	Texture towerTexture[5][4];
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];
@@ -58,7 +59,7 @@ private:
 	Texture map[3];
 
 	Image icon;
-	
+
 public:
 
 	static Ressources* getInstance();
@@ -74,7 +75,7 @@ public:
 	int getTowerUpgradesPrice2(int, int);
 	int getDroneLives(int);
 	int getDroneCountInRound();
-	
+
 	float getTowerDamage(int);
 	float getTowerSpeed(int);
 	float getTowerProjectileSpeed(int);
@@ -86,18 +87,19 @@ public:
 	float getTowerUpdateMoneyGeneration(int i, int j);
 	float getDroneSpawnTime();
 	float getWaitSubHealth();
-	
+
 	std::string getTowerName(int);
 
 	Image getIcon();
 
-   TcpSocket *getClient();
-	Texture* getTowerTexture(int,int);
+	TcpSocket* getClient();
+	TcpListener* getListener();
+	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);
 	Texture* getTowerNoBuyTexture(int);
 	Texture* getProjectileTexture(int);
-	Texture* getDroneTexture(int,int);
+	Texture* getDroneTexture(int, int);
 	Texture* getDroneDmgTexture(int, int);
 	Texture* getButtonHomeTexture();
 	Texture* getButtonRestartTexture();
@@ -106,9 +108,9 @@ public:
 	Texture* getButtonExitTexture();
 	Texture* getButtonSpeedTexture();
 	Texture* getMapTexture(int);
-	
+
 	void setSpeed();
-	
+
 	void doubleSpeed();
 	void normalSpeed();
 };

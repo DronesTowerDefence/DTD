@@ -34,8 +34,8 @@ HomeMenu::HomeMenu()
 	titel->setTexture(*textureTitel);
 	backround->setTexture(*textureBackround);
 	drone->setTexture(*res->getDroneTexture(1, 0));;
-	textureClient->loadFromFile("img/buttons/host.png");
-	textureHost->loadFromFile("img/buttons/host.png");
+	textureClient->loadFromFile("img/buttons/clientButton.png");
+	textureHost->loadFromFile("img/buttons/hostButton.png");
 	choseIndex = -1;
 
 	host->setTexture(*textureHost);
@@ -43,8 +43,8 @@ HomeMenu::HomeMenu()
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
-	host->setPosition(Vector2f(800, 900));
-	client->setPosition(Vector2f(900, 900));
+	host->setPosition(Vector2f(1100, 700));
+	client->setPosition(Vector2f(1250, 700));
 	drone->setScale(2, 2);
 	//
 	int x = 500;
@@ -234,7 +234,13 @@ bool  HomeMenu::CheckClicked()
 		{
 			status = 2;
 
-			//Todo als Host
+
+			if (Ressources::getInstance()->getClient()->connect(ipAdress, 4567) != sf::Socket::Done)
+			{
+
+			}
+
+
 			return true;
 		}
 		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
@@ -243,8 +249,21 @@ bool  HomeMenu::CheckClicked()
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 3;
+			Ressources* res = Ressources::getInstance();
+			if (res->getListener()->listen(4567))
+			{
+				std::cout << "Error Port";
+			}
 
-			//TODO als client
+
+			IpAddress ClientAdress;
+			TcpSocket Client;
+			if (res->getListener()->accept(Client) != Socket::Done)
+			{
+				std::cout << "Error Client";
+				//Error
+			}
+
 			return true;
 		}
 
@@ -314,6 +333,7 @@ void HomeMenu::draw()
 	window->draw(*drone);
 	window->draw(*choseText);
 	window->draw(*host);
+	window->draw(*client);
 	window->draw(*ownIpAdressText);
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
