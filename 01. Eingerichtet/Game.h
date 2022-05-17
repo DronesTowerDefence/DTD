@@ -7,6 +7,7 @@
 #include "PauseMenu.h"
 #include "HomeMenu.h"
 
+
 class Game
 {
 private:
@@ -14,6 +15,12 @@ private:
 
 	int chooseMusic;
 	int droneCount;
+	/// <summary>
+	/// 1 = Single
+	/// 2 = Host
+	/// 3 = Client
+	/// </summary>
+int status;
 
 	bool lost;
 	bool isMouseClicked;
@@ -106,7 +113,7 @@ public:
 	static Game* getInstance();
 
 
-	
+
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
@@ -138,6 +145,8 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	//void setPauseScreen(RenderWindow*);
+
+	void setStatus(int state);
 
 	/// <summary>
 	/// Startet das Spiel

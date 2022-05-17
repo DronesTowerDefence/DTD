@@ -5,6 +5,7 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
+	status = 1;
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
@@ -22,6 +23,7 @@ HomeMenu::HomeMenu()
 	ipAdressText = new Text();
 
 	ipAdress = "";
+	ownIpAdress = IpAddress::getLocalAddress().toString();
 
 	client = new Sprite();
 	host = new Sprite();
@@ -114,6 +116,13 @@ HomeMenu::HomeMenu()
 	ipAdressText->setPosition(Vector2f(0, 0));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(30);
+
+	ownIpAdressText = new Text();
+	ownIpAdressText->setFont(*font);
+	ownIpAdressText->setPosition(Vector2f(0, 30));
+	ownIpAdressText->setFillColor(Color::Black);
+	ownIpAdressText->setCharacterSize(30);
+	ownIpAdressText->setString(ownIpAdress);
 }
 #pragma endregion
 
@@ -170,8 +179,13 @@ void HomeMenu::eingabe(Event event) {
 		case Keyboard::Period:
 			ipAdress += ".";
 			break;
+
 		default:
 			break;
+		}
+		if (ipAdress.size() == 3 || ipAdress.size() == 7)
+		{
+			ipAdress += ".";
 		}
 		ipAdressText->setString(ipAdress);
 	}
@@ -210,8 +224,8 @@ bool  HomeMenu::CheckClicked()
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
+			status = 2;
 
-			
 			//Todo als Host
 			return true;
 		}
@@ -220,6 +234,8 @@ bool  HomeMenu::CheckClicked()
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
+			status = 3;
+
 			//TODO als client
 			return true;
 		}
@@ -277,7 +293,7 @@ void HomeMenu::HomeMenuStart()
 
 	}
 	Game::getInstance()->setWindow(&*window);
-
+	Game::getInstance()->setStatus(status);
 	Game::getInstance()->startGame();
 }
 void HomeMenu::draw()
@@ -290,6 +306,7 @@ void HomeMenu::draw()
 	window->draw(*drone);
 	window->draw(*choseText);
 	window->draw(*host);
+	window->draw(*ownIpAdressText);
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);

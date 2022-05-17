@@ -13,10 +13,17 @@ private:
 	int choseIndex;
 	int animationIndex;
 	int callCount;
+	/// <summary>
+	/// 1 = Single
+	/// 2 = Host
+	/// 3 = Client
+	/// </summary>
+	int status; 
 	
 	bool isClicked;
 	
 	std::string ipAdress;
+	std::string ownIpAdress;
 	Vector2f positionTower[5];
 
 	RenderWindow* window;
@@ -43,6 +50,7 @@ private:
 	Font *font;
 	Text *choseText;
 	Text *ipAdressText;
+	Text *ownIpAdressText;
 
 	Ressources* res;
 	

@@ -216,6 +216,11 @@ bool Game::towerAliasForbiddenPosition()
 	return 1;
 }
 
+void Game::setStatus(int status)
+{
+	this->status = status;
+}
+
 void Game::startGame()
 {
 	loadGame();
@@ -235,19 +240,34 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
-		updateEco();
-		checkLoseGame();
-		moveDrohnes();
-		checkShoot();
-		checkTowerAlias();
-		generateMoneyTowers();
-		changeBackgroundMusic();
-		for (auto i : Round::getInstance()->getAllTowers())
+		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
-			i->getUpdates()->canBuy();
+			updateEco();
+			checkLoseGame();
+			moveDrohnes();
+			checkShoot();
+			checkTowerAlias();
+			generateMoneyTowers();
+			changeBackgroundMusic();
+			for (auto i : Round::getInstance()->getAllTowers())
+			{
+				i->getUpdates()->canBuy();
+
+			}
+
 
 		}
+		if (status == 2)
+		{
+			sendPackets();
+		}
+		else if (status == 3)
+		{
+			if (receivePackets())
+			{
 
+			}
+		}
 		draw();
 	}
 }
@@ -472,7 +492,7 @@ void Game::checkShoot()
 				for (auto i : Round::getInstance()->getAllSpawns()) {
 					i->shoot();
 				}
-					
+
 			}
 		}
 		for (auto iter : t->getCoverableArea())
