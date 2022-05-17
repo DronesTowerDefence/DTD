@@ -830,6 +830,7 @@ bool Game::sendPackets()
 		Packet pac;
 		pac << new Transmit();
 		p_ressources->getClient()->send(pac);
+		sendPacketTimer.restart();
 		return true;
 	}
 	else return false;
