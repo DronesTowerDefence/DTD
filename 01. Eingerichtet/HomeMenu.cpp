@@ -304,7 +304,7 @@ void HomeMenu::HomeMenuStart()
 	callCount++;
 
 	while (window->isOpen())
-	{
+	{ //test
 		Event event;
 		while (window->pollEvent(event))
 		{
