@@ -19,6 +19,18 @@ Transmit::Transmit()
 	{
 		drones[i] = nullptr;
 	}
+
+	for (auto i : Round::getInstance()->getAllTowers())
+	{
+		addTransmit(new TowerTransmit(i));
+	}
+
+	for (auto i : Round::getInstance()->getAllDrones())
+	{
+		addTransmit(new DroneTransmit(i));
+	}
+
+
 }
 
 void Transmit::addTransmit(DroneTransmit* d)
@@ -31,4 +43,19 @@ void Transmit::addTransmit(TowerTransmit* t)
 {
 	towerCount++;
 	tower[towerCount] = t;
+}
+
+DroneTransmit::DroneTransmit(Drone* d)
+{
+	index = 1; //TODO
+	position = d->getDroneSprite().getPosition();
+	lives = d->getLives();
+}
+
+TowerTransmit::TowerTransmit(Tower* t)
+{
+	index = t->getIndex();
+	position = t->getTowerSpr().getPosition();
+	update1 = 0; //TODO
+	update2 = 0; //TODO
 }

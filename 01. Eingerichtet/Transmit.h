@@ -4,6 +4,7 @@
 
 class DroneTransmit {
 public:
+	DroneTransmit(Drone*);
 	int index;
 	Vector2f position;
 	int lives;
@@ -11,6 +12,7 @@ public:
 
 class TowerTransmit {
 public:
+	TowerTransmit(Tower*);
 	int index;
 	Vector2f position;
 	int update1;
