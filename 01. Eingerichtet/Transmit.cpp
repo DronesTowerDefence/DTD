@@ -1,7 +1,19 @@
 #include "Transmit.h"
 
-int Transmit::dronesCount = 0;
-int Transmit::towerCount = 0;
+DroneTransmit::DroneTransmit(Drone* d)
+{
+	index = d->getIndex();
+	position = d->getDroneSprite().getPosition();
+	lives = d->getLives();
+}
+
+TowerTransmit::TowerTransmit(Tower* t)
+{
+	index = t->getIndex();
+	position = t->getTowerSpr().getPosition();
+	update1 = 0; //TODO
+	update2 = 0; //TODO
+}
 
 Transmit::Transmit()
 {
@@ -9,6 +21,9 @@ Transmit::Transmit()
 	roundIndex = Round::getInstance()->getIndex();
 	live = Round::getInstance()->getHealth();
 	money = Round::getInstance()->getMoney();
+
+	towerCount = 0;
+	dronesCount = 0;
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -29,33 +44,16 @@ Transmit::Transmit()
 	{
 		addTransmit(new DroneTransmit(i));
 	}
-
-
 }
 
 void Transmit::addTransmit(DroneTransmit* d)
 {
-	dronesCount++;
 	drones[dronesCount] = d;
+	dronesCount++;
 }
 
 void Transmit::addTransmit(TowerTransmit* t)
 {
-	towerCount++;
 	tower[towerCount] = t;
-}
-
-DroneTransmit::DroneTransmit(Drone* d)
-{
-	index = 1; //TODO
-	position = d->getDroneSprite().getPosition();
-	lives = d->getLives();
-}
-
-TowerTransmit::TowerTransmit(Tower* t)
-{
-	index = t->getIndex();
-	position = t->getTowerSpr().getPosition();
-	update1 = 0; //TODO
-	update2 = 0; //TODO
+	towerCount++;
 }

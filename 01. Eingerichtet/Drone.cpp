@@ -117,6 +117,10 @@ int Drone::getLives()
 {
 	return lives;
 }
+int Drone::getIndex()
+{
+	return droneType;
+}
 Vector2i Drone::getMove()
 {
 	return Vector2i(move_x, move_y);
