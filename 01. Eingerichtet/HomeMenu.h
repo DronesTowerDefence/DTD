@@ -21,6 +21,7 @@ private:
 	int status; 
 	
 	bool isClicked;
+	bool connected;
 	
 	std::string ipAdress;
 	std::string ownIpAdress;
@@ -56,7 +57,7 @@ private:
 	
 
 	void eingabe(Event event);
-	bool CheckClicked();
+	int CheckClicked();
 	void draw();
 	
 	void setTowerTexture();
