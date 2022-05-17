@@ -53,6 +53,7 @@ public:
 	bool getWon();
 	Clock getDroneTimer();
 	Clock getDroneSubHealthTimer();
+	Map* getMap();
 	std::list<Tower*> getAllAttackTower();
 	std::list<Tower*> getAllTowers();
 	std::list<Tower*> getAllMoneyTower();

@@ -5,7 +5,7 @@ int Transmit::towerCount = 0;
 
 Transmit::Transmit()
 {
-	mapIndex; //TODO
+	mapIndex = Round::getInstance()->getMap()->getIndex();
 	roundIndex = Round::getInstance()->getIndex();
 	live = Round::getInstance()->getHealth();
 	money = Round::getInstance()->getMoney();

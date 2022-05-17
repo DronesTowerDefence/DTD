@@ -203,6 +203,10 @@ Clock Round::getDroneSubHealthTimer()
 {
 	return droneSubHealthTimer;
 }
+Map* Round::getMap()
+{
+	return p_map;
+}
 std::list<Tower*> Round::getAllAttackTower()
 {
 	return allAttackTowers;
