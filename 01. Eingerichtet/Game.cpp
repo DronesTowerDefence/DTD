@@ -844,7 +844,7 @@ bool Game::sendPackets()
 Transmit* Game::receivePacket()
 {
 	Packet pac;
-	Transmit* tra = new Transmit();
+	Transmit* tra = new Transmit(false);
 	p_ressources->getClient()->receive(pac);
 	pac >> *tra;
 
@@ -852,6 +852,8 @@ Transmit* Game::receivePacket()
 	{
 		tra = nullptr;
 	}
+
+	std::cout << tra->dronesCount << std::endl;
 
 	return tra;
 }

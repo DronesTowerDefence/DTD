@@ -34,6 +34,7 @@ public:
 	TowerTransmit* tower[100];
 
 	Transmit();
+	Transmit(bool);
 
 	void addTransmit(DroneTransmit*);
 	void addTransmit(TowerTransmit*);
