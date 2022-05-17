@@ -289,6 +289,7 @@ void HomeMenu::draw()
 	window->draw(*startButton);
 	window->draw(*drone);
 	window->draw(*choseText);
+	window->draw(*host);
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
