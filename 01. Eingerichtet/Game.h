@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include "Transmit.h"
 #include "Ressources.h"
 #include "Round.h"
 #include "Sidebar.h"
@@ -38,6 +39,7 @@ int status;
 	Sprite gameOverHomeButton;
 
 	Clock changeMusicTimer;
+	Clock sendPacketTimer;
 	SoundBuffer musicBuffer[4];
 	Sound music[4];
 
@@ -70,6 +72,12 @@ int status;
 	/// </summary>
 	/// <returns></returns>
 	bool towerAliasForbiddenPosition();
+
+	/// <summary>
+	/// Lädt ein Packet in die Game
+	/// </summary>
+	/// <returns></returns>
+	bool loadPacketContent(Transmit*);
 
 	void newRound();
 	/// <summary>
@@ -183,6 +191,6 @@ public:
 	/// Empfängt informationen
 	/// </summary>
 	/// <returns>True wenn was angekommen ist</returns>
-	bool receivePackets();
+	Transmit* receivePacket();
 
 };

@@ -1,4 +1,3 @@
-#include "Transmit.h"
 #include "Game.h"
 #include <fstream>
 
@@ -227,7 +226,7 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
-
+		Transmit* tra;
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -240,15 +239,16 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
+		updateEco();
+		checkLoseGame();
+		moveDrohnes();
+		checkShoot();
+		changeBackgroundMusic();
+
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
-			updateEco();
-			checkLoseGame();
-			moveDrohnes();
-			checkShoot();
 			checkTowerAlias();
 			generateMoneyTowers();
-			changeBackgroundMusic();
 			for (auto i : Round::getInstance()->getAllTowers())
 			{
 				i->getUpdates()->canBuy();
@@ -263,9 +263,9 @@ void Game::startGame()
 		}
 		else if (status == 3)
 		{
-			if (receivePackets())
+			if (tra = receivePacket())
 			{
-
+				loadPacketContent(tra);
 			}
 		}
 		draw();
@@ -293,6 +293,60 @@ void Game::updateEco()
 		"\nRound: " + std::to_string(round->getIndex() + 1)
 		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
+}
+bool Game::loadPacketContent(Transmit* tra)
+{
+	bool returnValue = false;
+
+	if (p_map->getIndex() != tra->mapIndex)
+	{
+		delete p_map;
+		p_map = new Map(tra->mapIndex);
+	}
+
+	round->setIndex(tra->roundIndex);
+	round->setMoney(tra->money);
+	round->setHealth(tra->live);
+
+	droneCount = tra->dronesCount;
+
+	if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones())
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllProjectiles().empty())
+	{
+		for (auto i : round->getAllProjectiles())
+		{
+			delete i;
+		}
+	}
+
+	for (int i = 0; i < tra->towerCount; i++)
+	{
+		new Tower(tra->tower[i]->index, tra->tower[i]->position, p_map);
+	}
+	for (int i = 0; i < tra->dronesCount; i++)
+	{
+		new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
+	}
+
+
+	if (round->getAllDrones().size() == tra->dronesCount && round->getAllTowers().size() == tra->towerCount)
+	{
+		returnValue = true;
+	}
+	return returnValue;
 }
 void Game::newRound()
 {
@@ -700,6 +754,13 @@ void Game::resetAll()
 			delete i;
 		}
 	}
+	if (!round->getAllSpawns().empty())
+	{
+		for (auto i : round->getAllSpawns())
+		{
+			delete i;
+		}
+	}
 	delete newTower;
 	delete sidebar;
 	delete p_map;
@@ -764,20 +825,23 @@ void Game::saveGame()
 }
 bool Game::sendPackets()
 {
-	Packet pac;
-	pac << new Transmit();
-	p_ressources->getClient()->send(pac);
-
-	return true;
+	if (sendPacketTimer.getElapsedTime().asSeconds() > 5)
+	{
+		Packet pac;
+		pac << new Transmit();
+		p_ressources->getClient()->send(pac);
+		return true;
+	}
+	else return false;
 }
-bool Game::receivePackets()
+Transmit* Game::receivePacket()
 {
 	Packet pac;
 	Transmit* tra = new Transmit();
 	p_ressources->getClient()->receive(pac);
 	pac >> *tra;
 
-	return true;
+	return tra;
 }
 #pragma endregion
 
