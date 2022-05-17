@@ -131,63 +131,71 @@ void HomeMenu::eingabe(Event event) {
 	if (event.type == Event::KeyReleased)
 	{
 
-		switch (event.key.code)
+		if (ipAdress.size() < 15)
 		{
-		case Keyboard::Num0:
-		case Keyboard::Numpad0:
-			ipAdress += "0";
-			break;
+			switch (event.key.code)
+			{
+			case Keyboard::Num0:
+			case Keyboard::Numpad0:
+				ipAdress += "0";
+				break;
 
-		case Keyboard::Num1:
-		case Keyboard::Numpad1:
-			ipAdress += "1";
-			break;
+			case Keyboard::Num1:
+			case Keyboard::Numpad1:
+				ipAdress += "1";
+				break;
 
-		case Keyboard::Num2:
-		case Keyboard::Numpad2:
-			ipAdress += "2";
-			break;
+			case Keyboard::Num2:
+			case Keyboard::Numpad2:
+				ipAdress += "2";
+				break;
 
-		case Keyboard::Num3:
-		case Keyboard::Numpad3:
-			ipAdress += "3";
-			break;
-		case Keyboard::Num4:
-		case Keyboard::Numpad4:
-			ipAdress += "4";
-			break;
-		case Keyboard::Num5:
-		case Keyboard::Numpad5:
-			ipAdress += "5";
-			break;
-		case Keyboard::Num6:
-		case Keyboard::Numpad6:
-			ipAdress += "6";
-			break;
-		case Keyboard::Num7:
-		case Keyboard::Numpad7:
-			ipAdress += "7";
-			break;
-		case Keyboard::Num8:
-		case Keyboard::Numpad8:
-			ipAdress += "8";
-			break;
-		case Keyboard::Num9:
-		case Keyboard::Numpad9:
-			ipAdress += "9";
-			break;
-		case Keyboard::Period:
-			ipAdress += ".";
-			break;
+			case Keyboard::Num3:
+			case Keyboard::Numpad3:
+				ipAdress += "3";
+				break;
+			case Keyboard::Num4:
+			case Keyboard::Numpad4:
+				ipAdress += "4";
+				break;
+			case Keyboard::Num5:
+			case Keyboard::Numpad5:
+				ipAdress += "5";
+				break;
+			case Keyboard::Num6:
+			case Keyboard::Numpad6:
+				ipAdress += "6";
+				break;
+			case Keyboard::Num7:
+			case Keyboard::Numpad7:
+				ipAdress += "7";
+				break;
+			case Keyboard::Num8:
+			case Keyboard::Numpad8:
+				ipAdress += "8";
+				break;
+			case Keyboard::Num9:
+			case Keyboard::Numpad9:
+				ipAdress += "9";
+				break;
+			case Keyboard::Period:
+				ipAdress += ".";
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
+			ipAdressText->setString(ipAdress);
 		}
-		if (ipAdress.size() == 3 || ipAdress.size() == 7)
+		if (event.key.code == Keyboard::BackSpace)
 		{
-			ipAdress += ".";
+			if (ipAdress.size() > 0)
+			{
+				ipAdress.erase(ipAdress.size() - 1);
+			}
+			ipAdressText->setString(ipAdress);
+
 		}
-		ipAdressText->setString(ipAdress);
 	}
 }
 
