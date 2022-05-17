@@ -296,6 +296,9 @@ void Game::moveDrohnes()
 	{
 		i->collission();
 	}
+	for (TowerSpawn* i : round->getAllSpawns()) {
+		i->moveSpawn();
+	}
 }
 void Game::checkButtonClick()
 {
@@ -463,6 +466,15 @@ void Game::checkShoot()
 	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
+		if (t->getIndex() == 3) {
+			if (shootCooldown.getElapsedTime().asSeconds() > 3) {
+				shootCooldown.restart();
+				for (auto i : Round::getInstance()->getAllSpawns()) {
+					i->shoot();
+				}
+					
+			}
+		}
 		for (auto iter : t->getCoverableArea())
 		{
 			tmp->setFillColor(Color::Transparent);

@@ -11,10 +11,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 	if (index >= 0 && index <= 4)
 	{
-		if (index == 3)
-		{
-			spawnSpawn(1);
-		}
+		
 
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
@@ -35,6 +32,10 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		generationCooldown = false;
 		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
+		if (index == 3)
+		{
+			spawnSpawn(1);
+		}
 
 		if (index < res->getTowerCount())
 		{
@@ -97,7 +98,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this, res->getTowerProjectileIndex(index)); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this,nullptr, res->getTowerProjectileIndex(index),Vector2f(0,0)); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > speed)

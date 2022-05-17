@@ -42,6 +42,8 @@ private:
 
 	Event event;
 
+	Clock shootCooldown;
+
 	Ressources* p_ressources;
 	Round* round;
 	Sidebar* sidebar;
