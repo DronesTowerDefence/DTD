@@ -5,8 +5,6 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
-
-	connected = false;
 	status = 1;
 	callCount = 1;
 	isClicked = false;
@@ -201,7 +199,7 @@ void HomeMenu::eingabe(Event event) {
 	}
 }
 
-int  HomeMenu::CheckClicked()
+bool  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
@@ -235,19 +233,15 @@ int  HomeMenu::CheckClicked()
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 2;
-			connected = true;
+
 
 			if (Ressources::getInstance()->getClient()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
-				connected = false;
-				std::cout << "ERROR";
+
 			}
-			Packet p;
-			p << choseIndex;
-			Ressources::getInstance()->getClient()->send(p);
 
 
-			return 2;
+			return true;
 		}
 		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
 		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
@@ -255,26 +249,22 @@ int  HomeMenu::CheckClicked()
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 3;
-			connected = true;
 			Ressources* res = Ressources::getInstance();
 			if (res->getListener()->listen(4567))
 			{
 				std::cout << "Error Port";
-				connected = false;
 			}
 
 
-	
-			if (res->getListener()->accept(*res->getClient()) != Socket::Done)
+			IpAddress ClientAdress;
+			TcpSocket Client;
+			if (res->getListener()->accept(Client) != Socket::Done)
 			{
-				connected = false;
 				std::cout << "Error Client";
 				//Error
 			}
-			Packet p;
-			res->getClient()->receive(p);
-			p >> choseIndex;
-			return 3;
+
+			return true;
 		}
 
 
@@ -287,10 +277,10 @@ int  HomeMenu::CheckClicked()
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 
 
 
@@ -322,18 +312,11 @@ void HomeMenu::HomeMenuStart()
 		{
 			drone->setPosition(Vector2f(0, 300));
 		}
-		int clicked = CheckClicked();
-		if (clicked == 1 && choseIndex != -1) // singleplayer
+		if (CheckClicked() && choseIndex != -1)
 		{
 			break;
 		}
-		else if (clicked == 2 && choseIndex != -1 && connected)
-		{
-			break;
-		}
-		else if (clicked == 3 && connected && choseIndex != -1)
-
-			draw();
+		draw();
 
 	}
 	Game::getInstance()->setWindow(&*window);
