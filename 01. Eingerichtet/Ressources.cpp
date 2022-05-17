@@ -20,8 +20,8 @@ Ressources::Ressources()
 	towerAttackTowerCount = 4;
 	towerMoneyTowerCount = 1;
 
-	towerProjectileIndex[0] = 1;
-	towerProjectileIndex[1] = 1;
+	towerProjectileIndex[0] = 2;
+	towerProjectileIndex[1] = 2;
 	towerProjectileIndex[2] = 3;
 	towerProjectileIndex[3] = 0;
 	towerProjectileIndex[4] = 0;
@@ -29,7 +29,7 @@ Ressources::Ressources()
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	towerPrice[3] = 2000;
+	towerPrice[3] = 2;
 	towerPrice[4] = 500;
 
 	towerDamage[0] = 1;
@@ -38,7 +38,7 @@ Ressources::Ressources()
 	towerDamage[3] = 4;
 	towerDamage[4] = 0;
 
-	towerSpeed[0] = 0.5;
+	towerSpeed[0] = 2;
 	towerSpeed[1] = 1;
 	towerSpeed[2] = 1.5;
 	towerSpeed[3] = 1;
@@ -47,13 +47,13 @@ Ressources::Ressources()
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
 	towerProjectileSpeed[2] = 4;
-	towerProjectileSpeed[3] = 4;
+	towerProjectileSpeed[3] = 0.05;
 	towerProjectileSpeed[4] = 0;
 
 	towerRange[0] = 100;
 	towerRange[1] = 200;
 	towerRange[2] = 100;
-	towerRange[3] = 1000;
+	towerRange[3] = 0;
 	towerRange[4] = 0;
 
 	towerMoneyGeneration[0] = 0;

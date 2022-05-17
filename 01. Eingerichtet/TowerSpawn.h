@@ -4,6 +4,8 @@ class TowerSpawn
 {
 private:
 	int kind;
+	int counter;
+	int direction;
 	Vector2f move;
 	Texture spawntexture;
 	Sprite spawnsprite;
@@ -14,8 +16,9 @@ public:
 	TowerSpawn(int, Tower*);
 	
 	Sprite getSpawnSprite();
+	Texture getSpawnTexture();
 	
-	void Shoot();
+	void shoot();
 	void moveSpawn();
 	void operate();
 };

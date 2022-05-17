@@ -296,6 +296,9 @@ void Game::moveDrohnes()
 	{
 		i->collission();
 	}
+	for (TowerSpawn* i : round->getAllSpawns()) {
+		i->moveSpawn();
+	}
 }
 void Game::checkButtonClick()
 {
@@ -388,6 +391,18 @@ void Game::draw()
 
 	window->draw(*p_map->getBackround()); //Karte wird gedrawt
 	window->draw(toolbar);
+	CircleShape* a;
+	for (auto i : round->getAllAttackTower())
+	{
+		for (auto j : i->getCoverableArea())
+		{
+			a = new CircleShape;
+			a->setRadius(25);
+			a->setFillColor(Color::Red);
+			a->setPosition(j.x, j.y);
+			window->draw(*a);
+		}
+	}
 
 	if (tower != nullptr)
 	{
@@ -463,6 +478,15 @@ void Game::checkShoot()
 	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
+		if (t->getIndex() == 3) {
+			if (shootCooldown.getElapsedTime().asSeconds() > 3) {
+				shootCooldown.restart();
+				for (auto i : Round::getInstance()->getAllSpawns()) {
+					i->shoot();
+				}
+					
+			}
+		}
 		for (auto iter : t->getCoverableArea())
 		{
 			tmp->setFillColor(Color::Transparent);

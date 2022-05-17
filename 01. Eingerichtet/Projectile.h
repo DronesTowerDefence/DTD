@@ -18,7 +18,7 @@ private:
 	Tower* tower;
 	Ressources* res;
 public:
-	Projectile(Drone*,Tower*,int);
+	Projectile(Drone*,Tower*,TowerSpawn*,int,Vector2f);
 	
 	bool getcollided();
 	Sprite* getProjectileSprite();

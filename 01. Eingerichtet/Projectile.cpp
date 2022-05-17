@@ -7,15 +7,22 @@
 
 
 #pragma region Konstruktor
-Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
+Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill)
 {
 	speed = _tower->getProjectileSpeed();
 	tower = _tower;
 	collided = 0;
 	res = Ressources::getInstance();
+	if (style == 0) {
+		move.x = _targetstill.x;
+		move.y = _targetstill.y;
+	}
 
 	switch (_style)
 	{
+	case 0:
+		projectilesprite.setTexture(*res->getProjectileTexture(0));
+		break;
 	case 1:
 		projectilesprite.setTexture(*res->getProjectileTexture(0));
 		break;
@@ -30,7 +37,11 @@ Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 	Round::getInstance()->addProjectile(this);
 	style = _style;
 	dronetarget = _target;
-	projectilesprite.setPosition(tower->getTowerPos());
+	if (_target == nullptr&&style==0)
+		projectilesprite.setPosition(_towerspawn->getSpawnSprite().getPosition().x+_towerspawn->getSpawnTexture().getSize().x/2, _towerspawn->getSpawnSprite().getPosition().y + _towerspawn->getSpawnTexture().getSize().y / 2);
+	else
+		projectilesprite.setPosition(tower->getTowerPos());
+
 	operate();
 }
 #pragma endregion
@@ -39,10 +50,19 @@ Projectile::Projectile(Drone* _target, Tower* _tower, int _style)
 void Projectile::operate()
 {
 	switch (style) {
-	case 1: {
+	case 0: {   //Fliegt einfach gerade
+		moveProjectile();
+		break;
+	}
+	case 1: { //Fliegt Richtung Drohne 
 		targeting();
-		setmove(); }
-	case 2:homing();
+		setmove();
+		break;
+	}
+	case 2: {  // Verfolgt Drohne
+		homing();
+		break; 
+	}
 	}
 
 
@@ -80,21 +100,24 @@ void Projectile::moveProjectile()
 		delete this;
 		return;
 	}
-	//std::cout << target.x << target.y << std::endl;
 	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / speed), projectilesprite.getPosition().y + (move.y / speed));
 
 
 }
 void Projectile::collission()
 {
-	if (collided == 0) {
-		if (projectilesprite.getGlobalBounds().intersects(dronetarget->getDroneSprite().getGlobalBounds())) {
-			//std::cout << "hit" << std::endl;
-			dronetarget->takeDamage(tower->getDamage());
-			collided = 1;
-			delete this;
+	for (auto i : Round::getInstance()->getAllDrones()) {
+		if (collided == 0) {
+			if (projectilesprite.getGlobalBounds().intersects(i->getDroneSprite().getGlobalBounds())) {
+				//std::cout << "hit" << std::endl;
+				i->takeDamage(tower->getDamage());
+				collided = 1;
+				delete this;
+			}
 		}
 	}
+
+
 }
 #pragma endregion
 
