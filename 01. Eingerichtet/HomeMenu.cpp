@@ -332,6 +332,9 @@ void HomeMenu::HomeMenuStart()
 			break;
 		}
 		else if (clicked == 3 && connected && choseIndex != -1)
+		{
+			break;
+		}
 
 			draw();
 
