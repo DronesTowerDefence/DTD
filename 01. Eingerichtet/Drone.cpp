@@ -62,7 +62,33 @@ void Drone::pass()
 		}
 		return;
 	}
-	else {
+
+	
+
+	else if(HomeMenu::getInstance()->getChoseIndex() == 1){
+
+		
+
+
+		if (nextPoint % 2 == 0) {
+
+			drone.setRotation(90.f);
+			drone.move(50.f, 0.f);
+		}
+		else {
+			drone.setRotation(0.f);
+
+		}
+
+		if (nextPoint == 3) {
+			drone.setRotation(360.f);
+			drone.setPosition(drone.getPosition()+Vector2f(-50.f,0.f));
+		}
+
+	}
+	else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
+
+
 
 
 		if (nextPoint % 2 == 0) {
@@ -75,9 +101,23 @@ void Drone::pass()
 
 		}
 
+		if (nextPoint == 7) {
+			drone.setRotation(360.f);
+			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
+		}
+
+		if (nextPoint == 8) {
+			drone.setRotation(90.f);
+		
+		}
+		
+
+
+		//next Point wird nie auf 8 erhöht => Wird die Fuunktion nicht mehr aufgerufen? Aber WARUM
 
 	}
 
+	
 
 
 	//if (nextPoint == 1) {
@@ -87,6 +127,7 @@ void Drone::pass()
 	//	
 	//}
 }
+
 bool Drone::takeDamage(int damage) {
 	int livesDiff = lives;
 	lives -= damage;
