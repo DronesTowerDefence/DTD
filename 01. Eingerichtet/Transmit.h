@@ -5,6 +5,7 @@
 class DroneTransmit {
 public:
 	DroneTransmit(Drone*);
+	DroneTransmit(bool);
 	int index;
 	Vector2f position;
 	int lives;
@@ -13,6 +14,7 @@ public:
 class TowerTransmit {
 public:
 	TowerTransmit(Tower*);
+	TowerTransmit(bool);
 	int index;
 	Vector2f position;
 	int update1;
@@ -22,6 +24,8 @@ public:
 
 class Transmit
 {
+private:
+	Transmit();
 public:
 	int dronesCount;
 	int towerCount;
@@ -30,13 +34,9 @@ public:
 	int live;
 	int money;
 	
-	DroneTransmit* drones[300];
-	TowerTransmit* tower[100];
+	std::list<DroneTransmit*> drones;
+	std::list<TowerTransmit*> tower;
 
-	Transmit();
 	Transmit(bool);
-
-	void addTransmit(DroneTransmit*);
-	void addTransmit(TowerTransmit*);
 };
 

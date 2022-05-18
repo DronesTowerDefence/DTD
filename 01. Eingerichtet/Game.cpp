@@ -5,15 +5,15 @@ Game* Game::instance = nullptr;
 
 #pragma region Packet_Operator
 
-//Transmit Klasse
-Packet& operator <<(Packet& packet, const Transmit& t)
-{
-	return packet << t.mapIndex << t.roundIndex << t.live << t.money; //TODO: Dronen und Tower hinzufügen
-}
-Packet& operator >>(Packet& packet, Transmit& t)
-{
-	return packet >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //TODO: Dronen und Tower hinzufügen
-}
+////Transmit Klasse
+//Packet& operator <<(Packet& packet, const Transmit& t)
+//{
+//	return packet << t.mapIndex << t.roundIndex << t.live << t.money; //TODO: Dronen und Tower hinzufügen
+//}
+//Packet& operator >>(Packet& packet, Transmit& t)
+//{
+//	return packet >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //TODO: Dronen und Tower hinzufügen
+//}
 
 //DroneTransmit Klasse
 Packet& operator <<(Packet& packet, const DroneTransmit& d)
@@ -338,15 +338,21 @@ bool Game::loadPacketContent(Transmit* tra)
 		}
 	}
 
-	for (int i = 0; i < tra->towerCount; i++)
-	{
-		new Tower(tra->tower[i]->index, tra->tower[i]->position, p_map);
-	}
-	for (int i = 0; i < tra->dronesCount; i++)
-	{
-		new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
-	}
+	Tower* t = nullptr;
+	Drone* d = nullptr;
 
+	for (auto i : tra->tower)
+	{
+		t = new Tower(i->index, i->position, p_map);
+		//TODO Updates
+		d = nullptr;
+	}
+	for (auto i : tra->drones)
+	{
+		d = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
+		//TODO Lives
+		d = nullptr;
+	}
 
 	if (round->getAllDrones().size() == tra->dronesCount && round->getAllTowers().size() == tra->towerCount)
 	{
@@ -354,6 +360,7 @@ bool Game::loadPacketContent(Transmit* tra)
 	}
 	return returnValue;
 }
+
 void Game::newRound()
 {
 	saveGame();
@@ -834,7 +841,24 @@ bool Game::sendPackets()
 	if (sendPacketTimer.getElapsedTime().asSeconds() > 5)
 	{
 		Packet pac;
-		pac << new Transmit();
+		Transmit t(true);
+
+		pac << t.dronesCount << t.towerCount << t.mapIndex << t.roundIndex << t.live << t.money;
+		if (t.dronesCount != 0)
+		{
+			for (auto i : t.drones)
+			{
+				pac << i;
+			}
+		}
+		if (t.towerCount != 0)
+		{
+			for (auto i : t.tower)
+			{
+				pac << i;
+			}
+		}
+
 		p_ressources->getClient()->send(pac);
 		sendPacketTimer.restart();
 		return true;
@@ -844,18 +868,32 @@ bool Game::sendPackets()
 Transmit* Game::receivePacket()
 {
 	Packet pac;
-	Transmit* tra = new Transmit(false);
+	Transmit t(false);
 	p_ressources->getClient()->receive(pac);
-	pac >> *tra;
 
-	if (false)
+	pac >> t.dronesCount >> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money;
+	if (t.dronesCount != 0)
 	{
-		tra = nullptr;
+		for (int i = 0; i < t.dronesCount; ++i)
+		{
+			DroneTransmit tmp(false);
+			pac >> tmp;
+			t.drones.push_back(&tmp);
+		}
+	}
+	if (t.towerCount != 0)
+	{
+		for (int i = 0; i < t.towerCount; ++i)
+		{
+			TowerTransmit tmp(false);
+			pac >> tmp;
+			t.tower.push_back(&tmp);
+		}
 	}
 
-	std::cout << tra->dronesCount << std::endl;
+	std::cout << t.dronesCount << std::endl;
 
-	return tra;
+	return &t;
 }
 #pragma endregion
 
