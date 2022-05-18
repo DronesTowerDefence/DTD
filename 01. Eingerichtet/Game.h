@@ -73,12 +73,6 @@ int status;
 	/// <returns></returns>
 	bool towerAliasForbiddenPosition();
 
-	/// <summary>
-	/// Lädt ein Packet in die Game
-	/// </summary>
-	/// <returns></returns>
-	bool loadPacketContent(Transmit*);
-
 	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter
@@ -191,6 +185,6 @@ public:
 	/// Empfängt informationen
 	/// </summary>
 	/// <returns>True wenn was angekommen ist</returns>
-	Transmit* receivePacket();
+	bool receivePacket();
 
 };

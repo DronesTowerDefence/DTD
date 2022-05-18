@@ -226,7 +226,6 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
-		Transmit* tra = nullptr;
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -263,13 +262,7 @@ void Game::startGame()
 		}
 		else if (status == 3)
 		{
-			tra = receivePacket();
-			if (tra != nullptr)
-			{
-				loadPacketContent(tra);
-				delete tra;
-				tra = nullptr;
-			}
+			receivePacket();
 		}
 		draw();
 	}
@@ -296,75 +289,6 @@ void Game::updateEco()
 		"\nRound: " + std::to_string(round->getIndex() + 1)
 		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
-}
-bool Game::loadPacketContent(Transmit* tra)
-{
-	bool returnValue = false;
-
-	if ((tra == nullptr) || (tra->mapIndex < 0 && tra->mapIndex>2) ||
-		(tra->dronesCount != tra->drones.size() || tra->towerCount != tra->tower.size())) //Überprüft, ob der Inhalt Sinn macht
-	{
-		return returnValue;
-	}
-
-	if (p_map->getIndex() != tra->mapIndex) //Wenn falsche Map, wird die aktuelle gelöscht und die richtige erstellt
-	{
-		delete p_map;
-		p_map = new Map(tra->mapIndex);
-	}
-
-	round->setIndex(tra->roundIndex);
-	round->setMoney(tra->money);
-	round->setHealth(tra->live);
-
-	droneCount = tra->dronesCount;
-
-	if (!round->getAllTowers().empty())
-	{
-		for (auto i : round->getAllTowers())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllDrones().empty())
-	{
-		for (auto i : round->getAllDrones())
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllProjectiles().empty())
-	{
-		for (auto i : round->getAllProjectiles())
-		{
-			delete i;
-		}
-	}
-
-	Tower* t = nullptr;
-	Drone* d = nullptr;
-	if (tra->towerCount > 0)
-	{
-		for (auto i : tra->tower)
-		{
-			t = new Tower(i->index, i->position, p_map);
-			//TODO Updates
-			d = nullptr;
-		}
-	}
-	if (tra->dronesCount > 0)
-	{
-		for (auto i : tra->drones)
-		{
-			d = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
-			//TODO Lives
-			d = nullptr;
-		}
-	}
-
-	returnValue = true;
-
-	return returnValue;
 }
 
 void Game::newRound()
@@ -513,7 +437,6 @@ void Game::draw()
 	{
 		window->draw(*(t->getDrawSprite()));
 	}
-
 
 	for (auto* t : round->getAllProjectiles()) //Projectiles werden gedrawt
 	{
@@ -871,22 +794,18 @@ bool Game::sendPackets()
 	}
 	else return false;
 }
-Transmit* Game::receivePacket()
+bool Game::receivePacket()
 {
+	//Entpacken des Paketes
 	Packet pac;
 	Transmit t(false);
 	p_ressources->getClient()->receive(pac);
 
-	pac >> t.dronesCount >> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money;
-
-	if (t.mapIndex > 2 || t.mapIndex < 0) //Überprüft, ob der Inhalt des Packetes Sinn macht
-	{
-		return nullptr;
-	}
+	pac >> t.dronesCount >> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //Extrahiert die Werte
 
 	if (t.dronesCount != 0)
 	{
-		for (int i = 0; i < t.dronesCount; ++i)
+		for (int i = 0; i < t.dronesCount; ++i) //Extrahiert die Drohnen
 		{
 			DroneTransmit tmp(false);
 			pac >> tmp.index >> tmp.lives >> tmp.position.x >> tmp.position.y;
@@ -895,7 +814,7 @@ Transmit* Game::receivePacket()
 	}
 	if (t.towerCount != 0)
 	{
-		for (int i = 0; i < t.towerCount; ++i)
+		for (int i = 0; i < t.towerCount; ++i) //Extrahiert die Türme
 		{
 			TowerTransmit tmp(false);
 			pac >> tmp.index >> tmp.position.x >> tmp.position.y >> tmp.update1 >> tmp.update2;
@@ -903,9 +822,64 @@ Transmit* Game::receivePacket()
 		}
 	}
 
-	std::cout << t.dronesCount << std::endl;
+	if ((t.mapIndex > 2 || t.mapIndex < 0) || (t.mapIndex < 0 && t.mapIndex>2) ||
+		(t.dronesCount != t.drones.size() || t.towerCount != t.tower.size())) //Überprüft, ob der Inhalt des Entpackten Packets Sinn macht
+	{
+		return false;
+	}
 
-	return &t;
+	//Anwenden des Inhaltes auf das Spiel
+
+	if (p_map->getIndex() != t.mapIndex) //Wenn falsche Map, wird die aktuelle gelöscht und die richtige erstellt
+	{
+		delete p_map;
+		p_map = new Map(t.mapIndex);
+	}
+
+	round->setIndex(t.roundIndex); //Wendet Werte an
+	round->setMoney(t.money);
+	round->setHealth(t.live);
+	this->droneCount = t.dronesCount;
+
+	/*if (!round->getAllTowers().empty())
+	{
+		for (auto i : round->getAllTowers()) //Löscht die vorhandenen Türme
+		{
+			delete i;
+		}
+	}
+	if (!round->getAllDrones().empty())
+	{
+		for (auto i : round->getAllDrones()) //Löscht die vorhandenen Drohnen
+		{
+			delete i;
+		}
+	}*/
+	
+
+	Tower* to = nullptr;
+	Drone* dr = nullptr;
+	if (t.towerCount > 0)
+	{
+		for (auto i : t.tower) //Erstellt die Türme
+		{
+			to = new Tower(i->index, i->position, p_map);
+			//TODO Updates
+			to = nullptr;
+		}
+	}
+	if (t.dronesCount > 0)
+	{
+		for (auto i : t.drones) //Erstellt die Drohnen
+		{
+			dr = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
+			round->addDrone(dr);
+			//TODO Lives
+			dr = nullptr;
+		}
+	}
+
+	return true;
 }
 #pragma endregion
 

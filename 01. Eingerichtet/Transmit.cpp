@@ -83,12 +83,13 @@ Transmit::Transmit(bool a)
 
 Transmit::~Transmit()
 {
-	if (!tower.empty())
+	/*if (!tower.empty())
 	{
 		for (auto i : tower)
 		{
 			delete i;
 		}
+	tower.clear();
 	}
 	if (!drones.empty())
 	{
@@ -96,8 +97,7 @@ Transmit::~Transmit()
 		{
 			delete i;
 		}
-	}
-
-	tower.clear();
 	drones.clear();
+	}*/
+
 }
