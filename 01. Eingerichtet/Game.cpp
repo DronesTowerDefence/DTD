@@ -226,7 +226,7 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
-		Transmit* tra;
+		Transmit* tra = nullptr;
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -263,7 +263,8 @@ void Game::startGame()
 		}
 		else if (status == 3)
 		{
-			if (tra = receivePacket())
+			tra = receivePacket();
+			if (tra != nullptr)
 			{
 				loadPacketContent(tra);
 			}
@@ -298,7 +299,12 @@ bool Game::loadPacketContent(Transmit* tra)
 {
 	bool returnValue = false;
 
-	if (p_map->getIndex() != tra->mapIndex)
+	if ((tra == nullptr) || (tra->mapIndex < 0 && tra->mapIndex>2)) //Überprüft, ob der Inhalt Sinn macht
+	{
+		return returnValue;
+	}
+
+	if (p_map->getIndex() != tra->mapIndex) //Wenn falsche Map, wird die aktuelle gelöscht und die richtige erstellt
 	{
 		delete p_map;
 		p_map = new Map(tra->mapIndex);
@@ -838,9 +844,16 @@ bool Game::sendPackets()
 Transmit* Game::receivePacket()
 {
 	Packet pac;
-	Transmit* tra = new Transmit();
+	Transmit* tra = new Transmit(false);
 	p_ressources->getClient()->receive(pac);
 	pac >> *tra;
+
+	if (false)
+	{
+		tra = nullptr;
+	}
+
+	std::cout << tra->dronesCount << std::endl;
 
 	return tra;
 }

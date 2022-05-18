@@ -98,6 +98,11 @@ public:
 	int getLives();
 
 	/// <summary>
+	/// Return den Index/Typspecifier/Dronetype der Drohne
+	/// </summary>
+	int getIndex();
+
+	/// <summary>
 	/// Gibt die move_x und move_y Koordinaten mit einem 2-float Vector zurück
 	/// </summary>
 	/// <returns>Vector21</returns>

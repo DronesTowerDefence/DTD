@@ -23,9 +23,8 @@ public:
 class Transmit
 {
 public:
-	static int dronesCount;
-	static int towerCount;
-
+	int dronesCount;
+	int towerCount;
 	int mapIndex;
 	int roundIndex;
 	int live;
@@ -35,6 +34,7 @@ public:
 	TowerTransmit* tower[100];
 
 	Transmit();
+	Transmit(bool);
 
 	void addTransmit(DroneTransmit*);
 	void addTransmit(TowerTransmit*);
