@@ -35,14 +35,14 @@ Transmit::Transmit()
 
 void Transmit::addTransmit(DroneTransmit* d)
 {
-	dronesCount++;
 	drones[dronesCount] = d;
+	dronesCount++;
 }
 
 void Transmit::addTransmit(TowerTransmit* t)
 {
-	towerCount++;
 	tower[towerCount] = t;
+	towerCount++;
 }
 
 DroneTransmit::DroneTransmit(Drone* d)
