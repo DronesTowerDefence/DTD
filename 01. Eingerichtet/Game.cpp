@@ -872,6 +872,12 @@ Transmit* Game::receivePacket()
 	p_ressources->getClient()->receive(pac);
 
 	pac >> t.dronesCount >> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money;
+
+	if (t.mapIndex > 2 || t.mapIndex < 0) //Überprüft, ob der Inhalt des Packetes Sinn macht
+	{
+		return nullptr;
+	}
+
 	if (t.dronesCount != 0)
 	{
 		for (int i = 0; i < t.dronesCount; ++i)
