@@ -14,26 +14,26 @@ Game* Game::instance = nullptr;
 //{
 //	return packet >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //TODO: Dronen und Tower hinzufügen
 //}
-
-//DroneTransmit Klasse
-Packet& operator <<(Packet& packet, const DroneTransmit& d)
-{
-	return packet << d.index << d.position.x << d.position.y << d.lives;
-}
-Packet& operator >>(Packet& packet, DroneTransmit& d)
-{
-	return packet >> d.index >> d.position.x >> d.position.y >> d.lives;
-}
-
-//TowerTransmit Klasse
-Packet& operator <<(Packet& packet, const TowerTransmit& t)
-{
-	return packet << t.index << t.position.x << t.position.y << t.update1 << t.update2;
-}
-Packet& operator >>(Packet& packet, TowerTransmit& t)
-{
-	return packet >> t.index >> t.position.x >> t.position.y >> t.update1 >> t.update2;
-}
+//
+////DroneTransmit Klasse
+//Packet& operator <<(Packet& packet, const DroneTransmit& d)
+//{
+//	return packet << d.index << d.position.x << d.position.y << d.lives;
+//}
+//Packet& operator >>(Packet& packet, DroneTransmit& d)
+//{
+//	return packet >> d.index >> d.position.x >> d.position.y >> d.lives;
+//}
+//
+////TowerTransmit Klasse
+//Packet& operator <<(Packet& packet, const TowerTransmit& t)
+//{
+//	return packet << t.index << t.position.x << t.position.y << t.update1 << t.update2;
+//}
+//Packet& operator >>(Packet& packet, TowerTransmit& t)
+//{
+//	return packet >> t.index >> t.position.x >> t.position.y >> t.update1 >> t.update2;
+//}
 #pragma endregion
 
 #pragma region Konstruktor
@@ -854,14 +854,14 @@ bool Game::sendPackets()
 		{
 			for (auto i : t.drones)
 			{
-				pac << i;
+				pac << i->index << i->lives << i->position.x << i->position.y;
 			}
 		}
 		if (t.towerCount != 0)
 		{
 			for (auto i : t.tower)
 			{
-				pac << i;
+				pac << i->index << i->position.x << i->position.y << i->update1 << i->update2;
 			}
 		}
 
@@ -889,7 +889,7 @@ Transmit* Game::receivePacket()
 		for (int i = 0; i < t.dronesCount; ++i)
 		{
 			DroneTransmit tmp(false);
-			pac >> tmp;
+			pac >> tmp.index >> tmp.lives >> tmp.position.x >> tmp.position.y;
 			t.drones.push_back(&tmp);
 		}
 	}
@@ -898,7 +898,7 @@ Transmit* Game::receivePacket()
 		for (int i = 0; i < t.towerCount; ++i)
 		{
 			TowerTransmit tmp(false);
-			pac >> tmp;
+			pac >> tmp.index >> tmp.position.x >> tmp.position.y >> tmp.update1 >> tmp.update2;
 			t.tower.push_back(&tmp);
 		}
 	}
