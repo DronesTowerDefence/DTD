@@ -267,6 +267,8 @@ void Game::startGame()
 			if (tra != nullptr)
 			{
 				loadPacketContent(tra);
+				delete tra;
+				tra = nullptr;
 			}
 		}
 		draw();
@@ -299,7 +301,8 @@ bool Game::loadPacketContent(Transmit* tra)
 {
 	bool returnValue = false;
 
-	if ((tra == nullptr) || (tra->mapIndex < 0 && tra->mapIndex>2)) //Überprüft, ob der Inhalt Sinn macht
+	if ((tra == nullptr) || (tra->mapIndex < 0 && tra->mapIndex>2) ||
+		(tra->dronesCount != tra->drones.size() || tra->towerCount != tra->tower.size())) //Überprüft, ob der Inhalt Sinn macht
 	{
 		return returnValue;
 	}

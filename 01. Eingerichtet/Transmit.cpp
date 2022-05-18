@@ -59,13 +59,11 @@ Transmit::Transmit(bool a)
 		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			tower.push_back(new TowerTransmit(i));
-			towerCount++;
 		}
 
 		for (auto i : Round::getInstance()->getAllDrones())
 		{
 			drones.push_back(new DroneTransmit(i));
-			dronesCount++;
 		}
 
 		towerCount = tower.size();
@@ -81,4 +79,25 @@ Transmit::Transmit(bool a)
 		towerCount = -1;
 		dronesCount = -1;
 	}
+}
+
+Transmit::~Transmit()
+{
+	if (!tower.empty())
+	{
+		for (auto i : tower)
+		{
+			delete i;
+		}
+	}
+	if (!drones.empty())
+	{
+		for (auto i : drones)
+		{
+			delete i;
+		}
+	}
+
+	tower.clear();
+	drones.clear();
 }

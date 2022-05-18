@@ -38,5 +38,6 @@ public:
 	std::list<TowerTransmit*> tower;
 
 	Transmit(bool);
+	~Transmit();
 };
 
