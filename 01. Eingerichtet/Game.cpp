@@ -340,24 +340,27 @@ bool Game::loadPacketContent(Transmit* tra)
 
 	Tower* t = nullptr;
 	Drone* d = nullptr;
+	if (tra->towerCount > 0)
+	{
+		for (auto i : tra->tower)
+		{
+			t = new Tower(i->index, i->position, p_map);
+			//TODO Updates
+			d = nullptr;
+		}
+	}
+	if (tra->dronesCount > 0)
+	{
+		for (auto i : tra->drones)
+		{
+			d = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
+			//TODO Lives
+			d = nullptr;
+		}
+	}
 
-	for (auto i : tra->tower)
-	{
-		t = new Tower(i->index, i->position, p_map);
-		//TODO Updates
-		d = nullptr;
-	}
-	for (auto i : tra->drones)
-	{
-		d = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
-		//TODO Lives
-		d = nullptr;
-	}
+	returnValue = true;
 
-	if (round->getAllDrones().size() == tra->dronesCount && round->getAllTowers().size() == tra->towerCount)
-	{
-		returnValue = true;
-	}
 	return returnValue;
 }
 
