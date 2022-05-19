@@ -198,6 +198,10 @@ void Drone::setMove(Vector2f v)
 	move_x = int(v.x);
 	move_y = int(v.y);
 }
+void Drone::setLives(int _lives)
+{
+	lives = _lives;
+}
 #pragma endregion
 
 

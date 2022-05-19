@@ -11,7 +11,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 	if (index >= 0 && index <= 4)
 	{
-		
+
 
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
@@ -25,7 +25,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		name = res->getTowerName(index);
 
 		animationCounter = 0;
-		position = pos;
+		position = towerSpr.getPosition();
 		p_map = n_map;
 		value = price;
 		shootCooldown = false;
@@ -98,7 +98,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this,nullptr, res->getTowerProjectileIndex(index),Vector2f(0,0)); //Konstruktor von Projektil aufrufen
+			new Projectile(a, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > speed)
@@ -110,7 +110,7 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 	}
 	else return false;
 }
-bool   Tower::isClicked(RenderWindow* window)
+bool Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
@@ -247,8 +247,71 @@ void Tower::setTowerChangeFrame(int frame)
 {
 	towerChangeFrame = frame;
 }
+void Tower::setUpdate(int _update1, int _update2)
+{
+	if (_update1 >= 0)
+	{
+		//TODO
+	}
+	if (_update2 >= 0)
+	{
+		//TODO
+	}
+}
 #pragma endregion
 
 #pragma region Desturktor
+Tower::~Tower()
+{
+	Round* r = Round::getInstance();
 
+	//Löscht sich selbst aus der Liste
+	if (!r->getAllTowers().empty())
+	{
+		for (auto i : r->getAllTowers())
+		{
+			if (i == this)
+			{
+				r->getAllTowers().remove(i);
+			}
+		}
+	}
+
+	//Löscht sich selbst aus der Liste
+	if (index < res->getTowerCount())
+	{
+		if (!r->getAllAttackTower().empty())
+		{
+			for (auto i : r->getAllAttackTower())
+			{
+				if (i == this)
+				{
+					r->getAllAttackTower().remove(i);
+				}
+			}
+		}
+	}
+	else if (!r->getAllMoneyTower().empty())
+	{
+		for (auto i : r->getAllMoneyTower())
+		{
+			if (i == this)
+			{
+				r->getAllMoneyTower().remove(i);
+			}
+		}
+	}
+
+	//Löscht die Liste
+	if (index == 3 && !boundSpawns.empty())
+	{
+		for (auto i : boundSpawns)
+		{
+			delete i;
+		}
+	}
+
+	//Löscht die Updates
+	delete update;
+}
 #pragma endregion

@@ -830,18 +830,13 @@ bool Game::receivePacket()
 
 	//Anwenden des Inhaltes auf das Spiel
 
-	if (p_map->getIndex() != t.mapIndex) //Wenn falsche Map, wird die aktuelle gelöscht und die richtige erstellt
-	{
-		delete p_map;
-		p_map = new Map(t.mapIndex);
-	}
-
 	round->setIndex(t.roundIndex); //Wendet Werte an
 	round->setMoney(t.money);
 	round->setHealth(t.live);
 	this->droneCount = t.dronesCount;
 
-	/*if (!round->getAllTowers().empty())
+	//Alte Objekte werden gelöscht
+	if (!round->getAllTowers().empty())
 	{
 		for (auto i : round->getAllTowers()) //Löscht die vorhandenen Türme
 		{
@@ -854,9 +849,9 @@ bool Game::receivePacket()
 		{
 			delete i;
 		}
-	}*/
+	}
 	
-
+	//Neue Objekte werden erstellt
 	Tower* to = nullptr;
 	Drone* dr = nullptr;
 	if (t.towerCount > 0)
@@ -864,7 +859,7 @@ bool Game::receivePacket()
 		for (auto i : t.tower) //Erstellt die Türme
 		{
 			to = new Tower(i->index, i->position, p_map);
-			//TODO Updates
+			to->setUpdate(i->update1, i->update2); //TODO: Die Funktion macht noch nix
 			to = nullptr;
 		}
 	}
@@ -874,7 +869,7 @@ bool Game::receivePacket()
 		{
 			dr = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
 			round->addDrone(dr);
-			//TODO Lives
+			dr->setLives(i->lives);
 			dr = nullptr;
 		}
 	}
