@@ -264,7 +264,7 @@ int  HomeMenu::CheckClicked()
 			}
 
 
-	
+
 			if (res->getListener()->accept(*res->getClient()) != Socket::Done)
 			{
 				connected = false;
@@ -274,6 +274,7 @@ int  HomeMenu::CheckClicked()
 			Packet p;
 			res->getClient()->receive(p);
 			p >> choseIndex;
+			res->getClient()->setBlocking(false);
 			return 3;
 		}
 
@@ -336,7 +337,7 @@ void HomeMenu::HomeMenuStart()
 			break;
 		}
 
-			draw();
+		draw();
 
 	}
 	Game::getInstance()->setWindow(&*window);
