@@ -867,7 +867,7 @@ bool Game::receivePacket()
 	{
 		for (auto i : t.drones) //Erstellt die Drohnen
 		{
-			dr = new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y);
+			dr = new Drone(0, i->position, p_map->getStartMove().x, p_map->getStartMove().y);
 			round->addDrone(dr);
 			dr->setLives(i->lives);
 			dr = nullptr;

@@ -25,7 +25,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		name = res->getTowerName(index);
 
 		animationCounter = 0;
-		position = towerSpr.getPosition();
+		position = pos;
 		p_map = n_map;
 		value = price;
 		shootCooldown = false;
