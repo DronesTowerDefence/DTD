@@ -213,6 +213,7 @@ void Updates::setStringPrice()
 	price->setString(std::to_string((int)(tower->getValue()*0.75f)) + " $");
 }
 #pragma endregion
+
 #pragma region getter
 int Updates::getIndex1()
 {
@@ -223,9 +224,19 @@ int Updates::getIndex2()
 	return index2;
 }
 
+
+
 #pragma endregion
 
 #pragma region setter
+void Updates::setIndex1(int index)
+{
+	index1 = index;
+}
+void Updates::setIndex2(int index)
+{
+	index2 = index;
+}
 
 #pragma endregion
 

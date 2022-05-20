@@ -801,7 +801,8 @@ bool Game::receivePacket()
 	Transmit t(false);
 	p_ressources->getClient()->receive(pac);
 
-	pac >> t.dronesCount >> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //Extrahiert die Werte
+	pac >> t.dronesCount;
+	pac>> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //Extrahiert die Werte
 
 	if (t.dronesCount != 0)
 	{

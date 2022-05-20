@@ -35,7 +35,8 @@ public:
 	int getIndex1();
 	int getIndex2();
 
-	
+	void setIndex1(int index);
+	void setIndex2(int index);
 
 	
 	void draw(RenderWindow* window);
