@@ -124,6 +124,12 @@ public:
 	Sprite* getDrawSprite();
 
 	/// <summary>
+	/// Returnt die id der Drohne
+	/// </summary>
+	/// <returns></returns>
+	int getId();
+
+	/// <summary>
 	/// Setzt die Position der Drone mit einem 2-float Vector
 	/// </summary>
 	/// <param name="Vector2f position"></param>

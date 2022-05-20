@@ -13,9 +13,11 @@ using namespace sf;
 class Tower
 {
 private:
+	static int globalId; //Zähler für die TurmId
 	int index; //Welcher Turm-Typ es ist
 	int animationCounter; //Welcher Frame ausgewählt ist
 	int towerChangeFrame;
+	int id; //Eindeutige Turm id
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float speed; //Wie schnell der Turm schießt, je kleiner desto schneller
 	float price;
@@ -122,6 +124,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Updates* getUpdates();
+
+	/// <summary>
+	/// Gibt die Id des Towers zurück
+	/// </summary>
+	/// <returns></returns>
+	int getId();
 
 	/// <summary>
 	/// Setzt die Angriffsgeschwindigkeit

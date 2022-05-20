@@ -1,8 +1,7 @@
 #pragma once
 #include <list>
-#include "Transmit.h"
+#include <fstream>
 #include "Ressources.h"
-#include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
 #include "PauseMenu.h"
@@ -21,7 +20,11 @@ private:
 	/// 2 = Host
 	/// 3 = Client
 	/// </summary>
-int status;
+	int status;
+
+	int sendDroneDamage;
+	int sendTowerUpdateIndex;
+	int sendIndex;
 
 	bool lost;
 	bool isMouseClicked;
@@ -43,7 +46,9 @@ int status;
 	SoundBuffer musicBuffer[4];
 	Sound music[4];
 
+	Drone* sendDamagedDrone;
 	Tower* tower;
+	Tower* sendTower;
 
 	Font stdFont;
 	Text eco;
@@ -121,6 +126,7 @@ public:
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
+
 	/// <summary>
 	/// Gibt die Schriftart zurück
 	/// </summary>
@@ -177,6 +183,7 @@ public:
 
 	/// <summary>
 	/// Sendet Informationen
+	/// 0=Neuer Turm, 1=Update1, 2=Update2, 3=Turm verkauft, 4=Drohne nimmt Schaden
 	/// </summary>
 	/// <returns> True wenn erfolgreich</returns>
 	bool sendPackets();

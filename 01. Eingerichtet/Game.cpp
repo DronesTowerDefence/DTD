@@ -1,40 +1,8 @@
 #include "Game.h"
-#include <fstream>
+#include "Multiplayer.h"
+#include "Round.h"
 
 Game* Game::instance = nullptr;
-
-#pragma region Packet_Operator
-
-////Transmit Klasse
-//Packet& operator <<(Packet& packet, const Transmit& t)
-//{
-//	return packet << t.mapIndex << t.roundIndex << t.live << t.money; //TODO: Dronen und Tower hinzufügen
-//}
-//Packet& operator >>(Packet& packet, Transmit& t)
-//{
-//	return packet >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //TODO: Dronen und Tower hinzufügen
-//}
-//
-////DroneTransmit Klasse
-//Packet& operator <<(Packet& packet, const DroneTransmit& d)
-//{
-//	return packet << d.index << d.position.x << d.position.y << d.lives;
-//}
-//Packet& operator >>(Packet& packet, DroneTransmit& d)
-//{
-//	return packet >> d.index >> d.position.x >> d.position.y >> d.lives;
-//}
-//
-////TowerTransmit Klasse
-//Packet& operator <<(Packet& packet, const TowerTransmit& t)
-//{
-//	return packet << t.index << t.position.x << t.position.y << t.update1 << t.update2;
-//}
-//Packet& operator >>(Packet& packet, TowerTransmit& t)
-//{
-//	return packet >> t.index >> t.position.x >> t.position.y >> t.update1 >> t.update2;
-//}
-#pragma endregion
 
 #pragma region Konstruktor
 Game::Game()
@@ -256,7 +224,7 @@ void Game::startGame()
 
 
 		}
-		if (status == 2)
+		if (status == 2 || sendIndex != -1)
 		{
 			sendPackets();
 		}
@@ -767,115 +735,31 @@ void Game::saveGame()
 }
 bool Game::sendPackets()
 {
-	if (sendPacketTimer.getElapsedTime().asSeconds() > 5)
+	bool returnValue = false;
+
+	if (sendIndex == 0 || sendIndex == 3)
 	{
-		Packet pac;
-		Transmit t(true);
-
-		pac << t.dronesCount << t.towerCount << t.mapIndex << t.roundIndex << t.live << t.money;
-		if (t.dronesCount != 0)
-		{
-			for (auto i : t.drones)
-			{
-				pac << i->index << i->lives << i->position.x << i->position.y;
-			}
-		}
-		if (t.towerCount != 0)
-		{
-			for (auto i : t.tower)
-			{
-				pac << i->index << i->position.x << i->position.y << i->update1 << i->update2;
-			}
-		}
-
-		p_ressources->getClient()->send(pac);
-		sendPacketTimer.restart();
-		return true;
+		returnValue = Multiplayer::getInstance()->send(sendTower, sendIndex);
+	}
+	else if (sendIndex == 1 || sendIndex == 2)
+	{
+		returnValue = Multiplayer::getInstance()->send(sendTower, sendIndex, sendTowerUpdateIndex);
+	}
+	else if (sendIndex == 4)
+	{
+		returnValue = Multiplayer::getInstance()->send(sendDamagedDrone, sendDroneDamage);
 	}
 	else return false;
+
+	return returnValue;
 }
 bool Game::receivePacket()
 {
-	//Entpacken des Paketes
-	Packet pac;
-	Transmit t(false);
-	p_ressources->getClient()->receive(pac);
+	bool returnValue = false;
 
-	pac >> t.dronesCount;
-	pac>> t.towerCount >> t.mapIndex >> t.roundIndex >> t.live >> t.money; //Extrahiert die Werte
+	returnValue = Multiplayer::getInstance()->receive();
 
-	if (t.dronesCount != 0)
-	{
-		for (int i = 0; i < t.dronesCount; ++i) //Extrahiert die Drohnen
-		{
-			DroneTransmit tmp(false);
-			pac >> tmp.index >> tmp.lives >> tmp.position.x >> tmp.position.y;
-			t.drones.push_back(&tmp);
-		}
-	}
-	if (t.towerCount != 0)
-	{
-		for (int i = 0; i < t.towerCount; ++i) //Extrahiert die Türme
-		{
-			TowerTransmit tmp(false);
-			pac >> tmp.index >> tmp.position.x >> tmp.position.y >> tmp.update1 >> tmp.update2;
-			t.tower.push_back(&tmp);
-		}
-	}
-
-	if ((t.mapIndex > 2 || t.mapIndex < 0) || (t.mapIndex < 0 && t.mapIndex>2) ||
-		(t.dronesCount != t.drones.size() || t.towerCount != t.tower.size())) //Überprüft, ob der Inhalt des Entpackten Packets Sinn macht
-	{
-		return false;
-	}
-
-	//Anwenden des Inhaltes auf das Spiel
-
-	round->setIndex(t.roundIndex); //Wendet Werte an
-	round->setMoney(t.money);
-	round->setHealth(t.live);
-	this->droneCount = t.dronesCount;
-
-	//Alte Objekte werden gelöscht
-	if (!round->getAllTowers().empty())
-	{
-		for (auto i : round->getAllTowers()) //Löscht die vorhandenen Türme
-		{
-			delete i;
-		}
-	}
-	if (!round->getAllDrones().empty())
-	{
-		for (auto i : round->getAllDrones()) //Löscht die vorhandenen Drohnen
-		{
-			delete i;
-		}
-	}
-	
-	//Neue Objekte werden erstellt
-	Tower* to = nullptr;
-	Drone* dr = nullptr;
-	if (t.towerCount > 0)
-	{
-		for (auto i : t.tower) //Erstellt die Türme
-		{
-			to = new Tower(i->index, i->position, p_map);
-			to->setUpdate(i->update1, i->update2); //TODO: Die Funktion macht noch nix
-			to = nullptr;
-		}
-	}
-	if (t.dronesCount > 0)
-	{
-		for (auto i : t.drones) //Erstellt die Drohnen
-		{
-			dr = new Drone(0, i->position, p_map->getStartMove().x, p_map->getStartMove().y);
-			round->addDrone(dr);
-			dr->setLives(i->lives);
-			dr = nullptr;
-		}
-	}
-
-	return true;
+	return returnValue;
 }
 #pragma endregion
 

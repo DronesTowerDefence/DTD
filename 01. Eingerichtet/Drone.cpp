@@ -180,6 +180,10 @@ Sprite* Drone::getDrawSprite()
 	}
 	return &drone;
 }
+int Drone::getId()
+{
+	return id;
+}
 #pragma endregion
 
 #pragma region setter

@@ -3,10 +3,14 @@
 #include "Round.h"
 #include <iostream>
 
+int Tower::globalId = 0;
+
 #pragma region Konstruktor
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	index = _index;
+	id = globalId;
+	globalId++;
 	int price;
 
 	if (index >= 0 && index <= 4)
@@ -231,6 +235,10 @@ Sprite* Tower::getDrawSprite()
 Updates* Tower::getUpdates()
 {
 	return update;
+}
+int Tower::getId()
+{
+	return id;
 }
 #pragma endregion
 
