@@ -74,11 +74,12 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
-	double p[4];
+	double p[5];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
 	p[2] = 1.f / 6.f;
 	p[3] = 1.f / 5.f;
+	p[4] = 1.f / 8.f;
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
