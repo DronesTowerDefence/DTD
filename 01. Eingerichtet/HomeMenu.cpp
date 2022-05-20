@@ -45,10 +45,10 @@ HomeMenu::HomeMenu()
 	textureTitel->loadFromFile("img/titleText.png");
 	textureBackround->loadFromFile("img/backround.jpg");
 	font->loadFromFile("fonts/arial.ttf");
-	textureCloseMultiplayer->loadFromFile("img/buttons/openMultiplayer.png");
-	textureOpenMultiplayer->loadFromFile("img/buttons/closeMultiplayer.png");
-	textureCopy->loadFromFile("img/buttons/copy.png");//TODO
-	texturePaste->loadFromFile("img/buttons/paste.png");//TODO
+	textureCloseMultiplayer->loadFromFile("img/buttons/multiplayerButtonUp.png");
+	textureOpenMultiplayer->loadFromFile("img/buttons/multiplayerButtonDown.png");
+	textureCopy->loadFromFile("img/buttons/copyButton.png");//TODO
+	texturePaste->loadFromFile("img/buttons/pasteButton.png");//TODO
 	textureClient->loadFromFile("img/buttons/clientButton.png");
 	textureHost->loadFromFile("img/buttons/hostButton.png");
 
