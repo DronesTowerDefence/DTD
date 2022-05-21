@@ -1,5 +1,4 @@
 #include "Ressources.h"
-#include "Transmit.h"
 #include "Round.h"
 
 Ressources* Ressources::instance = nullptr;
