@@ -57,6 +57,15 @@ bool Multiplayer::send(Drone* d, int _damage)
 	return true;
 }
 
+bool Multiplayer::send()
+{
+	Packet pac;
+	pac << 4 << p_round->getHealth() << p_round->getIndex();
+
+	res->getClient()->send(pac);
+	return true;
+}
+
 bool Multiplayer::receive()
 {
 	Packet pac;
@@ -113,6 +122,13 @@ bool Multiplayer::receive()
 				i->takeDamage(droneDamage);
 			}
 		}
+		return true;
+
+	case 4:
+		int health, index;
+		pac >> health  >> index;
+		p_round->setHealth(health);
+		p_round->setIndex(index);
 		return true;
 
 	default:

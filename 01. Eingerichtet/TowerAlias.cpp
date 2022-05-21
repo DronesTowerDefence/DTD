@@ -1,3 +1,4 @@
+#include "Multiplayer.h"
 #include "TowerAlias.h"
 
 #pragma region Konstruktor
@@ -25,7 +26,8 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 }
 void TowerAlias::CreateNewTower()
 {
-	new Tower(index, towerAliasSpr.getPosition(), p_map);
+	Tower* t = new Tower(index, towerAliasSpr.getPosition(), p_map);
+	Multiplayer::getInstance()->send(t, 0);
 }
 #pragma endregion
 #pragma region getter

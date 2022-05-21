@@ -182,12 +182,10 @@ bool Game::towerAliasForbiddenPosition()
 
 	return 1;
 }
-
 void Game::setStatus(int status)
 {
 	this->status = status;
 }
-
 void Game::startGame()
 {
 	loadGame();
@@ -224,13 +222,9 @@ void Game::startGame()
 
 
 		}
-		if (status == 2 || sendIndex != -1)
+		if (status == 3)
 		{
-			sendPackets();
-		}
-		else if (status == 3)
-		{
-			receivePacket();
+			Multiplayer::getInstance()->receive();
 		}
 		draw();
 	}
@@ -258,7 +252,6 @@ void Game::updateEco()
 		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
 }
-
 void Game::newRound()
 {
 	saveGame();
@@ -470,6 +463,7 @@ void Game::checkShoot()
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
 					t->shoot(d);
+					Multiplayer::getInstance()->send(d, t->getDamage());
 				}
 			}
 		}
@@ -732,34 +726,6 @@ void Game::saveGame()
 
 	wdatei << "\n";
 	wdatei.close();
-}
-bool Game::sendPackets()
-{
-	bool returnValue = false;
-
-	if (sendIndex == 0 || sendIndex == 3)
-	{
-		returnValue = Multiplayer::getInstance()->send(sendTower, sendIndex);
-	}
-	else if (sendIndex == 1 || sendIndex == 2)
-	{
-		returnValue = Multiplayer::getInstance()->send(sendTower, sendIndex, sendTowerUpdateIndex);
-	}
-	else if (sendIndex == 4)
-	{
-		returnValue = Multiplayer::getInstance()->send(sendDamagedDrone, sendDroneDamage);
-	}
-	else return false;
-
-	return returnValue;
-}
-bool Game::receivePacket()
-{
-	bool returnValue = false;
-
-	returnValue = Multiplayer::getInstance()->receive();
-
-	return returnValue;
 }
 #pragma endregion
 

@@ -1,3 +1,4 @@
+#include "Multiplayer.h"
 #include "Round.h"
 
 
@@ -12,7 +13,7 @@ Round::Round()
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
 	Lost = false;
-	Won = true;
+	Won = false;
 
 }
 
@@ -106,6 +107,8 @@ void Round::sellTower(Tower* a)
 	}
 	addMoney(a->getValue() * 0.75);
 
+	Multiplayer::getInstance()->send(a, 1);
+
 	delete a;
 	a = nullptr;
 }
@@ -132,7 +135,7 @@ void Round::nextRound()
 {
 	index++;
 	Lost = false;
-	Won = true;
+	Multiplayer::getInstance()->send();
 }
 void Round::addMoney(int _money)
 {

@@ -1,3 +1,4 @@
+#include "Multiplayer.h"
 #include "Tower.h"
 #include "TowerSpawn.h"
 #include "Round.h"
@@ -141,11 +142,13 @@ void Tower::manageUpdate(RenderWindow* window)
 		{
 			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 			speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+			Multiplayer::getInstance()->send(this, indexUpdate, update->getIndex1());
 		}
 		else if (indexUpdate == 2)
 		{
 			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
+			Multiplayer::getInstance()->send(this, indexUpdate, update->getIndex2());
 		}
 	}
 	else if (index == 4)

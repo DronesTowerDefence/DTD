@@ -2,7 +2,7 @@
 //Singleton
 #include "Round.h"
 
-//Multiplayer::send() //Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden
+//Packet-Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Round-Werte (Leben&Runde)
 
 class Multiplayer
 {
@@ -39,6 +39,13 @@ public:
 	/// <param name="">Wie viel Schaden sie erhalten hat</param>
 	/// <returns>True, wenn es geklappt hat</returns>
 	bool send(Drone*, int);
+
+	/// <summary>
+	/// Synchronisiert die Werte/Attribute, welche in Round gespeichert sind
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	bool send();
 
 	/// <summary>
 	/// Empfängt ein Packet und wendet es an

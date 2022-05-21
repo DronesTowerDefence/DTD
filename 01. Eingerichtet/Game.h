@@ -22,10 +22,6 @@ private:
 	/// </summary>
 	int status;
 
-	int sendDroneDamage;
-	int sendTowerUpdateIndex;
-	int sendIndex;
-
 	bool lost;
 	bool isMouseClicked;
 	bool doubleSpeed;
@@ -42,13 +38,10 @@ private:
 	Sprite gameOverHomeButton;
 
 	Clock changeMusicTimer;
-	Clock sendPacketTimer;
 	SoundBuffer musicBuffer[4];
 	Sound music[4];
 
-	Drone* sendDamagedDrone;
 	Tower* tower;
-	Tower* sendTower;
 
 	Font stdFont;
 	Text eco;
@@ -180,18 +173,4 @@ public:
 	/// Speichert das Spiel
 	/// </summary>
 	void saveGame();
-
-	/// <summary>
-	/// Sendet Informationen
-	/// 0=Neuer Turm, 1=Update1, 2=Update2, 3=Turm verkauft, 4=Drohne nimmt Schaden
-	/// </summary>
-	/// <returns> True wenn erfolgreich</returns>
-	bool sendPackets();
-
-	/// <summary>
-	/// Empfängt informationen
-	/// </summary>
-	/// <returns>True wenn was angekommen ist</returns>
-	bool receivePacket();
-
 };
