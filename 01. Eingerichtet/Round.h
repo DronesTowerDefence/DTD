@@ -69,7 +69,6 @@ public:
 	void setIndex(int);
 	bool setHealth(int);
 	bool setMoney(int);
-	void setReceiveNextRound(bool);
 	void setLost(bool);
 	void setDroneTimer(Clock);
 	void setP_map(Map* _map);

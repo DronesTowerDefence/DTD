@@ -138,10 +138,10 @@ void Round::nextRound()
 {
 	Game::getInstance()->saveGame();
 	Game::getInstance()->setDroneCount(0);
-	index++;
 
 	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
 	{
+		index++;
 		Multiplayer::getInstance()->send();
 		sendCooldown.restart();
 	}
@@ -281,10 +281,6 @@ bool Round::setMoney(int _money)
 		return 0;
 	money = _money;
 	return 1;
-}
-void Round::setReceiveNextRound(bool a)
-{
-	receiveNextRound = a;
 }
 void Round::setLost(bool a)
 {
