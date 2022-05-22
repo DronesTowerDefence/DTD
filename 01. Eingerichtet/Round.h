@@ -65,6 +65,7 @@ public:
 	std::list<Vector2f> getAllCoverablePoints();
 	std::list<TowerSpawn*> getAllSpawns();
 
+	void setReceivedFromHostNextRound(bool);
 	void setIndex(int);
 	bool setHealth(int);
 	bool setMoney(int);

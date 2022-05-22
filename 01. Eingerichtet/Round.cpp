@@ -256,6 +256,10 @@ std::list<TowerSpawn*> Round::getAllSpawns()
 #pragma endregion
 
 #pragma region setter
+void Round::setReceivedFromHostNextRound(bool a)
+{
+	receivedFromHostNextRound = a;
+}
 void Round::setIndex(int _index)
 {
 	index = _index;
