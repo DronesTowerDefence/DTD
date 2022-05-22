@@ -146,6 +146,7 @@ void Round::nextRound()
 	{
 		while (!receiveNextRound)
 		{
+			Multiplayer::getInstance()->receive();
 			//Wartet solange, bis beim Host die nächste Runde beginnt
 		}
 		receiveNextRound = false;
