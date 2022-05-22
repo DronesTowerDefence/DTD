@@ -184,4 +184,14 @@ public:
 	/// Speichert das Spiel
 	/// </summary>
 	void saveGame();
+
+	/// <summary>
+	/// Kehrt ins Hauptmenü zurück
+	/// </summary>
+	void mainMenu();
+
+	/// <summary>
+	/// Startet das Spiel auf der aktuellen Map neu
+	/// </summary>
+	void restart();
 };

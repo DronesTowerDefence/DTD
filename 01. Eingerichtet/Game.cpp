@@ -229,7 +229,7 @@ void Game::startGame()
 		}
 		if (status == 3)
 		{
-			while (Multiplayer::getInstance()->receive());
+			while (Multiplayer::receive());
 		}
 		draw();
 	}
@@ -526,6 +526,11 @@ void Game::checkLoseGame()
 		round->setHealth(0);
 		updateEco();
 
+		if (status == 2)
+		{
+			Multiplayer::send(1, false);
+		}
+
 		gameOverBackgroundTexture.loadFromFile("img/gameOverScreen.png");
 		gameOverBackround.setTexture(gameOverBackgroundTexture);
 		Vector2f gameOverPos(window->getSize().x / 2 - gameOverBackgroundTexture.getSize().x / 2, window->getSize().y / 2 - gameOverBackgroundTexture.getSize().y / 2);
@@ -587,32 +592,20 @@ void Game::checkLoseGame()
 				//restartButton = gameOverRestartButton.getPosition();
 				//restartButton2 = restartButton + Vector2f(gameOverRes				tartButtonTexture.getSize());
 
-
-
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
-					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
+					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y)) //Wenn home
 				{
-					saveGame();
-					lost = false;
-					HomeMenu::getInstance()->HomeMenuStart();
+					mainMenu();
 					return;
 				}
 				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
-					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
+					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y)) //Wenn restart
 				{
-					saveGame();
-					lost = false;
-					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
-					resetAll();
-					round = Round::getInstance();
-					p_map = new Map(mapIndex);
-					sidebar = Sidebar::getInstance();
+					restart();
 					return;
 				}
 			}
-
 		}
-
 	}
 
 }
@@ -632,6 +625,34 @@ void Game::checkDroneCount()
 	{
 		round->nextRound();
 	}
+}
+void Game::mainMenu()
+{
+	saveGame();
+	lost = false;
+
+	if (status == 2)
+	{
+		Multiplayer::send(3, false);
+	}
+
+	HomeMenu::getInstance()->HomeMenuStart();
+}
+void Game::restart()
+{
+	saveGame();
+	lost = false;
+
+	if (status == 2)
+	{
+		Multiplayer::send(4, false);
+	}
+
+	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
+	resetAll();
+	round = Round::getInstance();
+	p_map = new Map(mapIndex);
+	sidebar = Sidebar::getInstance();
 }
 void Game::resetAll()
 {

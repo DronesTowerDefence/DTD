@@ -29,7 +29,7 @@ void TowerAlias::CreateNewTower()
 {
 	Tower* t = new Tower(index, towerAliasSpr.getPosition(), p_map);
 	if (Game::getInstance()->getStatus() == 2)
-		Multiplayer::getInstance()->send(t, 0);
+		Multiplayer::send(t, 0);
 }
 #pragma endregion
 #pragma region getter

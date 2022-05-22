@@ -1,14 +1,7 @@
 #include "PauseMenu.h"
 #include "Multiplayer.h"
 
-Multiplayer* Multiplayer::instance = nullptr;
-
 #pragma region Konstruktor
-Multiplayer::Multiplayer()
-{
-	res = Ressources::getInstance();
-	p_round = Round::getInstance();
-}
 #pragma endregion
 
 #pragma region Funktionen
@@ -27,7 +20,7 @@ bool Multiplayer::send(Tower* t, int _index)
 			pac << 2 << t->getId();
 		}
 
-		res->getClient()->send(pac);
+		Ressources::getInstance()->getClient()->send(pac);
 
 		return true;
 	}
@@ -42,7 +35,7 @@ bool Multiplayer::send(int t, int _index, int _updateIndex)
 
 		pac << 1 << t << _index << _updateIndex;
 
-		res->getClient()->send(pac);
+		Ressources::getInstance()->getClient()->send(pac);
 
 		return true;
 	}
@@ -54,23 +47,41 @@ bool Multiplayer::send(int t, int d)
 	Packet pac;
 	pac << 3 << d << t;
 
-	res->getClient()->send(pac);
+	Ressources::getInstance()->getClient()->send(pac);
 	return true;
 }
 
-bool Multiplayer::send()
+bool Multiplayer::send(int _index, bool _bool)
 {
 	Packet pac;
-	pac << 4 << p_round->getHealth() << p_round->getIndex();
-	res->getClient()->send(pac);
-	return true;
-}
 
-bool Multiplayer::send(bool isPaused)
-{
-	Packet pac;
-	pac << 6 << isPaused;
-	res->getClient()->send(pac);
+	if (_index == 0)
+	{
+		pac << 4 << Round::getInstance()->getHealth() << Round::getInstance()->getIndex();
+	}
+	else if (_index == 1)
+	{
+		pac << 5; //verloren
+	}
+	else if (_index == 2)
+	{
+		pac << 6 << _bool; //pause
+	}
+	else if (_index == 3)
+	{
+		pac << 7 << true; //home
+	}
+	else if (_index == 4)
+	{
+		pac << 7 << false; //Ressources::getInstance()tart
+	}
+	else if (_index == 5)
+	{
+		pac << 8; //doubleSpeed
+	}
+	else return false;
+
+	Ressources::getInstance()->getClient()->send(pac);
 	return true;
 }
 
@@ -79,7 +90,7 @@ bool Multiplayer::receive()
 	Packet pac;
 	int header, towerId;
 
-	res->getClient()->receive(pac);
+	Ressources::getInstance()->getClient()->receive(pac);
 	pac >> header;
 
 	switch (header)
@@ -87,13 +98,13 @@ bool Multiplayer::receive()
 	case 0:
 		int towerIndex, towerPosX, towerPosY;
 		pac >> towerIndex >> towerPosX >> towerPosY;
-		new Tower(towerIndex, Vector2f(towerPosX, towerPosY), p_round->getMap());
+		new Tower(towerIndex, Vector2f(towerPosX, towerPosY), Round::getInstance()->getMap());
 		return true;
 
 	case 1:
 		int towerUpdate, towerUpdateIndex;
 		pac >> towerId >> towerUpdate >> towerUpdateIndex;
-		for (auto i : p_round->getAllTowers())
+		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			if (i->getId() == towerId)
 			{
@@ -111,11 +122,11 @@ bool Multiplayer::receive()
 
 	case 2:
 		pac >> towerId;
-		for (auto i : p_round->getAllTowers())
+		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			if (i->getId() == towerId)
 			{
-				p_round->sellTower(i);
+				Round::getInstance()->sellTower(i);
 			}
 		}
 		return true;
@@ -123,11 +134,11 @@ bool Multiplayer::receive()
 	case 3:
 		int droneId, towerId;
 		pac >> droneId >> towerId;
-		for (auto i : p_round->getAllAttackTower())
+		for (auto i : Round::getInstance()->getAllAttackTower())
 		{
 			if (i->getId() == towerId)
 			{
-				for (auto j : p_round->getAllDrones())
+				for (auto j : Round::getInstance()->getAllDrones())
 				{
 					if (j->getId() == droneId)
 					{
@@ -141,13 +152,13 @@ bool Multiplayer::receive()
 	case 4:
 		int health, index;
 		pac >> health >> index;
-		p_round->setHealth(health);
-		p_round->setIndex(index);
-		p_round->setReceivedFromHostNextRound(true);
+		Round::getInstance()->setHealth(health);
+		Round::getInstance()->setIndex(index);
+		Round::getInstance()->setReceivedFromHostNextRound(true);
 		return true;
 
 	case 5:
-		p_round->setLost(true);
+		Round::getInstance()->setLost(true);
 		return true;
 
 	case 6:
@@ -155,6 +166,23 @@ bool Multiplayer::receive()
 		pac >> isPaused;
 		PauseMenu::getInstance()->setMultiplayerIsPaused(isPaused);
 		PauseMenu::getInstance()->checkPause(isPaused);
+		return true;
+
+	case 7:
+		bool isHome;
+		pac >> isHome;
+		if (isHome)
+		{
+			Game::getInstance()->mainMenu();
+		}
+		else
+		{
+			Game::getInstance()->restart();
+		}
+		return true;
+
+	case 8:
+		//TODO doppelte Geschwindigkeit
 		return true;
 
 	default:
@@ -165,13 +193,5 @@ bool Multiplayer::receive()
 #pragma endregion
 
 #pragma region getter
-Multiplayer* Multiplayer::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Multiplayer();
-		return instance;
-	}
-	else return instance;
-}
+
 #pragma endregion

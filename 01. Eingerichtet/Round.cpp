@@ -110,7 +110,7 @@ void Round::sellTower(Tower* a)
 	addMoney(a->getValue() * 0.75);
 
 	if (Game::getInstance()->getStatus() == 2)
-		Multiplayer::getInstance()->send(a, 1);
+		Multiplayer::send(a, 1);
 
 	delete a;
 	a = nullptr;
@@ -142,7 +142,7 @@ void Round::nextRound()
 	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
 	{
 		index++;
-		Multiplayer::getInstance()->send();
+		Multiplayer::send(0,false);
 		sendCooldown.restart();
 	}
 	else if(Game::getInstance()->getStatus() == 3)

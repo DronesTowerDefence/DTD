@@ -138,8 +138,7 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			Game::getInstance()->saveGame();
-			HomeMenu::getInstance()->HomeMenuStart();
+			Game::getInstance()->mainMenu();
 		}
 
 		//Resume - Button Weiter
@@ -194,7 +193,7 @@ void PauseMenu::checkPause(Event event1)
 	/*Vector2i mousePos;*/
 	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) { //Übergebenes Event wird geprüft auf ESC-Druck
 
-		Multiplayer::getInstance()->send(true);
+		Multiplayer::send(2,true);
 
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
@@ -208,7 +207,7 @@ void PauseMenu::checkPause(Event event1)
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				{
-					Multiplayer::getInstance()->send(false);
+					Multiplayer::send(2,false);
 					return;
 				}
 
@@ -283,7 +282,7 @@ void PauseMenu::checkPause(bool isPaused)
 	{
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
-			while (Multiplayer::getInstance()->receive());
+			while (Multiplayer::receive());
 
 			if (!multiplayerIsPaused)
 				return;
