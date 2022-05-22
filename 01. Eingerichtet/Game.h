@@ -97,7 +97,12 @@ private:
 	void generateMoneyTowers();
 
 	/// <summary>
-	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat und überprüft ob man verloren hat
+	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat
+	/// </summary>
+	void subRoundHealth();
+
+	/// <summary>
+	/// Überprüft ob man verloren hat
 	/// </summary>
 	void checkLoseGame();
 

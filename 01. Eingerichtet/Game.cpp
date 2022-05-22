@@ -207,10 +207,11 @@ void Game::startGame()
 		updateEco();
 		moveDrohnes();
 		changeBackgroundMusic();
+		checkLoseGame();
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
-			checkLoseGame();
+			subRoundHealth();
 			checkShoot();
 			checkTowerAlias();
 			generateMoneyTowers();
@@ -481,7 +482,7 @@ void Game::generateMoneyTowers()
 		i->generateMoney();
 	}
 }
-void Game::checkLoseGame()
+void Game::subRoundHealth()
 {
 	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
 	{
@@ -537,7 +538,9 @@ void Game::checkLoseGame()
 		}
 		round->restartDroneSubHealthTimer();
 	}
-
+}
+void Game::checkLoseGame()
+{
 	if (round->getLost())
 	{
 		round->setHealth(0);

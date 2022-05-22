@@ -13,8 +13,8 @@ Round::Round()
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	Lost = false;
-	Won = false;
+	lost = false;
+	won = false;
 
 }
 
@@ -136,7 +136,7 @@ void Round::deleteProjectile(Projectile* p)
 void Round::nextRound()
 {
 	index++;
-	Lost = false;
+	lost = false;
 	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
 	{
 		Multiplayer::getInstance()->send();
@@ -175,7 +175,7 @@ bool Round::subhealth(int _health)
 {
 	if (health < _health) {
 
-		Lost = true;
+		lost = true;
 
 	}
 
@@ -207,11 +207,11 @@ int Round::getMoney()
 }
 bool Round::getLost()
 {
-	return Lost;
+	return lost;
 }
 bool Round::getWon()
 {
-	return Won;
+	return won;
 }
 Clock Round::getDroneTimer()
 {
@@ -279,6 +279,10 @@ bool Round::setMoney(int _money)
 void Round::setReceiveNextRound(bool a)
 {
 	receiveNextRound = a;
+}
+void Round::setLost(bool a)
+{
+	lost = a;
 }
 void Round::setDroneTimer(Clock f)
 {

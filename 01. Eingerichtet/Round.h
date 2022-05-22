@@ -15,8 +15,8 @@ private:
 	int health;
 	int index;
 	int towerPrice[3];
-	bool Lost;
-	bool Won;
+	bool lost;
+	bool won;
 	bool receiveNextRound;
 	std::list<Vector2f> allCoverablePoints; //Strecke eingeteilt in Punkte, alle 20px
 	Text WinLose;
@@ -68,6 +68,7 @@ public:
 	bool setHealth(int);
 	bool setMoney(int);
 	void setReceiveNextRound(bool);
+	void setLost(bool);
 	void setDroneTimer(Clock);
 	void setP_map(Map* _map);
 	void addDrone(Drone* drone);

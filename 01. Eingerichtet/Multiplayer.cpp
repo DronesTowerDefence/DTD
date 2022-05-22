@@ -132,6 +132,10 @@ bool Multiplayer::receive()
 		p_round->setReceiveNextRound(true);
 		return true;
 
+	case 5:
+		p_round->setLost(true);
+		return true;
+
 	default:
 		return false;
 	}

@@ -2,7 +2,7 @@
 //Singleton
 #include "Round.h"
 
-//Packet-Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Round-Werte (Leben&Runde)
+//Packet-Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Round-Werte (Leben&Runde), 5=Verloren
 
 class Multiplayer
 {
