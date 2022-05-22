@@ -147,6 +147,13 @@ void Round::nextRound()
 	}
 	else
 	{
+		if (!allDrones.empty())
+		{
+			for (auto i : allDrones)
+			{
+				delete i;
+			}
+		}
 		receivedFromHostNextRound = false;
 	}
 }
