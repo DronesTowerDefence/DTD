@@ -97,7 +97,6 @@ bool Drone::takeDamage(int damage) {
 	if (lives <= 0)
 	{
 		//True, wenn Drone tot ist
-		Round::getInstance()->getAllDrones().remove(this);
 		delete this;
 		return true;
 	}
@@ -213,6 +212,7 @@ void Drone::setLives(int _lives)
 #pragma region Destruktor
 Drone::~Drone()
 {
+	Round::getInstance()->deleteDrone(this);
 }
 #pragma endregion
 

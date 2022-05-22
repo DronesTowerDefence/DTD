@@ -324,6 +324,43 @@ Tower::~Tower()
 {
 	Round* r = Round::getInstance();
 
+	//Löscht sich selbst aus der Liste
+	if (!r->getAllTowers().empty())
+	{
+		for (auto i : r->getAllTowers())
+		{
+			if (i == this)
+			{
+				r->getAllTowers().remove(i);
+			}
+		}
+	}
+
+	//Löscht sich selbst aus der Liste
+	if (index < res->getTowerCount())
+	{
+		if (!r->getAllAttackTower().empty())
+		{
+			for (auto i : r->getAllAttackTower())
+			{
+				if (i == this)
+				{
+					r->getAllAttackTower().remove(i);
+				}
+			}
+		}
+	}
+	else if (!r->getAllMoneyTower().empty())
+	{
+		for (auto i : r->getAllMoneyTower())
+		{
+			if (i == this)
+			{
+				r->getAllMoneyTower().remove(i);
+			}
+		}
+	}
+
 	//Löscht die Liste
 	if (index == 3 && !boundSpawns.empty())
 	{
