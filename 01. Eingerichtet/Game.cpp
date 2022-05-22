@@ -205,13 +205,13 @@ void Game::startGame()
 		}
 
 		updateEco();
-		checkLoseGame();
 		moveDrohnes();
-		checkShoot();
 		changeBackgroundMusic();
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
+			checkLoseGame();
+			checkShoot();
 			checkTowerAlias();
 			generateMoneyTowers();
 			for (auto i : Round::getInstance()->getAllTowers())
