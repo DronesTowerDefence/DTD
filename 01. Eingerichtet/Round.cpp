@@ -7,8 +7,8 @@ Round* Round::instance = nullptr;
 #pragma region Konstruktor
 Round::Round()
 {
-	money = 10000000000; //Start-Geld
-	health = 2000000000; //Start-Leben
+	money = 1000000; //Start-Geld
+	health = 2000; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;

@@ -1,3 +1,4 @@
+#include "PauseMenu.h"
 #include "Multiplayer.h"
 
 Multiplayer* Multiplayer::instance = nullptr;
@@ -61,7 +62,14 @@ bool Multiplayer::send()
 {
 	Packet pac;
 	pac << 4 << p_round->getHealth() << p_round->getIndex();
+	res->getClient()->send(pac);
+	return true;
+}
 
+bool Multiplayer::send(bool isPaused)
+{
+	Packet pac;
+	pac << 6 << isPaused;
 	res->getClient()->send(pac);
 	return true;
 }
@@ -140,6 +148,12 @@ bool Multiplayer::receive()
 
 	case 5:
 		p_round->setLost(true);
+		return true;
+
+	case 6:
+		bool isPaused;
+		pac >> isPaused;
+		PauseMenu::getInstance()->setMultiplayerIsPaused(isPaused);
 		return true;
 
 	default:

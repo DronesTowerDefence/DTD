@@ -13,6 +13,8 @@ Ressources::Ressources()
 
 		droneSpawnTime[i] = 1;
 	}
+
+	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 4;
 	towerCount = 5;
@@ -97,6 +99,12 @@ Ressources::Ressources()
 
 	droneSpeed[0] = 2.5;
 	droneLives[0] = 3;
+
+	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
+	{
+		multiplayerMoneySplit[int(i)] = j;
+
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -235,6 +243,10 @@ Ressources* Ressources::getInstance()
 	}
 	return instance;
 }
+int Ressources::getMultiplayerPlayerCount()
+{
+	return multiplayerPlayerCount;
+}
 int Ressources::getMapCount()
 {
 	return mapCount;
@@ -282,6 +294,11 @@ int Ressources::getDroneLives(int i)
 int Ressources::getDroneCountInRound()
 {
 	return droneCountInRound[Round::getInstance()->getIndex()];
+}
+
+float Ressources::getMultiplayerMoneySplit()
+{
+	return multiplayerMoneySplit[multiplayerPlayerCount];
 }
 
 float Ressources::getTowerDamage(int i)
@@ -422,6 +439,14 @@ void Ressources::setSpeed()
 	for (auto i : Round::getInstance()->getAllDrones())
 	{
 		i->setSeed(res->getDroneSpeed(0));
+	}
+}
+
+void Ressources::setMultiplayerPlayerCount(int a)
+{
+	if (a<4 && a>-1)
+	{
+		multiplayerPlayerCount = a;
 	}
 }
 

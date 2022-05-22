@@ -1,3 +1,4 @@
+#include "Multiplayer.h"
 #include "PauseMenu.h"
 #include <iostream>
 
@@ -29,6 +30,7 @@ PauseMenu::PauseMenu() {
 	isClicked = false;
 	play = false;
 	mute = false;
+	multiplayerIsPaused = false;
 
 	backgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	background.setTexture(backgroundTexture);
@@ -53,7 +55,7 @@ PauseMenu::PauseMenu() {
 	homebtnTexture.loadFromFile("img/buttons/homeButton.png");
 	homebtn.setTexture(homebtnTexture);
 	homebtn.setPosition(Vector2f(630.f, 750.f));
-	
+
 
 	playbtnTexture.loadFromFile("img/buttons/startButton.png");
 	playbtn.setTexture(playbtnTexture);
@@ -99,10 +101,10 @@ PauseMenu::PauseMenu() {
 	volumeOutline.setOutlineColor(Color::Black);
 	volumeOutline.setOutlineThickness(float(1));
 	volumeOutline.setSize(Vector2f(402.f, 15.f));
-	volumeOutline.setPosition(volumeSlider.getPosition()-Vector2f(1.f,0.f)); 
+	volumeOutline.setPosition(volumeSlider.getPosition() - Vector2f(1.f, 0.f));
 
 
-	
+
 }
 #pragma endregion
 
@@ -119,20 +121,20 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 		isClicked = false;
 		mouse = Mouse::getPosition(*window);
 
-		
+
 		//twitter
-			pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-			{
-				system("start www.twitter.com/DronesTD");
-			}
-		
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		{
+			system("start www.twitter.com/DronesTD");
+		}
 
-			//Home Button
+
+		//Home Button
 		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f)); 
+		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
@@ -192,6 +194,8 @@ void PauseMenu::checkPause(Event event1)
 	/*Vector2i mousePos;*/
 	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) { //Übergebenes Event wird geprüft auf ESC-Druck
 
+		Multiplayer::getInstance()->send(true);
+
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
 
@@ -202,7 +206,9 @@ void PauseMenu::checkPause(Event event1)
 				{
 					window->close();
 				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) { // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+				{
+					Multiplayer::getInstance()->send(false);
 					return;
 				}
 
@@ -250,7 +256,7 @@ void PauseMenu::checkPause(Event event1)
 
 				}
 			}
-			else if(mute == true){
+			else if (mute == true) {
 				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
 				Game::getInstance()->setMusicVolume(0.f);
 			}
@@ -270,6 +276,88 @@ void PauseMenu::checkPause(Event event1)
 
 	return;
 
+}
+void PauseMenu::checkPause(bool isPaused)
+{
+	if (multiplayerIsPaused)
+	{
+		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
+		{
+			while (Multiplayer::getInstance()->receive());
+
+			Event event;
+			while (window->pollEvent(event))
+			{
+				if (event.type == Event::Closed)
+				{
+					window->close();
+				}
+				if (!multiplayerIsPaused)
+					return;
+				//if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+				//{
+				//	return;
+				//}
+
+
+			}
+
+
+			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
+			text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
+			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+
+			if (play == true) {
+				play = false;
+				return;
+			}
+			//Pfeiltasten Druck = Änderung Lautstärke
+			if (Keyboard::isKeyPressed(Keyboard::Left))
+			{
+				if (sliderHelper == 0.f)
+				{
+					sliderHelper = 1.f;
+				}
+				sliderHelper--;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Right))
+			{
+				if (sliderHelper == 100.f)
+				{
+					sliderHelper = 99.f;
+				}
+				sliderHelper++;
+			}
+			if (mute == false) {
+
+				if (sliderHelper < 33) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+				}
+				else if (sliderHelper > 33 && sliderHelper < 66) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+				}
+				else if (sliderHelper > 66) {
+					mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+
+				}
+			}
+			else if (mute == true) {
+				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+				Game::getInstance()->setMusicVolume(0.f);
+			}
+
+			/*mousePos = Mouse::getPosition();
+			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
+			if (mute == false) {
+				Game::getInstance()->setMusicVolume(sliderHelper);
+			}
+			volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+			Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
+			click();
+			draw(); //Texte und Objekte werden gezeichnet
+
+		}
+	}
 }
 void PauseMenu::checkPause()
 {
@@ -369,6 +457,14 @@ PauseMenu* PauseMenu::getInstance() {
 float PauseMenu::getSliderHelper()
 {
 	return sliderHelper;
+}
+void PauseMenu::setMultiplayerIsPaused(bool a)
+{
+	multiplayerIsPaused = a;
+}
+bool PauseMenu::getMultiplayerIsPaused()
+{
+	return multiplayerIsPaused;
 }
 RectangleShape PauseMenu::getEdge()
 {

@@ -2,7 +2,7 @@
 //Singleton
 #include "Round.h"
 
-//Packet-Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Round-Werte (Leben&Runde), 5=Verloren
+//Packet-Header: 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde, 5=Verloren, 6=PauseMenu
 
 class Multiplayer
 {
@@ -41,12 +41,18 @@ public:
 	bool send(int, int);
 
 	/// <summary>
-	/// !!FUNKTIONIERT NICHT!!
-	/// Synchronisiert die Werte/Attribute, welche in Round gespeichert sind
+	/// Synchronisiert Health und Round-Index,
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
 	bool send();
+
+	/// <summary>
+	/// Ob das Spiel pausiert wurde
+	/// </summary>
+	/// <param name="">True = Pausiert, False = Nicht mehr pausiert</param>
+	/// <returns></returns>
+	bool send(bool);
 
 	/// <summary>
 	/// Empfängt ein Packet und wendet es an

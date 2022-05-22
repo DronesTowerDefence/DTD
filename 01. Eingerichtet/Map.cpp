@@ -14,6 +14,7 @@ Map::Map(int index)
 	texture.loadFromFile("img/maps/map" + std::to_string(index) + ".png");
 	background.setSize(Vector2f(1920, 991));
 	background.setTexture(&texture);
+	wayPointCount = 0;
 	switch (index)
 	{
 	case 0:
