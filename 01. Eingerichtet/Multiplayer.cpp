@@ -154,6 +154,7 @@ bool Multiplayer::receive()
 		bool isPaused;
 		pac >> isPaused;
 		PauseMenu::getInstance()->setMultiplayerIsPaused(isPaused);
+		PauseMenu::getInstance()->checkPause(isPaused);
 		return true;
 
 	default:
