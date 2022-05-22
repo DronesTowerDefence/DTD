@@ -229,7 +229,7 @@ void Game::startGame()
 		}
 		if (status == 3)
 		{
-			Multiplayer::getInstance()->receive();
+			while (Multiplayer::getInstance()->receive());
 		}
 		draw();
 	}

@@ -145,9 +145,24 @@ void Round::nextRound()
 		Multiplayer::getInstance()->send();
 		sendCooldown.restart();
 	}
-	else
+	else if(Game::getInstance()->getStatus() == 3)
 	{
 		receivedFromHostNextRound = false;
+
+		if (!allDrones.empty())
+		{
+			for (auto i : allDrones)
+			{
+				delete i;
+			}
+		}
+		if (!allProjectiles.empty())
+		{
+			for (auto i : allProjectiles)
+			{
+				delete i;
+			}
+		}
 	}
 }
 void Round::addMoney(int _money)
