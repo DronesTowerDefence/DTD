@@ -170,7 +170,7 @@ public:
 	bool shoot(Drone*);
 
 	/// <summary>
-	/// !! NUR FÜR DEN MULTIPLAYER !!
+	/// !!NUR FÜR DIE MULTIPLAYER-KLASSE!!
 	/// Lässt den Turm auf eine Drohne schießen
 	/// umgeht dabei den shootCooldown
 	/// </summary>

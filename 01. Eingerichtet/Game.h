@@ -69,7 +69,6 @@ private:
 	/// <returns></returns>
 	bool towerAliasForbiddenPosition();
 
-	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter
 	/// </summary>
@@ -104,6 +103,11 @@ private:
 	/// Überprüft ob man verloren hat
 	/// </summary>
 	void checkLoseGame();
+
+	/// <summary>
+	/// Überprüft, ob Drohnen am Eingang erscheinen sollen und ob die nächste Runde beginnt
+	/// </summary>
+	void checkDroneCount();
 
 	/// <summary>
 	/// Konstruktor von Game
@@ -153,6 +157,8 @@ public:
 	//void setPauseScreen(RenderWindow*);
 
 	void setStatus(int state);
+
+	void setDroneCount(int);
 
 	/// <summary>
 	/// Startet das Spiel

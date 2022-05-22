@@ -186,6 +186,10 @@ void Game::setStatus(int status)
 {
 	this->status = status;
 }
+void Game::setDroneCount(int _droneCount)
+{
+	droneCount = _droneCount;
+}
 void Game::startGame()
 {
 	loadGame();
@@ -206,6 +210,7 @@ void Game::startGame()
 
 		updateEco();
 		moveDrohnes();
+		checkDroneCount();
 		changeBackgroundMusic();
 		checkLoseGame();
 
@@ -251,12 +256,6 @@ void Game::updateEco()
 		"\nRound: " + std::to_string(round->getIndex() + 1)
 		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
-}
-void Game::newRound()
-{
-	saveGame();
-	droneCount = 0;
-	round->nextRound();
 }
 void Game::moveDrohnes()
 {
@@ -403,7 +402,6 @@ void Game::draw()
 	{
 		if (t->getcollided() == 0)
 			window->draw(*(t->getProjectileSprite()));
-
 	}
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
@@ -411,21 +409,9 @@ void Game::draw()
 		window->draw(*d->getDrawSprite());
 	}
 
-	for (auto* q : round->getAllSpawns())
+	for (auto* q : round->getAllSpawns()) //Drawt die Spawns
 	{
 		window->draw(q->getSpawnSprite());
-	}
-
-
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
-
-		droneCount++;
-		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->restartDroneTimer();
-	}
-	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
-	{
-		newRound();
 	}
 
 	if (lost)
@@ -629,6 +615,19 @@ void Game::checkLoseGame()
 
 	}
 
+}
+void Game::checkDroneCount()
+{
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
+
+		droneCount++;
+		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		round->restartDroneTimer();
+	}
+	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
+	{
+		round->nextRound();
+	}
 }
 void Game::resetAll()
 {
