@@ -463,8 +463,11 @@ void Game::checkShoot()
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
 					t->shoot(d);
-					if (status == 2)
+					if (status == 2 && sendDroneDamageCooldown.getElapsedTime().asSeconds() > 0.5)
+					{
 						Multiplayer::getInstance()->send(d, t->getDamage());
+						sendDroneDamageCooldown.restart();
+					}
 				}
 			}
 		}

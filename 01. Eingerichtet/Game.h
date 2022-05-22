@@ -50,6 +50,7 @@ private:
 	Event event;
 
 	Clock shootCooldown;
+	Clock sendDroneDamageCooldown;
 
 	Ressources* p_ressources;
 	Round* round;

@@ -21,6 +21,7 @@ private:
 	Text WinLose;
 	Clock droneTimer;
 	Clock droneSubHealthTimer;
+	Clock sendCooldown;
 
 	
 	std::list<Projectile*> allProjectiles;

@@ -137,8 +137,11 @@ void Round::nextRound()
 {
 	index++;
 	Lost = false;
-	if (Game::getInstance()->getStatus() == 2)
+	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
+	{
 		Multiplayer::getInstance()->send();
+		sendCooldown.restart();
+	}
 }
 void Round::addMoney(int _money)
 {
