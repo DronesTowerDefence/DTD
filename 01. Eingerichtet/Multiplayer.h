@@ -19,15 +19,6 @@ public:
 	/// Sendet ein Packet
 	/// </summary>
 	/// <param name="">Tower an welchem entwas ge‰ndert wurde</param>
-	/// <param name="Index, was ge‰ndert wurde">1 = Update1, 2 = Update2</param>
-	/// <param name="updateIndex"></param>
-	/// <returns>True, wenn es geklappt hat</returns>
-	bool send(Tower*, int, int);
-
-	/// <summary>
-	/// Sendet ein Packet
-	/// </summary>
-	/// <param name="">Tower an welchem entwas ge‰ndert wurde</param>
 	/// <param name="">Index, was ge‰ndert wurde (0 = neuer Turm, 1 = Verkaufen)</param>
 	/// <returns>True, wenn es geklappt hat</returns>
 	bool send(Tower*, int);
@@ -35,10 +26,19 @@ public:
 	/// <summary>
 	/// Sendet ein Packet
 	/// </summary>
-	/// <param name="">Turm welcher auf eine Drohne schieﬂt</param>
-	/// <param name="">Drohne auf die geschossen wird</param>
+	/// <param name="TowerID">Tower an welchem entwas ge‰ndert wurde</param>
+	/// <param name="Index, was ge‰ndert wurde">1 = Update1, 2 = Update2</param>
+	/// <param name="updateIndex"></param>
 	/// <returns>True, wenn es geklappt hat</returns>
-	bool send(Tower*, Drone*);
+	bool send(int, int, int);
+
+	/// <summary>
+	/// Sendet ein Packet
+	/// </summary>
+	/// <param name="TowerID">Turm welcher auf eine Drohne schieﬂt</param>
+	/// <param name="DroneID">Drohne auf die geschossen wird</param>
+	/// <returns>True, wenn es geklappt hat</returns>
+	bool send(int, int);
 
 	/// <summary>
 	/// !!FUNKTIONIERT NICHT!!

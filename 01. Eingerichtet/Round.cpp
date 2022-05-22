@@ -137,6 +137,7 @@ void Round::nextRound()
 {
 	index++;
 	lost = false;
+	return; //TODO
 	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
 	{
 		Multiplayer::getInstance()->send();

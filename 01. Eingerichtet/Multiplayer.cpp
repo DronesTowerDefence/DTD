@@ -33,13 +33,13 @@ bool Multiplayer::send(Tower* t, int _index)
 	else return false;
 }
 
-bool Multiplayer::send(Tower* t, int _index, int _updateIndex)
+bool Multiplayer::send(int t, int _index, int _updateIndex)
 {
 	if (_index == 1 || _index == 2)
 	{
 		Packet pac;
 
-		pac << 1 << t->getId() << _index << _updateIndex;
+		pac << 1 << t << _index << _updateIndex;
 
 		res->getClient()->send(pac);
 
@@ -48,10 +48,10 @@ bool Multiplayer::send(Tower* t, int _index, int _updateIndex)
 	else return false;
 }
 
-bool Multiplayer::send(Tower* t, Drone* d)
+bool Multiplayer::send(int t, int d)
 {
 	Packet pac;
-	pac << 3 << d->getId() << t->getId();
+	pac << 3 << d << t;
 
 	res->getClient()->send(pac);
 	return true;

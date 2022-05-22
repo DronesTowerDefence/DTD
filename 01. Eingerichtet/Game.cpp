@@ -464,10 +464,6 @@ void Game::checkShoot()
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
 					t->shoot(d);
-					if (status == 2)
-					{
-						Multiplayer::getInstance()->send(t, d);
-					}
 				}
 			}
 		}
