@@ -19,7 +19,7 @@ bool Multiplayer::send(Tower* t, int _index)
 		Packet pac;
 		if (_index == 0)
 		{
-			pac << 0 << t->getIndex() << t->getTowerPos().x << t->getTowerPos().y;
+			pac << 0 << t->getIndex() << int(t->getTowerPos().x) << int(t->getTowerPos().y);
 		}
 		else if (_index == 1)
 		{
