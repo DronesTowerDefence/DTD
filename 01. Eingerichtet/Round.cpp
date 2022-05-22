@@ -137,6 +137,8 @@ void Round::nextRound()
 {
 	index++;
 	Lost = false;
+	if (Game::getInstance()->getStatus() == 2)
+		Multiplayer::getInstance()->send();
 }
 void Round::addMoney(int _money)
 {
