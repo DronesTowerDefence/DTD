@@ -143,6 +143,5 @@ void Projectile::setmove()
 #pragma region Desturktor
 Projectile::~Projectile()
 {
-	Round::getInstance()->deleteProjectile(this);
 }
 #pragma endregion

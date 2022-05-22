@@ -113,7 +113,6 @@ void Round::sellTower(Tower* a)
 		Multiplayer::getInstance()->send(a, 1);
 
 	delete a;
-	a = nullptr;
 }
 void Round::restartDroneTimer()
 {
@@ -122,17 +121,6 @@ void Round::restartDroneTimer()
 void Round::restartDroneSubHealthTimer()
 {
 	droneSubHealthTimer.restart();
-}
-void Round::deleteDrone(Drone* drone)
-{
-
-	allDrones.remove(drone);
-
-}
-void Round::deleteProjectile(Projectile* p)
-{
-	allProjectiles.remove(p);
-
 }
 void Round::nextRound()
 {
@@ -155,14 +143,17 @@ void Round::nextRound()
 			{
 				delete i;
 			}
+			allDrones.clear();
 		}
-		if (!allProjectiles.empty())
+	}
+
+	if (!allProjectiles.empty())
+	{
+		for (auto i : allProjectiles)
 		{
-			for (auto i : allProjectiles)
-			{
-				delete i;
-			}
+			delete i;
 		}
+		allProjectiles.clear();
 	}
 }
 void Round::addMoney(int _money)
