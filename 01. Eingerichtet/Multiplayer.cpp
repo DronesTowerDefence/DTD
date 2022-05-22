@@ -48,10 +48,10 @@ bool Multiplayer::send(Tower* t, int _index, int _updateIndex)
 	else return false;
 }
 
-bool Multiplayer::send(Drone* d, int _damage)
+bool Multiplayer::send(Tower* t, Drone* d)
 {
 	Packet pac;
-	pac << 3 << d->getId() << _damage;
+	pac << 3 << d->getId() << t->getId();
 
 	res->getClient()->send(pac);
 	return true;
@@ -69,7 +69,7 @@ bool Multiplayer::send()
 bool Multiplayer::receive()
 {
 	Packet pac;
-	int header,towerId;
+	int header, towerId;
 
 	res->getClient()->receive(pac);
 	pac >> header;
@@ -113,20 +113,26 @@ bool Multiplayer::receive()
 		return true;
 
 	case 3:
-		int droneId, droneDamage;
-		pac >> droneId >> droneDamage;
-		for (auto i : p_round->getAllDrones())
+		int droneId, towerId;
+		pac >> droneId >> towerId;
+		for (auto i : p_round->getAllAttackTower())
 		{
-			if (i->getId() == droneId)
+			if (i->getId() == towerId)
 			{
-				i->takeDamage(droneDamage);
+				for (auto j : p_round->getAllDrones())
+				{
+					if (j->getId() == droneId)
+					{
+						i->shoot(j);
+					}
+				}
 			}
 		}
 		return true;
 
 	case 4:
 		int health, index;
-		pac >> health  >> index;
+		pac >> health >> index;
 		p_round->setHealth(health);
 		p_round->setIndex(index);
 		p_round->setReceiveNextRound(true);

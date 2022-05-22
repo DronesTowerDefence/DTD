@@ -35,10 +35,10 @@ public:
 	/// <summary>
 	/// Sendet ein Packet
 	/// </summary>
-	/// <param name="">Drohne an welcher etwas ge‰ndert wurde</param>
-	/// <param name="">Wie viel Schaden sie erhalten hat</param>
+	/// <param name="">Turm welcher auf eine Drohne schieﬂt</param>
+	/// <param name="">Drohne auf die geschossen wird</param>
 	/// <returns>True, wenn es geklappt hat</returns>
-	bool send(Drone*, int);
+	bool send(Tower*, Drone*);
 
 	/// <summary>
 	/// !!FUNKTIONIERT NICHT!!
