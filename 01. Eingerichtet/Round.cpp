@@ -15,6 +15,7 @@ Round::Round()
 	towerPrice[2] = 300;
 	lost = false;
 	won = false;
+	receivedFromHostNextRound = false;
 
 }
 
@@ -144,15 +145,6 @@ void Round::nextRound()
 		Multiplayer::getInstance()->send();
 		sendCooldown.restart();
 	}
-	else if (Game::getInstance()->getStatus() == 3)
-	{
-		while (!receiveNextRound)
-		{
-			Multiplayer::getInstance()->receive();
-			//Wartet solange, bis beim Host die nächste Runde beginnt
-		}
-		receiveNextRound = false;
-	}
 }
 void Round::addMoney(int _money)
 {
@@ -214,6 +206,10 @@ bool Round::getLost()
 bool Round::getWon()
 {
 	return won;
+}
+bool Round::getReceivedFromHostNextRound()
+{
+	return receivedFromHostNextRound;
 }
 Clock Round::getDroneTimer()
 {

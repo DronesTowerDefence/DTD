@@ -17,7 +17,7 @@ private:
 	int towerPrice[3];
 	bool lost;
 	bool won;
-	bool receiveNextRound;
+	bool receivedFromHostNextRound;
 	std::list<Vector2f> allCoverablePoints; //Strecke eingeteilt in Punkte, alle 20px
 	Text WinLose;
 	Clock droneTimer;
@@ -53,6 +53,7 @@ public:
 	int getMoney();
 	bool getLost();
 	bool getWon();
+	bool getReceivedFromHostNextRound();
 	Clock getDroneTimer();
 	Clock getDroneSubHealthTimer();
 	Map* getMap();

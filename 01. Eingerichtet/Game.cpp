@@ -618,13 +618,17 @@ void Game::checkLoseGame()
 }
 void Game::checkDroneCount()
 {
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
-
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > p_ressources->getDroneSpawnTime() && droneCount < p_ressources->getDroneCountInRound())
+	{
 		droneCount++;
 		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
 		round->restartDroneTimer();
 	}
-	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
+	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status == 2)
+	{
+		round->nextRound();
+	}
+	else if (round->getReceivedFromHostNextRound() && status == 3)
 	{
 		round->nextRound();
 	}

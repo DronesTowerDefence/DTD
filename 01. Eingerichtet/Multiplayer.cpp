@@ -135,7 +135,7 @@ bool Multiplayer::receive()
 		pac >> health >> index;
 		p_round->setHealth(health);
 		p_round->setIndex(index);
-		p_round->setReceiveNextRound(true);
+		
 		return true;
 
 	case 5:
