@@ -123,7 +123,7 @@ bool Multiplayer::receive()
 				{
 					if (j->getId() == droneId)
 					{
-						i->shoot(j);
+						i->shoot(j, true);
 					}
 				}
 			}
