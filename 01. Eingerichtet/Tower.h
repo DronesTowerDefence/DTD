@@ -170,6 +170,16 @@ public:
 	bool shoot(Drone*);
 
 	/// <summary>
+	/// !! NUR FÜR DEN MULTIPLAYER !!
+	/// Lässt den Turm auf eine Drohne schießen
+	/// umgeht dabei den shootCooldown
+	/// </summary>
+	/// <param name="Pointer auf die Drohne">auf die geschossen werden soll</param>
+	/// <param name="Ob der Cooldown umgangen werden soll?">True</param>
+	/// <returns></returns>
+	bool shoot(Drone*,bool);
+
+	/// <summary>
 	/// Prüft, ob das Element angeklickt wird
 	/// </summary>
 	/// <returns>ist geklickt</returns>

@@ -221,7 +221,6 @@ void Game::startGame()
 
 			}
 
-
 		}
 		if (status == 3)
 		{
