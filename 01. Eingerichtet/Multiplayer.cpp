@@ -1,10 +1,6 @@
 #include "PauseMenu.h"
 #include "Multiplayer.h"
 
-#pragma region Konstruktor
-#pragma endregion
-
-#pragma region Funktionen
 
 bool Multiplayer::send(Tower* t, int _index)
 {
@@ -189,9 +185,3 @@ bool Multiplayer::receive()
 		return false;
 	}
 }
-
-#pragma endregion
-
-#pragma region getter
-
-#pragma endregion

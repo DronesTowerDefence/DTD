@@ -10,7 +10,7 @@ Packet-Header:
 static class Multiplayer
 {
 private:
-	Multiplayer();
+	Multiplayer(); //Laut Internet unnötig, aber habs ausprobiert, man braucht es doch
 	Multiplayer(const Multiplayer&);
 
 public:
