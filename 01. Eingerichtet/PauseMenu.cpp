@@ -285,6 +285,9 @@ void PauseMenu::checkPause(bool isPaused)
 		{
 			while (Multiplayer::getInstance()->receive());
 
+			if (!multiplayerIsPaused)
+				return;
+
 			Event event;
 			while (window->pollEvent(event))
 			{
@@ -292,8 +295,6 @@ void PauseMenu::checkPause(bool isPaused)
 				{
 					window->close();
 				}
-				if (!multiplayerIsPaused)
-					return;
 				//if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				//{
 				//	return;
