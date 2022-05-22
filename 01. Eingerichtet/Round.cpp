@@ -142,6 +142,14 @@ void Round::nextRound()
 		Multiplayer::getInstance()->send();
 		sendCooldown.restart();
 	}
+	else if (Game::getInstance()->getStatus() == 3)
+	{
+		while (!receiveNextRound)
+		{
+			//Wartet solange, bis beim Host die nächste Runde beginnt
+		}
+		receiveNextRound = false;
+	}
 }
 void Round::addMoney(int _money)
 {
@@ -266,6 +274,10 @@ bool Round::setMoney(int _money)
 		return 0;
 	money = _money;
 	return 1;
+}
+void Round::setReceiveNextRound(bool a)
+{
+	receiveNextRound = a;
 }
 void Round::setDroneTimer(Clock f)
 {

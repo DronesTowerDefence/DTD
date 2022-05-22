@@ -26,7 +26,6 @@ private:
 	bool isMouseClicked;
 	bool doubleSpeed;
 
-
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
 	Texture gameOverBackgroundTexture;
