@@ -463,7 +463,8 @@ void Game::checkShoot()
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
 					t->shoot(d);
-					Multiplayer::getInstance()->send(d, t->getDamage());
+					if (status == 2)
+						Multiplayer::getInstance()->send(d, t->getDamage());
 				}
 			}
 		}
@@ -749,6 +750,10 @@ Font Game::getFont()
 Sound Game::getMusic()
 {
 	return music[0];
+}
+int Game::getStatus()
+{
+	return status;
 }
 #pragma endregion
 

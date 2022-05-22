@@ -59,7 +59,6 @@ private:
 	TowerAlias* newTower;
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
-	/// NOCH NICHT FERTIG!
 	/// </summary>
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
@@ -130,6 +129,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Sound getMusic();
+
+	int getStatus();
 
 	/// <summary>
 	/// Setzt die Musik Lautstärke

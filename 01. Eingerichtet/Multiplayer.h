@@ -41,6 +41,7 @@ public:
 	bool send(Drone*, int);
 
 	/// <summary>
+	/// !!FUNKTIONIERT NICHT!!
 	/// Synchronisiert die Werte/Attribute, welche in Round gespeichert sind
 	/// </summary>
 	/// <param name=""></param>

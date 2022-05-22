@@ -1,3 +1,4 @@
+#include "Game.h"
 #include "Multiplayer.h"
 #include "Round.h"
 
@@ -107,7 +108,8 @@ void Round::sellTower(Tower* a)
 	}
 	addMoney(a->getValue() * 0.75);
 
-	Multiplayer::getInstance()->send(a, 1);
+	if (Game::getInstance()->getStatus() == 2)
+		Multiplayer::getInstance()->send(a, 1);
 
 	delete a;
 	a = nullptr;
@@ -135,7 +137,6 @@ void Round::nextRound()
 {
 	index++;
 	Lost = false;
-	Multiplayer::getInstance()->send();
 }
 void Round::addMoney(int _money)
 {
@@ -295,7 +296,7 @@ void Round::addProjectile(Projectile* _projectile)
 #pragma endregion
 
 #pragma region Desturktor
-Round::~Round() 
+Round::~Round()
 {
 	instance = nullptr;
 }
