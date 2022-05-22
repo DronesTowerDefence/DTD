@@ -120,19 +120,13 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 	}
 	else return false;
 }
-bool Tower::shoot(Drone* d, bool _client) //Tower schießt Drone ab
+bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 {
-	if (_client)
+	if (_isClient && Game::getInstance()->getStatus() == 3)
 	{
 		if (index < 4)
 		{
 			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
-			if (Game::getInstance()->getStatus() == 2)
-			{
-				Multiplayer::getInstance()->send(id, d->getId());
-			}
-			shootCooldown = true;
-
 			return true;
 		}
 		else return false;
