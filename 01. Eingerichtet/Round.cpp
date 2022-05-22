@@ -145,6 +145,10 @@ void Round::nextRound()
 		Multiplayer::getInstance()->send();
 		sendCooldown.restart();
 	}
+	else
+	{
+		receivedFromHostNextRound = false;
+	}
 }
 void Round::addMoney(int _money)
 {
