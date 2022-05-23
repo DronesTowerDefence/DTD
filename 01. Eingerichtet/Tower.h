@@ -175,6 +175,10 @@ public:
 	/// <returns>ist geklickt</returns>
 	bool isClicked(RenderWindow* window);
 
+	void Update1();
+
+	void Update2();
+
 	/// <summary>
 	/// Updates
 	/// </summary>

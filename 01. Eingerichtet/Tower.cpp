@@ -129,42 +129,66 @@ bool Tower::isClicked(RenderWindow* window)
 
 	return false;
 }
+void Tower::Update1()
+{
+	update->addIndex1();
+	if (update->getIndex1() < 4)
+		update->setText1(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1())) + " $");
+	else
+		update->setText1("CLOSE"); //TODO updatepeis
+	if (index < 4)
+	{
+		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+		speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+		Multiplayer::getInstance()->send(this, 1, update->getIndex1());
+	}
+	else if (index == 4)
+	{
+		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);	
+		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+	}
+	update->setStringPrice();
+
+}
+void Tower::Update2()
+{
+	update->addIndex2();
+	if (update->getIndex2() < 4)
+		update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
+
+	else
+		update->setText2("CLOSE"); //TODO updatepeis
+	if (index < 4)
+	{
+		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+		damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
+		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+	}
+	else if (index == 4)
+	{
+		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+		moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
+		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+
+	}
+	update->setStringPrice();
+
+}
 void Tower::manageUpdate(RenderWindow* window)
 {
 
 	int indexUpdate = update->isClicked(window);
 
-	// index wird in der Methode erhöht
-	if (index < 4)
+	if (indexUpdate == 1)
 	{
+		Update1();
+	}
+	else if (indexUpdate == 2)
+	{
+		Update2();
+	}
 
-		if (indexUpdate == 1)
-		{
-			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
-			Multiplayer::getInstance()->send(this, indexUpdate, update->getIndex1());
-		}
-		else if (indexUpdate == 2)
-		{
-			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
-			Multiplayer::getInstance()->send(this, indexUpdate, update->getIndex2());
-		}
-	}
-	else if (index == 4)
-	{
-		if (indexUpdate == 1)
-		{
-			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
-		}
-		else if (indexUpdate == 2)
-		{
-			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
-		}
-	}
-	update->setStringPrice();
 
 }
 void Tower::spawnSpawn(int art)

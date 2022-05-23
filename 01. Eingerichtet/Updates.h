@@ -38,6 +38,13 @@ public:
 	void setIndex1(int index);
 	void setIndex2(int index);
 
+	void setText1(std::string text);
+
+	void setText2(std::string text);
+
+	void addIndex1();
+	void addIndex2();
+
 	
 	void draw(RenderWindow* window);
 	int isClicked(RenderWindow* window);

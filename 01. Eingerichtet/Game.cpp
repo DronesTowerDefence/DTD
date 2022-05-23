@@ -200,7 +200,25 @@ void Game::startGame()
 				window->close();
 			}
 
-
+			if (tower != nullptr)
+			{
+				if (event.type == Event::KeyReleased)
+				{
+					if (event.key.code == Keyboard::Period)
+					{
+						tower->Update2();
+					}
+					else if (event.key.code == Keyboard::Comma)
+					{
+						tower->Update1();
+					}
+					else if (event.key.code = Keyboard::BackSpace)
+					{
+						Round::getInstance()->sellTower(tower);
+						tower = nullptr;
+					}
+				}
+			}
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
