@@ -109,9 +109,6 @@ void Round::sellTower(Tower* a)
 	}
 	addMoney(a->getValue() * 0.75);
 
-	if (Game::getInstance()->getStatus() == 2)
-		Multiplayer::send(a, 1);
-
 	delete a;
 	a = nullptr;
 }

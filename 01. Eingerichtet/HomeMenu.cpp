@@ -315,6 +315,7 @@ int  HomeMenu::CheckClicked()
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
+			connected = true;
 			status = 3;
 			if (Ressources::getInstance()->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
@@ -342,6 +343,7 @@ int  HomeMenu::CheckClicked()
 
 			while (res->getReceiver()->receive(p2));
 			p2 >> choseIndex;
+			std::cout << choseIndex;
 			res->getSender()->setBlocking(false);
 			res->getReceiver()->setBlocking(false);
 

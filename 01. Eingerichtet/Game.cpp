@@ -234,6 +234,7 @@ void Game::startGame()
 					else if (event.key.code == Keyboard::BackSpace)
 					{
 						Round::getInstance()->sellTower(tower);
+						Multiplayer::send(tower, 1);
 						tower = nullptr;
 					}
 					
@@ -373,6 +374,8 @@ void Game::checkButtonClick()
 			}
 			else if (tower->getUpdates()->isSell(window))
 			{
+				Multiplayer::send(tower, 1);
+
 				Round::getInstance()->sellTower(tower);
 				tower = nullptr;
 			}
