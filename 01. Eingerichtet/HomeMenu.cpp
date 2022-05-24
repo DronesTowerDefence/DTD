@@ -298,9 +298,13 @@ int  HomeMenu::CheckClicked()
 				//connected = false;
 				std::cout << "ERROR";
 			}
-			/*Packet p;
-			p << choseIndex;
-			Ressources::getInstance()->getClient()->send(p);*/
+			Packet p5;
+			p5 << choseIndex;
+			Ressources::getInstance()->getSender()->send(p5);
+		
+			res->getSender()->setBlocking(false);
+			res->getReceiver()->setBlocking(false);
+
 
 			return 2;
 		}
@@ -334,27 +338,13 @@ int  HomeMenu::CheckClicked()
 				connected = false;
 				std::cout << "Error Client";
 			}
+			Packet p2;
 
-			//connected = true;
-			//Ressources* res = Ressources::getInstance();
-			//if (res->getListener()->listen(4567))
-			//{
-			//	std::cout << "Error Port";
-			//	connected = false;
-			//}
+			while (res->getReceiver()->receive(p2));
+			p2 >> choseIndex;
+			res->getSender()->setBlocking(false);
+			res->getReceiver()->setBlocking(false);
 
-
-
-			//if (res->getListener()->accept(*res->getClient()) != Socket::Done)
-			//{
-			//	connected = false;
-			//	std::cout << "Error Client";
-			//	//Error
-			//}
-			//Packet p;
-			//res->getClient()->receive(p);
-			//p >> choseIndex;
-			//res->getClient()->setBlocking(false);
 			return 3;
 		}
 
