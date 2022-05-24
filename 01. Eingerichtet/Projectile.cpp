@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include "Round.h"
 #include <iostream>
+#include <random>
 
 
 
@@ -32,6 +33,8 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	case 3:
 		projectilesprite.setTexture(*res->getProjectileTexture(1));
 		break;
+	case 4:
+		projectilesprite.setTexture(*res->getProjectileTexture(1));
 	}
 
 	Round::getInstance()->addProjectile(this);
@@ -41,7 +44,6 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setPosition(_towerspawn->getSpawnSprite().getPosition().x+_towerspawn->getSpawnTexture().getSize().x/2, _towerspawn->getSpawnSprite().getPosition().y + _towerspawn->getSpawnTexture().getSize().y / 2);
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
-
 	operate();
 }
 #pragma endregion
@@ -63,6 +65,19 @@ void Projectile::operate()
 		homing();
 		break; 
 	}
+	case 3:
+		srand((unsigned)time(NULL));
+		int o = rand() % tower->getCoverableArea().size();
+		int j = 0;
+		for (auto i : tower->getCoverableArea()) {
+			if (j == o) {
+				targetstill.x = i.x;
+				targetstill.y = i.y;
+			}
+			j++;
+		}
+		homing();
+		break;
 	}
 
 
@@ -84,14 +99,19 @@ void Projectile::targeting()
 
 }
 void Projectile::homing() {
+	if (style == 3) {
+		move.x = -1 * (projectilesprite.getPosition().x - targetstill.x);
+		move.y = -1 * (projectilesprite.getPosition().y - targetstill.y);
+		return;
+	}
 	move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
 	move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
 }
 void Projectile::moveProjectile()
 {
-	if (style == 2)
+	if (style == 2||style==3)
 		homing();
-	if (style == 3) {
+	if (style == 4) {
 		for (auto i : Round::getInstance()->getAllDrones()) {
 			if (tower->getRangeShape()->getGlobalBounds().intersects(i->getDroneSprite().getGlobalBounds())) {
 				i->takeDamage(tower->getDamage());

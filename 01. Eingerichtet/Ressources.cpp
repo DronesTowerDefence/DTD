@@ -21,8 +21,8 @@ Ressources::Ressources()
 	towerMoneyTowerCount = 1;
 
 	towerProjectileIndex[0] = 2;
-	towerProjectileIndex[1] = 2;
-	towerProjectileIndex[2] = 3;
+	towerProjectileIndex[1] = 3;
+	towerProjectileIndex[2] = 4;
 	towerProjectileIndex[3] = 0;
 	towerProjectileIndex[4] = 0;
 
@@ -69,7 +69,7 @@ Ressources::Ressources()
 	towerChangeFrame[4] = towerSpeed[4] * 1000;
 
 	towerName[0] = "Feuer-Turm";
-	towerName[1] = "Tower 2";
+	towerName[1] = "Nagelfabrik";
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";

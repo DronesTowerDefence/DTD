@@ -17,7 +17,6 @@ TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 #pragma region Funktionen
 void TowerSpawn::shoot()
 {
-	std::cout << "Shoot" << std::endl;
 	new Projectile(nullptr, tower, this, 0, Vector2f(1, 0));
 	new Projectile(nullptr, tower, this, 0, Vector2f(-1, 0));
 	new Projectile(nullptr, tower, this, 0, Vector2f(0, 1));
