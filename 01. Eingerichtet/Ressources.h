@@ -49,7 +49,8 @@ private:
 
 
 	std::string towerName[5]; //Der Name des Turmes
-	TcpSocket* client;
+	TcpSocket* sender;
+	TcpSocket* receiver;
 	TcpListener* listener;
 
 	Texture towerTexture[5][4];
@@ -104,7 +105,9 @@ public:
 
 	Image getIcon();
 
-	TcpSocket* getClient();
+	TcpSocket* getSender();
+	TcpSocket* getReceiver();
+
 	TcpListener* getListener();
 	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);

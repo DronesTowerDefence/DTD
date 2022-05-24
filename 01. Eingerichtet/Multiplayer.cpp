@@ -16,7 +16,7 @@ bool Multiplayer::send(Tower* t, int _index)
 			pac << 2 << t->getId();
 		}
 
-		Ressources::getInstance()->getClient()->send(pac);
+		Ressources::getInstance()->getSender()->send(pac);
 
 		return true;
 	}
@@ -31,7 +31,7 @@ bool Multiplayer::send(int t, int _index, int _updateIndex)
 
 		pac << 1 << t << _index << _updateIndex;
 
-		Ressources::getInstance()->getClient()->send(pac);
+		Ressources::getInstance()->getSender()->send(pac);
 
 		return true;
 	}
@@ -43,7 +43,7 @@ bool Multiplayer::send(int t, int d)
 	Packet pac;
 	pac << 3 << d << t;
 
-	Ressources::getInstance()->getClient()->send(pac);
+	Ressources::getInstance()->getSender()->send(pac);
 	return true;
 }
 
@@ -77,7 +77,7 @@ bool Multiplayer::send(int _index, bool _bool)
 	}
 	else return false;
 
-	Ressources::getInstance()->getClient()->send(pac);
+	Ressources::getInstance()->getSender()->send(pac);
 	return true;
 }
 
@@ -86,7 +86,7 @@ bool Multiplayer::receive()
 	Packet pac;
 	int header, towerId;
 
-	Ressources::getInstance()->getClient()->receive(pac);
+	Ressources::getInstance()->getReceiver()->receive(pac);
 	pac >> header;
 
 	switch (header)
