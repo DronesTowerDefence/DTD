@@ -105,7 +105,7 @@
     <ClCompile Include="TowerSpawn.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Transmit.cpp">
+    <ClCompile Include="Multiplayer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,143 +155,11 @@
     <ClInclude Include="TowerSpawn.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Transmit.h">
+    <ClInclude Include="rekursion.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="sounds\hit-0.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\hit-1.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-0.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-1.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-2.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="sounds\shot-3.wav">
-      <Filter>Ressourcendateien\sounds</Filter>
-    </Media>
-    <Media Include="music\3-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\1-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\1-1.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-    <Media Include="music\2-0.wav">
-      <Filter>Ressourcendateien\music</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="fonts\arial.ttf">
-      <Filter>Ressourcendateien\fonts</Filter>
-    </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="img\buttons\closeButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\homeButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\restartButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\buttons\startButton.png">
-      <Filter>Ressourcendateien\img\buttons</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage1.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage2.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\drone0\drone0_damage3.png">
-      <Filter>Ressourcendateien\img\drone0</Filter>
-    </Image>
-    <Image Include="img\maps\Map1.png">
-      <Filter>Ressourcendateien\img\maps</Filter>
-    </Image>
-    <Image Include="img\projectiles\projectile0.png">
-      <Filter>Ressourcendateien\img\projectiles</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_0.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_1.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_2.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_alias.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower0\tower0_preview.png">
-      <Filter>Ressourcendateien\img\tower0</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_0.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_alias.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower1\tower1_preview.png">
-      <Filter>Ressourcendateien\img\tower1</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_0.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_alias.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower2\tower2_preview.png">
-      <Filter>Ressourcendateien\img\tower2</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_0.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_alias.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower3\tower3_preview.png">
-      <Filter>Ressourcendateien\img\tower3</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_0.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_alias.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\tower4\tower4_preview.png">
-      <Filter>Ressourcendateien\img\tower4</Filter>
-    </Image>
-    <Image Include="img\upgrades\sell.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
-    <Image Include="img\icon.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\titleText.png">
-      <Filter>Ressourcendateien\img</Filter>
-    </Image>
-    <Image Include="img\upgrades\upgradeAttackspeed.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
-    <Image Include="img\upgrades\upgradeDamage.png">
-      <Filter>Ressourcendateien\img\upgrades</Filter>
-    </Image>
+    <ClInclude Include="Multiplayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
