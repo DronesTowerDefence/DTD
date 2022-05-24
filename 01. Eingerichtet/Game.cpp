@@ -7,6 +7,7 @@ Game* Game::instance = nullptr;
 #pragma region Konstruktor
 Game::Game()
 {
+
 	doubleSpeed = false;
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
@@ -186,6 +187,10 @@ void Game::setStatus(int status)
 {
 	this->status = status;
 }
+void Game::setDroneCount(int _droneCount)
+{
+	droneCount = _droneCount;
+}
 void Game::startGame()
 {
 	loadGame();
@@ -219,17 +224,45 @@ void Game::startGame()
 					}
 				}
 			}
+			else if (newTower == nullptr)
+			{
+				if (event.key.code == Event::KeyReleased)
+				{
+					if (event.key.code == Keyboard::Num1)
+					{
+
+					}
+					else if (event.key.code == Keyboard::Num2)
+					{
+
+					}
+					else if (event.key.code == Keyboard::Num2)
+					{
+
+					}
+					else if (event.key.code == Keyboard::Num2)
+					{
+
+					}
+					else if (event.key.code == Keyboard::Num2)
+					{
+
+					}
+				}
+			}
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
 		updateEco();
-		checkLoseGame();
 		moveDrohnes();
-		checkShoot();
+		checkDroneCount();
 		changeBackgroundMusic();
+		checkLoseGame();
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
+			subRoundHealth();
+			checkShoot();
 			checkTowerAlias();
 			generateMoneyTowers();
 			for (auto i : Round::getInstance()->getAllTowers())
@@ -238,11 +271,10 @@ void Game::startGame()
 
 			}
 
-
 		}
 		if (status == 3)
 		{
-			Multiplayer::getInstance()->receive();
+			while (Multiplayer::receive());
 		}
 		draw();
 	}
@@ -270,12 +302,6 @@ void Game::updateEco()
 		/* + "\nx: " + std::to_string(Mouse::getPosition(*window).x) +
 		"\ny: " + std::to_string(Mouse::getPosition(*window).y)*/);
 }
-void Game::newRound()
-{
-	saveGame();
-	droneCount = 0;
-	round->nextRound();
-}
 void Game::moveDrohnes()
 {
 	for (Drone* p : round->getAllDrones())
@@ -300,6 +326,14 @@ void Game::checkButtonClick()
 {
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
+		if (newTower == nullptr /* || index == -1*/)
+		{
+			isMouseClicked = true;
+		}
+	}
+
+	if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
+	{
 		int index = -1;
 		if (tower == nullptr) // wenn die Toolbar nicht die Updates anzeigt
 		{
@@ -310,14 +344,6 @@ void Game::checkButtonClick()
 			}
 			//else clicked = true;
 		}
-		if (newTower == nullptr || index == -1)
-		{
-			isMouseClicked = true;
-		}
-	}
-
-	if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
-	{
 		isMouseClicked = false;
 		if (Sidebar::getInstance()->isChangeSpeed(window))
 		{
@@ -365,19 +391,25 @@ void Game::checkTowerAlias()
 	{
 		if (Mouse::isButtonPressed(Mouse::Button::Left))
 		{
-			newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
+			isMouseClicked = true;
 		}
-		else if (newTower->getSpr()->getPosition().x > 1700)
+
+		newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
+		if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
 		{
-			round->addMoney(Ressources::getInstance()->getTowerPrice(newTower->getIndex()));
-			delete newTower;
-			newTower = nullptr;
-		}
-		else if (towerAliasForbiddenPosition())
-		{
-			newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
-			delete newTower;
-			newTower = nullptr;
+			isMouseClicked = false;
+			if (newTower->getSpr()->getPosition().x > 1700) // löschen vom Tower
+			{
+				round->addMoney(Ressources::getInstance()->getTowerPrice(newTower->getIndex()));
+				delete newTower;
+				newTower = nullptr;
+			}
+			else if (towerAliasForbiddenPosition())
+			{
+				newTower->CreateNewTower(); //TowerAlias erstellt einen neuen Tower an der eigenen Position
+				delete newTower;
+				newTower = nullptr;
+			}
 		}
 	}
 }
@@ -421,7 +453,6 @@ void Game::draw()
 	{
 		if (t->getcollided() == 0)
 			window->draw(*(t->getProjectileSprite()));
-
 	}
 
 	for (auto* d : round->getAllDrones()) //Drones werden gedrawt
@@ -429,21 +460,9 @@ void Game::draw()
 		window->draw(*d->getDrawSprite());
 	}
 
-	for (auto* q : round->getAllSpawns())
+	for (auto* q : round->getAllSpawns()) //Drawt die Spawns
 	{
 		window->draw(q->getSpawnSprite());
-	}
-
-
-	if (round->getDroneTimer().getElapsedTime().asSeconds() > Ressources::getInstance()->getDroneSpawnTime() && droneCount < Ressources::getInstance()->getDroneCountInRound()) {
-
-		droneCount++;
-		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->restartDroneTimer();
-	}
-	if (droneCount == Ressources::getInstance()->getDroneCountInRound() && round->getAllDrones().empty())
-	{
-		newRound();
 	}
 
 	if (lost)
@@ -481,7 +500,6 @@ void Game::checkShoot()
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
 					t->shoot(d);
-					Multiplayer::getInstance()->send(d, t->getDamage());
 				}
 			}
 		}
@@ -495,7 +513,7 @@ void Game::generateMoneyTowers()
 		i->generateMoney();
 	}
 }
-void Game::checkLoseGame()
+void Game::subRoundHealth()
 {
 	if (round->getDroneSubHealthTimer().getElapsedTime().asSeconds() > 1)
 	{
@@ -551,11 +569,18 @@ void Game::checkLoseGame()
 		}
 		round->restartDroneSubHealthTimer();
 	}
-
+}
+void Game::checkLoseGame()
+{
 	if (round->getLost())
 	{
 		round->setHealth(0);
 		updateEco();
+
+		if (status == 2)
+		{
+			Multiplayer::send(1, false);
+		}
 
 		gameOverBackgroundTexture.loadFromFile("img/gameOverScreen.png");
 		gameOverBackround.setTexture(gameOverBackgroundTexture);
@@ -618,34 +643,67 @@ void Game::checkLoseGame()
 				//restartButton = gameOverRestartButton.getPosition();
 				//restartButton2 = restartButton + Vector2f(gameOverRes				tartButtonTexture.getSize());
 
-
-
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
-					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y))
+					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y)) //Wenn home
 				{
-					saveGame();
-					lost = false;
-					HomeMenu::getInstance()->HomeMenuStart();
+					mainMenu();
 					return;
 				}
 				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
-					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y))
+					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y)) //Wenn restart
 				{
-					saveGame();
-					lost = false;
-					int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
-					resetAll();
-					round = Round::getInstance();
-					p_map = new Map(mapIndex);
-					sidebar = Sidebar::getInstance();
+					restart();
 					return;
 				}
 			}
-
 		}
-
 	}
 
+}
+void Game::checkDroneCount()
+{
+	if (round->getDroneTimer().getElapsedTime().asSeconds() > p_ressources->getDroneSpawnTime() && droneCount < p_ressources->getDroneCountInRound())
+	{
+		droneCount++;
+		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		round->restartDroneTimer();
+	}
+	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status == 2)
+	{
+		round->nextRound();
+	}
+	else if (round->getReceivedFromHostNextRound() && status == 3)
+	{
+		round->nextRound();
+	}
+}
+void Game::mainMenu()
+{
+	saveGame();
+	lost = false;
+
+	if (status == 2)
+	{
+		Multiplayer::send(3, false);
+	}
+
+	HomeMenu::getInstance()->HomeMenuStart();
+}
+void Game::restart()
+{
+	saveGame();
+	lost = false;
+
+	if (status == 2)
+	{
+		Multiplayer::send(4, false);
+	}
+
+	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
+	resetAll();
+	round = Round::getInstance();
+	p_map = new Map(mapIndex);
+	sidebar = Sidebar::getInstance();
 }
 void Game::resetAll()
 {
@@ -767,6 +825,10 @@ Font Game::getFont()
 Sound Game::getMusic()
 {
 	return music[0];
+}
+int Game::getStatus()
+{
+	return status;
 }
 #pragma endregion
 

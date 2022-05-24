@@ -497,7 +497,7 @@ int HomeMenu::getChoseIndex()
 #pragma region setter
 void HomeMenu::setWindow(RenderWindow* window)
 {
-	this->window = window;	HomeMenu();
+	this->window = window;
 
 }
 #pragma endregion

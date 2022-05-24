@@ -1,3 +1,4 @@
+#include "Game.h"
 #include "Multiplayer.h"
 #include "Tower.h"
 #include "TowerSpawn.h"
@@ -97,13 +98,17 @@ bool Tower::generateMoney()
 	}
 	else return false;
 }
-bool Tower::shoot(Drone* a) //Tower schießt Drone ab
+bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 {
 	if (index < 4)
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(a, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			if (Game::getInstance()->getStatus() == 2)
+			{
+				Multiplayer::send(id, d->getId());
+			}
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > speed)
@@ -112,6 +117,19 @@ bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 			shootTimer.restart();
 		}
 		return true;
+	}
+	else return false;
+}
+bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
+{
+	if (_isClient && Game::getInstance()->getStatus() == 3)
+	{
+		if (index < 4)
+		{
+			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			return true;
+		}
+		else return false;
 	}
 	else return false;
 }
@@ -140,13 +158,13 @@ void Tower::Update1()
 	{
 		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 		speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
-		Multiplayer::getInstance()->send(this, 1, update->getIndex1());
+		Multiplayer::send(id, 1, update->getIndex1());
 	}
 	else if (index == 4)
 	{
 		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);	
-		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+		Multiplayer::send(id ,2, update->getIndex2());
 	}
 	update->setStringPrice();
 
@@ -163,13 +181,13 @@ void Tower::Update2()
 	{
 		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 		damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
-		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+		Multiplayer::send(id, 2, update->getIndex2());
 	}
 	else if (index == 4)
 	{
 		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 		moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
-		Multiplayer::getInstance()->send(this, 2, update->getIndex2());
+		Multiplayer::send(id, 2, update->getIndex2());
 
 	}
 	update->setStringPrice();

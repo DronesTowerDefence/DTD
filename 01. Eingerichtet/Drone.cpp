@@ -92,7 +92,7 @@ bool Drone::takeDamage(int damage) {
 	lives -= damage;
 	livesDiff -= lives;
 
-	Round::getInstance()->addMoney(livesDiff * 3); // mal 3, da Geld wenig
+	Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit()); // Für Geldaufteilung beim Multiplayer
 
 	if (lives <= 0)
 	{

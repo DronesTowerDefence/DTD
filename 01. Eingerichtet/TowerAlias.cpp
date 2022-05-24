@@ -1,3 +1,4 @@
+#include "Game.h"
 #include "Multiplayer.h"
 #include "TowerAlias.h"
 
@@ -27,7 +28,8 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 void TowerAlias::CreateNewTower()
 {
 	Tower* t = new Tower(index, towerAliasSpr.getPosition(), p_map);
-	Multiplayer::getInstance()->send(t, 0);
+	if (Game::getInstance()->getStatus() == 2)
+		Multiplayer::send(t, 0);
 }
 #pragma endregion
 #pragma region getter

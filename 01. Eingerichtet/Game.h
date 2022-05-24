@@ -26,7 +26,6 @@ private:
 	bool isMouseClicked;
 	bool doubleSpeed;
 
-
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
 	Texture gameOverBackgroundTexture;
@@ -59,7 +58,6 @@ private:
 	TowerAlias* newTower;
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
-	/// NOCH NICHT FERTIG!
 	/// </summary>
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
@@ -71,7 +69,6 @@ private:
 	/// <returns></returns>
 	bool towerAliasForbiddenPosition();
 
-	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter
 	/// </summary>
@@ -98,9 +95,19 @@ private:
 	void generateMoneyTowers();
 
 	/// <summary>
-	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat und überprüft ob man verloren hat
+	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat
+	/// </summary>
+	void subRoundHealth();
+
+	/// <summary>
+	/// Überprüft ob man verloren hat
 	/// </summary>
 	void checkLoseGame();
+
+	/// <summary>
+	/// Überprüft, ob Drohnen am Eingang erscheinen sollen und ob die nächste Runde beginnt
+	/// </summary>
+	void checkDroneCount();
 
 	/// <summary>
 	/// Konstruktor von Game
@@ -131,6 +138,8 @@ public:
 	/// <returns></returns>
 	Sound getMusic();
 
+	int getStatus();
+
 	/// <summary>
 	/// Setzt die Musik Lautstärke
 	/// </summary>
@@ -148,6 +157,8 @@ public:
 	//void setPauseScreen(RenderWindow*);
 
 	void setStatus(int state);
+
+	void setDroneCount(int);
 
 	/// <summary>
 	/// Startet das Spiel
@@ -173,4 +184,14 @@ public:
 	/// Speichert das Spiel
 	/// </summary>
 	void saveGame();
+
+	/// <summary>
+	/// Kehrt ins Hauptmenü zurück
+	/// </summary>
+	void mainMenu();
+
+	/// <summary>
+	/// Startet das Spiel auf der aktuellen Map neu
+	/// </summary>
+	void restart();
 };
