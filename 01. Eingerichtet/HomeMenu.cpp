@@ -271,36 +271,15 @@ int  HomeMenu::CheckClicked()
 			status = 2;
 			connected = true;
 
-
-			Ressources* res = Ressources::getInstance();
-
-			if (res->getListener()->listen(4567))
-			{
-				std::cout << "Error Port";
-				connected = false;
-			}
-
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
+			if (Ressources::getInstance()->getClient()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
 				connected = false;
-				std::cout << "Error Client";
-			}
-			Packet p;
-			while (res->getReceiver()->receive(p) != Socket::Done);
-
-			std::string ip_client;
-			p >> ip_client;
-
-
-
-			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
-			{
-				//connected = false;
 				std::cout << "ERROR";
 			}
-			/*Packet p;
+			Packet p;
 			p << choseIndex;
-			Ressources::getInstance()->getClient()->send(p);*/
+			Ressources::getInstance()->getClient()->send(p);
+
 
 			return 2;
 		}
@@ -312,49 +291,26 @@ int  HomeMenu::CheckClicked()
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 3;
-			if (Ressources::getInstance()->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
-			{
-				connected = false;
-				std::cout << "ERROR";
-			}
-
-			Packet p1;
-			p1 << ownIpAdress;
-			Ressources::getInstance()->getSender()->send(p1);
-
-
-			if (res->getListener()->listen(4568))
+			connected = true;
+			Ressources* res = Ressources::getInstance();
+			if (res->getListener()->listen(4567))
 			{
 				std::cout << "Error Port";
 				connected = false;
 			}
 
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
+
+
+			if (res->getListener()->accept(*res->getClient()) != Socket::Done)
 			{
 				connected = false;
 				std::cout << "Error Client";
+				//Error
 			}
-
-			//connected = true;
-			//Ressources* res = Ressources::getInstance();
-			//if (res->getListener()->listen(4567))
-			//{
-			//	std::cout << "Error Port";
-			//	connected = false;
-			//}
-
-
-
-			//if (res->getListener()->accept(*res->getClient()) != Socket::Done)
-			//{
-			//	connected = false;
-			//	std::cout << "Error Client";
-			//	//Error
-			//}
-			//Packet p;
-			//res->getClient()->receive(p);
-			//p >> choseIndex;
-			//res->getClient()->setBlocking(false);
+			Packet p;
+			res->getClient()->receive(p);
+			p >> choseIndex;
+			res->getClient()->setBlocking(false);
 			return 3;
 		}
 

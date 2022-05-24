@@ -152,8 +152,7 @@ Ressources::Ressources()
 	}
 
 	icon.loadFromFile("img/icon.png");
-	receiver = new TcpSocket();
-	sender = new TcpSocket();
+	client = new TcpSocket();
 	listener = new TcpListener();
 }
 #pragma endregion
@@ -355,13 +354,9 @@ Image Ressources::getIcon()
 {
 	return icon;
 }
-TcpSocket* Ressources::getSender()
+TcpSocket* Ressources::getClient()
 {
-	return sender;
-}
-TcpSocket* Ressources::getReceiver()
-{
-	return receiver;
+	return client;
 }
 TcpListener* Ressources::getListener()
 {
