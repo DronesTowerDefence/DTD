@@ -24,7 +24,7 @@ void TowerSpawn::shoot()
 }
 void TowerSpawn::moveSpawn()
 {
-	int direction=0;
+	int direction;
 	if (spawnsprite.getPosition().y+ (spawntexture.getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
 		move.x = 5;
 		move.y = 0;

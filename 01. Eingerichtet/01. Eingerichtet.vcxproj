@@ -23,7 +23,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Multiplayer.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="rekursion.h" />
@@ -34,6 +33,7 @@
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerAlias.h" />
     <ClInclude Include="TowerSpawn.h" />
+    <ClInclude Include="Transmit.h" />
     <ClInclude Include="Updates.h" />
     <ClInclude Include="Waypoint.h" />
   </ItemGroup>
@@ -43,7 +43,6 @@
     <ClCompile Include="HomeMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Multiplayer.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />
@@ -53,6 +52,7 @@
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerAlias.cpp" />
     <ClCompile Include="TowerSpawn.cpp" />
+    <ClCompile Include="Transmit.cpp" />
     <ClCompile Include="Updates.cpp" />
     <ClCompile Include="Waypoint.cpp" />
   </ItemGroup>

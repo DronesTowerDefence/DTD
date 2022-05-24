@@ -126,7 +126,13 @@ int Updates::isClicked(RenderWindow* window)
 	{
 		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
 		{
+			index1++;
+			if (index1 < 4)
+				text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $"); //TODO updatepeis
+			else
+				text1->setString("CLOSE"); //TODO updatepeis
 			return 1;
+
 		}
 
 	}
@@ -139,6 +145,11 @@ int Updates::isClicked(RenderWindow* window)
 		{
 			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
 			{
+				index2++;
+				if (index2 < 4)
+					text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $"); //TODO updatepeis
+				else
+					text2->setString("CLOSE"); //TODO updatepeis
 				return 2;
 			}
 		}
@@ -199,10 +210,9 @@ void Updates::canBuy()
 }
 void Updates::setStringPrice()
 {
-	price->setString(std::to_string((int)(tower->getValue() * 0.75f)) + " $");
+	price->setString(std::to_string((int)(tower->getValue()*0.75f)) + " $");
 }
 #pragma endregion
-
 #pragma region getter
 int Updates::getIndex1()
 {
@@ -213,35 +223,10 @@ int Updates::getIndex2()
 	return index2;
 }
 
-
-
 #pragma endregion
 
 #pragma region setter
-void Updates::setIndex1(int index)
-{
-	index1 = index;
-}
-void Updates::setIndex2(int index)
-{
-	index2 = index;
-}
-void Updates::setText1(std::string text)
-{
-	text1->setString(text);
-}
-void Updates::setText2(std::string text)
-{
-	text2->setString(text);
-}
-void Updates::addIndex1()
-{
-	index1++;
-}
-void Updates::addIndex2()
-{
-	index2++;
-}
+
 #pragma endregion
 
 #pragma region Desturktor

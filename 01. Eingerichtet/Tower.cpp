@@ -1,23 +1,17 @@
-#include "Game.h"
-#include "Multiplayer.h"
 #include "Tower.h"
 #include "TowerSpawn.h"
 #include "Round.h"
 #include <iostream>
 
-int Tower::globalId = 0;
-
 #pragma region Konstruktor
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	index = _index;
-	id = globalId;
-	globalId++;
 	int price;
 
 	if (index >= 0 && index <= 4)
 	{
-
+		
 
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
@@ -98,17 +92,13 @@ bool Tower::generateMoney()
 	}
 	else return false;
 }
-bool Tower::shoot(Drone* d) //Tower schießt Drone ab
+bool Tower::shoot(Drone* a) //Tower schießt Drone ab
 {
 	if (index < 4)
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
-			if (Game::getInstance()->getStatus() == 2)
-			{
-				Multiplayer::send(id, d->getId());
-			}
+			new Projectile(a, this,nullptr, res->getTowerProjectileIndex(index),Vector2f(0,0)); //Konstruktor von Projektil aufrufen
 			shootCooldown = true;
 		}
 		else if (shootTimer.getElapsedTime().asSeconds() > speed)
@@ -120,20 +110,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 	}
 	else return false;
 }
-bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
-{
-	if (_isClient && Game::getInstance()->getStatus() == 3)
-	{
-		if (index < 4)
-		{
-			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
-			return true;
-		}
-		else return false;
-	}
-	else return false;
-}
-bool Tower::isClicked(RenderWindow* window)
+bool   Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
@@ -147,66 +124,40 @@ bool Tower::isClicked(RenderWindow* window)
 
 	return false;
 }
-void Tower::Update1()
-{
-	update->addIndex1();
-	if (update->getIndex1() < 4)
-		update->setText1(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1())) + " $");
-	else
-		update->setText1("CLOSE"); //TODO updatepeis
-	if (index < 4)
-	{
-		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
-		Multiplayer::send(id, 1, update->getIndex1());
-	}
-	else if (index == 4)
-	{
-		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);	
-		Multiplayer::send(id ,2, update->getIndex2());
-	}
-	update->setStringPrice();
-
-}
-void Tower::Update2()
-{
-	update->addIndex2();
-	if (update->getIndex2() < 4)
-		update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
-
-	else
-		update->setText2("CLOSE"); //TODO updatepeis
-	if (index < 4)
-	{
-		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
-		Multiplayer::send(id, 2, update->getIndex2());
-	}
-	else if (index == 4)
-	{
-		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-		moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
-		Multiplayer::send(id, 2, update->getIndex2());
-
-	}
-	update->setStringPrice();
-
-}
 void Tower::manageUpdate(RenderWindow* window)
 {
 
 	int indexUpdate = update->isClicked(window);
 
-	if (indexUpdate == 1)
+	// index wird in der Methode erhöht
+	if (index < 4)
 	{
-		Update1();
-	}
-	else if (indexUpdate == 2)
-	{
-		Update2();
-	}
 
+		if (indexUpdate == 1)
+		{
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+		}
+		else if (indexUpdate == 2)
+		{
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
+		}
+	}
+	else if (index == 4)
+	{
+		if (indexUpdate == 1)
+		{
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
+		}
+		else if (indexUpdate == 2)
+		{
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
+		}
+	}
+	update->setStringPrice();
 
 }
 void Tower::spawnSpawn(int art)
@@ -281,10 +232,6 @@ Updates* Tower::getUpdates()
 {
 	return update;
 }
-int Tower::getId()
-{
-	return id;
-}
 #pragma endregion
 
 #pragma region setter
@@ -300,95 +247,8 @@ void Tower::setTowerChangeFrame(int frame)
 {
 	towerChangeFrame = frame;
 }
-void Tower::setUpdate(int _update1, int _update2)
-{
-
-	if (index < 4)
-	{
-
-		if (_update1 > update->getIndex1())
-		{
-			update->setIndex1(_update1);
-			value += res->getTowerUpgradesPrice1(index, _update1 - 1);
-			speed = res->getTowerUpdateSpeed(index, _update1 - 1);
-		}
-		else if (_update2 > update->getIndex2())
-		{
-			update->setIndex2(_update2);
-			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
-		}
-	}
-	else if (index == 4)
-	{
-		if (_update1 > update->getIndex1())
-		{
-			update->setIndex1(_update1);
-			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
-		}
-		else if (_update2 > update->getIndex2())
-		{
-			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
-		}
-	}
-}
-
 #pragma endregion
 
 #pragma region Desturktor
-Tower::~Tower()
-{
-	Round* r = Round::getInstance();
 
-	//Löscht sich selbst aus der Liste
-	if (!r->getAllTowers().empty())
-	{
-		for (auto i : r->getAllTowers())
-		{
-			if (i == this)
-			{
-				r->getAllTowers().remove(i);
-			}
-		}
-	}
-
-	//Löscht sich selbst aus der Liste
-	if (index < res->getTowerCount())
-	{
-		if (!r->getAllAttackTower().empty())
-		{
-			for (auto i : r->getAllAttackTower())
-			{
-				if (i == this)
-				{
-					r->getAllAttackTower().remove(i);
-				}
-			}
-		}
-	}
-	else if (!r->getAllMoneyTower().empty())
-	{
-		for (auto i : r->getAllMoneyTower())
-		{
-			if (i == this)
-			{
-				r->getAllMoneyTower().remove(i);
-			}
-		}
-	}
-
-	//Löscht die Liste
-	if (index == 3 && !boundSpawns.empty())
-	{
-		for (auto i : boundSpawns)
-		{
-			delete i;
-		}
-	}
-
-	//Löscht die Updates
-	delete update;
-}
 #pragma endregion

@@ -1,4 +1,5 @@
 #include "Ressources.h"
+#include "Transmit.h"
 #include "Round.h"
 
 Ressources* Ressources::instance = nullptr;
@@ -13,8 +14,6 @@ Ressources::Ressources()
 
 		droneSpawnTime[i] = 1;
 	}
-
-	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 4;
 	towerCount = 5;
@@ -75,12 +74,11 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
-	double p[5];
+	double p[4];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
 	p[2] = 1.f / 6.f;
 	p[3] = 1.f / 5.f;
-	p[4] = 1.f / 8.f;
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
@@ -99,12 +97,6 @@ Ressources::Ressources()
 
 	droneSpeed[0] = 2.5;
 	droneLives[0] = 3;
-
-	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
-	{
-		multiplayerMoneySplit[int(i)] = j;
-
-	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -243,10 +235,6 @@ Ressources* Ressources::getInstance()
 	}
 	return instance;
 }
-int Ressources::getMultiplayerPlayerCount()
-{
-	return multiplayerPlayerCount;
-}
 int Ressources::getMapCount()
 {
 	return mapCount;
@@ -294,11 +282,6 @@ int Ressources::getDroneLives(int i)
 int Ressources::getDroneCountInRound()
 {
 	return droneCountInRound[Round::getInstance()->getIndex()];
-}
-
-float Ressources::getMultiplayerMoneySplit()
-{
-	return multiplayerMoneySplit[multiplayerPlayerCount];
 }
 
 float Ressources::getTowerDamage(int i)
@@ -439,14 +422,6 @@ void Ressources::setSpeed()
 	for (auto i : Round::getInstance()->getAllDrones())
 	{
 		i->setSeed(res->getDroneSpeed(0));
-	}
-}
-
-void Ressources::setMultiplayerPlayerCount(int a)
-{
-	if (a<4 && a>-1)
-	{
-		multiplayerPlayerCount = a;
 	}
 }
 

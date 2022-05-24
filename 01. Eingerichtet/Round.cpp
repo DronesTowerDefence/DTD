@@ -1,5 +1,3 @@
-#include "Game.h"
-#include "Multiplayer.h"
 #include "Round.h"
 
 
@@ -7,15 +5,14 @@ Round* Round::instance = nullptr;
 #pragma region Konstruktor
 Round::Round()
 {
-	money = 1000000; //Start-Geld
-	health = 2000; //Start-Leben
+	money = 1000; //Start-Geld
+	health = 2; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	lost = false;
-	won = false;
-	receivedFromHostNextRound = false;
+	Lost = false;
+	Won = true;
 
 }
 
@@ -109,9 +106,6 @@ void Round::sellTower(Tower* a)
 	}
 	addMoney(a->getValue() * 0.75);
 
-	if (Game::getInstance()->getStatus() == 2)
-		Multiplayer::send(a, 1);
-
 	delete a;
 	a = nullptr;
 }
@@ -136,29 +130,9 @@ void Round::deleteProjectile(Projectile* p)
 }
 void Round::nextRound()
 {
-	Game::getInstance()->saveGame();
-	Game::getInstance()->setDroneCount(0);
-
-	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
-	{
-		index++;
-		Multiplayer::send(0,false);
-		sendCooldown.restart();
-	}
-	else if(Game::getInstance()->getStatus() == 3)
-	{
-		receivedFromHostNextRound = false;
-
-		if (!allDrones.empty())
-		{
-			allDrones.clear();
-		}
-	}
-
-	if (!allProjectiles.empty())
-	{
-		allProjectiles.clear();
-	}
+	index++;
+	Lost = false;
+	Won = true;
 }
 void Round::addMoney(int _money)
 {
@@ -183,7 +157,7 @@ bool Round::subhealth(int _health)
 {
 	if (health < _health) {
 
-		lost = true;
+		Lost = true;
 
 	}
 
@@ -215,15 +189,11 @@ int Round::getMoney()
 }
 bool Round::getLost()
 {
-	return lost;
+	return Lost;
 }
 bool Round::getWon()
 {
-	return won;
-}
-bool Round::getReceivedFromHostNextRound()
-{
-	return receivedFromHostNextRound;
+	return Won;
 }
 Clock Round::getDroneTimer()
 {
@@ -232,10 +202,6 @@ Clock Round::getDroneTimer()
 Clock Round::getDroneSubHealthTimer()
 {
 	return droneSubHealthTimer;
-}
-Map* Round::getMap()
-{
-	return p_map;
 }
 std::list<Tower*> Round::getAllAttackTower()
 {
@@ -270,10 +236,6 @@ std::list<TowerSpawn*> Round::getAllSpawns()
 #pragma endregion
 
 #pragma region setter
-void Round::setReceivedFromHostNextRound(bool a)
-{
-	receivedFromHostNextRound = a;
-}
 void Round::setIndex(int _index)
 {
 	index = _index;
@@ -291,10 +253,6 @@ bool Round::setMoney(int _money)
 		return 0;
 	money = _money;
 	return 1;
-}
-void Round::setLost(bool a)
-{
-	lost = a;
 }
 void Round::setDroneTimer(Clock f)
 {
@@ -330,7 +288,7 @@ void Round::addProjectile(Projectile* _projectile)
 #pragma endregion
 
 #pragma region Desturktor
-Round::~Round()
+Round::~Round() 
 {
 	instance = nullptr;
 }

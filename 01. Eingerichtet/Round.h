@@ -11,28 +11,27 @@ class Round
 {
 private:
 	static Round* instance;
-	double money;
+	int money;
 	int health;
 	int index;
 	int towerPrice[3];
-	bool lost;
-	bool won;
-	bool receivedFromHostNextRound;
-
-	Map* p_map;
-
+	bool Lost;
+	bool Won;
 	std::list<Vector2f> allCoverablePoints; //Strecke eingeteilt in Punkte, alle 20px
 	Text WinLose;
 	Clock droneTimer;
 	Clock droneSubHealthTimer;
-	Clock sendCooldown;
 
+	
 	std::list<Projectile*> allProjectiles;
 	std::list<Tower*> allAttackTowers;
 	std::list<Tower*> allMoneyTowers;
 	std::list<Tower*> allTowers;
 	std::list<Drone*> allDrones;
 	std::list<TowerSpawn*> allSpawns;
+	Map* p_map;
+
+
 
 	Round();
 	Round(int a, int b, int c, int d);
@@ -52,10 +51,8 @@ public:
 	int getMoney();
 	bool getLost();
 	bool getWon();
-	bool getReceivedFromHostNextRound();
 	Clock getDroneTimer();
 	Clock getDroneSubHealthTimer();
-	Map* getMap();
 	std::list<Tower*> getAllAttackTower();
 	std::list<Tower*> getAllTowers();
 	std::list<Tower*> getAllMoneyTower();
@@ -64,11 +61,9 @@ public:
 	std::list<Vector2f> getAllCoverablePoints();
 	std::list<TowerSpawn*> getAllSpawns();
 
-	void setReceivedFromHostNextRound(bool);
 	void setIndex(int);
 	bool setHealth(int);
 	bool setMoney(int);
-	void setLost(bool);
 	void setDroneTimer(Clock);
 	void setP_map(Map* _map);
 	void addDrone(Drone* drone);

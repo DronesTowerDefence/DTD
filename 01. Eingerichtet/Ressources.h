@@ -13,14 +13,6 @@ private:
 
 	int droneCountInRound[100];
 
-	/// <summary>
-	/// Wie viele Clients es gibt.
-	/// Bsp:
-	/// 0 = 1 Spieler (Singleplayer),
-	/// 1 = 2 Spieler
-	/// </summary>
-	int multiplayerPlayerCount;
-
 	int mapCount; //Wie viele Maps es gibt	
 	int droneCount; //Wie viele Drohnen-Typen es gibt
 	int towerCount; //Wie viele Turm-Typen es gibt
@@ -32,9 +24,8 @@ private:
 	int towerUpgradePrice1[5][4]; //Preise der Upgrades des ersten Pfades
 	int towerUpgradePrice2[5][4]; //Preise der Upgrades des zweiten Pfades
 	int droneLives[1];
-
-	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
+
 	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[5]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
 	float towerProjectileSpeed[5]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
@@ -72,8 +63,6 @@ private:
 public:
 
 	static Ressources* getInstance();
-
-	int getMultiplayerPlayerCount();
 	int getMapCount();
 	int getDroneCount();
 	int getTowerCount();
@@ -87,7 +76,6 @@ public:
 	int getDroneLives(int);
 	int getDroneCountInRound();
 
-	float getMultiplayerMoneySplit();
 	float getTowerDamage(int);
 	float getTowerSpeed(int);
 	float getTowerProjectileSpeed(int);
@@ -122,7 +110,6 @@ public:
 	Texture* getMapTexture(int);
 
 	void setSpeed();
-	void setMultiplayerPlayerCount(int);
 
 	void doubleSpeed();
 	void normalSpeed();

@@ -1,42 +1,27 @@
 
 #include "HomeMenu.h"
-
 HomeMenu* HomeMenu::instance = nullptr;
 
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
-
-	connected = false;
-	isMultiplayerOpen = false;
 	status = 1;
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
-
 	startButton = new Sprite;
 	font = new Font();
 	titel = new Sprite;
 	backround = new Sprite();
 	drone = new Sprite();
-	multiplayerMenue = new Sprite();
-	copy = new Sprite();
-	paste = new Sprite();
-
 	pointer = new RectangleShape;
-
 	textureTitel = new Texture;
 	textureBackround = new Texture;
+	res = Ressources::getInstance();
 	textureClient = new Texture();
 	textureHost = new Texture();
-	textureCloseMultiplayer = new Texture();
-	textureOpenMultiplayer = new Texture();
-	textureCopy = new Texture();
-	texturePaste = new Texture();
-
 	ipAdressText = new Text();
 
-	res = Ressources::getInstance();
 	ipAdress = "";
 	ownIpAdress = IpAddress::getLocalAddress().toString();
 
@@ -45,35 +30,21 @@ HomeMenu::HomeMenu()
 	textureTitel->loadFromFile("img/titleText.png");
 	textureBackround->loadFromFile("img/backround.jpg");
 	font->loadFromFile("fonts/arial.ttf");
-	textureCloseMultiplayer->loadFromFile("img/buttons/multiplayerButtonUp.png");
-	textureOpenMultiplayer->loadFromFile("img/buttons/multiplayerButtonDown.png");
-	textureCopy->loadFromFile("img/buttons/copyButton.png");//TODO
-	texturePaste->loadFromFile("img/buttons/pasteButton.png");//TODO
-	textureClient->loadFromFile("img/buttons/clientButton.png");
-	textureHost->loadFromFile("img/buttons/hostButton.png");
-
 	startButton->setTexture(*res->getButtonStartTexture());
 	titel->setTexture(*textureTitel);
 	backround->setTexture(*textureBackround);
 	drone->setTexture(*res->getDroneTexture(1, 0));;
-	multiplayerMenue->setTexture(*textureOpenMultiplayer);
-	paste->setTexture(*texturePaste);
-	copy->setTexture(*textureCopy);
-
+	textureClient->loadFromFile("img/buttons/clientButton.png");
+	textureHost->loadFromFile("img/buttons/hostButton.png");
 	choseIndex = -1;
 
 	host->setTexture(*textureHost);
 	client->setTexture(*textureClient);
-
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 	host->setPosition(Vector2f(1100, 700));
 	client->setPosition(Vector2f(1250, 700));
-	copy->setPosition(Vector2f(1550, 841));
-	paste->setPosition(Vector2f(1550, 941));
-	multiplayerMenue->setPosition(Vector2f(1100, 600));
-
 	drone->setScale(2, 2);
 	//
 	int x = 500;
@@ -135,34 +106,27 @@ HomeMenu::HomeMenu()
 	animationIndex = 0;
 	animation = new Clock();
 	animation->restart();
-
 	pointer->setSize(Vector2f(1920 * 0.1, 991 * 0.1));
 	pointer->setOutlineThickness(10);
 	pointer->setOutlineColor(Color::Magenta);
 	pointer->setFillColor(Color::Transparent);
-
 	choseText = new Text("Waehle eine Karte aus", *font, 40);
 	choseText->setPosition(Vector2f(500, 450));
-
 	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(1620, 941));
+	ipAdressText->setPosition(Vector2f(0, 0));
 	ipAdressText->setFillColor(Color::Black);
-	ipAdressText->setCharacterSize(50);
+	ipAdressText->setCharacterSize(30);
 
 	ownIpAdressText = new Text();
 	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(1620, 841));
+	ownIpAdressText->setPosition(Vector2f(0, 30));
 	ownIpAdressText->setFillColor(Color::Black);
-	ownIpAdressText->setCharacterSize(50);
+	ownIpAdressText->setCharacterSize(30);
 	ownIpAdressText->setString(ownIpAdress);
-
-
 }
 #pragma endregion
 
 #pragma region Funktionen
-
-
 void HomeMenu::eingabe(Event event) {
 	if (event.type == Event::KeyReleased)
 	{
@@ -235,7 +199,7 @@ void HomeMenu::eingabe(Event event) {
 	}
 }
 
-int  HomeMenu::CheckClicked()
+bool  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
@@ -251,7 +215,7 @@ int  HomeMenu::CheckClicked()
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{
@@ -261,155 +225,62 @@ int  HomeMenu::CheckClicked()
 		}
 
 
-		//Host clicked
 		mouse = Mouse::getPosition(*window);
+
 		pos = Service::getInstance()->getObjectPosition(host->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
+		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 2;
-			connected = true;
+
 
 			if (Ressources::getInstance()->getClient()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
-				connected = false;
-				std::cout << "ERROR";
+
 			}
-			Packet p;
-			p << choseIndex;
-			Ressources::getInstance()->getClient()->send(p);
 
 
-			return 2;
+			return true;
 		}
-
-		//Client Clicked
 		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
+		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 3;
-			connected = true;
 			Ressources* res = Ressources::getInstance();
 			if (res->getListener()->listen(4567))
 			{
 				std::cout << "Error Port";
-				connected = false;
 			}
 
 
-
-			if (res->getListener()->accept(*res->getClient()) != Socket::Done)
+			IpAddress ClientAdress;
+			TcpSocket Client;
+			if (res->getListener()->accept(Client) != Socket::Done)
 			{
-				connected = false;
 				std::cout << "Error Client";
 				//Error
 			}
-			Packet p;
-			res->getClient()->receive(p);
-			p >> choseIndex;
-			res->getClient()->setBlocking(false);
-			return 3;
+
+			return true;
 		}
 
 
 		//startclicked
 		mouse = Mouse::getPosition(*window);
+		pos, pos2;
 
 		pos = Service::getInstance()->getObjectPosition(startButton->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
+		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
-			return 1;
-
-
-		}
-
-		//Copy
-		pos = Service::getInstance()->getObjectPosition(copy->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			Clipboard::setString(IpAddress::getLocalAddress().toString());
-			return 0;
-		}
-
-
-
-		//Paste
-		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			ipAdress = Clipboard::getString();
-			ipAdressText->setString(ipAdress);
-			return 0;
-
-
-		}
-
-		//MultiplayerMunue
-		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); //Holt sich die Position des Turmes i + 50 wegen der Grï¿½ï¿½e
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			return 1;
-
-
-		}
-
-		//Copy
-		pos = Service::getInstance()->getObjectPosition(copy->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			Clipboard::setString(IpAddress::getLocalAddress().toString());
-			return 0;
-		}
-
-
-
-		//Paste
-		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			ipAdress = Clipboard::getString();
-			ipAdressText->setString(ipAdress);
-			return 0;
-
-
-		}
-
-		//MultiplayerMunue
-		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
-		{
-			if (isMultiplayerOpen)
-			{
-				multiplayerMenue->setTexture(*textureCloseMultiplayer);
-			}
-			else
-			{
-				multiplayerMenue->setTexture(*textureOpenMultiplayer);
-			}
-			isMultiplayerOpen = !isMultiplayerOpen;
-			return 0;
-
-
+			return true;
 		}
 	}
-	return 0;
+	return false;
 
 
 
@@ -423,7 +294,7 @@ void HomeMenu::HomeMenuStart()
 	callCount++;
 
 	while (window->isOpen())
-	{ //test
+	{
 		Event event;
 		while (window->pollEvent(event))
 		{
@@ -441,24 +312,7 @@ void HomeMenu::HomeMenuStart()
 		{
 			drone->setPosition(Vector2f(0, 300));
 		}
-		int clicked = CheckClicked();
-		if (clicked == 1 && choseIndex != -1) // singleplayer
-		{
-			break;
-		}
-		else if (clicked == 2 && choseIndex != -1 && connected)
-		{
-			break;
-		}
-		else if (clicked == 3 && connected && choseIndex != -1)
-		{
-			break;
-		}
-		else if (isClicked == 2 && choseIndex != -1 && connected)
-		{
-			break;
-		}
-		else if (isClicked == 3 && connected && choseIndex != -1)
+		if (CheckClicked() && choseIndex != -1)
 		{
 			break;
 		}
@@ -473,21 +327,14 @@ void HomeMenu::draw()
 {
 	window->clear();
 	window->draw(*backround);
+	window->draw(*ipAdressText);
 	window->draw(*titel);
 	window->draw(*startButton);
 	window->draw(*drone);
 	window->draw(*choseText);
-	window->draw(*multiplayerMenue);
-	if (isMultiplayerOpen)
-	{
-		window->draw(*copy);
-		window->draw(*paste);
-		window->draw(*ipAdressText);
-		window->draw(*host);
-		window->draw(*ownIpAdressText);
-		window->draw(*client);
-
-	}
+	window->draw(*host);
+	window->draw(*client);
+	window->draw(*ownIpAdressText);
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
@@ -540,7 +387,7 @@ int HomeMenu::getChoseIndex()
 #pragma region setter
 void HomeMenu::setWindow(RenderWindow* window)
 {
-	this->window = window;
+	this->window = window;	HomeMenu();
 
 }
 #pragma endregion

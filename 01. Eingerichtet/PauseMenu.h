@@ -12,7 +12,6 @@ class PauseMenu
 	bool isClicked;
 	bool play;
 	bool mute;
-	bool multiplayerIsPaused;
 	RenderWindow* window;
 
 	Vector2i mouse;
@@ -50,8 +49,6 @@ public:
 
 	static PauseMenu* getInstance();
 	float getSliderHelper();
-	void setMultiplayerIsPaused(bool);
-	bool getMultiplayerIsPaused();
 	RectangleShape getEdge();
 	Sprite getBackground();
 	Text getText();
@@ -63,15 +60,7 @@ public:
 	/// </summary>
 	/// <param name="">Event event</param>
 	void checkPause(Event);
-
-	/// <summary>
-	/// !!NUR FÜR MULTIPLAYER-KLASSE!! Wenn der Host in das Pause-Menü geht soll der Client auch ins Pause-Menü gehen
-	/// </summary>
-	/// <param name=""></param>
-	void checkPause(bool);
-
 	void checkPause();
-
 	/// <summary>
 	/// Wird nur für das Pause-Menu verwendet
 	/// </summary>

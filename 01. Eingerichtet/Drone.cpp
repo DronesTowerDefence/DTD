@@ -133,7 +133,7 @@ bool Drone::takeDamage(int damage) {
 	lives -= damage;
 	livesDiff -= lives;
 
-	Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit()); // Für Geldaufteilung beim Multiplayer
+	Round::getInstance()->addMoney(livesDiff * 3); // mal 3, da Geld wenig
 
 	if (lives <= 0)
 	{
@@ -157,10 +157,6 @@ int Drone::getNextPoint()
 int Drone::getLives()
 {
 	return lives;
-}
-int Drone::getIndex()
-{
-	return droneType;
 }
 Vector2i Drone::getMove()
 {
@@ -221,10 +217,6 @@ Sprite* Drone::getDrawSprite()
 	}
 	return &drone;
 }
-int Drone::getId()
-{
-	return id;
-}
 #pragma endregion
 
 #pragma region setter
@@ -242,10 +234,6 @@ void Drone::setMove(Vector2f v)
 {
 	move_x = int(v.x);
 	move_y = int(v.y);
-}
-void Drone::setLives(int _lives)
-{
-	lives = _lives;
 }
 #pragma endregion
 

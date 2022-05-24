@@ -2,7 +2,6 @@
 #include "SFML/Graphics.hpp"
 #include "Game.h"
 #include "Service.h"
-#include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
 class HomeMenu
@@ -22,8 +21,6 @@ private:
 	int status; 
 	
 	bool isClicked;
-	bool connected;
-	bool isMultiplayerOpen;
 	
 	std::string ipAdress;
 	std::string ownIpAdress;
@@ -36,10 +33,6 @@ private:
 	Texture* textureBackround;
 	Texture* textureHost;
 	Texture* textureClient;
-	Texture* textureOpenMultiplayer;
-	Texture* textureCloseMultiplayer;
-	Texture* textureCopy;
-	Texture* texturePaste;
 
 	RectangleShape* pointer;
 	
@@ -51,9 +44,6 @@ private:
 	Sprite* drone;
 	Sprite* host;
 	Sprite* client;
-	Sprite* multiplayerMenue;
-	Sprite* copy;
-	Sprite* paste;
 	
 	Clock* animation;
 	
@@ -65,9 +55,8 @@ private:
 	Ressources* res;
 	
 
-
 	void eingabe(Event event);
-	int CheckClicked();
+	bool CheckClicked();
 	void draw();
 	
 	void setTowerTexture();

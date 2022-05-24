@@ -79,12 +79,13 @@ public:
 	/// <param name="int"></param>
 	Drone(int typSpecifier, Vector2f startPosition, int x, int y); //Konstruktor
 
+
+
+
 	/// <summary>
 	/// Gibt die Sprite der Drone zurück
 	/// </summary>
 	/// <returns>sf::Sprite</returns>
-
-
 	/// <summary>
 	/// Gibt den nextPoint zurück, den die Drone auf der Map erreichen wird (Map-Relevant)
 	/// </summary>
@@ -95,11 +96,6 @@ public:
 	/// </summary>
 	/// <returns>int lives</returns>
 	int getLives();
-
-	/// <summary>
-	/// Return den Index/Typspecifier/Dronetype der Drohne
-	/// </summary>
-	int getIndex();
 
 	/// <summary>
 	/// Gibt die move_x und move_y Koordinaten mit einem 2-float Vector zurück
@@ -124,23 +120,11 @@ public:
 	Sprite* getDrawSprite();
 
 	/// <summary>
-	/// Returnt die id der Drohne
-	/// </summary>
-	/// <returns></returns>
-	int getId();
-
-	/// <summary>
-	/// Setzt die Position der Drone mit einem 2-float Vector
-	/// </summary>
-	/// <param name="Vector2f position"></param>
+/// Setzt die Position der Drone mit einem 2-float Vector
+/// </summary>
+/// <param name="Vector2f position"></param>
 	void setSeed(float speed);
-
-	/// <summary>
-	/// Setzt die Position der Drohne
-	/// </summary>
-	/// <param name="position"></param>
 	void setPosition(Vector2f position);
-
 	/// <summary>
 	/// Setzt die move_x und move_y Koordinaten mit einem 2-float Vector
 	/// </summary>
@@ -148,26 +132,23 @@ public:
 	void setMove(Vector2f v);
 
 	/// <summary>
-	/// Setzt die Leben
-	/// </summary>
-	/// <param name=""></param>
-	void setLives(int);
-
-	/// <summary>
 	/// Bewegt die Drone, indem die aktuelle Position + die move-Werte * der Geschwindigkeit gesetzt wird
 	/// </summary>
 	void move();
-
 	/// <summary>
 	/// Addiert 1 zu nextPoint (Wenn die Drone einen Punkt auf der Map erreicht) (Map-Relevant)
 	/// </summary>
 	void pass();
-
 	/// <summary>
 	/// Zieht Leben von der Drone ab (Standart-Lebenwert (WIP) = 3)
 	/// </summary>
 	/// <param name="int damage"></param>
 	bool takeDamage(int damage);
 
+
 	~Drone();
+
+
+
+
 };

@@ -1,7 +1,8 @@
 #pragma once
 #include <list>
-#include <fstream>
+#include "Transmit.h"
 #include "Ressources.h"
+#include "Round.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
 #include "PauseMenu.h"
@@ -20,11 +21,12 @@ private:
 	/// 2 = Host
 	/// 3 = Client
 	/// </summary>
-	int status;
+int status;
 
 	bool lost;
 	bool isMouseClicked;
 	bool doubleSpeed;
+
 
 	Texture gameOverRestartButtonTexture;
 	Texture gameOverHomeButtonTexture;
@@ -37,6 +39,7 @@ private:
 	Sprite gameOverHomeButton;
 
 	Clock changeMusicTimer;
+	Clock sendPacketTimer;
 	SoundBuffer musicBuffer[4];
 	Sound music[4];
 
@@ -60,6 +63,7 @@ private:
 	TowerAlias* newTower;
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
+	/// NOCH NICHT FERTIG!
 	/// </summary>
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
@@ -71,6 +75,13 @@ private:
 	/// <returns></returns>
 	bool towerAliasForbiddenPosition();
 
+	/// <summary>
+	/// Lädt ein Packet in die Game
+	/// </summary>
+	/// <returns></returns>
+	bool loadPacketContent(Transmit*);
+
+	void newRound();
 	/// <summary>
 	/// Bewegt alle Drohnen eine Position weiter
 	/// </summary>
@@ -97,19 +108,9 @@ private:
 	void generateMoneyTowers();
 
 	/// <summary>
-	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat
-	/// </summary>
-	void subRoundHealth();
-
-	/// <summary>
-	/// Überprüft ob man verloren hat
+	/// Zieht Leben ab, wenn eine Drohne den Ausgang erreicht hat und überprüft ob man verloren hat
 	/// </summary>
 	void checkLoseGame();
-
-	/// <summary>
-	/// Überprüft, ob Drohnen am Eingang erscheinen sollen und ob die nächste Runde beginnt
-	/// </summary>
-	void checkDroneCount();
 
 	/// <summary>
 	/// Konstruktor von Game
@@ -128,7 +129,6 @@ public:
 	/// </summary>
 	/// <returns>RenderWindow*</returns>
 	RenderWindow* getWindow();
-
 	/// <summary>
 	/// Gibt die Schriftart zurück
 	/// </summary>
@@ -139,8 +139,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Sound getMusic();
-
-	int getStatus();
 
 	/// <summary>
 	/// Setzt die Musik Lautstärke
@@ -159,8 +157,6 @@ public:
 	//void setPauseScreen(RenderWindow*);
 
 	void setStatus(int state);
-
-	void setDroneCount(int);
 
 	/// <summary>
 	/// Startet das Spiel
@@ -188,12 +184,15 @@ public:
 	void saveGame();
 
 	/// <summary>
-	/// Kehrt ins Hauptmenü zurück
+	/// Sendet Informationen
 	/// </summary>
-	void mainMenu();
+	/// <returns> True wenn erfolgreich</returns>
+	bool sendPackets();
 
 	/// <summary>
-	/// Startet das Spiel auf der aktuellen Map neu
+	/// Empfängt informationen
 	/// </summary>
-	void restart();
+	/// <returns>True wenn was angekommen ist</returns>
+	Transmit* receivePacket();
+
 };
