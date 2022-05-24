@@ -400,11 +400,11 @@ void HomeMenu::HomeMenuStart()
 		{
 			break;
 		}
-		else if (clicked == 2 && choseIndex != -1 && connected)
+		else if (isClicked == 2 && choseIndex != -1 && connected)
 		{
 			break;
 		}
-		else if (clicked == 3 && connected && choseIndex != -1)
+		else if (isClicked == 3 && connected && choseIndex != -1)
 		{
 			break;
 		}
