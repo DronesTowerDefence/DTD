@@ -13,9 +13,11 @@ using namespace sf;
 class Tower
 {
 private:
+	static int globalId; //Zähler für die TurmId
 	int index; //Welcher Turm-Typ es ist
 	int animationCounter; //Welcher Frame ausgewählt ist
 	int towerChangeFrame;
+	int id; //Eindeutige Turm id
 	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float speed; //Wie schnell der Turm schießt, je kleiner desto schneller
 	float price;
@@ -62,17 +64,25 @@ public:
 	/// </summary>
 	/// <returns>int</returns>
 	int getIndex();
+
+	/// <summary>
+	/// Den Radius der Reichweite
+	/// </summary>
+	/// <returns></returns>
 	int getRange();
+
 	/// <summary>
 	/// Return den Schaden, welchen der Turm mit einem Projektiel macht
 	/// </summary>
 	/// <returns></returns>
 	float getDamage();
+
 	/// <summary>
 	/// Return die Geschwindigkeit des Projektiels
 	/// </summary>
 	/// <returns></returns>
 	float getProjectileSpeed();
+
 	/// <summary>
 	/// Returnt Value
 	/// </summary>
@@ -84,50 +94,113 @@ public:
 	/// </summary>
 	/// <returns>Vector2f</returns>
 	Vector2f getTowerPos();
+
 	/// <summary>
 	/// Returnt die Liste CoverableArea
 	/// </summary>
 	/// <param name="int"></param>
 	std::list<Vector3f> getCoverableArea();
+
 	/// <summary>
-	/// Return nen Pointer auf die Shape fÃ¼r den Kreis der Range
+	/// Return nen Pointer auf die Shape für den Kreis der Range
 	/// </summary>
 	/// <returns>CircleShape*</returns>
 	CircleShape* getRangeShape();
+
 	/// <summary>
 	/// Returnt die Tower Sprite
 	/// </summary>
 	/// <returns>Sprite*</returns>
 	Sprite getTowerSpr();
+
 	/// <summary>
 	/// Funktion zum drawen, wegen der Animation
 	/// </summary>
 	/// <returns>Einzelnen Sprite-Frame</returns>
 	Sprite* getDrawSprite();
+
+	/// <summary>
+	/// Gibt einen Pointer auf die Updates des Turmes zurück
+	/// </summary>
+	/// <returns></returns>
 	Updates* getUpdates();
 
+	/// <summary>
+	/// Gibt die Id des Towers zurück
+	/// </summary>
+	/// <returns></returns>
+	int getId();
+
+	/// <summary>
+	/// Setzt die Angriffsgeschwindigkeit
+	/// </summary>
+	/// <param name="speed"></param>
 	void setSpeed(float speed);
+
+	/// <summary>
+	/// Setzt die Projektilgeschwindigkeit
+	/// </summary>
+	/// <param name="speed"></param>
 	void setProjektilSpeed(float speed);
+
+	/// <summary>
+	/// Setzt die Anzahl an Sekunden, nachdem der Frame der Animation gewechselt wird
+	/// </summary>
+	/// <param name="frame"></param>
 	void setTowerChangeFrame(int frame);
+
+	/// <summary>
+	/// Um nur ein Update zu verändern, den anderen Wert auf -1 setzen
+	/// </summary>
+	/// <param name="">Update1</param>
+	/// <param name="">Update2</param>
+	void setUpdate(int, int);
 
 	/// <summary>
 	/// Generiert Geld. Funktioniert nur bei MoneyTowers
 	/// </summary>
 	/// <returns>bool</returns>
 	bool generateMoney();
-	bool shoot(Drone*);
+
 	/// <summary>
-	/// PrÃ¼ft, ob das Element angeklickt wird
+	/// Lässt den Turm auf eine Drohne schießen
+	/// </summary>
+	/// <param name="">Drohne auf die geschossen werden soll</param>
+	/// <returns></returns>
+	bool shoot(Drone*);
+
+	/// <summary>
+	/// !!NUR FÜR DIE MULTIPLAYER-KLASSE!!
+	/// Lässt den Turm auf eine Drohne schießen
+	/// umgeht dabei den shootCooldown
+	/// </summary>
+	/// <param name="Pointer auf die Drohne">auf die geschossen werden soll</param>
+	/// <param name="Ob der Cooldown umgangen werden soll?">True</param>
+	/// <returns></returns>
+	bool shoot(Drone*,bool);
+
+	/// <summary>
+	/// Prüft, ob das Element angeklickt wird
 	/// </summary>
 	/// <returns>ist geklickt</returns>
-	/// <summary>
-	/// Tower schieÃt Drone ab
-	/// </summary>
-	/// <param name="Drone*"></param>
 	bool isClicked(RenderWindow* window);
+
+	void Update1();
+
+	void Update2();
+
+	/// <summary>
+	/// Updates
+	/// </summary>
+	/// <param name="window"></param>
 	void manageUpdate(RenderWindow* window);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name=""></param>
 	void spawnSpawn(int);
 
-
+	~Tower();
 
 };
