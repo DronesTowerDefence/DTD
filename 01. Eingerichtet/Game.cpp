@@ -224,28 +224,14 @@ void Game::startGame()
 					}
 				}
 			}
-			else if (newTower == nullptr)
+			else if (newTower == nullptr && tower == nullptr)
 			{
-				if (event.key.code == Event::KeyReleased)
+				if (event.type == Event::KeyReleased)
 				{
-					if (event.key.code == Keyboard::Num1)
-					{
 
-					}
-					else if (event.key.code == Keyboard::Num2)
+					if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
 					{
-
-					}
-					else if (event.key.code == Keyboard::Num2)
-					{
-
-					}
-					else if (event.key.code == Keyboard::Num2)
-					{
-
-					}
-					else if (event.key.code == Keyboard::Num2)
-					{
+						newTower = new TowerAlias(event.key.code - 27, p_map);
 
 					}
 				}
@@ -668,7 +654,7 @@ void Game::checkDroneCount()
 		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
 		round->restartDroneTimer();
 	}
-	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status == 2)
+	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status != 3)
 	{
 		round->nextRound();
 	}
