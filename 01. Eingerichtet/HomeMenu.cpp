@@ -6,7 +6,6 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
-
 	connected = false;
 	isMultiplayerOpen = false;
 	status = 1;
@@ -235,7 +234,7 @@ void HomeMenu::eingabe(Event event) {
 	}
 }
 
-int  HomeMenu::CheckClicked()
+bool  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
@@ -251,7 +250,7 @@ int  HomeMenu::CheckClicked()
 		{
 
 			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 			{
@@ -264,46 +263,38 @@ int  HomeMenu::CheckClicked()
 		//Host clicked
 		mouse = Mouse::getPosition(*window);
 		pos = Service::getInstance()->getObjectPosition(host->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 2;
-			connected = true;
+
 
 			if (Ressources::getInstance()->getClient()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
-				connected = false;
-				std::cout << "ERROR";
+
 			}
-			Packet p;
-			p << choseIndex;
-			Ressources::getInstance()->getClient()->send(p);
 
 
-			return 2;
+			return true;
 		}
 
 		//Client Clicked
 		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
 			status = 3;
-			connected = true;
 			Ressources* res = Ressources::getInstance();
 			if (res->getListener()->listen(4567))
 			{
 				std::cout << "Error Port";
-				connected = false;
 			}
-
 
 
 			if (res->getListener()->accept(*res->getClient()) != Socket::Done)
 			{
-				connected = false;
 				std::cout << "Error Client";
 				//Error
 			}
@@ -319,7 +310,7 @@ int  HomeMenu::CheckClicked()
 		mouse = Mouse::getPosition(*window);
 
 		pos = Service::getInstance()->getObjectPosition(startButton->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
@@ -330,7 +321,7 @@ int  HomeMenu::CheckClicked()
 
 		//Copy
 		pos = Service::getInstance()->getObjectPosition(copy->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
@@ -342,7 +333,7 @@ int  HomeMenu::CheckClicked()
 
 		//Paste
 		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
@@ -355,7 +346,7 @@ int  HomeMenu::CheckClicked()
 
 		//MultiplayerMunue
 		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); //Holt sich die Position des Turmes i + 50 wegen der GrÃ¶ÃŸe
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 		{
@@ -373,7 +364,7 @@ int  HomeMenu::CheckClicked()
 
 		}
 	}
-	return 0;
+	return false;
 
 
 
@@ -405,8 +396,7 @@ void HomeMenu::HomeMenuStart()
 		{
 			drone->setPosition(Vector2f(0, 300));
 		}
-		int clicked = CheckClicked();
-		if (clicked == 1 && choseIndex != -1) // singleplayer
+		if (CheckClicked() && choseIndex != -1)
 		{
 			break;
 		}
@@ -418,7 +408,6 @@ void HomeMenu::HomeMenuStart()
 		{
 			break;
 		}
-
 		draw();
 
 	}

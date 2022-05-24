@@ -38,7 +38,7 @@ Map::Map(int index)
 	case 1:
 		points.push_back(new Waypoint(Vector2f(1470, 210), Vector2f(0, 1), 1));
 		points.push_back(new Waypoint(Vector2f(1470, 830), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(330, 830), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(380, 830), Vector2f(0, -1), 2));
 		points.push_back(new Waypoint(Vector2f(330, 390), Vector2f(1, 0), 4));
 		points.push_back(new Waypoint(Vector2f(1270, 390), Vector2f(0, 1), 1));
 		points.push_back(new Waypoint(Vector2f(1270, 570), Vector2f(-1, 0), 3));
@@ -54,7 +54,7 @@ Map::Map(int index)
 		points.push_back(new Waypoint(Vector2f(887,78), Vector2f(1,0), 4));
 		points.push_back(new Waypoint(Vector2f(1328,78), Vector2f(0, 1), 1));
 		points.push_back(new Waypoint(Vector2f(1328, 810), Vector2f(-1,0), 3));
-		points.push_back(new Waypoint(Vector2f(675, 810), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(725, 810), Vector2f(0, -1), 2));
 		points.push_back(new Waypoint(Vector2f(675, 211), Vector2f(1,0), 4));
 		start = Vector2f(-50, 77);
 		startMove = Vector2f(1, 0);
@@ -64,7 +64,7 @@ Map::Map(int index)
 #pragma endregion
 #pragma region Funktionen
 /// <summary>
-/// 
+/// Allgemeine Funktionen 
 /// </summary>
 /// <param name="pos"></param>
 /// <returns></returns>

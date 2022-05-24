@@ -405,6 +405,7 @@ void Game::draw()
 
 	window->draw(*p_map->getBackround()); //Karte wird gedrawt
 	window->draw(toolbar);
+	CircleShape* a;
 
 	if (tower != nullptr)
 	{
@@ -463,18 +464,29 @@ void Game::draw()
 }
 void Game::checkShoot()
 {
-	CircleShape* tmp = new CircleShape;
-	for (auto t : round->getAllAttackTower())
-	{
-		if (t->getIndex() == 3) {
-			if (shootCooldown.getElapsedTime().asSeconds() > 3) {
-				shootCooldown.restart();
-				for (auto i : Round::getInstance()->getAllSpawns()) {
-					i->shoot();
+	if (shootCooldown.getElapsedTime().asSeconds() > 2) {
+		for (auto t : round->getAllAttackTower()) {
+			if (t->getIndex() == 3 || t->getIndex() == 1) {
+				//std::cout << shootCooldown.getElapsedTime().asSeconds() << std::endl;
+				if (t->getIndex() == 3) {
+					for (auto i : Round::getInstance()->getAllSpawns()) {
+						i->shoot();
+					}
 				}
-
+				if (t->getIndex() == 1) {
+					new Projectile(nullptr, t, nullptr, 3, Vector2f(0, 0));
+				}
 			}
 		}
+	}
+
+if (shootCooldown.getElapsedTime().asSeconds() > 2) {
+	shootCooldown.restart();
+}
+CircleShape* tmp = new CircleShape;
+for (auto t : round->getAllAttackTower())
+{
+	if (t->getIndex() != 1 && t->getIndex() != 3) {
 		for (auto iter : t->getCoverableArea())
 		{
 			tmp->setFillColor(Color::Transparent);
@@ -490,7 +502,8 @@ void Game::checkShoot()
 			}
 		}
 	}
-	delete tmp;
+}
+delete tmp;
 }
 void Game::generateMoneyTowers()
 {
