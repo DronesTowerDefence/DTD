@@ -67,7 +67,7 @@ private:
 
 
 	void eingabe(Event event);
-	bool CheckClicked();
+	int CheckClicked();
 	void draw();
 	
 	void setTowerTexture();
