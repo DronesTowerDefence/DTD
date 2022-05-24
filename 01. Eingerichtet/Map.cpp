@@ -56,6 +56,7 @@ Map::Map(int index)
 		points.push_back(new Waypoint(Vector2f(1328, 810), Vector2f(-1,0), 3));
 		points.push_back(new Waypoint(Vector2f(725, 810), Vector2f(0, -1), 2));
 		points.push_back(new Waypoint(Vector2f(675, 211), Vector2f(1,0), 4));
+		points.push_back(new Waypoint(Vector2f(675, 211), Vector2f(1, 0), 4));
 		start = Vector2f(-50, 77);
 		startMove = Vector2f(1, 0);
 		wayPointCount = 8;

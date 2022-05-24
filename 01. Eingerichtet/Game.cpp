@@ -205,6 +205,20 @@ void Game::startGame()
 				window->close();
 			}
 
+			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
+			{
+				if (doubleSpeed)
+				{
+					Ressources::getInstance()->normalSpeed();
+				}
+				else
+				{
+					Ressources::getInstance()->doubleSpeed();
+				}
+				doubleSpeed = !doubleSpeed;
+
+			}
+
 			if (tower != nullptr)
 			{
 				if (event.type == Event::KeyReleased)
@@ -217,11 +231,12 @@ void Game::startGame()
 					{
 						tower->Update1();
 					}
-					else if (event.key.code = Keyboard::BackSpace)
+					else if (event.key.code == Keyboard::BackSpace)
 					{
 						Round::getInstance()->sellTower(tower);
 						tower = nullptr;
 					}
+					
 				}
 			}
 			else if (newTower == nullptr && tower == nullptr)
@@ -559,6 +574,13 @@ void Game::subRoundHealth()
 						i->~Drone();
 						return;
 					}
+				case 5:
+					if (pos_drohne.x > 1720.f) {
+						round->subhealth(i->getLives());
+						i->~Drone();
+						return;
+					}
+
 					break;
 				default:
 					break;
