@@ -241,7 +241,6 @@ void Game::startGame()
 					if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
 					{
 						newTower = new TowerAlias(event.key.code - 27, p_map);
-
 					}
 				}
 			}
@@ -830,6 +829,10 @@ Game* Game::getInstance()
 	}
 	return instance;
 }
+bool Game::getDoubleSpeed()
+{
+	return doubleSpeed;
+}
 RenderWindow* Game::getWindow()
 {
 	return window;
@@ -854,6 +857,10 @@ void Game::setStatus(int status)
 {
 	this->status = status;
 	//this->status = 3;
+}
+void Game::setDoubleSpeed(bool wert)
+{
+	doubleSpeed = wert;
 }
 void Game::setDroneCount(int _droneCount)
 {

@@ -121,7 +121,7 @@ public:
 
 	static Game* getInstance();
 
-
+	bool getDoubleSpeed();
 
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
@@ -159,7 +159,7 @@ public:
 	//void setPauseScreen(RenderWindow*);
 
 	void setStatus(int state);
-
+	void setDoubleSpeed(bool wert);
 	void setDroneCount(int);
 
 	/// <summary>
