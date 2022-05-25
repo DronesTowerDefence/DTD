@@ -183,14 +183,7 @@ bool Game::towerAliasForbiddenPosition()
 
 	return 1;
 }
-void Game::setStatus(int status)
-{
-	this->status = status;
-}
-void Game::setDroneCount(int _droneCount)
-{
-	droneCount = _droneCount;
-}
+
 void Game::startGame()
 {
 	loadGame();
@@ -204,7 +197,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-
+			// Shotcuts
 			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 			{
 				if (doubleSpeed)
@@ -237,7 +230,7 @@ void Game::startGame()
 						Multiplayer::send(tower, 1);
 						tower = nullptr;
 					}
-					
+
 				}
 			}
 			else if (newTower == nullptr && tower == nullptr)
@@ -260,24 +253,23 @@ void Game::startGame()
 		checkDroneCount();
 		changeBackgroundMusic();
 		checkLoseGame();
+		checkTowerAlias();
+		for (auto i : Round::getInstance()->getAllTowers())
+		{
+			i->getUpdates()->canBuy();
+
+		}
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
 			subRoundHealth();
 			checkShoot();
-			checkTowerAlias();
 			generateMoneyTowers();
-			for (auto i : Round::getInstance()->getAllTowers())
-			{
-				i->getUpdates()->canBuy();
-
-			}
 
 		}
-		if (status == 3)
-		{
-			while (Multiplayer::receive());
-		}
+
+		while (Multiplayer::receive());
+
 		draw();
 	}
 }
@@ -498,30 +490,30 @@ void Game::checkShoot()
 		}
 	}
 
-if (shootCooldown.getElapsedTime().asSeconds() > 2) {
-	shootCooldown.restart();
-}
-CircleShape* tmp = new CircleShape;
-for (auto t : round->getAllAttackTower())
-{
-	if (t->getIndex() != 1 && t->getIndex() != 3) {
-		for (auto iter : t->getCoverableArea())
-		{
-			tmp->setFillColor(Color::Transparent);
-			tmp->setRadius(15);
-			tmp->setPosition(Vector2f(iter.x, iter.y));
-
-			for (auto d : round->getAllDrones())
+	if (shootCooldown.getElapsedTime().asSeconds() > 2) {
+		shootCooldown.restart();
+	}
+	CircleShape* tmp = new CircleShape;
+	for (auto t : round->getAllAttackTower())
+	{
+		if (t->getIndex() != 1 && t->getIndex() != 3) {
+			for (auto iter : t->getCoverableArea())
 			{
-				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+				tmp->setFillColor(Color::Transparent);
+				tmp->setRadius(15);
+				tmp->setPosition(Vector2f(iter.x, iter.y));
+
+				for (auto d : round->getAllDrones())
 				{
-					t->shoot(d);
+					if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+					{
+						t->shoot(d);
+					}
 				}
 			}
 		}
 	}
-}
-delete tmp;
+	delete tmp;
 }
 void Game::generateMoneyTowers()
 {
@@ -857,6 +849,16 @@ int Game::getStatus()
 #pragma endregion
 
 #pragma region setter
+
+void Game::setStatus(int status)
+{
+	this->status = status;
+	//this->status = 3;
+}
+void Game::setDroneCount(int _droneCount)
+{
+	droneCount = _droneCount;
+}
 void Game::setMusicVolume(float v)
 {
 	for (int i = 0; i < 4; i++) {
