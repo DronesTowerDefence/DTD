@@ -55,7 +55,7 @@ void TowerSpawn::operate()
 {
 	switch (kind)
 		case 1: {
-		spawntexture.loadFromFile("img/Flugzeug.jpg");
+		spawntexture.loadFromFile("img/towerSpawn/towerSpawn0.png");
 		counter = 150;
 		int setx = 300 + spawntexture.getSize().x / 2;
 		int sety = spawntexture.getSize().y / 2;
