@@ -178,7 +178,16 @@ bool Multiplayer::receive()
 		return true;
 
 	case 8:
-		//TODO doppelte Geschwindigkeit
+		if (Game::getInstance()->getDoubleSpeed())
+		{
+			Ressources::getInstance()->normalSpeed();
+		}
+		else
+		{
+			Ressources::getInstance()->doubleSpeed();
+		}
+		Game::getInstance()->setDoubleSpeed(!Game::getInstance()->getDoubleSpeed());
+		
 		return true;
 
 	default:

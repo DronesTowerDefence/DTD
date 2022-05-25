@@ -28,7 +28,7 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 void TowerAlias::CreateNewTower()
 {
 	Tower* t = new Tower(index, towerAliasSpr.getPosition(), p_map);
-	if (Game::getInstance()->getStatus() == 2)
+	if (Game::getInstance()->getStatus() !=1)
 		Multiplayer::send(t, 0);
 }
 #pragma endregion
