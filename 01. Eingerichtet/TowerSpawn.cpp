@@ -1,4 +1,5 @@
 #include "TowerSpawn.h"
+#include "Ressources.h"
 #include "Round.h"
 
 #pragma region Konstruktor
@@ -9,6 +10,7 @@ TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 	move.y = -5;
 	tower = _tower;
 	direction = 0;
+	res = Ressources::getInstance();
 	Round::getInstance()->addSpawn(this);
 	operate();
 }
@@ -25,27 +27,27 @@ void TowerSpawn::shoot()
 void TowerSpawn::moveSpawn()
 {
 	int direction=0;
-	if (spawnsprite.getPosition().y+ (spawntexture.getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
+	if (spawnsprite.getPosition().y+ (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
 		move.x = 5;
 		move.y = 0;
 		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y+5);
 	}
-	if (spawnsprite.getPosition().x-(spawntexture.getSize().x / 2) > tower->getTowerSpr().getPosition().x + 300) {
+	if (spawnsprite.getPosition().x-(res->getTowerSpawnTexture(0)->getSize().x / 2) > tower->getTowerSpr().getPosition().x + 300) {
 		move.x = 0;
 		move.y = 5;
 		spawnsprite.setPosition(spawnsprite.getPosition().x-5, spawnsprite.getPosition().y);
 	}
-	if (spawnsprite.getPosition().y-(spawntexture.getSize().y / 2) > tower->getTowerSpr().getPosition().y + 300) {
+	if (spawnsprite.getPosition().y-(res->getTowerSpawnTexture(0)->getSize().y / 2) > tower->getTowerSpr().getPosition().y + 300) {
 		move.x = -5;
 		move.y = 0;
 		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y - 5);
 	}
-	if (spawnsprite.getPosition().x+(spawntexture.getSize().x/2) < tower->getTowerSpr().getPosition().x - 300) {
+	if (spawnsprite.getPosition().x+(res->getTowerSpawnTexture(0)->getSize().x/2) < tower->getTowerSpr().getPosition().x - 300) {
 		move.x = 0;
 		move.y = -5;
 		spawnsprite.setPosition(spawnsprite.getPosition().x+5, spawnsprite.getPosition().y);
 	}
-	if (spawnsprite.getPosition().y + (spawntexture.getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
+	if (spawnsprite.getPosition().y + (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
 		std::cout << "moin" << std::endl;
 	}
 
@@ -55,11 +57,10 @@ void TowerSpawn::operate()
 {
 	switch (kind)
 		case 1: {
-		spawntexture.loadFromFile("img/towerSpawn/towerSpawn0.png");
 		counter = 150;
-		int setx = 300 + spawntexture.getSize().x / 2;
-		int sety = spawntexture.getSize().y / 2;
-		spawnsprite.setTexture(spawntexture);
+		int setx = 300 + res->getTowerSpawnTexture(0)->getSize().x / 2;
+		int sety = res->getTowerSpawnTexture(0)->getSize().y / 2;
+		spawnsprite.setTexture(*res->getTowerSpawnTexture(0));
 		spawnsprite.setPosition(tower->getTowerPos().x-setx, tower->getTowerPos().y-sety);
 		std::cout << tower->getTowerSpr().getPosition().x << std::endl << tower->getTowerSpr().getPosition().y << std::endl;
 	}
@@ -72,7 +73,7 @@ Sprite TowerSpawn::getSpawnSprite()
 }
 Texture TowerSpawn::getSpawnTexture()
 {
-	return spawntexture;
+	return *res->getTowerSpawnTexture(0);
 }
 #pragma endregion
 

@@ -28,6 +28,7 @@ private:
 	Text* price;
 
 	Tower* tower;
+	Ressources* res;
 
 public:
 	Updates(Tower * tower);

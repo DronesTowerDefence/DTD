@@ -7,9 +7,9 @@ private:
 	int counter;
 	int direction;
 	Vector2f move;
-	Texture spawntexture;
 	Sprite spawnsprite;
 	Tower* tower;
+	Ressources* res;
 
 
 public:
@@ -17,7 +17,6 @@ public:
 	
 	Sprite getSpawnSprite();
 	Texture getSpawnTexture();
-	
 	void shoot();
 	void moveSpawn();
 	void operate();

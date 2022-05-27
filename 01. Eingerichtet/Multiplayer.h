@@ -10,7 +10,7 @@ Packet-Header:
 static class Multiplayer
 {
 private:
-	Multiplayer(); //Laut Internet unnötig, aber habs ausprobiert, man braucht es doch
+	Multiplayer(); //Laut Internet unnötig die Konstruktoren bei einer statischen Klasse privat zu machen, aber habs ausprobiert, man muss es doch machen
 	Multiplayer(const Multiplayer&);
 
 public:
@@ -52,6 +52,6 @@ public:
 	/// Empfängt ein Packet und wendet es an.
 	/// Immer in einer eigenen while-Schleife aufrufen - Bsp.:"while(Multiplayer::receive());"
 	/// </summary>
-	/// <returns>True, wenn empfangen</returns>
+	/// <returns>True, wenn empfangen und Packet-Header gültig | False, wenn Packet-Header ungültig</returns>
 	static bool receive();
 };
