@@ -6,6 +6,7 @@ bool Multiplayer::send()
 	Packet pac;
 	pac << 9; //Setzt den Header
 	Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
+	return true;
 }
 
 bool Multiplayer::send(Tower* t, int _index)
