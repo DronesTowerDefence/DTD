@@ -1,6 +1,12 @@
 #include "PauseMenu.h"
 #include "Multiplayer.h"
 
+bool Multiplayer::send()
+{
+	Packet pac;
+	pac << 9; //Setzt den Header
+	Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
+}
 
 bool Multiplayer::send(Tower* t, int _index)
 {
@@ -190,6 +196,9 @@ bool Multiplayer::receive()
 		
 		return true;
 
+	case 9:
+		//TODO
+		return true;
 	default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 		return false;
 	}

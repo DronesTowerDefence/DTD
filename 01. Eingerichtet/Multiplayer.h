@@ -5,7 +5,7 @@
 |Static-Class|
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
-5=Verloren, 6=PauseMenu, 7=HomeMenu, 8=Doppelte Geschwindigkeit
+5=Verloren, 6=PauseMenu, 7=HomeMenu, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
 */
 static class Multiplayer
 {
@@ -14,6 +14,11 @@ private:
 	Multiplayer(const Multiplayer&);
 
 public:
+
+	/// <summary>
+	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
+	/// </summary>
+	static bool send();
 
 	/// <summary>
 	/// Sendet ein Packet, welches einen Turm platziert oder verkauft
