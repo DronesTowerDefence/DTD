@@ -197,7 +197,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			// Shotcuts
+			// Shortcuts
 			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 			{
 				if (doubleSpeed)
@@ -247,6 +247,7 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
+
 		updateEco();
 		moveDrohnes();
 		checkDroneCount();
@@ -259,15 +260,18 @@ void Game::startGame()
 
 		}
 
+		if (status != 1) //Wenn Host oder Client
+		{
+			while (Multiplayer::receive());
+			checkMultiplayerConnection();
+		}
+
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
 			subRoundHealth();
 			checkShoot();
 			generateMoneyTowers();
-
 		}
-
-		while (Multiplayer::receive());
 
 		draw();
 	}
@@ -720,6 +724,40 @@ void Game::restart()
 	p_map = new Map(mapIndex);
 	sidebar = Sidebar::getInstance();
 }
+void Game::checkMultiplayerConnection()
+{
+	Multiplayer::send();
+
+	if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() > 2)
+	{
+		bool waitWhile = true;
+		Text waitText;
+		waitText.setFont(stdFont);
+		waitText.setCharacterSize(30);
+		waitText.setFillColor(Color::White);
+		waitText.setOutlineColor(Color::Black);
+		waitText.setOutlineThickness(2);
+		waitText.setPosition(Service::getInstance()->getObjectPosition(Vector2f(500, 500)));
+		waitText.setString("Verbindungsproblem!\nWarten auf andere(n) Spieler");
+		RectangleShape waitShape;
+		waitShape.setFillColor(Color::Blue);
+		waitShape.setOutlineColor(Color::Black);
+		waitShape.setOutlineThickness(3);
+		waitShape.setPosition(Service::getInstance()->getObjectPosition(Vector2f(500, 500)));
+		window->draw(waitShape);
+		window->draw(waitText);
+		window->display();
+
+		while (waitWhile)
+		{
+			while (Multiplayer::receive());
+			if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() < 2)
+			{
+				waitWhile = false;
+			}
+		}
+	}
+}
 void Game::resetAll()
 {
 	//Zurücksetzen der Attribute von Game
@@ -844,6 +882,10 @@ Font Game::getFont()
 Sound Game::getMusic()
 {
 	return music[0];
+}
+Clock* Game::getMultiplayerCheckConnectionClock()
+{
+	return &multiplayerCheckConnectionClock;
 }
 int Game::getStatus()
 {

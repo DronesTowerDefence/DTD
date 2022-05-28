@@ -198,8 +198,9 @@ bool Multiplayer::receive()
 		return true;
 
 	case 9:
-		//TODO
+		Game::getInstance()->getMultiplayerCheckConnectionClock()->restart();
 		return true;
+
 	default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 		return false;
 	}

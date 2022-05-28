@@ -50,7 +50,7 @@ private:
 
 	Clock shootCooldown;
 	Clock shootCooldown2;
-
+	Clock multiplayerCheckConnectionClock;
 
 	Ressources* p_ressources;
 	Round* round;
@@ -140,6 +140,8 @@ public:
 	/// <returns></returns>
 	Sound getMusic();
 
+	Clock* getMultiplayerCheckConnectionClock();
+
 	int getStatus();
 
 	/// <summary>
@@ -196,4 +198,6 @@ public:
 	/// Startet das Spiel auf der aktuellen Map neu
 	/// </summary>
 	void restart();
+
+	void checkMultiplayerConnection();
 };
