@@ -371,6 +371,14 @@ std::string Ressources::getTowerName(int i)
 {
 	return towerName[i];
 }
+std::string Ressources::getOwnIpAddress()
+{
+	return ownIpAddress;
+}
+std::string Ressources::getIpAddress()
+{
+	return ipAddress;
+}
 Image Ressources::getIcon()
 {
 	return icon;
@@ -489,6 +497,16 @@ void Ressources::setMultiplayerPlayerCount(int a)
 	{
 		multiplayerPlayerCount = a;
 	}
+}
+
+void Ressources::setOwnIpAddress(std::string a)
+{
+	ownIpAddress = a;
+}
+
+void Ressources::setIpAddress(std::string a)
+{
+	ipAddress = a;
 }
 
 #pragma endregion

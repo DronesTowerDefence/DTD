@@ -49,6 +49,9 @@ private:
 
 
 	std::string towerName[5]; //Der Name des Turmes
+	std::string ownIpAddress; //Eigene Ip
+	std::string ipAddress; //Ip des Hosts
+
 	TcpSocket* sender;
 	TcpSocket* receiver;
 	TcpListener* listener;
@@ -106,6 +109,8 @@ public:
 	float getWaitSubHealth();
 
 	std::string getTowerName(int);
+	std::string getOwnIpAddress();
+	std::string getIpAddress();
 
 	Image getIcon();
 
@@ -150,6 +155,8 @@ public:
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
+	void setOwnIpAddress(std::string);
+	void setIpAddress(std::string);
 
 	void doubleSpeed();
 	void normalSpeed();
