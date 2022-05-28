@@ -1,4 +1,3 @@
-
 #include "HomeMenu.h"
 
 HomeMenu* HomeMenu::instance = nullptr;
@@ -260,6 +259,7 @@ int  HomeMenu::CheckClicked()
 			}
 		}
 
+		Ressources* res = Ressources::getInstance();
 
 		//Host clicked
 		mouse = Mouse::getPosition(*window);
@@ -270,9 +270,6 @@ int  HomeMenu::CheckClicked()
 		{
 			status = 2;
 			connected = true;
-
-
-			Ressources* res = Ressources::getInstance();
 
 			if (res->getListener()->listen(4567))
 			{
@@ -290,8 +287,7 @@ int  HomeMenu::CheckClicked()
 
 			std::string ip_client;
 			p >> ip_client;
-
-
+			res->setIpAddress(ip_client);
 
 			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
 			{
@@ -317,7 +313,10 @@ int  HomeMenu::CheckClicked()
 		{
 			connected = true;
 			status = 3;
-			if (Ressources::getInstance()->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
+
+			res->setIpAddress(ipAdress);
+
+			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
 				connected = false;
 				std::cout << "ERROR";
@@ -325,7 +324,7 @@ int  HomeMenu::CheckClicked()
 
 			Packet p1;
 			p1 << ownIpAdress;
-			Ressources::getInstance()->getSender()->send(p1);
+			res->getSender()->send(p1);
 
 
 			if (res->getListener()->listen(4568))

@@ -75,6 +75,9 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
+	ownIpAddress = IpAddress::getLocalAddress().toString();
+	ipAddress = "0"; //Standart-Initialisierung
+
 	double p[5];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
