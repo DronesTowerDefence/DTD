@@ -748,54 +748,26 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 
 		while (waitWhile)
 		{
-			while (Multiplayer::receive()); //Prüft/erhält Packet(e)
-
-			Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
+			waitWhile = !Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
+			Multiplayer::receive(); //Prüft/erhält Packet(e)
 
 			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 			{
-				if (p_ressources->getListener()->listen(4567)) //Horcht am Port
-				{
-					std::cout << "Error Port";
-					waitWhile = true;
-				}
+				p_ressources->getListener()->listen(4567); //Horcht am Port
 
-				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
-				{
-					std::cout << "Error Client";
-					waitWhile = true;
-				}
-				else waitWhile = false;
+				p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
 
-				if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568) != sf::Socket::Done) //Verbindet sich mit dem Client
-				{
-					std::cout << "ERROR";
-					waitWhile = true;
-				}
-				else waitWhile = false;
+				p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568); //Verbindet sich mit dem Client
 
 			}
 			else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
 			{
-				if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != sf::Socket::Done) //Verbindet sich mit dem Host
-				{
-					std::cout << "ERROR";
-					waitWhile = true;
-				}
-				else waitWhile = false;
+				p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567); //Verbindet sich mit dem Host
 
-				if (p_ressources->getListener()->listen(4568)) //Horch am Port
-				{
-					std::cout << "Error Port";
-					waitWhile = true;
-				}
+				p_ressources->getListener()->listen(4568); //Horch am Port
 
-				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
-				{
-					std::cout << "Error Client";
-					waitWhile = true;
-				}
-				else waitWhile = false;
+				p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+
 			}
 
 		}
