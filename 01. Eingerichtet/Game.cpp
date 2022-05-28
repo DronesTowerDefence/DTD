@@ -263,7 +263,7 @@ void Game::startGame()
 		if (status != 1) //Wenn Host oder Client
 		{
 			while (Multiplayer::receive());
-			checkMultiplayerConnection();
+			//checkMultiplayerConnection(); //TODO
 		}
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
@@ -724,7 +724,7 @@ void Game::restart()
 	p_map = new Map(mapIndex);
 	sidebar = Sidebar::getInstance();
 }
-void Game::checkMultiplayerConnection()
+void Game::checkMultiplayerConnection() //TODO - WIP
 {
 	Multiplayer::send();
 
