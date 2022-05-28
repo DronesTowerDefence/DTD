@@ -5,8 +5,9 @@ bool Multiplayer::send()
 {
 	Packet pac;
 	pac << 9; //Setzt den Header
-	Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
-	return true;
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
 }
 
 bool Multiplayer::send(Tower* t, int _index)
@@ -23,9 +24,9 @@ bool Multiplayer::send(Tower* t, int _index)
 			pac << 2 << t->getId(); //Schreibt den Header und die Tower-ID in das Packet
 		}
 
-		Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
-
-		return true;
+		if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+			return true;
+		else return false;
 	}
 	else return false;
 }
@@ -38,9 +39,9 @@ bool Multiplayer::send(int t, int _index, int _updateIndex)
 
 		pac << 1 << t << _index << _updateIndex; //Schreibt den Header, den Updatepfad (1=Oberer, 2=Unterer) und den Index / die Stufe des Updates
 
-		Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
-
-		return true;
+		if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+			return true;
+		else return false;
 	}
 	else return false;
 }
@@ -50,8 +51,9 @@ bool Multiplayer::send(int t, int d)
 	Packet pac;
 	pac << 3 << d << t; //Schreibt den Header, die Tower-ID und die Drone-ID in das Packet
 
-	Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
-	return true;
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
 }
 
 bool Multiplayer::send(int _index, bool _bool)
@@ -84,8 +86,9 @@ bool Multiplayer::send(int _index, bool _bool)
 	}
 	else return false;
 
-	Ressources::getInstance()->getSender()->send(pac); //Sendet das Packet
-	return true;
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
 }
 
 bool Multiplayer::receive()
@@ -194,7 +197,7 @@ bool Multiplayer::receive()
 			Ressources::getInstance()->doubleSpeed(); //Ansonsten auf doppelte Geschwindigkeit
 		}
 		Game::getInstance()->setDoubleSpeed(!Game::getInstance()->getDoubleSpeed());
-		
+
 		return true;
 
 	case 9:
