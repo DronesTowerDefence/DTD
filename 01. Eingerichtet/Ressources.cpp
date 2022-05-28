@@ -75,7 +75,6 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
-	ownIpAddress = IpAddress::getLocalAddress().toString();
 	ipAddress = "0"; //Standart-Initialisierung
 
 	double p[5];
@@ -376,7 +375,7 @@ std::string Ressources::getTowerName(int i)
 }
 std::string Ressources::getOwnIpAddress()
 {
-	return ownIpAddress;
+	return IpAddress::getLocalAddress().toString();
 }
 std::string Ressources::getIpAddress()
 {
@@ -500,11 +499,6 @@ void Ressources::setMultiplayerPlayerCount(int a)
 	{
 		multiplayerPlayerCount = a;
 	}
-}
-
-void Ressources::setOwnIpAddress(std::string a)
-{
-	ownIpAddress = a;
 }
 
 void Ressources::setIpAddress(std::string a)

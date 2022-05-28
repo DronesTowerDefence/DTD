@@ -49,7 +49,6 @@ private:
 
 
 	std::string towerName[5]; //Der Name des Turmes
-	std::string ownIpAddress; //Eigene Ip
 	std::string ipAddress; //Ip des Hosts
 
 	TcpSocket* sender;
@@ -155,7 +154,6 @@ public:
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
-	void setOwnIpAddress(std::string);
 	void setIpAddress(std::string);
 
 	void doubleSpeed();

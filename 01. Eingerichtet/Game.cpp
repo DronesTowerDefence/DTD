@@ -263,7 +263,7 @@ void Game::startGame()
 		if (status != 1) //Wenn Host oder Client
 		{
 			while (Multiplayer::receive());
-			//checkMultiplayerConnection(); //TODO
+			checkMultiplayerConnection(); //TODO
 		}
 
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
@@ -743,12 +743,14 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		window->draw(waitText);
 		window->display();
 
+		p_ressources->getSender()->setBlocking(true);
+		p_ressources->getReceiver()->setBlocking(true);
+
 		while (waitWhile)
 		{
 			while (Multiplayer::receive()); //Prüft/erhält Packet(e)
 
-			p_ressources->getSender()->setBlocking(true);
-			p_ressources->getReceiver()->setBlocking(true);
+			Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
 
 			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 			{
@@ -796,9 +798,10 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 				else waitWhile = false;
 			}
 
-			p_ressources->getSender()->setBlocking(false);
-			p_ressources->getReceiver()->setBlocking(false);
 		}
+		p_ressources->getSender()->setBlocking(false);
+		p_ressources->getReceiver()->setBlocking(false);
+
 	}
 }
 void Game::resetAll()
