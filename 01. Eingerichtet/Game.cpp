@@ -745,30 +745,32 @@ void Game::checkMultiplayerConnection()
 
 		while (waitWhile)
 		{
-			while (Multiplayer::receive()); //Prüft/erhält Packete
+			while (Multiplayer::receive()); //Prüft/erhält Packet(e)
 
 			p_ressources->getSender()->setBlocking(false);
 			p_ressources->getReceiver()->setBlocking(false);
-
-			if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() < 2)
-			{
-				waitWhile = false;
-			}
 
 			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 			{
 				if (p_ressources->getListener()->listen(4567)) //Horcht am Port
 				{
 					std::cout << "Error Port";
+					waitWhile = true;
 				}
+
 				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
 				{
 					std::cout << "Error Client";
+					waitWhile = true;
 				}
+				else waitWhile = false;
+
 				if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568) != sf::Socket::Done) //Verbindet sich mit dem Client
 				{
 					std::cout << "ERROR";
+					waitWhile = true;
 				}
+				else waitWhile = false;
 
 			}
 			else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
@@ -776,15 +778,22 @@ void Game::checkMultiplayerConnection()
 				if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != sf::Socket::Done) //Verbindet sich mit dem Host
 				{
 					std::cout << "ERROR";
+					waitWhile = true;
 				}
-				if (p_ressources->getListener()->listen(4568))
+				else waitWhile = false;
+
+				if (p_ressources->getListener()->listen(4568)) //Horch am Port
 				{
 					std::cout << "Error Port";
+					waitWhile = true;
 				}
-				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done)
+
+				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
 				{
 					std::cout << "Error Client";
+					waitWhile = true;
 				}
+				else waitWhile = false;
 			}
 		}
 	}
