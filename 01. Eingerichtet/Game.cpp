@@ -747,63 +747,61 @@ void Game::checkMultiplayerConnection()
 		{
 			while (Multiplayer::receive());
 
-			if (p_ressources->getReceiver()->getRemotePort() == 0 || p_ressources->getSender()->getRemotePort() == 0) //Überprüft, ob eine Verbindung vorhanden ist
+			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 			{
-				if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
+				if (p_ressources->getListener()->listen(4567))
 				{
-					if (p_ressources->getListener()->listen(4567))
-					{
-						std::cout << "Error Port";
-					}
-					if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done)
-					{
-						std::cout << "Error Client";
-					}
-
-					Packet p;
-					while (p_ressources->getReceiver()->receive(p) != Socket::Done);
-
-					std::string ip_client;
-					p >> ip_client;
-
-					if (p_ressources->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
-					{
-						std::cout << "ERROR";
-					}
-					Packet p2;
-					p2 << 9;
-					p_ressources->getSender()->send(p2);
-
-					p_ressources->getSender()->setBlocking(false);
-					p_ressources->getReceiver()->setBlocking(false);
+					std::cout << "Error Port";
 				}
-				else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done)
 				{
-					if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != sf::Socket::Done)
-					{
-						std::cout << "ERROR";
-					}
-
-					Packet p1;
-					p1 << p_ressources->getOwnIpAddress();
-					p_ressources->getSender()->send(p1);
-
-
-					if (p_ressources->getListener()->listen(4568))
-					{
-						std::cout << "Error Port";
-					}
-
-					if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done)
-					{
-						std::cout << "Error Client";
-					}
-
-					p_ressources->getSender()->setBlocking(false);
-					p_ressources->getReceiver()->setBlocking(false);
+					std::cout << "Error Client";
 				}
+
+				Packet p;
+				while (p_ressources->getReceiver()->receive(p) != Socket::Done);
+
+				std::string ip_client;
+				p >> ip_client;
+
+				if (p_ressources->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
+				{
+					std::cout << "ERROR";
+				}
+				Packet p2;
+				p2 << 9;
+				p_ressources->getSender()->send(p2);
+
+				p_ressources->getSender()->setBlocking(false);
+				p_ressources->getReceiver()->setBlocking(false);
 			}
-			else if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() < 2)
+			else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+			{
+				if (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != sf::Socket::Done)
+				{
+					std::cout << "ERROR";
+				}
+
+				Packet p1;
+				p1 << p_ressources->getOwnIpAddress();
+				p_ressources->getSender()->send(p1);
+
+
+				if (p_ressources->getListener()->listen(4568))
+				{
+					std::cout << "Error Port";
+				}
+
+				if (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done)
+				{
+					std::cout << "Error Client";
+				}
+
+				p_ressources->getSender()->setBlocking(false);
+				p_ressources->getReceiver()->setBlocking(false);
+			}
+
+			if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() < 2)
 			{
 				waitWhile = false;
 			}
