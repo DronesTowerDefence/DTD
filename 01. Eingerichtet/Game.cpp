@@ -747,8 +747,8 @@ void Game::checkMultiplayerConnection()
 		{
 			while (Multiplayer::receive()); //Prüft/erhält Packet(e)
 
-			p_ressources->getSender()->setBlocking(false);
-			p_ressources->getReceiver()->setBlocking(false);
+			p_ressources->getSender()->setBlocking(true);
+			p_ressources->getReceiver()->setBlocking(true);
 
 			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 			{
@@ -795,6 +795,9 @@ void Game::checkMultiplayerConnection()
 				}
 				else waitWhile = false;
 			}
+
+			p_ressources->getSender()->setBlocking(false);
+			p_ressources->getReceiver()->setBlocking(false);
 		}
 	}
 }
