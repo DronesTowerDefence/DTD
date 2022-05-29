@@ -51,6 +51,7 @@ private:
 	Clock shootCooldown;
 	Clock shootCooldown2;
 	Clock multiplayerCheckConnectionClock;
+	Clock multiplayerCheckConnectionSendClock;
 
 	Ressources* p_ressources;
 	Round* round;
