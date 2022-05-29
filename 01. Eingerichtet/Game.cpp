@@ -726,11 +726,10 @@ void Game::restart()
 }
 void Game::checkMultiplayerConnection() //TODO - WIP
 {
-	Multiplayer::send();
+	Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
 
-	if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() > 2)
+	if (multiplayerCheckConnectionClock.getElapsedTime().asSeconds() > Multiplayer::timeout.asSeconds())
 	{
-		bool waitWhile = true;
 		Text waitText;
 		waitText.setFont(stdFont);
 		waitText.setCharacterSize(30);
@@ -746,34 +745,27 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		p_ressources->getSender()->setBlocking(true);
 		p_ressources->getReceiver()->setBlocking(true);
 
-		while (waitWhile)
+		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 		{
-			waitWhile = !Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
-			Multiplayer::receive(); //Prüft/erhält Packet(e)
+			p_ressources->getListener()->listen(4567); //Horcht am Port
 
-			if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
-			{
-				p_ressources->getListener()->listen(4567); //Horcht am Port
+			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
 
-				p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
-
-				p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568); //Verbindet sich mit dem Client
-
-			}
-			else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
-			{
-				p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567); //Verbindet sich mit dem Host
-
-				p_ressources->getListener()->listen(4568); //Horch am Port
-
-				p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
-
-			}
+			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568, Multiplayer::timeout); //Verbindet sich mit dem Client
 
 		}
+		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+		{
+			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567, Multiplayer::timeout); //Verbindet sich mit dem Host
+
+			p_ressources->getListener()->listen(4568); //Horch am Port
+
+			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+
+		}
+
 		p_ressources->getSender()->setBlocking(false);
 		p_ressources->getReceiver()->setBlocking(false);
-
 	}
 }
 void Game::resetAll()

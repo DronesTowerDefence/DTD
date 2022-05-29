@@ -1,6 +1,8 @@
 #include "PauseMenu.h"
 #include "Multiplayer.h"
 
+Time Multiplayer::timeout = seconds(2.f);
+
 bool Multiplayer::send()
 {
 	Packet pac;

@@ -15,6 +15,8 @@ private:
 
 public:
 
+	static Time timeout;
+
 	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
 	/// </summary>
