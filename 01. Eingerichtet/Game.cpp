@@ -724,6 +724,13 @@ void Game::restart()
 	p_map = new Map(mapIndex);
 	sidebar = Sidebar::getInstance();
 }
+void Game::sellTower(Tower* t)
+{
+	if (tower == t)
+	{
+		tower =
+	}
+}
 void Game::checkMultiplayerConnection() //TODO - WIP
 {
 	if (multiplayerCheckConnectionSendClock.getElapsedTime().asSeconds() > Multiplayer::timeout.asSeconds() / 3)

@@ -6,6 +6,7 @@
 #include "TowerAlias.h"
 #include "PauseMenu.h"
 #include "HomeMenu.h"
+#include "Tower.h"
 
 
 class Game
@@ -199,6 +200,8 @@ public:
 	/// Startet das Spiel auf der aktuellen Map neu
 	/// </summary>
 	void restart();
+
+	void sellTower(Tower* t);
 
 	void checkMultiplayerConnection();
 };

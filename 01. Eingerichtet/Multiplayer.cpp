@@ -134,6 +134,7 @@ bool Multiplayer::receive()
 		{
 			if (i->getId() == towerId) //Wenn der richtige gefunden wurde...
 			{
+				Game::getInstance()->sellTower(i);
 				Round::getInstance()->sellTower(i); //... wird er verkauft
 			}
 		}
