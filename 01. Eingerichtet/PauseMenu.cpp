@@ -148,6 +148,7 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			play = true;
+			Multiplayer::send(2, false);
 		}
 		//mute button
 

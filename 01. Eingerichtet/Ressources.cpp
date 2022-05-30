@@ -75,6 +75,8 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
+	ipAddress = "0"; //Standart-Initialisierung
+
 	double p[5];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
@@ -121,6 +123,17 @@ Ressources::Ressources()
 		towerNoBuyTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
 	}
 
+	
+	updateTexture[0].loadFromFile("img/upgrades/upgradeMoney.png");
+	updateTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime.png");
+	updateTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed.png");
+	updateTexture[3].loadFromFile("img/upgrades/upgradeDamage.png");
+	updateNoBuyTexture[0].loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
+	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
+	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
+	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
+	
+
 	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
 	//{
 	//	for (int j = 0; j < 2; j++)
@@ -137,14 +150,23 @@ Ressources::Ressources()
 		}
 	}
 
-	projectileTexture[0].loadFromFile("img/projectiles/projectile0.png");
-	projectileTexture[1].loadFromFile("img/projectiles/projectile1.png");
+	for (int i = 0; i < (sizeof(projectileTexture) / sizeof(*projectileTexture)); i++)
+	{
+		projectileTexture[i].loadFromFile("img/projectiles/projectile" + std::to_string(i) + ".png");
+	}
+
+	for (int i = 0; i < (sizeof(spawnTexture) / sizeof(*spawnTexture)); i++)
+	{
+		spawnTexture[i].loadFromFile("img/towerSpawn/towerSpawn" + std::to_string(i) + ".png");
+	}
+
 	buttonHomeTexture.loadFromFile("img/buttons/homeButton.png");
 	buttonRestartTexture.loadFromFile("img/buttons/restartButton.png");
 	buttonCloseTexture.loadFromFile("img/buttons/closeButton.png");
 	buttonStartTexture.loadFromFile("img/buttons/startButton.png");
 	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
 	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
+	buttonSellTexture.loadFromFile("img/upgrades/sell.png");
 
 	for (int i = 0; i < mapCount; i++)
 	{
@@ -351,6 +373,14 @@ std::string Ressources::getTowerName(int i)
 {
 	return towerName[i];
 }
+std::string Ressources::getOwnIpAddress()
+{
+	return IpAddress::getLocalAddress().toString();
+}
+std::string Ressources::getIpAddress()
+{
+	return ipAddress;
+}
 Image Ressources::getIcon()
 {
 	return icon;
@@ -383,9 +413,21 @@ Texture* Ressources::getTowerNoBuyTexture(int i)
 {
 	return &towerNoBuyTexture[i];
 }
+Texture* Ressources::getUpdateTexture(int i)
+{
+	return &updateTexture[i];
+}
+Texture* Ressources::getUpdateNoBuyTexture(int i)
+{
+	return &updateNoBuyTexture[i];
+}
 Texture* Ressources::getProjectileTexture(int i)
 {
 	return &projectileTexture[i];
+}
+Texture* Ressources::getTowerSpawnTexture(int i)
+{
+	return &spawnTexture[i];
 }
 Texture* Ressources::getDroneTexture(int i, int j)
 {
@@ -418,6 +460,10 @@ Texture* Ressources::getButtonExitTexture()
 Texture* Ressources::getButtonSpeedTexture()
 {
 	return &buttonSpeedTexture;
+}
+Texture* Ressources::getButtonSellTexture()
+{
+	return &buttonSellTexture;
 }
 Texture* Ressources::getMapTexture(int i)
 {
@@ -453,6 +499,11 @@ void Ressources::setMultiplayerPlayerCount(int a)
 	{
 		multiplayerPlayerCount = a;
 	}
+}
+
+void Ressources::setIpAddress(std::string a)
+{
+	ipAddress = a;
 }
 
 #pragma endregion

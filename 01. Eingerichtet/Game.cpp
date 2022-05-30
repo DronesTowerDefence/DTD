@@ -247,6 +247,7 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
+
 		updateEco();
 		moveDrohnes();
 		checkDroneCount();
@@ -259,15 +260,18 @@ void Game::startGame()
 
 		}
 
+		if (status != 1) //Wenn Host oder Client
+		{
+			while (Multiplayer::receive());
+			checkMultiplayerConnection();
+		}
+
 		if (status == 1 || status == 2) // wenn Host oder SinglePlayer
 		{
 			subRoundHealth();
 			checkShoot();
 			generateMoneyTowers();
-
 		}
-
-		while (Multiplayer::receive());
 
 		draw();
 	}
@@ -720,6 +724,56 @@ void Game::restart()
 	p_map = new Map(mapIndex);
 	sidebar = Sidebar::getInstance();
 }
+void Game::checkMultiplayerConnection() //TODO - WIP
+{
+	if (multiplayerCheckConnectionSendClock.getElapsedTime().asSeconds() > Multiplayer::timeout.asSeconds() / 3)
+	{
+		Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
+		multiplayerCheckConnectionSendClock.restart();
+	}
+
+	if (multiplayerCheckConnectionClock.getElapsedTime() > Multiplayer::timeout)
+	{
+		Text waitText;
+		waitText.setFont(stdFont);
+		waitText.setCharacterSize(30);
+		waitText.setFillColor(Color::White);
+		waitText.setOutlineColor(Color::Black);
+		waitText.setOutlineThickness(2);
+		waitText.setPosition(Service::getInstance()->getObjectPosition(Vector2f(900, 500)));
+		waitText.setString("Verbindungsproblem!\nWarten auf anderen Spieler");
+
+		window->draw(waitText);
+		window->display();
+
+		p_ressources->getSender()->setBlocking(true);
+		p_ressources->getReceiver()->setBlocking(true);
+		p_ressources->getListener()->setBlocking(true);
+
+		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
+		{
+			p_ressources->getListener()->listen(4567); //Horcht am Port
+
+			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+
+			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568, Multiplayer::timeout); //Verbindet sich mit dem Client
+
+		}
+		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+		{
+			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567, Multiplayer::timeout); //Verbindet sich mit dem Host
+
+			p_ressources->getListener()->listen(4568); //Horcht am Port
+
+			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+
+		}
+
+		p_ressources->getSender()->setBlocking(false);
+		p_ressources->getReceiver()->setBlocking(false);
+		p_ressources->getListener()->setBlocking(false);
+	}
+}
 void Game::resetAll()
 {
 	//Zurücksetzen der Attribute von Game
@@ -844,6 +898,10 @@ Font Game::getFont()
 Sound Game::getMusic()
 {
 	return music[0];
+}
+Clock* Game::getMultiplayerCheckConnectionClock()
+{
+	return &multiplayerCheckConnectionClock;
 }
 int Game::getStatus()
 {

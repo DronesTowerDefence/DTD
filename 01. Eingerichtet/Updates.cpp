@@ -1,10 +1,11 @@
+#include "Ressources.h"
 #include "Updates.h"
-#include "Round.h"
 #include "Game.h"
 
 #pragma region Konstruktor
 Updates::Updates(Tower* tower)
 {
+	res = Ressources::getInstance();
 	this->tower = tower;
 	index1 = 0;
 	index2 = 0;
@@ -21,23 +22,21 @@ Updates::Updates(Tower* tower)
 	textureUpdate2NoBuy = new Texture();
 	if (tower->getIndex() == 4)
 	{
-		textureUpdate1->loadFromFile("img/upgrades/upgradeMoney.png");
-		textureUpdate2->loadFromFile("img/upgrades/upgradeMoneyTime.png");
-		textureUpdate1NoBuy->loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
-		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
-
-
+		textureUpdate1 = res->getUpdateTexture(0);
+		textureUpdate2 = res->getUpdateTexture(1);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(0);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(1);
 	}
 	else
 	{
-		textureUpdate1->loadFromFile("img/upgrades/upgradeAttackspeed.png");
-		textureUpdate2->loadFromFile("img/upgrades/upgradeDamage.png");
-		textureUpdate1NoBuy->loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
-		textureUpdate2NoBuy->loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
+		textureUpdate1 = res->getUpdateTexture(2);
+		textureUpdate2 = res->getUpdateTexture(3);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(2);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
 	}
 
-	textureclose->loadFromFile("img/buttons/closeButton.png");
-	textureSell->loadFromFile("img/upgrades/sell.png");
+	textureclose = res->getButtonCloseTexture();
+	textureSell = res->getButtonSellTexture();
 
 	update1->setTexture(*textureUpdate1);
 	update2->setTexture(*textureUpdate2);

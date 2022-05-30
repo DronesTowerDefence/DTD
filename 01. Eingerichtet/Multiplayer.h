@@ -5,15 +5,22 @@
 |Static-Class|
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
-5=Verloren, 6=PauseMenu, 7=HomeMenu, 8=Doppelte Geschwindigkeit
+5=Verloren, 6=PauseMenu, 7=HomeMenu, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
 */
 static class Multiplayer
 {
 private:
-	Multiplayer(); //Laut Internet unnötig, aber habs ausprobiert, man braucht es doch
+	Multiplayer(); //Laut Internet unnötig die Konstruktoren bei einer statischen Klasse privat zu machen, aber habs ausprobiert, man muss es doch machen
 	Multiplayer(const Multiplayer&);
 
 public:
+
+	static Time timeout;
+
+	/// <summary>
+	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
+	/// </summary>
+	static bool send();
 
 	/// <summary>
 	/// Sendet ein Packet, welches einen Turm platziert oder verkauft
@@ -52,6 +59,6 @@ public:
 	/// Empfängt ein Packet und wendet es an.
 	/// Immer in einer eigenen while-Schleife aufrufen - Bsp.:"while(Multiplayer::receive());"
 	/// </summary>
-	/// <returns>True, wenn empfangen</returns>
+	/// <returns>True, wenn empfangen und Packet-Header gültig | False, wenn Packet-Header ungültig</returns>
 	static bool receive();
 };

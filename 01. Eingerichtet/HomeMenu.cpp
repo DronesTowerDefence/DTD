@@ -1,4 +1,3 @@
-
 #include "HomeMenu.h"
 
 HomeMenu* HomeMenu::instance = nullptr;
@@ -101,22 +100,22 @@ HomeMenu::HomeMenu()
 	textureTower[0][0]->loadFromFile("img/tower0/tower0_0.png");
 	textureTower[0][1]->loadFromFile("img/tower0/tower0_1.png");
 	textureTower[0][2]->loadFromFile("img/tower0/tower0_2.png");
-	textureTower[0][3]->loadFromFile("img/tower0/tower0_1.png");
+	textureTower[0][3]->loadFromFile("img/tower0/tower0_3.png");
 
 	textureTower[1][0]->loadFromFile("img/tower1/tower1_0.png");
-	textureTower[1][1]->loadFromFile("img/tower1/tower1_0.png");
-	textureTower[1][2]->loadFromFile("img/tower1/tower1_0.png");
-	textureTower[1][3]->loadFromFile("img/tower1/tower1_0.png");
+	textureTower[1][1]->loadFromFile("img/tower1/tower1_1.png");
+	textureTower[1][2]->loadFromFile("img/tower1/tower1_2.png");
+	textureTower[1][3]->loadFromFile("img/tower1/tower1_3.png");
 
 	textureTower[2][0]->loadFromFile("img/tower2/tower2_0.png");
 	textureTower[2][1]->loadFromFile("img/tower2/tower2_1.png");
 	textureTower[2][2]->loadFromFile("img/tower2/tower2_2.png");
-	textureTower[2][3]->loadFromFile("img/tower2/tower2_1.png");
+	textureTower[2][3]->loadFromFile("img/tower2/tower2_3.png");
 
 	textureTower[3][0]->loadFromFile("img/tower3/tower3_0.png");
-	textureTower[3][1]->loadFromFile("img/tower3/tower3_0.png");
-	textureTower[3][2]->loadFromFile("img/tower3/tower3_0.png");
-	textureTower[3][3]->loadFromFile("img/tower3/tower3_0.png");
+	textureTower[3][1]->loadFromFile("img/tower3/tower3_1.png");
+	textureTower[3][2]->loadFromFile("img/tower3/tower3_2.png");
+	textureTower[3][3]->loadFromFile("img/tower3/tower3_3.png");
 
 	textureTower[4][0]->loadFromFile("img/tower4/tower4_0.png");
 	textureTower[4][1]->loadFromFile("img/tower4/tower4_1.png");
@@ -141,7 +140,7 @@ HomeMenu::HomeMenu()
 	pointer->setOutlineColor(Color::Magenta);
 	pointer->setFillColor(Color::Transparent);
 
-	choseText = new Text("Waehle eine Karte aus", *font, 40);
+	choseText = new Text("Wähle eine Karte aus", *font, 40);
 	choseText->setPosition(Vector2f(500, 450));
 
 	ipAdressText->setFont(*font);
@@ -260,6 +259,7 @@ int  HomeMenu::CheckClicked()
 			}
 		}
 
+		Ressources* res = Ressources::getInstance();
 
 		//Host clicked
 		mouse = Mouse::getPosition(*window);
@@ -270,9 +270,6 @@ int  HomeMenu::CheckClicked()
 		{
 			status = 2;
 			connected = true;
-
-
-			Ressources* res = Ressources::getInstance();
 
 			if (res->getListener()->listen(4567))
 			{
@@ -290,8 +287,7 @@ int  HomeMenu::CheckClicked()
 
 			std::string ip_client;
 			p >> ip_client;
-
-
+			res->setIpAddress(ip_client);
 
 			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
 			{
@@ -317,7 +313,10 @@ int  HomeMenu::CheckClicked()
 		{
 			connected = true;
 			status = 3;
-			if (Ressources::getInstance()->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
+
+			res->setIpAddress(ipAdress);
+
+			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
 				connected = false;
 				std::cout << "ERROR";
@@ -325,7 +324,7 @@ int  HomeMenu::CheckClicked()
 
 			Packet p1;
 			p1 << ownIpAdress;
-			Ressources::getInstance()->getSender()->send(p1);
+			res->getSender()->send(p1);
 
 
 			if (res->getListener()->listen(4568))

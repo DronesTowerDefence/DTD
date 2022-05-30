@@ -49,6 +49,8 @@ private:
 
 
 	std::string towerName[5]; //Der Name des Turmes
+	std::string ipAddress; //Ip des Hosts
+
 	TcpSocket* sender;
 	TcpSocket* receiver;
 	TcpListener* listener;
@@ -57,7 +59,10 @@ private:
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];
 	Texture towerNoBuyTexture[5];
-	Texture projectileTexture[2];
+	Texture updateTexture[4];
+	Texture updateNoBuyTexture[4];
+	Texture projectileTexture[3];
+	Texture spawnTexture[1];
 	Texture droneTexture[4][2];
 	Texture droneDmgTexture[4][4];
 	Texture buttonHomeTexture;
@@ -66,6 +71,7 @@ private:
 	Texture buttonStartTexture;
 	Texture buttonExitTexture;
 	Texture buttonSpeedTexture;
+	Texture buttonSellTexture;
 	Texture map[3];
 
 	Image icon;
@@ -102,6 +108,8 @@ public:
 	float getWaitSubHealth();
 
 	std::string getTowerName(int);
+	std::string getOwnIpAddress();
+	std::string getIpAddress();
 
 	Image getIcon();
 
@@ -113,7 +121,26 @@ public:
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);
 	Texture* getTowerNoBuyTexture(int);
+	/// <summary>
+	/// 0=upgradeMoney,
+	/// 1=upgradeMoneyTime,
+	/// 2=upgradeAttackspeed,
+	/// 3=upgradeDamage
+	/// </summary>
+	/// <param name="">Index</param>
+	/// <returns></returns>
+	Texture* getUpdateTexture(int);
+	/// <summary>
+	/// 0=upgradeMoney_noBuy,
+	/// 1=upgradeMoneyTime_noBuy,
+	/// 2=upgradeAttackspeed_noBuy,
+	/// 3=upgradeDamage_noBuy
+	/// </summary>
+	/// <param name="">Index</param>
+	/// <returns></returns>
+	Texture* getUpdateNoBuyTexture(int);
 	Texture* getProjectileTexture(int);
+	Texture* getTowerSpawnTexture(int);
 	Texture* getDroneTexture(int, int);
 	Texture* getDroneDmgTexture(int, int);
 	Texture* getButtonHomeTexture();
@@ -122,10 +149,12 @@ public:
 	Texture* getButtonStartTexture();
 	Texture* getButtonExitTexture();
 	Texture* getButtonSpeedTexture();
+	Texture* getButtonSellTexture();
 	Texture* getMapTexture(int);
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
+	void setIpAddress(std::string);
 
 	void doubleSpeed();
 	void normalSpeed();

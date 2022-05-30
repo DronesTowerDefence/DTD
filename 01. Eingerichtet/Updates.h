@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-//#include "Round.h"
 using namespace sf;
+
 class Tower;
 class Updates
 {
@@ -28,6 +28,7 @@ private:
 	Text* price;
 
 	Tower* tower;
+	Ressources* res;
 
 public:
 	Updates(Tower * tower);
