@@ -762,24 +762,27 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		{
 			p_ressources->getListener()->listen(4567); //Horcht am Port
 
-			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+			while(p_ressources->getListener()->accept(*p_ressources->getReceiver())!=Socket::Done); //Stellt Verbindung her
 
-			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568, Multiplayer::timeout); //Verbindet sich mit dem Client
+			while(p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568)!=Socket::Done); //Verbindet sich mit dem Client
 
+			multiplayerCheckConnectionClock.restart();
 		}
 		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
 		{
-			p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567, Multiplayer::timeout); //Verbindet sich mit dem Host
+			while(p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567)!=Socket::Done); //Verbindet sich mit dem Host
 
 			p_ressources->getListener()->listen(4568); //Horcht am Port
 
-			p_ressources->getListener()->accept(*p_ressources->getReceiver()); //Stellt Verbindung her
+			while(p_ressources->getListener()->accept(*p_ressources->getReceiver())!=Socket::Done); //Stellt Verbindung her
 
+			multiplayerCheckConnectionClock.restart();
 		}
 
 		p_ressources->getSender()->setBlocking(false);
 		p_ressources->getReceiver()->setBlocking(false);
 		p_ressources->getListener()->setBlocking(false);
+
 	}
 }
 void Game::resetAll()
