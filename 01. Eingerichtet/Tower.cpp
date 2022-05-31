@@ -213,6 +213,16 @@ void Tower::spawnSpawn(int art)
 {
 	boundSpawns.push_back(new TowerSpawn(art, this));
 }
+
+void Tower::sellSpawns()
+{
+	if (!boundSpawns.empty()) {
+		for (auto i : boundSpawns) {
+			i->~TowerSpawn();
+		}
+	}
+}
+
 #pragma endregion
 
 #pragma region getter

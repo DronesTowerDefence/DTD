@@ -100,6 +100,7 @@ void Round::sellTower(Tower* a)
 		if (i == a)
 		{
 			allAttackTowers.remove(i);
+			i->sellSpawns();
 			break;
 		}
 	}

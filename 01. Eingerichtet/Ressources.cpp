@@ -1,11 +1,14 @@
 #include "Ressources.h"
 #include "Round.h"
+#include "Game.h"
 
 Ressources* Ressources::instance = nullptr;
 
 #pragma region Konstruktor
 Ressources::Ressources()
 {
+
+	isDoubleSpeed = 0;
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -34,7 +37,7 @@ Ressources::Ressources()
 	towerPrice[4] = 500;
 
 	towerDamage[0] = 1;
-	towerDamage[1] = 2;
+	towerDamage[1] = 1;
 	towerDamage[2] = 2;
 	towerDamage[3] = 4;
 	towerDamage[4] = 0;
@@ -74,15 +77,22 @@ Ressources::Ressources()
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
+	towerName[5] = "Egal";
 
 	ipAddress = "0"; //Standart-Initialisierung
 
-	double p[5];
+	flugzeugUpdate[0] = Vector2f(1, 1);
+	flugzeugUpdate[1] = Vector2f(-1, 1);
+	flugzeugUpdate[2] = Vector2f(1, -1);
+	flugzeugUpdate[3] = Vector2f(-1, -1);
+
+	double p[6];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
 	p[2] = 1.f / 6.f;
 	p[3] = 1.f / 5.f;
-	p[4] = 1.f / 8.f;
+	p[4] = 1.f / 5.f;
+	p[5] = 1.f / 5.f;
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
@@ -116,7 +126,7 @@ Ressources::Ressources()
 		}
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < towerCount; i++)
 	{
 		towerAliasTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_alias.png");
 		towerPreviewTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_preview.png");
@@ -183,6 +193,10 @@ Ressources::Ressources()
 #pragma region Funktionen
 void Ressources::normalSpeed()
 {
+	Game::getInstance()->setShootClockSpeed(2);
+
+	isDoubleSpeed = 0;
+
 	waitSubHealth *= 2;
 
 	towerSpeed[0] *= 2;
@@ -190,12 +204,14 @@ void Ressources::normalSpeed()
 	towerSpeed[2] *= 2;
 	towerSpeed[3] *= 2;
 	towerSpeed[4] *= 2;
+	towerSpeed[5] *= 2;
 
 	towerProjectileSpeed[0] *= 2;
 	towerProjectileSpeed[1] *= 2;
 	towerProjectileSpeed[2] *= 2;
 	towerProjectileSpeed[3] *= 2;
 	towerProjectileSpeed[4] *= 2;
+	towerProjectileSpeed[5] *= 2;
 
 
 	towerChangeFrame[0] *= 2;
@@ -203,6 +219,8 @@ void Ressources::normalSpeed()
 	towerChangeFrame[2] *= 2;
 	towerChangeFrame[3] *= 2;
 	towerChangeFrame[4] *= 2;
+	towerChangeFrame[5] *= 2;
+
 
 	for (int j = 0; j < towerCount; j++)
 	{
@@ -230,24 +248,35 @@ void Ressources::newConnection()
 }
 void Ressources::doubleSpeed()
 {
+	isDoubleSpeed = 1;
+	
+	Game::getInstance()->setShootClockSpeed(1);
+
 	waitSubHealth /= 2;
 	towerSpeed[0] /= 2;
 	towerSpeed[1] /= 2;
 	towerSpeed[2] /= 2;
 	towerSpeed[3] /= 2;
 	towerSpeed[4] /= 2;
+	towerSpeed[5] /= 2;
 
 	towerProjectileSpeed[0] /= 2;
 	towerProjectileSpeed[1] /= 2;
 	towerProjectileSpeed[2] /= 2;
 	towerProjectileSpeed[3] /= 2;
 	towerProjectileSpeed[4] /= 2;
+	towerProjectileSpeed[6] /= 2;
 
 	towerChangeFrame[0] /= 2;
 	towerChangeFrame[1] /= 2;
 	towerChangeFrame[2] /= 2;
 	towerChangeFrame[3] /= 2;
 	towerChangeFrame[4] /= 2;
+	towerChangeFrame[6] /= 2;
+
+	for (auto i : Round::getInstance()->getAllSpawns()) { //Geschwindigkeit des Flugzeuges
+		i->setMoveMultiply(1);
+	}
 
 	for (int j = 0; j < towerCount; j++)
 	{
@@ -263,6 +292,7 @@ void Ressources::doubleSpeed()
 		droneSpawnTime[i] /= 2;
 	}
 	setSpeed();
+
 }
 #pragma endregion
 
@@ -376,6 +406,16 @@ float Ressources::getDroneSpawnTime()
 float Ressources::getWaitSubHealth()
 {
 	return waitSubHealth;
+}
+
+bool Ressources::getDoubleSpeed()
+{
+	return isDoubleSpeed;
+}
+
+Vector2f Ressources::getFlugzeugUpdate(int i)
+{
+	return flugzeugUpdate[i];
 }
 
 std::string Ressources::getTowerName(int i)

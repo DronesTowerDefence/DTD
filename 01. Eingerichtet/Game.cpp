@@ -19,6 +19,7 @@ Game::Game()
 
 	droneCount = 0;
 	chooseMusic = 0;
+	shootClockSpeed = 2;
 
 	lost = false;
 	eco.setCharacterSize(30);
@@ -460,11 +461,12 @@ void Game::draw()
 	{
 		window->draw(*d->getDrawSprite());
 	}
-
+		
 	for (auto* q : round->getAllSpawns()) //Drawt die Spawns
-	{
-		window->draw(q->getSpawnSprite());
-	}
+		{
+			window->draw(*q->getSpawnSprite());
+		}
+	
 
 	if (lost)
 	{
@@ -478,7 +480,7 @@ void Game::draw()
 }
 void Game::checkShoot()
 {
-	if (shootCooldown.getElapsedTime().asSeconds() > 2) {
+	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
 		for (auto t : round->getAllAttackTower()) {
 			if (t->getIndex() == 3 || t->getIndex() == 1) {
 				//std::cout << shootCooldown.getElapsedTime().asSeconds() << std::endl;
@@ -494,18 +496,18 @@ void Game::checkShoot()
 		}
 	}
 
-	if (shootCooldown.getElapsedTime().asSeconds() > 2) {
-		shootCooldown.restart();
-	}
-	CircleShape* tmp = new CircleShape;
-	for (auto t : round->getAllAttackTower())
-	{
-		if (t->getIndex() != 1 && t->getIndex() != 3) {
-			for (auto iter : t->getCoverableArea())
-			{
-				tmp->setFillColor(Color::Transparent);
-				tmp->setRadius(15);
-				tmp->setPosition(Vector2f(iter.x, iter.y));
+if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
+	shootCooldown.restart();
+}
+CircleShape* tmp = new CircleShape;
+for (auto t : round->getAllAttackTower())
+{
+	if (t->getIndex() != 1 && t->getIndex() != 3) {
+		for (auto iter : t->getCoverableArea())
+		{
+			tmp->setFillColor(Color::Transparent);
+			tmp->setRadius(15);
+			tmp->setPosition(Vector2f(iter.x, iter.y));
 
 				for (auto d : round->getAllDrones())
 				{
@@ -727,7 +729,7 @@ void Game::restart()
 }
 void Game::sellTower(Tower* t)
 {
-	if (tower == t)
+	/*if (tower == t)
 	{
 		tower = nullptr;
 	}
@@ -889,6 +891,10 @@ Game* Game::getInstance()
 	}
 	return instance;
 }
+int Game::getShootClockSpeed()
+{
+	return shootClockSpeed;
+}
 bool Game::getDoubleSpeed()
 {
 	return doubleSpeed;
@@ -937,6 +943,10 @@ void Game::setMusicVolume(float v)
 		music[i].setVolume(v);
 
 	}
+}
+void Game::setShootClockSpeed(int a)
+{
+	shootClockSpeed = a;
 }
 void Game::setWindow(RenderWindow* _window) {
 	window = _window;

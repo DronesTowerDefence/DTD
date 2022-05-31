@@ -22,7 +22,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	switch (_style)
 	{
 	case 0:
-		projectilesprite.setTexture(*res->getProjectileTexture(0));
+		projectilesprite.setTexture(*res->getProjectileTexture(0));//Feuerturm
 		break;
 	case 1:
 		projectilesprite.setTexture(*res->getProjectileTexture(0));
@@ -31,7 +31,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setTexture(*res->getProjectileTexture(0));
 		break;
 	case 3:
-		projectilesprite.setTexture(*res->getProjectileTexture(1));
+		projectilesprite.setTexture(*res->getProjectileTexture(2));//Nagelwerfer
 		break;
 	case 4:
 		projectilesprite.setTexture(*res->getProjectileTexture(1));
@@ -41,7 +41,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	style = _style;
 	dronetarget = _target;
 	if (_target == nullptr&&style==0)
-		projectilesprite.setPosition(_towerspawn->getSpawnSprite().getPosition().x+_towerspawn->getSpawnTexture().getSize().x/2, _towerspawn->getSpawnSprite().getPosition().y + _towerspawn->getSpawnTexture().getSize().y / 2);
+		projectilesprite.setPosition((*_towerspawn->getSpawnSprite()).getPosition().x +  (_towerspawn->getSpawnTexture()).getSize().x / 2, (*_towerspawn->getSpawnSprite()).getPosition().y + _towerspawn->getSpawnTexture().getSize().y / 2);
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
 	operate();
