@@ -729,7 +729,7 @@ void Game::restart()
 }
 void Game::sellTower(Tower* t)
 {
-	/*if (tower == t)
+	if (tower == t)
 	{
 		tower = nullptr;
 	}
