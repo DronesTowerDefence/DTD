@@ -219,6 +219,15 @@ void Ressources::normalSpeed()
 	}
 	setSpeed();
 }
+void Ressources::newConnection()
+{
+	delete listener;
+	delete receiver;
+	delete sender;
+	sender = new TcpSocket();
+	receiver = new TcpSocket();
+	listener = new TcpListener();
+}
 void Ressources::doubleSpeed()
 {
 	waitSubHealth /= 2;

@@ -347,10 +347,12 @@ void Game::checkButtonClick()
 			if (doubleSpeed)
 			{
 				Ressources::getInstance()->normalSpeed();
+				Multiplayer::send(5, false);
 			}
 			else
 			{
 				Ressources::getInstance()->doubleSpeed();
+				Multiplayer::send(5, false);
 			}
 			doubleSpeed = !doubleSpeed;
 		}
@@ -753,9 +755,7 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		window->draw(waitText);
 		window->display();
 
-		p_ressources->getSender()->setBlocking(true);
-		p_ressources->getReceiver()->setBlocking(true);
-		p_ressources->getListener()->setBlocking(true);
+		p_ressources->newConnection();
 
 		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 		{

@@ -54,6 +54,7 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
 		return true;
+		
 	}
 	return false;
 }
