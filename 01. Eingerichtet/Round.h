@@ -35,7 +35,7 @@ private:
 	std::list<TowerSpawn*> allSpawns;
 
 	Round();
-	Round(int a, int b, int c, int d);
+	Round(Map*);
 
 
 public:
@@ -43,9 +43,7 @@ public:
 	~Round();
 
 	static Round* getInstance();
-
-	
-
+	static Round* getInstance(Map*);
 
 	int getHealth();
 	int getIndex();

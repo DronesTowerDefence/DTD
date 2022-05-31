@@ -5,10 +5,21 @@
 
 Round* Round::instance = nullptr;
 #pragma region Konstruktor
+
 Round::Round()
 {
+	money = -1; //Start-Geld
+	health = -1; //Start-Leben
+	index = -1; //Start-Runde
+	lost = false;
+	won = false;
+	receivedFromHostNextRound = false;
+	p_map = nullptr;
+}
+Round::Round(Map* _p_map)
+{
 	money = 1000000; //Start-Geld
-	health = 2000; //Start-Leben
+	health = 2; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -17,6 +28,9 @@ Round::Round()
 	won = false;
 	receivedFromHostNextRound = false;
 
+	p_map = _p_map;
+
+	setAllCoverablePoints();
 }
 
 #pragma endregion
@@ -195,6 +209,16 @@ Round* Round::getInstance()
 	if (instance == nullptr)
 	{
 		instance = new Round;
+		return instance;
+	}
+	return instance;
+}
+Round* Round::getInstance(Map* _p_map)
+{
+	if (instance == nullptr)
+	{
+		instance = new Round(_p_map);
+		return instance;
 	}
 	return instance;
 }

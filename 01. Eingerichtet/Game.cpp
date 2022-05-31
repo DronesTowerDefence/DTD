@@ -13,10 +13,9 @@ Game::Game()
 	stdFont.loadFromFile("fonts/arial.ttf");
 	eco.setFont(stdFont);
 	p_map = new Map(HomeMenu::getInstance()->getChoseIndex());
-	round = Round::getInstance();
+	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
-	round->setAllCoverablePoints();
 
 	droneCount = 0;
 	chooseMusic = 0;
@@ -722,8 +721,8 @@ void Game::restart()
 
 	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 	resetAll();
-	round = Round::getInstance();
 	p_map = new Map(mapIndex);
+	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 }
 void Game::sellTower(Tower* t)

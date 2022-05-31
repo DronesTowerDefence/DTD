@@ -10,7 +10,6 @@ Map::Map(int index)
 
 	this->index = index; //Muss bei mehreren Maps angepasst werden. Mit einem Übergabe Parameter
 
-	Round::getInstance()->setP_map(this);
 	texture.loadFromFile("img/maps/map" + std::to_string(index) + ".png");
 	background.setSize(Vector2f(1920, 991));
 	background.setTexture(&texture);
