@@ -492,9 +492,6 @@ void Game::checkShoot()
 						i->shoot();
 					}
 				}
-				if (t->getIndex() == 1) {
-					new Projectile(nullptr, t, nullptr, 3, Vector2f(0, 0));
-				}
 			}
 		}
 	}

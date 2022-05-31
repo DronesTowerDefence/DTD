@@ -17,8 +17,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 
 	if (index >= 0 && index <= 4)
 	{
-
-
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
 		damage = res->getTowerDamage(index);
@@ -104,7 +102,14 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			if (index == 1)
+			{
+				new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+			}
+			else
+			{
+				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			}
 			if (Game::getInstance()->getStatus() == 2)
 			{
 				Multiplayer::send(id, d->getId());
