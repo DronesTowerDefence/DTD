@@ -19,7 +19,7 @@ Round::Round()
 Round::Round(Map* _p_map)
 {
 	money = 1000000; //Start-Geld
-	health = 2; //Start-Leben
+	health = 2000; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;

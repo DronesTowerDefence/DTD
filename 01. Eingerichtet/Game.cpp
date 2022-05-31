@@ -11,7 +11,6 @@ Game::Game()
 	doubleSpeed = false;
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
-	eco.setFont(stdFont);
 	p_map = new Map(HomeMenu::getInstance()->getChoseIndex());
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
@@ -22,8 +21,12 @@ Game::Game()
 	shootClockSpeed = 2;
 
 	lost = false;
+	eco.setFont(stdFont);
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
+	eco.setFillColor(Color::White);
+	eco.setOutlineThickness(4);
+	eco.setOutlineColor(Color::Black);
 	tower = nullptr;
 	toolbar = RectangleShape();
 	toolbar.setFillColor(Color::Blue);
@@ -197,7 +200,7 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			// Shotcuts
+			// Shortcuts
 			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
 			{
 				if (doubleSpeed)
@@ -461,12 +464,12 @@ void Game::draw()
 	{
 		window->draw(*d->getDrawSprite());
 	}
-		
+
 	for (auto* q : round->getAllSpawns()) //Drawt die Spawns
-		{
-			window->draw(*q->getSpawnSprite());
-		}
-	
+	{
+		window->draw(*q->getSpawnSprite());
+	}
+
 
 	if (lost)
 	{
@@ -496,18 +499,18 @@ void Game::checkShoot()
 		}
 	}
 
-if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
-	shootCooldown.restart();
-}
-CircleShape* tmp = new CircleShape;
-for (auto t : round->getAllAttackTower())
-{
-	if (t->getIndex() != 1 && t->getIndex() != 3) {
-		for (auto iter : t->getCoverableArea())
-		{
-			tmp->setFillColor(Color::Transparent);
-			tmp->setRadius(15);
-			tmp->setPosition(Vector2f(iter.x, iter.y));
+	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
+		shootCooldown.restart();
+	}
+	CircleShape* tmp = new CircleShape;
+	for (auto t : round->getAllAttackTower())
+	{
+		if (t->getIndex() != 1 && t->getIndex() != 3) {
+			for (auto iter : t->getCoverableArea())
+			{
+				tmp->setFillColor(Color::Transparent);
+				tmp->setRadius(15);
+				tmp->setPosition(Vector2f(iter.x, iter.y));
 
 				for (auto d : round->getAllDrones())
 				{
@@ -734,9 +737,9 @@ void Game::sellTower(Tower* t)
 		tower = nullptr;
 	}
 }
-void Game::checkMultiplayerConnection() //TODO - WIP
+void Game::checkMultiplayerConnection()
 {
-	if (multiplayerCheckConnectionSendClock.getElapsedTime().asSeconds() > Multiplayer::timeout.asSeconds() / 3)
+	if (multiplayerCheckConnectionSendClock.getElapsedTime() > Multiplayer::timeoutSend)
 	{
 		Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
 		multiplayerCheckConnectionSendClock.restart();
@@ -744,9 +747,11 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 
 	if (multiplayerCheckConnectionClock.getElapsedTime() > Multiplayer::timeout)
 	{
+		Clock noConnectionPossibleClock;
+		Time noConnectionPossibleTimer = seconds(20);
 		Text waitText;
 		waitText.setFont(stdFont);
-		waitText.setCharacterSize(30);
+		waitText.setCharacterSize(40);
 		waitText.setFillColor(Color::White);
 		waitText.setOutlineColor(Color::Black);
 		waitText.setOutlineThickness(2);
@@ -762,19 +767,83 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		{
 			p_ressources->getListener()->listen(4567); //Horcht am Port
 
-			while(p_ressources->getListener()->accept(*p_ressources->getReceiver())!=Socket::Done); //Stellt Verbindung her
+			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
+			{
+				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+				{
+					if (event.type == Event::Closed)
+					{
+						saveGame(); //Speichert das Spiel
+						window->close();
+					}
+				}
+				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				{
+					status = 1;
+					p_ressources->newConnection();
+					return;
+				}
+			}
 
-			while(p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568)!=Socket::Done); //Verbindet sich mit dem Client
+			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
+			{
+				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+				{
+					if (event.type == Event::Closed)
+					{
+						saveGame(); //Speichert das Spiel
+						window->close();
+					}
+				}
+				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				{
+					status = 1;
+					p_ressources->newConnection();
+					return;
+				}
+			}
 
 			multiplayerCheckConnectionClock.restart();
 		}
 		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
 		{
-			while(p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567)!=Socket::Done); //Verbindet sich mit dem Host
+			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
+			{
+				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+				{
+					if (event.type == Event::Closed)
+					{
+						saveGame(); //Speichert das Spiel
+						window->close();
+					}
+				}
+				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				{
+					status = 1;
+					p_ressources->newConnection();
+					return;
+				}
+			}
 
 			p_ressources->getListener()->listen(4568); //Horcht am Port
 
-			while(p_ressources->getListener()->accept(*p_ressources->getReceiver())!=Socket::Done); //Stellt Verbindung her
+			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
+			{
+				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+				{
+					if (event.type == Event::Closed)
+					{
+						saveGame(); //Speichert das Spiel
+						window->close();
+					}
+				}
+				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				{
+					status = 1;
+					p_ressources->newConnection();
+					return;
+				}
+			}
 
 			multiplayerCheckConnectionClock.restart();
 		}
