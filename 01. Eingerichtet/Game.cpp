@@ -726,10 +726,10 @@ void Game::restart()
 }
 void Game::sellTower(Tower* t)
 {
-	if (tower == t)
+	/*if (tower == t)
 	{
 		tower =
-	}
+	}*/
 }
 void Game::checkMultiplayerConnection() //TODO - WIP
 {
