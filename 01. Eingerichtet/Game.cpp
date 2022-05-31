@@ -728,7 +728,7 @@ void Game::sellTower(Tower* t)
 {
 	if (tower == t)
 	{
-		tower =
+		tower = nullptr;
 	}
 }
 void Game::checkMultiplayerConnection() //TODO - WIP
