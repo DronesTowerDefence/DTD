@@ -448,6 +448,14 @@ Image Ressources::getIcon()
 {
 	return icon;
 }
+Sound* Ressources::getHitSound(int a)
+{
+	return &hitSound[a];
+}
+Sound* Ressources::getShootSound(int a)
+{
+	return &shootSound[a];
+}
 TcpSocket* Ressources::getSender()
 {
 	return sender;

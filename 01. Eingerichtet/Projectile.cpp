@@ -53,19 +53,23 @@ void Projectile::operate()
 {
 	switch (style) {
 	case 0: {   //Fliegt einfach gerade
+		res->getShootSound(style)->play();
 		moveProjectile();
 		break;
 	}
 	case 1: { //Fliegt Richtung Drohne 
+		res->getShootSound(style)->play();
 		targeting();
 		setmove();
 		break;
 	}
 	case 2: {  // Verfolgt Drohne
+		res->getShootSound(style)->play();
 		homing();
 		break; 
 	}
 	case 3:
+		res->getShootSound(style)->play();
 		srand((unsigned)time(NULL));
 		int o = rand() % tower->getCoverableArea().size();
 		int j = 0;

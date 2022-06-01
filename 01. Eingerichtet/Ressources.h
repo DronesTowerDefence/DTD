@@ -126,6 +126,9 @@ public:
 
 	Image getIcon();
 
+	Sound* getHitSound(int);
+	Sound* getShootSound(int);
+
 	TcpSocket* getSender();
 	TcpSocket* getReceiver();
 	TcpListener* getListener();
