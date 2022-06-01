@@ -92,6 +92,7 @@ void TowerSpawn::operate()
 		spawnsprite.setTexture(*res->getTowerSpawnTexture(0));
 		spawnsprite.setPosition(tower->getTowerPos().x-setx, tower->getTowerPos().y-sety);
 		std::cout << tower->getTowerSpr().getPosition().x << std::endl << tower->getTowerSpr().getPosition().y << std::endl;
+		break;
 	}
 }
 #pragma endregion
