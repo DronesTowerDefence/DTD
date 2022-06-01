@@ -20,7 +20,6 @@ Game::Game()
 	chooseMusic = 0;
 	shootClockSpeed = 2;
 
-	lost = false;
 	eco.setFont(stdFont);
 	eco.setCharacterSize(30);
 	eco.setPosition(20, 20);
@@ -474,7 +473,13 @@ void Game::draw()
 	}
 
 
-	if (lost)
+	if (round->getLost())
+	{
+		window->draw(gameOverWonBackround);
+		window->draw(homeButton);
+		window->draw(restartButton);
+	}
+	else if (round->getWon())
 	{
 		window->draw(gameOverWonBackround);
 		window->draw(homeButton);
@@ -613,23 +618,47 @@ void Game::checkLoseGame()
 	{
 		if (round->getLost())
 		{
+			//Setzen der Texturen/Positionen
 			round->setHealth(0);
 			updateEco();
 			gameOverWonBackround.setTexture(*p_ressources->getGameOverTexture());
 
-			if (status == 2)
+			gameOverWonText[0].setString(std::to_string(round->getIndex() + 1));
+			gameOverWonText[0].setFont(stdFont);
+			gameOverWonText[0].setCharacterSize(70);
+			gameOverWonText[0].setFillColor(Color::White);
+			gameOverWonText[0].setOutlineColor(Color::Black);
+			gameOverWonText[0].setOutlineThickness(3);
+			gameOverWonText[0].setPosition(Vector2f(970, 467));
+
+			if (status == 2) //Multiplayer
 			{
 				Multiplayer::send(1, false);
 			}
 		}
-		else if (round->getWon())
+		else if (round->getWon()) //Setzen der Textur
 		{
 			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
 			updateEco();
+
+			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
+			{
+				gameOverWonText[i].setFont(stdFont);
+				gameOverWonText[i].setCharacterSize(70);
+				gameOverWonText[i].setFillColor(Color::White);
+				gameOverWonText[i].setOutlineColor(Color::Black);
+				gameOverWonText[i].setOutlineThickness(3);
+			}
+				gameOverWonText[0].setString(std::to_string(1)); //TODO
+				gameOverWonText[1].setString(std::to_string(2));
+				gameOverWonText[0].setPosition(Vector2f(1200, 440));
+				gameOverWonText[1].setPosition(Vector2f(1200, 530));
 		}
 
+		//Setzen der Texturen
 		Vector2f gameOverPos(window->getSize().x / 2 - p_ressources->getGameWonTexture()->getSize().x / 2, window->getSize().y / 2 - p_ressources->getGameWonTexture()->getSize().y / 2);
 		//gameOverPos: Rechnung, um das Bild in der Mitte vom Bildschirm zu haben
+
 		gameOverWonBackround.setPosition(gameOverPos);
 
 		homeButton.setTexture(*p_ressources->getButtonHomeTexture());
@@ -639,22 +668,13 @@ void Game::checkLoseGame()
 		restartButton.setPosition(Vector2f(1060, 650));
 
 		Vector2i mousePos = Vector2i(0, 0);
-		gameOverRound.setString(std::to_string(round->getIndex() + 1));
-		gameOverRound.setFont(stdFont);
-		gameOverRound.setCharacterSize(70);
-		gameOverRound.setFillColor(Color::White);
-		gameOverRound.setOutlineColor(Color::Black);
-		gameOverRound.setOutlineThickness(3);
-		gameOverRound.setPosition(Vector2f(970, 467));
-
-		lost = true;
 
 		if (doubleSpeed)
 		{
 			Ressources::getInstance()->normalSpeed();
 			doubleSpeed = false;
 		}
-		while (lost)
+		while (round->getLost() || round->getWon())
 		{
 			while (window->pollEvent(event))
 			{
@@ -666,12 +686,26 @@ void Game::checkLoseGame()
 				}
 			}
 
+			//Draw
 			window->draw(gameOverWonBackround);
-			window->draw(gameOverRound);
 			window->draw(homeButton);
 			window->draw(restartButton);
+
+			if (round->getLost())
+			{
+				window->draw(gameOverWonText[0]);
+			}
+			else
+			{
+				for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
+				{
+					window->draw(gameOverWonText[i]);
+				}
+			}
+
 			window->display();
 
+			//Überprüfung, ob einer der beiden Buttons geklickt wurde
 			mousePos = Mouse::getPosition();
 
 			if (Mouse::isButtonPressed(Mouse::Left))
@@ -693,26 +727,6 @@ void Game::checkLoseGame()
 					(mousePos.y >= restartButtonPos.y && mousePos.y <= restartButtonPos2.y)) //Wenn restart
 				{
 					restart();
-					return;
-				}
-			}
-		}
-	}
-	else if (round->getWon())
-	{
-		if (doubleSpeed)
-		{
-			Ressources::getInstance()->normalSpeed();
-			doubleSpeed = false;
-		}
-		while (lost)
-		{
-			while (window->pollEvent(event))
-			{
-				if (event.type == Event::Closed)
-				{
-					saveGame();
-					window->close();
 					return;
 				}
 			}
@@ -740,7 +754,6 @@ void Game::checkDroneCount()
 void Game::mainMenu()
 {
 	saveGame();
-	lost = false;
 
 	if (status == 2)
 	{
@@ -751,8 +764,7 @@ void Game::mainMenu()
 }
 void Game::restart()
 {
-	saveGame();
-	lost = false;
+	deleteSaveGame();
 
 	if (status == 2)
 	{
@@ -771,6 +783,18 @@ void Game::sellTower(Tower* t)
 	{
 		tower = nullptr;
 	}
+}
+bool Game::deleteSaveGame()
+{
+	std::ifstream FileTest("saves/savegame" + std::to_string(p_map->getIndex()) + ".sav"); //Überprüft ob die Datei existiert, wenn nicht
+	if (!FileTest)
+		return false;
+
+	std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
+	const char* cmd_cc = cmd_s.c_str();
+	system(cmd_cc);
+
+	return true;
 }
 void Game::checkMultiplayerConnection()
 {
@@ -892,7 +916,6 @@ void Game::checkMultiplayerConnection()
 void Game::resetAll()
 {
 	//Zurücksetzen der Attribute von Game
-	lost = false;
 	droneCount = 0;
 	isMouseClicked = false;
 	doubleSpeed = false;
@@ -950,7 +973,7 @@ void Game::saveGame()
 	{
 		return;
 	}
-	else if (lost && round->getIndex() > 0)
+	else if ((round->getLost() || round->getWon()) && round->getIndex() > 0)
 	{
 		std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
 		const char* cmd_cc = cmd_s.c_str();

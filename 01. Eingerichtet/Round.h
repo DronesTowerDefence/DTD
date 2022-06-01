@@ -34,7 +34,16 @@ private:
 	std::list<Drone*> allDrones;
 	std::list<TowerSpawn*> allSpawns;
 
+	/// <summary>
+	/// !!NICHT BENUTZEN!!
+	/// Ist nur für getInstance da
+	/// </summary>
 	Round();
+
+	/// <summary>
+	/// Konstruktor, benutzen um Round zu erstellen
+	/// </summary>
+	/// <param name=""></param>
 	Round(Map*);
 
 
@@ -42,7 +51,18 @@ public:
 
 	~Round();
 
+	/// <summary>
+	/// <para> Benutzen um die Instanz zurück zu bekommen </para>
+	/// <para> !!NICHT BENUTZEN WENN ROUND NOCH NICHT EXISTIERT!! </para>
+	/// </summary>
+	/// <returns></returns>
 	static Round* getInstance();
+
+	/// <summary>
+	/// Benutzen um Round zu erstellen
+	/// </summary>
+	/// <param name="p_map:">Map-Pointer aus der Game-Klasse</param>
+	/// <returns></returns>
 	static Round* getInstance(Map*);
 
 	int getHealth();
@@ -74,7 +94,7 @@ public:
 	void addSpawn(TowerSpawn* spawn);
 	void addProjectile(Projectile* _projectile);
 
-	
+
 	void setAllCoverablePoints(); //Strecke eingeteilt in Punkte, alle 20px
 	void sellTower(Tower*);
 	void restartDroneTimer();

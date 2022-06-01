@@ -25,7 +25,6 @@ private:
 
 	int shootClockSpeed;
 
-	bool lost;
 	bool isMouseClicked;
 	bool doubleSpeed;
 
@@ -43,7 +42,7 @@ private:
 
 	Font stdFont;
 	Text eco;
-	Text gameOverRound;
+	Text gameOverWonText[2];
 
 	Event event;
 
@@ -58,6 +57,7 @@ private:
 	Map* p_map;
 	RenderWindow* window;
 	TowerAlias* newTower;
+
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
 	/// </summary>
@@ -110,6 +110,11 @@ private:
 	/// Überprüft, ob Drohnen am Eingang erscheinen sollen und ob die nächste Runde beginnt
 	/// </summary>
 	void checkDroneCount();
+
+	/// <summary>
+	/// Überprüft die Verbindung zum anderen PC
+	/// </summary>
+	void checkMultiplayerConnection();
 
 	/// <summary>
 	/// Konstruktor von Game
@@ -201,8 +206,15 @@ public:
 	/// </summary>
 	void restart();
 
+	/// <summary>
+	/// Verkauft einen Tower
+	/// </summary>
+	/// <param name="t">Welcher Tower verkauft werden soll</param>
 	void sellTower(Tower* t);
 
-	void checkMultiplayerConnection();
-
+	/// <summary>
+	/// Löscht den Spielstand zur aktuellen Map
+	/// </summary>
+	/// <returns>True wenn erfolgreich</returns>
+	bool deleteSaveGame();
 };

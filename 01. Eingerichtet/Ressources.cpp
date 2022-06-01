@@ -495,7 +495,7 @@ Texture* Ressources::getButtonHomeTexture()
 }
 Texture* Ressources::getButtonRestartTexture()
 {
-	return &buttonStartTexture;
+	return &buttonRestartTexture;
 }
 Texture* Ressources::getButtonCloseTexture()
 {

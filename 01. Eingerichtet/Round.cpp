@@ -19,11 +19,16 @@ Round::Round()
 Round::Round(Map* _p_map)
 {
 	money = 1000000; //Start-Geld
-	health = 2; //Start-Leben
+	health = 200; //Start-Leben
 	index = 0; //Start-Runde
+
+	//Eigentlich unnötig, da das eigentlich von der Ressourcen-Klasse abgelöst wurde, außerdem nur 3 groß und nicht 5
+	//Habe aber Angst es wegzumachen
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
+	//
+
 	lost = false;
 	won = false;
 	receivedFromHostNextRound = false;
@@ -179,6 +184,7 @@ void Round::nextRound()
 	if (index == 100 && !lost)
 	{
 		won = true;
+		Game::getInstance()->deleteSaveGame();
 	}
 }
 void Round::addMoney(int _money)
@@ -202,14 +208,24 @@ void Round::addHealth(int _health)
 }
 bool Round::subhealth(int _health)
 {
-	if (health < _health || health <= 0) {
+	if (_health < 1)
+	{
+		return false;
+	}
+
+	if (health < _health) {
 
 		lost = true;
-
 	}
 
 	health -= _health;
-	return 1;
+
+	if (health <= 0)
+	{
+		lost = true;
+	}
+
+	return true;
 }
 #pragma endregion
 
