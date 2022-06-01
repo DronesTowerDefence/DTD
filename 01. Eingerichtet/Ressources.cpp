@@ -133,7 +133,7 @@ Ressources::Ressources()
 		towerNoBuyTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
 	}
 
-	
+
 	updateTexture[0].loadFromFile("img/upgrades/upgradeMoney.png");
 	updateTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime.png");
 	updateTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed.png");
@@ -142,7 +142,7 @@ Ressources::Ressources()
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
 	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
-	
+
 
 	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
 	//{
@@ -190,6 +190,17 @@ Ressources::Ressources()
 	receiver = new TcpSocket();
 	sender = new TcpSocket();
 	listener = new TcpListener();
+
+	for (int i = 0; i < (sizeof(hitBuffer) / sizeof(*hitBuffer)); i++)
+	{
+		hitBuffer[i].loadFromFile("sounds/hit" + std::to_string(i) + ".wav");
+		hitSound[i].setBuffer(hitBuffer[i]);
+	}
+	for (int i = 0; i < (sizeof(shootBuffer) / sizeof(*shootBuffer)); i++)
+	{
+		shootBuffer[i].loadFromFile("sounds/shot" + std::to_string(i) + ".wav");
+		shootSound[i].setBuffer(shootBuffer[i]);
+	}
 }
 #pragma endregion
 
@@ -252,7 +263,7 @@ void Ressources::newConnection()
 void Ressources::doubleSpeed()
 {
 	isDoubleSpeed = 1;
-	
+
 	Game::getInstance()->setShootClockSpeed(1);
 
 	waitSubHealth /= 2;

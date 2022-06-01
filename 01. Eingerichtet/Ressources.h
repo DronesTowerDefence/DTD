@@ -54,6 +54,11 @@ private:
 	std::string towerName[5]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
+	SoundBuffer hitBuffer[2];
+	SoundBuffer shootBuffer[4];
+	Sound hitSound[2];
+	Sound shootSound[4];
+
 	TcpSocket* sender;
 	TcpSocket* receiver;
 	TcpListener* listener;
@@ -123,8 +128,8 @@ public:
 
 	TcpSocket* getSender();
 	TcpSocket* getReceiver();
-
 	TcpListener* getListener();
+
 	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);
