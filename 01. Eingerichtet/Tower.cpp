@@ -102,6 +102,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
+			res->getShootSound(0)->play();
 			if (index == 1)
 			{
 				new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
@@ -131,6 +132,7 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 	{
 		if (index < 4)
 		{
+			res->getShootSound(0)->play();
 			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 			return true;
 		}

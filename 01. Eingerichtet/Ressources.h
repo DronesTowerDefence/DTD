@@ -54,10 +54,10 @@ private:
 	std::string towerName[5]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
-	SoundBuffer hitBuffer[2];
-	SoundBuffer shootBuffer[4];
-	Sound hitSound[2];
-	Sound shootSound[4];
+	SoundBuffer hitBuffer[1];
+	SoundBuffer shootBuffer[1];
+	Sound hitSound[1];
+	Sound shootSound[1];
 
 	TcpSocket* sender;
 	TcpSocket* receiver;
