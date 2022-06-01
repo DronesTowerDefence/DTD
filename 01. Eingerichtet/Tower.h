@@ -201,6 +201,8 @@ public:
 	/// <param name=""></param>
 	void spawnSpawn(int);
 
+	void sellSpawns();
+
 	~Tower();
 
 };

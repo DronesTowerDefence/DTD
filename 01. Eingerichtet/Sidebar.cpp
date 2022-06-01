@@ -29,12 +29,16 @@ Sidebar::Sidebar()
 	buttonText[2].setPosition(Vector2f(1757, 275));
 	buttonText[3].setPosition(Vector2f(1757, 380));
 	buttonText[4].setPosition(Vector2f(1757, 485));
+	buttonText[5].setPosition(Vector2f(1832, 380));
+
 
 	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
 	buttonSpr[1].setPosition(Vector2f(1762, 120));
 	buttonSpr[2].setPosition(Vector2f(1762, 225));
 	buttonSpr[3].setPosition(Vector2f(1762, 330));
 	buttonSpr[4].setPosition(Vector2f(1762, 435));
+	buttonSpr[5].setPosition(Vector2f(1765, 450));
+
 
 	doubleSpeed.setTexture(*res->getButtonSpeedTexture());
 	doubleSpeed.setPosition(Vector2f(1757, 800));

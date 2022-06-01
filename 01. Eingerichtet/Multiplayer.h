@@ -15,7 +15,15 @@ private:
 
 public:
 
+	/// <summary>
+	/// Zeit, wann die Verbindung als abgebrochen gilt
+	/// </summary>
 	static Time timeout;
+
+	/// <summary>
+	/// Zeit, in welchen Abständen die Überprüfungspackete gesendet werden sollen
+	/// </summary>
+	static Time timeoutSend;
 
 	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen

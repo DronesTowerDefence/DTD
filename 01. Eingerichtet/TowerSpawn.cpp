@@ -3,6 +3,7 @@
 #include "Round.h"
 
 #pragma region Konstruktor
+
 TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 {
 	kind = _kind;
@@ -12,6 +13,7 @@ TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 	direction = 0;
 	res = Ressources::getInstance();
 	Round::getInstance()->addSpawn(this);
+	moveMultiply = 1;
 	operate();
 }
 #pragma endregion
@@ -23,6 +25,13 @@ void TowerSpawn::shoot()
 	new Projectile(nullptr, tower, this, 0, Vector2f(-1, 0));
 	new Projectile(nullptr, tower, this, 0, Vector2f(0, 1));
 	new Projectile(nullptr, tower, this, 0, Vector2f(0, -1));
+	
+	for (int i = 0; i < tower->getUpdates()->getIndex1();i++)
+	{
+		new Projectile(nullptr, tower, this, 0,Ressources::getInstance()->getFlugzeugUpdate(i));
+	}
+
+
 }
 void TowerSpawn::moveSpawn()
 {
@@ -30,22 +39,42 @@ void TowerSpawn::moveSpawn()
 	if (spawnsprite.getPosition().y+ (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
 		move.x = 5;
 		move.y = 0;
+		if (Ressources::getInstance()->getDoubleSpeed()) {
+			move.x *= 2;
+			move.y *= 2;
+		}
 		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y+5);
+		spawnsprite.rotate(90.f);
 	}
 	if (spawnsprite.getPosition().x-(res->getTowerSpawnTexture(0)->getSize().x / 2) > tower->getTowerSpr().getPosition().x + 300) {
 		move.x = 0;
 		move.y = 5;
+		if (Ressources::getInstance()->getDoubleSpeed()) {
+			move.x *= 2;
+			move.y *= 2;
+		}
 		spawnsprite.setPosition(spawnsprite.getPosition().x-5, spawnsprite.getPosition().y);
+		spawnsprite.rotate(90.f);
 	}
 	if (spawnsprite.getPosition().y-(res->getTowerSpawnTexture(0)->getSize().y / 2) > tower->getTowerSpr().getPosition().y + 300) {
 		move.x = -5;
 		move.y = 0;
+		if (Ressources::getInstance()->getDoubleSpeed()) {
+			move.x *= 2;
+			move.y *= 2;
+		}
 		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y - 5);
+		spawnsprite.rotate(90.f);
 	}
 	if (spawnsprite.getPosition().x+(res->getTowerSpawnTexture(0)->getSize().x/2) < tower->getTowerSpr().getPosition().x - 300) {
 		move.x = 0;
 		move.y = -5;
+		if (Ressources::getInstance()->getDoubleSpeed()) {
+			move.x *= 2;
+			move.y *= 2;
+		}
 		spawnsprite.setPosition(spawnsprite.getPosition().x+5, spawnsprite.getPosition().y);
+		spawnsprite.rotate(90.f);
 	}
 	if (spawnsprite.getPosition().y + (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
 		std::cout << "moin" << std::endl;
@@ -67,13 +96,22 @@ void TowerSpawn::operate()
 }
 #pragma endregion
 #pragma region getter
-Sprite TowerSpawn::getSpawnSprite()
+Sprite* TowerSpawn::getSpawnSprite()
 {
-	return spawnsprite;
+	return &spawnsprite;
 }
 Texture TowerSpawn::getSpawnTexture()
 {
 	return *res->getTowerSpawnTexture(0);
+}
+int TowerSpawn::getMoveMultiply()
+{
+	return moveMultiply;
+}
+void TowerSpawn::setMoveMultiply(int a)
+{
+
+	moveMultiply = a;
 }
 #pragma endregion
 
@@ -82,5 +120,21 @@ Texture TowerSpawn::getSpawnTexture()
 #pragma endregion
 
 #pragma region Desturktor
+TowerSpawn::~TowerSpawn()
+{
+	Round* r = Round::getInstance();
 
+	//Löscht sich selbst aus der Liste
+	if (!r->getAllSpawns().empty())
+	{
+		for (auto i : r->getAllSpawns())
+		{
+			if (i == this)
+			{
+				r->getAllSpawns().remove(i);
+			}
+		}
+	}
+	r->getAllSpawns().clear();
+}
 #pragma endregion

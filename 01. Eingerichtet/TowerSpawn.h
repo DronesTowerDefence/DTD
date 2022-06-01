@@ -1,5 +1,6 @@
 #pragma once
 #include "Tower.h"
+#include "Ressources.h"
 class TowerSpawn
 {
 private:
@@ -10,13 +11,16 @@ private:
 	Sprite spawnsprite;
 	Tower* tower;
 	Ressources* res;
-
+	int moveMultiply;
 
 public:
+	~TowerSpawn();
 	TowerSpawn(int, Tower*);
 	
-	Sprite getSpawnSprite();
+	Sprite* getSpawnSprite();
 	Texture getSpawnTexture();
+	int getMoveMultiply();
+	void setMoveMultiply(int);
 	void shoot();
 	void moveSpawn();
 	void operate();

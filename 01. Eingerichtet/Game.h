@@ -23,6 +23,8 @@ private:
 	/// </summary>
 	int status;
 
+	int shootClockSpeed;
+
 	bool lost;
 	bool isMouseClicked;
 	bool doubleSpeed;
@@ -123,8 +125,9 @@ public:
 
 	static Game* getInstance();
 
-	bool getDoubleSpeed();
+	int getShootClockSpeed();
 
+	bool getDoubleSpeed();
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
@@ -155,6 +158,7 @@ public:
 	/// Legt das Fenster fest
 	/// </summary>
 	/// <param name="RenderWindow*"></param>
+	void setShootClockSpeed(int);
 	void setWindow(RenderWindow*);
 	/// <summary>
 	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
