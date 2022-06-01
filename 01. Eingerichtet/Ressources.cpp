@@ -177,6 +177,8 @@ Ressources::Ressources()
 	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
 	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
 	buttonSellTexture.loadFromFile("img/upgrades/sell.png");
+	gameOverScreen.loadFromFile("img/gameOverScreen.png");
+	gameWonScreen.loadFromFile("img/gameWonScreen.png");
 	buttonSpeedPressedTexture.loadFromFile("img/buttons/speedPressedButton.png");
 
 	for (int i = 0; i < mapCount; i++)
@@ -522,6 +524,14 @@ Texture* Ressources::getButtonSellTexture()
 Texture* Ressources::getMapTexture(int i)
 {
 	return &map[i];
+}
+Texture* Ressources::getGameOverTexture()
+{
+	return &gameOverScreen;
+}
+Texture* Ressources::getGameWonTexture()
+{
+	return &gameWonScreen;
 }
 #pragma endregion
 

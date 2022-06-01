@@ -19,7 +19,7 @@ Round::Round()
 Round::Round(Map* _p_map)
 {
 	money = 1000000; //Start-Geld
-	health = 2000; //Start-Leben
+	health = 2; //Start-Leben
 	index = 0; //Start-Runde
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -151,13 +151,17 @@ void Round::nextRound()
 	Game::getInstance()->saveGame();
 	Game::getInstance()->setDroneCount(0);
 
-	if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
+	if (Game::getInstance()->getStatus() == 1)
 	{
 		index++;
-		Multiplayer::send(0,false);
+	}
+	else if (Game::getInstance()->getStatus() == 2 && sendCooldown.getElapsedTime().asSeconds() > 0.5)
+	{
+		index++;
+		Multiplayer::send(0, false);
 		sendCooldown.restart();
 	}
-	else if(Game::getInstance()->getStatus() == 3)
+	else if (Game::getInstance()->getStatus() == 3)
 	{
 		receivedFromHostNextRound = false;
 
@@ -170,6 +174,11 @@ void Round::nextRound()
 	if (!allProjectiles.empty())
 	{
 		allProjectiles.clear();
+	}
+
+	if (index == 100 && !lost)
+	{
+		won = true;
 	}
 }
 void Round::addMoney(int _money)
@@ -193,7 +202,7 @@ void Round::addHealth(int _health)
 }
 bool Round::subhealth(int _health)
 {
-	if (health < _health) {
+	if (health < _health || health <= 0) {
 
 		lost = true;
 

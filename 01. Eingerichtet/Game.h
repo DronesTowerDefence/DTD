@@ -29,15 +29,11 @@ private:
 	bool isMouseClicked;
 	bool doubleSpeed;
 
-	Texture gameOverRestartButtonTexture;
-	Texture gameOverHomeButtonTexture;
-	Texture gameOverBackgroundTexture;
-
 	RectangleShape toolbar;
 
-	Sprite gameOverBackround;
-	Sprite gameOverRestartButton;
-	Sprite gameOverHomeButton;
+	Sprite gameOverWonBackround;
+	Sprite restartButton;
+	Sprite homeButton;
 
 	Clock changeMusicTimer;
 	SoundBuffer musicBuffer[4];

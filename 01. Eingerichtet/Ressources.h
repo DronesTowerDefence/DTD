@@ -77,6 +77,8 @@ private:
 	Texture buttonSpeedPressedTexture;
 	Texture buttonSellTexture;
 	Texture map[3];
+	Texture gameOverScreen;
+	Texture gameWonScreen;
 
 	Image icon;
 
@@ -158,6 +160,8 @@ public:
 	Texture* getButtonSpeedTexturePressed();
 	Texture* getButtonSellTexture();
 	Texture* getMapTexture(int);
+	Texture* getGameOverTexture();
+	Texture* getGameWonTexture();
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);

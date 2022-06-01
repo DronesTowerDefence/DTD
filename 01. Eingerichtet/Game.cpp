@@ -476,9 +476,9 @@ void Game::draw()
 
 	if (lost)
 	{
-		window->draw(gameOverBackround);
-		window->draw(gameOverHomeButton);
-		window->draw(gameOverRestartButton);
+		window->draw(gameOverWonBackround);
+		window->draw(homeButton);
+		window->draw(restartButton);
 	}
 
 	window->draw(eco);
@@ -609,29 +609,34 @@ void Game::subRoundHealth()
 }
 void Game::checkLoseGame()
 {
-	if (round->getLost())
+	if (round->getLost() || round->getWon())
 	{
-		round->setHealth(0);
-		updateEco();
-
-		if (status == 2)
+		if (round->getLost())
 		{
-			Multiplayer::send(1, false);
+			round->setHealth(0);
+			updateEco();
+			gameOverWonBackround.setTexture(*p_ressources->getGameOverTexture());
+
+			if (status == 2)
+			{
+				Multiplayer::send(1, false);
+			}
+		}
+		else if (round->getWon())
+		{
+			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
+			updateEco();
 		}
 
-		gameOverBackgroundTexture.loadFromFile("img/gameOverScreen.png");
-		gameOverBackround.setTexture(gameOverBackgroundTexture);
-		Vector2f gameOverPos(window->getSize().x / 2 - gameOverBackgroundTexture.getSize().x / 2, window->getSize().y / 2 - gameOverBackgroundTexture.getSize().y / 2);
+		Vector2f gameOverPos(window->getSize().x / 2 - p_ressources->getGameWonTexture()->getSize().x / 2, window->getSize().y / 2 - p_ressources->getGameWonTexture()->getSize().y / 2);
 		//gameOverPos: Rechnung, um das Bild in der Mitte vom Bildschirm zu haben
-		gameOverBackround.setPosition(gameOverPos);
+		gameOverWonBackround.setPosition(gameOverPos);
 
-		gameOverHomeButtonTexture.loadFromFile("img/buttons/homeButton.png");
-		gameOverHomeButton.setTexture(gameOverHomeButtonTexture);
-		gameOverHomeButton.setPosition(Vector2f(760, 650));
+		homeButton.setTexture(*p_ressources->getButtonHomeTexture());
+		homeButton.setPosition(Vector2f(760, 650));
 
-		gameOverRestartButtonTexture.loadFromFile("img/buttons/restartButton.png");
-		gameOverRestartButton.setTexture(gameOverRestartButtonTexture);
-		gameOverRestartButton.setPosition(Vector2f(1060, 650));
+		restartButton.setTexture(*p_ressources->getButtonRestartTexture());
+		restartButton.setPosition(Vector2f(1060, 650));
 
 		Vector2i mousePos = Vector2i(0, 0);
 		gameOverRound.setString(std::to_string(round->getIndex() + 1));
@@ -661,24 +666,22 @@ void Game::checkLoseGame()
 				}
 			}
 
-			window->draw(gameOverBackround);
+			window->draw(gameOverWonBackround);
 			window->draw(gameOverRound);
-			window->draw(gameOverHomeButton);
-			window->draw(gameOverRestartButton);
+			window->draw(homeButton);
+			window->draw(restartButton);
 			window->display();
 
 			mousePos = Mouse::getPosition();
 
 			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				Vector2f homeButtonPos, homeButtonPos2, restartButton, restartButton2;
+				Vector2f homeButtonPos, homeButtonPos2, restartButtonPos, restartButtonPos2;
 				Service* serv = Service::getInstance();
-				homeButtonPos = serv->getObjectPosition(gameOverHomeButton.getPosition());
-				homeButtonPos2 = serv->getObjectPosition(gameOverHomeButton.getPosition() + Vector2f(100.f, 100.f));
-				restartButton = serv->getObjectPosition(gameOverRestartButton.getPosition());
-				restartButton2 = serv->getObjectPosition(gameOverRestartButton.getPosition() + Vector2f(100.f, 100.f)); //Muss noch bearbeitet werden
-				//restartButton = gameOverRestartButton.getPosition();
-				//restartButton2 = restartButton + Vector2f(gameOverRes				tartButtonTexture.getSize());
+				homeButtonPos = serv->getObjectPosition(homeButton.getPosition());
+				homeButtonPos2 = serv->getObjectPosition(homeButton.getPosition() + Vector2f(100.f, 100.f));
+				restartButtonPos = serv->getObjectPosition(restartButton.getPosition());
+				restartButtonPos2 = serv->getObjectPosition(restartButton.getPosition() + Vector2f(100.f, 100.f));
 
 				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
 					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y)) //Wenn home
@@ -686,10 +689,30 @@ void Game::checkLoseGame()
 					mainMenu();
 					return;
 				}
-				else if ((mousePos.x >= restartButton.x && mousePos.x <= restartButton2.x) &&
-					(mousePos.y >= restartButton.y && mousePos.y <= restartButton2.y)) //Wenn restart
+				else if ((mousePos.x >= restartButtonPos.x && mousePos.x <= restartButtonPos2.x) &&
+					(mousePos.y >= restartButtonPos.y && mousePos.y <= restartButtonPos2.y)) //Wenn restart
 				{
 					restart();
+					return;
+				}
+			}
+		}
+	}
+	else if (round->getWon())
+	{
+		if (doubleSpeed)
+		{
+			Ressources::getInstance()->normalSpeed();
+			doubleSpeed = false;
+		}
+		while (lost)
+		{
+			while (window->pollEvent(event))
+			{
+				if (event.type == Event::Closed)
+				{
+					saveGame();
+					window->close();
 					return;
 				}
 			}
