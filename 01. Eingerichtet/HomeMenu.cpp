@@ -69,8 +69,8 @@ HomeMenu::HomeMenu()
 	drone->setPosition(Vector2f(0, 300));
 	host->setPosition(Vector2f(1100, 700));
 	client->setPosition(Vector2f(1250, 700));
-	copy->setPosition(Vector2f(1550, 841));
-	paste->setPosition(Vector2f(1550, 941));
+	copy->setPosition(Vector2f(1100, 841));
+	paste->setPosition(Vector2f(1100, 941));
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
 
 	drone->setScale(2, 2);
@@ -144,13 +144,13 @@ HomeMenu::HomeMenu()
 	choseText->setPosition(Vector2f(500, 450));
 
 	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(1620, 941));
+	ipAdressText->setPosition(Vector2f(1170, 941));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(50);
 
 	ownIpAdressText = new Text();
 	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(1620, 841));
+	ownIpAdressText->setPosition(Vector2f(1170, 841));
 	ownIpAdressText->setFillColor(Color::Black);
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
