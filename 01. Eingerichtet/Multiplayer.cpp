@@ -201,6 +201,8 @@ bool Multiplayer::receive()
 			Ressources::getInstance()->doubleSpeed(); //Ansonsten auf doppelte Geschwindigkeit
 		}
 		Game::getInstance()->setDoubleSpeed(!Game::getInstance()->getDoubleSpeed());
+		Sidebar::getInstance()->setSpeedButton(Game::getInstance()->getDoubleSpeed());
+
 
 		return true;
 

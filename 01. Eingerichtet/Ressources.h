@@ -74,6 +74,7 @@ private:
 	Texture buttonStartTexture;
 	Texture buttonExitTexture;
 	Texture buttonSpeedTexture;
+	Texture buttonSpeedPressedTexture;
 	Texture buttonSellTexture;
 	Texture map[3];
 
@@ -154,6 +155,7 @@ public:
 	Texture* getButtonStartTexture();
 	Texture* getButtonExitTexture();
 	Texture* getButtonSpeedTexture();
+	Texture* getButtonSpeedTexturePressed();
 	Texture* getButtonSellTexture();
 	Texture* getMapTexture(int);
 

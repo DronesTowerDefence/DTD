@@ -177,6 +177,7 @@ Ressources::Ressources()
 	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
 	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
 	buttonSellTexture.loadFromFile("img/upgrades/sell.png");
+	buttonSpeedPressedTexture.loadFromFile("img/buttons/speedPressedButton.png");
 
 	for (int i = 0; i < mapCount; i++)
 	{
@@ -509,6 +510,10 @@ Texture* Ressources::getButtonExitTexture()
 Texture* Ressources::getButtonSpeedTexture()
 {
 	return &buttonSpeedTexture;
+}
+Texture* Ressources::getButtonSpeedTexturePressed()
+{
+	return &buttonSpeedPressedTexture;
 }
 Texture* Ressources::getButtonSellTexture()
 {

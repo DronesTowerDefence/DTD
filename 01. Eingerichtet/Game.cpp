@@ -206,13 +206,14 @@ void Game::startGame()
 				if (doubleSpeed)
 				{
 					Ressources::getInstance()->normalSpeed();
+
 				}
 				else
 				{
 					Ressources::getInstance()->doubleSpeed();
 				}
 				doubleSpeed = !doubleSpeed;
-
+				Sidebar::getInstance()->setSpeedButton(doubleSpeed);
 			}
 
 			if (tower != nullptr)
@@ -358,6 +359,8 @@ void Game::checkButtonClick()
 				Multiplayer::send(5, false);
 			}
 			doubleSpeed = !doubleSpeed;
+			Sidebar::getInstance()->setSpeedButton(doubleSpeed);
+
 		}
 		for (auto* t : round->getAllTowers())
 		{

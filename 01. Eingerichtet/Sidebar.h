@@ -44,5 +44,6 @@ public:
 	/// </summary>
 	/// <param name="window"></param>
 	void draw(RenderWindow* window);
+	void setSpeedButton(bool speed);
 
 };

@@ -49,7 +49,7 @@ Sidebar::Sidebar()
 #pragma region Funktionen
 bool Sidebar::isChangeSpeed(RenderWindow* window)
 {
-	
+
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
@@ -58,7 +58,7 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
 		return true;
-		
+
 	}
 	return false;
 }
@@ -102,6 +102,17 @@ void Sidebar::draw(sf::RenderWindow* window)
 	}
 	window->draw(doubleSpeed);
 
+}
+void Sidebar::setSpeedButton(bool speed)
+{
+	if (speed)
+	{
+		doubleSpeed.setTexture(*Ressources::getInstance()->getButtonSpeedTexturePressed());
+	}
+	else
+	{
+		doubleSpeed.setTexture(*Ressources::getInstance()->getButtonSpeedTexture());
+	}
 }
 #pragma endregion
 #pragma region getter
