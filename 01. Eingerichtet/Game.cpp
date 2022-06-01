@@ -483,37 +483,49 @@ void Game::draw()
 }
 void Game::checkShoot()
 {
-	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
-		for (auto t : round->getAllAttackTower()) {
-			if (t->getIndex() == 3 || t->getIndex() == 1) {
+	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed)
+	{
+		for (auto t : round->getAllAttackTower())
+		{
+			if (t->getIndex() == 3)
+			{
 				//std::cout << shootCooldown.getElapsedTime().asSeconds() << std::endl;
-				if (t->getIndex() == 3) {
-					for (auto i : Round::getInstance()->getAllSpawns()) {
-						i->shoot();
-					}
+				for (auto i : Round::getInstance()->getAllSpawns())
+				{
+					i->shoot();
 				}
+
 			}
 		}
 	}
 
-	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed) {
+	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed)
+	{
 		shootCooldown.restart();
 	}
 	CircleShape* tmp = new CircleShape;
 	for (auto t : round->getAllAttackTower())
 	{
-		if (t->getIndex() != 1 && t->getIndex() != 3) {
-			for (auto iter : t->getCoverableArea())
+		if (t->getIndex() != 3)
+		{
+			if (t->getIndex() == 1)
 			{
-				tmp->setFillColor(Color::Transparent);
-				tmp->setRadius(15);
-				tmp->setPosition(Vector2f(iter.x, iter.y));
-
-				for (auto d : round->getAllDrones())
+				t->shoot(nullptr);
+			}
+			else
+			{
+				for (auto iter : t->getCoverableArea())
 				{
-					if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+					tmp->setFillColor(Color::Transparent);
+					tmp->setRadius(15);
+					tmp->setPosition(Vector2f(iter.x, iter.y));
+
+					for (auto d : round->getAllDrones())
 					{
-						t->shoot(d);
+						if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
+						{
+							t->shoot(d);
+						}
 					}
 				}
 			}
