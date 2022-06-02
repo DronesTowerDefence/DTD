@@ -180,6 +180,14 @@ Ressources::Ressources()
 	gameOverScreen.loadFromFile("img/gameOverScreen.png");
 	gameWonScreen.loadFromFile("img/gameWonScreen.png");
 	buttonSpeedPressedTexture.loadFromFile("img/buttons/speedPressedButton.png");
+	titleTextTexture.loadFromFile("img/titleText.png");
+	homeMenuBackgroundTexture.loadFromFile("img/homeMenuBackground.jpg");
+	buttonMultiplayerTexture[0].loadFromFile("img/buttons/multiplayerButtonUp.png");
+	buttonMultiplayerTexture[1].loadFromFile("img/buttons/multiplayerButtonDown.png");
+	pasteTexture.loadFromFile("img/buttons/pasteButton.png");
+	copyTexture.loadFromFile("img/buttons/copyButton.png");
+	buttonHostTexture.loadFromFile("img/buttons/hostButton.png");
+	buttonClientTexture.loadFromFile("img/buttons/clientButton.png");
 
 	for (int i = 0; i < mapCount; i++)
 	{
@@ -551,6 +559,34 @@ Texture* Ressources::getGameOverTexture()
 Texture* Ressources::getGameWonTexture()
 {
 	return &gameWonScreen;
+}
+Texture* Ressources::getTitleTextTexture()
+{
+	return &titleTextTexture;
+}
+Texture* Ressources::getHomeMenuBackgroundTexture()
+{
+	return &homeMenuBackgroundTexture;
+}
+Texture* Ressources::getButtonMultiplayerTexture(int a)
+{
+	return &buttonMultiplayerTexture[a];
+}
+Texture* Ressources::getPasteTexture()
+{
+	return &pasteTexture;
+}
+Texture* Ressources::getCopyTexture()
+{
+	return &copyTexture;
+}
+Texture* Ressources::getButtonHostTexture()
+{
+	return &buttonHostTexture;
+}
+Texture* Ressources::getButtonClientTexture()
+{
+	return &buttonClientTexture;
 }
 #pragma endregion
 

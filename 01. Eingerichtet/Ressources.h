@@ -84,6 +84,13 @@ private:
 	Texture map[3];
 	Texture gameOverScreen;
 	Texture gameWonScreen;
+	Texture titleTextTexture;
+	Texture homeMenuBackgroundTexture;
+	Texture buttonMultiplayerTexture[2];
+	Texture pasteTexture;
+	Texture copyTexture;
+	Texture buttonHostTexture;
+	Texture buttonClientTexture;
 
 	Image icon;
 
@@ -170,6 +177,13 @@ public:
 	Texture* getMapTexture(int);
 	Texture* getGameOverTexture();
 	Texture* getGameWonTexture();
+	Texture* getTitleTextTexture();
+	Texture* getHomeMenuBackgroundTexture();
+	Texture* getButtonMultiplayerTexture(int);
+	Texture* getPasteTexture();
+	Texture* getCopyTexture();
+	Texture* getButtonHostTexture();
+	Texture* getButtonClientTexture();
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
