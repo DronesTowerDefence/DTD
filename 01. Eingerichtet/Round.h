@@ -101,6 +101,7 @@ public:
 	void restartDroneSubHealthTimer();
 	void deleteDrone(Drone*);
 	void deleteProjectile(Projectile*);
+	void deleteTowerSpawn(TowerSpawn* towerspawn);
 	void nextRound();
 	void addMoney(int);
 	bool submoney(int);

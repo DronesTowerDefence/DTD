@@ -126,16 +126,7 @@ TowerSpawn::~TowerSpawn()
 	Round* r = Round::getInstance();
 
 	//Löscht sich selbst aus der Liste
-	if (!r->getAllSpawns().empty())
-	{
-		for (auto i : r->getAllSpawns())
-		{
-			if (i == this)
-			{
-				r->getAllSpawns().remove(i);
-			}
-		}
-	}
-	r->getAllSpawns().clear();
+
+	r->deleteTowerSpawn(this);
 }
 #pragma endregion

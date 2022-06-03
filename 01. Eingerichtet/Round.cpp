@@ -151,6 +151,10 @@ void Round::deleteProjectile(Projectile* p)
 	allProjectiles.remove(p);
 
 }
+void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
+{
+	allSpawns.remove(towerspawn);
+}
 void Round::nextRound()
 {
 	Game::getInstance()->saveGame();
