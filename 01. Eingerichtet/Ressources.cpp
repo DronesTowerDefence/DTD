@@ -78,6 +78,8 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
+	towerSpawnSpeed[0] = 5;
+
 	ipAddress = "0"; //Standart-Initialisierung
 
 	flugzeugUpdate[0] = Vector2f(1, 1);
@@ -256,6 +258,11 @@ void Ressources::normalSpeed()
 	{
 		droneSpawnTime[i] *= 2;
 	}
+	for (int i = 0; i < (sizeof(towerSpawnSpeed) / sizeof(*towerSpawnSpeed)); i++)
+	{
+		towerSpawnSpeed[i] /= 2;
+	}
+
 	setSpeed();
 }
 void Ressources::newConnection()
@@ -308,6 +315,12 @@ void Ressources::doubleSpeed()
 	{
 		droneSpawnTime[i] /= 2;
 	}
+
+	for (int i = 0; i < (sizeof(towerSpawnSpeed) / sizeof(*towerSpawnSpeed)); i++)
+	{
+		towerSpawnSpeed[i] *= 2;
+	}
+
 	setSpeed();
 
 }
@@ -604,6 +617,10 @@ void Ressources::setSpeed()
 	for (auto i : Round::getInstance()->getAllDrones())
 	{
 		i->setSeed(res->getDroneSpeed(0));
+	}
+	for (auto i : Round::getInstance()->getAllSpawns())
+	{
+		i->setSpeed(towerSpawnSpeed[0]);
 	}
 }
 

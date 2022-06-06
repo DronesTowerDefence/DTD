@@ -26,6 +26,7 @@ public:
 
 	Sprite* getSpawnSprite();
 	Texture* getSpawnTexture();
+	void setSpeed(int);
 	void shoot();
 	void moveSpawn();
 };

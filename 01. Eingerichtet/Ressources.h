@@ -32,6 +32,7 @@ private:
 	int towerChangeFrame[6]; //In Millisekunden
 	int towerUpgradePrice1[6][4]; //Preise der Upgrades des ersten Pfades
 	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
+	int towerSpawnSpeed[1];
 	int droneLives[1];
 
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl

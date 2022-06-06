@@ -103,6 +103,10 @@ Texture* TowerSpawn::getSpawnTexture()
 {
 	return res->getTowerSpawnTexture(0);
 }
+void TowerSpawn::setSpeed(int a)
+{
+	speed = a;
+}
 #pragma endregion
 
 #pragma region setter
