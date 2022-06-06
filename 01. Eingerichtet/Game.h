@@ -46,8 +46,6 @@ private:
 
 	Event event;
 
-	Clock shootCooldown;
-	Clock shootCooldown2;
 	Clock multiplayerCheckConnectionClock;
 	Clock multiplayerCheckConnectionSendClock;
 

@@ -77,7 +77,6 @@ Ressources::Ressources()
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
-	towerName[5] = "Egal";
 
 	ipAddress = "0"; //Standart-Initialisierung
 

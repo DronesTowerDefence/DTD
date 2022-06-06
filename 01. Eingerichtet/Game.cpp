@@ -491,49 +491,31 @@ void Game::draw()
 }
 void Game::checkShoot()
 {
-	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed)
-	{
-		for (auto t : round->getAllAttackTower())
-		{
-			if (t->getIndex() == 3)
-			{
-				//std::cout << shootCooldown.getElapsedTime().asSeconds() << std::endl;
-				for (auto i : Round::getInstance()->getAllSpawns())
-				{
-					i->shoot();
-				}
-
-			}
-		}
-	}
-
-	if (shootCooldown.getElapsedTime().asSeconds() > shootClockSpeed)
-	{
-		shootCooldown.restart();
-	}
 	CircleShape* tmp = new CircleShape;
+	tmp->setFillColor(Color::Transparent);
+	tmp->setRadius(15);
+
 	for (auto t : round->getAllAttackTower())
 	{
-		if (t->getIndex() != 3)
+		if (t->getIndex() == 1)
 		{
-			if (t->getIndex() == 1)
+			t->shoot(nullptr);
+		}
+		else if (t->getIndex() == 3)
+		{
+			t->shoot(nullptr);
+		}
+		else
+		{
+			for (auto iter : t->getCoverableArea())
 			{
-				t->shoot(nullptr);
-			}
-			else
-			{
-				for (auto iter : t->getCoverableArea())
-				{
-					tmp->setFillColor(Color::Transparent);
-					tmp->setRadius(15);
-					tmp->setPosition(Vector2f(iter.x, iter.y));
+				tmp->setPosition(Vector2f(iter.x, iter.y));
 
-					for (auto d : round->getAllDrones())
+				for (auto d : round->getAllDrones())
+				{
+					if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 					{
-						if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
-						{
-							t->shoot(d);
-						}
+						t->shoot(d);
 					}
 				}
 			}
@@ -649,10 +631,10 @@ void Game::checkLoseGame()
 				gameOverWonText[i].setOutlineColor(Color::Black);
 				gameOverWonText[i].setOutlineThickness(3);
 			}
-				gameOverWonText[0].setString(std::to_string(1)); //TODO
-				gameOverWonText[1].setString(std::to_string(2));
-				gameOverWonText[0].setPosition(Vector2f(1200, 440));
-				gameOverWonText[1].setPosition(Vector2f(1200, 530));
+			gameOverWonText[0].setString(std::to_string(1)); //TODO
+			gameOverWonText[1].setString(std::to_string(2));
+			gameOverWonText[0].setPosition(Vector2f(1200, 440));
+			gameOverWonText[1].setPosition(Vector2f(1200, 530));
 		}
 
 		//Setzen der Texturen

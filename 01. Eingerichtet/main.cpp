@@ -9,8 +9,6 @@
 
 using namespace sf;
 
-int fileVerification();
-
 int main()
 {
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
@@ -22,23 +20,7 @@ int main()
 
 	window.setIcon(ressources->getIcon().getSize().x, ressources->getIcon().getSize().y, ressources->getIcon().getPixelsPtr());
 
-	int fileError = fileVerification();
-	if (fileError != -1)
-	{
-		std::cout << "ApplicationError:fe" << fileError;
-		return 404;
-	}
-
 	HomeMenu::getInstance()->setWindow(&window);
 	HomeMenu::getInstance()->HomeMenuStart();
 	return 0;
-}
-
-int fileVerification()
-{
-	std::list<std::string> assets;
-
-	//Coming Soon
-
-	return -1;
 }

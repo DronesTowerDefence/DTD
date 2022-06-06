@@ -107,6 +107,13 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			{
 				new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
 			}
+			else if (index == 3)
+			{
+				for (auto i : boundSpawns)
+				{
+					i->shoot();
+				}
+			}
 			else
 			{
 				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen

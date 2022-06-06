@@ -257,14 +257,12 @@ int  HomeMenu::CheckClicked()
 
 			if (res->getListener()->listen(4567))
 			{
-				std::cout << "Error Port";
 				connected = false;
 			}
 
 			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
 			{
 				connected = false;
-				std::cout << "Error Client";
 			}
 			Packet p;
 			while (res->getReceiver()->receive(p) != Socket::Done);
@@ -276,7 +274,6 @@ int  HomeMenu::CheckClicked()
 			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
 			{
 				//connected = false;
-				std::cout << "ERROR";
 			}
 			Packet p5;
 			p5 << choseIndex;
@@ -303,7 +300,6 @@ int  HomeMenu::CheckClicked()
 			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
 				connected = false;
-				std::cout << "ERROR";
 			}
 
 			Packet p1;
@@ -313,20 +309,17 @@ int  HomeMenu::CheckClicked()
 
 			if (res->getListener()->listen(4568))
 			{
-				std::cout << "Error Port";
 				connected = false;
 			}
 
 			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
 			{
 				connected = false;
-				std::cout << "Error Client";
 			}
 			Packet p2;
 
 			while (res->getReceiver()->receive(p2));
 			p2 >> choseIndex;
-			std::cout << choseIndex;
 			res->getSender()->setBlocking(false);
 			res->getReceiver()->setBlocking(false);
 

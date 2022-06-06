@@ -77,7 +77,6 @@ void TowerSpawn::moveSpawn()
 		spawnsprite.rotate(90.f);
 	}
 	if (spawnsprite.getPosition().y + (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
-		std::cout << "moin" << std::endl;
 	}
 
 	spawnsprite.setPosition(spawnsprite.getPosition().x + move.x, spawnsprite.getPosition().y + move.y);
@@ -91,7 +90,7 @@ void TowerSpawn::operate()
 		int sety = res->getTowerSpawnTexture(0)->getSize().y / 2;
 		spawnsprite.setTexture(*res->getTowerSpawnTexture(0));
 		spawnsprite.setPosition(tower->getTowerPos().x-setx, tower->getTowerPos().y-sety);
-		std::cout << tower->getTowerSpr().getPosition().x << std::endl << tower->getTowerSpr().getPosition().y << std::endl;
+		//std::cout << tower->getTowerSpr().getPosition().x << std::endl << tower->getTowerSpr().getPosition().y << std::endl;
 		break;
 	}
 }
