@@ -41,7 +41,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	style = _style;
 	dronetarget = _target;
 	if (_target == nullptr&&style==0)
-		projectilesprite.setPosition((*_towerspawn->getSpawnSprite()).getPosition().x +  (_towerspawn->getSpawnTexture()).getSize().x / 2, (*_towerspawn->getSpawnSprite()).getPosition().y + _towerspawn->getSpawnTexture().getSize().y / 2);
+		projectilesprite.setPosition((*_towerspawn->getSpawnSprite()).getPosition().x +  (_towerspawn->getSpawnTexture())->getSize().x / 2, (_towerspawn->getSpawnSprite())->getPosition().y + _towerspawn->getSpawnTexture()->getSize().y / 2);
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
 	operate();

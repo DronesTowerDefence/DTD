@@ -6,15 +6,36 @@
 
 TowerSpawn::TowerSpawn(int _kind, Tower* _tower)
 {
-	kind = _kind;
-	move.x = 0;
-	move.y = -5;
-	tower = _tower;
-	direction = 0;
 	res = Ressources::getInstance();
 	Round::getInstance()->addSpawn(this);
-	moveMultiply = 1;
-	operate();
+	tower = _tower;
+	kind = _kind;
+	speed = 5;
+	spawnsprite.setTexture(*res->getTowerSpawnTexture(0));
+
+	move.x = 0;
+	move.y = -speed;
+
+	towerSpawnSize = Vector2f(res->getTowerSpawnTexture(0)->getSize());
+
+	Vector2f towerSize = Vector2f(res->getTowerTexture(tower->getIndex(), 0)->getSize());
+	Vector2f towerPosition = tower->getTowerSpr().getPosition();
+	Vector2f towerCenter(towerPosition.x + towerSize.x / 2, towerPosition.y + towerSize.y / 2);
+
+	waypoint[0].x = towerCenter.x - tower->getRange();
+	waypoint[0].y = towerCenter.y - tower->getRange();
+
+	waypoint[1].x = towerCenter.x + tower->getRange();
+	waypoint[1].y = waypoint[0].y;
+
+	waypoint[2].x = waypoint[1].x;
+	waypoint[2].y = towerCenter.y + tower->getRange();
+
+	waypoint[3].x = waypoint[0].x;
+	waypoint[3].y = waypoint[2].y;
+
+	spawnsprite.setPosition(waypoint[3] + Vector2f(move.x * 5, move.y * 5));
+	spawnsprite.setPosition(spawnsprite.getPosition().x - towerSpawnSize.x / 2, spawnsprite.getPosition().y);
 }
 #pragma endregion
 
@@ -25,74 +46,52 @@ void TowerSpawn::shoot()
 	new Projectile(nullptr, tower, this, 0, Vector2f(-1, 0));
 	new Projectile(nullptr, tower, this, 0, Vector2f(0, 1));
 	new Projectile(nullptr, tower, this, 0, Vector2f(0, -1));
-	
-	for (int i = 0; i < tower->getUpdates()->getIndex1();i++)
+
+	for (int i = 0; i < tower->getUpdates()->getIndex1(); i++)
 	{
-		new Projectile(nullptr, tower, this, 0,Ressources::getInstance()->getFlugzeugUpdate(i));
+		new Projectile(nullptr, tower, this, 0, Ressources::getInstance()->getFlugzeugUpdate(i));
 	}
 
 
 }
 void TowerSpawn::moveSpawn()
 {
-	int direction=0;
-	if (spawnsprite.getPosition().y+ (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
-		move.x = 5;
+	spawnsprite.setPosition(spawnsprite.getPosition() + move); //Bewegt das Objekt
+
+	//Überprüft, ob an Eckpunkten
+	if ((spawnsprite.getPosition().y + towerSpawnSize.y / 2 >= waypoint[0].y && spawnsprite.getPosition().y <= waypoint[0].y)
+		&& (spawnsprite.getPosition().x <= waypoint[3].x && spawnsprite.getPosition().x + towerSpawnSize.x >= waypoint[3].x)) //Ob der X-Wert von Punkt 3 ist
+	{
+		move.x = speed;
 		move.y = 0;
-		if (Ressources::getInstance()->getDoubleSpeed()) {
-			move.x *= 2;
-			move.y *= 2;
-		}
-		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y+5);
 		spawnsprite.rotate(90.f);
+		spawnsprite.setPosition(waypoint[0].x + towerSpawnSize.y / 2, waypoint[0].y - towerSpawnSize.x / 2);
 	}
-	if (spawnsprite.getPosition().x-(res->getTowerSpawnTexture(0)->getSize().x / 2) > tower->getTowerSpr().getPosition().x + 300) {
+	else if ((spawnsprite.getPosition().x - towerSpawnSize.x / 2 <= waypoint[1].x && spawnsprite.getPosition().x >= waypoint[1].x)
+		&& (spawnsprite.getPosition().y <= waypoint[0].y && spawnsprite.getPosition().y + towerSpawnSize.x >= waypoint[0].y)) //Ob der Y-Wert von Punkt 0 ist
+	{
 		move.x = 0;
-		move.y = 5;
-		if (Ressources::getInstance()->getDoubleSpeed()) {
-			move.x *= 2;
-			move.y *= 2;
-		}
-		spawnsprite.setPosition(spawnsprite.getPosition().x-5, spawnsprite.getPosition().y);
+		move.y = speed;
 		spawnsprite.rotate(90.f);
+		spawnsprite.setPosition(waypoint[1].x + towerSpawnSize.x / 2, waypoint[1].y + towerSpawnSize.y / 2);
 	}
-	if (spawnsprite.getPosition().y-(res->getTowerSpawnTexture(0)->getSize().y / 2) > tower->getTowerSpr().getPosition().y + 300) {
-		move.x = -5;
+	else if ((spawnsprite.getPosition().y >= waypoint[2].y && spawnsprite.getPosition().y - towerSpawnSize.x / 2 <= waypoint[2].y)
+		&& (spawnsprite.getPosition().x - towerSpawnSize.x <= waypoint[1].x && spawnsprite.getPosition().x >= waypoint[1].x)) //Ob der X-Wert von Punkt 1 ist
+	{
+		move.x = -speed;
 		move.y = 0;
-		if (Ressources::getInstance()->getDoubleSpeed()) {
-			move.x *= 2;
-			move.y *= 2;
-		}
-		spawnsprite.setPosition(spawnsprite.getPosition().x, spawnsprite.getPosition().y - 5);
 		spawnsprite.rotate(90.f);
+		spawnsprite.setPosition(waypoint[2].x - towerSpawnSize.x / 2, waypoint[2].y + towerSpawnSize.y / 2);
 	}
-	if (spawnsprite.getPosition().x+(res->getTowerSpawnTexture(0)->getSize().x/2) < tower->getTowerSpr().getPosition().x - 300) {
+	else if ((spawnsprite.getPosition().x <= waypoint[3].x && spawnsprite.getPosition().x + towerSpawnSize.y >= waypoint[3].x)
+		&& (spawnsprite.getPosition().y - towerSpawnSize.x <= waypoint[2].y && spawnsprite.getPosition().y >= waypoint[2].y)) //Ob der Y-Wert von Punkt 2 ist
+	{
 		move.x = 0;
-		move.y = -5;
-		if (Ressources::getInstance()->getDoubleSpeed()) {
-			move.x *= 2;
-			move.y *= 2;
-		}
-		spawnsprite.setPosition(spawnsprite.getPosition().x+5, spawnsprite.getPosition().y);
+		move.y = -speed;
 		spawnsprite.rotate(90.f);
-	}
-	if (spawnsprite.getPosition().y + (res->getTowerSpawnTexture(0)->getSize().y / 2) < tower->getTowerSpr().getPosition().y - 300) {
+		spawnsprite.setPosition(waypoint[3].x - towerSpawnSize.x / 2, waypoint[3].y - towerSpawnSize.y / 2);
 	}
 
-	spawnsprite.setPosition(spawnsprite.getPosition().x + move.x, spawnsprite.getPosition().y + move.y);
-}
-void TowerSpawn::operate()
-{
-	switch (kind)
-		case 1: {
-		counter = 150;
-		int setx = 300 + res->getTowerSpawnTexture(0)->getSize().x / 2;
-		int sety = res->getTowerSpawnTexture(0)->getSize().y / 2;
-		spawnsprite.setTexture(*res->getTowerSpawnTexture(0));
-		spawnsprite.setPosition(tower->getTowerPos().x-setx, tower->getTowerPos().y-sety);
-		//std::cout << tower->getTowerSpr().getPosition().x << std::endl << tower->getTowerSpr().getPosition().y << std::endl;
-		break;
-	}
 }
 #pragma endregion
 #pragma region getter
@@ -100,18 +99,9 @@ Sprite* TowerSpawn::getSpawnSprite()
 {
 	return &spawnsprite;
 }
-Texture TowerSpawn::getSpawnTexture()
+Texture* TowerSpawn::getSpawnTexture()
 {
-	return *res->getTowerSpawnTexture(0);
-}
-int TowerSpawn::getMoveMultiply()
-{
-	return moveMultiply;
-}
-void TowerSpawn::setMoveMultiply(int a)
-{
-
-	moveMultiply = a;
+	return res->getTowerSpawnTexture(0);
 }
 #pragma endregion
 

@@ -295,10 +295,6 @@ void Ressources::doubleSpeed()
 	towerChangeFrame[4] /= 2;
 	towerChangeFrame[6] /= 2;
 
-	for (auto i : Round::getInstance()->getAllSpawns()) { //Geschwindigkeit des Flugzeuges
-		i->setMoveMultiply(1);
-	}
-
 	for (int j = 0; j < towerCount; j++)
 	{
 		for (int i = 0; i < 4; i++)
