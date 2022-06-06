@@ -440,10 +440,14 @@ void Game::draw()
 	{
 		window->draw((*newTower->getSpr()));
 		window->draw((*newTower->getRangeShape()));
+		if (newTower->getRangeShapePlane() != nullptr)
+			window->draw((*newTower->getRangeShapePlane()));
 	}
 	if (tower != nullptr)
 	{
 		window->draw(*tower->getRangeShape());
+		if (tower->getRangeShapePlane() != nullptr)
+			window->draw(*tower->getRangeShapePlane());
 	}
 
 	for (auto* t : round->getAllMoneyTower()) //Geldgenerations Tower werden gedrawt

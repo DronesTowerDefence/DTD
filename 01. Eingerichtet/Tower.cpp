@@ -39,10 +39,17 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		if (index == 3)
 		{
 			spawnSpawn(1);
-		}
+			rangeShapePlane = new RectangleShape;
+			rangeShapePlane->setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
+			rangeShapePlane->setSize(Vector2f(range * 2, range * 2));
+			rangeShapePlane->setFillColor(Color::Transparent);
+			rangeShapePlane->setOutlineColor(Color::Black);
+			rangeShapePlane->setOutlineThickness(5);
 
-		if (index < res->getTowerCount())
+		}
+		else
 		{
+			rangeShapePlane = nullptr;
 			rangeShape.setRadius(range);
 			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
 			rangeShape.setFillColor(Color::Transparent);
@@ -177,8 +184,8 @@ void Tower::Update1()
 	else if (index == 4)
 	{
 		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);	
-		Multiplayer::send(id ,2, update->getIndex2());
+		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
+		Multiplayer::send(id, 2, update->getIndex2());
 	}
 	update->setStringPrice();
 
@@ -271,6 +278,10 @@ std::list<Vector3f> Tower::getCoverableArea()
 CircleShape* Tower::getRangeShape()
 {
 	return &rangeShape;
+}
+RectangleShape* Tower::getRangeShapePlane()
+{
+	return rangeShapePlane;
 }
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 {

@@ -35,6 +35,7 @@ private:
 	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
 	
 	CircleShape rangeShape;
+	RectangleShape* rangeShapePlane; //RangeShape für das Flugzeug
 	Sprite towerSpr;
 	
 	Clock shootTimer; //Zum zÃ¤hlen des Schuss-Cooldowns
@@ -106,6 +107,12 @@ public:
 	/// </summary>
 	/// <returns>CircleShape*</returns>
 	CircleShape* getRangeShape();
+
+	/// <summary>
+	/// Gibt nen Pointer auf die Range Shape vom Flugzeug zurück
+	/// </summary>
+	/// <returns></returns>
+	RectangleShape* getRangeShapePlane();
 
 	/// <summary>
 	/// Returnt die Tower Sprite

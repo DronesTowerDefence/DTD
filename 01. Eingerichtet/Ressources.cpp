@@ -57,7 +57,7 @@ Ressources::Ressources()
 	towerRange[0] = 100;
 	towerRange[1] = 200;
 	towerRange[2] = 100;
-	towerRange[3] = 0;
+	towerRange[3] = 300;
 	towerRange[4] = 0;
 
 	towerMoneyGeneration[0] = 0;

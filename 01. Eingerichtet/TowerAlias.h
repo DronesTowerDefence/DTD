@@ -14,6 +14,7 @@ private:
 	float price;
 	Vector2f pos;
 	CircleShape rangeShape;
+	RectangleShape* rangeShapePlane;
 	Sprite towerAliasSpr;
 	Map* p_map;
 	Ressources* res;
@@ -37,6 +38,13 @@ public:
 	/// </summary>
 	/// <returns>CircleShape</returns>
 	CircleShape* getRangeShape();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	RectangleShape* getRangeShapePlane();
+
 	/// <summary>
 	/// Gibt einen Zeiger auf die Sprite von TowerAlias zurück
 	/// </summary>
