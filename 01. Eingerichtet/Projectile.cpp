@@ -40,8 +40,35 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	Round::getInstance()->addProjectile(this);
 	style = _style;
 	dronetarget = _target;
-	if (_target == nullptr&&style==0)
-		projectilesprite.setPosition((*_towerspawn->getSpawnSprite()).getPosition().x +  (_towerspawn->getSpawnTexture())->getSize().x / 2, (_towerspawn->getSpawnSprite())->getPosition().y + _towerspawn->getSpawnTexture()->getSize().y / 2);
+	if (_target == nullptr && style == 0)
+	{
+		Vector2f newPos;
+		Vector2f towerSpawnSize = Vector2f(_towerspawn->getSpawnTexture()->getSize());
+		Vector2f towerSpawnPos = _towerspawn->getSpawnSprite()->getPosition();
+		switch (int(_towerspawn->getSpawnSprite()->getRotation())) //Zentrieren vom Schuss
+		{
+		case 0:
+			newPos.x = towerSpawnPos.x + towerSpawnSize.x / 2;
+			newPos.y = towerSpawnPos.y + towerSpawnSize.y / 2;
+			break;
+
+		case 90:
+			newPos.x = towerSpawnPos.x - towerSpawnSize.y / 2;
+			newPos.y = towerSpawnPos.y + towerSpawnSize.x / 2;
+			break;
+
+		case 180:
+			newPos.x = towerSpawnPos.x - towerSpawnSize.x / 2;
+			newPos.y = towerSpawnPos.y - towerSpawnSize.y / 2;
+			break;
+
+		case 270:
+			newPos.x = towerSpawnPos.x + towerSpawnSize.y / 2;
+			newPos.y = towerSpawnPos.y - towerSpawnSize.x / 2;
+			break;
+		}
+		projectilesprite.setPosition(newPos);
+	}
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
 	operate();
@@ -63,7 +90,7 @@ void Projectile::operate()
 	}
 	case 2: {  // Verfolgt Drohne
 		homing();
-		break; 
+		break;
 	}
 	case 3:
 		srand((unsigned)time(NULL));
@@ -109,7 +136,7 @@ void Projectile::homing() {
 }
 void Projectile::moveProjectile()
 {
-	if (style == 2||style==3)
+	if (style == 2 || style == 3)
 		homing();
 	if (style == 4) {
 		for (auto i : Round::getInstance()->getAllDrones()) {
