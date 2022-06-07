@@ -22,6 +22,10 @@ private:
 	/// 3 = Client
 	/// </summary>
 	int status;
+	int droneRow;
+
+	int currentDrones[5];
+	int currentRound;
 
 	bool lost;
 	bool isMouseClicked;
@@ -146,6 +150,8 @@ public:
 
 	int getStatus();
 
+	int getDroneRow();
+
 	/// <summary>
 	/// Setzt die Musik Lautstärke
 	/// </summary>
@@ -204,4 +210,6 @@ public:
 	void sellTower(Tower* t);
 
 	void checkMultiplayerConnection();
+
+	void setDroneRow(int g);
 };

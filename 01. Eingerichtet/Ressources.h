@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
@@ -47,6 +48,8 @@ private:
 	float towerUpdateMoneyGeneration[5][4];
 	float droneSpeed[1];
 
+	int droneTypesInRound[100][5];
+	
 
 	std::string towerName[5]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
@@ -151,6 +154,9 @@ public:
 	Texture* getButtonSpeedTexture();
 	Texture* getButtonSellTexture();
 	Texture* getMapTexture(int);
+
+	int* getDroneTypesInRound(int index);
+	
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);

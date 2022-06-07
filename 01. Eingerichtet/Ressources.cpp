@@ -1,17 +1,85 @@
 #include "Ressources.h"
 #include "Round.h"
+#include <fstream>
+
 
 Ressources* Ressources::instance = nullptr;
 
 #pragma region Konstruktor
 Ressources::Ressources()
 {
+	char buffer[32];
+	std::unique_ptr<float> help(new float(0));
+	std::unique_ptr<int> tc(new int(0));
+	std::unique_ptr<bool> dig(new bool(false));
+	std::unique_ptr<int> sit(new int(0));
 
-	for (int i = 0; i < 100; i++)
-	{
-		droneCountInRound[i] = i + 1 * 10;
+	std::ifstream ok;
+	ok.open("saves/round_data.csv", std::ios::in);
+	
+	
 
-		droneSpawnTime[i] = 1;
+	if (ok.is_open()) {
+
+		for (int i = 0; i < 100; i++){
+
+			if (i == 100) {
+				std::cout << "hi";
+			}
+			//Anzahl Drohnen Gesamt in Runde
+
+				ok.getline(buffer, 32);
+				*sit = 0;
+				
+				for (int f = 0; buffer[f] != '\0'; f++) {
+
+					if (std::isdigit(buffer[f])) {
+
+						//Falls Zahl dreistellig ist
+						//if (/*isdigit(buffer[f + 2]) && */ isdigit(buffer[f + 1])) {
+						//	*help += (buffer[f] - 48.f )* 100.f;
+						//	*help += (buffer[f + 1] - 48.f) * 10;
+						//	*help += buffer[f + 2] - 48.f;
+
+						//	droneCountInRound[i] += *help;
+						//	droneTypesInRound[i][*sit] = *help;
+						//	f++;
+						//	*help = 0;
+						//	*sit += 1;
+						//}
+						//zweistellig
+						if (isdigit(buffer[f + 1])) {
+							*help += (buffer[f] - 48.f) * 10;
+							*help += (buffer[f + 1] - 48.f);
+							
+
+							droneCountInRound[i] += *help;
+							droneTypesInRound[i][*sit] = *help;
+
+							f++;
+							*help = 0;
+							*sit += 1;
+						}
+						else {
+
+							droneCountInRound[i] += buffer[f] - 48;
+							droneTypesInRound[i][*sit] = buffer[f] - 48;
+							*sit += 1;
+						}
+						
+					}
+
+					
+				}
+			
+				//Einzelne Drohnen Typen in einer Runde
+
+				//droneTypesInRound[i] = buffer;
+			
+			droneSpawnTime[i] = 0.5;
+
+			
+		}
 	}
 
 	multiplayerPlayerCount = 0;
@@ -258,6 +326,7 @@ void Ressources::doubleSpeed()
 #pragma endregion
 
 #pragma region getter
+
 Ressources* Ressources::getInstance()
 {
 	if (instance == nullptr)
@@ -468,6 +537,10 @@ Texture* Ressources::getButtonSellTexture()
 Texture* Ressources::getMapTexture(int i)
 {
 	return &map[i];
+}
+int* Ressources::getDroneTypesInRound(int index)
+{
+	return &droneTypesInRound[index][0];
 }
 #pragma endregion
 

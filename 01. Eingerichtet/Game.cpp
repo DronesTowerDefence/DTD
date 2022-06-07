@@ -18,6 +18,12 @@ Game::Game()
 	newTower = nullptr;
 	round->setAllCoverablePoints();
 
+	currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(0);
+	currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 1);
+	currentDrones[2] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 2);
+	currentDrones[3] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 3);
+	currentDrones[4] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 4);
+
 	droneCount = 0;
 	chooseMusic = 0;
 
@@ -683,8 +689,58 @@ void Game::checkDroneCount()
 {
 	if (round->getDroneTimer().getElapsedTime().asSeconds() > p_ressources->getDroneSpawnTime() && droneCount < p_ressources->getDroneCountInRound())
 	{
-		droneCount++;
-		round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		std::unique_ptr<int> rI(new int(round->getIndex())); //roundIndex
+		std::unique_ptr<int> help(new int(0));
+
+		if (currentRound != round->getIndex()) {
+		currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(*rI);
+		currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 1);
+		currentDrones[2] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 2);
+		currentDrones[3] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 3);
+		currentDrones[4] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 4);
+
+		currentRound = round->getIndex();
+		}
+
+		
+
+		if (currentDrones[4] != 0) {
+			currentDrones[4] -= 1;
+			round->addDrone(new Drone(4, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+
+			droneCount++;
+			round->restartDroneTimer();
+			return;
+		}
+		if (currentDrones[3] != 0) {
+			currentDrones[3] -= 1;
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			droneCount++;
+			round->restartDroneTimer();
+			return;
+		}
+		if (currentDrones[2] != 0) {
+			currentDrones[2] -= 1;
+			round->addDrone(new Drone(2, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			droneCount++;
+			round->restartDroneTimer();
+			return;
+		}
+		if (currentDrones[1] != 0) {
+			currentDrones[1] -= 1;
+			round->addDrone(new Drone(1, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			droneCount++;
+			round->restartDroneTimer();
+			return;
+		}
+		if (currentDrones[0] != 0) {
+			currentDrones[0] -= 1;
+			round->addDrone(new Drone(0, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			droneCount++;
+			round->restartDroneTimer();
+			return;
+		}
+		
 		round->restartDroneTimer();
 	}
 	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status != 3)
@@ -780,6 +836,10 @@ void Game::checkMultiplayerConnection() //TODO - WIP
 		p_ressources->getReceiver()->setBlocking(false);
 		p_ressources->getListener()->setBlocking(false);
 	}
+}
+void Game::setDroneRow(int g)
+{
+	this->droneRow = g;
 }
 void Game::resetAll()
 {
@@ -913,6 +973,10 @@ Clock* Game::getMultiplayerCheckConnectionClock()
 int Game::getStatus()
 {
 	return status;
+}
+int Game::getDroneRow()
+{
+	return droneRow;
 }
 #pragma endregion
 
