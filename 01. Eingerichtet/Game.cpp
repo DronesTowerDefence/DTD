@@ -191,7 +191,6 @@ bool Game::towerAliasForbiddenPosition()
 
 	return 1;
 }
-
 void Game::startGame()
 {
 	loadGame();
@@ -734,16 +733,14 @@ void Game::checkDroneCount()
 		std::unique_ptr<int> help(new int(0));
 
 		if (currentRound != round->getIndex()) {
-		currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(*rI);
-		currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 1);
-		currentDrones[2] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 2);
-		currentDrones[3] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 3);
-		currentDrones[4] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 4);
+			currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(*rI);
+			currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 1);
+			currentDrones[2] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 2);
+			currentDrones[3] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 3);
+			currentDrones[4] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 4);
 
-		currentRound = round->getIndex();
+			currentRound = round->getIndex();
 		}
-
-		
 
 		if (currentDrones[4] != 0) {
 			currentDrones[4] -= 1;
@@ -781,7 +778,7 @@ void Game::checkDroneCount()
 			round->restartDroneTimer();
 			return;
 		}
-		
+
 		round->restartDroneTimer();
 	}
 	if (droneCount == p_ressources->getDroneCountInRound() && round->getAllDrones().empty() && status != 3)

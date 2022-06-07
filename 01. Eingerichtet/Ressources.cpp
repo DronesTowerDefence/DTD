@@ -86,6 +86,20 @@ Ressources::Ressources()
 			}
 		}
 	}
+
+	//TODO
+	int tmp = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			tmp += droneTypesInRound[i][j];
+		}
+		droneCountInRound[i] = tmp;
+		tmp = 0;
+	}
+	//
+
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 4;
