@@ -35,6 +35,10 @@ private:
 	/// 3 = Client
 	/// </summary>
 	int status;
+	int droneRow;
+
+	int currentDrones[5];
+	int currentRound;
 
 	/// <summary>
 	/// Unnötig? Ist glaube der alte Counter vom Flugzeug-Schuss
@@ -259,6 +263,8 @@ public:
 	/// <returns></returns>
 	int getStatus();
 
+	int getDroneRow();
+
 	/// <summary>
 	/// Setzt die Musik Lautstärke
 	/// </summary>
@@ -317,6 +323,16 @@ public:
 	/// <param name="t">Welcher Tower verkauft werden soll</param>
 	void sellTower(Tower* t);
 
+  /// <summary>
+  /// Überprüft die Multiplayer-Verbindung
+  /// </summary>
+	void checkMultiplayerConnection();
+  
+  /// <summary>
+  ///
+  /// </summary>
+	void setDroneRow(int g);
+  
 	/// <summary>
 	/// Löscht den Spielstand zur aktuellen Map
 	/// </summary>

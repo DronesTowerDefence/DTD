@@ -17,18 +17,19 @@ Round::Round()
 	receivedFromHostNextRound = false;
 	p_map = nullptr;
 }
+
 Round::Round(Map* _p_map)
 {
 	//Setzen der Attribute
-	money = 1000; //Start-Geld
-	health = 100; //Start-Leben
+	money = 350; //Start-Geld
+	health = 150; //Start-Leben
 	index = 0; //Start-Runde
 	lost = false;
 	won = false;
 	receivedFromHostNextRound = false;
 	p_map = _p_map;
 
-	//Eigentlich unnötig, da das eigentlich von der Ressourcen-Klasse abgelöst wurde, außerdem nur 3 groß und nicht 5
+	//Eigentlich unnÃ¶tig, da das eigentlich von der Ressourcen-Klasse abgelÃ¶st wurde, auÃŸerdem nur 3 groÃŸ und nicht 5
 	//Habe aber Angst es wegzumachen
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
@@ -56,13 +57,13 @@ void Round::setAllCoverablePoints()
 		}
 		else
 		{
-			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1); //Nächster Eckpunkt der Map
-			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Nächster Eckpunkt der Map
+			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1); //NÃ¤chster Eckpunkt der Map
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //NÃ¤chster Eckpunkt der Map
 		}
 
 		pointIterator++; //Bei welchem Eckpunkt die for-Schleife ist
 
-		//Möglichkeiten, wie die beiden Eckpunkte liegen (untereinander(rechts-links / links-rechts) / nebeneinander(oben-unten / unten-oben))
+		//MÃ¶glichkeiten, wie die beiden Eckpunkte liegen (untereinander(rechts-links / links-rechts) / nebeneinander(oben-unten / unten-oben))
 		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x) //Untereinander, links-rechts
 		{
 			point.y = mapPoint1.y;
@@ -122,7 +123,7 @@ void Round::sellTower(Tower* a)
 		}
 	}
 
-	//Entfernt den Turm aus der Liste für alle Türme
+	//Entfernt den Turm aus der Liste fÃ¼r alle TÃ¼rme
 	for (auto i : allTowers)
 	{
 		if (i == a)
@@ -132,7 +133,7 @@ void Round::sellTower(Tower* a)
 		}
 	}
 
-	//Fügt den Wert des Turmes dem Spieler hinzu
+	//FÃ¼gt den Wert des Turmes dem Spieler hinzu
 	addMoney(a->getValue() * 0.75);
 
 	delete a;
@@ -161,7 +162,7 @@ void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
 void Round::nextRound()
 {
 	Game::getInstance()->saveGame(); //Speichert das Spiel am Ende jeder Runde
-	Game::getInstance()->setDroneCount(0); //Setzt den Zähler der Drohnen in der Game auf 0
+	Game::getInstance()->setDroneCount(0); //Setzt den ZÃ¤hler der Drohnen in der Game auf 0
 
 	//Startet eine neue Runde, je nachdem ob Host/Client/Singleplayer
 	if (Game::getInstance()->getStatus() == 1)
@@ -184,7 +185,7 @@ void Round::nextRound()
 		}
 	}
 
-	//Löscht alle Projektile
+	//LÃ¶scht alle Projektile
 	if (!allProjectiles.empty())
 	{
 		allProjectiles.clear();

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
@@ -34,12 +35,13 @@ private:
 	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
 	int towerSpawnSpeed[1];
 	int droneLives[1];
-
+	int droneTypesInRound[100][5];
+  
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
 
 	float towerDamage[6]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float towerSpeed[6]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
+	float towerSpeed[6]; //Wie schnell der Turm schie√üt, je kleiner desto schneller
 	float towerProjectileSpeed[6]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float towerRange[6]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[6]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
@@ -185,6 +187,9 @@ public:
 	Texture* getCopyTexture();
 	Texture* getButtonHostTexture();
 	Texture* getButtonClientTexture();
+
+	int* getDroneTypesInRound(int index);
+	
 
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
