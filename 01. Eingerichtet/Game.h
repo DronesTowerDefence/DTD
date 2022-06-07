@@ -1,6 +1,4 @@
 #pragma once
-#include <list>
-#include <fstream>
 #include "Ressources.h"
 #include "Sidebar.h"
 #include "TowerAlias.h"
@@ -215,11 +213,6 @@ private:
 	void checkDroneCount();
 
 	/// <summary>
-	/// Überprüft die Verbindung zum anderen PC
-	/// </summary>
-	void checkMultiplayerConnection();
-
-	/// <summary>
 	/// Konstruktor von Game
 	/// </summary>
 	Game();
@@ -323,16 +316,16 @@ public:
 	/// <param name="t">Welcher Tower verkauft werden soll</param>
 	void sellTower(Tower* t);
 
-  /// <summary>
-  /// Überprüft die Multiplayer-Verbindung
-  /// </summary>
+	/// <summary>
+	/// Überprüft die Multiplayer-Verbindung
+	/// </summary>
 	void checkMultiplayerConnection();
-  
-  /// <summary>
-  ///
-  /// </summary>
+
+	/// <summary>
+	///
+	/// </summary>
 	void setDroneRow(int g);
-  
+
 	/// <summary>
 	/// Löscht den Spielstand zur aktuellen Map
 	/// </summary>

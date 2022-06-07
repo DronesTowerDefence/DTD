@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <list>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
@@ -190,7 +192,6 @@ public:
 
 	int* getDroneTypesInRound(int index);
 	
-
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
 	void setIpAddress(std::string);

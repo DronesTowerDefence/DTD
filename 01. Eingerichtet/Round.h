@@ -1,5 +1,4 @@
 #pragma once
-//Singleton
 #include "Tower.h"
 #include "Drone.h"
 #include "Map.h"
@@ -7,6 +6,9 @@
 #include "TowerSpawn.h"
 using namespace sf;
 
+/**
+Singleton
+*/
 class Round
 {
 private:

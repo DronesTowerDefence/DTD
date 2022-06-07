@@ -1,7 +1,6 @@
-#include "Ressources.h"
-#include "Round.h"
-#include <fstream>
 #include "Game.h"
+#include "Round.h"
+#include "Ressources.h"
 
 Ressources* Ressources::instance = nullptr;
 
@@ -16,7 +15,7 @@ Ressources::Ressources()
 
 	std::ifstream ok;
 	ok.open("saves/round_data.csv", std::ios::in);
-	
+
 	isDoubleSpeed = 0;
 
 	for (int i = 0; i < 100; i++)
@@ -24,18 +23,18 @@ Ressources::Ressources()
 		droneCountInRound[i] = i + 1 * 10;
 
 
-	if (ok.is_open()) {
+		if (ok.is_open()) {
 
-		for (int i = 0; i < 100; i++){
+			for (int i = 0; i < 100; i++) {
 
-			if (i == 100) {
-				std::cout << "hi";
-			}
-			//Anzahl Drohnen Gesamt in Runde
+				if (i == 100) {
+					std::cout << "hi";
+				}
+				//Anzahl Drohnen Gesamt in Runde
 
 				ok.getline(buffer, 32);
 				*sit = 0;
-				
+
 				for (int f = 0; buffer[f] != '\0'; f++) {
 
 					if (std::isdigit(buffer[f])) {
@@ -56,7 +55,7 @@ Ressources::Ressources()
 						if (isdigit(buffer[f + 1])) {
 							*help += (buffer[f] - 48.f) * 10;
 							*help += (buffer[f + 1] - 48.f);
-							
+
 
 							droneCountInRound[i] += *help;
 							droneTypesInRound[i][*sit] = *help;
@@ -71,22 +70,22 @@ Ressources::Ressources()
 							droneTypesInRound[i][*sit] = buffer[f] - 48;
 							*sit += 1;
 						}
-						
+
 					}
 
-					
+
 				}
-			
+
 				//Einzelne Drohnen Typen in einer Runde
 
 				//droneTypesInRound[i] = buffer;
-			
-			droneSpawnTime[i] = 0.5;
 
-			
+				droneSpawnTime[i] = 0.5;
+
+
+			}
 		}
 	}
-
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 4;
@@ -281,6 +280,7 @@ Ressources::Ressources()
 		shootSound[i].setBuffer(shootBuffer[i]);
 	}
 }
+
 #pragma endregion
 
 #pragma region Funktionen
