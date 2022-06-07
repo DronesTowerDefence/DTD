@@ -8,14 +8,27 @@
 #include "HomeMenu.h"
 #include "Tower.h"
 
-
+/**
+Das Hauptspiel, wo auf einer Map Drohnen sich bewegen und vom Spieler platzierte Türme auf diese Drohnen schießen
+*/
 class Game
 {
 private:
+	/// <summary>
+	/// Instance, weil Singleton
+	/// </summary>
 	static Game* instance;
 
+	/// <summary>
+	/// Welcher Track der Musik gerade läuft
+	/// </summary>
 	int chooseMusic;
+
+	/// <summary>
+	/// Wie viele Drohnen gerade auf dem Bildschirm sind
+	/// </summary>
 	int droneCount;
+
 	/// <summary>
 	/// 1 = Single
 	/// 2 = Host
@@ -23,37 +36,119 @@ private:
 	/// </summary>
 	int status;
 
+	/// <summary>
+	/// Unnötig? Ist glaube der alte Counter vom Flugzeug-Schuss
+	/// </summary>
 	int shootClockSpeed;
 
+	/// <summary>
+	/// Ob die linke Maustaste gedrückt wurde
+	/// </summary>
 	bool isMouseClicked;
+
+	/// <summary>
+	/// Ob doppelte Geschwindigkeit
+	/// </summary>
 	bool doubleSpeed;
 
+	/// <summary>
+	/// Die Shape, wo die Sidebar drin ist
+	/// </summary>
 	RectangleShape toolbar;
 
+	/// <summary>
+	/// Die Sprite des Bildschirmes, ob man gewonnen oder verloren hat
+	/// </summary>
 	Sprite gameOverWonBackround;
+
+	/// <summary>
+	/// Die Sprite des Neustart-Knopfes
+	/// </summary>
 	Sprite restartButton;
+
+	/// <summary>
+	/// Die Sprite des Hauptmenü-Knopfes
+	/// </summary>
 	Sprite homeButton;
 
+	/// <summary>
+	/// Wann die Musik wechselt
+	/// </summary>
 	Clock changeMusicTimer;
+
+	/// <summary>
+	/// Die Buffer der Musik
+	/// </summary>
 	SoundBuffer musicBuffer[4];
+
+	/// <summary>
+	/// Die Musik
+	/// </summary>
 	Sound music[4];
 
+	/// <summary>
+	/// Ein Pointer auf einen Turm
+	/// </summary>
 	Tower* tower;
 
+	/// <summary>
+	/// Die Schriftart
+	/// </summary>
 	Font stdFont;
+
+	/// <summary>
+	/// Der Text oben links, welcher die Leben, Geld und Rundenanzahl anzeigt
+	/// </summary>
 	Text eco;
+
+	/// <summary>
+	/// Der Text, welcher auf dem gewinnen-/verlieren-Bildschirm angezeigt wird
+	/// </summary>
 	Text gameOverWonText[2];
 
+	/// <summary>
+	/// Das event, welches z.B. auf einen Tastendruck überprüft
+	/// </summary>
 	Event event;
 
+	/// <summary>
+	/// Die Clock für die Überprüfung der Verbindung (empfangen)
+	/// </summary>
 	Clock multiplayerCheckConnectionClock;
+
+	/// <summary>
+	/// Die Clock für die Überprüfung der Verbindung (senden)
+	/// </summary>
 	Clock multiplayerCheckConnectionSendClock;
 
+	/// <summary>
+	/// Pointer auf die Ressourcen-Klasse, fürs setzen der Attribute
+	/// </summary>
 	Ressources* p_ressources;
+
+	/// <summary>
+	/// Pointer auf die Round
+	/// </summary>
 	Round* round;
+
+	/// <summary>
+	/// Pointer auf die Sidebar
+	/// </summary>
 	Sidebar* sidebar;
+
+	/// <summary>
+	/// Pointer auf die Map
+	/// </summary>
 	Map* p_map;
+
+	/// <summary>
+	/// Pointer auf das Fenster
+	/// </summary>
 	RenderWindow* window;
+
+	/// <summary>
+	/// TowerAlias; nullptr, wenn kein Turm platziert werden soll / kein TowerAlias ausgewählt ist
+	/// </summary>
 	TowerAlias* newTower;
 
 	/// <summary>
@@ -62,6 +157,7 @@ private:
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
 	bool loadGame();
+
 	/// <summary>
 	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
 	/// Z.B. Die Sidebar oder die Strecke
@@ -73,22 +169,27 @@ private:
 	/// Bewegt alle Drohnen eine Position weiter
 	/// </summary>
 	void moveDrohnes();
+
 	/// <summary>
 	/// Checkt, ob ein Button gekllickt wurde
 	/// </summary>
 	void checkButtonClick();
+
 	/// <summary>
 	/// Checkt, ob Drag & Drop aktiv ist, oder ob losgelassen wird
 	/// </summary>
 	void checkTowerAlias();
+
 	/// <summary>
 	/// Draw alle Elemente
 	/// </summary>
 	void draw();
+
 	/// <summary>
 	/// Überprüft ob ein Turm eine Drohne abschießen kann
 	/// </summary>
 	void checkShoot();
+
 	/// <summary>
 	/// Lässt MoneyTower Geld generieren
 	/// </summary>
@@ -122,11 +223,16 @@ private:
 public:
 	~Game();
 
+	/// <summary>
+	/// Singleton
+	/// </summary>
+	/// <returns>Gibt die Instance zurück</returns>
 	static Game* getInstance();
 
 	int getShootClockSpeed();
 
 	bool getDoubleSpeed();
+
 	/// <summary>
 	/// Gibt einen Pointer auf das Fenster zurück
 	/// </summary>
@@ -138,6 +244,7 @@ public:
 	/// </summary>
 	/// <returns>Font</returns>
 	Font getFont();
+
 	/// <summary>
 	/// Gibt erstes Feld der Music wieder
 	/// </summary>
@@ -146,6 +253,10 @@ public:
 
 	Clock* getMultiplayerCheckConnectionClock();
 
+	/// <summary>
+	/// Gibt den Status zurück, ob Singleplayer/Host/Client
+	/// </summary>
+	/// <returns></returns>
 	int getStatus();
 
 	/// <summary>
@@ -153,18 +264,14 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	void setMusicVolume(float);
+
 	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>
 	/// <param name="RenderWindow*"></param>
-	void setShootClockSpeed(int);
 	void setWindow(RenderWindow*);
-	/// <summary>
-	/// Übergibt das Pause-Screen Window (Kann nicht als festes Attribut in Game sein)
-	/// </summary>
-	/// <param name=""></param>
-	//void setPauseScreen(RenderWindow*);
 
+	void setShootClockSpeed(int);
 	void setStatus(int state);
 	void setDoubleSpeed(bool wert);
 	void setDroneCount(int);

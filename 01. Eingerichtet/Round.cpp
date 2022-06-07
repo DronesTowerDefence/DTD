@@ -2,12 +2,13 @@
 #include "Multiplayer.h"
 #include "Round.h"
 
-
 Round* Round::instance = nullptr;
+
 #pragma region Konstruktor
 
 Round::Round()
 {
+	//Wenn man die falsche getInstance-Funktion verwendet, ohne das das Spiel crasht
 	money = -1; //Start-Geld
 	health = -1; //Start-Leben
 	index = -1; //Start-Runde
@@ -18,22 +19,20 @@ Round::Round()
 }
 Round::Round(Map* _p_map)
 {
-	money = 1000000; //Start-Geld
-	health = 200; //Start-Leben
+	//Setzen der Attribute
+	money = 1000; //Start-Geld
+	health = 100; //Start-Leben
 	index = 0; //Start-Runde
+	lost = false;
+	won = false;
+	receivedFromHostNextRound = false;
+	p_map = _p_map;
 
 	//Eigentlich unnötig, da das eigentlich von der Ressourcen-Klasse abgelöst wurde, außerdem nur 3 groß und nicht 5
 	//Habe aber Angst es wegzumachen
 	towerPrice[0] = 100;
 	towerPrice[1] = 200;
 	towerPrice[2] = 300;
-	//
-
-	lost = false;
-	won = false;
-	receivedFromHostNextRound = false;
-
-	p_map = _p_map;
 
 	setAllCoverablePoints();
 }
@@ -48,23 +47,23 @@ void Round::setAllCoverablePoints()
 	Vector2f mapPoint2;
 	int pointIterator = 0;
 
-	for (auto i : p_map->getPoints())
+	for (auto i : p_map->getPoints()) //Geht alle Eckpunkte durch
 	{
 		if (pointIterator == 0)
 		{
-			mapPoint1.x = p_map->getStart().x; //Muss bei anderer Map angepasst werden // eingang
-			mapPoint1.y = p_map->getStart().y;  // eingang
-			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+			mapPoint1 = p_map->getStart();  // Eingang der Map
+ 			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Erster Eckpunkt der Map
 		}
 		else
 		{
-			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1);
-			mapPoint2 = p_map->getWaypointAsVector(pointIterator);
+			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1); //Nächster Eckpunkt der Map
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Nächster Eckpunkt der Map
 		}
 
-		pointIterator++;
+		pointIterator++; //Bei welchem Eckpunkt die for-Schleife ist
 
-		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x)
+		//Möglichkeiten, wie die beiden Eckpunkte liegen (untereinander(rechts-links / links-rechts) / nebeneinander(oben-unten / unten-oben))
+		if (mapPoint1.y == mapPoint2.y && mapPoint1.x < mapPoint2.x) //Untereinander, links-rechts
 		{
 			point.y = mapPoint1.y;
 			for (point.x = mapPoint1.x; point.x <= mapPoint2.x; point.x += 20)
@@ -72,7 +71,7 @@ void Round::setAllCoverablePoints()
 				allCoverablePoints.push_back(point);
 			}
 		}
-		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y)
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y > mapPoint2.y) //Nebeneinander, unten-oben
 		{
 			point.x = mapPoint1.x;
 			for (point.y = mapPoint1.y; point.y >= mapPoint2.y; point.y -= 20)
@@ -80,7 +79,7 @@ void Round::setAllCoverablePoints()
 				allCoverablePoints.push_back(point);
 			}
 		}
-		else if (mapPoint1.y == mapPoint2.y && mapPoint1.x > mapPoint2.x)
+		else if (mapPoint1.y == mapPoint2.y && mapPoint1.x > mapPoint2.x) //Untereinander, rechts-links
 		{
 			point.y = mapPoint1.y;
 			for (point.x = mapPoint1.x; point.x >= mapPoint2.x; point.x -= 20)
@@ -88,7 +87,7 @@ void Round::setAllCoverablePoints()
 				allCoverablePoints.push_back(point);
 			}
 		}
-		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y < mapPoint2.y)
+		else if (mapPoint1.x == mapPoint2.x && mapPoint1.y < mapPoint2.y) //Nebeneinander, oben-unten
 		{
 			point.x = mapPoint1.x;
 			for (point.y = mapPoint1.y; point.y <= mapPoint2.y; point.y += 20)
@@ -100,6 +99,9 @@ void Round::setAllCoverablePoints()
 }
 void Round::sellTower(Tower* a)
 {
+	//Verkauft einen Turm
+
+	//Entfernt den Turm aus der Angriffs-Turm-Liste
 	for (auto i : allAttackTowers)
 	{
 		if (i == a)
@@ -110,6 +112,7 @@ void Round::sellTower(Tower* a)
 		}
 	}
 
+	//Entfernt den Turm aus der Geldgenerations-Turm-Liste
 	for (auto i : allMoneyTowers)
 	{
 		if (i == a)
@@ -119,6 +122,7 @@ void Round::sellTower(Tower* a)
 		}
 	}
 
+	//Entfernt den Turm aus der Liste für alle Türme
 	for (auto i : allTowers)
 	{
 		if (i == a)
@@ -127,6 +131,8 @@ void Round::sellTower(Tower* a)
 			break;
 		}
 	}
+
+	//Fügt den Wert des Turmes dem Spieler hinzu
 	addMoney(a->getValue() * 0.75);
 
 	delete a;
@@ -142,14 +148,11 @@ void Round::restartDroneSubHealthTimer()
 }
 void Round::deleteDrone(Drone* drone)
 {
-
 	allDrones.remove(drone);
-
 }
 void Round::deleteProjectile(Projectile* p)
 {
 	allProjectiles.remove(p);
-
 }
 void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
 {
@@ -157,9 +160,10 @@ void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
 }
 void Round::nextRound()
 {
-	Game::getInstance()->saveGame();
-	Game::getInstance()->setDroneCount(0);
+	Game::getInstance()->saveGame(); //Speichert das Spiel am Ende jeder Runde
+	Game::getInstance()->setDroneCount(0); //Setzt den Zähler der Drohnen in der Game auf 0
 
+	//Startet eine neue Runde, je nachdem ob Host/Client/Singleplayer
 	if (Game::getInstance()->getStatus() == 1)
 	{
 		index++;
@@ -180,11 +184,13 @@ void Round::nextRound()
 		}
 	}
 
+	//Löscht alle Projektile
 	if (!allProjectiles.empty())
 	{
 		allProjectiles.clear();
 	}
 
+	//Wenn man gewonnen hat
 	if (index == 100 && !lost)
 	{
 		won = true;

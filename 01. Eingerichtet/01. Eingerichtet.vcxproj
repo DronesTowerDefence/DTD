@@ -26,7 +26,6 @@
     <ClInclude Include="Multiplayer.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="rekursion.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
     <ClInclude Include="Service.h" />

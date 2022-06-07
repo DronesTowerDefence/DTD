@@ -5,18 +5,22 @@
 #include "Round.h"
 #include <iostream>
 
+/// <summary>
+/// Zähler für die TurmId
+/// </summary>
 int Tower::globalId = 0;
 
 #pragma region Konstruktor
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
-	index = _index;
-	id = globalId;
-	globalId++;
-	int price;
 
+	//Ob der Index richtig ist
 	if (index >= 0 && index <= 4)
 	{
+		//Setzen der Attribute
+		index = _index;
+		id = globalId;
+		globalId++;
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
 		damage = res->getTowerDamage(index);
@@ -27,7 +31,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		moneyGeneration = res->getTowerMoneyGeneration(index);
 		towerChangeFrame = res->getTowerChangeFrame(index);
 		name = res->getTowerName(index);
-
 		animationCounter = 0;
 		position = pos;
 		p_map = n_map;
@@ -36,7 +39,8 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		generationCooldown = false;
 		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
-		if (index == 3)
+
+		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
 			spawnSpawn(1);
 			rangeShapePlane = new RectangleShape;
@@ -47,7 +51,7 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			rangeShapePlane->setOutlineThickness(5);
 
 		}
-		else
+		else //Reichweite-Kreis
 		{
 			rangeShapePlane = nullptr;
 			rangeShape.setRadius(range);
@@ -58,12 +62,12 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			setCoverableArea();
 		}
 
-		update = new Updates(this);
+		update = new Updates(this); //Erstellung der dazugehörigen Upgrade-Möglichkeiten
 
 	}
 	else
 	{
-		delete this;
+		delete this; //Löschen des Turmes, wenn die Übergebene ID falsch ist
 	}
 }
 #pragma endregion
@@ -71,17 +75,15 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 #pragma region Funktionen
 void Tower::setCoverableArea()
 {
-	Vector3f point = Vector3f(0, 0, 0);
+	//Ergänzung zum Konstruktor
 	float distanz = 0;
-	for (auto i : Round::getInstance()->getAllCoverablePoints())
+	for (auto i : Round::getInstance()->getAllCoverablePoints()) //Geht die Liste aus Round durch, welche alle Punkte der Strecke hat
 	{
+		//Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
 		if (distanz <= range)
 		{
-			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
-			point.x = i.x;
-			point.y = i.y;
-			coverableArea.push_back(point);
+			coverableArea.push_back(Vector3f(i.x,i.y,distanz));
 		}
 	}
 }
@@ -414,7 +416,7 @@ Tower::~Tower()
 		}
 	}
 
-	//Löscht die Liste
+	//Löscht die Liste bzw. die Spawns zum Turm
 	if (index == 3 && !boundSpawns.empty())
 	{
 		for (auto i : boundSpawns)
