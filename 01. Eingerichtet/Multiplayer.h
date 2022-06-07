@@ -5,7 +5,7 @@
 |Static-Class|
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
-5=Verloren, 6=PauseMenu, 7=HomeMenu, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
+5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
 */
 static class Multiplayer
 {
@@ -15,7 +15,15 @@ private:
 
 public:
 
-	static Time timeout;
+	/// <summary>
+	/// Zeit, wann die Verbindung als abgebrochen gilt
+	/// </summary>
+	static const Time timeout;
+
+	/// <summary>
+	/// Zeit, in welchen Abständen die Überprüfungspackete gesendet werden sollen
+	/// </summary>
+	static const Time timeoutSend;
 
 	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
@@ -56,9 +64,12 @@ public:
 	static bool send(int, bool);
 
 	/// <summary>
-	/// Empfängt ein Packet und wendet es an.
-	/// Immer in einer eigenen while-Schleife aufrufen - Bsp.:"while(Multiplayer::receive());"
+	/// <para>Empfängt ein Packet und wendet es an.</para>
+	/// <para>Immer in einer eigenen while-Schleife aufrufen: Bsp.:"while(Multiplayer::receive());"</para>
 	/// </summary>
-	/// <returns>True, wenn empfangen und Packet-Header gültig | False, wenn Packet-Header ungültig</returns>
+	/// <returns>
+	/// <para>True, wenn empfangen und Packet-Header gültig</para>
+	/// <para>False, wenn Packet-Header ungültig</para>
+	/// </returns>
 	static bool receive();
 };

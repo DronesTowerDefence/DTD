@@ -32,14 +32,6 @@ private:
 	RenderWindow* window;
 	
 	Texture* textureTower[5][4];	
-	Texture* textureTitel;
-	Texture* textureBackround;
-	Texture* textureHost;
-	Texture* textureClient;
-	Texture* textureOpenMultiplayer;
-	Texture* textureCloseMultiplayer;
-	Texture* textureCopy;
-	Texture* texturePaste;
 
 	RectangleShape* pointer;
 	
@@ -54,6 +46,7 @@ private:
 	Sprite* multiplayerMenue;
 	Sprite* copy;
 	Sprite* paste;
+	Sprite* exitButton;
 	
 	Clock* animation;
 	

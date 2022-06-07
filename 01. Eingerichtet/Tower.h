@@ -5,58 +5,174 @@
 #include "Map.h"
 #include "Service.h"
 #include "Updates.h"
-
-class TowerSpawn;
-
 using namespace sf;
 
+class TowerSpawn; //Joa, muss halt, weil sonst Include-Fehler
+
+/**
+Turm, welcher die Drohnen abschießt
+Index:
+0: Feuer-Turm
+1: Nagelfabrik
+2: EMP-Sender
+3: Flugzeug
+4: Goldmine
+*/
 class Tower
 {
 private:
-	static int globalId; //Zähler für die TurmId
-	int index; //Welcher Turm-Typ es ist
-	int animationCounter; //Welcher Frame ausgewählt ist
+	/// <summary>
+	/// Zähler für die TurmId
+	/// </summary>
+	static int globalId;
+
+	/// <summary>
+	/// Welcher Typ von Turm es ist (siehe Klassenbeschreibung)
+	/// </summary>
+	int index;
+
+	/// <summary>
+	/// Welcher Frame von der Animation ausgewählt ist
+	/// </summary>
+	int animationCounter;
+
+	/// <summary>
+	/// 
+	/// </summary>
 	int towerChangeFrame;
-	int id; //Eindeutige Turm id
-	float damage; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float speed; //Wie schnell der Turm schießt, je kleiner desto schneller
+
+	/// <summary>
+	/// Eindeutige Turm ID
+	/// </summary>
+	int id;
+
+	/// <summary>
+	/// Wie viel Schaden der Turm mit einem Schuss anrichtet
+	/// </summary>
+	float damage;
+
+	/// <summary>
+	/// Wie schnell der Turm schießt, je kleiner desto schneller (Cooldown in Sekunden)
+	/// </summary>
+	float speed;
+
+	/// <summary>
+	/// Kaufpreis des Turmes
+	/// </summary>
 	float price;
-	float value; //Wie hoch der Wert des Turmes ist (erhöht sich durch Upgrades)
-	float projectileSpeed; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
-	float range; //Die Reichweite in der der Turm Drohnen angreifen kann
-	float moneyGeneration; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
-	
-	std::string name; //Der Name des Turmes
 
-	bool shootCooldown; //Damit der Turm nicht dauerhaft schieÃen kann
-	bool generationCooldown; //Cooldown zum generieren von Geld, damit nicht dauerhaft Geld generiert wird
-	
+	/// <summary>
+	/// Wie hoch der Wert des Turmes ist (erhöht sich durch Upgrades)
+	/// </summary>
+	float value;
+
+	/// <summary>
+	/// Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1 = instant)
+	/// </summary>
+	float projectileSpeed;
+
+	/// <summary>
+	/// Die Reichweite in der der Turm Drohnen angreifen kann (Radius)
+	/// </summary>
+	float range;
+
+	/// <summary>
+	/// Wie viel Geld in einem bestimmten Zeitraum generiert wird, vom Attribut "Speed" abhängig
+	/// </summary>
+	float moneyGeneration;
+
+	/// <summary>
+	/// Der Name des Turmes
+	/// </summary>
+	std::string name;
+
+	/// <summary>
+	/// Ob Schuss-Cooldown
+	/// </summary>
+	bool shootCooldown;
+
+	/// <summary>
+	/// Cooldown zum Geldgenerieren
+	/// </summary>
+	bool generationCooldown;
+
+	/// <summary>
+	/// Position des Turmes
+	/// </summary>
 	Vector2f position;
-	std::list<Vector3f> coverableArea; //Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
-	
+
+	/// <summary>
+	/// Welche Punkte der Turm auf der Strecke abdeckt in 20px Schritten
+	/// </summary>
+	std::list<Vector3f> coverableArea;
+
+	/// <summary>
+	/// Die Shape der Reichweite als Kreis
+	/// </summary>
 	CircleShape rangeShape;
+
+	/// <summary>
+	/// Die Flugbahn des Flugzeugs, als Rechteck
+	/// </summary>
+	RectangleShape* rangeShapePlane;
+
+	/// <summary>
+	/// Sprite des Turmes
+	/// </summary>
 	Sprite towerSpr;
-	
-	Clock shootTimer; //Zum zÃ¤hlen des Schuss-Cooldowns
-	Clock generationTimer; //Der Timer welcher den bool zum Generieren von Geld bestimmt
-	Clock animationTimer; //Der Timer zum wechseln des Frames
 
+	/// <summary>
+	/// Zum zählen des Schuss-Cooldowns
+	/// </summary>
+	Clock shootTimer;
 
+	/// <summary>
+	/// Zum zählen des Geldgenerations-Cooldowns
+	/// </summary>
+	Clock generationTimer;
 
+	/// <summary>
+	/// Der Timer zum wechseln des Animations Frames
+	/// </summary>
+	Clock animationTimer;
+
+	/// <summary>
+	/// Welche spawns zu dem Turm gehören
+	/// </summary>
 	std::list<TowerSpawn*> boundSpawns;
+
+	/// <summary>
+	/// Pointer auf die Map (evtl. unnötig)
+	/// </summary>
 	Map* p_map;
+
+	/// <summary>
+	/// Pointer auf die zugehörigen Updates des Turmes
+	/// </summary>
 	Updates* update;
+
+	/// <summary>
+	/// Pointer auf die Ressourcen, um die Attribute zu setzen
+	/// </summary>
 	Ressources* res;
-	
-	Tower(); //Standart-Konstruktor soll nicht benutzt werden
-	
+
+	/// <summary>
+	/// !! NICHT BENUTZEN !!
+	/// </summary>
+	Tower();
+
+	/// <summary>
+	/// Holt sich die Punkte von der Liste in Round, welche in der Reichweite liegen. Extra Funktion, damit der Konstruktor übersichtlicher ist
+	/// </summary>
 	void setCoverableArea();
 
 public:
 	/// <summary>
 	/// Neuen Turm kaufen; 0,1,2,3
 	/// </summary>
-	/// <param name="int 0,1,2,3"></param>
+	/// <param name="int: 0,1,2,3"></param>
+	/// <param name="Vector2f: Position"></param>
+	/// <param name="Map*: Pointer auf die Map"></param>
 	Tower(int, Vector2f, Map*);
 
 	/// <summary>
@@ -88,7 +204,7 @@ public:
 	/// </summary>
 	/// <param name="float"></param>
 	float getValue();
-	
+
 	/// <summary>
 	/// Return die Position des Towers
 	/// </summary>
@@ -106,6 +222,12 @@ public:
 	/// </summary>
 	/// <returns>CircleShape*</returns>
 	CircleShape* getRangeShape();
+
+	/// <summary>
+	/// Gibt nen Pointer auf die Range Shape vom Flugzeug zurück
+	/// </summary>
+	/// <returns></returns>
+	RectangleShape* getRangeShapePlane();
 
 	/// <summary>
 	/// Returnt die Tower Sprite
@@ -176,8 +298,7 @@ public:
 	/// </summary>
 	/// <param name="Pointer auf die Drohne">auf die geschossen werden soll</param>
 	/// <param name="Ob der Cooldown umgangen werden soll?">True</param>
-	/// <returns></returns>
-	bool shoot(Drone*,bool);
+	bool shoot(Drone*, bool);
 
 	/// <summary>
 	/// Prüft, ob das Element angeklickt wird
@@ -185,8 +306,14 @@ public:
 	/// <returns>ist geklickt</returns>
 	bool isClicked(RenderWindow* window);
 
+	/// <summary>
+	/// Updated Pfad 1
+	/// </summary>
 	void Update1();
 
+	/// <summary>
+	/// Updated Pfad 2
+	/// </summary>
 	void Update2();
 
 	/// <summary>
@@ -196,11 +323,19 @@ public:
 	void manageUpdate(RenderWindow* window);
 
 	/// <summary>
-	/// 
+	/// Erstellt einen Spawn
 	/// </summary>
-	/// <param name=""></param>
+	/// <param name="Typ = ">1: Flugzeug</param>
 	void spawnSpawn(int);
 
+	/// <summary>
+	/// Verkauft alle Spawns, die zum Turm gehören
+	/// </summary>
+	void sellSpawns();
+
+	/// <summary>
+	/// Destruktor
+	/// </summary>
 	~Tower();
 
 };

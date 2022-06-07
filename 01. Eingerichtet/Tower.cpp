@@ -5,20 +5,22 @@
 #include "Round.h"
 #include <iostream>
 
+/// <summary>
+/// Zähler für die TurmId
+/// </summary>
 int Tower::globalId = 0;
 
 #pragma region Konstruktor
 Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
-	index = _index;
-	id = globalId;
-	globalId++;
-	int price;
 
+	//Ob der Index richtig ist
 	if (index >= 0 && index <= 4)
 	{
-
-
+		//Setzen der Attribute
+		index = _index;
+		id = globalId;
+		globalId++;
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
 		damage = res->getTowerDamage(index);
@@ -29,7 +31,6 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		moneyGeneration = res->getTowerMoneyGeneration(index);
 		towerChangeFrame = res->getTowerChangeFrame(index);
 		name = res->getTowerName(index);
-
 		animationCounter = 0;
 		position = pos;
 		p_map = n_map;
@@ -38,13 +39,21 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 		generationCooldown = false;
 		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
-		if (index == 3)
+
+		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
 			spawnSpawn(1);
-		}
+			rangeShapePlane = new RectangleShape;
+			rangeShapePlane->setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
+			rangeShapePlane->setSize(Vector2f(range * 2, range * 2));
+			rangeShapePlane->setFillColor(Color::Transparent);
+			rangeShapePlane->setOutlineColor(Color::Black);
+			rangeShapePlane->setOutlineThickness(5);
 
-		if (index < res->getTowerCount())
+		}
+		else //Reichweite-Kreis
 		{
+			rangeShapePlane = nullptr;
 			rangeShape.setRadius(range);
 			rangeShape.setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
 			rangeShape.setFillColor(Color::Transparent);
@@ -53,12 +62,12 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 			setCoverableArea();
 		}
 
-		update = new Updates(this);
+		update = new Updates(this); //Erstellung der dazugehörigen Upgrade-Möglichkeiten
 
 	}
 	else
 	{
-		delete this;
+		delete this; //Löschen des Turmes, wenn die Übergebene ID falsch ist
 	}
 }
 #pragma endregion
@@ -66,17 +75,15 @@ Tower::Tower(int _index, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,
 #pragma region Funktionen
 void Tower::setCoverableArea()
 {
-	Vector3f point = Vector3f(0, 0, 0);
+	//Ergänzung zum Konstruktor
 	float distanz = 0;
-	for (auto i : Round::getInstance()->getAllCoverablePoints())
+	for (auto i : Round::getInstance()->getAllCoverablePoints()) //Geht die Liste aus Round durch, welche alle Punkte der Strecke hat
 	{
+		//Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
 		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
 		if (distanz <= range)
 		{
-			point.z = distanz; //Pythagoras um die Distanz zwischen dem Tower und dem Punkt zu bekommen
-			point.x = i.x;
-			point.y = i.y;
-			coverableArea.push_back(point);
+			coverableArea.push_back(Vector3f(i.x,i.y,distanz));
 		}
 	}
 }
@@ -104,7 +111,22 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 	{
 		if (!shootCooldown)
 		{
-			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			res->getShootSound(0)->play();
+			if (index == 1)
+			{
+				new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+			}
+			else if (index == 3)
+			{
+				for (auto i : boundSpawns)
+				{
+					i->shoot();
+				}
+			}
+			else
+			{
+				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			}
 			if (Game::getInstance()->getStatus() == 2)
 			{
 				Multiplayer::send(id, d->getId());
@@ -126,6 +148,7 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 	{
 		if (index < 4)
 		{
+			res->getShootSound(0)->play();
 			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 			return true;
 		}
@@ -163,8 +186,8 @@ void Tower::Update1()
 	else if (index == 4)
 	{
 		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);	
-		Multiplayer::send(id ,2, update->getIndex2());
+		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
+		Multiplayer::send(id, 2, update->getIndex2());
 	}
 	update->setStringPrice();
 
@@ -213,6 +236,16 @@ void Tower::spawnSpawn(int art)
 {
 	boundSpawns.push_back(new TowerSpawn(art, this));
 }
+
+void Tower::sellSpawns()
+{
+	if (!boundSpawns.empty()) {
+		for (auto i : boundSpawns) {
+			i->~TowerSpawn();
+		}
+	}
+}
+
 #pragma endregion
 
 #pragma region getter
@@ -247,6 +280,10 @@ std::list<Vector3f> Tower::getCoverableArea()
 CircleShape* Tower::getRangeShape()
 {
 	return &rangeShape;
+}
+RectangleShape* Tower::getRangeShapePlane()
+{
+	return rangeShapePlane;
 }
 Sprite Tower::getTowerSpr() //Returnt die Tower Sprite
 {
@@ -379,7 +416,7 @@ Tower::~Tower()
 		}
 	}
 
-	//Löscht die Liste
+	//Löscht die Liste bzw. die Spawns zum Turm
 	if (index == 3 && !boundSpawns.empty())
 	{
 		for (auto i : boundSpawns)

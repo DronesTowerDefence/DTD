@@ -25,19 +25,23 @@ Sidebar::Sidebar()
 	}
 
 	buttonText[0].setPosition(Vector2f(1757, 65)); //Position des Button-Textes
-	buttonText[1].setPosition(Vector2f(1832, 65));
-	buttonText[2].setPosition(Vector2f(1757, 170));
-	buttonText[3].setPosition(Vector2f(1832, 170));
-	buttonText[4].setPosition(Vector2f(1757, 275));
+	buttonText[1].setPosition(Vector2f(1757, 170));
+	buttonText[2].setPosition(Vector2f(1757, 275));
+	buttonText[3].setPosition(Vector2f(1757, 380));
+	buttonText[4].setPosition(Vector2f(1757, 485));
+	buttonText[5].setPosition(Vector2f(1832, 380));
+
 
 	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
-	buttonSpr[1].setPosition(Vector2f(1837, 15));
-	buttonSpr[2].setPosition(Vector2f(1762, 120));
-	buttonSpr[3].setPosition(Vector2f(1837, 120));
-	buttonSpr[4].setPosition(Vector2f(1762, 225));
+	buttonSpr[1].setPosition(Vector2f(1762, 120));
+	buttonSpr[2].setPosition(Vector2f(1762, 225));
+	buttonSpr[3].setPosition(Vector2f(1762, 330));
+	buttonSpr[4].setPosition(Vector2f(1762, 435));
+	buttonSpr[5].setPosition(Vector2f(1765, 450));
+
 
 	doubleSpeed.setTexture(*res->getButtonSpeedTexture());
-	doubleSpeed.setPosition(Vector2f(1750, 500));
+	doubleSpeed.setPosition(Vector2f(1757, 800));
 }
 
 #pragma endregion
@@ -45,7 +49,7 @@ Sidebar::Sidebar()
 #pragma region Funktionen
 bool Sidebar::isChangeSpeed(RenderWindow* window)
 {
-	
+
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
@@ -54,6 +58,7 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
 	{
 		return true;
+
 	}
 	return false;
 }
@@ -97,6 +102,17 @@ void Sidebar::draw(sf::RenderWindow* window)
 	}
 	window->draw(doubleSpeed);
 
+}
+void Sidebar::setSpeedButton(bool speed)
+{
+	if (speed)
+	{
+		doubleSpeed.setTexture(*Ressources::getInstance()->getButtonSpeedTexturePressed());
+	}
+	else
+	{
+		doubleSpeed.setTexture(*Ressources::getInstance()->getButtonSpeedTexture());
+	}
 }
 #pragma endregion
 #pragma region getter

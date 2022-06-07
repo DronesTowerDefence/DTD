@@ -11,12 +11,12 @@ class Sidebar
 private:
 	//Map* p_map;
 	static Sidebar* instance;
-	float price[5]; //Wie viel die Tower kosten
-	Sprite buttonSpr[5];
+	float price[6]; //Wie viel die Tower kosten
+	Sprite buttonSpr[6];
 	Sprite doubleSpeed;
 
 	Font buttonTextFont;
-	Text buttonText[5];
+	Text buttonText[6];
 
 	Ressources* res;
 
@@ -44,5 +44,6 @@ public:
 	/// </summary>
 	/// <param name="window"></param>
 	void draw(RenderWindow* window);
+	void setSpeedButton(bool speed);
 
 };

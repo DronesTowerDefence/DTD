@@ -1,7 +1,8 @@
 #include "PauseMenu.h"
 #include "Multiplayer.h"
 
-Time Multiplayer::timeout = seconds(2.f);
+const Time Multiplayer::timeout = seconds(2.f);
+const Time Multiplayer::timeoutSend = seconds(Multiplayer::timeout / seconds(3));
 
 bool Multiplayer::send()
 {
@@ -200,6 +201,8 @@ bool Multiplayer::receive()
 			Ressources::getInstance()->doubleSpeed(); //Ansonsten auf doppelte Geschwindigkeit
 		}
 		Game::getInstance()->setDoubleSpeed(!Game::getInstance()->getDoubleSpeed());
+		Sidebar::getInstance()->setSpeedButton(Game::getInstance()->getDoubleSpeed());
+
 
 		return true;
 

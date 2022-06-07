@@ -155,9 +155,6 @@
     <ClInclude Include="TowerSpawn.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="rekursion.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Multiplayer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>

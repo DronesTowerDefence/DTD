@@ -12,6 +12,9 @@ HomeMenu::HomeMenu()
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
+	res = Ressources::getInstance();
+	ipAdress = "";
+	ownIpAdress = IpAddress::getLocalAddress().toString();
 
 	startButton = new Sprite;
 	font = new Font();
@@ -21,57 +24,39 @@ HomeMenu::HomeMenu()
 	multiplayerMenue = new Sprite();
 	copy = new Sprite();
 	paste = new Sprite();
+	exitButton = new Sprite();
+	client = new Sprite();
+	host = new Sprite();
 
 	pointer = new RectangleShape;
 
-	textureTitel = new Texture;
-	textureBackround = new Texture;
-	textureClient = new Texture();
-	textureHost = new Texture();
-	textureCloseMultiplayer = new Texture();
-	textureOpenMultiplayer = new Texture();
-	textureCopy = new Texture();
-	texturePaste = new Texture();
-
 	ipAdressText = new Text();
 
-	res = Ressources::getInstance();
-	ipAdress = "";
-	ownIpAdress = IpAddress::getLocalAddress().toString();
-
-	client = new Sprite();
-	host = new Sprite();
-	textureTitel->loadFromFile("img/titleText.png");
-	textureBackround->loadFromFile("img/backround.jpg");
 	font->loadFromFile("fonts/arial.ttf");
-	textureCloseMultiplayer->loadFromFile("img/buttons/multiplayerButtonUp.png");
-	textureOpenMultiplayer->loadFromFile("img/buttons/multiplayerButtonDown.png");
-	textureCopy->loadFromFile("img/buttons/copyButton.png");//TODO
-	texturePaste->loadFromFile("img/buttons/pasteButton.png");//TODO
-	textureClient->loadFromFile("img/buttons/clientButton.png");
-	textureHost->loadFromFile("img/buttons/hostButton.png");
 
 	startButton->setTexture(*res->getButtonStartTexture());
-	titel->setTexture(*textureTitel);
-	backround->setTexture(*textureBackround);
+	titel->setTexture(*res->getTitleTextTexture());
+	backround->setTexture(*res->getHomeMenuBackgroundTexture());
 	drone->setTexture(*res->getDroneTexture(1, 0));;
-	multiplayerMenue->setTexture(*textureOpenMultiplayer);
-	paste->setTexture(*texturePaste);
-	copy->setTexture(*textureCopy);
+	multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
+	paste->setTexture(*res->getPasteTexture());
+	copy->setTexture(*res->getCopyTexture());
+	host->setTexture(*res->getButtonHostTexture());
+	client->setTexture(*res->getButtonClientTexture());
+	exitButton->setTexture(*res->getButtonExitTexture());
 
 	choseIndex = -1;
 
-	host->setTexture(*textureHost);
-	client->setTexture(*textureClient);
 
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 	host->setPosition(Vector2f(1100, 700));
 	client->setPosition(Vector2f(1250, 700));
-	copy->setPosition(Vector2f(1550, 841));
-	paste->setPosition(Vector2f(1550, 941));
+	copy->setPosition(Vector2f(1100, 841));
+	paste->setPosition(Vector2f(1100, 941));
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
+	exitButton->setPosition(Vector2f(20, 871));
 
 	drone->setScale(2, 2);
 	//
@@ -144,13 +129,13 @@ HomeMenu::HomeMenu()
 	choseText->setPosition(Vector2f(500, 450));
 
 	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(1620, 941));
+	ipAdressText->setPosition(Vector2f(1170, 941));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(50);
 
 	ownIpAdressText = new Text();
 	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(1620, 841));
+	ownIpAdressText->setPosition(Vector2f(1170, 841));
 	ownIpAdressText->setFillColor(Color::Black);
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
@@ -233,7 +218,6 @@ void HomeMenu::eingabe(Event event) {
 		}
 	}
 }
-
 int  HomeMenu::CheckClicked()
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
@@ -273,14 +257,12 @@ int  HomeMenu::CheckClicked()
 
 			if (res->getListener()->listen(4567))
 			{
-				std::cout << "Error Port";
 				connected = false;
 			}
 
 			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
 			{
 				connected = false;
-				std::cout << "Error Client";
 			}
 			Packet p;
 			while (res->getReceiver()->receive(p) != Socket::Done);
@@ -292,7 +274,6 @@ int  HomeMenu::CheckClicked()
 			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
 			{
 				//connected = false;
-				std::cout << "ERROR";
 			}
 			Packet p5;
 			p5 << choseIndex;
@@ -319,7 +300,6 @@ int  HomeMenu::CheckClicked()
 			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
 			{
 				connected = false;
-				std::cout << "ERROR";
 			}
 
 			Packet p1;
@@ -329,20 +309,17 @@ int  HomeMenu::CheckClicked()
 
 			if (res->getListener()->listen(4568))
 			{
-				std::cout << "Error Port";
 				connected = false;
 			}
 
 			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
 			{
 				connected = false;
-				std::cout << "Error Client";
 			}
 			Packet p2;
 
 			while (res->getReceiver()->receive(p2));
 			p2 >> choseIndex;
-			std::cout << choseIndex;
 			res->getSender()->setBlocking(false);
 			res->getReceiver()->setBlocking(false);
 
@@ -396,17 +373,28 @@ int  HomeMenu::CheckClicked()
 		{
 			if (isMultiplayerOpen)
 			{
-				multiplayerMenue->setTexture(*textureCloseMultiplayer);
+				multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
 			}
 			else
 			{
-				multiplayerMenue->setTexture(*textureOpenMultiplayer);
+				multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(0));
 			}
 			isMultiplayerOpen = !isMultiplayerOpen;
 			return 0;
 
 
 		}
+
+		//Exit
+		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			window->close();
+			return 0;
+		}
+
 	}
 	return 0;
 
@@ -470,6 +458,7 @@ void HomeMenu::draw()
 	window->draw(*drone);
 	window->draw(*choseText);
 	window->draw(*multiplayerMenue);
+	window->draw(*exitButton);
 	if (isMultiplayerOpen)
 	{
 		window->draw(*copy);

@@ -1,7 +1,7 @@
 #include "Ressources.h"
 #include "Round.h"
 #include <fstream>
-
+#include "Game.h"
 
 Ressources* Ressources::instance = nullptr;
 
@@ -17,7 +17,12 @@ Ressources::Ressources()
 	std::ifstream ok;
 	ok.open("saves/round_data.csv", std::ios::in);
 	
-	
+	isDoubleSpeed = 0;
+
+	for (int i = 0; i < 100; i++)
+	{
+		droneCountInRound[i] = i + 1 * 10;
+
 
 	if (ok.is_open()) {
 
@@ -102,7 +107,7 @@ Ressources::Ressources()
 	towerPrice[4] = 500;
 
 	towerDamage[0] = 1;
-	towerDamage[1] = 2;
+	towerDamage[1] = 1;
 	towerDamage[2] = 2;
 	towerDamage[3] = 4;
 	towerDamage[4] = 0;
@@ -122,7 +127,7 @@ Ressources::Ressources()
 	towerRange[0] = 100;
 	towerRange[1] = 200;
 	towerRange[2] = 100;
-	towerRange[3] = 0;
+	towerRange[3] = 300;
 	towerRange[4] = 0;
 
 	towerMoneyGeneration[0] = 0;
@@ -143,14 +148,22 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
 
+	towerSpawnSpeed[0] = 5;
+
 	ipAddress = "0"; //Standart-Initialisierung
 
-	double p[5];
+	flugzeugUpdate[0] = Vector2f(1, 1);
+	flugzeugUpdate[1] = Vector2f(-1, 1);
+	flugzeugUpdate[2] = Vector2f(1, -1);
+	flugzeugUpdate[3] = Vector2f(-1, -1);
+
+	double p[6];
 	p[0] = 1.f / 8.f;
 	p[1] = 1.f / 7.f;
 	p[2] = 1.f / 6.f;
 	p[3] = 1.f / 5.f;
-	p[4] = 1.f / 8.f;
+	p[4] = 1.f / 5.f;
+	p[5] = 1.f / 5.f;
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
@@ -184,14 +197,14 @@ Ressources::Ressources()
 		}
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < towerCount; i++)
 	{
 		towerAliasTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_alias.png");
 		towerPreviewTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_preview.png");
 		towerNoBuyTexture[i].loadFromFile("img/tower" + std::to_string(i) + "/tower" + std::to_string(i) + "_noBuy.png");
 	}
 
-	
+
 	updateTexture[0].loadFromFile("img/upgrades/upgradeMoney.png");
 	updateTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime.png");
 	updateTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed.png");
@@ -200,9 +213,9 @@ Ressources::Ressources()
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
 	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
-	
 
-	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
+
+	//for (int i = 0; i < droneCount; i++) //Animation fÃ¼r 0 Damage
 	//{
 	//	for (int j = 0; j < 2; j++)
 	//	{
@@ -210,7 +223,7 @@ Ressources::Ressources()
 	//	}
 	//}
 
-	for (int i = 0; i < droneCount; i++) //Ohne Animation dafür mit Damage
+	for (int i = 0; i < droneCount; i++) //Ohne Animation dafÃ¼r mit Damage
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -235,6 +248,17 @@ Ressources::Ressources()
 	buttonExitTexture.loadFromFile("img/buttons/exitButton.png");
 	buttonSpeedTexture.loadFromFile("img/buttons/speedButton.png");
 	buttonSellTexture.loadFromFile("img/upgrades/sell.png");
+	gameOverScreen.loadFromFile("img/gameOverScreen.png");
+	gameWonScreen.loadFromFile("img/gameWonScreen.png");
+	buttonSpeedPressedTexture.loadFromFile("img/buttons/speedPressedButton.png");
+	titleTextTexture.loadFromFile("img/titleText.png");
+	homeMenuBackgroundTexture.loadFromFile("img/homeMenuBackground.jpg");
+	buttonMultiplayerTexture[0].loadFromFile("img/buttons/multiplayerButtonUp.png");
+	buttonMultiplayerTexture[1].loadFromFile("img/buttons/multiplayerButtonDown.png");
+	pasteTexture.loadFromFile("img/buttons/pasteButton.png");
+	copyTexture.loadFromFile("img/buttons/copyButton.png");
+	buttonHostTexture.loadFromFile("img/buttons/hostButton.png");
+	buttonClientTexture.loadFromFile("img/buttons/clientButton.png");
 
 	for (int i = 0; i < mapCount; i++)
 	{
@@ -245,12 +269,27 @@ Ressources::Ressources()
 	receiver = new TcpSocket();
 	sender = new TcpSocket();
 	listener = new TcpListener();
+
+	for (int i = 0; i < (sizeof(hitBuffer) / sizeof(*hitBuffer)); i++)
+	{
+		hitBuffer[i].loadFromFile("sounds/hit" + std::to_string(i) + ".wav");
+		hitSound[i].setBuffer(hitBuffer[i]);
+	}
+	for (int i = 0; i < (sizeof(shootBuffer) / sizeof(*shootBuffer)); i++)
+	{
+		shootBuffer[i].loadFromFile("sounds/shot" + std::to_string(i) + ".wav");
+		shootSound[i].setBuffer(shootBuffer[i]);
+	}
 }
 #pragma endregion
 
 #pragma region Funktionen
 void Ressources::normalSpeed()
 {
+	Game::getInstance()->setShootClockSpeed(2);
+
+	isDoubleSpeed = 0;
+
 	waitSubHealth *= 2;
 
 	towerSpeed[0] *= 2;
@@ -258,12 +297,14 @@ void Ressources::normalSpeed()
 	towerSpeed[2] *= 2;
 	towerSpeed[3] *= 2;
 	towerSpeed[4] *= 2;
+	towerSpeed[5] *= 2;
 
 	towerProjectileSpeed[0] *= 2;
 	towerProjectileSpeed[1] *= 2;
 	towerProjectileSpeed[2] *= 2;
 	towerProjectileSpeed[3] *= 2;
 	towerProjectileSpeed[4] *= 2;
+	towerProjectileSpeed[5] *= 2;
 
 
 	towerChangeFrame[0] *= 2;
@@ -271,6 +312,8 @@ void Ressources::normalSpeed()
 	towerChangeFrame[2] *= 2;
 	towerChangeFrame[3] *= 2;
 	towerChangeFrame[4] *= 2;
+	towerChangeFrame[5] *= 2;
+
 
 	for (int j = 0; j < towerCount; j++)
 	{
@@ -285,28 +328,49 @@ void Ressources::normalSpeed()
 	{
 		droneSpawnTime[i] *= 2;
 	}
+	for (int i = 0; i < (sizeof(towerSpawnSpeed) / sizeof(*towerSpawnSpeed)); i++)
+	{
+		towerSpawnSpeed[i] /= 2;
+	}
+
 	setSpeed();
+}
+void Ressources::newConnection()
+{
+	delete listener;
+	delete receiver;
+	delete sender;
+	sender = new TcpSocket();
+	receiver = new TcpSocket();
+	listener = new TcpListener();
 }
 void Ressources::doubleSpeed()
 {
+	isDoubleSpeed = 1;
+
+	Game::getInstance()->setShootClockSpeed(1);
+
 	waitSubHealth /= 2;
 	towerSpeed[0] /= 2;
 	towerSpeed[1] /= 2;
 	towerSpeed[2] /= 2;
 	towerSpeed[3] /= 2;
 	towerSpeed[4] /= 2;
+	towerSpeed[5] /= 2;
 
 	towerProjectileSpeed[0] /= 2;
 	towerProjectileSpeed[1] /= 2;
 	towerProjectileSpeed[2] /= 2;
 	towerProjectileSpeed[3] /= 2;
 	towerProjectileSpeed[4] /= 2;
+	towerProjectileSpeed[6] /= 2;
 
 	towerChangeFrame[0] /= 2;
 	towerChangeFrame[1] /= 2;
 	towerChangeFrame[2] /= 2;
 	towerChangeFrame[3] /= 2;
 	towerChangeFrame[4] /= 2;
+	towerChangeFrame[6] /= 2;
 
 	for (int j = 0; j < towerCount; j++)
 	{
@@ -321,7 +385,14 @@ void Ressources::doubleSpeed()
 	{
 		droneSpawnTime[i] /= 2;
 	}
+
+	for (int i = 0; i < (sizeof(towerSpawnSpeed) / sizeof(*towerSpawnSpeed)); i++)
+	{
+		towerSpawnSpeed[i] *= 2;
+	}
+
 	setSpeed();
+
 }
 #pragma endregion
 
@@ -438,6 +509,16 @@ float Ressources::getWaitSubHealth()
 	return waitSubHealth;
 }
 
+bool Ressources::getDoubleSpeed()
+{
+	return isDoubleSpeed;
+}
+
+Vector2f Ressources::getFlugzeugUpdate(int i)
+{
+	return flugzeugUpdate[i];
+}
+
 std::string Ressources::getTowerName(int i)
 {
 	return towerName[i];
@@ -453,6 +534,14 @@ std::string Ressources::getIpAddress()
 Image Ressources::getIcon()
 {
 	return icon;
+}
+Sound* Ressources::getHitSound(int a)
+{
+	return &hitSound[a];
+}
+Sound* Ressources::getShootSound(int a)
+{
+	return &shootSound[a];
 }
 TcpSocket* Ressources::getSender()
 {
@@ -512,7 +601,7 @@ Texture* Ressources::getButtonHomeTexture()
 }
 Texture* Ressources::getButtonRestartTexture()
 {
-	return &buttonStartTexture;
+	return &buttonRestartTexture;
 }
 Texture* Ressources::getButtonCloseTexture()
 {
@@ -530,6 +619,10 @@ Texture* Ressources::getButtonSpeedTexture()
 {
 	return &buttonSpeedTexture;
 }
+Texture* Ressources::getButtonSpeedTexturePressed()
+{
+	return &buttonSpeedPressedTexture;
+}
 Texture* Ressources::getButtonSellTexture()
 {
 	return &buttonSellTexture;
@@ -538,9 +631,46 @@ Texture* Ressources::getMapTexture(int i)
 {
 	return &map[i];
 }
+
 int* Ressources::getDroneTypesInRound(int index)
 {
 	return &droneTypesInRound[index][0];
+}
+Texture* Ressources::getGameOverTexture()
+{
+	return &gameOverScreen;
+}
+Texture* Ressources::getGameWonTexture()
+{
+	return &gameWonScreen;
+}
+Texture* Ressources::getTitleTextTexture()
+{
+	return &titleTextTexture;
+}
+Texture* Ressources::getHomeMenuBackgroundTexture()
+{
+	return &homeMenuBackgroundTexture;
+}
+Texture* Ressources::getButtonMultiplayerTexture(int a)
+{
+	return &buttonMultiplayerTexture[a];
+}
+Texture* Ressources::getPasteTexture()
+{
+	return &pasteTexture;
+}
+Texture* Ressources::getCopyTexture()
+{
+	return &copyTexture;
+}
+Texture* Ressources::getButtonHostTexture()
+{
+	return &buttonHostTexture;
+}
+Texture* Ressources::getButtonClientTexture()
+{
+	return &buttonClientTexture;
 }
 #pragma endregion
 
@@ -563,6 +693,10 @@ void Ressources::setSpeed()
 	for (auto i : Round::getInstance()->getAllDrones())
 	{
 		i->setSeed(res->getDroneSpeed(0));
+	}
+	for (auto i : Round::getInstance()->getAllSpawns())
+	{
+		i->setSpeed(towerSpawnSpeed[0]);
 	}
 }
 

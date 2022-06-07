@@ -13,6 +13,7 @@ private:
 	static Ressources* instance;
 
 	int droneCountInRound[100];
+	bool isDoubleSpeed;//ist doppelte Geschwindigkeit?
 
 	/// <summary>
 	/// Wie viele Clients es gibt.
@@ -27,32 +28,39 @@ private:
 	int towerCount; //Wie viele Turm-Typen es gibt
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
-	int towerProjectileIndex[5]; //Welches Projektil verwendet werden soll
-	int towerPrice[5]; //Wie viel der Tower kostet
-	int towerChangeFrame[5]; //In Millisekunden
-	int towerUpgradePrice1[5][4]; //Preise der Upgrades des ersten Pfades
-	int towerUpgradePrice2[5][4]; //Preise der Upgrades des zweiten Pfades
+	int towerProjectileIndex[6]; //Welches Projektil verwendet werden soll
+	int towerPrice[6]; //Wie viel der Tower kostet
+	int towerChangeFrame[6]; //In Millisekunden
+	int towerUpgradePrice1[6][4]; //Preise der Upgrades des ersten Pfades
+	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
+	int towerSpawnSpeed[1];
 	int droneLives[1];
-
+	int droneTypesInRound[100][5];
+  
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
-	float towerDamage[5]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float towerSpeed[5]; //Wie schnell der Turm schieﬂt, je kleiner desto schneller
-	float towerProjectileSpeed[5]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
-	float towerRange[5]; //Die Reichweite in der der Turm Drohnen angreifen kann
-	float towerMoneyGeneration[5]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
+
+	float towerDamage[6]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
+	float towerSpeed[6]; //Wie schnell der Turm schie√üt, je kleiner desto schneller
+	float towerProjectileSpeed[6]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
+	float towerRange[6]; //Die Reichweite in der der Turm Drohnen angreifen kann
+	float towerMoneyGeneration[6]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
 	float droneSpawnTime[100];
-	float towerUpdateDamage[5][4];
-	float towerUpdateSpeed[5][4];
-	float towerUpdateMoney[5][4];
-	float towerUpdateMoneyGeneration[5][4];
+	float towerUpdateDamage[6][4];
+	float towerUpdateSpeed[6][4];
+	float towerUpdateMoney[6][4];
+	float towerUpdateMoneyGeneration[6][4];
 	float droneSpeed[1];
 
-	int droneTypesInRound[100][5];
-	
+	Vector2f flugzeugUpdate[4];
 
 	std::string towerName[5]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
+
+	SoundBuffer hitBuffer[1];
+	SoundBuffer shootBuffer[1];
+	Sound hitSound[1];
+	Sound shootSound[1];
 
 	TcpSocket* sender;
 	TcpSocket* receiver;
@@ -74,8 +82,18 @@ private:
 	Texture buttonStartTexture;
 	Texture buttonExitTexture;
 	Texture buttonSpeedTexture;
+	Texture buttonSpeedPressedTexture;
 	Texture buttonSellTexture;
 	Texture map[3];
+	Texture gameOverScreen;
+	Texture gameWonScreen;
+	Texture titleTextTexture;
+	Texture homeMenuBackgroundTexture;
+	Texture buttonMultiplayerTexture[2];
+	Texture pasteTexture;
+	Texture copyTexture;
+	Texture buttonHostTexture;
+	Texture buttonClientTexture;
 
 	Image icon;
 
@@ -109,6 +127,8 @@ public:
 	float getTowerUpdateMoneyGeneration(int i, int j);
 	float getDroneSpawnTime();
 	float getWaitSubHealth();
+	bool getDoubleSpeed();
+	Vector2f getFlugzeugUpdate(int i);
 
 	std::string getTowerName(int);
 	std::string getOwnIpAddress();
@@ -116,10 +136,13 @@ public:
 
 	Image getIcon();
 
+	Sound* getHitSound(int);
+	Sound* getShootSound(int);
+
 	TcpSocket* getSender();
 	TcpSocket* getReceiver();
-
 	TcpListener* getListener();
+
 	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);
@@ -152,8 +175,18 @@ public:
 	Texture* getButtonStartTexture();
 	Texture* getButtonExitTexture();
 	Texture* getButtonSpeedTexture();
+	Texture* getButtonSpeedTexturePressed();
 	Texture* getButtonSellTexture();
 	Texture* getMapTexture(int);
+	Texture* getGameOverTexture();
+	Texture* getGameWonTexture();
+	Texture* getTitleTextTexture();
+	Texture* getHomeMenuBackgroundTexture();
+	Texture* getButtonMultiplayerTexture(int);
+	Texture* getPasteTexture();
+	Texture* getCopyTexture();
+	Texture* getButtonHostTexture();
+	Texture* getButtonClientTexture();
 
 	int* getDroneTypesInRound(int index);
 	
@@ -164,5 +197,7 @@ public:
 
 	void doubleSpeed();
 	void normalSpeed();
+	void newConnection();
+
 };
 
