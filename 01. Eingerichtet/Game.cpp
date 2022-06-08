@@ -195,6 +195,8 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
+		while (Multiplayer::receive());
+
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -253,6 +255,7 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
+		while (Multiplayer::receive());
 
 		updateEco();
 		moveDrohnes();
