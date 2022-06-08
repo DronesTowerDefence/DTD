@@ -8,6 +8,7 @@ Ressources* Ressources::instance = nullptr;
 Ressources::Ressources()
 {
 	char buffer[32];
+	//Intelligente Zeiger für tmp. Variablen
 	std::unique_ptr<float> help(new float(0));
 	std::unique_ptr<int> tc(new int(0));
 	std::unique_ptr<bool> dig(new bool(false));
@@ -20,7 +21,6 @@ Ressources::Ressources()
 
 	for (int i = 0; i < 100; i++)
 	{
-		droneCountInRound[i] = i + 1 * 10;
 
 
 		if (ok.is_open()) {
@@ -87,18 +87,7 @@ Ressources::Ressources()
 		}
 	}
 
-	//TODO
-	int tmp = 0;
-	for (int i = 0; i < 100; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			tmp += droneTypesInRound[i][j];
-		}
-		droneCountInRound[i] = tmp;
-		tmp = 0;
-	}
-	//
+	
 
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
