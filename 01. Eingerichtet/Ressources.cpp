@@ -332,7 +332,7 @@ void Ressources::normalSpeed()
 		}
 	}
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		droneSpeed[i] = droneSpeed[i] / 2;
 	}
@@ -389,7 +389,7 @@ void Ressources::doubleSpeed()
 
 		}
 	}
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i <5; i++)
 	{
 		droneSpeed[i] = droneSpeed[i] * 2;
 	}
