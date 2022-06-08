@@ -257,6 +257,8 @@ void Game::startGame()
 
 		while (Multiplayer::receive());
 
+		HomeMenu::getInstance()->checkTestVersionEnd();
+
 		updateEco();
 		moveDrohnes();
 		checkDroneCount();

@@ -5,13 +5,13 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
-
 	connected = false;
 	isMultiplayerOpen = false;
 	status = 1;
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
+	timeUntilTestVersionEnd = 0;
 	res = Ressources::getInstance();
 	ipAdress = "";
 	ownIpAdress = IpAddress::getLocalAddress().toString();
@@ -119,6 +119,7 @@ HomeMenu::HomeMenu()
 	animationIndex = 0;
 	animation = new Clock();
 	animation->restart();
+	timeUntilTestVersionEndClock = new Clock();
 
 	pointer->setSize(Vector2f(1920 * 0.1, 991 * 0.1));
 	pointer->setOutlineThickness(10);
@@ -139,14 +140,19 @@ HomeMenu::HomeMenu()
 	ownIpAdressText->setFillColor(Color::Black);
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
-
-
 }
 #pragma endregion
 
 #pragma region Funktionen
-
-
+bool HomeMenu::checkTestVersionEnd()
+{
+	if (timeUntilTestVersionEndClock->getElapsedTime().asSeconds() > timeUntilTestVersionEnd)
+	{
+		window->close();
+		return false;
+	}
+	else return true;
+}
 void HomeMenu::eingabe(Event event) {
 	if (event.type == Event::KeyReleased)
 	{
@@ -278,7 +284,7 @@ int  HomeMenu::CheckClicked()
 			Packet p5;
 			p5 << choseIndex;
 			Ressources::getInstance()->getSender()->send(p5);
-		
+
 			res->getSender()->setBlocking(false);
 			res->getReceiver()->setBlocking(false);
 
@@ -421,6 +427,7 @@ void HomeMenu::HomeMenuStart()
 			eingabe(event);
 		}
 
+		checkTestVersionEnd();
 
 		drone->move(2, 0);
 		setTowerTexture();
@@ -523,6 +530,10 @@ void HomeMenu::setWindow(RenderWindow* window)
 {
 	this->window = window;
 
+}
+void HomeMenu::setTimeUntilTestVersionEnd(unsigned long long _timeUntilTestVersionEnd)
+{
+	timeUntilTestVersionEnd = _timeUntilTestVersionEnd;
 }
 #pragma endregion
 

@@ -21,6 +21,8 @@ private:
 	/// </summary>
 	int status; 
 	
+	unsigned long long timeUntilTestVersionEnd;
+
 	bool isClicked;
 	bool connected;
 	bool isMultiplayerOpen;
@@ -49,6 +51,7 @@ private:
 	Sprite* exitButton;
 	
 	Clock* animation;
+	Clock* timeUntilTestVersionEndClock;
 	
 	Font *font;
 	Text *choseText;
@@ -69,9 +72,11 @@ public:
 	HomeMenu();
 	
 	static HomeMenu* getInstance();
+	bool checkTestVersionEnd();
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
-	
+	void setTimeUntilTestVersionEnd(unsigned long long);
+
 	void HomeMenuStart();
 };
 
