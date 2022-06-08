@@ -57,8 +57,6 @@ Game::Game()
 #pragma region Funktionen
 bool Game::loadGame()
 {
-	return 0; //DELETE WHEN DONE : Nur zum testen, im Final-Build entfernen!
-
 	std::ifstream rdatei;
 
 	bool defaultCounter = 0;
@@ -197,6 +195,8 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
+		while (Multiplayer::receive());
+
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -255,6 +255,7 @@ void Game::startGame()
 			PauseMenu::getInstance()->checkPause(event);
 		}
 
+		while (Multiplayer::receive());
 
 		updateEco();
 		moveDrohnes();

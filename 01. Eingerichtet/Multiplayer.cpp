@@ -148,11 +148,18 @@ bool Multiplayer::receive()
 		{
 			if (i->getId() == towerId) //Wenn der richtige Tower gefunden wurde...
 			{
-				for (auto j : Round::getInstance()->getAllDrones()) //... werden alle Drohnen durchgegangen
+				if(droneId==-1)
 				{
-					if (j->getId() == droneId) //Wenn die richtige Drohne gefunden wurde...
+					i->shoot(nullptr, true);
+				}
+				else
+				{
+					for (auto j : Round::getInstance()->getAllDrones()) //... werden alle Drohnen durchgegangen
 					{
-						i->shoot(j, true); //... schieﬂt der Turm auf die Drohne
+						if (j->getId() == droneId) //Wenn die richtige Drohne gefunden wurde...
+						{
+							i->shoot(j, true); //... schieﬂt der Turm auf die Drohne
+						}
 					}
 				}
 			}
