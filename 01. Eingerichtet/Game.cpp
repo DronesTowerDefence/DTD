@@ -732,6 +732,7 @@ void Game::checkDroneCount()
 		std::unique_ptr<int> rI(new int(round->getIndex())); //roundIndex
 		std::unique_ptr<int> help(new int(0));
 
+		//Falls eine neue Runde beginnt, wird die nächste Drohnen-Reihe eingelesen
 		if (currentRound != round->getIndex()) {
 			currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(*rI);
 			currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(*rI) + 1);
@@ -742,6 +743,8 @@ void Game::checkDroneCount()
 			currentRound = round->getIndex();
 		}
 
+
+		//Die stärksten Drohnen werden zuerst gespawnt
 		if (currentDrones[4] != 0) {
 			currentDrones[4] -= 1;
 			round->addDrone(new Drone(4, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));

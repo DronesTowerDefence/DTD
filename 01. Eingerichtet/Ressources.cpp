@@ -12,8 +12,9 @@ Ressources::Ressources()
 	std::unique_ptr<float> help(new float(0));
 	std::unique_ptr<int> tc(new int(0));
 	std::unique_ptr<bool> dig(new bool(false));
-	std::unique_ptr<int> sit(new int(0));
+	std::unique_ptr<int> sit(new int(0)); //small iterator | Iterator für das zweite Feld
 
+	//Datei wird initialisiert
 	std::ifstream ok;
 	ok.open("saves/round_data.csv", std::ios::in);
 
@@ -27,11 +28,7 @@ Ressources::Ressources()
 
 			for (int i = 0; i < 100; i++) {
 
-				if (i == 100) {
-					std::cout << "hi";
-				}
-				//Anzahl Drohnen Gesamt in Runde
-
+				//Zeilenweise eingelesen
 				ok.getline(buffer, 32);
 				*sit = 0;
 
@@ -53,11 +50,13 @@ Ressources::Ressources()
 						//}
 						//zweistellig
 						if (isdigit(buffer[f + 1])) {
+							//Hier wird von char auf int umgerechnet
 							*help += (buffer[f] - 48.f) * 10;
 							*help += (buffer[f + 1] - 48.f);
 
-
+							//Gesamt Drohnenanzahl in Runde
 							droneCountInRound[i] += *help;
+							//small iterator 
 							droneTypesInRound[i][*sit] = *help;
 
 							f++;
@@ -76,10 +75,8 @@ Ressources::Ressources()
 
 				}
 
-				//Einzelne Drohnen Typen in einer Runde
-
-				//droneTypesInRound[i] = buffer;
-
+				
+				// 1 war zu langsam
 				droneSpawnTime[i] = 0.5;
 
 

@@ -37,7 +37,7 @@ private:
 	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
 	int towerSpawnSpeed[1];
 	int droneLives[1];
-	int droneTypesInRound[100][5];
+	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
   
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
@@ -190,7 +190,8 @@ public:
 	Texture* getButtonHostTexture();
 	Texture* getButtonClientTexture();
 
-	int* getDroneTypesInRound(int index);
+	
+	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 	
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);

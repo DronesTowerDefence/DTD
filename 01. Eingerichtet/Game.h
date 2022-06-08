@@ -35,7 +35,13 @@ private:
 	int status;
 	int droneRow;
 
+	/// <summary>
+	/// Aktuelle Drohnen in aktueller Runde
+	/// </summary>
 	int currentDrones[5];
+	/// <summary>
+	/// Aktuelle Runde
+	/// </summary>
 	int currentRound;
 
 	/// <summary>
