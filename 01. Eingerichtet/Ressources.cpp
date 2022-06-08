@@ -180,7 +180,15 @@ Ressources::Ressources()
 	}
 
 	droneSpeed[0] = 2.5;
+	droneSpeed[1] = 1.f;
+	droneSpeed[2] = 2.f;
+	droneSpeed[3] = 4.f;
+	droneSpeed[4] = 0.5;
 	droneLives[0] = 3;
+	droneLives[1] = 6;
+	droneLives[2] = 4;
+	droneLives[3] = 2;
+	droneLives[4] = 20;
 
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
 	{

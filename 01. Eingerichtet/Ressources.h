@@ -36,7 +36,7 @@ private:
 	int towerUpgradePrice1[6][4]; //Preise der Upgrades des ersten Pfades
 	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
 	int towerSpawnSpeed[1];
-	int droneLives[1];
+	int droneLives[5];
 	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
   
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
@@ -47,12 +47,12 @@ private:
 	float towerProjectileSpeed[6]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float towerRange[6]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[6]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
-	float droneSpawnTime[100];
 	float towerUpdateDamage[6][4];
 	float towerUpdateSpeed[6][4];
 	float towerUpdateMoney[6][4];
 	float towerUpdateMoneyGeneration[6][4];
-	float droneSpeed[1];
+	float droneSpawnTime[100];
+	float droneSpeed[5];
 
 	Vector2f flugzeugUpdate[4];
 
