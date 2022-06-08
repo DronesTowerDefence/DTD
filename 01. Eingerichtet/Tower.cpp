@@ -83,7 +83,7 @@ void Tower::setCoverableArea()
 		distanz = std::sqrt(((position.x - i.x) * (position.x - i.x)) + ((position.y - i.y) * (position.y - i.y)));
 		if (distanz <= range)
 		{
-			coverableArea.push_back(Vector3f(i.x,i.y,distanz));
+			coverableArea.push_back(Vector3f(i.x, i.y, distanz));
 		}
 	}
 }
@@ -129,7 +129,14 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			}
 			if (Game::getInstance()->getStatus() == 2)
 			{
-				Multiplayer::send(id, d->getId());
+				if (d != nullptr)
+				{
+					Multiplayer::send(id, d->getId());
+				}
+				else
+				{
+					Multiplayer::send(id, -1);
+				}
 			}
 			shootCooldown = true;
 		}

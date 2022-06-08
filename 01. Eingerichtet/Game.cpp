@@ -57,8 +57,6 @@ Game::Game()
 #pragma region Funktionen
 bool Game::loadGame()
 {
-	return 0; //DELETE WHEN DONE : Nur zum testen, im Final-Build entfernen!
-
 	std::ifstream rdatei;
 
 	bool defaultCounter = 0;
