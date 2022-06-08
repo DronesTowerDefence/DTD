@@ -10,6 +10,8 @@ PauseMenu::PauseMenu() {
 
 	window = Game::getInstance()->getWindow();
 
+	res = Ressources::getInstance();
+
 	//Ich kann nicht auf die Font in Game zugreifen (unerklärbarer Error mit wherenode) also deklariere ich die Font nochmal selbst
 	font.loadFromFile("fonts/arial.ttf");
 
@@ -32,16 +34,14 @@ PauseMenu::PauseMenu() {
 	mute = false;
 	multiplayerIsPaused = false;
 
-	backgroundTexture.loadFromFile("img/pauseScreenBackground.png");
-	background.setTexture(backgroundTexture);
+	background.setTexture(*res->getPauseScreenBackgroundTexture());
 	background.setPosition(530.f, 150.f);
 	background.setScale(Vector2f(float(1.36), float(0.7)));
 
 
 
 	//Socials
-	twitterTexture.loadFromFile("img/socials/twitter.png");
-	twitter.setTexture(twitterTexture);
+	twitter.setTexture(*res->getSocialsTwitterTexture());
 	twitter.setScale(Vector2f(float(0.15), float(0.15)));
 	twitter.setPosition(Vector2f(1130.f, 175.f));
 
@@ -52,17 +52,15 @@ PauseMenu::PauseMenu() {
 	socialsBorder.setPosition(1120.f, 165.f);
 
 	//Buttons
-	homebtnTexture.loadFromFile("img/buttons/homeButton.png");
-	homebtn.setTexture(homebtnTexture);
+	homebtn.setTexture(*res->getButtonHomeTexture());
 	homebtn.setPosition(Vector2f(630.f, 750.f));
 
 
-	playbtnTexture.loadFromFile("img/buttons/startButton.png");
-	playbtn.setTexture(playbtnTexture);
+	playbtn.setTexture(*res->getButtonStartTexture());
 	playbtn.setPosition(Vector2f(1030.f, 750.f));
 
-	mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
-	mutebtn.setTexture(mutebtnTexture);
+	mutebtnTexture = res->getButtonVolume(2);
+	mutebtn.setTexture(*mutebtnTexture);
 	mutebtn.setPosition(Vector2f(1050.f, 340.f));
 
 	//Überschriften
@@ -194,7 +192,7 @@ void PauseMenu::checkPause(Event event1)
 	/*Vector2i mousePos;*/
 	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) { //Übergebenes Event wird geprüft auf ESC-Druck
 
-		Multiplayer::send(2,true);
+		Multiplayer::send(2, true);
 
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
@@ -208,7 +206,7 @@ void PauseMenu::checkPause(Event event1)
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				{
-					Multiplayer::send(2,false);
+					Multiplayer::send(2, false);
 					return;
 				}
 
@@ -246,20 +244,21 @@ void PauseMenu::checkPause(Event event1)
 			if (mute == false) {
 
 				if (sliderHelper < 33) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+					mutebtnTexture = res->getButtonVolume(1);
 				}
 				else if (sliderHelper > 33 && sliderHelper < 66) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+					mutebtnTexture = res->getButtonVolume(2);
 				}
 				else if (sliderHelper > 66) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+					mutebtnTexture = res->getButtonVolume(3);
 
 				}
 			}
 			else if (mute == true) {
-				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+				mutebtnTexture = res->getButtonVolume(0);
 				Game::getInstance()->setMusicVolume(0.f);
 			}
+			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
@@ -332,20 +331,21 @@ void PauseMenu::checkPause(bool isPaused)
 			if (mute == false) {
 
 				if (sliderHelper < 33) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+					mutebtnTexture = res->getButtonVolume(1);
 				}
 				else if (sliderHelper > 33 && sliderHelper < 66) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+					mutebtnTexture = res->getButtonVolume(2);
 				}
 				else if (sliderHelper > 66) {
-					mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+					mutebtnTexture = res->getButtonVolume(3);
 
 				}
 			}
 			else if (mute == true) {
-				mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+				mutebtnTexture = res->getButtonVolume(0);
 				Game::getInstance()->setMusicVolume(0.f);
 			}
+			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
@@ -410,20 +410,21 @@ void PauseMenu::checkPause()
 		if (mute == false) {
 
 			if (sliderHelper < 33) {
-				mutebtnTexture.loadFromFile("img/buttons/volume/soundLowButton.png");
+				mutebtnTexture = res->getButtonVolume(1);
 			}
 			else if (sliderHelper > 33 && sliderHelper < 66) {
-				mutebtnTexture.loadFromFile("img/buttons/volume/soundMediumButton.png");
+				mutebtnTexture = res->getButtonVolume(2);
 			}
 			else if (sliderHelper > 66) {
-				mutebtnTexture.loadFromFile("img/buttons/volume/soundHighButton.png");
+				mutebtnTexture = res->getButtonVolume(3);
 
 			}
 		}
 		else {
-			mutebtnTexture.loadFromFile("img/buttons/volume/soundMuteButton.png");
+			mutebtnTexture = res->getButtonVolume(0);
 			Game::getInstance()->setMusicVolume(0.f);
 		}
+		mutebtn.setTexture(*mutebtnTexture);
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/

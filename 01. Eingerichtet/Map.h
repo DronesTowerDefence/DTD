@@ -15,7 +15,6 @@ private:
 	Vector2f start;	//Startposition
 	Vector2f startMove; // Startbewegung
 	
-	Texture texture;	// Texture des Hintergrundes
 	RectangleShape background; // Hintergrund
 	std::list<Waypoint*> points; // Liste der Wegpunkte
 	

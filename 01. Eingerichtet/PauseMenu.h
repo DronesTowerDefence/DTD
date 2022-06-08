@@ -8,6 +8,8 @@ class PauseMenu
 	//Singleton
 	static PauseMenu* instance;
 
+	Ressources* res;
+
 	float sliderHelper;
 	bool isClicked;
 	bool play;
@@ -17,13 +19,9 @@ class PauseMenu
 
 	Vector2i mouse;
 	Vector2f pos, pos2;
-
-	Texture backgroundTexture;
-	Texture twitterTexture;
-	Texture homebtnTexture;
-	Texture playbtnTexture;
-	Texture mutebtnTexture;
 	
+	Texture* mutebtnTexture;
+
 	Sprite background;
 	Sprite twitter;
 	Sprite homebtn;

@@ -10,9 +10,8 @@ Map::Map(int index)
 
 	this->index = index; //Muss bei mehreren Maps angepasst werden. Mit einem Übergabe Parameter
 
-	texture.loadFromFile("img/maps/map" + std::to_string(index) + ".png");
 	background.setSize(Vector2f(1920, 991));
-	background.setTexture(&texture);
+	background.setTexture(Ressources::getInstance()->getMapTexture(index));
 	wayPointCount = 0;
 	switch (index)
 	{

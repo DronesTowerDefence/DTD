@@ -38,7 +38,7 @@ private:
 	int towerSpawnSpeed[1];
 	int droneLives[5];
 	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
-  
+
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
 
@@ -96,6 +96,9 @@ private:
 	Texture copyTexture;
 	Texture buttonHostTexture;
 	Texture buttonClientTexture;
+	Texture pauseScreenBackgroundTexture;
+	Texture socialsTwitterTexture;
+	Texture buttonVolume[4];
 
 	Image icon;
 
@@ -189,10 +192,13 @@ public:
 	Texture* getCopyTexture();
 	Texture* getButtonHostTexture();
 	Texture* getButtonClientTexture();
+	Texture* getPauseScreenBackgroundTexture();
+	Texture* getSocialsTwitterTexture();
+	Texture* getButtonVolume(int);
 
-	
+
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
-	
+
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
 	void setIpAddress(std::string);

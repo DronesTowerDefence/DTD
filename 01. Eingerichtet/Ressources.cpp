@@ -266,6 +266,13 @@ Ressources::Ressources()
 	copyTexture.loadFromFile("img/buttons/copyButton.png");
 	buttonHostTexture.loadFromFile("img/buttons/hostButton.png");
 	buttonClientTexture.loadFromFile("img/buttons/clientButton.png");
+	pauseScreenBackgroundTexture.loadFromFile("img/pauseScreenBackground.png");
+	socialsTwitterTexture.loadFromFile("img/socials/twitter.png");
+
+	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
+	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
+	buttonVolume[2].loadFromFile("img/buttons/volume/soundMediumButton.png");
+	buttonVolume[3].loadFromFile("img/buttons/volume/soundHighButton.png");
 
 	for (int i = 0; i < mapCount; i++)
 	{
@@ -683,6 +690,18 @@ Texture* Ressources::getButtonHostTexture()
 Texture* Ressources::getButtonClientTexture()
 {
 	return &buttonClientTexture;
+}
+Texture* Ressources::getPauseScreenBackgroundTexture()
+{
+	return &pauseScreenBackgroundTexture;
+}
+Texture* Ressources::getSocialsTwitterTexture()
+{
+	return &socialsTwitterTexture;
+}
+Texture* Ressources::getButtonVolume(int a)
+{
+	return &buttonVolume[a];
 }
 #pragma endregion
 
