@@ -75,7 +75,7 @@ Ressources::Ressources()
 
 				}
 
-				
+
 				// 1 war zu langsam
 				droneSpawnTime[i] = 0.5;
 
@@ -84,7 +84,7 @@ Ressources::Ressources()
 		}
 	}
 
-	
+
 
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
@@ -323,7 +323,11 @@ void Ressources::normalSpeed()
 
 		}
 	}
-	droneSpeed[0] = droneSpeed[0] / 2;
+
+	for (int i = 0; i < 1; i++)
+	{
+		droneSpeed[i] = droneSpeed[i] / 2;
+	}
 	for (int i = 0; i < 100; i++)
 	{
 		droneSpawnTime[i] *= 2;
@@ -363,15 +367,12 @@ void Ressources::doubleSpeed()
 	towerProjectileSpeed[2] /= 2;
 	towerProjectileSpeed[3] /= 2;
 	towerProjectileSpeed[4] /= 2;
-	towerProjectileSpeed[6] /= 2;
 
 	towerChangeFrame[0] /= 2;
 	towerChangeFrame[1] /= 2;
 	towerChangeFrame[2] /= 2;
 	towerChangeFrame[3] /= 2;
 	towerChangeFrame[4] /= 2;
-	towerChangeFrame[6] /= 2;
-
 	for (int j = 0; j < towerCount; j++)
 	{
 		for (int i = 0; i < 4; i++)
@@ -380,7 +381,10 @@ void Ressources::doubleSpeed()
 
 		}
 	}
-	droneSpeed[0] = droneSpeed[0] * 2;
+	for (int i = 0; i < 1; i++)
+	{
+		droneSpeed[i] = droneSpeed[i] * 2;
+	}
 	for (int i = 0; i < 100; i++)
 	{
 		droneSpawnTime[i] /= 2;
@@ -692,7 +696,7 @@ void Ressources::setSpeed()
 	}
 	for (auto i : Round::getInstance()->getAllDrones())
 	{
-		i->setSeed(res->getDroneSpeed(0));
+		i->setSeed(res->getDroneSpeed(i->getIndex()));
 	}
 	for (auto i : Round::getInstance()->getAllSpawns())
 	{
