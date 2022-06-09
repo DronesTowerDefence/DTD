@@ -62,7 +62,7 @@ int main()
 		window.setIcon(ressources->getIcon().getSize().x, ressources->getIcon().getSize().y, ressources->getIcon().getPixelsPtr());
 
 		HomeMenu::getInstance()->setWindow(&window);
-		HomeMenu::getInstance()->setTimeUntilTestVersionEnd(10);
+		HomeMenu::getInstance()->setTimeUntilTestVersionEnd(timeUntilTestVersionEnd);
 		HomeMenu::getInstance()->HomeMenuStart();
 	}
 	else

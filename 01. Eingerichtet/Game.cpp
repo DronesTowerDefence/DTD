@@ -1016,8 +1016,6 @@ void Game::saveGame()
 
 	wdatei.close();
 
-	return; //DELETE WHEN DONE : Nur zum testen, damit das nicht nervt
-
 	if (round->getIndex() <= 0)
 	{
 		return;
