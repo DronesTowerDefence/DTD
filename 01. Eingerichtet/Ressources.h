@@ -99,6 +99,7 @@ private:
 	Texture pauseScreenBackgroundTexture;
 	Texture socialsTwitterTexture;
 	Texture buttonVolume[4];
+	Texture deleteAllSavesButtonTexture;
 
 	Image icon;
 
@@ -195,7 +196,7 @@ public:
 	Texture* getPauseScreenBackgroundTexture();
 	Texture* getSocialsTwitterTexture();
 	Texture* getButtonVolume(int);
-
+	Texture* getDeleteAllSavesButtonTexture();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 

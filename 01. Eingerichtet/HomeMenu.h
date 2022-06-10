@@ -49,6 +49,7 @@ private:
 	Sprite* copy;
 	Sprite* paste;
 	Sprite* exitButton;
+	Sprite* deleteSavesButton;
 	
 	Clock* animation;
 	Clock* timeUntilTestVersionEndClock;
@@ -65,6 +66,7 @@ private:
 	void eingabe(Event event);
 	int CheckClicked();
 	void draw();
+	void deleteAllSaves();
 	
 	void setTowerTexture();
 

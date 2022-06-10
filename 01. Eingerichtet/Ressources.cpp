@@ -268,6 +268,7 @@ Ressources::Ressources()
 	buttonClientTexture.loadFromFile("img/buttons/clientButton.png");
 	pauseScreenBackgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	socialsTwitterTexture.loadFromFile("img/socials/twitter.png");
+	deleteAllSavesButtonTexture.loadFromFile("img/buttons/deleteAllSavesButton.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -702,6 +703,10 @@ Texture* Ressources::getSocialsTwitterTexture()
 Texture* Ressources::getButtonVolume(int a)
 {
 	return &buttonVolume[a];
+}
+Texture* Ressources::getDeleteAllSavesButtonTexture()
+{
+	return &deleteAllSavesButtonTexture;
 }
 #pragma endregion
 

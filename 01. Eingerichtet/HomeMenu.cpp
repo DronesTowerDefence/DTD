@@ -27,6 +27,7 @@ HomeMenu::HomeMenu()
 	exitButton = new Sprite();
 	client = new Sprite();
 	host = new Sprite();
+	deleteSavesButton = new Sprite();
 
 	pointer = new RectangleShape;
 
@@ -44,6 +45,7 @@ HomeMenu::HomeMenu()
 	host->setTexture(*res->getButtonHostTexture());
 	client->setTexture(*res->getButtonClientTexture());
 	exitButton->setTexture(*res->getButtonExitTexture());
+	deleteSavesButton->setTexture(*res->getDeleteAllSavesButtonTexture());
 
 	choseIndex = -1;
 
@@ -57,6 +59,7 @@ HomeMenu::HomeMenu()
 	paste->setPosition(Vector2f(1100, 941));
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
 	exitButton->setPosition(Vector2f(20, 871));
+	deleteSavesButton->setPosition(Vector2f(1700,900));
 
 	drone->setScale(2, 2);
 	//
@@ -401,11 +404,18 @@ int  HomeMenu::CheckClicked()
 			return 0;
 		}
 
+		//DeleteSaves
+		pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition()); //Holt sich die Position des Turmes i
+		pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			deleteAllSaves();
+			return 0;
+		}
+
 	}
 	return 0;
-
-
-
 }
 void HomeMenu::HomeMenuStart()
 {
@@ -466,6 +476,7 @@ void HomeMenu::draw()
 	window->draw(*choseText);
 	window->draw(*multiplayerMenue);
 	window->draw(*exitButton);
+	window->draw(*deleteSavesButton);
 	if (isMultiplayerOpen)
 	{
 		window->draw(*copy);
@@ -491,6 +502,20 @@ void HomeMenu::draw()
 	}
 
 	window->display();
+}
+void HomeMenu::deleteAllSaves()
+{
+	for (int i = 0; i < res->getMapCount(); i++)
+	{
+		std::ifstream FileTest("saves/savegame" + std::to_string(i) + ".sav"); //Überprüft ob die Datei existiert
+		if (!FileTest)
+			continue;
+		FileTest.close();
+		std::string cmd_s = "del saves\\savegame" + std::to_string(i) + ".sav";
+		const char* cmd_cc = cmd_s.c_str();
+		system(cmd_cc);
+		//delete cmd_cc;
+	}
 }
 void HomeMenu::setTowerTexture()
 {
