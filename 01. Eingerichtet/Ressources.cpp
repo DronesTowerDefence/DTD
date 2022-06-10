@@ -262,7 +262,7 @@ Ressources::Ressources()
 	gameWonScreen.loadFromFile("img/gameWonScreen.png");
 	buttonSpeedPressedTexture.loadFromFile("img/buttons/speedPressedButton.png");
 	titleTextTexture.loadFromFile("img/titleText.png");
-	homeMenuBackgroundTexture.loadFromFile("img/homeMenuBackground.jpg");
+	homeMenuBackgroundTexture.loadFromFile("img/homeMenuBackground.png");
 	buttonMultiplayerTexture[0].loadFromFile("img/buttons/multiplayerButtonUp.png");
 	buttonMultiplayerTexture[1].loadFromFile("img/buttons/multiplayerButtonDown.png");
 	pasteTexture.loadFromFile("img/buttons/pasteButton.png");
