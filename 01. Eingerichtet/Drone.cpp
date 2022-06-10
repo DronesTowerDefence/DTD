@@ -63,11 +63,11 @@ void Drone::pass()
 		return;
 	}
 
-	
 
-	else if(HomeMenu::getInstance()->getChoseIndex() == 1){
 
-		
+	else if (HomeMenu::getInstance()->getChoseIndex() == 1) {
+
+
 
 
 		if (nextPoint % 2 == 0) {
@@ -82,7 +82,7 @@ void Drone::pass()
 
 		if (nextPoint == 3) {
 			drone.setRotation(360.f);
-			drone.setPosition(drone.getPosition()+Vector2f(-50.f,0.f));
+			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
 		}
 
 	}
@@ -108,16 +108,16 @@ void Drone::pass()
 
 		if (nextPoint == 8) {
 			drone.setRotation(90.f);
-		
+
 		}
-		
+
 
 
 		//next Point wird nie auf 8 erhöht => Wird die Fuunktion nicht mehr aufgerufen? Aber WARUM
 
 	}
 
-	
+
 
 
 	//if (nextPoint == 1) {
@@ -143,8 +143,19 @@ bool Drone::takeDamage(int damage) {
 		delete this;
 		return true;
 	}
-		
-	drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
+	if (droneType == 4 && lives % 5 == 0)
+	{
+		if (lives == 15)
+			drone.setTexture(*res->getDroneDmgTexture(droneType, 1));
+		else if (lives == 10)
+			drone.setTexture(*res->getDroneDmgTexture(droneType, 2));
+		else if (lives == 5)
+			drone.setTexture(*res->getDroneDmgTexture(droneType, 3));
+	}
+	else
+	{
+		drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
+	}
 	animationCounter = -1;
 
 	return false;
@@ -195,7 +206,7 @@ Sprite Drone::getDroneSprite()
 Sprite* Drone::getDrawSprite()
 {
 	animationCounter = -1; //Animationen kommen irgendwann
-	return &drone; 
+	return &drone;
 
 	//Animationsdings von Jonas
 	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)

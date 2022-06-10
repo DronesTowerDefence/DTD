@@ -77,7 +77,7 @@ private:
 	Texture projectileTexture[3];
 	Texture spawnTexture[1];
 	Texture droneTexture[4][2];
-	Texture droneDmgTexture[4][4];
+	Texture droneDmgTexture[5][4];
 	Texture buttonHomeTexture;
 	Texture buttonRestartTexture;
 	Texture buttonCloseTexture;
