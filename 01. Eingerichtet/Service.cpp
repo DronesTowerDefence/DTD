@@ -20,7 +20,7 @@ float Service::getYPosition(int yObject)
 Vector2f Service::getMousePosition(Vector2i MousePosition)
 {
 	float x = 1920.f / VideoMode::getDesktopMode().width * MousePosition.x;
-	float y = 991.f / VideoMode::getDesktopMode().height * MousePosition.y;
+	float y = 1080.f / VideoMode::getDesktopMode().height * MousePosition.y;
 	return Vector2f(x, y);
 }
 Vector2f Service::getObjectPosition(Vector2f objectposition)
