@@ -46,6 +46,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	//Wenn Flugzeug
 	if (_target == nullptr && style == 0)
 	{
+		projectilesprite.setTexture(*res->getProjectileTexture(1));
 		Vector2f newPos;
 		Vector2f towerSpawnSize = Vector2f(_towerspawn->getSpawnTexture()->getSize());
 		Vector2f towerSpawnPos = _towerspawn->getSpawnSprite()->getPosition();

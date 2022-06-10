@@ -88,7 +88,7 @@ Ressources::Ressources()
 
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
-	droneCount =5;
+	droneCount = 5;
 	towerCount = 5;
 	towerAttackTowerCount = 4;
 	towerMoneyTowerCount = 1;
@@ -216,10 +216,13 @@ Ressources::Ressources()
 	updateTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime.png");
 	updateTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed.png");
 	updateTexture[3].loadFromFile("img/upgrades/upgradeDamage.png");
+	updateTexture[4].loadFromFile("img/upgrades/upgradePlane.png");
 	updateNoBuyTexture[0].loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
 	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
+	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradePlane_noBuy.png");
+
 
 
 	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
@@ -397,7 +400,7 @@ void Ressources::doubleSpeed()
 
 		}
 	}
-	for (int i = 0; i <5; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		droneSpeed[i] = droneSpeed[i] * 2;
 	}

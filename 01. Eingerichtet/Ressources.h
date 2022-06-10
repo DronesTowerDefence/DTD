@@ -72,8 +72,8 @@ private:
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];
 	Texture towerNoBuyTexture[5];
-	Texture updateTexture[4];
-	Texture updateNoBuyTexture[4];
+	Texture updateTexture[5];
+	Texture updateNoBuyTexture[5];
 	Texture projectileTexture[3];
 	Texture spawnTexture[1];
 	Texture droneTexture[4][2];

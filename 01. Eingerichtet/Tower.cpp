@@ -184,7 +184,12 @@ void Tower::Update1()
 		update->setText1(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1())) + " $");
 	else
 		update->setText1("CLOSE"); //TODO updatepeis
-	if (index < 4)
+	if (index == 3)
+	{
+		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+		Multiplayer::send(id, 1, update->getIndex1());
+	}
+	else if (index < 4)
 	{
 		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 		speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
