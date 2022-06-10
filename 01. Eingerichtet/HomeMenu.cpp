@@ -53,13 +53,13 @@ HomeMenu::HomeMenu()
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
-	host->setPosition(Vector2f(1100, 700));
-	client->setPosition(Vector2f(1250, 700));
-	copy->setPosition(Vector2f(1100, 841));
-	paste->setPosition(Vector2f(1100, 941));
+	host->setPosition(Vector2f(1100, 690));
+	client->setPosition(Vector2f(1350, 690));
+	copy->setPosition(Vector2f(1100, 831));
+	paste->setPosition(Vector2f(1100, 931));
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
 	exitButton->setPosition(Vector2f(20, 871));
-	deleteSavesButton->setPosition(Vector2f(1700,900));
+	deleteSavesButton->setPosition(Vector2f(1700, 900));
 
 	drone->setScale(2, 2);
 	//
@@ -133,13 +133,13 @@ HomeMenu::HomeMenu()
 	choseText->setPosition(Vector2f(500, 450));
 
 	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(1170, 941));
+	ipAdressText->setPosition(Vector2f(1170, 931));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(50);
 
 	ownIpAdressText = new Text();
 	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(1170, 841));
+	ownIpAdressText->setPosition(Vector2f(1170, 831));
 	ownIpAdressText->setFillColor(Color::Black);
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
@@ -471,7 +471,6 @@ void HomeMenu::draw()
 	window->clear();
 	window->draw(*backround);
 	window->draw(*titel);
-	window->draw(*startButton);
 	window->draw(*drone);
 	window->draw(*choseText);
 	window->draw(*multiplayerMenue);
@@ -487,6 +486,8 @@ void HomeMenu::draw()
 		window->draw(*client);
 
 	}
+	else
+		window->draw(*startButton);
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
