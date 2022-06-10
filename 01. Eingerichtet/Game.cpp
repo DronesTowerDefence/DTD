@@ -59,9 +59,9 @@ bool Game::loadGame()
 {
 	std::ifstream rdatei;
 
-	bool defaultCounter = 0;
 	char bufferValue1[30], bufferValue2[30], buffer[50];
-	int counter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
+	Tower* newTower = nullptr;
+	int counter = 0, defaultCounter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
 
 	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTestSettings)
@@ -136,12 +136,12 @@ bool Game::loadGame()
 			break;
 
 		default:
-			if (!defaultCounter)
+			if (defaultCounter == 0)
 			{
 				towerIndex = std::stoi(bufferValue1);
-				defaultCounter = 1;
+				defaultCounter++;
 			}
-			else if (defaultCounter)
+			else if (defaultCounter == 1)
 			{
 				first = std::string(buffer).find("\"");
 				second = std::string(buffer).find(",", first + 1);
@@ -151,8 +151,23 @@ bool Game::loadGame()
 				std::string(buffer).copy(bufferValue1, length1, first + 1);
 				std::string(buffer).copy(bufferValue2, length2, second + 1);
 
+				newTower = new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
+
+				defaultCounter++;
+			}
+			else if (defaultCounter == 2)
+			{
+				first = std::string(buffer).find("\"");
+				second = std::string(buffer).find(",", first + 1);
+				third = std::string(buffer).find("\"", second + 1);
+				length1 = second - first - 1;
+				length2 = third - second - 1;
+				std::string(buffer).copy(bufferValue1, length1, first + 1);
+				std::string(buffer).copy(bufferValue2, length2, second + 1);
+
+				newTower->setUpdate(std::stoi(bufferValue1), std::stoi(bufferValue2));
+
 				defaultCounter = 0;
-				new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
 			}
 			break;
 		}
@@ -1040,17 +1055,11 @@ void Game::saveGame()
 	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
 
 	int j = 0;
-	for (auto i : round->getAllAttackTower())
+	for (auto i : round->getAllTowers())
 	{
 		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
 		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
-		j++;
-	}
-
-	for (auto i : round->getAllMoneyTower())
-	{
-		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
-		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+		wdatei << "Tower" << j << "_Upgrade=\"" << i->getUpdates()->getIndex1() << "," << i->getUpdates()->getIndex2() << "\"\n";
 		j++;
 	}
 

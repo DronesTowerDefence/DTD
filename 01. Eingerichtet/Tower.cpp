@@ -352,16 +352,30 @@ void Tower::setTowerChangeFrame(int frame)
 void Tower::setUpdate(int _update1, int _update2)
 {
 
-	if (index < 4)
+	if (index == 3)
 	{
-
+		if (_update1 > update->getIndex1())
+		{
+			value += res->getTowerUpgradesPrice1(index, _update1 - 1);
+			update->setIndex1(_update1);
+		}
+		if (_update2 > update->getIndex2())
+		{
+			update->setIndex2(_update2);
+			value += res->getTowerUpgradesPrice2(index, _update2 - 1);
+			damage = res->getTowerUpdateDamage(index, _update2 - 1);
+		}
+		
+	}
+	else if (index < 4)
+	{
 		if (_update1 > update->getIndex1())
 		{
 			update->setIndex1(_update1);
 			value += res->getTowerUpgradesPrice1(index, _update1 - 1);
 			speed = res->getTowerUpdateSpeed(index, _update1 - 1);
 		}
-		else if (_update2 > update->getIndex2())
+		if (_update2 > update->getIndex2())
 		{
 			update->setIndex2(_update2);
 			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
@@ -376,7 +390,7 @@ void Tower::setUpdate(int _update1, int _update2)
 			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
 		}
-		else if (_update2 > update->getIndex2())
+		if (_update2 > update->getIndex2())
 		{
 			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
