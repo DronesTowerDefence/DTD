@@ -207,6 +207,7 @@ public:
 	void doubleSpeed();
 	void normalSpeed();
 	void newConnection();
+	void moabDeath();
 
 };
 

@@ -856,6 +856,26 @@ bool Game::deleteSaveGame()
 
 	return true;
 }
+void Game::moabSpawn()
+{
+
+	Ressources::getInstance()->moabDeath();
+
+	if (HomeMenu::getInstance()->getChoseIndex() == 0) {
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 3.f));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 6.f));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 9.f));
+	}
+	else {
+
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y ));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y ));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y ));
+	}
+	droneCount += 4;
+}
 void Game::checkMultiplayerConnection()
 {
 	if (multiplayerCheckConnectionSendClock.getElapsedTime() > Multiplayer::timeoutSend)

@@ -337,4 +337,6 @@ public:
 	/// </summary>
 	/// <returns>True wenn erfolgreich</returns>
 	bool deleteSaveGame();
+
+	void moabSpawn();
 };
