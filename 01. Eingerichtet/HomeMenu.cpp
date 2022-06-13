@@ -32,6 +32,7 @@ HomeMenu::HomeMenu()
 	pointer = new RectangleShape;
 
 	ipAdressText = new Text();
+	credits = new Text();
 
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -46,6 +47,11 @@ HomeMenu::HomeMenu()
 	client->setTexture(*res->getButtonClientTexture());
 	exitButton->setTexture(*res->getButtonExitTexture());
 	deleteSavesButton->setTexture(*res->getDeleteAllSavesButtonTexture());
+	credits->setFont(*font);
+	credits->setCharacterSize(25);
+	credits->setFillColor(Color::Black);
+	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
+	credits->setPosition(Vector2f(650,950));
 
 	choseIndex = -1;
 
@@ -476,6 +482,7 @@ void HomeMenu::draw()
 	window->draw(*multiplayerMenue);
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
+	window->draw(*credits);
 	if (isMultiplayerOpen)
 	{
 		window->draw(*copy);

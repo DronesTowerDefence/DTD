@@ -18,7 +18,7 @@ int createTestVersionDate()
 	struct tm expireTime;
 	expireTime.tm_year = 122;
 	expireTime.tm_mon = 5;
-	expireTime.tm_mday = 30;
+	expireTime.tm_mday = 17;
 	expireTime.tm_hour = 23;
 	expireTime.tm_min = 59;
 	expireTime.tm_sec = 59;
@@ -55,14 +55,32 @@ int main()
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
+
 	if (createTestVersionDate() > 0)
 	{
+		Texture creditsT;
+		creditsT.loadFromFile("img/credits.png");
+		Sprite credits;
+		credits.setTexture(creditsT);
+		Event e;
+
+		window.draw(credits);
+		window.display();
+
 		Ressources* ressources = Ressources::getInstance();
-
 		window.setIcon(ressources->getIcon().getSize().x, ressources->getIcon().getSize().y, ressources->getIcon().getPixelsPtr());
-
 		HomeMenu::getInstance()->setWindow(&window);
 		HomeMenu::getInstance()->setTimeUntilTestVersionEnd(timeUntilTestVersionEnd);
+
+		while (!Mouse::isButtonPressed(Mouse::Left))
+		{
+			window.pollEvent(e);
+			if (e.Closed)
+			{
+				window.close();
+			}
+		}
+
 		HomeMenu::getInstance()->HomeMenuStart();
 	}
 	else

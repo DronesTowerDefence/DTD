@@ -58,6 +58,7 @@ private:
 	Text *choseText;
 	Text *ipAdressText;
 	Text *ownIpAdressText;
+	Text* credits;
 
 	Ressources* res;
 	
