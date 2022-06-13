@@ -137,6 +137,16 @@ bool Drone::takeDamage(int damage) {
 
 	Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit()); // Für Geldaufteilung beim Multiplayer
 
+	if (droneType == 4 && lives <= 0) {
+
+		Game::getInstance()->moabSpawn();
+
+		
+		
+
+		//WIP FOR MOAB DEATH
+	}
+
 	if (lives <= 0)
 	{
 		//True, wenn Drone tot ist
@@ -151,123 +161,124 @@ bool Drone::takeDamage(int damage) {
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 2));
 		else if (lives == 5)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 3));
-	}
-	else if (droneType != 4)
-	{
-		drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
-	}
-	animationCounter = -1;
 
-	return false;
+		else if (droneType != 4)
+		{
+			drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
+		}
+		animationCounter = -1;
+
+		return false;
+	}
 }
 #pragma endregion
 
 #pragma region getter
-int Drone::getNextPoint()
-{
-	return nextPoint;
-}
-int Drone::getLives()
-{
-	return lives;
-}
-int Drone::getIndex()
-{
-	return droneType;
-}
-Vector2i Drone::getMove()
-{
-	return Vector2i(move_x, move_y);
-}
-Vector2f Drone::getPosition()
-{
-	return drone.getPosition();
-}
-Vector2f Drone::getNextPosition(int nextFrame)
-{
-	//Wird die überhaupt noch benutzt?
-
-	Vector2f deezNuts;
-
-	for (int i = 0; i < nextFrame; i++) {
-
-		deezNuts.x += drone.getPosition().x + move_x * speed;
-		deezNuts.y += drone.getPosition().y + move_y * speed;
-
-	}
-
-	return deezNuts;
-
-}
-Sprite Drone::getDroneSprite()
-{
-	return drone;
-}
-Sprite* Drone::getDrawSprite()
-{
-	animationCounter = -1; //Animationen kommen irgendwann
-	return &drone;
-
-	//Animationsdings von Jonas
-	if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
+	int Drone::getNextPoint()
 	{
-		switch (animationCounter)
-		{
-		case -1:
-			return &drone;
-			break;
-		case 0:
-			animationCounter = 1;
-			break;
-		case 1:
-			animationCounter = 2;
-			break;
-		case 2:
-			animationCounter = 3;
-			break;
-		case 3:
-			animationCounter = 0;
-			break;
-		}
-		drone.setTexture(*res->getDroneTexture(droneType, animationCounter));
-		animationTimer.restart();
+		return nextPoint;
 	}
-	return &drone;
-}
-int Drone::getId()
-{
-	return id;
-}
+	int Drone::getLives()
+	{
+		return lives;
+	}
+	int Drone::getIndex()
+	{
+		return droneType;
+	}
+	Vector2i Drone::getMove()
+	{
+		return Vector2i(move_x, move_y);
+	}
+	Vector2f Drone::getPosition()
+	{
+		return drone.getPosition();
+	}
+	Vector2f Drone::getNextPosition(int nextFrame)
+	{
+		//Wird die überhaupt noch benutzt?
+
+		Vector2f deezNuts;
+
+		for (int i = 0; i < nextFrame; i++) {
+
+			deezNuts.x += drone.getPosition().x + move_x * speed;
+			deezNuts.y += drone.getPosition().y + move_y * speed;
+
+		}
+
+		return deezNuts;
+
+	}
+	Sprite Drone::getDroneSprite()
+	{
+		return drone;
+	}
+	Sprite* Drone::getDrawSprite()
+	{
+		animationCounter = -1; //Animationen kommen irgendwann
+		return &drone;
+
+		//Animationsdings von Jonas
+		if (animationTimer.getElapsedTime().asMilliseconds() >= droneChangeFrame)
+		{
+			switch (animationCounter)
+			{
+			case -1:
+				return &drone;
+				break;
+			case 0:
+				animationCounter = 1;
+				break;
+			case 1:
+				animationCounter = 2;
+				break;
+			case 2:
+				animationCounter = 3;
+				break;
+			case 3:
+				animationCounter = 0;
+				break;
+			}
+			drone.setTexture(*res->getDroneTexture(droneType, animationCounter));
+			animationTimer.restart();
+		}
+		return &drone;
+	}
+	int Drone::getId()
+	{
+		return id;
+	}
 #pragma endregion
 
 #pragma region setter
-void Drone::setSeed(float speed)
-{
-	this->speed = speed;
-}
-void Drone::setPosition(Vector2f position)
-{
+	void Drone::setSeed(float speed)
+	{
+		this->speed = speed;
+	}
+	void Drone::setPosition(Vector2f position)
+	{
 
-	drone.setPosition(position);
+		drone.setPosition(position);
 
-}
-void Drone::setMove(Vector2f v)
-{
-	move_x = int(v.x);
-	move_y = int(v.y);
-}
-void Drone::setLives(int _lives)
-{
-	lives = _lives;
-}
+	}
+	void Drone::setMove(Vector2f v)
+	{
+		move_x = int(v.x);
+		move_y = int(v.y);
+	}
+	void Drone::setLives(int _lives)
+	{
+		lives = _lives;
+	}
 #pragma endregion
 
 
 #pragma region Destruktor
-Drone::~Drone()
-{
-	Round::getInstance()->deleteDrone(this);
-}
+	Drone::~Drone()
+	{
+		Round::getInstance()->deleteDrone(this);
+	}
 #pragma endregion
 
 

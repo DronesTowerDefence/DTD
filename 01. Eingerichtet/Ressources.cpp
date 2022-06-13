@@ -179,11 +179,11 @@ Ressources::Ressources()
 		}
 	}
 
-	droneSpeed[0] = 2.5;
-	droneSpeed[1] = 1.f;
-	droneSpeed[2] = 2.f;
-	droneSpeed[3] = 4.f;
-	droneSpeed[4] = 0.5;
+	droneSpeed[0] = float(2.5);
+	droneSpeed[1] = 2.f;
+	droneSpeed[2] = 3.f;
+	droneSpeed[3] = 5.f;
+	droneSpeed[4] = 1.f;
 	droneLives[0] = 3;
 	droneLives[1] = 6;
 	droneLives[2] = 4;
@@ -363,6 +363,10 @@ void Ressources::newConnection()
 	sender = new TcpSocket();
 	receiver = new TcpSocket();
 	listener = new TcpListener();
+}
+void Ressources::moabDeath()
+{
+	droneCountInRound[Round::getInstance()->getIndex()] += 4;
 }
 void Ressources::doubleSpeed()
 {
