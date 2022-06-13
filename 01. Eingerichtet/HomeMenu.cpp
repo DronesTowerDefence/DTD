@@ -262,10 +262,10 @@ int  HomeMenu::CheckClicked()
 
 		//Host clicked
 		mouse = Mouse::getPosition(*window);
-		pos = Service::getInstance()->getObjectPosition(host->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(host->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			status = 2;
 			connected = true;

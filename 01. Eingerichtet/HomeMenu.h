@@ -63,8 +63,15 @@ private:
 	Ressources* res;
 	
 
-
+	/// <summary>
+	/// Checkt, ob Zahlen 0-9 geklickt wird oder "." für die Eingabe der IP-Adersse
+	/// </summary>
+	/// <param name="event"></param>
 	void eingabe(Event event);
+	/// <summary>
+	/// Checkt, ob etwas geklicht wurde
+	/// </summary>
+	/// <returns></returns>
 	int CheckClicked();
 	void draw();
 	void deleteAllSaves();
