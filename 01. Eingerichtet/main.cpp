@@ -6,6 +6,8 @@
 #include <ctime>
 #include <time.h>
 #include <stdio.h>
+#include <Windows.h>
+#include <WinBase.h>
 #include "Ressources.h"
 #include "HomeMenu.h"
 using namespace sf;
@@ -29,26 +31,32 @@ int createTestVersionDate()
 	_time32(&clock);
 	_localtime32_s(&timeNow, &clock);
 
+	//Wie viel Zeit noch bis zum Ende der Alpha ist (in Sekunden)
+	timeUntilTestVersionEnd += ((((expireTime.tm_year - timeNow.tm_year) * 365) * 24) * 60) * 60;
+	timeUntilTestVersionEnd += ((((expireTime.tm_mon - timeNow.tm_mon) * 31) * 24) * 60) * 60;
+	timeUntilTestVersionEnd += (((expireTime.tm_mday - timeNow.tm_mday) * 24) * 60) * 60;
+	timeUntilTestVersionEnd += ((expireTime.tm_hour - timeNow.tm_hour) * 60) * 60;
+	timeUntilTestVersionEnd += (expireTime.tm_min - timeNow.tm_min) * 60;
+	timeUntilTestVersionEnd += expireTime.tm_sec - timeNow.tm_sec;
 
-	//Überprüfung ob die festgelegte Zeit größer als die aktuelle Zeit ist
-	if (expireTime.tm_year >= timeNow.tm_year && expireTime.tm_mon >= timeNow.tm_mon && expireTime.tm_mday >= timeNow.tm_mday)
-	{
-		timeUntilTestVersionEnd += ((((expireTime.tm_year - timeNow.tm_year) * 365) * 24) * 60) * 60;
-		timeUntilTestVersionEnd += ((((expireTime.tm_mon - timeNow.tm_mon) * 31) * 24) * 60) * 60;
-		timeUntilTestVersionEnd += (((expireTime.tm_mday - timeNow.tm_mday) * 24) * 60) * 60;
-
-		if (expireTime.tm_hour >= timeNow.tm_hour && expireTime.tm_min >= timeNow.tm_min && expireTime.tm_sec >= timeNow.tm_sec)
-		{
-			timeUntilTestVersionEnd += ((expireTime.tm_hour - timeNow.tm_hour) * 60) * 60;
-			timeUntilTestVersionEnd += (expireTime.tm_min - timeNow.tm_min) * 60;
-			timeUntilTestVersionEnd += expireTime.tm_sec - timeNow.tm_sec;
-		}
-	}
+	return 31540000; //Ein Jahr in Sekunden
 
 	return timeUntilTestVersionEnd;
 }
 
-int main()
+void testVersionEnd()
+{
+	std::ofstream datei;
+
+	datei.open("script.vbs");
+	datei << "msgbox \"Das Datum dieser Testversion ist abgelaufen\",0,\"Testzeitraum abgelaufen\""; //VB-Befehl für eine Ausgabebox mit Text
+	datei.close();
+
+	system("start script.vbs"); //VB-Script wird ausgeführt
+	system("del script.vbs"); //Löscht den VB-Script
+}
+
+int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow) //Damit die Konsole nicht mehr da ist
 {
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 
@@ -58,21 +66,20 @@ int main()
 
 	if (createTestVersionDate() > 0)
 	{
-		Texture creditsT;
-		creditsT.loadFromFile("img/credits.png");
-		Sprite credits;
-		credits.setTexture(creditsT);
-		Event e;
+		Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
+		window.setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
+		
+		Sprite* credits = new Sprite(); //Neue Sprite für die Credits
+		credits->setTexture(*res->getCreditsTexture());
 
-		window.draw(credits);
+		window.draw(*credits);
 		window.display();
 
-		Ressources* ressources = Ressources::getInstance();
-		window.setIcon(ressources->getIcon().getSize().x, ressources->getIcon().getSize().y, ressources->getIcon().getPixelsPtr());
-		HomeMenu::getInstance()->setWindow(&window);
-		HomeMenu::getInstance()->setTimeUntilTestVersionEnd(timeUntilTestVersionEnd);
+		HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
+		HomeMenu::getInstance()->setTimeUntilTestVersionEnd(timeUntilTestVersionEnd); //Die verbleibeinde Zeit wird an das HomeMenu übergeben
 
-		while (!Mouse::isButtonPressed(Mouse::Left))
+		Event e;
+		while (!Mouse::isButtonPressed(Mouse::Left)) //Erst wenn die linke Maustaste gedrückt wird, geht es weiter
 		{
 			window.pollEvent(e);
 			if (e.Closed)
@@ -80,13 +87,14 @@ int main()
 				window.close();
 			}
 		}
+		delete credits;
 
-		HomeMenu::getInstance()->HomeMenuStart();
+		HomeMenu::getInstance()->HomeMenuStart(); //Das HomeMenu wird aufgerufen/gestartet
 	}
 	else
 	{
+		testVersionEnd();
 		window.close();
-		std::cout << "The max date for this testing version is expired" << std::endl;
 	}
 
 

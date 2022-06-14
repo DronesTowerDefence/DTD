@@ -179,11 +179,20 @@ bool Tower::isClicked(RenderWindow* window)
 }
 void Tower::Update1()
 {
-	update->addIndex1();
 	if (update->getIndex1() < 4)
+	{
+		update->addIndex1();
+	}
+
+	if (update->getIndex1() < 4)
+	{
 		update->setText1(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1())) + " $");
+	}
 	else
+	{
 		update->setText1("CLOSE"); //TODO updatepeis
+	}
+
 	if (index == 3)
 	{
 		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
@@ -206,12 +215,20 @@ void Tower::Update1()
 }
 void Tower::Update2()
 {
-	update->addIndex2();
 	if (update->getIndex2() < 4)
-		update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
+	{
+		update->addIndex2();
+	}
 
+	if (update->getIndex2() < 4)
+	{
+		update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
+	}
 	else
+	{
 		update->setText2("CLOSE"); //TODO updatepeis
+	}
+
 	if (index < 4)
 	{
 		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
@@ -365,7 +382,7 @@ void Tower::setUpdate(int _update1, int _update2)
 			value += res->getTowerUpgradesPrice2(index, _update2 - 1);
 			damage = res->getTowerUpdateDamage(index, _update2 - 1);
 		}
-		
+
 	}
 	else if (index < 4)
 	{
