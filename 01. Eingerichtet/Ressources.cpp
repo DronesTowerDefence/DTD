@@ -272,6 +272,7 @@ Ressources::Ressources()
 	pauseScreenBackgroundTexture.loadFromFile("img/pauseScreenBackground.png");
 	socialsTwitterTexture.loadFromFile("img/socials/twitter.png");
 	deleteAllSavesButtonTexture.loadFromFile("img/buttons/deleteAllSavesButton.png");
+	creditsTexture.loadFromFile("img/credits.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -620,7 +621,11 @@ Texture* Ressources::getDroneTexture(int i, int j)
 }
 Texture* Ressources::getDroneDmgTexture(int i, int j)
 {
-	return &droneDmgTexture[i][j];
+	if (j > 3 || j < 0)
+	{
+		return &droneDmgTexture[i][3];
+	}
+	else return &droneDmgTexture[i][j];
 }
 Texture* Ressources::getButtonHomeTexture()
 {
@@ -714,6 +719,10 @@ Texture* Ressources::getButtonVolume(int a)
 Texture* Ressources::getDeleteAllSavesButtonTexture()
 {
 	return &deleteAllSavesButtonTexture;
+}
+Texture* Ressources::getCreditsTexture()
+{
+	return &creditsTexture;
 }
 #pragma endregion
 
