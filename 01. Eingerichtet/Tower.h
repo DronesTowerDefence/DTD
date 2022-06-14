@@ -9,7 +9,7 @@ using namespace sf;
 
 class TowerSpawn; //Joa, muss halt, weil sonst Include-Fehler
 
-/**
+/*
 Turm, welcher die Drohnen abschießt
 Index:
 0: Feuer-Turm

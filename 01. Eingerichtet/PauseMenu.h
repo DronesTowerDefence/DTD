@@ -35,8 +35,7 @@ class PauseMenu
 	RectangleShape btnoutlines[3];
 
 
-	Font font;
-
+	Font font; //Font muss nochmal neu geladen werden aufgrund 
 	Text text1;
 	Text text2;
 
@@ -47,13 +46,24 @@ class PauseMenu
 public:
 
 	static PauseMenu* getInstance();
+	/// <summary>
+	/// Laustärkeslider als Zahl
+	/// </summary>
+	/// <returns>float SliderHelper</returns>
 	float getSliderHelper();
+	
 	void setMultiplayerIsPaused(bool);
 	bool getMultiplayerIsPaused();
-	RectangleShape getEdge();
+
+
+	RectangleShape getEdge(); //Get-Funktionen
 	Sprite getBackground();
 	Text getText();
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="">float neuerSliderHelper</param>
 	void setSliderHelper(float);
 
 	/// <summary>
@@ -68,6 +78,9 @@ public:
 	/// <param name=""></param>
 	void checkPause(bool);
 
+	/// <summary>
+	/// Überprüft, ob das Spiel pausiert ist
+	/// </summary>
 	void checkPause();
 
 	/// <summary>

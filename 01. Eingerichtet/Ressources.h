@@ -68,6 +68,7 @@ private:
 	TcpSocket* receiver;
 	TcpListener* listener;
 
+	
 	Texture towerTexture[5][4];
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];

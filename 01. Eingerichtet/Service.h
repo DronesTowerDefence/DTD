@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 using namespace sf;
-class Service
+class Service //Die Klasse ist für die anderen Auflösungen da
 {
 private:
 	static Service* instance;
@@ -14,6 +14,6 @@ public:
 	Vector2f getMousePosition(Vector2i MousePosition);
 	Vector2f getObjectPosition( Vector2f objectposition);
 
-
+	
 
 };

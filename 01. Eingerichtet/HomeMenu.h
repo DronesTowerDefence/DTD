@@ -10,8 +10,10 @@ class HomeMenu
 private:
 	
 	static HomeMenu* instance;
-	
-	int choseIndex;
+	/// <summary>
+	/// Index für gewählte Map (wichtig für Rotation, Bewegung & Spawn der Drohnen)
+	/// </summary>
+	int choseIndex; 
 	int animationIndex;
 	int callCount;
 	/// <summary>

@@ -59,12 +59,18 @@ private:
 	/// </summary>
 	Sprite drone;
 
+	/// <summary>
+	/// Unbenutzt im Moment, für Animationen
+	/// </summary>
 	Clock animationTimer;
 
 	SoundBuffer deathSoundBuffer;
 
 	Sound deathSound;
 
+	/// <summary>
+	/// Pointer auf Ressourcen-Klasse
+	/// </summary>
 	Ressources* res;
 
 	/// <summary>

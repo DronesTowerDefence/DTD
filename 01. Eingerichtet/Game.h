@@ -33,6 +33,10 @@ private:
 	/// 3 = Client
 	/// </summary>
 	int status;
+
+	/// <summary>
+	/// Gibt den aktuellen Drohnen-Iterator für das Feld "DroneTypesInRound" in Ressources an
+	/// </summary>
 	int droneRow;
 
 	/// <summary>
@@ -338,5 +342,8 @@ public:
 	/// <returns>True wenn erfolgreich</returns>
 	bool deleteSaveGame();
 
+	/// <summary>
+	/// Wird bei Moab-Tod aufgerufen (nicht benutzen anderswo)
+	/// </summary>
 	void moabSpawn();
 };
