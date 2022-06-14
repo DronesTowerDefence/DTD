@@ -178,17 +178,27 @@ Ressources::Ressources()
 
 		}
 	}
+	// 0 = Schwarz
+	// 1 = Blau
+	// 2 = Rot
+	// 3 = Grün
+	// 4 = schwarze, große Drohen (MOAD = Mother Of All Drones)
 
+	//Geschwindigkeit der Drohnen-Typen
 	droneSpeed[0] = float(2.5);
-	droneSpeed[1] = 2.f;
-	droneSpeed[2] = 3.f;
-	droneSpeed[3] = 5.f;
-	droneSpeed[4] = 1.f;
-	droneLives[0] = 3;
-	droneLives[1] = 6;
-	droneLives[2] = 4;
-	droneLives[3] = 2;
-	droneLives[4] = 20;
+	droneSpeed[1] = float(3.5);
+	droneSpeed[2] = float(4.5);
+	droneSpeed[3] = 6.f;
+	droneSpeed[4] = float(1.5);
+
+	
+
+	// Leben der Drohnen
+	droneLives[0] = 4;
+	droneLives[1] = 8;
+	droneLives[2] = 12;
+	droneLives[3] = 16;
+	droneLives[4] = 22;
 
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
 	{
