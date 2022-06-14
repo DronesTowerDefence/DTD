@@ -18,36 +18,25 @@ Ressources::Ressources()
 	std::ifstream ok;
 	ok.open("saves/round_data.csv", std::ios::in);
 
-	isDoubleSpeed = 0;
+	
 
 	for (int i = 0; i < 100; i++)
 	{
 
-
-		if (ok.is_open()) {
+		
+		if (ok.is_open()) { //Solange die Datei offen ist
 
 			for (int i = 0; i < 100; i++) {
 
 				//Zeilenweise eingelesen
 				ok.getline(buffer, 32);
-				*sit = 0;
+				*sit = 0; //Bei neuer Reihe auf '0'
 
 				for (int f = 0; buffer[f] != '\0'; f++) {
 
-					if (std::isdigit(buffer[f])) {
+					if (std::isdigit(buffer[f])) { //Sobald der Ascii-Char eine Zahl ist
 
-						//Falls Zahl dreistellig ist
-						//if (/*isdigit(buffer[f + 2]) && */ isdigit(buffer[f + 1])) {
-						//	*help += (buffer[f] - 48.f )* 100.f;
-						//	*help += (buffer[f + 1] - 48.f) * 10;
-						//	*help += buffer[f + 2] - 48.f;
-
-						//	droneCountInRound[i] += *help;
-						//	droneTypesInRound[i][*sit] = *help;
-						//	f++;
-						//	*help = 0;
-						//	*sit += 1;
-						//}
+						
 						//zweistellig
 						if (isdigit(buffer[f + 1])) {
 							//Hier wird von char auf int umgerechnet
@@ -76,8 +65,8 @@ Ressources::Ressources()
 				}
 
 
-				// 1 war zu langsam
-				droneSpawnTime[i] = 0.5;
+				
+				droneSpawnTime[i] = float(0.45);
 
 
 			}
@@ -85,6 +74,7 @@ Ressources::Ressources()
 	}
 
 
+	isDoubleSpeed = 0; //Doppelte Geschwindigkeit
 
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
@@ -108,7 +98,7 @@ Ressources::Ressources()
 	towerDamage[0] = 1;
 	towerDamage[1] = 1;
 	towerDamage[2] = 2;
-	towerDamage[3] = 4;
+	towerDamage[3] = 3;
 	towerDamage[4] = 0;
 
 	towerSpeed[0] = 2;
