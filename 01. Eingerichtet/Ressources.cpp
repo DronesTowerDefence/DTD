@@ -90,10 +90,10 @@ Ressources::Ressources()
 	towerProjectileIndex[4] = 0;
 
 	towerPrice[0] = 50;
-	towerPrice[1] = 100;
-	towerPrice[2] = 250;
+	towerPrice[1] = 175;
+	towerPrice[2] = 300;
 	towerPrice[3] = 400;
-	towerPrice[4] = 500;
+	towerPrice[4] = 550;
 
 	towerDamage[0] = 1;
 	towerDamage[1] = 1;
@@ -123,7 +123,7 @@ Ressources::Ressources()
 	towerMoneyGeneration[1] = 0;
 	towerMoneyGeneration[2] = 0;
 	towerMoneyGeneration[3] = 0;
-	towerMoneyGeneration[4] = 15;
+	towerMoneyGeneration[4] = 20;
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
