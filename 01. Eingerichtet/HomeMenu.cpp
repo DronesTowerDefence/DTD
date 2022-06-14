@@ -248,10 +248,10 @@ int  HomeMenu::CheckClicked()
 		for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 		{
 
-			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); //Holt sich die Position des Turmes i
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); 
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); 
 
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 			{
 				pointer->setPosition(Vector2f(map[i]->getPosition().x, map[i]->getPosition().y));
 				choseIndex = i;
@@ -302,10 +302,10 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//Client Clicked
-		pos = Service::getInstance()->getObjectPosition(client->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(client->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			connected = true;
 			status = 3;
@@ -345,10 +345,10 @@ int  HomeMenu::CheckClicked()
 		//startclicked
 		mouse = Mouse::getPosition(*window);
 
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(startButton->getPosition()); 
+		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			return 1;
 
@@ -356,10 +356,10 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//Copy
-		pos = Service::getInstance()->getObjectPosition(copy->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(copy->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			Clipboard::setString(IpAddress::getLocalAddress().toString());
 			return 0;
@@ -368,10 +368,10 @@ int  HomeMenu::CheckClicked()
 
 
 		//Paste
-		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); 
+		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			ipAdress = Clipboard::getString();
 			ipAdressText->setString(ipAdress);
@@ -381,10 +381,10 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//MultiplayerMunue
-		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); 
+		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			if (isMultiplayerOpen)
 			{
@@ -401,8 +401,8 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//Exit
-		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100)); 
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
@@ -411,8 +411,8 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//DeleteSaves
-		pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition()); 
+		pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{

@@ -52,10 +52,10 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
-	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition()); //Holt sich die Position des Turmes i
-	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition());
+	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(100, 100)); 
 
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
 		return true;
 
@@ -70,10 +70,10 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 
 	for (int i = 0; i < 5; i++) //Geht alle Türme durch
 	{
-		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); 
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
 			{

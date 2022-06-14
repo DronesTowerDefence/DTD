@@ -125,10 +125,10 @@ int Updates::isClicked(RenderWindow* window)
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 
-	pos = Service::getInstance()->getObjectPosition(update1->getPosition()); //Holt sich die Position des Turmes i
-	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	pos = Service::getInstance()->getObjectPosition(update1->getPosition()); 
+	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100)); 
 
-	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 	{
 		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
 		{
@@ -138,10 +138,10 @@ int Updates::isClicked(RenderWindow* window)
 	}
 	else
 	{
-		pos = Service::getInstance()->getObjectPosition(update2->getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+		pos = Service::getInstance()->getObjectPosition(update2->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100)); 
 
-		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 		{
 			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
 			{
@@ -156,10 +156,10 @@ bool Updates::IsClosed(RenderWindow* window)
 {
 
 	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f	pos = Service::getInstance()->getObjectPosition(close->getPosition()); //Holt sich die Position des Turmes i
-	Vector2f	pos2 = Service::getInstance()->getObjectPosition(close->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	Vector2f	pos = Service::getInstance()->getObjectPosition(close->getPosition()); 
+	Vector2f	pos2 = Service::getInstance()->getObjectPosition(close->getPosition() + Vector2f(50, 50)); 
 
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
 		return true;
 	}
@@ -172,10 +172,10 @@ bool Updates::IsClosed(RenderWindow* window)
 bool Updates::isSell(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f pos = Service::getInstance()->getObjectPosition(sell->getPosition()); //Holt sich die Position des Turmes i
-	Vector2f pos2 = Service::getInstance()->getObjectPosition(sell->getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
+	Vector2f pos = Service::getInstance()->getObjectPosition(sell->getPosition());
+	Vector2f pos2 = Service::getInstance()->getObjectPosition(sell->getPosition() + Vector2f(50, 50));
 
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
 	{
 		return true;
 	}
