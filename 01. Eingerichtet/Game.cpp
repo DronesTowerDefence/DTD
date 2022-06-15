@@ -658,8 +658,8 @@ void Game::checkLoseGame()
 				gameOverWonText[i].setOutlineColor(Color::Black);
 				gameOverWonText[i].setOutlineThickness(3);
 			}
-			gameOverWonText[0].setString(std::to_string(1)); //TODO
-			gameOverWonText[1].setString(std::to_string(2));
+			gameOverWonText[0].setString(std::to_string(p_ressources->statistic_moneyGeneration));
+			gameOverWonText[1].setString(std::to_string(p_ressources->statistic_damage));
 			gameOverWonText[0].setPosition(Vector2f(1200, 440));
 			gameOverWonText[1].setPosition(Vector2f(1200, 530));
 		}

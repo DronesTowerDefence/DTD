@@ -107,6 +107,9 @@ private:
 
 public:
 
+	int statistic_moneyGeneration;
+	int statistic_damage;
+
 	static Ressources* getInstance();
 
 	int getMultiplayerPlayerCount();

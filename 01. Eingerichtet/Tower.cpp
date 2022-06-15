@@ -95,6 +95,7 @@ bool Tower::generateMoney()
 		{
 			generationCooldown = true;
 			Round::getInstance()->addMoney(moneyGeneration);
+			res->statistic_moneyGeneration += moneyGeneration;
 		}
 		else if (generationTimer.getElapsedTime().asSeconds() > speed)
 		{
@@ -115,18 +116,23 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			if (index == 1)
 			{
 				if (!coverableArea.empty())
+				{
 					new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+					res->statistic_damage += damage;
+				}
 			}
 			else if (index == 3)
 			{
 				for (auto i : boundSpawns)
 				{
 					i->shoot();
+					res->statistic_damage += damage;
 				}
 			}
 			else
 			{
 				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+				res->statistic_damage += damage;
 			}
 			if (Game::getInstance()->getStatus() == 2)
 			{
