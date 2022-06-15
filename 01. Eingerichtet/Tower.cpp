@@ -114,7 +114,8 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			res->getShootSound(0)->play();
 			if (index == 1)
 			{
-				new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+				if (!coverableArea.empty())
+					new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
 			}
 			else if (index == 3)
 			{
@@ -190,7 +191,7 @@ void Tower::Update1()
 	}
 	else
 	{
-		update->setText1("CLOSE"); //TODO updatepeis
+		update->setText1("CLOSE");
 	}
 
 	if (index == 3)

@@ -99,17 +99,20 @@ void Projectile::operate()
 		break;
 	}
 	case 3: //Für den Nagelwerfer, Schüsse werden auf der Strecke zufällig platziert
-		srand((unsigned)time(NULL));
-		int o = rand() % tower->getCoverableArea().size();
-		int j = 0;
-		for (auto i : tower->getCoverableArea()) {
-			if (j == o) {
-				targetstill.x = i.x;
-				targetstill.y = i.y;
+		if (!tower->getCoverableArea().empty())
+		{
+			srand((unsigned)time(NULL));
+			int o = rand() % tower->getCoverableArea().size();
+			int j = 0;
+			for (auto i : tower->getCoverableArea()) {
+				if (j == o) {
+					targetstill.x = i.x;
+					targetstill.y = i.y;
+				}
+				j++;
 			}
-			j++;
+			homing();
 		}
-		homing();
 		break;
 	}
 
