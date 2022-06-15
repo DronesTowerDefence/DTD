@@ -427,7 +427,7 @@ void Game::checkTowerAlias()
 		if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
 		{
 			isMouseClicked = false;
-			if (newTower->getSpr()->getPosition().x > 1700) // löschen vom Tower
+			if (newTower->getSpr()->getPosition().x > 1700) // löschen vom Tower	
 			{
 				round->addMoney(Ressources::getInstance()->getTowerPrice(newTower->getIndex()));
 				delete newTower;
@@ -640,6 +640,7 @@ void Game::checkLoseGame()
 			gameOverWonText[0].setOutlineThickness(3);
 			gameOverWonText[0].setPosition(Vector2f(970, 467));
 
+			tower = nullptr;
 			if (status == 2) //Multiplayer
 			{
 				Multiplayer::send(1, false);

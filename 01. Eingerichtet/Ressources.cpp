@@ -102,7 +102,7 @@ Ressources::Ressources()
 	towerDamage[4] = 0;
 
 	towerSpeed[0] = 3;
-	towerSpeed[1] = 1.7;
+	towerSpeed[1] = 1.5;
 	towerSpeed[2] = 1.5; 
 	towerSpeed[3] = 1;
 	towerSpeed[4] = 4;
@@ -175,8 +175,8 @@ Ressources::Ressources()
 	// 4 = schwarze, große Drohen (MOAD = Mother Of All Drones)
 
 	//Geschwindigkeit der Drohnen-Typen
-	droneSpeed[0] = float(2);
-	droneSpeed[1] = float(2.5);
+	droneSpeed[0] = float(2.5);
+	droneSpeed[1] = float(3);
 	droneSpeed[2] = float(3.5);
 	droneSpeed[3] = 6.f;
 	droneSpeed[4] = float(1.5);
@@ -184,8 +184,8 @@ Ressources::Ressources()
 	
 
 	// Leben der Drohnen
-	droneLives[0] = 3;
-	droneLives[1] = 6;
+	droneLives[0] = 4;
+	droneLives[1] = 7;
 	droneLives[2] = 12;
 	droneLives[3] = 16;
 	droneLives[4] = 21;
