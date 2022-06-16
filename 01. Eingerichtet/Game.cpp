@@ -197,6 +197,9 @@ bool Game::towerAliasForbiddenPosition()
 				||
 				((newTower->getPos().x > 1000 && newTower->getPos().x < 1270) && newTower->getPos().y < 270) //Baum Oben Rechts
 				)
+			{
+				return 0;
+			}
 		}
 		CircleShape* collisionShape = new CircleShape();
 		collisionShape->setFillColor(Color::Transparent);
