@@ -182,6 +182,22 @@ bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
+		if (p_map->getIndex() == 0) //Überprüfung ob auf Baum
+		{
+			if (
+				((newTower->getPos().x > 156 && newTower->getPos().x < 470) && newTower->getPos().y > 720) //Baum Unten Links
+				||
+				((newTower->getPos().x > 710 && newTower->getPos().x < 100) && newTower->getPos().y > 740) //Baum Unten Mitte
+				||
+				((newTower->getPos().x > 1280 && newTower->getPos().x < 1530) && newTower->getPos().y > 740) //Baum Unten Rechts
+				||
+				((newTower->getPos().x > 1030 && newTower->getPos().x < 1300) && (newTower->getPos().y > 400 && newTower->getPos().y < 685)) //Baum Mitte Mitte
+				||
+				((newTower->getPos().x > 445 && newTower->getPos().x < 710) && newTower->getPos().y < 270) //Baum Oben Links
+				||
+				((newTower->getPos().x > 1000 && newTower->getPos().x < 1270) && newTower->getPos().y < 270) //Baum Oben Rechts
+				)
+		}
 		CircleShape* collisionShape = new CircleShape();
 		collisionShape->setFillColor(Color::Transparent);
 		collisionShape->setRadius(25);
@@ -871,9 +887,9 @@ void Game::moabSpawn()
 	else {
 
 		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y ));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y ));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y ));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y));
+		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y));
 	}
 	droneCount += 4;
 }
