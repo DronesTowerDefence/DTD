@@ -180,22 +180,35 @@ end:
 }
 bool Game::towerAliasForbiddenPosition()
 {
-	if (newTower->getPos().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
+	if (newTower->getSpr()->getPosition().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
 	{
 		if (p_map->getIndex() == 0) //Überprüfung ob auf Baum
 		{
 			if (
-				((newTower->getPos().x > 156 && newTower->getPos().x < 470) && newTower->getPos().y > 720) //Baum Unten Links
+				((newTower->getSpr()->getPosition().x > 155 && newTower->getSpr()->getPosition().x < 470) && newTower->getSpr()->getPosition().y > 720) //Baum Unten Links
 				||
-				((newTower->getPos().x > 710 && newTower->getPos().x < 100) && newTower->getPos().y > 740) //Baum Unten Mitte
+				((newTower->getSpr()->getPosition().x > 710 && newTower->getSpr()->getPosition().x < 1000) && newTower->getSpr()->getPosition().y > 740) //Baum Unten Mitte
 				||
-				((newTower->getPos().x > 1280 && newTower->getPos().x < 1530) && newTower->getPos().y > 740) //Baum Unten Rechts
+				((newTower->getSpr()->getPosition().x > 1280 && newTower->getSpr()->getPosition().x < 1530) && newTower->getSpr()->getPosition().y > 740) //Baum Unten Rechts
 				||
-				((newTower->getPos().x > 1030 && newTower->getPos().x < 1300) && (newTower->getPos().y > 400 && newTower->getPos().y < 685)) //Baum Mitte Mitte
+				((newTower->getSpr()->getPosition().x > 1030 && newTower->getSpr()->getPosition().x < 1300) && (newTower->getSpr()->getPosition().y > 400 && newTower->getSpr()->getPosition().y < 685)) //Baum Mitte Mitte
 				||
-				((newTower->getPos().x > 445 && newTower->getPos().x < 710) && newTower->getPos().y < 270) //Baum Oben Links
+				((newTower->getSpr()->getPosition().x > 445 && newTower->getSpr()->getPosition().x < 710) && newTower->getSpr()->getPosition().y < 270) //Baum Oben Links
 				||
-				((newTower->getPos().x > 1000 && newTower->getPos().x < 1270) && newTower->getPos().y < 270) //Baum Oben Rechts
+				((newTower->getSpr()->getPosition().x > 1000 && newTower->getSpr()->getPosition().x < 1270) && newTower->getSpr()->getPosition().y < 270) //Baum Oben Rechts
+				)
+			{
+				return 0;
+			}
+		}
+		else if (p_map->getIndex() == 1) //Überprüfung ob Baum oder Eisschollen
+		{
+			if (
+				(newTower->getSpr()->getPosition().x < 330 && newTower->getSpr()->getPosition().y > 200) //Beide Bäume Links
+				||
+				((newTower->getSpr()->getPosition().x > 370 && newTower->getSpr()->getPosition().x < 1490) && (newTower->getSpr()->getPosition().y > 570 && newTower->getSpr()->getPosition().y < 870)) //Drei Bäume in der Mitte
+				||
+				((newTower->getSpr()->getPosition().x > 680 && newTower->getSpr()->getPosition().x < 1265) && (newTower->getSpr()->getPosition().y > 440 && newTower->getSpr()->getPosition().x < 560)) //Eisschollen in der Mitte //TODO Funktioniert nicht, ka warum
 				)
 			{
 				return 0;
