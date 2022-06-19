@@ -155,12 +155,14 @@ bool Drone::takeDamage(int damage) {
 	livesDiff -= lives;
 
 	res->getHitSound(0)->play();
-
-	if (Round::getInstance()->getIndex() > 30) {
-		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.3); // Für Geldaufteilung beim Multiplayer
+	if (Round::getInstance()->getIndex() > 60) {
+		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.05); // Für Geldaufteilung beim Multiplayer
+	}
+	else if (Round::getInstance()->getIndex() > 30) {
+		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.1); // Für Geldaufteilung beim Multiplayer
 	}
 	else if (Round::getInstance()->getIndex() > 10) {
-		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.5); // Für Geldaufteilung beim Multiplayer
+		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.3); // Für Geldaufteilung beim Multiplayer
 	}
 	else {
 		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() ); // Für Geldaufteilung beim Multiplayer

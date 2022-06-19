@@ -123,7 +123,7 @@ Ressources::Ressources()
 	towerMoneyGeneration[1] = 0;
 	towerMoneyGeneration[2] = 0;
 	towerMoneyGeneration[3] = 0;
-	towerMoneyGeneration[4] = 20;
+	towerMoneyGeneration[4] = 10;
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
