@@ -889,6 +889,16 @@ bool Game::deleteSaveGame()
 
 	return true;
 }
+bool Game::playShootSound()
+{
+	if (p_ressources->getShootSound(0)->getStatus() != Sound::Playing && playShootSoundTimer.getElapsedTime().asSeconds() >= p_ressources->getShootSoundCooldown())
+	{
+		playShootSoundTimer.restart();
+		p_ressources->getShootSound(0)->play();
+		return true;
+	}
+	else return false;
+}
 void Game::droneSpawn(int typ1, Vector2f start1, int next)
 {
 	//Da jede Map unterschiedliche Richtungen und Pfade haben, muss jede Map für jeden Wegpunkt abgefragt werden, um die richtige Rotation & Richtung der Bewegung zu finden
@@ -901,7 +911,7 @@ void Game::droneSpawn(int typ1, Vector2f start1, int next)
 				return;
 			}
 			round->addDrone(new Drone(typ1, start1, 0, -1, next, 0)); //Wenn normale Drohne, wird nur eine gespawnt, '0' und '-1' ist die Richtung, next ist der nächste Wegpunkt der Drohne, 0 ist der Rotationswert
-			return;					
+			return;
 		}
 		else if (next == 1) {
 			if (typ1 == 4) {
@@ -1007,9 +1017,9 @@ void Game::droneSpawn(int typ1, Vector2f start1, int next)
 		}
 		else if (next == 4) {
 			if (typ1 == 4) {
-					Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
-					return;
-				}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
 			return;
 		}
 		else if (next == 5) {

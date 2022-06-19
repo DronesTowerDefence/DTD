@@ -137,6 +137,8 @@ Ressources::Ressources()
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldspawner";
 
+	shootSoundCooldown = 0.5f;
+
 	towerSpawnSpeed[0] = 5;
 
 	ipAddress = "0"; //Standart-Initialisierung
@@ -488,6 +490,11 @@ int Ressources::getDroneLives(int i)
 int Ressources::getDroneCountInRound()
 {
 	return droneCountInRound[Round::getInstance()->getIndex()];
+}
+
+float Ressources::getShootSoundCooldown()
+{
+	return shootSoundCooldown;
 }
 
 float Ressources::getMultiplayerMoneySplit()

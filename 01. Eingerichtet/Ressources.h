@@ -39,6 +39,7 @@ private:
 	int droneLives[5];
 	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
 
+	float shootSoundCooldown; //Wie lange Pause zwischen dem Schuss-Sound ist
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
 
@@ -126,6 +127,7 @@ public:
 	int getDroneLives(int);
 	int getDroneCountInRound();
 
+	float getShootSoundCooldown();
 	float getMultiplayerMoneySplit();
 	float getTowerDamage(int);
 	float getTowerSpeed(int);

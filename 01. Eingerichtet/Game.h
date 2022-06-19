@@ -89,6 +89,11 @@ private:
 	Clock changeMusicTimer;
 
 	/// <summary>
+	/// Um die Zeit zu zählen, wann der Schuss-Sound wieder abgespielt werden soll
+	/// </summary>
+	Clock playShootSoundTimer;
+
+	/// <summary>
 	/// Die Buffer der Musik
 	/// </summary>
 	SoundBuffer musicBuffer[4];
@@ -343,6 +348,12 @@ public:
 	bool deleteSaveGame();
 
 	/// <summary>
+	/// Spielt den Shoot-Sound ab, wenn er nicht schon abgespielt wird oder in den letzten  Sekunden
+	/// </summary>
+	/// <returns></returns>
+	bool playShootSound();
+
+	/// <summary>
 	/// Wird bei Moab-Tod aufgerufen (nicht benutzen anderswo)
 	/// </summary>
 	void droneSpawn(int typ1, Vector2f start1, int next);
@@ -352,4 +363,5 @@ public:
 	/// </summary>
 	/// <param name="dr"> int | wird auf DroneCount addiert</param>
 	void addDroneCount(int dr);
+
 };
