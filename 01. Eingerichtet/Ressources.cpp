@@ -185,9 +185,9 @@ Ressources::Ressources()
 
 	// Leben der Drohnen
 	droneLives[0] = 4;
-	droneLives[1] = 2;
-	droneLives[2] = 4;
-	droneLives[3] = 10;
+	droneLives[1] = 3;
+	droneLives[2] = 6;
+	droneLives[3] = 8;
 	droneLives[4] = 22;
 
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
