@@ -132,7 +132,7 @@ HomeMenu::HomeMenu()
 
 	pointer->setSize(Vector2f(1920 * 0.1, 991 * 0.1));
 	pointer->setOutlineThickness(10);
-	pointer->setOutlineColor(Color::Magenta);
+	pointer->setOutlineColor(Color::Red);
 	pointer->setFillColor(Color::Transparent);
 
 	choseText = new Text("Wähle eine Karte aus", *font, 40);
