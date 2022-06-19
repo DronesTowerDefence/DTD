@@ -368,9 +368,12 @@ void Ressources::newConnection()
 	receiver = new TcpSocket();
 	listener = new TcpListener();
 }
-void Ressources::moabDeath()
+void Ressources::moabDeath(Vector2f pos, int x, int y, int next, int rotation)
 {
-	droneCountInRound[Round::getInstance()->getIndex()] += 4;
+	droneCountInRound[Round::getInstance()->getIndex()] += 2; //2 Neue Drohnen
+	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation));  //2 Drohnen von Typ 3, 4 wird nur angegeben, weil hier der überladene Kontruktor automatisch "-1" rechnet
+	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation)); // "
+	Game::getInstance()->addDroneCount(2); 
 }
 void Ressources::doubleSpeed()
 {

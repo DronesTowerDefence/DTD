@@ -213,7 +213,7 @@ public:
 	void doubleSpeed();
 	void normalSpeed();
 	void newConnection();
-	void moabDeath();
+	void moabDeath(Vector2f pos, int x, int y, int next, int rotation);
 
 };
 

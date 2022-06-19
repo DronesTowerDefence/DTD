@@ -891,114 +891,212 @@ bool Game::deleteSaveGame()
 }
 void Game::droneSpawn(int typ1, Vector2f start1, int next)
 {
-	if (typ1 == 4) {
-		Ressources::getInstance()->moabDeath();
+	//Da jede Map unterschiedliche Richtungen und Pfade haben, muss jede Map für jeden Wegpunkt abgefragt werden, um die richtige Rotation & Richtung der Bewegung zu finden
 
-		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 3.f));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 6.f));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 9.f));
+	if (HomeMenu::getInstance()->getChoseIndex() == 0) { //Für die erste Map
+		//"""""""""""""""""""""""Erklärbeispiel 
+		if (next == 0) { //Erster Wegpunkt
+			if (typ1 == 4) {//Wenn die tote Drohne ein Moab ist
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0); // Extra Funktion für Moab-Tod( Hier werden 2 neue Drohnen angelegt + in Listen addiert
+				return;
+			}
+			round->addDrone(new Drone(typ1, start1, 0, -1, next, 0)); //Wenn normale Drohne, wird nur eine gespawnt, '0' und '-1' ist die Richtung, next ist der nächste Wegpunkt der Drohne, 0 ist der Rotationswert
+			return;					
 		}
-		else {
-
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y));
-			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y));
+		else if (next == 1) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90); //Nach einem Knick ist die Rotation natürlich anders '90', und die Bewegungsrichtung auch
+				return;
+			}
+			round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
 		}
-		droneCount += 4;
-		return;
-	}
-	else {
-		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
-			if (next == 0) {
-				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next,0));
-			}
-			else if (next == 1) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
-			}
-			else if (next == 2) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
-			}
-			else if (next == 3) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
-			}
-			else if (next == 4) {
-				round->addDrone(new Drone(typ1, start1, 0, -1, next,0));
-			}
-			else if (next == 5) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
-			}
-			else if (next == 6) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
-			}
-			else if (next == 7) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
-			}
-			else if (next == 8) {
-				round->addDrone(new Drone(typ1, start1, 0, -1, next,0));
-			}
-			else if (next == 9) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
-			}
-			else if (next == 10) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
-			}
+		//"""""""""""""""""""""
+		else if (next == 2) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
 		}
-		else if (HomeMenu::getInstance()->getChoseIndex() == 1) {
-			if (next == 0) {
-				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next, 90));
-			}
-			else if (next == 1) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
-			}
-			else if (next == 2) {
-				round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
-			}
-			else if (next == 3) {
-				round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
-			}
-			else if (next == 4) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
-			}
-			else if (next == 5) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
-			}
-			else if (next == 6) {
-				round->addDrone(new Drone(typ1, start1, -1,0, next, 90));
-			}
+		else if (next == 3) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
 		}
-		else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
-			if (next == 0) {
-				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next, 90));
-			}
-			else if (next == 1) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
-			}
-			else if (next == 2) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
-			}
-			else if (next == 3) {
-				round->addDrone(new Drone(typ1, start1, 0,-1, next, 0));
-			}
-			else if (next == 4) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
-			}
-			else if (next == 5) {
-				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
-			}
-			else if (next == 6) {
-				round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
-			}
-			else if (next == 7) {
-				round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
-			}
-			else if (next == 8) {
-				round->addDrone(new Drone(typ1, start1, 1, 0, next, 0));
-			}
+		else if (next == 4) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			return;
+		}
+		else if (next == 5) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 6) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
+		}
+		else if (next == 7) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 8) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			return;
+		}
+		else if (next == 9) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 10) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
 		}
 	}
+	else if (HomeMenu::getInstance()->getChoseIndex() == 1) {
+		if (next == 0) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 1) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
+		}
+		else if (next == 2) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, -1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
+			return;
+		}
+		else if (next == 3) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			return;
+		}
+		else if (next == 4) {
+			if (typ1 == 4) {
+					Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+					return;
+				}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 5) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
+		}
+		else if (next == 6) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, -1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
+			return;
+		}
+	}
+	else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
+		if (next == 0) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 1) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
+		}
+		else if (next == 2) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 3) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			return;
+		}
+		else if (next == 4) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+		else if (next == 5) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, 1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			return;
+		}
+		else if (next == 6) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, -1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
+			return;
+		}
+		else if (next == 7) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 0, -1, next, 0);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			return;
+		}
+		else if (next == 8) {
+			if (typ1 == 4) {
+				Ressources::getInstance()->moabDeath(start1, 1, 0, next, 90);
+				return;
+			}round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			return;
+		}
+	}
+}
+
+void Game::addDroneCount(int dr)
+{
+	droneCount += dr;
 }
 void Game::checkMultiplayerConnection()
 {

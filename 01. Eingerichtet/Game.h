@@ -346,4 +346,10 @@ public:
 	/// Wird bei Moab-Tod aufgerufen (nicht benutzen anderswo)
 	/// </summary>
 	void droneSpawn(int typ1, Vector2f start1, int next);
+
+	/// <summary>
+	/// Addiert dr auf DroneCount drauf (Benutzung nur in MoabDeath relevant)
+	/// </summary>
+	/// <param name="dr"> int | wird auf DroneCount addiert</param>
+	void addDroneCount(int dr);
 };

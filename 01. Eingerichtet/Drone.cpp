@@ -151,7 +151,7 @@ void Drone::pass()
 
 bool Drone::takeDamage(int damage) {
 	int livesDiff = lives;
-	lives -= damage;
+	lives = lives - damage;
 	livesDiff -= lives;
 
 	res->getHitSound(0)->play();
@@ -168,13 +168,14 @@ bool Drone::takeDamage(int damage) {
 
 	if (droneType != 0 && lives <= 0) {
 
-		Game::getInstance()->droneSpawn(droneType, drone.getPosition(), nextPoint);
+		Game::getInstance()->droneSpawn(droneType, drone.getPosition(), nextPoint); //Um Nachfolger zu spawnen
 
+		//Tod der ursprünglichen Drohne
 		delete this;
 		return true;
 
 
-		//WIP FOR MOAB DEATH
+		
 	}
 
 	if (lives <= 0)
