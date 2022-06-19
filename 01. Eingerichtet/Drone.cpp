@@ -49,7 +49,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y, int nextPoi
 	move_y = y;
 	id = droneID;
 	droneID++;
-	
+
 	drone.rotate(rotation);
 }
 #pragma endregion
@@ -165,7 +165,7 @@ bool Drone::takeDamage(int damage) {
 		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.3); // Für Geldaufteilung beim Multiplayer
 	}
 	else {
-		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() ); // Für Geldaufteilung beim Multiplayer
+		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() * 0.7); // Für Geldaufteilung beim Multiplayer
 	}
 
 	if (droneType != 0 && lives <= 0) {
@@ -177,7 +177,7 @@ bool Drone::takeDamage(int damage) {
 		return true;
 
 
-		
+
 	}
 
 	if (lives <= 0)
@@ -195,13 +195,15 @@ bool Drone::takeDamage(int damage) {
 		else if (lives == 5)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 3));
 
-		else if (droneType != 4)
-		{
-			drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
-		}
+
 		animationCounter = -1;
 
 		return false;
+	}
+	else if (droneType != 4)
+	{
+		//Für Drohnenschaden
+		drone.setTexture(*res->getDroneDmgTexture(droneType, res->getDroneLives(droneType) - lives));
 	}
 }
 #pragma endregion
