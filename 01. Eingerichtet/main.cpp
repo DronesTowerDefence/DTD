@@ -12,15 +12,17 @@
 #include "HomeMenu.h"
 using namespace sf;
 
-unsigned long long timeUntilTestVersionEnd = 0;
+unsigned long long timeUntilTestVersionEnd = 31540000; //Ein Jahr in Sekunden
 
-int createTestVersionDate()
+void createTestVersionDate()
 {
+	timeUntilTestVersionEnd = 0;
+
 	//Festgelegte Zeit
 	struct tm expireTime;
 	expireTime.tm_year = 122;
 	expireTime.tm_mon = 5;
-	expireTime.tm_mday = 17;
+	expireTime.tm_mday = 26;
 	expireTime.tm_hour = 23;
 	expireTime.tm_min = 59;
 	expireTime.tm_sec = 59;
@@ -32,16 +34,31 @@ int createTestVersionDate()
 	_localtime32_s(&timeNow, &clock);
 
 	//Wie viel Zeit noch bis zum Ende der Alpha ist (in Sekunden)
-	timeUntilTestVersionEnd += ((((expireTime.tm_year - timeNow.tm_year) * 365) * 24) * 60) * 60;
-	timeUntilTestVersionEnd += ((((expireTime.tm_mon - timeNow.tm_mon) * 31) * 24) * 60) * 60;
-	timeUntilTestVersionEnd += (((expireTime.tm_mday - timeNow.tm_mday) * 24) * 60) * 60;
-	timeUntilTestVersionEnd += ((expireTime.tm_hour - timeNow.tm_hour) * 60) * 60;
-	timeUntilTestVersionEnd += (expireTime.tm_min - timeNow.tm_min) * 60;
-	timeUntilTestVersionEnd += expireTime.tm_sec - timeNow.tm_sec;
+	int tmpCalc=0;
 
-	return 31540000; //Ein Jahr in Sekunden
+	tmpCalc += ((((expireTime.tm_year - timeNow.tm_year) * 365) * 24) * 60) * 60;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
 
-	return timeUntilTestVersionEnd;
+	tmpCalc += ((((expireTime.tm_mon - timeNow.tm_mon) * 31) * 24) * 60) * 60;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
+
+	tmpCalc += (((expireTime.tm_mday - timeNow.tm_mday) * 24) * 60) * 60;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
+
+	tmpCalc += ((expireTime.tm_hour - timeNow.tm_hour) * 60) * 60;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
+
+	tmpCalc += (expireTime.tm_min - timeNow.tm_min) * 60;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
+
+	tmpCalc += expireTime.tm_sec - timeNow.tm_sec;
+	if (tmpCalc >= 0)
+		timeUntilTestVersionEnd += tmpCalc;
 }
 
 void testVersionEnd()
@@ -63,8 +80,9 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
+	//createTestVersionDate();
 
-	if (createTestVersionDate() > 0)
+	if (timeUntilTestVersionEnd > 0)
 	{
 		Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
 		window.setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
