@@ -378,7 +378,6 @@ void Tower::setTowerChangeFrame(int frame)
 }
 void Tower::setUpdate(int _update1, int _update2)
 {
-
 	if (index == 3)
 	{
 		if (_update1 > update->getIndex1())
@@ -419,6 +418,7 @@ void Tower::setUpdate(int _update1, int _update2)
 		}
 		if (_update2 > update->getIndex2())
 		{
+			update->setIndex2(_update2);
 			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
