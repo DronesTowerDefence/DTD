@@ -89,11 +89,11 @@ Ressources::Ressources()
 	towerProjectileIndex[3] = 0;
 	towerProjectileIndex[4] = 0;
 
-	towerPrice[0] = 50;
+	towerPrice[0] = 100;
 	towerPrice[1] = 175;
-	towerPrice[2] = 250;
+	towerPrice[2] = 350;
 	towerPrice[3] = 400;
-	towerPrice[4] = 550;
+	towerPrice[4] = 750;
 
 	towerDamage[0] = 1;
 	towerDamage[1] = 2;
@@ -103,7 +103,7 @@ Ressources::Ressources()
 
 	towerSpeed[0] = 1;
 	towerSpeed[1] = 1.5;
-	towerSpeed[2] = 1.5; 
+	towerSpeed[2] = 1; 
 	towerSpeed[3] = 1;
 	towerSpeed[4] = 4;
 
@@ -135,7 +135,7 @@ Ressources::Ressources()
 	towerName[1] = "Nagelfabrik";
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
-	towerName[4] = "Goldspawner";
+	towerName[4] = "Goldmine";
 
 	shootSoundCooldown = 0.5f;
 
@@ -187,7 +187,7 @@ Ressources::Ressources()
 
 	// Leben der Drohnen
 	droneLives[0] = 4;
-	droneLives[1] = 3;
+	droneLives[1] = 5;
 	droneLives[2] = 6;
 	droneLives[3] = 8;
 	droneLives[4] = 22;
