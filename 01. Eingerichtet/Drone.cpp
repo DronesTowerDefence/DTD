@@ -31,6 +31,27 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 		drone.setRotation(90);
 	}
 }
+
+Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y, int nextPoint1, int rotation)
+{
+	droneType = typSpecifier - 1;
+
+	res = Ressources::getInstance();
+
+	//In Ressoucen gespeichert
+	drone.setTexture(*res->getDroneDmgTexture(droneType, 0));
+	speed = res->getDroneSpeed(typSpecifier);
+	nextPoint = nextPoint1;
+	//""
+	lives = res->getDroneLives(typSpecifier);
+	drone.setPosition(startPosition);
+	move_x = x;
+	move_y = y;
+	id = droneID;
+	droneID++;
+	
+	drone.rotate(rotation);
+}
 #pragma endregion
 
 #pragma region Funktionen
@@ -145,11 +166,12 @@ bool Drone::takeDamage(int damage) {
 		Round::getInstance()->addMoney(livesDiff * res->getMultiplayerMoneySplit() ); // Für Geldaufteilung beim Multiplayer
 	}
 
-	if (droneType == 4 && lives <= 0) {
+	if (droneType != 0 && lives <= 0) {
 
-		Game::getInstance()->moabSpawn();
+		Game::getInstance()->droneSpawn(droneType, drone.getPosition(), nextPoint);
 
-
+		delete this;
+		return true;
 
 
 		//WIP FOR MOAB DEATH

@@ -84,6 +84,16 @@ public:
 	/// </summary>
 	/// <param name="int"></param>
 	Drone(int typSpecifier, Vector2f startPosition, int x, int y); //Konstruktor
+	/// <summary>
+	/// Konstruktor für Nachwuchs-Drohnen
+	/// </summary>
+	/// <param name="typSpecifier">Drohnentyp</param>
+	/// <param name="startPosition">Start der Map</param>
+	/// <param name="x">Spawn-Koordinate x</param>
+	/// <param name="y">Spawn-Koordinate y</param>
+	/// <param name="nextPoint1">nextPoint</param>
+	/// <param name="rotation"> int Rotation (Grad)</param>
+	Drone(int typSpecifier, Vector2f startPosition, int x, int y, int nextPoint1, int rotation);
 
 	/// <summary>
 	/// Gibt die Sprite der Drone zurück

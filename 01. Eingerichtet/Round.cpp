@@ -21,7 +21,7 @@ Round::Round()
 Round::Round(Map* _p_map)
 {
 	//Setzen der Attribute
-	money = 300; //Start-Geld
+	money = 500; //Start-Geld
 	health = 150; //Start-Leben
 	index = 0; //Start-Runde
 	lost = false;

@@ -345,5 +345,5 @@ public:
 	/// <summary>
 	/// Wird bei Moab-Tod aufgerufen (nicht benutzen anderswo)
 	/// </summary>
-	void moabSpawn();
+	void droneSpawn(int typ1, Vector2f start1, int next);
 };

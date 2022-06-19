@@ -889,25 +889,116 @@ bool Game::deleteSaveGame()
 
 	return true;
 }
-void Game::moabSpawn()
+void Game::droneSpawn(int typ1, Vector2f start1, int next)
 {
+	if (typ1 == 4) {
+		Ressources::getInstance()->moabDeath();
 
-	Ressources::getInstance()->moabDeath();
+		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 3.f));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 6.f));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 9.f));
+		}
+		else {
 
-	if (HomeMenu::getInstance()->getChoseIndex() == 0) {
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 3.f));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 6.f));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y - 9.f));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y));
+			round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y));
+		}
+		droneCount += 4;
+		return;
 	}
 	else {
-
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x, p_map->getStartMove().y));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 3.f, p_map->getStartMove().y));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 6.f, p_map->getStartMove().y));
-		round->addDrone(new Drone(3, p_map->getStart(), p_map->getStartMove().x + 9.f, p_map->getStartMove().y));
+		if (HomeMenu::getInstance()->getChoseIndex() == 0) {
+			if (next == 0) {
+				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next,0));
+			}
+			else if (next == 1) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
+			}
+			else if (next == 2) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
+			}
+			else if (next == 3) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
+			}
+			else if (next == 4) {
+				round->addDrone(new Drone(typ1, start1, 0, -1, next,0));
+			}
+			else if (next == 5) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
+			}
+			else if (next == 6) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
+			}
+			else if (next == 7) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
+			}
+			else if (next == 8) {
+				round->addDrone(new Drone(typ1, start1, 0, -1, next,0));
+			}
+			else if (next == 9) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next,90));
+			}
+			else if (next == 10) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next,0));
+			}
+		}
+		else if (HomeMenu::getInstance()->getChoseIndex() == 1) {
+			if (next == 0) {
+				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next, 90));
+			}
+			else if (next == 1) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			}
+			else if (next == 2) {
+				round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
+			}
+			else if (next == 3) {
+				round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			}
+			else if (next == 4) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			}
+			else if (next == 5) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			}
+			else if (next == 6) {
+				round->addDrone(new Drone(typ1, start1, -1,0, next, 90));
+			}
+		}
+		else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
+			if (next == 0) {
+				round->addDrone(new Drone(typ1, start1, p_map->getStartMove().x, p_map->getStartMove().y, next, 90));
+			}
+			else if (next == 1) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			}
+			else if (next == 2) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			}
+			else if (next == 3) {
+				round->addDrone(new Drone(typ1, start1, 0,-1, next, 0));
+			}
+			else if (next == 4) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next, 90));
+			}
+			else if (next == 5) {
+				round->addDrone(new Drone(typ1, start1, 0, 1, next, 0));
+			}
+			else if (next == 6) {
+				round->addDrone(new Drone(typ1, start1, -1, 0, next, 90));
+			}
+			else if (next == 7) {
+				round->addDrone(new Drone(typ1, start1, 0, -1, next, 0));
+			}
+			else if (next == 8) {
+				round->addDrone(new Drone(typ1, start1, 1, 0, next, 0));
+			}
+		}
 	}
-	droneCount += 4;
 }
 void Game::checkMultiplayerConnection()
 {

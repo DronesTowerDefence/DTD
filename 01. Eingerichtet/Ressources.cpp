@@ -101,7 +101,7 @@ Ressources::Ressources()
 	towerDamage[3] = 3;
 	towerDamage[4] = 0;
 
-	towerSpeed[0] = 3;
+	towerSpeed[0] = 1;
 	towerSpeed[1] = 1.5;
 	towerSpeed[2] = 1.5; 
 	towerSpeed[3] = 1;
@@ -135,7 +135,7 @@ Ressources::Ressources()
 	towerName[1] = "Nagelfabrik";
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
-	towerName[4] = "Goldmine";
+	towerName[4] = "Goldspawner";
 
 	towerSpawnSpeed[0] = 5;
 
@@ -177,18 +177,18 @@ Ressources::Ressources()
 	//Geschwindigkeit der Drohnen-Typen
 	droneSpeed[0] = float(2.5);
 	droneSpeed[1] = float(3);
-	droneSpeed[2] = float(3.5);
-	droneSpeed[3] = 6.f;
+	droneSpeed[2] = float(4);
+	droneSpeed[3] = float(6);
 	droneSpeed[4] = float(1.5);
 
 	
 
 	// Leben der Drohnen
 	droneLives[0] = 4;
-	droneLives[1] = 7;
-	droneLives[2] = 12;
-	droneLives[3] = 16;
-	droneLives[4] = 21;
+	droneLives[1] = 2;
+	droneLives[2] = 4;
+	droneLives[3] = 10;
+	droneLives[4] = 22;
 
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
 	{
