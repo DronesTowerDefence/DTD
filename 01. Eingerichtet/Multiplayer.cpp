@@ -2,7 +2,7 @@
 #include "Multiplayer.h"
 
 const Time Multiplayer::timeout = seconds(2.f);
-const Time Multiplayer::timeoutSend = seconds(Multiplayer::timeout / seconds(3));
+const Time Multiplayer::timeoutSend = seconds(Multiplayer::timeout / seconds(3.f));
 
 bool Multiplayer::send()
 {
