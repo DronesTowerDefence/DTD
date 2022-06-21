@@ -20,13 +20,18 @@ PauseMenu::PauseMenu() {
 	edge.setSize(Vector2f(690.f, 700.f));
 	edge.setPosition(548.f, 148.f);
 
-	volumeSlider.setFillColor(Color::Green);
-	volumeSlider.setSize(Vector2f(400.f, 15.f));
-	volumeSlider.setPosition(Vector2f(565.f, 390.f));
+	musicSlider.setFillColor(Color::Green);
+	musicSlider.setSize(Vector2f(400.f, 15.f));
+	musicSlider.setPosition(Vector2f(565.f, 390.f));
+
+	sfxSlider.setFillColor(Color::Green);
+	sfxSlider.setSize(Vector2f(400.f, 15.f));
+	sfxSlider.setPosition(565.f, 640.f); // +150 auf der y-Achse
 
 
 	//Anfangslautstärke beträgt 50%
-	sliderHelper = 50.f;
+	sliderHelperMusic = 50.f;
+	sliderHelperSound = 50.f;
 
 	//für Maus-Click
 	isClicked = false;
@@ -61,7 +66,7 @@ PauseMenu::PauseMenu() {
 
 	mutebtnTexture = res->getButtonVolume(2);
 	mutebtn.setTexture(*mutebtnTexture);
-	mutebtn.setPosition(Vector2f(1050.f, 340.f));
+	mutebtn.setPosition(Vector2f(1050.f, 475.f));
 
 	//Überschriften
 	text1.setFont(font);
@@ -95,13 +100,17 @@ PauseMenu::PauseMenu() {
 
 	//
 
-	volumeOutline.setFillColor(Color::Transparent);
-	volumeOutline.setOutlineColor(Color::Black);
-	volumeOutline.setOutlineThickness(float(1));
-	volumeOutline.setSize(Vector2f(402.f, 15.f));
-	volumeOutline.setPosition(volumeSlider.getPosition() - Vector2f(1.f, 0.f));
+	musicOutline.setFillColor(Color::Transparent);
+	musicOutline.setOutlineColor(Color::Black);
+	musicOutline.setOutlineThickness(float(1));
+	musicOutline.setSize(Vector2f(402.f, 15.f));
+	musicOutline.setPosition(musicSlider.getPosition() - Vector2f(1.f, 0.f));
 
-
+	sfxOutline.setFillColor(Color::Transparent);
+	sfxOutline.setOutlineColor(Color::Black);
+	sfxOutline.setOutlineThickness(float(1));
+	sfxOutline.setSize(Vector2f(402.f, 15.f));
+	sfxOutline.setPosition(sfxSlider.getPosition() - Vector2f(1.f, 0.f));
 
 }
 #pragma endregion
@@ -173,6 +182,7 @@ void PauseMenu::draw()
 	window->draw(socialsBorder);
 	window->draw(homebtn);
 	window->draw(playbtn);
+
 	window->draw(mutebtn);
 
 	for (int i = 0; i < 3; i++) {
@@ -180,9 +190,13 @@ void PauseMenu::draw()
 	}
 
 
-	window->draw(volumeSlider);
+	window->draw(musicSlider);
 
-	window->draw(volumeOutline);
+	window->draw(sfxSlider);
+
+	window->draw(musicOutline);
+
+	window->draw(sfxOutline);
 
 	window->display();
 
@@ -212,9 +226,9 @@ void PauseMenu::checkPause(Event event1)
 
 
 			}
-			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
-			text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
-			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelperMusic ist die float-Variable für den Slider)
+			text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : "+ std::to_string(int(sliderHelperSound)) + "%");
+			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)\n\n\n\n\n\n\n\n(Mit Pfeiltasten ändern, runter = leiser, hoch = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			if (play == true) {
 				play = false;
@@ -225,31 +239,48 @@ void PauseMenu::checkPause(Event event1)
 			//Pfeiltasten Druck = Änderung Lautstärke
 			if (Keyboard::isKeyPressed(Keyboard::Left))
 			{
-				if (sliderHelper == 0.f)
+				if (sliderHelperMusic == 0.f)
 				{
-					sliderHelper = 1.f;
+					sliderHelperMusic = 1.f;
 				}
-				sliderHelper--;
+				sliderHelperMusic--;
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Right))
 			{
-				if (sliderHelper == 100.f)
+				if (sliderHelperMusic == 100.f)
 				{
-					sliderHelper = 99.f;
+					sliderHelperMusic = 99.f;
 				}
-				sliderHelper++;
+				sliderHelperMusic++;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				if (sliderHelperSound == 0.f)
+				{
+					sliderHelperSound = 1.f;
+				}
+				sliderHelperSound--;
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Up))
+			{
+				if (sliderHelperSound == 100.f)
+				{
+					sliderHelperSound = 99.f;
+				}
+				sliderHelperSound++;
 			}
 
 			if (mute == false) {
 
-				if (sliderHelper < 33) {
+				if ((sliderHelperMusic + sliderHelperSound) / 2 < 33) {
 					mutebtnTexture = res->getButtonVolume(1);
 				}
-				else if (sliderHelper > 33 && sliderHelper < 66) {
+				else if ((sliderHelperMusic + sliderHelperSound) / 2 > 33 && (sliderHelperMusic + sliderHelperSound) / 2 < 66) {
 					mutebtnTexture = res->getButtonVolume(2);
 				}
-				else if (sliderHelper > 66) {
+				else if ((sliderHelperMusic + sliderHelperSound) / 2 > 66) {
 					mutebtnTexture = res->getButtonVolume(3);
 
 				}
@@ -257,15 +288,18 @@ void PauseMenu::checkPause(Event event1)
 			else if (mute == true) {
 				mutebtnTexture = res->getButtonVolume(0);
 				Game::getInstance()->setMusicVolume(0.f);
+				Game::getInstance()->setSoundVolume(0.f);
 			}
 			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 			if (mute == false) {
-				Game::getInstance()->setMusicVolume(sliderHelper);
+				Game::getInstance()->setMusicVolume(sliderHelperMusic);
+				Game::getInstance()->setSoundVolume(sliderHelperSound);
 			}
-			volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+			musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+			sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""
 			Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
 			click();
 			draw(); //Texte und Objekte werden gezeichnet
@@ -303,40 +337,61 @@ void PauseMenu::checkPause(bool isPaused)
 			}
 
 
-			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
-			text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
-			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelperMusic ist die float-Variable für den Slider)
+					text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : "+ std::to_string(int(sliderHelperSound)) + "%");
+			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)\n\n\n\n\n\n\n\n(Mit Pfeiltasten ändern, runter = leiser, hoch = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			if (play == true) {
 				play = false;
 				return;
 			}
+
+
 			//Pfeiltasten Druck = Änderung Lautstärke
 			if (Keyboard::isKeyPressed(Keyboard::Left))
 			{
-				if (sliderHelper == 0.f)
+				if (sliderHelperMusic == 0.f)
 				{
-					sliderHelper = 1.f;
+					sliderHelperMusic = 1.f;
 				}
-				sliderHelper--;
+				sliderHelperMusic--;
 			}
+
 			if (Keyboard::isKeyPressed(Keyboard::Right))
 			{
-				if (sliderHelper == 100.f)
+				if (sliderHelperMusic == 100.f)
 				{
-					sliderHelper = 99.f;
+					sliderHelperMusic = 99.f;
 				}
-				sliderHelper++;
+				sliderHelperMusic++;
 			}
+			if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				if (sliderHelperSound == 0.f)
+				{
+					sliderHelperSound = 1.f;
+				}
+				sliderHelperSound--;
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Up))
+			{
+				if (sliderHelperSound == 100.f)
+				{
+					sliderHelperSound = 99.f;
+				}
+				sliderHelperSound++;
+			}
+
 			if (mute == false) {
 
-				if (sliderHelper < 33) {
+				if ((sliderHelperMusic + sliderHelperSound) / 2 < 33) {
 					mutebtnTexture = res->getButtonVolume(1);
 				}
-				else if (sliderHelper > 33 && sliderHelper < 66) {
+				else if ((sliderHelperMusic + sliderHelperSound) / 2 > 33 && (sliderHelperMusic + sliderHelperSound) / 2 < 66) {
 					mutebtnTexture = res->getButtonVolume(2);
 				}
-				else if (sliderHelper > 66) {
+				else if ((sliderHelperMusic + sliderHelperSound) / 2 > 66) {
 					mutebtnTexture = res->getButtonVolume(3);
 
 				}
@@ -344,21 +399,27 @@ void PauseMenu::checkPause(bool isPaused)
 			else if (mute == true) {
 				mutebtnTexture = res->getButtonVolume(0);
 				Game::getInstance()->setMusicVolume(0.f);
+				Game::getInstance()->setSoundVolume(0.f);
 			}
 			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 			if (mute == false) {
-				Game::getInstance()->setMusicVolume(sliderHelper);
+				Game::getInstance()->setMusicVolume(sliderHelperMusic);
+				Game::getInstance()->setSoundVolume(sliderHelperSound);
 			}
-			volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+			musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+			sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""
 			Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
 			click();
 			draw(); //Texte und Objekte werden gezeichnet
 
 		}
 	}
+
+	return;
+
 }
 void PauseMenu::checkPause()
 {
@@ -379,59 +440,79 @@ void PauseMenu::checkPause()
 
 
 		}
-		//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelper ist die float-Variable für den Slider)
-		text1.setString("Pause Menu : \n\n\nLautstärke : " + std::to_string(int(sliderHelper)) + " % \n");
-		text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
+		//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelperMusic ist die float-Variable für den Slider)
+		text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : " + std::to_string(int(sliderHelperSound)) + "%");
+		text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)\n\n\n\n\n\n\n\n(Mit Pfeiltasten ändern, runter = leiser, hoch = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 		if (play == true) {
 			play = false;
 			return;
 		}
 
+
 		//Pfeiltasten Druck = Änderung Lautstärke
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 		{
-			if (sliderHelper == 0.f)
+			if (sliderHelperMusic == 0.f)
 			{
-				sliderHelper = 1.f;
+				sliderHelperMusic = 1.f;
 			}
-			sliderHelper--;
+			sliderHelperMusic--;
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 		{
-			if (sliderHelper == 100.f)
+			if (sliderHelperMusic == 100.f)
 			{
-				sliderHelper = 99.f;
+				sliderHelperMusic = 99.f;
 			}
-			sliderHelper++;
+			sliderHelperMusic++;
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Down))
+		{
+			if (sliderHelperSound == 0.f)
+			{
+				sliderHelperSound = 1.f;
+			}
+			sliderHelperSound--;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Up))
+		{
+			if (sliderHelperSound == 100.f)
+			{
+				sliderHelperSound = 99.f;
+			}
+			sliderHelperSound++;
 		}
 
 		if (mute == false) {
-
-			if (sliderHelper < 33) {
+			if ((sliderHelperMusic + sliderHelperSound) / 2 < 33) {
 				mutebtnTexture = res->getButtonVolume(1);
 			}
-			else if (sliderHelper > 33 && sliderHelper < 66) {
+			else if ((sliderHelperMusic + sliderHelperSound) / 2 > 33 && (sliderHelperMusic + sliderHelperSound) / 2 < 66) {
 				mutebtnTexture = res->getButtonVolume(2);
 			}
-			else if (sliderHelper > 66) {
+			else if ((sliderHelperMusic + sliderHelperSound) / 2 > 66) {
 				mutebtnTexture = res->getButtonVolume(3);
 
 			}
 		}
-		else {
+		else if (mute == true) {
 			mutebtnTexture = res->getButtonVolume(0);
 			Game::getInstance()->setMusicVolume(0.f);
+			Game::getInstance()->setSoundVolume(0.f);
 		}
 		mutebtn.setTexture(*mutebtnTexture);
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 		if (mute == false) {
-			Game::getInstance()->setMusicVolume(sliderHelper);
+			Game::getInstance()->setMusicVolume(sliderHelperMusic);
+			Game::getInstance()->setSoundVolume(sliderHelperSound);
 		}
-		volumeSlider.setSize(Vector2f(sliderHelper / 100 * 400.f, 14.f)); //Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+		musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
+		sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""
 		Game::getInstance()->changeBackgroundMusic(); //Da die Musik weiterlaufen soll, muss man die hier auch aufrufen
 		click();
 		draw(); //Texte und Objekte werden gezeichnet
@@ -439,7 +520,6 @@ void PauseMenu::checkPause()
 	}
 
 
-	return;
 
 }
 #pragma endregion
@@ -456,9 +536,9 @@ PauseMenu* PauseMenu::getInstance() {
 	return instance;
 
 }
-float PauseMenu::getSliderHelper()
+float PauseMenu::getsliderHelperMusic()
 {
-	return sliderHelper;
+	return sliderHelperMusic;
 }
 void PauseMenu::setMultiplayerIsPaused(bool a)
 {
@@ -483,9 +563,9 @@ Text PauseMenu::getText()
 #pragma endregion
 
 #pragma region setter
-void PauseMenu::setSliderHelper(float i)
+void PauseMenu::setsliderHelperMusic(float i)
 {
-	sliderHelper = i;
+	sliderHelperMusic = i;
 }
 #pragma endregion
 

@@ -190,7 +190,7 @@ Ressources::Ressources()
 	droneLives[1] = 5;
 	droneLives[2] = 6;
 	droneLives[3] = 8;
-	droneLives[4] = 22;
+	droneLives[4] = 55;
 
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
 	{
@@ -303,6 +303,8 @@ Ressources::Ressources()
 	}
 }
 
+
+
 #pragma endregion
 
 #pragma region Funktionen
@@ -376,6 +378,12 @@ void Ressources::moabDeath(Vector2f pos, int x, int y, int next, int rotation)
 	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation));  //2 Drohnen von Typ 3, 4 wird nur angegeben, weil hier der überladene Kontruktor automatisch "-1" rechnet
 	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation)); // "
 	Game::getInstance()->addDroneCount(2); 
+}
+void Ressources::setSfxVolumeRessources(float volume)
+{
+	shootSound[0].setVolume(volume);
+	hitSound[0].setVolume(volume);
+	return;
 }
 void Ressources::doubleSpeed()
 {
