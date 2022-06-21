@@ -295,6 +295,7 @@ void Game::startGame()
 
 					if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
 					{
+						Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event.key.code - 27));
 						newTower = new TowerAlias(event.key.code - 27, p_map);
 					}
 				}
