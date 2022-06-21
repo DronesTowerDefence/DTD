@@ -82,7 +82,7 @@ bool Game::loadGame()
 	}
 	rdatei.close();
 
-	PauseMenu::getInstance()->setSliderHelper(std::stof(bufferValue1));
+	PauseMenu::getInstance()->setsliderHelperMusic(std::stof(bufferValue1));
 
 	std::string datei; //Dateipfad
 	datei = "saves/savegame" + std::to_string(p_map->getIndex());
@@ -1279,7 +1279,7 @@ void Game::saveGame()
 
 	wdatei.open("saves/settings.sav");
 
-	wdatei << "Volume=\"" << PauseMenu::getInstance()->getSliderHelper() << "\"\n";
+	wdatei << "Volume=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
 
 	wdatei.close();
 
@@ -1385,6 +1385,12 @@ void Game::setMusicVolume(float v)
 		music[i].setVolume(v);
 
 	}
+}
+void Game::setSoundVolume(float v)
+{
+	
+	p_ressources->setSfxVolumeRessources(v);
+
 }
 void Game::setShootClockSpeed(int a)
 {

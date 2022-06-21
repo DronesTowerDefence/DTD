@@ -280,6 +280,12 @@ public:
 	void setMusicVolume(float);
 
 	/// <summary>
+	/// Setzt die SFX (Sound) Lautstärke
+	/// </summary>
+	/// <param name=""></param>
+	void setSoundVolume(float);
+
+	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>
 	/// <param name="RenderWindow*"></param>

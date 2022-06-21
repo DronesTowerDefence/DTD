@@ -188,11 +188,11 @@ bool Drone::takeDamage(int damage) {
 	}
 	if (droneType == 4 && lives % 5 == 0)
 	{
-		if (lives == 15)
+		if (lives == 40)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 1));
-		else if (lives == 10)
+		else if (lives == 30)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 2));
-		else if (lives == 5)
+		else if (lives == 15)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 3));
 
 

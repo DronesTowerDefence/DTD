@@ -216,6 +216,10 @@ public:
 	void normalSpeed();
 	void newConnection();
 	void moabDeath(Vector2f pos, int x, int y, int next, int rotation);
-
+	/// <summary>
+	/// Setzt die 2 Sounds (hit & shot Sound) auf den float (ACHTUNG: Im moment gibt es nur 2 Sounds insgesamt, also werden auch nur jeweils die [0]-Stelle von den Feldern benutzt
+	/// </summary>
+	/// <param name="">float newSoundVolume</param>
+	void setSfxVolumeRessources(float);
 };
 

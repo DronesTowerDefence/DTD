@@ -10,7 +10,8 @@ class PauseMenu
 
 	Ressources* res;
 
-	float sliderHelper;
+	float sliderHelperMusic;
+	float sliderHelperSound;
 	bool isClicked;
 	bool play;
 	bool mute;
@@ -29,9 +30,11 @@ class PauseMenu
 	Sprite mutebtn;
 	
 	RectangleShape edge;
-	RectangleShape volumeSlider;
+	RectangleShape musicSlider;
+	RectangleShape sfxSlider;
 	RectangleShape socialsBorder;
-	RectangleShape volumeOutline;
+	RectangleShape musicOutline;
+	RectangleShape sfxOutline;
 	RectangleShape btnoutlines[3];
 
 
@@ -49,8 +52,8 @@ public:
 	/// <summary>
 	/// Laustärkeslider als Zahl
 	/// </summary>
-	/// <returns>float SliderHelper</returns>
-	float getSliderHelper();
+	/// <returns>float sliderHelperMusic</returns>
+	float getsliderHelperMusic();
 	
 	void setMultiplayerIsPaused(bool);
 	bool getMultiplayerIsPaused();
@@ -63,8 +66,8 @@ public:
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="">float neuerSliderHelper</param>
-	void setSliderHelper(float);
+	/// <param name="">float neuersliderHelperMusic</param>
+	void setsliderHelperMusic(float);
 
 	/// <summary>
 		/// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft (wird in Game::startGame() aufgerufen)
