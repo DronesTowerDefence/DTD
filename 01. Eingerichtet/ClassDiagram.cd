@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Drone">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAApAAQAAEBACCEgAYAEAAShIIAAYCAACQCAAIAAgg=</HashCode>
+      <FileName>Drone.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SMwQAZQQQgQDCiAAN2IBQJAAmAjAtnYOJhAACBQCOQI=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeMenu" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KA4QGAlAAgACASoAoAJAAMEAkABoAJaIABgABIEAAAQ=</HashCode>
+      <FileName>HomeMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map">
+    <Position X="2.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACCABAAAAAgIAAAEAAgIIBAAAKgAAQAAAABICA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Multiplayer" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAgAACEAAAAAA=</HashCode>
+      <FileName>Multiplayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PauseMenu" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAACAAYQAgBAQoACMIEJATJAAwKAAQTFAAA4ZI=</HashCode>
+      <FileName>PauseMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile" Collapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAABAAAAgCEIgIAAQDABAAEAQAAAASAAABAIMA=</HashCode>
+      <FileName>Projectile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ressources" Collapsed="true">
+    <Position X="10.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FErEURZgh8x8aeLssKTH4ALlO+LbaeRRNQjN0Q2aciE=</HashCode>
+      <FileName>Ressources.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Round" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kgYhAQJwA9ACjAAAAAjQEjAhEBBRIYQGKADJAo4RERk=</HashCode>
+      <FileName>Round.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Service" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAIAAAABAQAQAAAAAAARAAAA=</HashCode>
+      <FileName>Service.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sidebar" Collapsed="true">
+    <Position X="11" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAAAAAgABACgAAAIAAAAAQAJgAAQAAAAgAAAAAAA=</HashCode>
+      <FileName>Sidebar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tower" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkIBCUAMEACFiHhAAAIIMAAAREIcESCMAEAQMAdNAwA=</HashCode>
+      <FileName>Tower.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerAlias" Collapsed="true">
+    <Position X="9" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEABAAAIAAAAAAAAAAIIMIAAAMAJAAAECgAAAAAFAAA=</HashCode>
+      <FileName>TowerAlias.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerSpawn" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQBEAEAAAAAACAAAICEAAAAAIwAQQDAAAAAAIBAAA=</HashCode>
+      <FileName>TowerSpawn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Updates" Collapsed="true">
+    <Position X="8.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARAhAAAkBAAAgBAQIAEAARAAQAAEIJQIgQCgEBAIA=</HashCode>
+      <FileName>Updates.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Waypoint">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAoACAAAAQkAEAAAAAkAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Waypoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
