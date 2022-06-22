@@ -166,7 +166,17 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 		{
 			if (index != 1)
 				Game::getInstance()->playShootSound();
-			new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			if (index == 3)
+			{
+				for (auto i : boundSpawns)
+				{
+					i->shoot();
+				}
+			}
+			else
+			{
+				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+			}
 			return true;
 		}
 		else return false;
