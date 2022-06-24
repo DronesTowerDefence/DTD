@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccountMenu.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Waypoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AccountMenu.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HomeMenu.cpp" />

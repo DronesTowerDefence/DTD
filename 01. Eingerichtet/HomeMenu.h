@@ -90,6 +90,8 @@ public:
 	void setWindow(RenderWindow* window);
 	void setTimeUntilTestVersionEnd(unsigned long long);
 
+	RenderWindow* getWindow();
+
 	void HomeMenuStart();
 };
 

@@ -431,6 +431,7 @@ int  HomeMenu::CheckClicked()
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			//Aufruf in die Account/Server-Klasse
+			AccountMenu::getInstance()->onClick();
 
 			return 0;
 		}
@@ -583,6 +584,10 @@ void HomeMenu::setWindow(RenderWindow* window)
 void HomeMenu::setTimeUntilTestVersionEnd(unsigned long long _timeUntilTestVersionEnd)
 {
 	timeUntilTestVersionEnd = _timeUntilTestVersionEnd;
+}
+RenderWindow* HomeMenu::getWindow()
+{
+	return window;
 }
 #pragma endregion
 
