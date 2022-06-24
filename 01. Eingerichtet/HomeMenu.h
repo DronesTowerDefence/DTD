@@ -52,6 +52,7 @@ private:
 	Sprite* paste;
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
+	Sprite* accountInfo;
 	
 	Clock* animation;
 	Clock* timeUntilTestVersionEndClock;

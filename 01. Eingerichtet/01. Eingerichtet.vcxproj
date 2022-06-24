@@ -28,6 +28,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />
     <ClCompile Include="Round.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />

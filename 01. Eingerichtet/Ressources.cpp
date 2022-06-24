@@ -227,6 +227,7 @@ Ressources::Ressources()
 
 
 
+
 	//for (int i = 0; i < droneCount; i++) //Animation für 0 Damage
 	//{
 	//	for (int j = 0; j < 2; j++)
@@ -275,6 +276,7 @@ Ressources::Ressources()
 	socialsTwitterTexture.loadFromFile("img/socials/twitter.png");
 	deleteAllSavesButtonTexture.loadFromFile("img/buttons/deleteAllSavesButton.png");
 	creditsTexture.loadFromFile("img/credits.png");
+	accountIcon.loadFromFile("img/buttons/accountIcon.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -741,6 +743,10 @@ Texture* Ressources::getDeleteAllSavesButtonTexture()
 Texture* Ressources::getCreditsTexture()
 {
 	return &creditsTexture;
+}
+Texture* Ressources::getAccountInfoTexture()
+{
+	return &accountIcon;
 }
 #pragma endregion
 

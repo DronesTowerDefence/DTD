@@ -28,6 +28,7 @@ HomeMenu::HomeMenu()
 	client = new Sprite();
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
+	accountInfo = new Sprite();
 
 	pointer = new RectangleShape;
 
@@ -52,6 +53,7 @@ HomeMenu::HomeMenu()
 	credits->setFillColor(Color::Black);
 	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
 	credits->setPosition(Vector2f(650,950));
+	accountInfo->setTexture(*res->getAccountInfoTexture());
 
 	choseIndex = -1;
 
@@ -66,6 +68,7 @@ HomeMenu::HomeMenu()
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
+	accountInfo->setPosition(Vector2f(1400.f, 500.f));
 
 	drone->setScale(2, 2);
 	//
@@ -420,6 +423,18 @@ int  HomeMenu::CheckClicked()
 			return 0;
 		}
 
+
+		//Account-Icon
+		pos = Service::getInstance()->getObjectPosition(accountInfo->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(accountInfo->getPosition() + Vector2f(200, 50));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			//Aufruf in die Account/Server-Klasse
+
+			return 0;
+		}
+
 	}
 	return 0;
 }
@@ -483,6 +498,7 @@ void HomeMenu::draw()
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
 	window->draw(*credits);
+	window->draw(*accountInfo);
 	if (isMultiplayerOpen)
 	{
 		window->draw(*copy);
