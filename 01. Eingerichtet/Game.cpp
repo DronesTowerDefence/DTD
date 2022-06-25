@@ -239,6 +239,7 @@ bool Game::towerAliasForbiddenPosition()
 }
 void Game::startGame()
 {
+	loadGame();
 
 	while (window->isOpen())
 	{
@@ -257,7 +258,6 @@ void Game::startGame()
 				if (doubleSpeed)
 				{
 					Ressources::getInstance()->normalSpeed();
-
 				}
 				else
 				{
