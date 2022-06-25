@@ -1114,7 +1114,6 @@ void Game::checkMultiplayerConnection()
 	if (multiplayerCheckConnectionClock.getElapsedTime() > Multiplayer::timeout)
 	{
 		Clock noConnectionPossibleClock;
-		Time noConnectionPossibleTimer = seconds(20);
 		Text waitText;
 		waitText.setFont(stdFont);
 		waitText.setCharacterSize(40);
@@ -1128,6 +1127,9 @@ void Game::checkMultiplayerConnection()
 		window->display();
 
 		p_ressources->newConnection();
+		p_ressources->getSender()->setBlocking(false);
+		p_ressources->getReceiver()->setBlocking(false);
+		p_ressources->getListener()->setBlocking(false);
 
 		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 		{
@@ -1143,7 +1145,7 @@ void Game::checkMultiplayerConnection()
 						window->close();
 					}
 				}
-				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 				{
 					status = 1;
 					p_ressources->newConnection();
@@ -1161,7 +1163,7 @@ void Game::checkMultiplayerConnection()
 						window->close();
 					}
 				}
-				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 				{
 					status = 1;
 					p_ressources->newConnection();
@@ -1183,7 +1185,7 @@ void Game::checkMultiplayerConnection()
 						window->close();
 					}
 				}
-				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 				{
 					status = 1;
 					p_ressources->newConnection();
@@ -1203,7 +1205,7 @@ void Game::checkMultiplayerConnection()
 						window->close();
 					}
 				}
-				if (noConnectionPossibleClock.getElapsedTime() > noConnectionPossibleTimer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 				{
 					status = 1;
 					p_ressources->newConnection();
@@ -1214,9 +1216,6 @@ void Game::checkMultiplayerConnection()
 			multiplayerCheckConnectionClock.restart();
 		}
 
-		p_ressources->getSender()->setBlocking(false);
-		p_ressources->getReceiver()->setBlocking(false);
-		p_ressources->getListener()->setBlocking(false);
 
 	}
 }

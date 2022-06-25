@@ -26,6 +26,11 @@ public:
 	static const Time timeoutSend;
 
 	/// <summary>
+	/// Zeit, wann bei keiner Verbindung in den Singleplayer gewechselt wird
+	/// </summary>
+	static const Time timeUntilSingleplayer;
+
+	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
 	/// </summary>
 	static bool send();
