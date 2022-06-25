@@ -348,12 +348,6 @@ public:
 	void setDroneRow(int g);
 
 	/// <summary>
-	/// Löscht den Spielstand zur aktuellen Map
-	/// </summary>
-	/// <returns>True wenn erfolgreich</returns>
-	bool deleteSaveGame();
-
-	/// <summary>
 	/// Spielt den Shoot-Sound ab, wenn er nicht schon abgespielt wird oder in den letzten  Sekunden
 	/// </summary>
 	/// <returns></returns>

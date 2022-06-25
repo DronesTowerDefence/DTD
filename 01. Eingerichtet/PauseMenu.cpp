@@ -227,7 +227,7 @@ void PauseMenu::checkPause(Event event1)
 
 			}
 			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelperMusic ist die float-Variable für den Slider)
-			text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : "+ std::to_string(int(sliderHelperSound)) + "%");
+			text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : " + std::to_string(int(sliderHelperSound)) + "%");
 			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)\n\n\n\n\n\n\n\n(Mit Pfeiltasten ändern, runter = leiser, hoch = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			if (play == true) {
@@ -338,7 +338,7 @@ void PauseMenu::checkPause(bool isPaused)
 
 
 			//Hier wird der Text angezeigt, text1 ist Überschrift, text2 ist Beschreibung (sliderHelperMusic ist die float-Variable für den Slider)
-					text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : "+ std::to_string(int(sliderHelperSound)) + "%");
+			text1.setString("Pause Menu : \n\n\nMusiklautstärke : " + std::to_string(int(sliderHelperMusic)) + " % \n\n\n\n\nSoundlautstärke : " + std::to_string(int(sliderHelperSound)) + "%");
 			text2.setString("\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   Twitter:\n\n\n\n\n\n (Mit Pfeiltasten ändern, links = leiser, rechts = lauter)\n\n\n\n\n\n\n\n(Mit Pfeiltasten ändern, runter = leiser, hoch = lauter)"); //Die Text-Variablen sind von der Position her gleich angeordnet, oben links im Pause-Fenster, deswegen die ganzen "\n"'s
 
 			if (play == true) {
@@ -540,6 +540,10 @@ float PauseMenu::getsliderHelperMusic()
 {
 	return sliderHelperMusic;
 }
+float PauseMenu::getSliderHelperSound()
+{
+	return sliderHelperSound;
+}
 void PauseMenu::setMultiplayerIsPaused(bool a)
 {
 	multiplayerIsPaused = a;
@@ -563,9 +567,19 @@ Text PauseMenu::getText()
 #pragma endregion
 
 #pragma region setter
-void PauseMenu::setsliderHelperMusic(float i)
+void PauseMenu::setsliderHelperMusic(float a)
 {
-	sliderHelperMusic = i;
+	if (a >= 0 && a <= 100)
+	{
+		sliderHelperMusic = a;
+	}
+}
+void PauseMenu::setSliderHelperSound(float a)
+{
+	if (a >= 0 && a <= 100)
+	{
+		sliderHelperSound = a;
+	}
 }
 #pragma endregion
 

@@ -76,7 +76,6 @@ private:
 	/// <returns></returns>
 	int CheckClicked();
 	void draw();
-	void deleteAllSaves();
 	
 	void setTowerTexture();
 
@@ -88,6 +87,13 @@ public:
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
 	void setTimeUntilTestVersionEnd(unsigned long long);
+
+	/// <summary>
+	/// Löscht den Spielstand zur aktuellen Map
+	/// </summary>
+	/// <returns>True wenn erfolgreich</returns>
+	/// <param>Map-Index, welcher Spielstand gelöscht werden soll</param>
+	bool deleteSave(int);
 
 	void HomeMenuStart();
 };

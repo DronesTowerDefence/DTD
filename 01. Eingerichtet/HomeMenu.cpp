@@ -51,7 +51,7 @@ HomeMenu::HomeMenu()
 	credits->setCharacterSize(25);
 	credits->setFillColor(Color::Black);
 	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
-	credits->setPosition(Vector2f(650,950));
+	credits->setPosition(Vector2f(650, 950));
 
 	choseIndex = -1;
 
@@ -248,10 +248,10 @@ int  HomeMenu::CheckClicked()
 		for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 		{
 
-			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition()); 
-			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1)); 
+			pos = Service::getInstance()->getObjectPosition(map[i]->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1));
 
-			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
 				pointer->setPosition(Vector2f(map[i]->getPosition().x, map[i]->getPosition().y));
 				choseIndex = i;
@@ -263,7 +263,7 @@ int  HomeMenu::CheckClicked()
 		//Host clicked
 		mouse = Mouse::getPosition(*window);
 		pos = Service::getInstance()->getObjectPosition(host->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100)); 
+		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
@@ -303,9 +303,9 @@ int  HomeMenu::CheckClicked()
 
 		//Client Clicked
 		pos = Service::getInstance()->getObjectPosition(client->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100)); 
+		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			connected = true;
 			status = 3;
@@ -345,10 +345,10 @@ int  HomeMenu::CheckClicked()
 		//startclicked
 		mouse = Mouse::getPosition(*window);
 
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition()); 
+		pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			return 1;
 
@@ -357,9 +357,9 @@ int  HomeMenu::CheckClicked()
 
 		//Copy
 		pos = Service::getInstance()->getObjectPosition(copy->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50)); 
+		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			Clipboard::setString(IpAddress::getLocalAddress().toString());
 			return 0;
@@ -368,7 +368,7 @@ int  HomeMenu::CheckClicked()
 
 
 		//Paste
-		pos = Service::getInstance()->getObjectPosition(paste->getPosition()); 
+		pos = Service::getInstance()->getObjectPosition(paste->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
@@ -381,10 +381,10 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//MultiplayerMunue
-		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition()); 
-		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50)); 
+		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			if (isMultiplayerOpen)
 			{
@@ -402,7 +402,7 @@ int  HomeMenu::CheckClicked()
 
 		//Exit
 		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100)); 
+		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
@@ -411,12 +411,15 @@ int  HomeMenu::CheckClicked()
 		}
 
 		//DeleteSaves
-		pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition()); 
+		pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			deleteAllSaves();
+			for (int i = 0; i < res->getMapCount(); i++)
+			{
+				deleteSave(i);
+			}
 			return 0;
 		}
 
@@ -511,19 +514,17 @@ void HomeMenu::draw()
 
 	window->display();
 }
-void HomeMenu::deleteAllSaves()
+bool HomeMenu::deleteSave(int index)
 {
-	for (int i = 0; i < res->getMapCount(); i++)
-	{
-		std::ifstream FileTest("saves/savegame" + std::to_string(i) + ".sav"); //Überprüft ob die Datei existiert
-		if (!FileTest)
-			continue;
-		FileTest.close();
-		std::string cmd_s = "del saves\\savegame" + std::to_string(i) + ".sav";
-		const char* cmd_cc = cmd_s.c_str();
-		system(cmd_cc);
-		//delete cmd_cc;
-	}
+	std::ifstream FileTest("saves/savegame" + std::to_string(index) + ".sav"); //Überprüft ob die Datei existiert, wenn nicht wird false zurückgegeben
+	if (!FileTest)
+		return false;
+
+	std::string cmd_s = "del saves\\savegame" + std::to_string(index) + ".sav";
+	const char* cmd_cc = cmd_s.c_str();
+	system(cmd_cc);
+
+	return true;
 }
 void HomeMenu::setTowerTexture()
 {

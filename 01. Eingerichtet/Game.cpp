@@ -7,7 +7,6 @@ Game* Game::instance = nullptr;
 #pragma region Konstruktor
 Game::Game()
 {
-
 	doubleSpeed = false;
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
@@ -58,20 +57,20 @@ Game::Game()
 bool Game::loadGame()
 {
 	std::ifstream rdatei;
-
 	char bufferValue1[30], bufferValue2[30], buffer[50];
 	Tower* newTower = nullptr;
 	int counter = 0, defaultCounter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
+	bool settingsFirstVolume = true;
 
 	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTestSettings)
-		return false;
+		goto skipSettings;
 
 	rdatei.open("saves/settings.sav");
 	while (!rdatei.eof())
 	{
 		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
-		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
+		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
 		for (int i = 0; i < 48; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
 
@@ -79,104 +78,119 @@ bool Game::loadGame()
 		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
 		length1 = second - first - 1;
 		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
+
+		if (settingsFirstVolume)
+		{
+			PauseMenu::getInstance()->setsliderHelperMusic(std::stof(bufferValue1));
+			settingsFirstVolume = false;
+		}
+		else
+		{
+			PauseMenu::getInstance()->setSliderHelperSound(std::stof(bufferValue1));
+		}
 	}
 	rdatei.close();
 
-	PauseMenu::getInstance()->setsliderHelperMusic(std::stof(bufferValue1));
 
-	std::string datei; //Dateipfad
-	datei = "saves/savegame" + std::to_string(p_map->getIndex());
-	datei += ".sav";
+skipSettings:
 
-	std::ifstream FileTest(datei);//Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-	if (!FileTest)
-		return false;
-
-	rdatei.open(datei);
-
-	while (!rdatei.eof())
+	if (status == 1)
 	{
-		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
-		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
+		std::string datei; //Dateipfad
+		datei = "saves/savegame" + std::to_string(p_map->getIndex());
+		datei += ".sav";
 
-		for (int i = 0; i < 49; i++)
+		std::ifstream FileTest(datei);//Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+		if (!FileTest)
+			return false;
+
+		rdatei.open(datei);
+
+		while (!rdatei.eof())
 		{
-			rdatei.get(buffer[i]);
+			for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt des Buffers
+			for (int i = 0; i < 19; i++, bufferValue1[i] = '\0', bufferValue2[i] = '\0');
 
-			if (buffer[i] == '\n') //Ende der Zeile
+			for (int i = 0; i < 49; i++)
 			{
+				rdatei.get(buffer[i]);
+
+				if (buffer[i] == '\n') //Ende der Zeile
+				{
+					break;
+				}
+			}
+
+			if (buffer[1] == '\0') //Ende der Datei
+			{
+				goto end;
+			}
+
+			first = std::string(buffer).find("\"");
+			second = std::string(buffer).find("\"", first + 1);
+			length1 = second - first - 1;
+			std::string(buffer).copy(bufferValue1, length1, first + 1);
+
+			switch (counter)
+			{
+			case 0:
+				break;
+			case 1:
+				round->setIndex(std::stoi(bufferValue1));
+				break;
+
+			case 2:
+				round->setMoney(std::stoi(bufferValue1));
+				break;
+
+			case 3:
+				round->setHealth(std::stoi(bufferValue1));
+				break;
+
+			default:
+				if (defaultCounter == 0)
+				{
+					towerIndex = std::stoi(bufferValue1);
+					defaultCounter++;
+				}
+				else if (defaultCounter == 1)
+				{
+					first = std::string(buffer).find("\"");
+					second = std::string(buffer).find(",", first + 1);
+					third = std::string(buffer).find("\"", second + 1);
+					length1 = second - first - 1;
+					length2 = third - second - 1;
+					std::string(buffer).copy(bufferValue1, length1, first + 1);
+					std::string(buffer).copy(bufferValue2, length2, second + 1);
+
+					newTower = new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
+
+					defaultCounter++;
+				}
+				else if (defaultCounter == 2)
+				{
+					first = std::string(buffer).find("\"");
+					second = std::string(buffer).find(",", first + 1);
+					third = std::string(buffer).find("\"", second + 1);
+					length1 = second - first - 1;
+					length2 = third - second - 1;
+					std::string(buffer).copy(bufferValue1, length1, first + 1);
+					std::string(buffer).copy(bufferValue2, length2, second + 1);
+
+					newTower->setUpdate(std::stoi(bufferValue1), std::stoi(bufferValue2));
+
+					defaultCounter = 0;
+				}
 				break;
 			}
+			counter++;
 		}
 
-		if (buffer[1] == '\0') //Ende der Datei
-		{
-			goto end;
-		}
-
-		first = std::string(buffer).find("\"");
-		second = std::string(buffer).find("\"", first + 1);
-		length1 = second - first - 1;
-		std::string(buffer).copy(bufferValue1, length1, first + 1);
-
-		switch (counter)
-		{
-		case 0:
-			break;
-		case 1:
-			round->setIndex(std::stoi(bufferValue1));
-			break;
-
-		case 2:
-			round->setMoney(std::stoi(bufferValue1));
-			break;
-
-		case 3:
-			round->setHealth(std::stoi(bufferValue1));
-			break;
-
-		default:
-			if (defaultCounter == 0)
-			{
-				towerIndex = std::stoi(bufferValue1);
-				defaultCounter++;
-			}
-			else if (defaultCounter == 1)
-			{
-				first = std::string(buffer).find("\"");
-				second = std::string(buffer).find(",", first + 1);
-				third = std::string(buffer).find("\"", second + 1);
-				length1 = second - first - 1;
-				length2 = third - second - 1;
-				std::string(buffer).copy(bufferValue1, length1, first + 1);
-				std::string(buffer).copy(bufferValue2, length2, second + 1);
-
-				newTower = new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
-
-				defaultCounter++;
-			}
-			else if (defaultCounter == 2)
-			{
-				first = std::string(buffer).find("\"");
-				second = std::string(buffer).find(",", first + 1);
-				third = std::string(buffer).find("\"", second + 1);
-				length1 = second - first - 1;
-				length2 = third - second - 1;
-				std::string(buffer).copy(bufferValue1, length1, first + 1);
-				std::string(buffer).copy(bufferValue2, length2, second + 1);
-
-				newTower->setUpdate(std::stoi(bufferValue1), std::stoi(bufferValue2));
-
-				defaultCounter = 0;
-			}
-			break;
-		}
-		counter++;
+	end:
+		rdatei.close();
+		return true;
 	}
-
-end:
-	rdatei.close();
-	return true;
+	else return false;
 }
 bool Game::towerAliasForbiddenPosition()
 {
@@ -238,7 +252,6 @@ bool Game::towerAliasForbiddenPosition()
 }
 void Game::startGame()
 {
-	loadGame();
 
 	while (window->isOpen())
 	{
@@ -858,7 +871,7 @@ void Game::mainMenu()
 }
 void Game::restart()
 {
-	deleteSaveGame();
+	HomeMenu::getInstance()->deleteSave(p_map->getIndex());
 
 	if (status == 2)
 	{
@@ -877,18 +890,6 @@ void Game::sellTower(Tower* t)
 	{
 		tower = nullptr;
 	}
-}
-bool Game::deleteSaveGame()
-{
-	std::ifstream FileTest("saves/savegame" + std::to_string(p_map->getIndex()) + ".sav"); //Überprüft ob die Datei existiert, wenn nicht
-	if (!FileTest)
-		return false;
-
-	std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
-	const char* cmd_cc = cmd_s.c_str();
-	system(cmd_cc);
-
-	return true;
 }
 bool Game::playShootSound()
 {
@@ -1279,12 +1280,12 @@ void Game::saveGame()
 	std::ofstream wdatei;
 
 	wdatei.open("saves/settings.sav");
-
-	wdatei << "Volume=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
-
+	wdatei << "VolumeMusic=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
+	wdatei << "VolumeSound=\"" << PauseMenu::getInstance()->getSliderHelperSound() << "\"\n";
 	wdatei.close();
 
-	if (round->getIndex() <= 0)
+
+	if (status != 1 || round->getIndex() <= 0)
 	{
 		return;
 	}
@@ -1389,7 +1390,7 @@ void Game::setMusicVolume(float v)
 }
 void Game::setSoundVolume(float v)
 {
-	
+
 	p_ressources->setSfxVolumeRessources(v);
 
 }

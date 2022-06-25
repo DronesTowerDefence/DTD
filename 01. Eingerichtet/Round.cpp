@@ -195,7 +195,7 @@ void Round::nextRound()
 	if (index == 100 && !lost)
 	{
 		won = true;
-		Game::getInstance()->deleteSaveGame();
+		HomeMenu::getInstance()->deleteSave(p_map->getIndex());
 	}
 }
 void Round::addMoney(int _money)
