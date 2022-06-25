@@ -62,14 +62,16 @@ private:
 
 	SoundBuffer hitBuffer[1];
 	SoundBuffer shootBuffer[1];
+
 	Sound hitSound[1];
 	Sound shootSound[1];
+
+	Music backgroundMusic[2];
 
 	TcpSocket* sender;
 	TcpSocket* receiver;
 	TcpListener* listener;
-
-	
+		
 	Texture towerTexture[5][4];
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];
@@ -152,6 +154,8 @@ public:
 	Sound* getHitSound(int);
 	Sound* getShootSound(int);
 
+	Music* getBackgroundMusic(int);
+
 	TcpSocket* getSender();
 	TcpSocket* getReceiver();
 	TcpListener* getListener();
@@ -216,10 +220,17 @@ public:
 	void normalSpeed();
 	void newConnection();
 	void moabDeath(Vector2f pos, int x, int y, int next, int rotation);
+
 	/// <summary>
 	/// Setzt die 2 Sounds (hit & shot Sound) auf den float (ACHTUNG: Im moment gibt es nur 2 Sounds insgesamt, also werden auch nur jeweils die [0]-Stelle von den Feldern benutzt
 	/// </summary>
 	/// <param name="">float newSoundVolume</param>
 	void setSfxVolumeRessources(float);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="">flaot newMusicVolume</param>
+	void setMusicVolume(float);
 };
 

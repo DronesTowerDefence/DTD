@@ -94,16 +94,6 @@ private:
 	Clock playShootSoundTimer;
 
 	/// <summary>
-	/// Die Buffer der Musik
-	/// </summary>
-	SoundBuffer musicBuffer[4];
-
-	/// <summary>
-	/// Die Musik
-	/// </summary>
-	Sound music[4];
-
-	/// <summary>
 	/// Ein Pointer auf einen Turm
 	/// </summary>
 	Tower* tower;
@@ -257,12 +247,6 @@ public:
 	/// <returns>Font</returns>
 	Font getFont();
 
-	/// <summary>
-	/// Gibt erstes Feld der Music wieder
-	/// </summary>
-	/// <returns></returns>
-	Sound getMusic();
-
 	Clock* getMultiplayerCheckConnectionClock();
 
 	/// <summary>
@@ -272,18 +256,6 @@ public:
 	int getStatus();
 
 	int getDroneRow();
-
-	/// <summary>
-	/// Setzt die Musik Lautstärke
-	/// </summary>
-	/// <param name=""></param>
-	void setMusicVolume(float);
-
-	/// <summary>
-	/// Setzt die SFX (Sound) Lautstärke
-	/// </summary>
-	/// <param name=""></param>
-	void setSoundVolume(float);
 
 	/// <summary>
 	/// Legt das Fenster fest
@@ -302,9 +274,14 @@ public:
 	void startGame();
 
 	/// <summary>
-	/// Verändert regelmäßig die Musik
+	/// Verändert die Hintergrund Musik
 	/// </summary>
 	void changeBackgroundMusic();
+
+	/// <summary>
+	/// Stopt die Hintergrund Musik
+	/// </summary>
+	void stopBackgroundMusic();
 
 	/// <summary>
 	/// Aktualisiert die Infos oben Links (Geld, Leben, Runde)

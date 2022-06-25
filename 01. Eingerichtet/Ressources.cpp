@@ -18,12 +18,12 @@ Ressources::Ressources()
 	std::ifstream ok;
 	ok.open("saves/round_data.csv", std::ios::in);
 
-	
+
 
 	for (int i = 0; i < 100; i++)
 	{
 
-		
+
 		if (ok.is_open()) { //Solange die Datei offen ist
 
 			for (int i = 0; i < 100; i++) {
@@ -36,7 +36,7 @@ Ressources::Ressources()
 
 					if (std::isdigit(buffer[f])) { //Sobald der Ascii-Char eine Zahl ist
 
-						
+
 						//zweistellig
 						if (isdigit(buffer[f + 1])) {
 							//Hier wird von char auf int umgerechnet
@@ -65,7 +65,7 @@ Ressources::Ressources()
 				}
 
 
-				
+
 				droneSpawnTime[i] = float(0.45);
 
 
@@ -103,7 +103,7 @@ Ressources::Ressources()
 
 	towerSpeed[0] = 1;
 	towerSpeed[1] = 1.5;
-	towerSpeed[2] = 1; 
+	towerSpeed[2] = 1;
 	towerSpeed[3] = 1;
 	towerSpeed[4] = 4;
 
@@ -183,7 +183,7 @@ Ressources::Ressources()
 	droneSpeed[3] = float(6);
 	droneSpeed[4] = float(1.5);
 
-	
+
 
 	// Leben der Drohnen
 	droneLives[0] = 4;
@@ -301,10 +301,13 @@ Ressources::Ressources()
 		shootBuffer[i].loadFromFile("sounds/shot" + std::to_string(i) + ".wav");
 		shootSound[i].setBuffer(shootBuffer[i]);
 	}
+
+	for (int i = 0; i < (sizeof(backgroundMusic) / sizeof(*backgroundMusic)); i++)
+	{
+		backgroundMusic[i].openFromFile("music/m" + std::to_string(i) + ".wav");
+		backgroundMusic[i].setVolume(50);
+	}
 }
-
-
-
 #pragma endregion
 
 #pragma region Funktionen
@@ -377,13 +380,25 @@ void Ressources::moabDeath(Vector2f pos, int x, int y, int next, int rotation)
 	droneCountInRound[Round::getInstance()->getIndex()] += 2; //2 Neue Drohnen
 	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation));  //2 Drohnen von Typ 3, 4 wird nur angegeben, weil hier der überladene Kontruktor automatisch "-1" rechnet
 	Round::getInstance()->addDrone(new Drone(4, pos, x, y, next, rotation)); // "
-	Game::getInstance()->addDroneCount(2); 
+	Game::getInstance()->addDroneCount(2);
 }
-void Ressources::setSfxVolumeRessources(float volume)
+void Ressources::setSfxVolumeRessources(float v)
 {
-	shootSound[0].setVolume(volume);
-	hitSound[0].setVolume(volume);
-	return;
+	for (int i = 0; i < (sizeof(shootSound) / sizeof(*shootSound)); i++)
+	{
+		shootSound[i].setVolume(v);
+	}
+	for (int i = 0; i < (sizeof(hitSound) / sizeof(*hitSound)); i++)
+	{
+		hitSound[i].setVolume(v);
+	}
+}
+void Ressources::setMusicVolume(float v)
+{
+	for (int i = 0; i < (sizeof(backgroundMusic) / sizeof(*backgroundMusic)); i++)
+	{
+		backgroundMusic[i].setVolume(v);
+	}
 }
 void Ressources::doubleSpeed()
 {
@@ -588,6 +603,10 @@ Sound* Ressources::getHitSound(int a)
 Sound* Ressources::getShootSound(int a)
 {
 	return &shootSound[a];
+}
+Music* Ressources::getBackgroundMusic(int i)
+{
+	return &backgroundMusic[i];
 }
 TcpSocket* Ressources::getSender()
 {

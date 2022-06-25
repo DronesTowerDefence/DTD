@@ -287,16 +287,16 @@ void PauseMenu::checkPause(Event event1)
 			}
 			else if (mute == true) {
 				mutebtnTexture = res->getButtonVolume(0);
-				Game::getInstance()->setMusicVolume(0.f);
-				Game::getInstance()->setSoundVolume(0.f);
+				res->setSfxVolumeRessources(0.0f);
+				res->setMusicVolume(0.0f);
 			}
 			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 			if (mute == false) {
-				Game::getInstance()->setMusicVolume(sliderHelperMusic);
-				Game::getInstance()->setSoundVolume(sliderHelperSound);
+				res->setSfxVolumeRessources(sliderHelperSound);
+				res->setMusicVolume(sliderHelperMusic);
 			}
 			musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
 			sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""
@@ -398,16 +398,16 @@ void PauseMenu::checkPause(bool isPaused)
 			}
 			else if (mute == true) {
 				mutebtnTexture = res->getButtonVolume(0);
-				Game::getInstance()->setMusicVolume(0.f);
-				Game::getInstance()->setSoundVolume(0.f);
+				res->setSfxVolumeRessources(0.0f);
+				res->setMusicVolume(0.0f);
 			}
 			mutebtn.setTexture(*mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 			if (mute == false) {
-				Game::getInstance()->setMusicVolume(sliderHelperMusic);
-				Game::getInstance()->setSoundVolume(sliderHelperSound);
+				res->setSfxVolumeRessources(sliderHelperSound);
+				res->setMusicVolume(sliderHelperMusic);
 			}
 			musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
 			sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""
@@ -500,16 +500,16 @@ void PauseMenu::checkPause()
 		}
 		else if (mute == true) {
 			mutebtnTexture = res->getButtonVolume(0);
-			Game::getInstance()->setMusicVolume(0.f);
-			Game::getInstance()->setSoundVolume(0.f);
+			res->setSfxVolumeRessources(0.0f);
+			res->setMusicVolume(0.0f);
 		}
 		mutebtn.setTexture(*mutebtnTexture);
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
 		if (mute == false) {
-			Game::getInstance()->setMusicVolume(sliderHelperMusic);
-			Game::getInstance()->setSoundVolume(sliderHelperSound);
+			res->setSfxVolumeRessources(sliderHelperSound);
+			res->setMusicVolume(sliderHelperMusic);
 		}
 		musicSlider.setSize(Vector2f(sliderHelperMusic / 100 * 400.f, 14.f));//Hier berechne ich mit Prozentrechnung aus dem Grundwert und dem Prozentsatz den Prozentwert
 		sfxSlider.setSize(Vector2f(sliderHelperSound / 100 * 400.f, 14.f));//""

@@ -37,19 +37,6 @@ Game::Game()
 	toolbar.setPosition(1720, 0);
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
-
-	musicBuffer[0].loadFromFile("music/1-0.wav");
-	musicBuffer[1].loadFromFile("music/1-1.wav");
-	musicBuffer[2].loadFromFile("music/2-0.wav");
-	musicBuffer[3].loadFromFile("music/3-0.wav");
-	music[0].setBuffer(musicBuffer[0]);
-	music[1].setBuffer(musicBuffer[1]);
-	music[2].setBuffer(musicBuffer[2]);
-	music[3].setBuffer(musicBuffer[3]);
-	music[0].setVolume(50);
-	music[1].setVolume(50);
-	music[2].setVolume(50);
-	music[3].setVolume(50);
 }
 #pragma endregion
 
@@ -350,9 +337,9 @@ void Game::startGame()
 }
 void Game::changeBackgroundMusic()
 {
-	if (music[chooseMusic].getStatus() != music[chooseMusic].Playing)
+	if (p_ressources->getBackgroundMusic(chooseMusic)->getStatus() != Music::Playing)
 	{
-		if (chooseMusic == 3)
+		if (chooseMusic == 1)
 		{
 			chooseMusic = 0;
 		}
@@ -360,8 +347,12 @@ void Game::changeBackgroundMusic()
 		{
 			chooseMusic++;
 		}
-		music[chooseMusic].play();
+		p_ressources->getBackgroundMusic(chooseMusic)->play();
 	}
+}
+void Game::stopBackgroundMusic()
+{
+	p_ressources->getBackgroundMusic(chooseMusic)->stop();
 }
 void Game::updateEco()
 {
@@ -862,6 +853,8 @@ void Game::mainMenu()
 {
 	saveGame();
 
+	stopBackgroundMusic();
+
 	if (status == 2)
 	{
 		Multiplayer::send(3, false);
@@ -1347,10 +1340,6 @@ Font Game::getFont()
 {
 	return stdFont;
 }
-Sound Game::getMusic()
-{
-	return music[0];
-}
 Clock* Game::getMultiplayerCheckConnectionClock()
 {
 	return &multiplayerCheckConnectionClock;
@@ -1379,20 +1368,6 @@ void Game::setDoubleSpeed(bool wert)
 void Game::setDroneCount(int _droneCount)
 {
 	droneCount = _droneCount;
-}
-void Game::setMusicVolume(float v)
-{
-	for (int i = 0; i < 4; i++) {
-
-		music[i].setVolume(v);
-
-	}
-}
-void Game::setSoundVolume(float v)
-{
-
-	p_ressources->setSfxVolumeRessources(v);
-
 }
 void Game::setShootClockSpeed(int a)
 {
