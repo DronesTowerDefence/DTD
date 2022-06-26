@@ -181,6 +181,11 @@ MultiplayerChat* MultiplayerChat::getInstance()
 	else return instance;
 }
 
+bool MultiplayerChat::getIsOpen()
+{
+	return isOpen;
+}
+
 #pragma endregion
 
 #pragma region setter

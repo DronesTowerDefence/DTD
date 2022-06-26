@@ -252,61 +252,17 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			// Shortcuts
-			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
-			{
-				if (doubleSpeed)
-				{
-					Ressources::getInstance()->normalSpeed();
-				}
-				else
-				{
-					Ressources::getInstance()->doubleSpeed();
-				}
-				doubleSpeed = !doubleSpeed;
-				Sidebar::getInstance()->setSpeedButton(doubleSpeed);
-			}
 			MultiplayerChat::getInstance()->checkInput(event);
-
-			if (tower != nullptr)
-			{
-				if (event.type == Event::KeyReleased)
-				{
-					if (event.key.code == Keyboard::Period)
-					{
-						tower->Update2();
-					}
-					else if (event.key.code == Keyboard::Comma)
-					{
-						tower->Update1();
-					}
-					else if (event.key.code == Keyboard::BackSpace)
-					{
-						Round::getInstance()->sellTower(tower);
-						Multiplayer::send(tower, 1);
-						tower = nullptr;
-					}
-
-				}
-			}
-			else if (newTower == nullptr && tower == nullptr)
-			{
-				if (event.type == Event::KeyReleased)
-				{
-
-					if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
-					{
-						Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event.key.code - 27));
-						newTower = new TowerAlias(event.key.code - 27, p_map);
-					}
-				}
-			}
 			PauseMenu::getInstance()->checkPause(event);
+			if (!MultiplayerChat::getInstance()->getIsOpen())
+			{
+				shortcuts();
+			}
 		}
 
 		while (Multiplayer::receive());
-
 		HomeMenu::getInstance()->checkTestVersionEnd();
+		MultiplayerChat::getInstance()->checkChat();
 
 		updateEco();
 		moveDrohnes();
@@ -314,7 +270,7 @@ void Game::startGame()
 		changeBackgroundMusic();
 		checkLoseGame();
 		checkTowerAlias();
-		MultiplayerChat::getInstance()->checkChat();
+
 		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			i->getUpdates()->canBuy();
@@ -852,6 +808,57 @@ void Game::checkDroneCount()
 	else if (round->getReceivedFromHostNextRound() && status == 3)
 	{
 		round->nextRound();
+	}
+}
+void Game::shortcuts()
+{
+	// Shortcuts
+	if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
+	{
+		if (doubleSpeed)
+		{
+			Ressources::getInstance()->normalSpeed();
+		}
+		else
+		{
+			Ressources::getInstance()->doubleSpeed();
+		}
+		doubleSpeed = !doubleSpeed;
+		Sidebar::getInstance()->setSpeedButton(doubleSpeed);
+	}
+
+	if (tower != nullptr)
+	{
+		if (event.type == Event::KeyReleased)
+		{
+			if (event.key.code == Keyboard::Period)
+			{
+				tower->Update2();
+			}
+			else if (event.key.code == Keyboard::Comma)
+			{
+				tower->Update1();
+			}
+			else if (event.key.code == Keyboard::BackSpace)
+			{
+				Round::getInstance()->sellTower(tower);
+				Multiplayer::send(tower, 1);
+				tower = nullptr;
+			}
+
+		}
+	}
+	else if (newTower == nullptr && tower == nullptr)
+	{
+		if (event.type == Event::KeyReleased)
+		{
+
+			if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
+			{
+				Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event.key.code - 27));
+				newTower = new TowerAlias(event.key.code - 27, p_map);
+			}
+		}
 	}
 }
 void Game::mainMenu()

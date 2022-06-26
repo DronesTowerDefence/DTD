@@ -218,6 +218,8 @@ private:
 	/// </summary>
 	void checkDroneCount();
 
+	void shortcuts();
+
 	/// <summary>
 	/// Konstruktor von Game
 	/// </summary>

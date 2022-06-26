@@ -74,6 +74,7 @@ public:
 	void addChatMessage(int, std::string);
 
 	static MultiplayerChat* getInstance();
+	bool getIsOpen();
 
 	~MultiplayerChat();
 };
