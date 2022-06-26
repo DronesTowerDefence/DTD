@@ -255,7 +255,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->addMoney(std::stoi(value));
-				output = "added " + std::stoi(value);
+				output = "added ";
+				output += value;
 				output += " money";
 			}
 		}
@@ -266,7 +267,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->submoney(std::stoi(value));
-				output = "subtracted " + std::stoi(value);
+				output = "subtracted ";
+				output += value;
 				output += " money";
 			}
 		}
@@ -277,7 +279,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->addHealth(std::stoi(value));
-				output = "added " + std::stoi(value);
+				output = "added ";
+				output += value;
 				output += " health";
 			}
 		}
@@ -288,7 +291,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->subhealth(std::stoi(value));
-				output = "subtracted " + std::stoi(value);
+				output = "subtracted ";
+				output += value;
 				output += " health";
 			}
 		}
@@ -299,7 +303,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->setIndex(std::stoi(value));
-				output = "set round to " + std::stoi(value);
+				output = "set round to ";
+				output += value;
 			}
 		}
 		else if (str.find("kickallplayer") != std::string::npos)
@@ -332,6 +337,40 @@ bool MultiplayerChat::chatCommand()
 				}
 			}
 		}
+		else if (str.find("sellall") != std::string::npos)
+		{
+			if (str.size() > 7)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) == 1)
+				{
+					for (auto i : Round::getInstance()->getAllTowers())
+					{
+						Round::getInstance()->sellTower(i);
+					}
+					output = "sold all towers";
+				}
+			}
+		}
+		else if (str.find("freeze") != std::string::npos)
+		{
+			if (str.size() > 6)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+
+				Time time = seconds(std::stoi(value));
+				Clock timer;
+
+				while (timer.getElapsedTime() < time);
+
+				output = "froze game for ";
+				output += value;
+				output += " seconds";
+			}
+		}
+
 
 		addChatMessage(0, output);
 		return true;
