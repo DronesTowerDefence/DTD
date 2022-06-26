@@ -138,12 +138,12 @@ void MultiplayerChat::checkInput(Event event)
 		}
 		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0)
 		{
-			addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
 			if (!chatCommand())
 			{
-				refreshChatOutput();
+				addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
 				Multiplayer::send(chatInput);
 			}
+			refreshChatOutput();
 			chatInput = defaultChatInput;
 			inputDefaultText = true;
 		}
@@ -233,7 +233,7 @@ bool MultiplayerChat::chatCommand()
 
 	if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
 	{
-		std::string str = "";
+		std::string str = "", output = "Unknown Command";
 		char value[10];
 		size_t found;
 		for (int i = 3; i <= arrLeng; i++)
@@ -255,6 +255,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->addMoney(std::stoi(value));
+				output = "added " + std::stoi(value);
+				output += " money";
 			}
 		}
 		else if (str.find("submoney") != std::string::npos)
@@ -264,6 +266,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->submoney(std::stoi(value));
+				output = "subtracted " + std::stoi(value);
+				output += " money";
 			}
 		}
 		else if (str.find("addhealth") != std::string::npos)
@@ -273,6 +277,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->addHealth(std::stoi(value));
+				output = "added " + std::stoi(value);
+				output += " health";
 			}
 		}
 		else if (str.find("subhealth") != std::string::npos)
@@ -282,6 +288,8 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->subhealth(std::stoi(value));
+				output = "subtracted " + std::stoi(value);
+				output += " health";
 			}
 		}
 		else if (str.find("setround") != std::string::npos)
@@ -291,6 +299,7 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 				Round::getInstance()->setIndex(std::stoi(value));
+				output = "set round to " + std::stoi(value);
 			}
 		}
 		else if (str.find("kickallplayer") != std::string::npos)
@@ -303,6 +312,7 @@ bool MultiplayerChat::chatCommand()
 				{
 					res->newConnection();
 					Game::getInstance()->setStatus(1);
+					output = "kicked all players and switched to singleplayer";
 				}
 			}
 		}
@@ -318,10 +328,12 @@ bool MultiplayerChat::chatCommand()
 					{
 						delete i;
 					}
+					output = "destroyed all drones";
 				}
 			}
 		}
 
+		addChatMessage(0, output);
 		return true;
 	}
 	else return false;
