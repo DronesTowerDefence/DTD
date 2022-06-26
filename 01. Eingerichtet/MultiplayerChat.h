@@ -6,17 +6,6 @@ Hilfsklasse für die MultiplayerChat-Klasse um mehrere Daten in einer Liste zu sp
 */
 class ChatMessage
 {
-private:
-	/// <summary>
-	/// Der Inhalt der Nachricht
-	/// </summary>
-	std::string message;
-
-	/// <summary>
-	/// Die Account-ID von der Person, welche die Nachricht geschrieben hat
-	/// </summary>
-	unsigned int accountID;
-
 public:
 	ChatMessage(int _accountID, std::string _message)
 	{
@@ -24,17 +13,14 @@ public:
 		message = _message;
 	}
 
-	/// <returns>Die Account-ID von der Person, welche die Nachricht geschrieben hat</returns>
-	int getAccountID()
-	{
-		return accountID;
-	}
-
-	/// <returns>Den Inhalt der Nachricht</returns>
-	std::string getMessage()
-	{
-		return message;
-	}
+	/// <summary>
+	/// Die Account-ID von der Person, welche die Nachricht geschrieben hat
+	/// </summary>
+	unsigned int accountID;
+	/// <summary>
+	/// Der Inhalt der Nachricht
+	/// </summary>
+	std::string message;
 };
 
 /*
@@ -52,12 +38,20 @@ private:
 	bool isOpen;
 	bool mouseClicked;
 	bool inputDefaultText;
+
+	int chatOutputLines;
+
 	std::string chatInput;
 	std::string defaultChatInput;
 
+	std::list<ChatMessage*> chatText;
+
 	Text chatInputText;
 	Text chatOutputText;
-	std::list<ChatMessage*> chatText;
+
+	RectangleShape rightChatBorder;
+	RectangleShape bottomChatBorder;
+
 	Sprite buttonOpen;
 	Sprite buttonClose;
 	Sprite chatBackground;

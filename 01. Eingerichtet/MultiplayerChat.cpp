@@ -18,6 +18,14 @@ MultiplayerChat::MultiplayerChat()
 	defaultChatInput = "Deine Nachricht...";
 	chatInput = defaultChatInput;
 
+	rightChatBorder.setFillColor(Color::Red);
+	rightChatBorder.setPosition(1665, 65);
+	rightChatBorder.setSize(Vector2f(1, 750));
+
+	bottomChatBorder.setFillColor(Color::Red);
+	bottomChatBorder.setPosition(1300, 650);
+	bottomChatBorder.setSize(Vector2f(400, 1));
+
 	chatInputText.setString(chatInput);
 	chatInputText.setPosition(Vector2f(1335, 750));
 	chatInputText.setFont(font);
@@ -104,6 +112,25 @@ void MultiplayerChat::checkInput(Event event)
 			inputDefaultText = true;
 		}
 
+		chatInputText.setString(chatInput);
+		if (chatInputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
+		{
+			chatInput += "\n";
+			int arrLeng = chatInput.size();
+			char* arr = new char[arrLeng + 1];
+			char tmpC1, tmpC2;
+			strcpy_s(arr, arrLeng + 1, chatInput.c_str());
+
+			tmpC1 = arr[arrLeng - 3];
+			tmpC2 = arr[arrLeng - 1];
+
+			arr[arrLeng - 1] = tmpC1;
+			arr[arrLeng - 3] = tmpC2;
+
+			chatInput = arr;
+			chatInputText.setString(chatInput);
+		}
+
 		if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0)
 		{
 			chatInput.erase(chatInput.size() - 1);
@@ -117,39 +144,97 @@ void MultiplayerChat::checkInput(Event event)
 			inputDefaultText = true;
 		}
 		chatInputText.setString(chatInput);
-
 	}
 }
 void MultiplayerChat::refreshChatOutput()
 {
 	std::string str = "";
+	int count = 0;
+	for (auto iter : chatText)
+	{
+		count++;
+		if (count == chatText.size())
+		{
+			str = iter->message;
+		}
+	}
+	count = 0;
 
+	int arrLeng = str.size();
+	char tmpC;
+	char* arr = new char[arrLeng + 1];
+	strcpy_s(arr, arrLeng + 1, str.c_str());
+
+	if (chatOutputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
+	{
+		unsigned int accID = 0;
+		for (auto iter : chatText)
+		{
+			count++;
+			if (count == chatText.size())
+			{
+				accID = iter->accountID;
+			}
+		}
+		count = 0;
+
+
+		for (int i = 0; i <= arrLeng; i++)
+		{
+			if (arr[i] == '\n')
+			{
+				std::string userName = std::to_string(accID); //TODO: AccountID zum Namen auflösen 
+				int userNameLeng = userName.size();
+
+				tmpC = arr[i];
+				arr[i] = arr[i - userNameLeng - 4];
+				arr[i - userNameLeng - 4] = tmpC;
+			}
+		}
+		str = arr;
+
+		for (auto iter : chatText)
+		{
+			count++;
+			if (count == chatText.size())
+			{
+				iter->message = str;
+			}
+		}
+		count = 0;
+	}
+
+
+	str = "";
 	if (!chatText.empty())
 	{
 		for (auto i : chatText)
 		{
-			str += std::to_string(i->getAccountID()); //TODO: AccountID zum Namen auflösen
+			str += std::to_string(i->accountID); //TODO: AccountID zum Namen auflösen
 			str += ": \"";
-			str += i->getMessage();
+			str += i->message;
 			str += "\"\n";
 		}
 	}
-
 	chatOutputText.setString(str);
+
 }
 void MultiplayerChat::checkChat()
 {
 	checkClicked();
-	refreshChatOutput();
+	if (isOpen)
+		refreshChatOutput();
 }
 void MultiplayerChat::draw()
 {
 	if (isOpen)
 	{
 		window->draw(chatBackground);
-		window->draw(buttonClose);
 		window->draw(chatOutputText);
 		window->draw(chatInputText);
+		window->draw(buttonClose);
+		//window->draw(bottomChatBorder);
+		//window->draw(rightChatBorder);
 	}
 	else
 	{
@@ -158,14 +243,14 @@ void MultiplayerChat::draw()
 }
 void MultiplayerChat::addChatMessage(int _accountID, std::string _message)
 {
-	if (chatText.size() > 24)
+	chatText.push_back(new ChatMessage(_accountID, _message));
+
+	refreshChatOutput();
+
+	while (chatOutputText.getGlobalBounds().intersects(bottomChatBorder.getGlobalBounds()))
 	{
 		chatText.erase(chatText.begin());
-		chatText.push_back(new ChatMessage(_accountID, _message));
-	}
-	else
-	{
-		chatText.push_back(new ChatMessage(_accountID, _message));
+		refreshChatOutput();
 	}
 }
 #pragma endregion
