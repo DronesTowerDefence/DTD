@@ -28,8 +28,10 @@ HomeMenu::HomeMenu()
 	client = new Sprite();
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
-
+	
+	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
+	upperBorder = new RectangleShape();
 
 	ipAdressText = new Text();
 	credits = new Text();
@@ -53,8 +55,18 @@ HomeMenu::HomeMenu()
 	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
 	credits->setPosition(Vector2f(650, 950));
 
-	choseIndex = -1;
+	Color black(0x2F2F2Fff);
 
+	sideMenu->setSize(Vector2f(369.f, 1020.f));
+	sideMenu->setPosition(Vector2f(0.f, 0.f));
+	sideMenu->setFillColor(black);
+
+	upperBorder->setSize(Vector2f(1550.f, 215.f));
+	upperBorder->setPosition(Vector2f(370.f, 0.f));
+	upperBorder->setFillColor(black);
+
+	/*upperBorder->setOutlineColor(Color::Black);
+	upperBorder->setOutlineThickness(2.0);*/
 
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
@@ -66,7 +78,9 @@ HomeMenu::HomeMenu()
 	multiplayerMenue->setPosition(Vector2f(1100, 600));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
-
+	
+	choseIndex = -1;
+	
 	drone->setScale(2, 2);
 	//
 	int x = 500;
@@ -427,6 +441,8 @@ void HomeMenu::draw()
 {
 	window->clear();
 	window->draw(*backround);
+	window->draw(*sideMenu);
+	window->draw(*upperBorder);
 	window->draw(*titel);
 	window->draw(*drone);
 	window->draw(*choseText);
