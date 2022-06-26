@@ -38,6 +38,7 @@ private:
 	int towerSpawnSpeed[1];
 	int droneLives[5];
 	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
+	int ownAccountID;
 
 	float shootSoundCooldown; //Wie lange Pause zwischen dem Schuss-Sound ist
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
@@ -105,6 +106,8 @@ private:
 	Texture buttonVolume[4];
 	Texture deleteAllSavesButtonTexture;
 	Texture creditsTexture;
+	Texture openChatButtonTexture;
+	Texture multiplayerChatBackgroundTexture;
 
 	Image icon;
 
@@ -128,6 +131,7 @@ public:
 	int getTowerUpgradesPrice2(int, int);
 	int getDroneLives(int);
 	int getDroneCountInRound();
+	int getOwnAccountID();
 
 	float getShootSoundCooldown();
 	float getMultiplayerMoneySplit();
@@ -209,6 +213,8 @@ public:
 	Texture* getButtonVolume(int);
 	Texture* getDeleteAllSavesButtonTexture();
 	Texture* getCreditsTexture();
+	Texture* getOpenChatButtonTexture();
+	Texture* getMultiplayerChatBackgroundTexture();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 

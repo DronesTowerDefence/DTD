@@ -5,6 +5,7 @@
 #include "PauseMenu.h"
 #include "HomeMenu.h"
 #include "Tower.h"
+#include "MultiplayerChat.h"
 
 /**
 Das Hauptspiel, wo auf einer Map Drohnen sich bewegen und vom Spieler platzierte Türme auf diese Drohnen schießen
@@ -248,6 +249,8 @@ public:
 	Font getFont();
 
 	Clock* getMultiplayerCheckConnectionClock();
+
+	Event* getEvent();
 
 	/// <summary>
 	/// Gibt den Status zurück, ob Singleplayer/Host/Client

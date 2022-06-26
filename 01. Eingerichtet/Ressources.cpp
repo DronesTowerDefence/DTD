@@ -76,6 +76,7 @@ Ressources::Ressources()
 
 	isDoubleSpeed = 0; //Doppelte Geschwindigkeit
 
+	ownAccountID = 1; //TODO
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 5;
@@ -275,6 +276,8 @@ Ressources::Ressources()
 	socialsTwitterTexture.loadFromFile("img/socials/twitter.png");
 	deleteAllSavesButtonTexture.loadFromFile("img/buttons/deleteAllSavesButton.png");
 	creditsTexture.loadFromFile("img/credits.png");
+	openChatButtonTexture.loadFromFile("img/buttons/openChatButton.png");
+	multiplayerChatBackgroundTexture.loadFromFile("img/multiplayerChatBackground.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -513,6 +516,11 @@ int Ressources::getDroneLives(int i)
 int Ressources::getDroneCountInRound()
 {
 	return droneCountInRound[Round::getInstance()->getIndex()];
+}
+
+int Ressources::getOwnAccountID()
+{
+	return ownAccountID;
 }
 
 float Ressources::getShootSoundCooldown()
@@ -760,6 +768,14 @@ Texture* Ressources::getDeleteAllSavesButtonTexture()
 Texture* Ressources::getCreditsTexture()
 {
 	return &creditsTexture;
+}
+Texture* Ressources::getOpenChatButtonTexture()
+{
+	return &openChatButtonTexture;
+}
+Texture* Ressources::getMultiplayerChatBackgroundTexture()
+{
+	return &multiplayerChatBackgroundTexture;
 }
 #pragma endregion
 

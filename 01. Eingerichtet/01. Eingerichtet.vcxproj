@@ -24,6 +24,7 @@
     <ClInclude Include="HomeMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Multiplayer.h" />
+    <ClInclude Include="MultiplayerChat.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ressources.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Multiplayer.cpp" />
+    <ClCompile Include="MultiplayerChat.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />

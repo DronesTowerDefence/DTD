@@ -6,6 +6,7 @@
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
 5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
+10=ChatMessage
 */
 static class Multiplayer
 {
@@ -67,6 +68,13 @@ public:
 	/// <param name="Bei Index 0:">True = Pausiert, False = Nicht mehr pausiert</param>
 	/// <returns>True, wenn gesendet</returns>
 	static bool send(int, bool);
+
+	/// <summary>
+	/// Sendet ein Packet, welches die eigene AccountID und die Nachricht enthält
+	/// </summary>
+	/// <param name="">Nachricht</param>
+	/// <returns>True, wenn gesendet</returns>
+	static bool send(std::string);
 
 	/// <summary>
 	/// <para>Empfängt ein Packet und wendet es an.</para>

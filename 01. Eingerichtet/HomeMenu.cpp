@@ -162,75 +162,23 @@ bool HomeMenu::checkTestVersionEnd()
 	}
 	else return true;
 }
-void HomeMenu::eingabe(Event event) {
+void HomeMenu::ipAdressInput(Event event) {
+
 	if (event.type == Event::KeyReleased)
 	{
-
 		if (ipAdress.size() < 15)
 		{
-			switch (event.key.code)
-			{
-			case Keyboard::Num0:
-			case Keyboard::Numpad0:
-				ipAdress += "0";
-				break;
-
-			case Keyboard::Num1:
-			case Keyboard::Numpad1:
-				ipAdress += "1";
-				break;
-
-			case Keyboard::Num2:
-			case Keyboard::Numpad2:
-				ipAdress += "2";
-				break;
-
-			case Keyboard::Num3:
-			case Keyboard::Numpad3:
-				ipAdress += "3";
-				break;
-			case Keyboard::Num4:
-			case Keyboard::Numpad4:
-				ipAdress += "4";
-				break;
-			case Keyboard::Num5:
-			case Keyboard::Numpad5:
-				ipAdress += "5";
-				break;
-			case Keyboard::Num6:
-			case Keyboard::Numpad6:
-				ipAdress += "6";
-				break;
-			case Keyboard::Num7:
-			case Keyboard::Numpad7:
-				ipAdress += "7";
-				break;
-			case Keyboard::Num8:
-			case Keyboard::Numpad8:
-				ipAdress += "8";
-				break;
-			case Keyboard::Num9:
-			case Keyboard::Numpad9:
-				ipAdress += "9";
-				break;
-			case Keyboard::Period:
-				ipAdress += ".";
-				break;
-
-			default:
-				break;
-			}
-			ipAdressText->setString(ipAdress);
+			ipAdress += keyboardInput(event);
 		}
-		if (event.key.code == Keyboard::BackSpace)
+		ipAdressText->setString(ipAdress);
+	}
+	if (event.key.code == Keyboard::BackSpace)
+	{
+		if (ipAdress.size() > 0)
 		{
-			if (ipAdress.size() > 0)
-			{
-				ipAdress.erase(ipAdress.size() - 1);
-			}
-			ipAdressText->setString(ipAdress);
-
+			ipAdress.erase(ipAdress.size() - 1);
 		}
+		ipAdressText->setString(ipAdress);
 	}
 }
 int  HomeMenu::CheckClicked()
@@ -443,7 +391,7 @@ void HomeMenu::HomeMenuStart()
 			{
 				window->close();
 			}
-			eingabe(event);
+			ipAdressInput(event);
 		}
 
 		checkTestVersionEnd();
@@ -526,21 +474,177 @@ bool HomeMenu::deleteSave(int index)
 
 	return true;
 }
-void HomeMenu::setTowerTexture()
+char HomeMenu::keyboardInput(Event event)
 {
-	if (animation->getElapsedTime().asMilliseconds() >= 300)
-	{
-		animationIndex++;
-		if (animationIndex > 3)
-			animationIndex = 0;
+	char c = '\0';
+	bool caps = false;
 
-		for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
-		{
-			towers[i]->setTexture(*textureTower[i][animationIndex]);
-		}
-		animation->restart();
+	switch (event.key.code)
+	{
+	case Keyboard::Num0:
+	case Keyboard::Numpad0:
+		c= '0';
+		break;
+	case Keyboard::Num1:
+	case Keyboard::Numpad1:
+		c= '1';
+		break;
+	case Keyboard::Num2:
+	case Keyboard::Numpad2:
+		c= '2';
+		break;
+	case Keyboard::Num3:
+	case Keyboard::Numpad3:
+		c= '3';
+		break;
+	case Keyboard::Num4:
+	case Keyboard::Numpad4:
+		c= '4';
+		break;
+	case Keyboard::Num5:
+	case Keyboard::Numpad5:
+		c= '5';
+		break;
+	case Keyboard::Num6:
+	case Keyboard::Numpad6:
+		c= '6';
+		break;
+	case Keyboard::Num7:
+	case Keyboard::Numpad7:
+		c= '7';
+		break;
+	case Keyboard::Num8:
+	case Keyboard::Numpad8:
+		c= '8';
+		break;
+	case Keyboard::Num9:
+	case Keyboard::Numpad9:
+		c= '9';
+		break;
+	case Keyboard::A:
+		c= 'a';
+		break;
+	case Keyboard::B:
+		c= 'b';
+		break;
+	case Keyboard::C:
+		c= 'c';
+		break;
+	case Keyboard::D:
+		c= 'd';
+		break;
+	case Keyboard::E:
+		c= 'e';
+		break;
+	case Keyboard::F:
+		c= 'f';
+		break;
+	case Keyboard::G:
+		c= 'g';
+		break;
+	case Keyboard::H:
+		c= 'h';
+		break;
+	case Keyboard::I:
+		c= 'i';
+		break;
+	case Keyboard::J:
+		c= 'j';
+		break;
+	case Keyboard::K:
+		c= 'k';
+		break;
+	case Keyboard::L:
+		c= 'l';
+		break;
+	case Keyboard::M:
+		c= 'm';
+		break;
+	case Keyboard::N:
+		c= 'n';
+		break;
+	case Keyboard::O:
+		c= 'o';
+		break;
+	case Keyboard::P:
+		c= 'p';
+		break;
+	case Keyboard::Q:
+		c= 'q';
+		break;
+	case Keyboard::R:
+		c= 'r';
+		break;
+	case Keyboard::S:
+		c= 's';
+		break;
+	case Keyboard::T:
+		c= 't';
+		break;
+	case Keyboard::U:
+		c= 'u';
+		break;
+	case Keyboard::V:
+		c= 'v';
+		break;
+	case Keyboard::W:
+		c= 'w';
+		break;
+	case Keyboard::X:
+		c= 'x';
+		break;
+	case Keyboard::Y:
+		c= 'y';
+		break;
+	case Keyboard::Z:
+		c= 'z';
+		break;
+	case Keyboard::Period:
+		c= '.';
+		break;
+	case Keyboard::Add:
+		c= '+';
+		break;
+	case Keyboard::Comma:
+		c= ',';
+		break;
+	case Keyboard::Dash:
+		c= '-';
+		break;
+	case Keyboard::Divide:
+		c= '/';
+		break;
+	case Keyboard::Equal:
+		c= '=';
+		break;
+	case Keyboard::Multiply:
+		c= '*';
+		break;
+	case Keyboard::Quote:
+		c= '"';
+		break;
+	case Keyboard::Semicolon:
+		c= ';';
+		break;
+	case Keyboard::Slash:
+		c= '/';
+		break;
+	case Keyboard::Space:
+		c= ' ';
+		break;
+	case Keyboard::Subtract:
+		c= '-';
+		break;
+	case Keyboard::Tilde:
+		c= '~';
+		break;
+
+
+	default:
+		c = '\0';
 	}
 
+	return c;
 }
 #pragma endregion
 
@@ -569,8 +673,23 @@ void HomeMenu::setTimeUntilTestVersionEnd(unsigned long long _timeUntilTestVersi
 {
 	timeUntilTestVersionEnd = _timeUntilTestVersionEnd;
 }
-#pragma endregion
+void HomeMenu::setTowerTexture()
+{
+	if (animation->getElapsedTime().asMilliseconds() >= 300)
+	{
+		animationIndex++;
+		if (animationIndex > 3)
+			animationIndex = 0;
 
+		for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+		{
+			towers[i]->setTexture(*textureTower[i][animationIndex]);
+		}
+		animation->restart();
+	}
+
+}
+#pragma endregion
 
 #pragma region Desturktor
 #pragma endregion

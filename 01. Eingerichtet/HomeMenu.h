@@ -69,7 +69,7 @@ private:
 	/// Checkt, ob Zahlen 0-9 geklickt wird oder "." für die Eingabe der IP-Adersse
 	/// </summary>
 	/// <param name="event"></param>
-	void eingabe(Event event);
+	void ipAdressInput(Event event);
 	/// <summary>
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
@@ -83,6 +83,14 @@ public:
 	HomeMenu();
 	
 	static HomeMenu* getInstance();
+
+	/// <summary>
+	/// Überprüft auf eine Tastatureingabe
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns>Das Zeichen, welches gedrückt wurde</returns>
+	static char keyboardInput(Event);
+
 	bool checkTestVersionEnd();
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
@@ -96,5 +104,7 @@ public:
 	bool deleteSave(int);
 
 	void HomeMenuStart();
+
+
 };
 

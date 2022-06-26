@@ -266,6 +266,7 @@ void Game::startGame()
 				doubleSpeed = !doubleSpeed;
 				Sidebar::getInstance()->setSpeedButton(doubleSpeed);
 			}
+			MultiplayerChat::getInstance()->checkInput(event);
 
 			if (tower != nullptr)
 			{
@@ -313,6 +314,7 @@ void Game::startGame()
 		changeBackgroundMusic();
 		checkLoseGame();
 		checkTowerAlias();
+		MultiplayerChat::getInstance()->checkChat();
 		for (auto i : Round::getInstance()->getAllTowers())
 		{
 			i->getUpdates()->canBuy();
@@ -551,6 +553,9 @@ void Game::draw()
 	}
 
 	window->draw(eco);
+
+	MultiplayerChat::getInstance()->draw();
+
 	window->display();
 }
 void Game::checkShoot()
@@ -1098,7 +1103,6 @@ void Game::droneSpawn(int typ1, Vector2f start1, int next)
 		}
 	}
 }
-
 void Game::addDroneCount(int dr)
 {
 	droneCount += dr;
@@ -1262,6 +1266,7 @@ void Game::resetAll()
 	delete sidebar;
 	delete p_map;
 	delete round;
+	delete MultiplayerChat::getInstance();
 }
 void Game::saveGame()
 {
@@ -1342,6 +1347,10 @@ Font Game::getFont()
 Clock* Game::getMultiplayerCheckConnectionClock()
 {
 	return &multiplayerCheckConnectionClock;
+}
+Event* Game::getEvent()
+{
+	return &event;
 }
 int Game::getStatus()
 {

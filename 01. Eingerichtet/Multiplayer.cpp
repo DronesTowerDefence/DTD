@@ -95,10 +95,22 @@ bool Multiplayer::send(int _index, bool _bool)
 	else return false;
 }
 
+bool Multiplayer::send(std::string mess)
+{
+	Packet pac;
+
+	pac << 10 << Ressources::getInstance()->getOwnAccountID() << mess;
+
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
+}
+
 bool Multiplayer::receive()
 {
 	Packet pac;
-	int header, towerId;
+	int header, int1, int2;
+	std::string str;
 
 	Ressources::getInstance()->getReceiver()->receive(pac); //Erhält das Packet
 	pac >> header; //Entpackt den Header
@@ -113,10 +125,10 @@ bool Multiplayer::receive()
 
 	case 1: //Turm-Update
 		int towerUpdate, towerUpdateIndex;
-		pac >> towerId >> towerUpdate >> towerUpdateIndex; //Infos für Turm-Upgrade entpackt
+		pac >> int1 >> towerUpdate >> towerUpdateIndex; //Infos für Turm-Upgrade entpackt
 		for (auto i : Round::getInstance()->getAllTowers()) //Alle Tower werden durchgegangen
 		{
-			if (i->getId() == towerId) //Ob die Tower-ID stimmt
+			if (i->getId() == int1) //Ob die Tower-ID stimmt
 			{
 				if (towerUpdate == 1) //Pfad 1 wird geupgradet
 				{
@@ -131,10 +143,10 @@ bool Multiplayer::receive()
 		return true;
 
 	case 2: //Turm verkauft
-		pac >> towerId;
+		pac >> int1;
 		for (auto i : Round::getInstance()->getAllTowers()) //Alle Tower werden durchgegangen
 		{
-			if (i->getId() == towerId) //Wenn der richtige gefunden wurde...
+			if (i->getId() == int1) //Wenn der richtige gefunden wurde...
 			{
 				Game::getInstance()->sellTower(i);
 				Round::getInstance()->sellTower(i); //... wird er verkauft
@@ -216,6 +228,11 @@ bool Multiplayer::receive()
 
 	case 9:
 		Game::getInstance()->getMultiplayerCheckConnectionClock()->restart();
+		return true;
+
+	case 10:
+		pac >> int1 >> str;
+		MultiplayerChat::getInstance()->addChatMessage(int1, str);
 		return true;
 
 	default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
