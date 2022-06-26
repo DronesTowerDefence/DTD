@@ -110,7 +110,7 @@ void MultiplayerChat::checkInput(Event event)
 		}
 		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0)
 		{
-			addChatMessage(res->getOwnAccountID(), chatInput);
+			addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
 			refreshChatOutput();
 			Multiplayer::send(chatInput);
 			chatInput = defaultChatInput;

@@ -76,7 +76,6 @@ Ressources::Ressources()
 
 	isDoubleSpeed = 0; //Doppelte Geschwindigkeit
 
-	ownAccountID = 1; //TODO
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 5;
@@ -516,11 +515,6 @@ int Ressources::getDroneLives(int i)
 int Ressources::getDroneCountInRound()
 {
 	return droneCountInRound[Round::getInstance()->getIndex()];
-}
-
-int Ressources::getOwnAccountID()
-{
-	return ownAccountID;
 }
 
 float Ressources::getShootSoundCooldown()

@@ -99,7 +99,7 @@ bool Multiplayer::send(std::string mess)
 {
 	Packet pac;
 
-	pac << 10 << Ressources::getInstance()->getOwnAccountID() << mess;
+	pac << 10 << Game::getInstance()->getStatus() << mess; //TODO AccID
 
 	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
 		return true;
