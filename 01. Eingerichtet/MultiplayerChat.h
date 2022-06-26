@@ -59,6 +59,7 @@ private:
 	MultiplayerChat();
 	void checkClicked();
 	void refreshChatOutput();
+	bool chatCommand();
 
 public:
 

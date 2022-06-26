@@ -627,7 +627,7 @@ char HomeMenu::keyboardInput(Event event)
 		c= ';';
 		break;
 	case Keyboard::Slash:
-		c= '/';
+		c= '#';
 		break;
 	case Keyboard::Space:
 		c= ' ';

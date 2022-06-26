@@ -110,6 +110,7 @@ void MultiplayerChat::checkInput(Event event)
 		{
 			chatInput = defaultChatInput;
 			inputDefaultText = true;
+			chatInputText.setString(chatInput);
 		}
 
 		chatInputText.setString(chatInput);
@@ -138,8 +139,11 @@ void MultiplayerChat::checkInput(Event event)
 		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0)
 		{
 			addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
-			refreshChatOutput();
-			Multiplayer::send(chatInput);
+			if (!chatCommand())
+			{
+				refreshChatOutput();
+				Multiplayer::send(chatInput);
+			}
 			chatInput = defaultChatInput;
 			inputDefaultText = true;
 		}
@@ -217,6 +221,110 @@ void MultiplayerChat::refreshChatOutput()
 		}
 	}
 	chatOutputText.setString(str);
+
+}
+bool MultiplayerChat::chatCommand()
+{
+	bool stringIsCommand = false;
+	int arrLeng = chatInput.size();
+	char* arr = new char[arrLeng + 1];
+	char tmpC1, tmpC2;
+	strcpy_s(arr, arrLeng + 1, chatInput.c_str());
+
+	if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
+	{
+		std::string str = "";
+		char value[10];
+		size_t found;
+		for (int i = 3; i <= arrLeng; i++)
+		{
+			str += tolower(arr[i]);
+		}
+
+		if (str.find("system") != std::string::npos)
+		{
+			if (str.size() > 7)
+			{
+
+			}
+		}
+		else if (str.find("addmoney") != std::string::npos)
+		{
+			if (str.size() > 9)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				Round::getInstance()->addMoney(std::stoi(value));
+			}
+		}
+		else if (str.find("submoney") != std::string::npos)
+		{
+			if (str.size() > 9)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				Round::getInstance()->submoney(std::stoi(value));
+			}
+		}
+		else if (str.find("addhealth") != std::string::npos)
+		{
+			if (str.size() > 10)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				Round::getInstance()->addHealth(std::stoi(value));
+			}
+		}
+		else if (str.find("subhealth") != std::string::npos)
+		{
+			if (str.size() > 10)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				Round::getInstance()->subhealth(std::stoi(value));
+			}
+		}
+		else if (str.find("setround") != std::string::npos)
+		{
+			if (str.size() > 9)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				Round::getInstance()->setIndex(std::stoi(value));
+			}
+		}
+		else if (str.find("kickallplayer") != std::string::npos)
+		{
+			if (str.size() > 13)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) == 1)
+				{
+					res->newConnection();
+					Game::getInstance()->setStatus(1);
+				}
+			}
+		}
+		else if (str.find("killall") != std::string::npos)
+		{
+			if (str.size() > 7)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) == 1)
+				{
+					for (auto i : Round::getInstance()->getAllDrones())
+					{
+						delete i;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+	else return false;
 
 }
 void MultiplayerChat::checkChat()
