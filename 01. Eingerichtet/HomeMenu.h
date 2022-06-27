@@ -38,6 +38,8 @@ private:
 	Texture* textureTower[5][4];	
 
 	RectangleShape* pointer;
+	RectangleShape* sideMenu;
+	RectangleShape* upperBorder;
 	
 	Sprite* startButton;
 	Sprite* towers[5];
@@ -52,6 +54,7 @@ private:
 	Sprite* paste;
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
+	
 	
 	Clock* animation;
 	Clock* timeUntilTestVersionEndClock;
