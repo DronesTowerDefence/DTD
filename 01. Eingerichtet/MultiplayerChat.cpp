@@ -15,6 +15,8 @@ MultiplayerChat::MultiplayerChat()
 	isOpen = false;
 	mouseClicked = false;
 	inputDefaultText = true;
+	chatNavigationHorizontal = 0;
+	chatNavigationVertical = 0;
 	defaultChatInput = "Deine Nachricht...";
 	chatInput = defaultChatInput;
 
@@ -110,10 +112,7 @@ void MultiplayerChat::checkInput(Event event)
 		{
 			chatInput = defaultChatInput;
 			inputDefaultText = true;
-			chatInputText.setString(chatInput);
 		}
-
-		chatInputText.setString(chatInput);
 		if (chatInputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
 		{
 			chatInput += "\n";
@@ -146,9 +145,36 @@ void MultiplayerChat::checkInput(Event event)
 			refreshChatOutput();
 			chatInput = defaultChatInput;
 			inputDefaultText = true;
+			chatNavigationVertical = 0;
+			chatNavigationHorizontal = 0;
 		}
-		chatInputText.setString(chatInput);
+
+		if (event.key.code == Keyboard::Up && chatNavigationVertical < chatText.size())
+		{
+			chatNavigationVertical++;
+		}
+		else if (event.key.code == Keyboard::Down && chatNavigationVertical > 0)
+		{
+			chatNavigationVertical--;
+			if (chatNavigationVertical == 0)
+			{
+				chatInput = defaultChatInput;
+				inputDefaultText = true;
+			}
+		}
+
+		if (event.key.code == Keyboard::Right && chatNavigationHorizontal < chatInput.size())
+		{
+			chatNavigationHorizontal++;
+		}
+		else if (event.key.code == Keyboard::Left && chatNavigationHorizontal > 0)
+		{
+			chatNavigationHorizontal--;
+		}
 	}
+	checkChatNavigation();
+
+	chatInputText.setString(chatInput);
 }
 void MultiplayerChat::refreshChatOutput()
 {
@@ -222,6 +248,26 @@ void MultiplayerChat::refreshChatOutput()
 	}
 	chatOutputText.setString(str);
 
+}
+void MultiplayerChat::checkChatNavigation()
+{
+	if (chatNavigationVertical > 0)
+	{
+		int j = 0;
+		for (auto i : chatText) //TODO: falschrum
+		{
+			j++;
+			if (j == (chatText.size()+1) - chatNavigationVertical)
+			{
+				chatInput = i->message;
+				inputDefaultText = false;
+			}
+		}
+	}
+	else if (chatNavigationVertical == 0 && chatNavigationHorizontal > 0)
+	{
+
+	}
 }
 bool MultiplayerChat::chatCommand()
 {
@@ -379,7 +425,7 @@ bool MultiplayerChat::chatCommand()
 				if (std::stoi(value) == 1)
 				{
 					Game::getInstance()->mainMenu();
-					output = "send to mainmenu";
+					output = "sent to mainmenu";
 				}
 			}
 		}
@@ -396,7 +442,19 @@ bool MultiplayerChat::chatCommand()
 				}
 			}
 		}
-
+		else if (str.find("savegame") != std::string::npos)
+		{
+		if (str.size() > 8)
+		{
+			found = str.find(" ");
+			str.copy(value, 10, found);
+			if (std::stoi(value) == 1)
+			{
+				Game::getInstance()->saveGame();
+				output = "saved the game";
+			}
+		}
+		}
 
 		addChatMessage(0, output);
 		return true;

@@ -40,6 +40,8 @@ private:
 	bool inputDefaultText;
 
 	int chatOutputLines;
+	int chatNavigationVertical;
+	int chatNavigationHorizontal;
 
 	std::string chatInput;
 	std::string defaultChatInput;
@@ -59,6 +61,7 @@ private:
 	MultiplayerChat();
 	void checkClicked();
 	void refreshChatOutput();
+	void checkChatNavigation();
 	bool chatCommand();
 
 public:
