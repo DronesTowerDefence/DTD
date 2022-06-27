@@ -257,7 +257,7 @@ void MultiplayerChat::checkChatNavigation()
 		for (auto i : chatText) //TODO: falschrum
 		{
 			j++;
-			if (j == (chatText.size()+1) - chatNavigationVertical)
+			if (j == (chatText.size() + 1) - chatNavigationVertical)
 			{
 				chatInput = i->message;
 				inputDefaultText = false;
@@ -442,18 +442,18 @@ bool MultiplayerChat::chatCommand()
 				}
 			}
 		}
-		else if (str.find("savegame") != std::string::npos)
+		else if (str.find("deletesave") != std::string::npos)
 		{
-		if (str.size() > 8)
-		{
-			found = str.find(" ");
-			str.copy(value, 10, found);
-			if (std::stoi(value) == 1)
+			if (str.size() > 14)
 			{
-				Game::getInstance()->saveGame();
-				output = "saved the game";
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) < res->getMapCount() && std::stoi(value) >= 0)
+				{
+					HomeMenu::getInstance()->deleteSave(std::stoi(value));
+					output = "deleted the saved the game";
+				}
 			}
-		}
 		}
 
 		addChatMessage(0, output);
