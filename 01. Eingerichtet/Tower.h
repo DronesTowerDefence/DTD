@@ -300,6 +300,8 @@ public:
 	/// <param name="Ob der Cooldown umgangen werden soll?">True</param>
 	bool shoot(Drone*, bool);
 
+	bool shoot(Vector2f _targetstill);
+
 	/// <summary>
 	/// Prüft, ob das Element angeklickt wird
 	/// </summary>

@@ -108,6 +108,7 @@ bool Tower::generateMoney()
 }
 bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 {
+	Projectile* p = nullptr;
 	if (index < 4)
 	{
 		if (!shootCooldown)
@@ -119,7 +120,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			{
 				if (!coverableArea.empty())
 				{
-					new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+					p = new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
 					res->statistic_damage += damage;
 				}
 			}
@@ -138,7 +139,11 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			}
 			if (Game::getInstance()->getStatus() == 2)
 			{
-				if (d != nullptr)
+				if (index == 1)
+				{
+					Multiplayer::send(index, p->getTargetstill());
+				}
+				else if (d != nullptr)
 				{
 					Multiplayer::send(id, d->getId());
 				}
@@ -173,6 +178,7 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 					i->shoot();
 				}
 			}
+
 			else
 			{
 				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
@@ -182,6 +188,15 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 		else return false;
 	}
 	else return false;
+}
+bool Tower::shoot(Vector2f _targetstill)
+{
+	if (index == 1)
+	{
+		new Projectile(this, _targetstill);
+	return true;
+	}
+	return false;
 }
 bool Tower::isClicked(RenderWindow* window)
 {

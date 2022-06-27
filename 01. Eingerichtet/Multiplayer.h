@@ -6,7 +6,7 @@
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
 5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
-10=ChatMessage
+10=ChatMessage, 11=Nagelhaufen wird platziert
 */
 static class Multiplayer
 {
@@ -76,6 +76,7 @@ public:
 	/// <returns>True, wenn gesendet</returns>
 	static bool send(std::string);
 
+	static bool send(int, Vector2f);
 	/// <summary>
 	/// <para>Empfängt ein Packet und wendet es an.</para>
 	/// <para>Immer in einer eigenen while-Schleife aufrufen: Bsp.:"while(Multiplayer::receive());"</para>

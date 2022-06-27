@@ -2,12 +2,28 @@
 #include "Round.h"
 #include <iostream>
 #include <random>
+#include "Multiplayer.h"
 
 
 
 
 
 #pragma region Konstruktor
+Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
+{
+	speed = _tower->getProjectileSpeed();
+	tower = _tower;
+	collided = 0;
+	res = Ressources::getInstance();
+	Round::getInstance()->addProjectile(this);
+	projectilesprite.setTexture(*res->getProjectileTexture(2));//Nagelwerfer
+	targetstill = _targetstill;
+	dronetarget = nullptr;
+	style = res->getTowerProjectileIndex(1);
+	homing();
+
+	
+}
 Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill)
 {
 	//Setzen der Attribute
@@ -111,6 +127,7 @@ void Projectile::operate()
 				}
 				j++;
 			}
+			//Multiplayer::send(tower->getId(), targetstill);
 			homing();
 		}
 		break;
@@ -118,6 +135,7 @@ void Projectile::operate()
 
 
 }
+
 void Projectile::targeting()
 {
 	for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
@@ -192,6 +210,10 @@ bool Projectile::getcollided()
 Sprite* Projectile::getProjectileSprite()
 {
 	return &projectilesprite;
+}
+Vector2f Projectile::getTargetstill()
+{
+	return targetstill;
 }
 #pragma endregion
 

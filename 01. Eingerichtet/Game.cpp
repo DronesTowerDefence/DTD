@@ -518,7 +518,7 @@ void Game::checkShoot()
 		}
 		else if (t->getIndex() == 3)
 		{
-			t->shoot(nullptr);
+				t->shoot(nullptr);
 		}
 		else
 		{

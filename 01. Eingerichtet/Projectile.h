@@ -67,6 +67,7 @@ private:
 	Ressources* res;
 
 public:
+	Projectile(Tower* _tower, Vector2f _targetstill);
 	/// <summary>
 	/// Konstruktor vom Projektil
 	/// </summary>
@@ -88,6 +89,8 @@ public:
 	/// </summary>
 	/// <returns>Gibt die Sprite des Projektils zurück</returns>
 	Sprite* getProjectileSprite();
+
+	Vector2f getTargetstill();
 
 	/// <summary>
 	/// Setzt die Bewegungsrichtung

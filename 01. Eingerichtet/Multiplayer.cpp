@@ -106,11 +106,22 @@ bool Multiplayer::send(std::string mess)
 	else return false;
 }
 
+bool Multiplayer::send(int index, Vector2f vector)
+{
+	Packet pac;
+	pac << 11 << index << vector.x << vector.y;
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
+
+}
+
 bool Multiplayer::receive()
 {
 	Packet pac;
 	int header, int1, int2;
 	std::string str;
+	Vector2f vector;
 
 	Ressources::getInstance()->getReceiver()->receive(pac); //Erhält das Packet
 	pac >> header; //Entpackt den Header
@@ -161,7 +172,7 @@ bool Multiplayer::receive()
 		{
 			if (i->getId() == towerId) //Wenn der richtige Tower gefunden wurde...
 			{
-				if(droneId==-1)
+				if (droneId == -1)
 				{
 					i->shoot(nullptr, true);
 				}
@@ -234,7 +245,20 @@ bool Multiplayer::receive()
 		pac >> int1 >> str;
 		MultiplayerChat::getInstance()->addChatMessage(int1, str);
 		return true;
-
+	case 11:
+		int towerId_;
+		pac >> towerId_, vector;
+		for (auto i : Round::getInstance()->getAllAttackTower()) // Alle Tower werden durchgegangen
+		{
+			if (i->getId() == towerId_) //Wenn der richtige Tower gefunden wurde...
+			{
+				if (droneId == -1)
+				{
+					i->shoot(vector);
+				}
+			}
+		}
+		return true;
 	default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 		return false;
 	}
