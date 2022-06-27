@@ -37,6 +37,8 @@ Game::Game()
 	toolbar.setPosition(1720, 0);
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
+	p_ressources->getBackgroundMusic(p_map->getIndex())->play();
+	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
 }
 #pragma endregion
 
@@ -295,18 +297,6 @@ void Game::startGame()
 }
 void Game::changeBackgroundMusic()
 {
-	if (p_ressources->getBackgroundMusic(chooseMusic)->getStatus() != Music::Playing)
-	{
-		if (chooseMusic == 1)
-		{
-			chooseMusic = 0;
-		}
-		else
-		{
-			chooseMusic++;
-		}
-		p_ressources->getBackgroundMusic(chooseMusic)->play();
-	}
 }
 void Game::stopBackgroundMusic()
 {

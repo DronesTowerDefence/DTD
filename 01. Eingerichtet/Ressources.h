@@ -66,7 +66,7 @@ private:
 	Sound hitSound[1];
 	Sound shootSound[1];
 
-	Music backgroundMusic[2];
+	Music backgroundMusic[3];
 
 	TcpSocket* sender;
 	TcpSocket* receiver;

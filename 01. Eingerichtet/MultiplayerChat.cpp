@@ -132,11 +132,11 @@ void MultiplayerChat::checkInput(Event event)
 			chatInputText.setString(chatInput);
 		}
 
-		if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0)
+		if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0 && !inputDefaultText)
 		{
 			chatInput.erase(chatInput.size() - 1);
 		}
-		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0)
+		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0 && !inputDefaultText)
 		{
 			if (!chatCommand())
 			{
@@ -368,6 +368,32 @@ bool MultiplayerChat::chatCommand()
 				output = "froze game for ";
 				output += value;
 				output += " seconds";
+			}
+		}
+		else if (str.find("mainmenu") != std::string::npos)
+		{
+			if (str.size() > 8)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) == 1)
+				{
+					Game::getInstance()->mainMenu();
+					output = "send to mainmenu";
+				}
+			}
+		}
+		else if (str.find("savegame") != std::string::npos)
+		{
+			if (str.size() > 8)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (std::stoi(value) == 1)
+				{
+					Game::getInstance()->saveGame();
+					output = "saved the game";
+				}
 			}
 		}
 
