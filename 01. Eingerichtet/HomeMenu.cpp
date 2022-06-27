@@ -28,8 +28,10 @@ HomeMenu::HomeMenu()
 	client = new Sprite();
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
-
+	
+	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
+	upperBorder = new RectangleShape();
 
 	ipAdressText = new Text();
 	credits = new Text();
@@ -53,36 +55,52 @@ HomeMenu::HomeMenu()
 	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
 	credits->setPosition(Vector2f(650, 950));
 
-	choseIndex = -1;
+	Color black(0x2F2F2Fff);
 
+	sideMenu->setSize(Vector2f(370.f, 1020.f));
+	sideMenu->setPosition(Vector2f(0.f, 0.f));
+	sideMenu->setFillColor(black);
+
+	upperBorder->setSize(Vector2f(1550.f, 215.f));
+	upperBorder->setPosition(Vector2f(370.f, 0.f));
+	upperBorder->setFillColor(black);
+
+	/*upperBorder->setOutlineColor(Color::Black);
+	upperBorder->setOutlineThickness(2.0);*/
 
 	startButton->setPosition(Vector2f(900, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
-	host->setPosition(Vector2f(1100, 690));
-	client->setPosition(Vector2f(1350, 690));
-	copy->setPosition(Vector2f(1100, 831));
-	paste->setPosition(Vector2f(1100, 931));
-	multiplayerMenue->setPosition(Vector2f(1100, 600));
+	host->setPosition(Vector2f(500, 450));
+	client->setPosition(Vector2f(750, 450));
+	copy->setPosition(Vector2f(500, 600));
+	paste->setPosition(Vector2f(500, 700));
+	multiplayerMenue->setPosition(Vector2f(500, 350));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
-
+	
+	choseIndex = -1;
+	
 	drone->setScale(2, 2);
 	//
-	int x = 500;
-	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, x += 242)
+	int y = 400;
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, y += 150)
 	{
 		map[i] = new Sprite;
 		map[i]->setScale(0.1, 0.1);
 		map[i]->setTexture(*res->getMapTexture(i));
-		map[i]->setPosition(Vector2f(x, 500));
+		map[i]->setPosition(Vector2f(80, y));
 
 	}
-	positionTower[0] = Vector2f(100, 400);
-	positionTower[1] = Vector2f(300, 500);
-	positionTower[2] = Vector2f(700, 800);
-	positionTower[3] = Vector2f(1400, 200);
-	positionTower[4] = Vector2f(1570, 400);
+
+	
+
+
+	positionTower[0] = Vector2f(1300, 250);
+	positionTower[1] = Vector2f(1300, 400);
+	positionTower[2] = Vector2f(1300, 550);
+	positionTower[3] = Vector2f(1300, 700);
+	positionTower[4] = Vector2f(1300, 850);
 	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
 	{
 
@@ -135,17 +153,17 @@ HomeMenu::HomeMenu()
 	pointer->setOutlineColor(Color::Red);
 	pointer->setFillColor(Color::Transparent);
 
-	choseText = new Text("Wähle eine Karte aus", *font, 40);
-	choseText->setPosition(Vector2f(500, 450));
+	choseText = new Text("Wähle eine Karte aus:", *font, 30);
+	choseText->setPosition(Vector2f(25, 300));
 
 	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(1170, 931));
+	ipAdressText->setPosition(Vector2f(570, 696));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(50);
 
 	ownIpAdressText = new Text();
 	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(1170, 831));
+	ownIpAdressText->setPosition(Vector2f(570, 596));
 	ownIpAdressText->setFillColor(Color::Black);
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
@@ -427,6 +445,8 @@ void HomeMenu::draw()
 {
 	window->clear();
 	window->draw(*backround);
+	window->draw(*sideMenu);
+	window->draw(*upperBorder);
 	window->draw(*titel);
 	window->draw(*drone);
 	window->draw(*choseText);
