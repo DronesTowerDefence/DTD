@@ -281,6 +281,7 @@ bool MultiplayerChat::chatCommand()
 	{
 		std::string str = "", output = "Unknown Command";
 		char value[10];
+		int iValue = 0;
 		size_t found;
 		for (int i = 3; i <= arrLeng; i++)
 		{
@@ -291,7 +292,14 @@ bool MultiplayerChat::chatCommand()
 		{
 			if (str.size() > 7)
 			{
-
+				char cmdC[50];
+				found = str.find(" ");
+				str.copy(cmdC, 10, found);
+				const char* cmdCC = cmdC;
+				system(cmdCC);
+				output = "Executed command: \"";
+				output += cmdC;
+				output += "\" succesfully";
 			}
 		}
 		else if (str.find("addmoney") != std::string::npos)
@@ -300,7 +308,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->addMoney(std::stoi(value));
+				Round::getInstance()->addMoney(stoi(value));
 				output = "added ";
 				output += value;
 				output += " money";
@@ -312,7 +320,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->submoney(std::stoi(value));
+				Round::getInstance()->submoney(stoi(value));
 				output = "subtracted ";
 				output += value;
 				output += " money";
@@ -324,7 +332,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->addHealth(std::stoi(value));
+				Round::getInstance()->addHealth(stoi(value));
 				output = "added ";
 				output += value;
 				output += " health";
@@ -336,7 +344,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->subhealth(std::stoi(value));
+				Round::getInstance()->subhealth(stoi(value));
 				output = "subtracted ";
 				output += value;
 				output += " health";
@@ -348,55 +356,40 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->setIndex(std::stoi(value));
+				Round::getInstance()->setIndex(stoi(value));
 				output = "set round to ";
 				output += value;
 			}
 		}
 		else if (str.find("kickallplayer") != std::string::npos)
 		{
-			if (str.size() > 13)
+			if (str.size() == 14)
 			{
-				found = str.find(" ");
-				str.copy(value, 10, found);
-				if (std::stoi(value) == 1)
-				{
-					res->newConnection();
-					Game::getInstance()->setStatus(1);
-					output = "kicked all players and switched to singleplayer";
-				}
+				res->newConnection();
+				Game::getInstance()->setStatus(1);
+				output = "kicked all players and switched to singleplayer";
 			}
 		}
 		else if (str.find("killall") != std::string::npos)
 		{
-			if (str.size() > 7)
+			if (str.size() == 8)
 			{
-				found = str.find(" ");
-				str.copy(value, 10, found);
-				if (std::stoi(value) == 1)
+				for (auto i : Round::getInstance()->getAllDrones())
 				{
-					for (auto i : Round::getInstance()->getAllDrones())
-					{
-						delete i;
-					}
-					output = "destroyed all drones";
+					delete i;
 				}
+				output = "destroyed all drones";
 			}
 		}
 		else if (str.find("sellall") != std::string::npos)
 		{
-			if (str.size() > 7)
+			if (str.size() == 8)
 			{
-				found = str.find(" ");
-				str.copy(value, 10, found);
-				if (std::stoi(value) == 1)
+				for (auto i : Round::getInstance()->getAllTowers())
 				{
-					for (auto i : Round::getInstance()->getAllTowers())
-					{
-						Round::getInstance()->sellTower(i);
-					}
-					output = "sold all towers";
+					Round::getInstance()->sellTower(i);
 				}
+				output = "sold all towers";
 			}
 		}
 		else if (str.find("freeze") != std::string::npos)
@@ -418,28 +411,18 @@ bool MultiplayerChat::chatCommand()
 		}
 		else if (str.find("mainmenu") != std::string::npos)
 		{
-			if (str.size() > 8)
+			if (str.size() == 9)
 			{
-				found = str.find(" ");
-				str.copy(value, 10, found);
-				if (std::stoi(value) == 1)
-				{
-					Game::getInstance()->mainMenu();
-					output = "sent to mainmenu";
-				}
+				Game::getInstance()->mainMenu();
+				output = "sent to mainmenu";
 			}
 		}
 		else if (str.find("savegame") != std::string::npos)
 		{
-			if (str.size() > 8)
+			if (str.size() == 8)
 			{
-				found = str.find(" ");
-				str.copy(value, 10, found);
-				if (std::stoi(value) == 1)
-				{
-					Game::getInstance()->saveGame();
-					output = "saved the game";
-				}
+				Game::getInstance()->saveGame();
+				output = "saved the game";
 			}
 		}
 		else if (str.find("deletesave") != std::string::npos)
@@ -461,6 +444,32 @@ bool MultiplayerChat::chatCommand()
 	}
 	else return false;
 
+}
+int MultiplayerChat::stoi(char* c)
+{
+	int returnValue = 0;
+	int size = 0;
+	char tmp;
+
+	for (; c[size] != '\0'; size++);
+
+	for (int k = 0; k < size; k++)
+	{
+		tmp = c[k];
+		c[k] = c[k + 1];
+		c[k + 1] = tmp;
+
+
+	}
+	size--;
+
+	for (int i = 0; i < size; i++)
+	{
+		returnValue *= 10;
+		returnValue += (c[i] - 48);
+	}
+
+	return returnValue;
 }
 void MultiplayerChat::checkChat()
 {
