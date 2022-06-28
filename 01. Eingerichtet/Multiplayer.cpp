@@ -109,7 +109,7 @@ bool Multiplayer::send(std::string mess)
 bool Multiplayer::send(int index, Vector2f vector)
 {
 	Packet pac;
-	pac << 11 << index << vector.x << vector.y;
+	pac << 11 << index << int(vector.x) << int(vector.y);
 	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
 		return true;
 	else return false;
@@ -247,15 +247,12 @@ bool Multiplayer::receive()
 		return true;
 	case 11:
 		int towerId_;
-		pac >> towerId_, vector;
+		pac >> towerId_ >> vector.x >> vector.y;
 		for (auto i : Round::getInstance()->getAllAttackTower()) // Alle Tower werden durchgegangen
 		{
 			if (i->getId() == towerId_) //Wenn der richtige Tower gefunden wurde...
 			{
-				if (droneId == -1)
-				{
-					i->shoot(vector);
-				}
+				i->shoot(vector);
 			}
 		}
 		return true;
