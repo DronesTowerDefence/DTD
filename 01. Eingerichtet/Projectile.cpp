@@ -17,12 +17,13 @@ Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
 	res = Ressources::getInstance();
 	Round::getInstance()->addProjectile(this);
 	projectilesprite.setTexture(*res->getProjectileTexture(2));//Nagelwerfer
+	projectilesprite.setPosition(tower->getTowerSpr().getPosition());
 	targetstill = _targetstill;
 	dronetarget = nullptr;
 	style = res->getTowerProjectileIndex(1);
 	homing();
 
-	
+
 }
 Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill)
 {
