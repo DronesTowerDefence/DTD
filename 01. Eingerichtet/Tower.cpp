@@ -141,7 +141,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			{
 				if (index == 1)
 				{
-					Multiplayer::send(index, p->getTargetstill());
+					Multiplayer::send(id, p->getTargetstill());
 				}
 				else if (d != nullptr)
 				{
@@ -194,7 +194,7 @@ bool Tower::shoot(Vector2f _targetstill)
 	if (index == 1)
 	{
 		new Projectile(this, _targetstill);
-	return true;
+		return true;
 	}
 	return false;
 }
