@@ -497,7 +497,6 @@ bool HomeMenu::deleteSave(int index)
 char HomeMenu::keyboardInput(Event event)
 {
 	char c = '\0';
-	bool caps = false;
 
 	switch (event.key.code)
 	{

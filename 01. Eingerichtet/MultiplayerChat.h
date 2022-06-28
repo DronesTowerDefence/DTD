@@ -38,6 +38,7 @@ private:
 	bool isOpen;
 	bool mouseClicked;
 	bool inputDefaultText;
+	bool isShift;
 
 	int chatOutputLines;
 	int chatNavigationVertical;

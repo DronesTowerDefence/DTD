@@ -90,11 +90,21 @@ void MultiplayerChat::checkClicked()
 }
 void MultiplayerChat::checkInput(Event event)
 {
+	if (event.type == Event::KeyPressed && event.key.code == Keyboard::LShift)
+	{
+		isShift = true;
+	}
+	else if (event.type == Event::KeyReleased && event.key.code == Keyboard::LShift)
+	{
+		isShift = false;
+	}
+
 	if (event.type == Event::KeyReleased && isOpen)
 	{
 		char tmp = '\0';
 
 		tmp = HomeMenu::keyboardInput(event);
+		if (isShift) tmp = std::toupper(tmp);
 
 		if (tmp != '\0')
 		{
@@ -276,10 +286,32 @@ bool MultiplayerChat::chatCommand()
 	char* arr = new char[arrLeng + 1];
 	char tmpC1, tmpC2;
 	strcpy_s(arr, arrLeng + 1, chatInput.c_str());
+	std::string str = "";
 
-	if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
+	if (arrLeng > 3 && (arr[0] == '<' && arr[2] == '>' && (arr[1] == 'b' || arr[1] == 'i' || arr[1] == 'u')))
 	{
-		std::string str = "", output = "Unknown Command";
+		for (int i = 3; i <= arrLeng; i++)
+		{
+			str += arr[i];
+		}
+
+		if (arr[1] == 'b')
+		{
+			chatInputText.setStyle(Text::Bold);
+		}
+		else if (arr[1] == 'i')
+		{
+			chatInputText.setStyle(Text::Italic);
+		}
+		else if (arr[1] == 'u')
+		{
+			chatInputText.setStyle(Text::Underlined);
+		}
+		return false;
+	}
+	else if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
+	{
+		std::string output = "Unknown Command";
 		char value[10];
 		int iValue = 0;
 		size_t found;
