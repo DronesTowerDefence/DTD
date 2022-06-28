@@ -438,6 +438,20 @@ bool MultiplayerChat::chatCommand()
 				}
 			}
 		}
+		else if (str.find("exit") != std::string::npos)
+		{
+			if (str.size() == 7)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (stoi(value) == 1)
+				{
+					Game::getInstance()->saveGame();
+					window->close();
+				}
+				else window->close();
+			}
+		}
 
 		addChatMessage(0, output);
 		return true;
