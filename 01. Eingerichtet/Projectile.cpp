@@ -17,7 +17,7 @@ Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
 	res = Ressources::getInstance();
 	Round::getInstance()->addProjectile(this);
 	projectilesprite.setTexture(*res->getProjectileTexture(2));//Nagelwerfer
-	projectilesprite.setPosition(tower->getTowerSpr().getPosition());
+	projectilesprite.setPosition(tower->getTowerPos());
 	targetstill = _targetstill;
 	dronetarget = nullptr;
 	style = res->getTowerProjectileIndex(1);
@@ -128,7 +128,6 @@ void Projectile::operate()
 				}
 				j++;
 			}
-			//Multiplayer::send(tower->getId(), targetstill);
 			homing();
 		}
 		break;

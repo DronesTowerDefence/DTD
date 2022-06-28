@@ -247,12 +247,12 @@ bool Multiplayer::receive()
 		return true;
 	case 11:
 		int towerId_;
-		pac >> towerId_ >> vector.x >> vector.y;
+		pac >> towerId_ >> int1 >> int2;
 		for (auto i : Round::getInstance()->getAllAttackTower()) // Alle Tower werden durchgegangen
 		{
 			if (i->getId() == towerId_) //Wenn der richtige Tower gefunden wurde...
 			{
-				i->shoot(vector);
+				i->shoot(Vector2f(int1, int2));
 			}
 		}
 		return true;
