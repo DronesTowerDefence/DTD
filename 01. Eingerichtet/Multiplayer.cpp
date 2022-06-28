@@ -252,7 +252,7 @@ bool Multiplayer::receive()
 		{
 			if (i->getId() == towerId_) //Wenn der richtige Tower gefunden wurde...
 			{
-				i->shoot(Vector2f(int1, int2));
+				i->shoot(Vector2f(int1,int2));
 			}
 		}
 		return true;
