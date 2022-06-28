@@ -254,12 +254,12 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			MultiplayerChat::getInstance()->checkInput(event);
-			PauseMenu::getInstance()->checkPause(event);
 			if (!MultiplayerChat::getInstance()->getIsOpen())
 			{
+				PauseMenu::getInstance()->checkPause(event);
 				shortcuts();
 			}
+			MultiplayerChat::getInstance()->checkInput(event);
 		}
 
 		while (Multiplayer::receive());
@@ -518,7 +518,7 @@ void Game::checkShoot()
 		}
 		else if (t->getIndex() == 3)
 		{
-				t->shoot(nullptr);
+			t->shoot(nullptr);
 		}
 		else
 		{

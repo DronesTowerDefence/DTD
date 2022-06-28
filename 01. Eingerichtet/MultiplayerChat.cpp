@@ -99,6 +99,11 @@ void MultiplayerChat::checkInput(Event event)
 		isShift = false;
 	}
 
+	if (isOpen && event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+	{
+		isOpen = false;
+	}
+
 	if (event.type == Event::KeyReleased && isOpen)
 	{
 		char tmp = '\0';
