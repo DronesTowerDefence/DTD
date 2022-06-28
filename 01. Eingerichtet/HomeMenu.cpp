@@ -490,7 +490,7 @@ bool HomeMenu::deleteSave(int index)
 
 	std::string cmd_s = "del saves\\savegame" + std::to_string(index) + ".sav";
 	const char* cmd_cc = cmd_s.c_str();
-	system(cmd_cc);
+	system(cmd_cc); //TODO Funktioniert nicht
 
 	return true;
 }

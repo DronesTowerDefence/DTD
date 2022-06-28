@@ -399,7 +399,7 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 
-				Time time = seconds(std::stoi(value));
+				Time time = seconds(stoi(value));
 				Clock timer;
 
 				while (timer.getElapsedTime() < time);
@@ -419,7 +419,7 @@ bool MultiplayerChat::chatCommand()
 		}
 		else if (str.find("savegame") != std::string::npos)
 		{
-			if (str.size() == 8)
+			if (str.size() == 9)
 			{
 				Game::getInstance()->saveGame();
 				output = "saved the game";
@@ -427,13 +427,13 @@ bool MultiplayerChat::chatCommand()
 		}
 		else if (str.find("deletesave") != std::string::npos)
 		{
-			if (str.size() > 14)
+			if (str.size() > 12)
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				if (std::stoi(value) < res->getMapCount() && std::stoi(value) >= 0)
+				if (stoi(value) < res->getMapCount() && stoi(value) >= 0)
 				{
-					HomeMenu::getInstance()->deleteSave(std::stoi(value));
+					HomeMenu::getInstance()->deleteSave(stoi(value));
 					output = "deleted the saved the game";
 				}
 			}
