@@ -55,7 +55,6 @@ private:
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
 	
-	
 	Clock* animation;
 	Clock* timeUntilTestVersionEndClock;
 	
@@ -67,7 +66,6 @@ private:
 
 	Ressources* res;
 	
-
 	/// <summary>
 	/// Checkt, ob Zahlen 0-9 geklickt wird oder "." für die Eingabe der IP-Adersse
 	/// </summary>
@@ -77,10 +75,11 @@ private:
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
 	/// <returns></returns>
-	int CheckClicked();
+	int CheckClicked(Event);
 	void draw();
 	
 	void setTowerTexture();
+	bool connect(Event);
 
 public:
 	HomeMenu();

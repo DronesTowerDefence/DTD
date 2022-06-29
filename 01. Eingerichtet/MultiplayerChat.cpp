@@ -293,28 +293,7 @@ bool MultiplayerChat::chatCommand()
 	strcpy_s(arr, arrLeng + 1, chatInput.c_str());
 	std::string str = "";
 
-	if (arrLeng > 3 && (arr[0] == '<' && arr[2] == '>' && (arr[1] == 'b' || arr[1] == 'i' || arr[1] == 'u')))
-	{
-		for (int i = 3; i <= arrLeng; i++)
-		{
-			str += arr[i];
-		}
-
-		if (arr[1] == 'b')
-		{
-			chatInputText.setStyle(Text::Bold);
-		}
-		else if (arr[1] == 'i')
-		{
-			chatInputText.setStyle(Text::Italic);
-		}
-		else if (arr[1] == 'u')
-		{
-			chatInputText.setStyle(Text::Underlined);
-		}
-		return false;
-	}
-	else if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
+	if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
 	{
 		std::string output = "Unknown Command";
 		char value[10];

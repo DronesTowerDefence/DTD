@@ -28,7 +28,7 @@ HomeMenu::HomeMenu()
 	client = new Sprite();
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
-	
+
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
 	upperBorder = new RectangleShape();
@@ -78,9 +78,9 @@ HomeMenu::HomeMenu()
 	multiplayerMenue->setPosition(Vector2f(500, 350));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
-	
+
 	choseIndex = -1;
-	
+
 	drone->setScale(2, 2);
 	//
 	int y = 400;
@@ -93,7 +93,7 @@ HomeMenu::HomeMenu()
 
 	}
 
-	
+
 
 
 	positionTower[0] = Vector2f(1300, 250);
@@ -199,7 +199,7 @@ void HomeMenu::ipAdressInput(Event event) {
 		ipAdressText->setString(ipAdress);
 	}
 }
-int  HomeMenu::CheckClicked()
+int  HomeMenu::CheckClicked(Event event)
 {
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
@@ -236,33 +236,8 @@ int  HomeMenu::CheckClicked()
 			status = 2;
 			connected = true;
 
-			if (res->getListener()->listen(4567))
-			{
-				connected = false;
-			}
-
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
-			{
-				connected = false;
-			}
-			Packet p;
-			while (res->getReceiver()->receive(p) != Socket::Done);
-
-			std::string ip_client;
-			p >> ip_client;
-			res->setIpAddress(ip_client);
-
-			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
-			{
-				//connected = false;
-			}
-			Packet p5;
-			p5 << choseIndex;
-			Ressources::getInstance()->getSender()->send(p5);
-
-			res->getSender()->setBlocking(false);
-			res->getReceiver()->setBlocking(false);
-
+			if (connect(event)) return 2;
+			else return 0;
 
 			return 2;
 		}
@@ -276,37 +251,9 @@ int  HomeMenu::CheckClicked()
 			connected = true;
 			status = 3;
 
-			res->setIpAddress(ipAdress);
-
-			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
-			{
-				connected = false;
-			}
-
-			Packet p1;
-			p1 << ownIpAdress;
-			res->getSender()->send(p1);
-
-
-			if (res->getListener()->listen(4568))
-			{
-				connected = false;
-			}
-
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
-			{
-				connected = false;
-			}
-			Packet p2;
-
-			while (res->getReceiver()->receive(p2));
-			p2 >> choseIndex;
-			res->getSender()->setBlocking(false);
-			res->getReceiver()->setBlocking(false);
-
-			return 3;
+			if (connect(event)) return 3;
+			else return 0;
 		}
-
 
 		//startclicked
 		mouse = Mouse::getPosition(*window);
@@ -420,7 +367,7 @@ void HomeMenu::HomeMenuStart()
 		{
 			drone->setPosition(Vector2f(0, 300));
 		}
-		int clicked = CheckClicked();
+		int clicked = CheckClicked(event);
 		if (clicked == 1 && choseIndex != -1) // singleplayer
 		{
 			break;
@@ -502,160 +449,160 @@ char HomeMenu::keyboardInput(Event event)
 	{
 	case Keyboard::Num0:
 	case Keyboard::Numpad0:
-		c= '0';
+		c = '0';
 		break;
 	case Keyboard::Num1:
 	case Keyboard::Numpad1:
-		c= '1';
+		c = '1';
 		break;
 	case Keyboard::Num2:
 	case Keyboard::Numpad2:
-		c= '2';
+		c = '2';
 		break;
 	case Keyboard::Num3:
 	case Keyboard::Numpad3:
-		c= '3';
+		c = '3';
 		break;
 	case Keyboard::Num4:
 	case Keyboard::Numpad4:
-		c= '4';
+		c = '4';
 		break;
 	case Keyboard::Num5:
 	case Keyboard::Numpad5:
-		c= '5';
+		c = '5';
 		break;
 	case Keyboard::Num6:
 	case Keyboard::Numpad6:
-		c= '6';
+		c = '6';
 		break;
 	case Keyboard::Num7:
 	case Keyboard::Numpad7:
-		c= '7';
+		c = '7';
 		break;
 	case Keyboard::Num8:
 	case Keyboard::Numpad8:
-		c= '8';
+		c = '8';
 		break;
 	case Keyboard::Num9:
 	case Keyboard::Numpad9:
-		c= '9';
+		c = '9';
 		break;
 	case Keyboard::A:
-		c= 'a';
+		c = 'a';
 		break;
 	case Keyboard::B:
-		c= 'b';
+		c = 'b';
 		break;
 	case Keyboard::C:
-		c= 'c';
+		c = 'c';
 		break;
 	case Keyboard::D:
-		c= 'd';
+		c = 'd';
 		break;
 	case Keyboard::E:
-		c= 'e';
+		c = 'e';
 		break;
 	case Keyboard::F:
-		c= 'f';
+		c = 'f';
 		break;
 	case Keyboard::G:
-		c= 'g';
+		c = 'g';
 		break;
 	case Keyboard::H:
-		c= 'h';
+		c = 'h';
 		break;
 	case Keyboard::I:
-		c= 'i';
+		c = 'i';
 		break;
 	case Keyboard::J:
-		c= 'j';
+		c = 'j';
 		break;
 	case Keyboard::K:
-		c= 'k';
+		c = 'k';
 		break;
 	case Keyboard::L:
-		c= 'l';
+		c = 'l';
 		break;
 	case Keyboard::M:
-		c= 'm';
+		c = 'm';
 		break;
 	case Keyboard::N:
-		c= 'n';
+		c = 'n';
 		break;
 	case Keyboard::O:
-		c= 'o';
+		c = 'o';
 		break;
 	case Keyboard::P:
-		c= 'p';
+		c = 'p';
 		break;
 	case Keyboard::Q:
-		c= 'q';
+		c = 'q';
 		break;
 	case Keyboard::R:
-		c= 'r';
+		c = 'r';
 		break;
 	case Keyboard::S:
-		c= 's';
+		c = 's';
 		break;
 	case Keyboard::T:
-		c= 't';
+		c = 't';
 		break;
 	case Keyboard::U:
-		c= 'u';
+		c = 'u';
 		break;
 	case Keyboard::V:
-		c= 'v';
+		c = 'v';
 		break;
 	case Keyboard::W:
-		c= 'w';
+		c = 'w';
 		break;
 	case Keyboard::X:
-		c= 'x';
+		c = 'x';
 		break;
 	case Keyboard::Y:
-		c= 'y';
+		c = 'y';
 		break;
 	case Keyboard::Z:
-		c= 'z';
+		c = 'z';
 		break;
 	case Keyboard::Period:
-		c= '.';
+		c = '.';
 		break;
 	case Keyboard::Add:
-		c= '+';
+		c = '+';
 		break;
 	case Keyboard::Comma:
-		c= ',';
+		c = ',';
 		break;
 	case Keyboard::Dash:
-		c= '-';
+		c = '-';
 		break;
 	case Keyboard::Divide:
-		c= '/';
+		c = '/';
 		break;
 	case Keyboard::Equal:
-		c= '=';
+		c = '=';
 		break;
 	case Keyboard::Multiply:
-		c= '*';
+		c = '*';
 		break;
 	case Keyboard::Quote:
-		c= '"';
+		c = '"';
 		break;
 	case Keyboard::Semicolon:
-		c= ';';
+		c = ';';
 		break;
 	case Keyboard::Slash:
-		c= '#';
+		c = '#';
 		break;
 	case Keyboard::Space:
-		c= ' ';
+		c = ' ';
 		break;
 	case Keyboard::Subtract:
-		c= '-';
+		c = '-';
 		break;
 	case Keyboard::Tilde:
-		c= '~';
+		c = '~';
 		break;
 
 
@@ -707,6 +654,96 @@ void HomeMenu::setTowerTexture()
 		animation->restart();
 	}
 
+}
+bool HomeMenu::connect(Event event)
+{
+	res->getSender()->setBlocking(false);
+	res->getReceiver()->setBlocking(false);
+	res->getListener()->setBlocking(false);
+
+	if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
+	{
+		res->getListener()->listen(4567); //Horcht am Port
+
+		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
+		{
+			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+			{
+				if (event.type == Event::Closed)
+				{
+					window->close();
+					return 0;
+				}
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)	return false;
+			}
+		}
+
+		Packet p;
+		std::string ip_client;
+		p >> ip_client;
+		res->setIpAddress(ip_client);
+
+		while (res->getSender()->connect(res->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
+		{
+			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+			{
+				if (event.type == Event::Closed)
+				{
+					window->close();
+					return false;
+				}
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
+			}
+		}
+
+		Packet p5;
+		p5 << choseIndex;
+		Ressources::getInstance()->getSender()->send(p5);
+
+		return true;
+	}
+	else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+	{
+		res->setIpAddress(ipAdress);
+
+		while (res->getSender()->connect(res->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
+		{
+			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+			{
+				if (event.type == Event::Closed)
+				{
+					window->close();
+					return false;
+				}
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
+			}
+		}
+
+		Packet p1;
+		p1 << ownIpAdress;
+		res->getSender()->send(p1);
+
+		res->getListener()->listen(4568); //Horcht am Port
+
+		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
+		{
+			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
+			{
+				if (event.type == Event::Closed)
+				{
+					window->close();
+					return false;
+				}
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
+			}
+		}
+
+		Packet p2;
+		while (res->getReceiver()->receive(p2));
+		p2 >> choseIndex;
+
+		return true;
+	}
 }
 #pragma endregion
 
