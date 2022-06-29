@@ -107,6 +107,8 @@ private:
 	Texture creditsTexture;
 	Texture openChatButtonTexture;
 	Texture multiplayerChatBackgroundTexture;
+	Texture sendMoneyButtonOpenTexture;
+	Texture sendMoneyBackgroundTexture;
 
 	Image icon;
 
@@ -213,6 +215,8 @@ public:
 	Texture* getCreditsTexture();
 	Texture* getOpenChatButtonTexture();
 	Texture* getMultiplayerChatBackgroundTexture();
+	Texture* getSendMoneyButtonOpenTexture();
+	Texture* getSendMoneyBackgroundTexture();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 

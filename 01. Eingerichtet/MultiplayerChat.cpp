@@ -29,7 +29,7 @@ MultiplayerChat::MultiplayerChat()
 	bottomChatBorder.setSize(Vector2f(400, 1));
 
 	chatInputText.setString(chatInput);
-	chatInputText.setPosition(Vector2f(1335, 750));
+	chatInputText.setPosition(Vector2f(1335, 690));
 	chatInputText.setFont(font);
 	chatInputText.setCharacterSize(20);
 	chatInputText.setFillColor(Color::White);
@@ -90,106 +90,109 @@ void MultiplayerChat::checkClicked()
 }
 void MultiplayerChat::checkInput(Event event)
 {
-	if (event.type == Event::KeyPressed && event.key.code == Keyboard::LShift)
+	if (isOpen)
 	{
-		isShift = true;
-	}
-	else if (event.type == Event::KeyReleased && event.key.code == Keyboard::LShift)
-	{
-		isShift = false;
-	}
-
-	if (isOpen && event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
-	{
-		isOpen = false;
-	}
-
-	if (event.type == Event::KeyReleased && isOpen)
-	{
-		char tmp = '\0';
-
-		tmp = HomeMenu::keyboardInput(event);
-		if (isShift) tmp = std::toupper(tmp);
-
-		if (tmp != '\0')
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::LShift)
 		{
-			if (inputDefaultText)
+			isShift = true;
+		}
+		else if (event.type == Event::KeyReleased && event.key.code == Keyboard::LShift)
+		{
+			isShift = false;
+		}
+
+		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+		{
+			isOpen = false;
+		}
+
+		if (event.type == Event::KeyReleased)
+		{
+			char tmp = '\0';
+
+			tmp = HomeMenu::keyboardInput(event);
+			if (isShift) tmp = std::toupper(tmp);
+
+			if (tmp != '\0')
 			{
-				chatInput = tmp;
-				inputDefaultText = false;
+				if (inputDefaultText)
+				{
+					chatInput = tmp;
+					inputDefaultText = false;
+				}
+				else
+				{
+					chatInput += tmp;
+				}
 			}
-			else
-			{
-				chatInput += tmp;
-			}
-		}
-		if (chatInput.size() == 0)
-		{
-			chatInput = defaultChatInput;
-			inputDefaultText = true;
-		}
-		if (chatInputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
-		{
-			chatInput += "\n";
-			int arrLeng = chatInput.size();
-			char* arr = new char[arrLeng + 1];
-			char tmpC1, tmpC2;
-			strcpy_s(arr, arrLeng + 1, chatInput.c_str());
-
-			tmpC1 = arr[arrLeng - 3];
-			tmpC2 = arr[arrLeng - 1];
-
-			arr[arrLeng - 1] = tmpC1;
-			arr[arrLeng - 3] = tmpC2;
-
-			chatInput = arr;
-			chatInputText.setString(chatInput);
-		}
-
-		if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0 && !inputDefaultText)
-		{
-			chatInput.erase(chatInput.size() - 1);
-		}
-		else if (event.key.code == Keyboard::Enter && chatInput.size() > 0 && !inputDefaultText)
-		{
-			if (!chatCommand())
-			{
-				addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
-				Multiplayer::send(chatInput);
-			}
-			refreshChatOutput();
-			chatInput = defaultChatInput;
-			inputDefaultText = true;
-			chatNavigationVertical = 0;
-			chatNavigationHorizontal = 0;
-		}
-
-		if (event.key.code == Keyboard::Up && chatNavigationVertical < chatText.size())
-		{
-			chatNavigationVertical++;
-		}
-		else if (event.key.code == Keyboard::Down && chatNavigationVertical > 0)
-		{
-			chatNavigationVertical--;
-			if (chatNavigationVertical == 0)
+			if (chatInput.size() == 0)
 			{
 				chatInput = defaultChatInput;
 				inputDefaultText = true;
 			}
-		}
+			if (chatInputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
+			{
+				chatInput += "\n";
+				int arrLeng = chatInput.size();
+				char* arr = new char[arrLeng + 1];
+				char tmpC1, tmpC2;
+				strcpy_s(arr, arrLeng + 1, chatInput.c_str());
 
-		if (event.key.code == Keyboard::Right && chatNavigationHorizontal < chatInput.size())
-		{
-			chatNavigationHorizontal++;
+				tmpC1 = arr[arrLeng - 3];
+				tmpC2 = arr[arrLeng - 1];
+
+				arr[arrLeng - 1] = tmpC1;
+				arr[arrLeng - 3] = tmpC2;
+
+				chatInput = arr;
+				chatInputText.setString(chatInput);
+			}
+
+			if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0 && !inputDefaultText)
+			{
+				chatInput.erase(chatInput.size() - 1);
+			}
+			else if (event.key.code == Keyboard::Enter && chatInput.size() > 0 && !inputDefaultText)
+			{
+				if (!chatCommand())
+				{
+					addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
+					Multiplayer::send(chatInput);
+				}
+				refreshChatOutput();
+				chatInput = defaultChatInput;
+				inputDefaultText = true;
+				chatNavigationVertical = 0;
+				chatNavigationHorizontal = 0;
+			}
+
+			if (event.key.code == Keyboard::Up && chatNavigationVertical < chatText.size())
+			{
+				chatNavigationVertical++;
+			}
+			else if (event.key.code == Keyboard::Down && chatNavigationVertical > 0)
+			{
+				chatNavigationVertical--;
+				if (chatNavigationVertical == 0)
+				{
+					chatInput = defaultChatInput;
+					inputDefaultText = true;
+				}
+			}
+
+			if (event.key.code == Keyboard::Right && chatNavigationHorizontal < chatInput.size())
+			{
+				chatNavigationHorizontal++;
+			}
+			else if (event.key.code == Keyboard::Left && chatNavigationHorizontal > 0)
+			{
+				chatNavigationHorizontal--;
+			}
 		}
-		else if (event.key.code == Keyboard::Left && chatNavigationHorizontal > 0)
-		{
-			chatNavigationHorizontal--;
-		}
+		checkChatNavigation();
+
+		chatInputText.setString(chatInput);
 	}
-	checkChatNavigation();
-
-	chatInputText.setString(chatInput);
 }
 void MultiplayerChat::refreshChatOutput()
 {
@@ -269,7 +272,7 @@ void MultiplayerChat::checkChatNavigation()
 	if (chatNavigationVertical > 0)
 	{
 		int j = 0;
-		for (auto i : chatText) //TODO: falschrum
+		for (auto i : chatText)
 		{
 			j++;
 			if (j == (chatText.size() + 1) - chatNavigationVertical)
@@ -463,9 +466,8 @@ bool MultiplayerChat::chatCommand()
 				if (stoi(value) == 1)
 				{
 					Game::getInstance()->saveGame();
-					window->close();
 				}
-				else window->close();
+				window->close();
 			}
 		}
 

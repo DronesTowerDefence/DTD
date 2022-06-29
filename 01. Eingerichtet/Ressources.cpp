@@ -277,6 +277,8 @@ Ressources::Ressources()
 	creditsTexture.loadFromFile("img/credits.png");
 	openChatButtonTexture.loadFromFile("img/buttons/openChatButton.png");
 	multiplayerChatBackgroundTexture.loadFromFile("img/multiplayerChatBackground.png");
+	sendMoneyButtonOpenTexture.loadFromFile("img/openSendMoneyButton.png");
+	sendMoneyBackgroundTexture.loadFromFile("img/sendMoneyBackground.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -770,6 +772,14 @@ Texture* Ressources::getOpenChatButtonTexture()
 Texture* Ressources::getMultiplayerChatBackgroundTexture()
 {
 	return &multiplayerChatBackgroundTexture;
+}
+Texture* Ressources::getSendMoneyButtonOpenTexture()
+{
+	return &sendMoneyButtonOpenTexture;
+}
+Texture* Ressources::getSendMoneyBackgroundTexture()
+{
+	return &sendMoneyBackgroundTexture;
 }
 #pragma endregion
 

@@ -29,6 +29,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
+    <ClInclude Include="SendMoney.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />
     <ClCompile Include="Round.cpp" />
+    <ClCompile Include="SendMoney.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />

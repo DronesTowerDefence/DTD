@@ -111,6 +111,9 @@
     <ClCompile Include="MultiplayerChat.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="SendMoney.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -162,6 +165,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="MultiplayerChat.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="SendMoney.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

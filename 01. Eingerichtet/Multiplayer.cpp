@@ -106,6 +106,15 @@ bool Multiplayer::send(std::string mess)
 	else return false;
 }
 
+bool Multiplayer::send(int money)
+{
+	Packet pac;
+	pac << 12 << money;
+	if (Ressources::getInstance()->getSender()->send(pac) == Socket::Done) //Sendet das Packet
+		return true;
+	else return false;
+}
+
 bool Multiplayer::send(int index, Vector2f vector)
 {
 	Packet pac;
@@ -256,6 +265,11 @@ bool Multiplayer::receive()
 			}
 		}
 		return true;
+
+	case 12:
+		pac >> int1;
+		Round::getInstance()->addMoney(int1);
+
 	default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 		return false;
 	}

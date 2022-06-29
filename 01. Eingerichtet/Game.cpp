@@ -254,17 +254,20 @@ void Game::startGame()
 				saveGame();
 				window->close();
 			}
-			if (!MultiplayerChat::getInstance()->getIsOpen())
+			if (!MultiplayerChat::getInstance()->getIsOpen() && !SendMoney::getInstance()->getIsOpen())
 			{
 				PauseMenu::getInstance()->checkPause(event);
 				shortcuts();
 			}
 			MultiplayerChat::getInstance()->checkInput(event);
+			SendMoney::getInstance()->checkInput(event);
 		}
 
 		while (Multiplayer::receive());
 		HomeMenu::getInstance()->checkTestVersionEnd();
 		MultiplayerChat::getInstance()->checkChat();
+		SendMoney::getInstance()->checkSendMoney();
+
 
 		updateEco();
 		moveDrohnes();
@@ -500,6 +503,7 @@ void Game::draw()
 
 	window->draw(eco);
 
+	SendMoney::getInstance()->draw();
 	MultiplayerChat::getInstance()->draw();
 
 	window->display();

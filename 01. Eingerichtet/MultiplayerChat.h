@@ -64,10 +64,10 @@ private:
 	void refreshChatOutput();
 	void checkChatNavigation();
 	bool chatCommand();
-	int stoi(char*);
 
 public:
 
+	int stoi(char*);
 	void checkInput(Event);
 	void checkChat();
 	void draw();

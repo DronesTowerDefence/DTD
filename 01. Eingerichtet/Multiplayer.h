@@ -6,7 +6,7 @@
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
 5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
-10=ChatMessage, 11=Nagelhaufen wird platziert
+10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden
 */
 static class Multiplayer
 {
@@ -75,6 +75,13 @@ public:
 	/// <param name="">Nachricht</param>
 	/// <returns>True, wenn gesendet</returns>
 	static bool send(std::string);
+
+	/// <summary>
+	/// Sendet ein Packet, welches Geld enthält
+	/// </summary>
+	/// <param name="">Geld Betrag</param>
+	/// <returns>True, wenn gesendet</returns>
+	static bool send(int);
 
 	static bool send(int, Vector2f);
 	/// <summary>
