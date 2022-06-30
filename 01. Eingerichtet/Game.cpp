@@ -247,6 +247,12 @@ void Game::startGame()
 	{
 		while (Multiplayer::receive());
 
+		if (!window->hasFocus())
+		{
+			PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+			PauseMenu::getInstance()->checkPause(true);
+		}
+
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -678,6 +684,12 @@ void Game::checkLoseGame()
 		}
 		while (round->getLost() || round->getWon())
 		{
+			if (!window->hasFocus())
+			{
+				PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+				PauseMenu::getInstance()->checkPause(true);
+			}
+
 			while (window->pollEvent(event))
 			{
 				if (event.type == Event::Closed)
@@ -1142,6 +1154,11 @@ void Game::checkMultiplayerConnection()
 
 			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
 			{
+				if (!window->hasFocus())
+				{
+					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+					PauseMenu::getInstance()->checkPause(true);
+				}
 				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 				{
 					if (event.type == Event::Closed)
@@ -1160,6 +1177,11 @@ void Game::checkMultiplayerConnection()
 
 			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
 			{
+				if (!window->hasFocus())
+				{
+					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+					PauseMenu::getInstance()->checkPause(true);
+				}
 				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 				{
 					if (event.type == Event::Closed)
@@ -1182,6 +1204,11 @@ void Game::checkMultiplayerConnection()
 		{
 			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
 			{
+				if (!window->hasFocus())
+				{
+					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+					PauseMenu::getInstance()->checkPause(true);
+				}
 				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 				{
 					if (event.type == Event::Closed)
@@ -1202,6 +1229,11 @@ void Game::checkMultiplayerConnection()
 
 			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
 			{
+				if (!window->hasFocus())
+				{
+					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
+					PauseMenu::getInstance()->checkPause(true);
+				}
 				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 				{
 					if (event.type == Event::Closed)
