@@ -67,7 +67,6 @@ private:
 
 public:
 
-	int stoi(char*);
 	void checkInput(Event);
 	void checkChat();
 	void draw();

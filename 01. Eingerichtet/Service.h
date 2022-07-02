@@ -9,6 +9,9 @@ private:
 public:
 	static Service* getInstance();
 	
+	static float stringToFloat(std::string);
+	static int stringToInt(std::string);
+
 	float getXPosition( int xObject);
 	float getYPosition( int yObject);
 	Vector2f getMousePosition(Vector2i MousePosition);

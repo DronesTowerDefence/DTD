@@ -31,7 +31,39 @@ Vector2f Service::getObjectPosition(Vector2f objectposition)
 	float x = VideoMode::getDesktopMode().height;
 	return Vector2f(VideoMode::getDesktopMode().width / 1920.0 * objectposition.x, VideoMode::getDesktopMode().height / 1080.f * objectposition.y);
 }
+float Service::stringToFloat(std::string str)
+{
+	return float(stringToInt(str));
+}
+int Service::stringToInt(std::string str)
+{
+	int returnValue = 0;
+	int size = str.size();
+	char tmp;
+	char* c = new char[str.size()];
+	strcpy_s(c, size + 1, str.c_str());
+
+	if (str.find(" ") != std::string::npos)
+	{
+		for (int k = 0; k < size; k++)
+		{
+			tmp = c[k];
+			c[k] = c[k + 1];
+			c[k + 1] = tmp;
+		}
+		size--;
+	}
+
+	for (int i = 0; i < size; i++)
+	{
+		returnValue *= 10;
+		returnValue += (c[i] - 48);
+	}
+
+	return returnValue;
+}
 #pragma endregion
+
 #pragma region getter
 Service* Service::getInstance()
 {

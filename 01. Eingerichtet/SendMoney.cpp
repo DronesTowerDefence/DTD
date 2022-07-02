@@ -118,7 +118,7 @@ bool SendMoney::send()
 	int arrLen = input.size();
 	char* arr = new char[arrLen];
 	strcpy_s(arr, arrLen + 1, input.c_str());
-	inputAsInt = MultiplayerChat::getInstance()->stoi(arr);
+	inputAsInt = Service::getInstance()->stringToInt(arr);
 
 	if (inputAsInt > 0 && Round::getInstance()->getMoney() >= inputAsInt)
 	{

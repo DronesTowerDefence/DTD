@@ -327,7 +327,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->addMoney(stoi(value));
+				Round::getInstance()->addMoney(Service::getInstance()->stringToInt(value));
 				output = "added ";
 				output += value;
 				output += " money";
@@ -339,7 +339,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->submoney(stoi(value));
+				Round::getInstance()->submoney(Service::getInstance()->stringToInt(value));
 				output = "subtracted ";
 				output += value;
 				output += " money";
@@ -351,7 +351,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->addHealth(stoi(value));
+				Round::getInstance()->addHealth(Service::getInstance()->stringToInt(value));
 				output = "added ";
 				output += value;
 				output += " health";
@@ -363,7 +363,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->subhealth(stoi(value));
+				Round::getInstance()->subhealth(Service::getInstance()->stringToInt(value));
 				output = "subtracted ";
 				output += value;
 				output += " health";
@@ -375,7 +375,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				Round::getInstance()->setIndex(stoi(value));
+				Round::getInstance()->setIndex(Service::getInstance()->stringToInt(value));
 				output = "set round to ";
 				output += value;
 			}
@@ -418,7 +418,7 @@ bool MultiplayerChat::chatCommand()
 				found = str.find(" ");
 				str.copy(value, 10, found);
 
-				Time time = seconds(stoi(value));
+				Time time = seconds(Service::getInstance()->stringToInt(value));
 				Clock timer;
 
 				while (timer.getElapsedTime() < time);
@@ -450,9 +450,9 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				if (stoi(value) < res->getMapCount() && stoi(value) >= 0)
+				if (Service::getInstance()->stringToInt(value) < res->getMapCount() && Service::getInstance()->stringToInt(value) >= 0)
 				{
-					HomeMenu::getInstance()->deleteSave(stoi(value));
+					HomeMenu::getInstance()->deleteSave(Service::getInstance()->stringToInt(value));
 					output = "deleted the saved the game";
 				}
 			}
@@ -463,7 +463,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				found = str.find(" ");
 				str.copy(value, 10, found);
-				if (stoi(value) == 1)
+				if (Service::getInstance()->stringToInt(value) == 1)
 				{
 					Game::getInstance()->saveGame();
 				}
@@ -476,32 +476,6 @@ bool MultiplayerChat::chatCommand()
 	}
 	else return false;
 
-}
-int MultiplayerChat::stoi(char* c)
-{
-	int returnValue = 0;
-	int size = 0;
-	char tmp;
-
-	for (; c[size] != '\0'; size++);
-
-	for (int k = 0; k < size; k++)
-	{
-		tmp = c[k];
-		c[k] = c[k + 1];
-		c[k + 1] = tmp;
-
-
-	}
-	size--;
-
-	for (int i = 0; i < size; i++)
-	{
-		returnValue *= 10;
-		returnValue += (c[i] - 48);
-	}
-
-	return returnValue;
 }
 void MultiplayerChat::checkChat()
 {
