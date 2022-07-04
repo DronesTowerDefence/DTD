@@ -53,6 +53,7 @@ bool Game::loadGame()
 	Tower* newTower = nullptr;
 	int counter = 0, defaultCounter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
 	bool settingsFirstVolume = true;
+	immortalMode = false;
 
 	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
 	if (!FileTestSettings)
@@ -64,7 +65,7 @@ bool Game::loadGame()
 		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
 		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-		for (int i = 0; buffer[i]!='\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
+		for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
 
 		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
 		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
@@ -576,7 +577,10 @@ void Game::subRoundHealth()
 				case 1:
 					if (pos_drohne.y == pos_waypoint.y && pos_drohne.x >= pos_waypoint.x)
 					{
-						round->subhealth(i->getLives());
+						if (!immortalMode)
+						{
+							round->subhealth(i->getLives());
+						}
 						i->~Drone();
 						return;
 					}
@@ -585,7 +589,10 @@ void Game::subRoundHealth()
 				case 2:
 					if (pos_drohne.y == pos_waypoint.y && pos_drohne.x <= pos_waypoint.x)
 					{
-						round->subhealth(i->getLives());
+						if (!immortalMode)
+						{
+							round->subhealth(i->getLives());
+						}
 						i->~Drone();
 						return;
 					}
@@ -593,7 +600,10 @@ void Game::subRoundHealth()
 				case 3:
 					if (pos_drohne.y >= pos_waypoint.y && pos_drohne.x == pos_waypoint.x)
 					{
-						round->subhealth(i->getLives());
+						if (!immortalMode)
+						{
+							round->subhealth(i->getLives());
+						}
 						i->~Drone();
 						return;
 					}
@@ -601,13 +611,19 @@ void Game::subRoundHealth()
 				case 4:
 					if (pos_drohne.y <= pos_waypoint.y && pos_drohne.x == pos_waypoint.x)
 					{
-						round->subhealth(i->getLives());
+						if (!immortalMode)
+						{
+							round->subhealth(i->getLives());
+						}
 						i->~Drone();
 						return;
 					}
 				case 5:
 					if (pos_drohne.x > 1720.f) {
-						round->subhealth(i->getLives());
+						if (!immortalMode)
+						{
+							round->subhealth(i->getLives());
+						}
 						i->~Drone();
 						return;
 					}
@@ -1396,6 +1412,10 @@ int Game::getDroneRow()
 {
 	return droneRow;
 }
+bool Game::getImmortalMode()
+{
+	return immortalMode;
+}
 #pragma endregion
 
 #pragma region setter
@@ -1412,6 +1432,10 @@ void Game::setDoubleSpeed(bool wert)
 void Game::setDroneCount(int _droneCount)
 {
 	droneCount = _droneCount;
+}
+void Game::setImmortalMode(bool a)
+{
+	immortalMode = a;
 }
 void Game::setShootClockSpeed(int a)
 {

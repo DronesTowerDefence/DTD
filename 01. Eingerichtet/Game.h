@@ -66,6 +66,11 @@ private:
 	bool doubleSpeed;
 
 	/// <summary>
+	/// Für die Cheats, wenn true ziehen Drohnen keine Leben ab
+	/// </summary>
+	bool immortalMode;
+
+	/// <summary>
 	/// Die Shape, wo die Sidebar drin ist
 	/// </summary>
 	RectangleShape toolbar;
@@ -263,6 +268,8 @@ public:
 
 	int getDroneRow();
 
+	bool getImmortalMode();
+
 	/// <summary>
 	/// Legt das Fenster fest
 	/// </summary>
@@ -273,6 +280,7 @@ public:
 	void setStatus(int state);
 	void setDoubleSpeed(bool wert);
 	void setDroneCount(int);
+	void setImmortalMode(bool);
 
 	/// <summary>
 	/// Startet das Spiel
