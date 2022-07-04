@@ -358,6 +358,7 @@ void Game::checkButtonClick()
 		if (tower == nullptr) // wenn die Toolbar nicht die Updates anzeigt
 		{
 			index = sidebar->isClicked(window);
+
 			if (index > -1)
 			{
 				newTower = new TowerAlias(index, p_map);
@@ -389,7 +390,7 @@ void Game::checkButtonClick()
 		if (tower != nullptr)
 		{
 
-			tower->manageUpdate(window);
+			
 			if (tower->getUpdates()->IsClosed(window))
 			{
 				tower = nullptr;
@@ -405,6 +406,10 @@ void Game::checkButtonClick()
 		Sidebar::getInstance()->isChangeSpeed(window);
 	}
 
+	if (tower != nullptr)
+	{
+		tower->manageUpdate(window);
+	}
 
 }
 void Game::checkTowerAlias()
@@ -447,14 +452,7 @@ void Game::draw()
 	window->draw(toolbar);
 	CircleShape* a;
 
-	if (tower != nullptr)
-	{
-		tower->getUpdates()->draw(window);
-	}
-	else
-	{
-		sidebar->draw(window); //Sidebar wird gedrawt
-	}
+
 
 	if (newTower != nullptr) //TowerAlias wird gedrawt
 	{
@@ -515,6 +513,14 @@ void Game::draw()
 	SendMoney::getInstance()->draw();
 	MultiplayerChat::getInstance()->draw();
 
+	if (tower != nullptr)
+	{
+		tower->getUpdates()->draw(window);
+	}
+	else
+	{
+		sidebar->draw(window); //Sidebar wird gedrawt
+	}
 	window->display();
 }
 void Game::checkShoot()

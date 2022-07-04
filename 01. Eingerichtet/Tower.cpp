@@ -283,6 +283,7 @@ void Tower::Update2()
 void Tower::manageUpdate(RenderWindow* window)
 {
 
+	update->hover(window);
 	int indexUpdate = update->isClicked(window);
 
 	if (indexUpdate == 1)

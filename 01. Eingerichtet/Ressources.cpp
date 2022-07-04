@@ -170,6 +170,64 @@ Ressources::Ressources()
 
 		}
 	}
+
+
+	updateBeschreibungEins[0][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[0][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[0][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[0][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+
+	updateBeschreibungEins[1][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[1][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[1][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[1][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+
+	updateBeschreibungEins[2][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[2][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[2][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[2][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+
+	updateBeschreibungEins[3][0] = "Fuegt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][1] = "Fuegt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][2] = "Fuegt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][3] = "Fuegt eine Schussrichtung hinzu";
+
+	updateBeschreibungEins[0][0] = "Generiert 20% mehr Geld\n als zum beginn";
+	updateBeschreibungEins[0][1] = "Generiert 40% mehr Geld\n als zum beginn";
+	updateBeschreibungEins[0][2] = "Generiert 60% mehr Geld\n als zum beginn";
+	updateBeschreibungEins[0][3] = "Generiert 80% mehr Geld\n als zum beginn";
+
+
+	updateBeschreibungZwei[0][0] = "Veringert die Angriffszeit\n um 12,5%";
+	updateBeschreibungZwei[0][1] = "Veringert die Angriffszeit\n um 25%";
+	updateBeschreibungZwei[0][2] = "Veringert die Angriffszeit\n um 37,5%";
+	updateBeschreibungZwei[0][3] = "Veringert die Angriffszeit\n um 50%";
+
+	updateBeschreibungZwei[1][0] = "Veringert die Angriffszeit\n um 14,29%";
+	updateBeschreibungZwei[1][1] = "Veringert die Angriffszeit\n um 28,57%";
+	updateBeschreibungZwei[1][2] = "Veringert die Angriffszeit\n um 42,85%";
+	updateBeschreibungZwei[1][3] = "Veringert die Angriffszeit\n um 57,14%";
+
+	updateBeschreibungZwei[2][0] = "Veringert die Angriffszeit\n um 16,67%";
+	updateBeschreibungZwei[2][1] = "Veringert die Angriffszeit\n um 33,33%";
+	updateBeschreibungZwei[2][2] = "Veringert die Angriffszeit\n um 50%";
+	updateBeschreibungZwei[2][3] = "Veringert die Angriffszeit\n um 66,66%";
+
+	updateBeschreibungZwei[3][0] = "Veringert die Angriffszeit\n um 20%";
+	updateBeschreibungZwei[3][1] = "Veringert die Angriffszeit\n um 40%";
+	updateBeschreibungZwei[3][2] = "Veringert die Angriffszeit\n um 60%";
+	updateBeschreibungZwei[3][3] = "Veringert die Angriffszeit\n um 80%";
+
+	updateBeschreibungZwei[4][0] = "Veringert die Angriffszeit\n um 20%";
+	updateBeschreibungZwei[4][1] = "Veringert die Angriffszeit\n um 40%";
+	updateBeschreibungZwei[4][2] = "Veringert die Angriffszeit\n um 60%";
+	updateBeschreibungZwei[4][3] = "Veringert die Angriffszeit\n um 80%";
+
+
+
+
+
+
 	// 0 = Schwarz
 	// 1 = Blau
 	// 2 = Rot
@@ -708,6 +766,14 @@ Texture* Ressources::getMapTexture(int i)
 int* Ressources::getDroneTypesInRound(int index)
 {
 	return &droneTypesInRound[index][0];
+}
+std::string Ressources::getUpdateBeschreibungEins(int tower, int index)
+{
+	return updateBeschreibungEins[tower][index];
+}
+std::string Ressources::getUpdateBeschreibungZwei(int tower, int index)
+{
+	return updateBeschreibungZwei[tower][index];
 }
 Texture* Ressources::getGameOverTexture()
 {

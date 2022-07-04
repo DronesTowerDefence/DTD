@@ -5,6 +5,7 @@
 #pragma region Konstruktor
 Updates::Updates(Tower* tower)
 {
+
 	res = Ressources::getInstance();
 	this->tower = tower;
 	index1 = 0;
@@ -13,6 +14,11 @@ Updates::Updates(Tower* tower)
 	update1 = new Sprite();
 	update2 = new Sprite();
 	sell = new Sprite();
+	information1 = new Sprite();
+	information2 = new Sprite();
+	informationTexture = new Texture();
+	background = new Sprite();
+	backgroundTexture = new Texture();
 	textureUpdate1 = new Texture();
 	textureUpdate2 = new Texture();
 	textureclose = new Texture();
@@ -20,6 +26,9 @@ Updates::Updates(Tower* tower)
 
 	textureUpdate1NoBuy = new Texture();
 	textureUpdate2NoBuy = new Texture();
+	backgroundTexture->loadFromFile("img/sendMoneyBackground.png");
+	informationTexture->loadFromFile("img/buttons/infoButton.png");
+	informationTexture->loadFromFile("");
 	if (tower->getIndex() == 4)
 	{
 		textureUpdate1 = res->getUpdateTexture(0);
@@ -49,11 +58,17 @@ Updates::Updates(Tower* tower)
 	update2->setTexture(*textureUpdate2);
 	close->setTexture(*textureclose);
 	sell->setTexture(*textureSell);
+	information1->setTexture(*informationTexture);
+	information2->setTexture(*informationTexture);
+	background->setTexture(*backgroundTexture);
 
 	update1->setPosition(Vector2f(1745, 200));
 	update2->setPosition(Vector2f(1745, 350));
 	close->setPosition(Vector2f(1850, 25));
 	sell->setPosition(Vector2f(1745, 25));
+	information1->setPosition(Vector2f(1850, 200));
+	information2->setPosition(Vector2f(1850, 350));
+	background->setPosition(Vector2f(1395, 150));
 
 	close->setScale(Vector2f(0.5, 0.5));
 
@@ -72,7 +87,7 @@ Updates::Updates(Tower* tower)
 	text1 = new Text();
 	text2 = new Text();
 	price = new Text();
-
+	informationtext = new Text();
 	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $");
 	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
 	price->setString(std::to_string((int)(tower->getValue() * 0.75f)) + " $");
@@ -81,11 +96,15 @@ Updates::Updates(Tower* tower)
 	text1->setPosition(1745, 300);
 	text2->setPosition(1745, 450);
 	price->setPosition(1745, 100);
+	informationtext->setPosition(Vector2f(1435, 200));
 
+
+	informationtext->setFont(arial);
 	text1->setFont(arial);
 	text2->setFont(arial);
 	price->setFont(arial);
 
+	informationtext->setCharacterSize(20);
 	text1->setCharacterSize(20);
 	text2->setCharacterSize(20);
 	price->setCharacterSize(20);
@@ -93,10 +112,12 @@ Updates::Updates(Tower* tower)
 	text1->setOutlineThickness(2);
 	price->setOutlineThickness(2);
 	text2->setOutlineThickness(2);
+	informationtext->setOutlineThickness(2);
 
 	text1->setOutlineColor(Color::Black);
 	text2->setOutlineColor(Color::Black);
 	price->setOutlineColor(Color::Black);
+	informationtext->setOutlineColor(Color::Black);
 
 }
 #pragma endregion
@@ -118,17 +139,60 @@ void Updates::draw(RenderWindow* window)
 		if (index2 > i)
 			window->draw(*shoowUpdate2[i]);
 	}
+	if (showinformation)
+	{
+		window->draw(*background);
+		window->draw(*informationtext);
+	}
+	window->draw(*information1);
+	window->draw(*information2);
 
+}
+void Updates::hover(RenderWindow* window)
+{
+	Vector2i mouse = Mouse::getPosition(*window);
+	Vector2f pos, pos2;
+
+	pos = Service::getInstance()->getObjectPosition(information1->getPosition());
+	pos2 = Service::getInstance()->getObjectPosition(information1->getPosition() + Vector2f(100, 100));
+
+	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	{
+		std::string test = Ressources::getInstance()->getUpdateBeschreibungEins(tower->getIndex(), index1);
+		informationtext->setString(Ressources::getInstance()->getUpdateBeschreibungEins(tower->getIndex(), index1));
+		showinformation = true;
+	}
+
+	else
+	{
+
+		pos = Service::getInstance()->getObjectPosition(information2->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(information2->getPosition() + Vector2f(100, 100));
+
+		if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+
+			informationtext->setString(Ressources::getInstance()->getUpdateBeschreibungZwei(tower->getIndex(), index2));
+			showinformation = true;
+		}
+		else
+		{
+			showinformation = false;
+		}
+	}
 }
 int Updates::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 
-	pos = Service::getInstance()->getObjectPosition(update1->getPosition()); 
-	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100)); 
 
-	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+
+
+	pos = Service::getInstance()->getObjectPosition(update1->getPosition());
+	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100));
+
+	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
 		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
 		{
@@ -139,9 +203,9 @@ int Updates::isClicked(RenderWindow* window)
 	else
 	{
 		pos = Service::getInstance()->getObjectPosition(update2->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100)); 
+		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100));
 
-		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
 			{
@@ -150,14 +214,15 @@ int Updates::isClicked(RenderWindow* window)
 		}
 	}
 
+
 	return -1;
 }
 bool Updates::IsClosed(RenderWindow* window)
 {
 
 	Vector2i mouse = Mouse::getPosition(*window);
-	Vector2f	pos = Service::getInstance()->getObjectPosition(close->getPosition()); 
-	Vector2f	pos2 = Service::getInstance()->getObjectPosition(close->getPosition() + Vector2f(50, 50)); 
+	Vector2f	pos = Service::getInstance()->getObjectPosition(close->getPosition());
+	Vector2f	pos2 = Service::getInstance()->getObjectPosition(close->getPosition() + Vector2f(50, 50));
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
@@ -175,7 +240,7 @@ bool Updates::isSell(RenderWindow* window)
 	Vector2f pos = Service::getInstance()->getObjectPosition(sell->getPosition());
 	Vector2f pos2 = Service::getInstance()->getObjectPosition(sell->getPosition() + Vector2f(50, 50));
 
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
 		return true;
 	}

@@ -60,6 +60,9 @@ private:
 	std::string towerName[5]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
+	std::string updateBeschreibungEins[5][4];
+	std::string updateBeschreibungZwei[5][4];
+
 	SoundBuffer hitBuffer[1];
 	SoundBuffer shootBuffer[1];
 
@@ -219,7 +222,8 @@ public:
 	Texture* getSendMoneyBackgroundTexture();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
-
+	std::string getUpdateBeschreibungEins(int, int);
+	std::string getUpdateBeschreibungZwei(int, int);
 	void setSpeed();
 	void setMultiplayerPlayerCount(int);
 	void setIpAddress(std::string);

@@ -8,10 +8,16 @@ class Updates
 private:
 	int index1;
 	int index2;
-	
+	Text *informationtext;
+	bool showinformation;
+	Sprite* background;
+	Texture* backgroundTexture;
+	Sprite* information1;
+	Sprite* information2;
+	Texture* informationTexture;
 	RectangleShape* shoowUpdate1[4];
 	RectangleShape* shoowUpdate2[4];
-	
+
 	Texture* textureUpdate1;
 	Texture* textureUpdate1NoBuy;
 	Texture* textureUpdate2;
@@ -31,8 +37,8 @@ private:
 	Ressources* res;
 
 public:
-	Updates(Tower * tower);
-	
+	Updates(Tower* tower);
+
 	int getIndex1();
 	int getIndex2();
 
@@ -46,12 +52,13 @@ public:
 	void addIndex1();
 	void addIndex2();
 
-	
+	void hover(RenderWindow* window);
+
 	void draw(RenderWindow* window);
 	int isClicked(RenderWindow* window);
 	bool IsClosed(RenderWindow* window);
 	bool isSell(RenderWindow* window);
-	void canBuy();	
+	void canBuy();
 	void setStringPrice();
 };
 
