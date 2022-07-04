@@ -298,7 +298,7 @@ bool MultiplayerChat::chatCommand()
 
 	if (arrLeng > 3 && (arr[0] == '#' && arr[1] == '+' && arr[2] == '#'))
 	{
-		std::string output = "Unknown Command";
+		std::string output = "Unknown command";
 		char value[10];
 		int iValue = 0;
 		size_t found;
@@ -468,6 +468,24 @@ bool MultiplayerChat::chatCommand()
 					Game::getInstance()->saveGame();
 				}
 				window->close();
+			}
+		}
+		else if (str.find("immortal") != std::string::npos)
+		{
+			if (str.size() == 11)
+			{
+				found = str.find(" ");
+				str.copy(value, 10, found);
+				if (Service::stringToInt(value) == 1)
+				{
+					Game::getInstance()->setImmortalMode(true);
+					output = "immortal-mode true";
+				}
+				else
+				{
+					Game::getInstance()->setImmortalMode(false);
+					output = "immortal-mode false";
+				}
 			}
 		}
 

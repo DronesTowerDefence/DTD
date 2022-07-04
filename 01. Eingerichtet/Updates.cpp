@@ -10,6 +10,8 @@ Updates::Updates(Tower* tower)
 	this->tower = tower;
 	index1 = 0;
 	index2 = 0;
+	isClosed1 = false;
+	isClosed2 = false;
 	close = new Sprite();
 	update1 = new Sprite();
 	update2 = new Sprite();
@@ -283,9 +285,14 @@ int Updates::getIndex2()
 {
 	return index2;
 }
-
-
-
+bool Updates::getIsClosed1()
+{
+	return isClosed1;
+}
+bool Updates::getIsClosed2()
+{
+	return isClosed2;
+}
 #pragma endregion
 
 #pragma region setter
@@ -296,6 +303,14 @@ void Updates::setIndex1(int index)
 void Updates::setIndex2(int index)
 {
 	index2 = index;
+}
+void Updates::setIsClosed1(bool a)
+{
+	isClosed1 = a;
+}
+void Updates::setIsClosed2(bool a)
+{
+	isClosed2 = a;
 }
 void Updates::setText1(std::string text)
 {

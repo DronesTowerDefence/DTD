@@ -15,6 +15,10 @@ private:
 	Sprite* information1;
 	Sprite* information2;
 	Texture* informationTexture;
+	
+	bool isClosed1;
+	bool isClosed2;
+
 	RectangleShape* shoowUpdate1[4];
 	RectangleShape* shoowUpdate2[4];
 
@@ -41,12 +45,14 @@ public:
 
 	int getIndex1();
 	int getIndex2();
+	bool getIsClosed1();
+	bool getIsClosed2();
 
 	void setIndex1(int index);
 	void setIndex2(int index);
-
+	void setIsClosed1(bool);
+	void setIsClosed2(bool);
 	void setText1(std::string text);
-
 	void setText2(std::string text);
 
 	void addIndex1();
