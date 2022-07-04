@@ -218,34 +218,41 @@ void Tower::Update1()
 	{
 		update->addIndex1();
 	}
+	else if (update->getIndex1() == 4)
+	{
+		update->setIsClosed1(true);
+	}
 
-	if (update->getIndex1() < 4)
+	if (update->getIndex1() < 4 && !update->getIsClosed1())
 	{
 		update->setText1(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex1())) + " $");
 	}
-	else
+	else if (update->getIndex1() == 4)
 	{
 		update->setText1("CLOSE");
 	}
 
-	if (index == 3)
+	if (!update->getIsClosed1())
 	{
-		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-		Multiplayer::send(id, 1, update->getIndex1());
+		if (index == 3)
+		{
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			Multiplayer::send(id, 1, update->getIndex1());
+		}
+		else if (index < 4)
+		{
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+			Multiplayer::send(id, 1, update->getIndex1());
+		}
+		else if (index == 4)
+		{
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
+			Multiplayer::send(id, 2, update->getIndex2());
+		}
+		update->setStringPrice();
 	}
-	else if (index < 4)
-	{
-		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
-		Multiplayer::send(id, 1, update->getIndex1());
-	}
-	else if (index == 4)
-	{
-		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
-		Multiplayer::send(id, 2, update->getIndex2());
-	}
-	update->setStringPrice();
 
 }
 void Tower::Update2()
@@ -254,35 +261,41 @@ void Tower::Update2()
 	{
 		update->addIndex2();
 	}
+	else if (update->getIndex2() == 4)
+	{
+		update->setIsClosed2(true);
+	}
 
-	if (update->getIndex2() < 4)
+	if (update->getIndex2() < 4 && update->getIsClosed2())
 	{
 		update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
 	}
-	else
+	else if (update->getIndex2() == 4)
 	{
 		update->setText2("CLOSE"); //TODO updatepeis
 	}
 
-	if (index < 4)
+	if (!update->getIsClosed2())
 	{
-		value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-		damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
-		Multiplayer::send(id, 2, update->getIndex2());
-	}
-	else if (index == 4)
-	{
-		value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-		moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
-		Multiplayer::send(id, 2, update->getIndex2());
+		if (index < 4)
+		{
+			value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+			damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
+			Multiplayer::send(id, 2, update->getIndex2());
+		}
+		else if (index == 4)
+		{
+			value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+			moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
+			Multiplayer::send(id, 2, update->getIndex2());
 
+		}
+		update->setStringPrice();
 	}
-	update->setStringPrice();
 
 }
 void Tower::manageUpdate(RenderWindow* window)
 {
-
 	int indexUpdate = update->isClicked(window);
 
 	if (indexUpdate == 1)
@@ -293,14 +306,11 @@ void Tower::manageUpdate(RenderWindow* window)
 	{
 		Update2();
 	}
-
-
 }
 void Tower::spawnSpawn(int art)
 {
 	boundSpawns.push_back(new TowerSpawn(art, this));
 }
-
 void Tower::sellSpawns()
 {
 	if (!boundSpawns.empty()) {

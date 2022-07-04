@@ -135,19 +135,25 @@ bool SendMoney::send()
 }
 void SendMoney::checkSendMoney()
 {
-	checkClicked();
+	if (Game::getInstance()->getStatus() != 1)
+	{
+		checkClicked();
+	}
 }
 void SendMoney::draw()
 {
-	if (isOpen)
+	if (Game::getInstance()->getStatus() != 1)
 	{
-		window->draw(background);
-		window->draw(inputText);
-		window->draw(buttonClose);
-	}
-	else
-	{
-		window->draw(buttonOpen);
+		if (isOpen)
+		{
+			window->draw(background);
+			window->draw(inputText);
+			window->draw(buttonClose);
+		}
+		else
+		{
+			window->draw(buttonOpen);
+		}
 	}
 }
 #pragma endregion

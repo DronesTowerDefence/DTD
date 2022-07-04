@@ -9,6 +9,9 @@ private:
 	int index1;
 	int index2;
 	
+	bool isClosed1;
+	bool isClosed2;
+
 	RectangleShape* shoowUpdate1[4];
 	RectangleShape* shoowUpdate2[4];
 	
@@ -35,17 +38,18 @@ public:
 	
 	int getIndex1();
 	int getIndex2();
+	bool getIsClosed1();
+	bool getIsClosed2();
 
 	void setIndex1(int index);
 	void setIndex2(int index);
-
+	void setIsClosed1(bool);
+	void setIsClosed2(bool);
 	void setText1(std::string text);
-
 	void setText2(std::string text);
 
 	void addIndex1();
 	void addIndex2();
-
 	
 	void draw(RenderWindow* window);
 	int isClicked(RenderWindow* window);
