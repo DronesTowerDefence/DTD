@@ -236,9 +236,32 @@ int  HomeMenu::CheckClicked(Event event)
 			status = 2;
 			connected = true;
 
-			if (connect(event)) return 2;
-			else return 0;
+			if (res->getListener()->listen(4567))
+			{
+				connected = false;
+			}
 
+			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
+			{
+				connected = false;
+			}
+			Packet p;
+			while (res->getReceiver()->receive(p) != Socket::Done);
+
+			std::string ip_client;
+			p >> ip_client;
+			res->setIpAddress(ip_client);
+
+			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
+			{
+				//connected = false;
+			}
+			Packet p5;
+			p5 << choseIndex;
+			Ressources::getInstance()->getSender()->send(p5);
+
+			res->getSender()->setBlocking(false);
+			res->getReceiver()->setBlocking(false);
 			return 2;
 		}
 
@@ -251,8 +274,35 @@ int  HomeMenu::CheckClicked(Event event)
 			connected = true;
 			status = 3;
 
-			if (connect(event)) return 3;
-			else return 0;
+			res->setIpAddress(ipAdress);
+
+			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
+			{
+				connected = false;
+			}
+
+			Packet p1;
+			p1 << ownIpAdress;
+			res->getSender()->send(p1);
+
+
+			if (res->getListener()->listen(4568))
+			{
+				connected = false;
+			}
+
+			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
+			{
+				connected = false;
+			}
+			Packet p2;
+
+			while (res->getReceiver()->receive(p2));
+			p2 >> choseIndex;
+			res->getSender()->setBlocking(false);
+			res->getReceiver()->setBlocking(false);
+
+			return 3;
 		}
 
 		//startclicked
