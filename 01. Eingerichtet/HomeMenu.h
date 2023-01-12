@@ -93,7 +93,7 @@ public:
 	/// <returns>Das Zeichen, welches gedrückt wurde</returns>
 	static char keyboardInput(Event);
 
-	bool checkTestVersionEnd();
+	// bool checkTestVersionEnd();
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
 	void setTimeUntilTestVersionEnd(unsigned long long);

@@ -171,15 +171,15 @@ HomeMenu::HomeMenu()
 #pragma endregion
 
 #pragma region Funktionen
-bool HomeMenu::checkTestVersionEnd()
-{
-	if (timeUntilTestVersionEndClock->getElapsedTime().asSeconds() > timeUntilTestVersionEnd)
-	{
-		window->close();
-		return false;
-	}
-	else return true;
-}
+//bool HomeMenu::checkTestVersionEnd()
+//{
+//	if (timeUntilTestVersionEndClock->getElapsedTime().asSeconds() > timeUntilTestVersionEnd)
+//	{
+//		window->close();
+//		return false;
+//	}
+//	else return true;
+//}
 void HomeMenu::ipAdressInput(Event event) {
 
 	if (event.type == Event::KeyReleased)
@@ -410,7 +410,7 @@ void HomeMenu::HomeMenuStart()
 			ipAdressInput(event);
 		}
 
-		checkTestVersionEnd();
+		// checkTestVersionEnd();
 
 		drone->move(2, 0);
 		setTowerTexture();
