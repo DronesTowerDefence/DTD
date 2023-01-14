@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Game.h"
 #include "Service.h"
+#include "Account.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 

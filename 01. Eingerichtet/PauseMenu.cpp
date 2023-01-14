@@ -316,7 +316,7 @@ void PauseMenu::checkPause(bool isPaused)
 	{
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
-			while (Multiplayer::receive());
+			Multiplayer::receive();
 
 			if (!multiplayerIsPaused)
 				return;

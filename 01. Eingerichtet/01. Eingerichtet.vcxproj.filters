@@ -114,6 +114,12 @@
     <ClCompile Include="SendMoney.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="MultiplayerPlayer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -168,6 +174,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="SendMoney.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiplayerPlayer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

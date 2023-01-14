@@ -1,5 +1,6 @@
 #pragma once
 #include "Round.h"
+#include "MultiplayerPlayer.h"
 
 /**
 |Static-Class|
@@ -30,6 +31,16 @@ public:
 	/// Zeit, wann bei keiner Verbindung in den Singleplayer gewechselt wird
 	/// </summary>
 	static const Time timeUntilSingleplayer;
+
+	/// <summary>
+	/// Array mit allen Spielern
+	/// </summary>
+	static MultiplayerPlayer* player[3];
+
+	/// <summary>
+	/// Anzahl an Spielern (Im SP=0)
+	/// </summary>
+	static int multiplayerPlayerCount;
 
 	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
@@ -84,13 +95,14 @@ public:
 	static bool send(int);
 
 	static bool send(int, Vector2f);
+
 	/// <summary>
-	/// <para>Empfängt ein Packet und wendet es an.</para>
-	/// <para>Immer in einer eigenen while-Schleife aufrufen: Bsp.:"while(Multiplayer::receive());"</para>
+	/// <para>Empfängt Packete und wendet sie an.</para>
 	/// </summary>
-	/// <returns>
-	/// <para>True, wenn empfangen und Packet-Header gültig</para>
-	/// <para>False, wenn Packet-Header ungültig</para>
-	/// </returns>
-	static bool receive();
+	static void receive();
+
+	/// <summary>
+	/// Setzt alle Membervariablen etc zurück
+	/// </summary>
+	static void resetMultiplayer();
 };

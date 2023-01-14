@@ -32,6 +32,11 @@ private:
 	int index;
 
 	/// <summary>
+	/// Welchem Spieler der Turm gehört (Im SP 1)
+	/// </summary>
+	int ownerID;
+
+	/// <summary>
 	/// Welcher Frame von der Animation ausgewählt ist
 	/// </summary>
 	int animationCounter;
@@ -170,10 +175,11 @@ public:
 	/// <summary>
 	/// Neuen Turm kaufen; 0,1,2,3
 	/// </summary>
-	/// <param name="int: 0,1,2,3"></param>
-	/// <param name="Vector2f: Position"></param>
-	/// <param name="Map*: Pointer auf die Map"></param>
-	Tower(int, Vector2f, Map*);
+	/// <param name="Turm-Typ:">0,1,2,3</param>
+	/// <param name="Spieler-ID:">Im SP 1</param>
+	/// <param name="Position:">Vector2f</param>
+	/// <param name="Pointer auf die Map:">Map*</param>
+	Tower(int, int, Vector2f, Map*);
 
 	/// <summary>
 	/// Returnt den Index, um welchen Turm es sich handelt
@@ -252,6 +258,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int getId();
+
+	/// <summary>
+	/// Gibt die ID des Owners zurück
+	/// </summary>
+	/// <returns></returns>
+	int getOwnerID();
 
 	/// <summary>
 	/// Setzt die Angriffsgeschwindigkeit

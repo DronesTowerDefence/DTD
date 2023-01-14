@@ -102,42 +102,45 @@ void Round::sellTower(Tower* a)
 {
 	//Verkauft einen Turm
 
-	//Entfernt den Turm aus der Angriffs-Turm-Liste
-	for (auto i : allAttackTowers)
+	if (a->getOwnerID() == Account::getAcc()->getAccID())
 	{
-		if (i == a)
+		//Entfernt den Turm aus der Angriffs-Turm-Liste
+		for (auto i : allAttackTowers)
 		{
-			allAttackTowers.remove(i);
-			i->sellSpawns();
-			break;
+			if (i == a)
+			{
+				allAttackTowers.remove(i);
+				i->sellSpawns();
+				break;
+			}
 		}
-	}
 
-	//Entfernt den Turm aus der Geldgenerations-Turm-Liste
-	for (auto i : allMoneyTowers)
-	{
-		if (i == a)
+		//Entfernt den Turm aus der Geldgenerations-Turm-Liste
+		for (auto i : allMoneyTowers)
 		{
-			allMoneyTowers.remove(i);
-			break;
+			if (i == a)
+			{
+				allMoneyTowers.remove(i);
+				break;
+			}
 		}
-	}
 
-	//Entfernt den Turm aus der Liste für alle Türme
-	for (auto i : allTowers)
-	{
-		if (i == a)
+		//Entfernt den Turm aus der Liste für alle Türme
+		for (auto i : allTowers)
 		{
-			allTowers.remove(i);
-			break;
+			if (i == a)
+			{
+				allTowers.remove(i);
+				break;
+			}
 		}
+
+		//Fügt den Wert des Turmes dem Spieler hinzu
+		addMoney(a->getValue() * 0.75);
+
+		delete a;
+		a = nullptr;
 	}
-
-	//Fügt den Wert des Turmes dem Spieler hinzu
-	addMoney(a->getValue() * 0.75);
-
-	delete a;
-	a = nullptr;
 }
 void Round::restartDroneTimer()
 {

@@ -156,7 +156,7 @@ skipSettings:
 					std::string(buffer).copy(bufferValue1, length1, first + 1);
 					std::string(buffer).copy(bufferValue2, length2, second + 1);
 
-					newTower = new Tower(towerIndex, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
+					newTower = new Tower(towerIndex, 1, Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
 
 					defaultCounter++;
 				}
@@ -249,7 +249,7 @@ void Game::startGame()
 
 	while (window->isOpen())
 	{
-		while (Multiplayer::receive());
+		Multiplayer::receive();
 
 		if (!window->hasFocus())
 		{
@@ -273,7 +273,7 @@ void Game::startGame()
 			SendMoney::getInstance()->checkInput(event);
 		}
 
-		while (Multiplayer::receive());
+		Multiplayer::receive();
 		// HomeMenu::getInstance()->checkTestVersionEnd();
 		MultiplayerChat::getInstance()->checkChat();
 		SendMoney::getInstance()->checkSendMoney();
@@ -294,7 +294,7 @@ void Game::startGame()
 
 		if (status != 1) //Wenn Host oder Client
 		{
-			while (Multiplayer::receive());
+			Multiplayer::receive();
 			checkMultiplayerConnection();
 		}
 
