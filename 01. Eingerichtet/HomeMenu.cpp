@@ -11,7 +11,6 @@ HomeMenu::HomeMenu()
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
-	timeUntilTestVersionEnd = 0;
 	res = Ressources::getInstance();
 	ipAdress = "";
 	ownIpAdress = IpAddress::getLocalAddress().toString();
@@ -685,10 +684,6 @@ void HomeMenu::setWindow(RenderWindow* window)
 {
 	this->window = window;
 
-}
-void HomeMenu::setTimeUntilTestVersionEnd(unsigned long long _timeUntilTestVersionEnd)
-{
-	timeUntilTestVersionEnd = _timeUntilTestVersionEnd;
 }
 void HomeMenu::setTowerTexture()
 {

@@ -24,7 +24,7 @@ private:
 	/// </summary>
 	int status; 
 	
-	unsigned long long timeUntilTestVersionEnd;
+	int multiplayerPlayerCount;
 
 	bool isClicked;
 	bool connected;
@@ -97,7 +97,6 @@ public:
 	// bool checkTestVersionEnd();
 	int getChoseIndex();
 	void setWindow(RenderWindow* window);
-	void setTimeUntilTestVersionEnd(unsigned long long);
 
 	/// <summary>
 	/// Löscht den Spielstand zur aktuellen Map
