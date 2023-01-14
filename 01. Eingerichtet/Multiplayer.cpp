@@ -178,7 +178,7 @@ void Multiplayer::receive()
 					if (i->getId() == int1) //Wenn der richtige gefunden wurde...
 					{
 						Game::getInstance()->sellTower(i);
-						Round::getInstance()->sellTower(i); //... wird er verkauft
+						Round::getInstance()->sellTower(i, true); //... wird er verkauft
 					}
 				}
 				break;

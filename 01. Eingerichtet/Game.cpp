@@ -401,7 +401,7 @@ void Game::checkButtonClick()
 			{
 				Multiplayer::send(tower, 1);
 
-				Round::getInstance()->sellTower(tower);
+				Round::getInstance()->sellTower(tower,false);
 				tower = nullptr;
 			}
 		}
@@ -873,7 +873,7 @@ void Game::shortcuts()
 			}
 			else if (event.key.code == Keyboard::BackSpace)
 			{
-				Round::getInstance()->sellTower(tower);
+				Round::getInstance()->sellTower(tower,false);
 				Multiplayer::send(tower, 1);
 				tower = nullptr;
 			}

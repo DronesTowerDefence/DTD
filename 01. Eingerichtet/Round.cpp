@@ -98,11 +98,11 @@ void Round::setAllCoverablePoints()
 		}
 	}
 }
-void Round::sellTower(Tower* a)
+void Round::sellTower(Tower* a, bool b)
 {
 	//Verkauft einen Turm
 
-	if (a->getOwnerID() == Account::getAcc()->getAccID())
+	if (b || a->getOwnerID() == Account::getAcc()->getAccID())
 	{
 		//Entfernt den Turm aus der Angriffs-Turm-Liste
 		for (auto i : allAttackTowers)

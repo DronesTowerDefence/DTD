@@ -317,8 +317,9 @@ public:
 	/// <summary>
 	/// Verkauft einen Turm und entfernt ihn aus der Liste
 	/// </summary>
-	/// <param name=""></param>
-	void sellTower(Tower*);
+	/// <param name="">Tower der verkauft werden soll</param>
+	/// <param name="">True wenn bypass für Multplayer</param>
+	void sellTower(Tower*, bool);
 
 	/// <summary>
 	/// Startet den Timer neu

@@ -406,7 +406,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				for (auto i : Round::getInstance()->getAllTowers())
 				{
-					Round::getInstance()->sellTower(i);
+					Round::getInstance()->sellTower(i,false);
 				}
 				output = "sold all towers";
 			}
