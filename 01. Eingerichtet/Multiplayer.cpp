@@ -23,7 +23,7 @@ bool Multiplayer::send(Tower* t, int _index)
 		Packet pac;
 		if (_index == 0)
 		{
-			pac << 0 << t->getIndex() << t->getOwnerID() << int(t->getTowerPos().x) << int(t->getTowerPos().y); //Schreibt den Header, den Tower-Index und die Postion des Towers in das Packet
+			pac << 0 << t->getIndex() << t->getOwnerName() << int(t->getTowerPos().x) << int(t->getTowerPos().y); //Schreibt den Header, den Tower-Index und die Postion des Towers in das Packet
 		}
 		else if (_index == 1)
 		{
@@ -131,7 +131,7 @@ void Multiplayer::receive()
 {
 	Packet pac;
 	int header, int1, int2;
-	std::string str;
+	std::string str, username = "0";
 	Vector2f vector;
 	bool returnValue = true;
 
@@ -147,9 +147,9 @@ void Multiplayer::receive()
 			switch (header)
 			{
 			case 0: //Neuer Turm
-				int towerIndex, towerOwnerID, towerPosX, towerPosY;
-				pac >> towerIndex >> towerOwnerID >> towerPosX >> towerPosY; //Infos für neuen Turm werden entpackt
-				new Tower(towerIndex, towerOwnerID, Vector2f(towerPosX, towerPosY), Round::getInstance()->getMap()); //Neuer Turm wird mit den entpackten Infos erstellt
+				int towerIndex, towerPosX, towerPosY;
+				pac >> towerIndex >> username >> towerPosX >> towerPosY; //Infos für neuen Turm werden entpackt
+				new Tower(towerIndex, username, Vector2f(towerPosX, towerPosY), Round::getInstance()->getMap()); //Neuer Turm wird mit den entpackten Infos erstellt
 				break;
 
 			case 1: //Turm-Update
@@ -258,8 +258,8 @@ void Multiplayer::receive()
 				break;
 
 			case 10:
-				pac >> int1 >> str;
-				MultiplayerChat::getInstance()->addChatMessage(int1, str);
+				pac >> username >> str;
+				MultiplayerChat::getInstance()->addChatMessage(username, str);
 				break;
 
 			case 11:

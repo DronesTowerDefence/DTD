@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
 	window.setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 
-	Account::createAcc();
+	// TODO Account
 
 	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
 	credits->setTexture(*res->getCreditsTexture());

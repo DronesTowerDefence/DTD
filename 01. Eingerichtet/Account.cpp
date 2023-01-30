@@ -4,27 +4,28 @@ Account* Account::m_acc = nullptr;
 
 Account::Account()
 {
-	m_accID = 0; //TODO
-	m_accName = "0"; //TODO
+	m_accName = "0";
 }
 
-void Account::createAcc()
+Account::Account(std::string userName)
+{
+	m_accName = userName;
+}
+
+Account* Account::createAcc(std::string userName)
 {
 	if (m_acc != nullptr)
 	{
 		delete m_acc;
 	}
-	m_acc = new Account();
+	m_acc = new Account(userName);
+
+	return m_acc;
 }
 
 Account* Account::getAcc()
 {
 	return m_acc;
-}
-
-int Account::getAccID()
-{
-	return m_accID;
 }
 
 std::string Account::getAccName()

@@ -102,7 +102,7 @@ void Round::sellTower(Tower* a, bool b)
 {
 	//Verkauft einen Turm
 
-	if (b || a->getOwnerID() == Account::getAcc()->getAccID())
+	if (b || a->getOwnerName() == Account::getAcc()->getAccName())
 	{
 		//Entfernt den Turm aus der Angriffs-Turm-Liste
 		for (auto i : allAttackTowers)

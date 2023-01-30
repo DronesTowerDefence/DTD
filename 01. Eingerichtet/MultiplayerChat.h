@@ -7,16 +7,16 @@ Hilfsklasse für die MultiplayerChat-Klasse um mehrere Daten in einer Liste zu sp
 class ChatMessage
 {
 public:
-	ChatMessage(int _accountID, std::string _message)
+	ChatMessage(std::string _username, std::string _message)
 	{
-		accountID = _accountID;
+		username = _username;
 		message = _message;
 	}
 
 	/// <summary>
 	/// Die Account-ID von der Person, welche die Nachricht geschrieben hat
 	/// </summary>
-	unsigned int accountID;
+	std::string username;
 	/// <summary>
 	/// Der Inhalt der Nachricht
 	/// </summary>
@@ -70,7 +70,7 @@ public:
 	void checkInput(Event);
 	void checkChat();
 	void draw();
-	void addChatMessage(int, std::string);
+	void addChatMessage(std::string, std::string);
 
 	static MultiplayerChat* getInstance();
 	bool getIsOpen();

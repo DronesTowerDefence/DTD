@@ -8,15 +8,14 @@ class Account
 {
 private:
 	static Account* m_acc;
-	int m_accID;
 	std::string m_accName;
 
 	Account();
+	Account(std::string userName);
 
 public:
-	static void createAcc();
+	static Account* createAcc(std::string userName);
 	static Account* getAcc();
-	int getAccID();
 	std::string getAccName();
 
 };

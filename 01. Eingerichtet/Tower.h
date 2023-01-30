@@ -32,11 +32,6 @@ private:
 	int index;
 
 	/// <summary>
-	/// Welchem Spieler der Turm gehört (Im SP 1)
-	/// </summary>
-	int ownerID;
-
-	/// <summary>
 	/// Welcher Frame von der Animation ausgewählt ist
 	/// </summary>
 	int animationCounter;
@@ -90,6 +85,11 @@ private:
 	/// Der Name des Turmes
 	/// </summary>
 	std::string name;
+
+	/// <summary>
+	/// Welchem Spieler der Turm gehört (Im SP 1)
+	/// </summary>
+	std::string ownerName;
 
 	/// <summary>
 	/// Ob Schuss-Cooldown
@@ -179,7 +179,7 @@ public:
 	/// <param name="Spieler-ID:">Im SP 1</param>
 	/// <param name="Position:">Vector2f</param>
 	/// <param name="Pointer auf die Map:">Map*</param>
-	Tower(int, int, Vector2f, Map*);
+	Tower(int, std::string, Vector2f, Map*);
 
 	/// <summary>
 	/// Returnt den Index, um welchen Turm es sich handelt
@@ -210,6 +210,12 @@ public:
 	/// </summary>
 	/// <param name="float"></param>
 	float getValue();
+
+	/// <summary>
+	/// Return den userName des Besitzers
+	/// </summary>
+	/// <returns></returns>
+	std::string getOwnerName();
 
 	/// <summary>
 	/// Return die Position des Towers
@@ -258,12 +264,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int getId();
-
-	/// <summary>
-	/// Gibt die ID des Owners zurück
-	/// </summary>
-	/// <returns></returns>
-	int getOwnerID();
 
 	/// <summary>
 	/// Setzt die Angriffsgeschwindigkeit

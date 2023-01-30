@@ -11,14 +11,14 @@
 int Tower::globalId = 0;
 
 #pragma region Konstruktor
-Tower::Tower(int _index, int _ownerID, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
+Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	//Ob der Index richtig ist
 	if (index >= 0 && index <= 4)
 	{
 		//Setzen der Attribute
 		index = _index;
-		ownerID = _ownerID;
+		ownerName = _ownerName;
 		id = globalId;
 		globalId++;
 		Round::getInstance()->addTower(this);
@@ -214,7 +214,7 @@ bool Tower::isClicked(RenderWindow* window)
 }
 void Tower::Update1()
 {
-	if (ownerID == Account::getAcc()->getAccID())
+	if (ownerName == Account::getAcc()->getAccName())
 	{
 		if (update->getIndex1() < 4)
 		{
@@ -260,7 +260,7 @@ void Tower::Update1()
 }
 void Tower::Update2()
 {
-	if (ownerID == Account::getAcc()->getAccID())
+	if (ownerName == Account::getAcc()->getAccName())
 	{
 		if (update->getIndex2() < 4)
 		{
@@ -350,6 +350,10 @@ float Tower::getValue()
 {
 	return value;
 }
+std::string Tower::getOwnerName()
+{
+	return ownerName;
+}
 Vector2f Tower::getTowerPos()
 {
 	return position;
@@ -402,10 +406,6 @@ Updates* Tower::getUpdates()
 int Tower::getId()
 {
 	return id;
-}
-int Tower::getOwnerID()
-{
-	return ownerID;
 }
 #pragma endregion
 

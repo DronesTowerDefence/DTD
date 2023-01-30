@@ -1,9 +1,8 @@
 #include "MultiplayerPlayer.h"
 
-MultiplayerPlayer::MultiplayerPlayer(int _playerID)
+MultiplayerPlayer::MultiplayerPlayer(std::string _playerName)
 {
-	m_playerID = _playerID;
-	m_playerName = "Player" + std::to_string(m_playerID); //TODO
+	m_playerName = _playerName;
 	m_sender = new TcpSocket();
 	m_receiver = new TcpSocket();
 }
@@ -16,9 +15,9 @@ void MultiplayerPlayer::resetSockets()
 	m_receiver = new TcpSocket();
 }
 
-int MultiplayerPlayer::getPlayerID()
+bool MultiplayerPlayer::connect(std::string ip, int port)
 {
-	return m_playerID;
+	return m_sender->connect(ip, port) == sf::Socket::Done;
 }
 
 std::string MultiplayerPlayer::getPlayerName()

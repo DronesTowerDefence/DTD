@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Service.h"
 #include "Account.h"
+#include "AccountServer.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -25,6 +26,8 @@ private:
 	int status; 
 	
 	int multiplayerPlayerCount;
+	std::string gameID;
+
 
 	bool isClicked;
 	bool connected;

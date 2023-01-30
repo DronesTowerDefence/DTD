@@ -156,7 +156,7 @@ void MultiplayerChat::checkInput(Event event)
 			{
 				if (!chatCommand())
 				{
-					addChatMessage(Game::getInstance()->getStatus(), chatInput); //TODO AccID
+					addChatMessage(Account::getAcc()->getAccName(), chatInput); //TODO AccID
 					Multiplayer::send(chatInput);
 				}
 				refreshChatOutput();
@@ -215,13 +215,13 @@ void MultiplayerChat::refreshChatOutput()
 
 	if (chatOutputText.getGlobalBounds().intersects(rightChatBorder.getGlobalBounds()))
 	{
-		unsigned int accID = 0;
+		std::string _username = "0";
 		for (auto iter : chatText)
 		{
 			count++;
 			if (count == chatText.size())
 			{
-				accID = iter->accountID;
+				_username = iter->username;
 			}
 		}
 		count = 0;
@@ -231,7 +231,7 @@ void MultiplayerChat::refreshChatOutput()
 		{
 			if (arr[i] == '\n')
 			{
-				std::string userName = std::to_string(accID); //TODO: AccountID zum Namen auflösen 
+				std::string userName = _username;
 				int userNameLeng = userName.size();
 
 				tmpC = arr[i];
@@ -258,7 +258,7 @@ void MultiplayerChat::refreshChatOutput()
 	{
 		for (auto i : chatText)
 		{
-			str += std::to_string(i->accountID); //TODO: AccountID zum Namen auflösen
+			str += i->username;
 			str += ": \"";
 			str += i->message;
 			str += "\"\n";
@@ -517,9 +517,9 @@ void MultiplayerChat::draw()
 		window->draw(buttonOpen);
 	}
 }
-void MultiplayerChat::addChatMessage(int _accountID, std::string _message)
+void MultiplayerChat::addChatMessage(std::string _username, std::string _message)
 {
-	chatText.push_back(new ChatMessage(_accountID, _message));
+	chatText.push_back(new ChatMessage(_username, _message));
 
 	refreshChatOutput();
 
