@@ -1,4 +1,5 @@
 #pragma once
+#include "Account.h"
 
 class AccountServer
 {
@@ -7,8 +8,6 @@ private:
 	sf::Http::Request* request;
 	sf::Http::Response* response;
 	int httpVersion[2];
-
-	std::string passwordEncryption(std::string password);
 
 public:
 	AccountServer();

@@ -24,6 +24,8 @@
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
+    <ClInclude Include="Loadingbar.h" />
+    <ClInclude Include="Loadup.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Multiplayer.h" />
     <ClInclude Include="MultiplayerChat.h" />
@@ -47,6 +49,8 @@
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HomeMenu.cpp" />
+    <ClCompile Include="Loadingbar.cpp" />
+    <ClCompile Include="Loadup.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Multiplayer.cpp" />
@@ -172,7 +176,7 @@
       <AdditionalIncludeDirectories>C:\SFML\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;ws2_32.lib;freetype.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>

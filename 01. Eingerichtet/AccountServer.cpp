@@ -1,19 +1,5 @@
 #include "Ressources.h"
-#include "Account.h"
 #include "AccountServer.h"
-
-std::string AccountServer::passwordEncryption(std::string password)
-{
-	std::string returnPassword = "";
-	int hexKey = 0x2FD;
-
-	for (int i = 0; i < password.length(); i++)
-	{
-		returnPassword += password[i] ^ hexKey;
-	}
-
-	return returnPassword;
-}
 
 AccountServer::AccountServer()
 {
@@ -47,7 +33,7 @@ std::string AccountServer::sendLogin(std::string email, std::string passwort)
 	request->setHttpVersion(httpVersion[0], httpVersion[1]);
 	request->setField("From", "Drones-Client");
 	request->setField("Content-Type", "email/passwort");
-	request->setBody(email + "&" + passwordEncryption(passwort));
+	request->setBody(email + "&" + passwort);
 
 	response = new sf::Http::Response();
 	*response = http->sendRequest(*request);
