@@ -51,7 +51,15 @@ void TowerAlias::setPositionMouse(Vector2i mouse)
 }
 void TowerAlias::CreateNewTower()
 {
-	Tower* t = new Tower(index, Multiplayer::player[0]->getPlayerName(),  towerAliasSpr.getPosition(), p_map); //Erstellt einen neuen Turm
+	Tower* t = nullptr;
+	if (Game::getInstance()->getStatus() == 1)
+	{
+		t = new Tower(index, Account::getAcc()->getAccName(), towerAliasSpr.getPosition(), p_map); //Erstellt einen neuen Turm
+	}
+	else
+	{
+		t = new Tower(index, Multiplayer::player[0]->getPlayerName(), towerAliasSpr.getPosition(), p_map); //Erstellt einen neuen Turm
+	}
 
 	//Sendet die Information, dass ein neuer Turm platziert wurde
 	if (Game::getInstance()->getStatus() != 1)

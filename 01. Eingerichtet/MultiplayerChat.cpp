@@ -489,7 +489,7 @@ bool MultiplayerChat::chatCommand()
 			}
 		}
 
-		addChatMessage(0, output);
+		addChatMessage("0", output);
 		return true;
 	}
 	else return false;

@@ -482,8 +482,12 @@ void HomeMenu::draw()
 bool HomeMenu::deleteSave(int index)
 {
 	std::ifstream FileTest("saves/savegame" + std::to_string(index) + ".sav"); //Überprüft ob die Datei existiert, wenn nicht wird false zurückgegeben
-	if (!FileTest)
+	if (FileTest.fail())
+	{
+		FileTest.close();
 		return false;
+	}
+	FileTest.close();
 
 	std::string cmd_s = "del saves\\savegame" + std::to_string(index) + ".sav";
 	const char* cmd_cc = cmd_s.c_str();

@@ -60,7 +60,7 @@ void Loadup::start()
 	AccountServer* accServer = new AccountServer();
 	setLoadingbar(60);
 
-	std::cout << accServer->createAccount(readUsernameFromFile())->getAccName();
+	accServer->createAccount(readUsernameFromFile())->getAccName();
 	setLoadingbar(70);
 
 	setLoadingbar(100);

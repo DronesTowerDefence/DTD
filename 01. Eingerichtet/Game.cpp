@@ -56,8 +56,11 @@ bool Game::loadGame()
 	immortalMode = false;
 
 	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-	if (!FileTestSettings)
+	if (FileTestSettings.fail())
+	{
+		FileTestSettings.close();
 		goto skipSettings;
+	}
 
 	rdatei.open("saves/settings.sav");
 	while (!rdatei.eof())
@@ -93,10 +96,11 @@ skipSettings:
 		datei = "saves/savegame" + std::to_string(p_map->getIndex());
 		datei += ".sav";
 
-		std::ifstream FileTest(datei);//Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-		if (!FileTest)
+		std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+		if (FileTest.fail())
 			return false;
 
+		FileTest.close();
 		rdatei.open(datei);
 
 		while (!rdatei.eof())
