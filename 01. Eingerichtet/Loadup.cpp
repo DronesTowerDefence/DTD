@@ -1,10 +1,11 @@
 #include "Loadup.h"
 #include <fstream>
 
+bool Loadup::usernameSuccessfull = false;
 
 std::string Loadup::readUsernameFromFile()
 {
-	std::string username = "";
+	std::string username = "0";
 	char* buffer = new char[20];
 	std::ifstream file;
 
@@ -60,8 +61,22 @@ void Loadup::start()
 	AccountServer* accServer = new AccountServer();
 	setLoadingbar(60);
 
-	accServer->createAccount(readUsernameFromFile())->getAccName();
+	std::string username = readUsernameFromFile();
 	setLoadingbar(70);
+
+	if (accServer->checkUsername(username) != "0")
+	{
+		accServer->createAccount(username);
+		usernameSuccessfull = true;
+	}
+	else
+	{
+		accServer->createAccount("???");
+	}
+	setLoadingbar(80);
+
+	delete accServer;
+	setLoadingbar(90);
 
 	setLoadingbar(100);
 
@@ -81,4 +96,5 @@ void Loadup::start()
 	}
 
 	delete credits;
+	delete loadingbar;
 }

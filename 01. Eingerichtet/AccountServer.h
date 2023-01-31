@@ -42,5 +42,12 @@ public:
 	/// <returns>GameID</returns>
 	std::string sendHostIP(std::string hostIP);
 
+	/// <summary>
+	/// Überprüft, ob der angegebene Benutzername existiert
+	/// </summary>
+	/// <param name="username"></param>
+	/// <returns></returns>
+	std::string checkUsername(std::string username);
+
 };
 

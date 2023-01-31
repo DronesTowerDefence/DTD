@@ -16,5 +16,6 @@ public:
 	Loadup(sf::RenderWindow* _window);
 	void start();
 
+	static bool usernameSuccessfull;
 };
 

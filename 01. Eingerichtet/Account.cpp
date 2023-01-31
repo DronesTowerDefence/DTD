@@ -1,15 +1,22 @@
 #include "Account.h"
+#include <fstream>
 
 Account* Account::m_acc = nullptr;
 
 Account::Account()
 {
-	m_accName = "0";
+	m_accName = "???";
 }
 
 Account::Account(std::string userName)
 {
 	m_accName = userName;
+
+	if (userName != "???")
+	{
+		std::ofstream file("saves/user.sav");
+		file << userName;
+	}
 }
 
 Account* Account::createAcc(std::string userName)

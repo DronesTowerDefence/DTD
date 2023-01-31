@@ -95,3 +95,26 @@ std::string AccountServer::sendHostIP(std::string hostIP)
 
 	return responseBody;
 }
+
+std::string AccountServer::checkUsername(std::string username)
+{
+	std::string responseBody;
+
+	request = new sf::Http::Request();
+	request->setMethod(sf::Http::Request::Post);
+	request->setHttpVersion(httpVersion[0], httpVersion[1]);
+	request->setField("From", "Drones-Client");
+	request->setField("Content-Type", "Username");
+	request->setBody(username);
+
+	response = new sf::Http::Response();
+	*response = http->sendRequest(*request, *timeout);
+	responseBody = response->getBody();
+
+	delete request;
+	delete response;
+	request = nullptr;
+	response = nullptr;
+
+	return responseBody;
+}

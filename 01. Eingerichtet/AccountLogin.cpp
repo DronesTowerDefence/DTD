@@ -161,6 +161,7 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 			if (Controls::getBackSpaceIsPressed())
 			{
 				email.erase(email.length() - 1);
+				accountLoginEmailText->setString(email);
 			}
 			if (newChar != '\0')
 			{
@@ -174,6 +175,10 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 			if (Controls::getBackSpaceIsPressed())
 			{
 				password.erase(password.length() - 1);
+				for (int i = 0; i < password.length(); i++)
+				{
+					accountLoginPasswordText->setString(accountLoginPasswordText->getString() + "*");
+				}
 			}
 			if (newChar != '\0')
 			{
@@ -187,11 +192,11 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 			}
 		}
 
-		if (email.length() == 0)
+		if (email.length() == 0 && !accountLoginEmailIsClicked)
 		{
 			accountLoginEmailText->setString("Deine E-Mail...");
 		}
-		if (password.length() == 0)
+		if (password.length() == 0 && !accountLoginPasswordIsClicked)
 		{
 			accountLoginPasswordText->setString("Dein Passwort...");
 		}
