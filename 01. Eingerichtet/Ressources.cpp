@@ -338,6 +338,11 @@ Ressources::Ressources()
 	sendMoneyButtonOpenTexture.loadFromFile("img/openSendMoneyButton.png");
 	sendMoneyBackgroundTexture.loadFromFile("img/sendMoneyBackground.png");
 
+	accountIconButtonTexture.loadFromFile("img/buttons/account/accountIcon.png");
+	accountSignInButtonTexture.loadFromFile("img/buttons/account/signInButton.png");
+	accountSignOutButtonTexture.loadFromFile("img/buttons/account/signOutButton.png");
+	accountLoginBackground.loadFromFile("img/buttons/account/accountLoginBackground.png");
+
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
 	buttonVolume[2].loadFromFile("img/buttons/volume/soundMediumButton.png");
@@ -846,6 +851,22 @@ Texture* Ressources::getSendMoneyButtonOpenTexture()
 Texture* Ressources::getSendMoneyBackgroundTexture()
 {
 	return &sendMoneyBackgroundTexture;
+}
+Texture* Ressources::getAccountIconButtonTexture()
+{
+	return &accountIconButtonTexture;
+}
+Texture* Ressources::getAccountSignInButtonTexture()
+{
+	return &accountSignInButtonTexture;
+}
+Texture* Ressources::getAccountSignOutButtonTexture()
+{
+	return &accountSignOutButtonTexture;
+}
+Texture* Ressources::getAccountLoginBackground()
+{
+	return &accountLoginBackground;
 }
 #pragma endregion
 

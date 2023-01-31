@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="AccountLogin.h" />
     <ClInclude Include="AccountServer.h" />
+    <ClInclude Include="Controls.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
@@ -45,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="AccountLogin.cpp" />
     <ClCompile Include="AccountServer.cpp" />
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HomeMenu.cpp" />

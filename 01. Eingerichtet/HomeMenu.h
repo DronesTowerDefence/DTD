@@ -4,6 +4,7 @@
 #include "Service.h"
 #include "Account.h"
 #include "AccountServer.h"
+#include "AccountLogin.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -28,7 +29,6 @@ private:
 	int multiplayerPlayerCount;
 	std::string gameID;
 
-
 	bool isClicked;
 	bool connected;
 	bool isMultiplayerOpen;
@@ -44,7 +44,7 @@ private:
 	RectangleShape* pointer;
 	RectangleShape* sideMenu;
 	RectangleShape* upperBorder;
-	
+
 	Sprite* startButton;
 	Sprite* towers[5];
 	Sprite* map[3];
@@ -58,6 +58,7 @@ private:
 	Sprite* paste;
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
+	Sprite* accountButton;
 	
 	Clock* animation;
 	Clock* timeUntilTestVersionEndClock;
@@ -80,22 +81,17 @@ private:
 	/// </summary>
 	/// <returns></returns>
 	int CheckClicked(Event);
-	void draw();
 	
 	void setTowerTexture();
 	bool connect(Event);
+	void draw();
 
 public:
 	HomeMenu();
 	
-	static HomeMenu* getInstance();
+	void drawPublic();
 
-	/// <summary>
-	/// Überprüft auf eine Tastatureingabe
-	/// </summary>
-	/// <param name=""></param>
-	/// <returns>Das Zeichen, welches gedrückt wurde</returns>
-	static char keyboardInput(Event);
+	static HomeMenu* getInstance();
 
 	// bool checkTestVersionEnd();
 	int getChoseIndex();

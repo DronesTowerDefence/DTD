@@ -1,6 +1,7 @@
 #include "Multiplayer.h"
 #include "Game.h"
 #include "MultiplayerChat.h"
+#include "Controls.h"
 
 MultiplayerChat* MultiplayerChat::instance = nullptr;
 
@@ -109,8 +110,7 @@ void MultiplayerChat::checkInput(Event event)
 		if (event.type == Event::KeyReleased)
 		{
 			char tmp = '\0';
-
-			tmp = HomeMenu::keyboardInput(event);
+			tmp = Controls::checkKeyboardInput(&event);
 			if (isShift) tmp = std::toupper(tmp);
 
 			if (tmp != '\0')

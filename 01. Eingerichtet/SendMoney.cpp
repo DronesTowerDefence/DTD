@@ -1,6 +1,7 @@
 #include "Multiplayer.h"
 #include "Game.h"
 #include "SendMoney.h"
+#include "Controls.h"
 
 SendMoney* SendMoney::instance = nullptr;
 
@@ -93,8 +94,7 @@ bool SendMoney::checkInput(Event event)
 			}
 
 			char tmp = '\0';
-
-			tmp = HomeMenu::keyboardInput(event);
+			tmp = Controls::checkKeyboardInput(&event);
 
 			if (tmp < 48 || tmp > 57)
 			{

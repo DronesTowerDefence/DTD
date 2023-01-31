@@ -1,4 +1,5 @@
 #include "HomeMenu.h"
+#include "Controls.h"
 
 HomeMenu* HomeMenu::instance = nullptr;
 
@@ -27,6 +28,7 @@ HomeMenu::HomeMenu()
 	client = new Sprite();
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
+	accountButton = new Sprite();
 
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
@@ -48,8 +50,10 @@ HomeMenu::HomeMenu()
 	client->setTexture(*res->getButtonClientTexture());
 	exitButton->setTexture(*res->getButtonExitTexture());
 	deleteSavesButton->setTexture(*res->getDeleteAllSavesButtonTexture());
-	credits->setFont(*font);
+	accountButton->setTexture(*res->getAccountIconButtonTexture());
+
 	credits->setCharacterSize(25);
+	credits->setFont(*font);
 	credits->setFillColor(Color::Black);
 	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
 	credits->setPosition(Vector2f(650, 950));
@@ -77,6 +81,7 @@ HomeMenu::HomeMenu()
 	multiplayerMenue->setPosition(Vector2f(500, 350));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
+	accountButton->setPosition(Vector2f(1770, 750));
 
 	choseIndex = -1;
 
@@ -91,9 +96,6 @@ HomeMenu::HomeMenu()
 		map[i]->setPosition(Vector2f(80, y));
 
 	}
-
-
-
 
 	positionTower[0] = Vector2f(1300, 250);
 	positionTower[1] = Vector2f(1300, 400);
@@ -167,25 +169,56 @@ HomeMenu::HomeMenu()
 	ownIpAdressText->setCharacterSize(50);
 	ownIpAdressText->setString(ownIpAdress);
 }
+void HomeMenu::drawPublic()
+{
+	window->draw(*backround);
+	window->draw(*sideMenu);
+	window->draw(*upperBorder);
+	window->draw(*titel);
+	window->draw(*drone);
+	window->draw(*choseText);
+	window->draw(*multiplayerMenue);
+	window->draw(*exitButton);
+	window->draw(*deleteSavesButton);
+	window->draw(*credits);
+	window->draw(*accountButton);
+
+	if (isMultiplayerOpen)
+	{
+		window->draw(*copy);
+		window->draw(*paste);
+		window->draw(*ipAdressText);
+		window->draw(*host);
+		window->draw(*ownIpAdressText);
+		window->draw(*client);
+
+	}
+	else
+		window->draw(*startButton);
+	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
+	{
+		window->draw(*map[i]);
+	}
+
+	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	{
+		window->draw(*towers[i]);
+	}
+	if (choseIndex > -1)
+	{
+		window->draw(*pointer);
+	}
+}
 #pragma endregion
 
 #pragma region Funktionen
-//bool HomeMenu::checkTestVersionEnd()
-//{
-//	if (timeUntilTestVersionEndClock->getElapsedTime().asSeconds() > timeUntilTestVersionEnd)
-//	{
-//		window->close();
-//		return false;
-//	}
-//	else return true;
-//}
 void HomeMenu::ipAdressInput(Event event) {
 
 	if (event.type == Event::KeyReleased)
 	{
 		if (ipAdress.size() < 15)
 		{
-			ipAdress += keyboardInput(event);
+			ipAdress += Controls::checkKeyboardInput(&event);
 		}
 		ipAdressText->setString(ipAdress);
 	}
@@ -385,6 +418,18 @@ int  HomeMenu::CheckClicked(Event event)
 			return 0;
 		}
 
+		//AccountButton
+		pos = Service::getInstance()->getObjectPosition(accountButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(accountButton->getPosition() + Vector2f(accountButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			AccountLogin* accLog = new AccountLogin(window, res);
+			accLog->openAccountLoginWindow(&event);
+			delete accLog;
+			return 0;
+		}
+
 	}
 	return 0;
 }
@@ -397,7 +442,7 @@ void HomeMenu::HomeMenuStart()
 	callCount++;
 
 	while (window->isOpen())
-	{ //test
+	{
 		Event event;
 		while (!window->hasFocus());
 		while (window->pollEvent(event))
@@ -405,11 +450,11 @@ void HomeMenu::HomeMenuStart()
 			if (event.type == Event::Closed)
 			{
 				window->close();
+				exit(0);
 			}
 			ipAdressInput(event);
-		}
 
-		// checkTestVersionEnd();
+		}
 
 		drone->move(2, 0);
 		setTowerTexture();
@@ -451,6 +496,8 @@ void HomeMenu::draw()
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
 	window->draw(*credits);
+	window->draw(*accountButton);
+
 	if (isMultiplayerOpen)
 	{
 		window->draw(*copy);
@@ -491,180 +538,9 @@ bool HomeMenu::deleteSave(int index)
 
 	std::string cmd_s = "del saves\\savegame" + std::to_string(index) + ".sav";
 	const char* cmd_cc = cmd_s.c_str();
-	system(cmd_cc); //TODO Funktioniert nicht
+	system(cmd_cc);
 
 	return true;
-}
-char HomeMenu::keyboardInput(Event event)
-{
-	char c = '\0';
-
-	switch (event.key.code)
-	{
-	case Keyboard::Num0:
-	case Keyboard::Numpad0:
-		c = '0';
-		break;
-	case Keyboard::Num1:
-	case Keyboard::Numpad1:
-		c = '1';
-		break;
-	case Keyboard::Num2:
-	case Keyboard::Numpad2:
-		c = '2';
-		break;
-	case Keyboard::Num3:
-	case Keyboard::Numpad3:
-		c = '3';
-		break;
-	case Keyboard::Num4:
-	case Keyboard::Numpad4:
-		c = '4';
-		break;
-	case Keyboard::Num5:
-	case Keyboard::Numpad5:
-		c = '5';
-		break;
-	case Keyboard::Num6:
-	case Keyboard::Numpad6:
-		c = '6';
-		break;
-	case Keyboard::Num7:
-	case Keyboard::Numpad7:
-		c = '7';
-		break;
-	case Keyboard::Num8:
-	case Keyboard::Numpad8:
-		c = '8';
-		break;
-	case Keyboard::Num9:
-	case Keyboard::Numpad9:
-		c = '9';
-		break;
-	case Keyboard::A:
-		c = 'a';
-		break;
-	case Keyboard::B:
-		c = 'b';
-		break;
-	case Keyboard::C:
-		c = 'c';
-		break;
-	case Keyboard::D:
-		c = 'd';
-		break;
-	case Keyboard::E:
-		c = 'e';
-		break;
-	case Keyboard::F:
-		c = 'f';
-		break;
-	case Keyboard::G:
-		c = 'g';
-		break;
-	case Keyboard::H:
-		c = 'h';
-		break;
-	case Keyboard::I:
-		c = 'i';
-		break;
-	case Keyboard::J:
-		c = 'j';
-		break;
-	case Keyboard::K:
-		c = 'k';
-		break;
-	case Keyboard::L:
-		c = 'l';
-		break;
-	case Keyboard::M:
-		c = 'm';
-		break;
-	case Keyboard::N:
-		c = 'n';
-		break;
-	case Keyboard::O:
-		c = 'o';
-		break;
-	case Keyboard::P:
-		c = 'p';
-		break;
-	case Keyboard::Q:
-		c = 'q';
-		break;
-	case Keyboard::R:
-		c = 'r';
-		break;
-	case Keyboard::S:
-		c = 's';
-		break;
-	case Keyboard::T:
-		c = 't';
-		break;
-	case Keyboard::U:
-		c = 'u';
-		break;
-	case Keyboard::V:
-		c = 'v';
-		break;
-	case Keyboard::W:
-		c = 'w';
-		break;
-	case Keyboard::X:
-		c = 'x';
-		break;
-	case Keyboard::Y:
-		c = 'y';
-		break;
-	case Keyboard::Z:
-		c = 'z';
-		break;
-	case Keyboard::Period:
-		c = '.';
-		break;
-	case Keyboard::Add:
-		c = '+';
-		break;
-	case Keyboard::Comma:
-		c = ',';
-		break;
-	case Keyboard::Dash:
-		c = '-';
-		break;
-	case Keyboard::Divide:
-		c = '/';
-		break;
-	case Keyboard::Equal:
-		c = '=';
-		break;
-	case Keyboard::Multiply:
-		c = '*';
-		break;
-	case Keyboard::Quote:
-		c = '"';
-		break;
-	case Keyboard::Semicolon:
-		c = ';';
-		break;
-	case Keyboard::Slash:
-		c = '#';
-		break;
-	case Keyboard::Space:
-		c = ' ';
-		break;
-	case Keyboard::Subtract:
-		c = '-';
-		break;
-	case Keyboard::Tilde:
-		c = '~';
-		break;
-
-
-	default:
-		c = '\0';
-	}
-
-	return c;
 }
 #pragma endregion
 

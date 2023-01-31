@@ -55,10 +55,10 @@ bool Game::loadGame()
 	bool settingsFirstVolume = true;
 	immortalMode = false;
 
-	std::ifstream FileTestSettings("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-	if (FileTestSettings.fail())
+	std::ifstream* FileTestSettings = new std::ifstream("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	if (FileTestSettings->fail())
 	{
-		FileTestSettings.close();
+		FileTestSettings->close();
 		goto skipSettings;
 	}
 
@@ -96,11 +96,11 @@ skipSettings:
 		datei = "saves/savegame" + std::to_string(p_map->getIndex());
 		datei += ".sav";
 
-		std::ifstream FileTest(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-		if (FileTest.fail())
+		std::ifstream* FileTest = new std::ifstream(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+		if (FileTest->fail())
 			return false;
 
-		FileTest.close();
+		FileTest->close();
 		rdatei.open(datei);
 
 		while (!rdatei.eof())
@@ -189,6 +189,7 @@ skipSettings:
 	}
 	else return false;
 }
+
 bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getSpr()->getPosition().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
@@ -405,7 +406,7 @@ void Game::checkButtonClick()
 			{
 				Multiplayer::send(tower, 1);
 
-				Round::getInstance()->sellTower(tower,false);
+				Round::getInstance()->sellTower(tower, false);
 				tower = nullptr;
 			}
 		}
@@ -877,7 +878,7 @@ void Game::shortcuts()
 			}
 			else if (event.key.code == Keyboard::BackSpace)
 			{
-				Round::getInstance()->sellTower(tower,false);
+				Round::getInstance()->sellTower(tower, false);
 				Multiplayer::send(tower, 1);
 				tower = nullptr;
 			}
@@ -1333,8 +1334,9 @@ void Game::resetAll()
 }
 void Game::saveGame()
 {
-	system("md saves >nul 2>&1");
+	system("md saves");
 	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
+	//system("md saves >nul 2>&1");
 	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
 
 	std::ofstream wdatei;

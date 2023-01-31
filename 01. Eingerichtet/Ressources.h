@@ -112,6 +112,10 @@ private:
 	Texture multiplayerChatBackgroundTexture;
 	Texture sendMoneyButtonOpenTexture;
 	Texture sendMoneyBackgroundTexture;
+	Texture accountIconButtonTexture;
+	Texture accountSignInButtonTexture;
+	Texture accountSignOutButtonTexture;
+	Texture accountLoginBackground;
 
 	Image icon;
 
@@ -220,6 +224,10 @@ public:
 	Texture* getMultiplayerChatBackgroundTexture();
 	Texture* getSendMoneyButtonOpenTexture();
 	Texture* getSendMoneyBackgroundTexture();
+	Texture* getAccountIconButtonTexture();
+	Texture* getAccountSignInButtonTexture();
+	Texture* getAccountSignOutButtonTexture();
+	Texture* getAccountLoginBackground();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 	std::string getUpdateBeschreibungEins(int, int);

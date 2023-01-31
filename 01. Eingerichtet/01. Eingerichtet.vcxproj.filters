@@ -129,6 +129,12 @@
     <ClCompile Include="Loadingbar.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="AccountLogin.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -198,6 +204,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Loadingbar.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountLogin.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

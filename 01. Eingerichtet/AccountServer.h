@@ -7,6 +7,7 @@ private:
 	sf::Http* http;
 	sf::Http::Request* request;
 	sf::Http::Response* response;
+	sf::Time* timeout;
 	int httpVersion[2];
 
 public:

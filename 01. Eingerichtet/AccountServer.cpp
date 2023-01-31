@@ -7,6 +7,9 @@ AccountServer::AccountServer()
 	httpVersion[0] = 1;
 	httpVersion[1] = 1;
 
+	timeout = new sf::Time();
+	*timeout = sf::seconds(10);
+
 	request = nullptr;
 	response = nullptr;
 }
@@ -36,7 +39,7 @@ std::string AccountServer::sendLogin(std::string email, std::string passwort)
 	request->setBody(email + "&" + passwort);
 
 	response = new sf::Http::Response();
-	*response = http->sendRequest(*request);
+	*response = http->sendRequest(*request, *timeout);
 	responseBody = response->getBody();
 
 	delete request;
@@ -59,7 +62,7 @@ std::string AccountServer::sendGameID(std::string gameID)
 	request->setBody(gameID);
 
 	response = new sf::Http::Response();
-	*response = http->sendRequest(*request);
+	*response = http->sendRequest(*request, *timeout);
 	responseBody = response->getBody();
 
 	delete request;
@@ -82,7 +85,7 @@ std::string AccountServer::sendHostIP(std::string hostIP)
 	request->setBody(hostIP);
 
 	response = new sf::Http::Response();
-	*response = http->sendRequest(*request);
+	*response = http->sendRequest(*request, *timeout);
 	responseBody = response->getBody();
 
 	delete request;
