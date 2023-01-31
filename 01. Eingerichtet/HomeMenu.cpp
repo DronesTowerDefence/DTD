@@ -402,6 +402,7 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			window->close();
+			exit(0);
 			return 0;
 		}
 
@@ -599,6 +600,7 @@ bool HomeMenu::connect(Event event)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 					return 0;
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)	return false;
@@ -618,6 +620,7 @@ bool HomeMenu::connect(Event event)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 					return false;
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
@@ -642,6 +645,7 @@ bool HomeMenu::connect(Event event)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 					return false;
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
@@ -662,6 +666,7 @@ bool HomeMenu::connect(Event event)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 					return false;
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;

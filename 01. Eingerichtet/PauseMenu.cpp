@@ -217,6 +217,7 @@ void PauseMenu::checkPause(Event event1)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 				}
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				{
@@ -327,6 +328,7 @@ void PauseMenu::checkPause(bool isPaused)
 				if (event.type == Event::Closed)
 				{
 					window->close();
+					exit(0);
 				}
 				//if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				//{
@@ -432,6 +434,7 @@ void PauseMenu::checkPause()
 			if (event.type == Event::Closed)
 			{
 				window->close();
+				exit(0);
 			}
 			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) { // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				return;

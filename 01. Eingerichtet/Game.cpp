@@ -268,6 +268,7 @@ void Game::startGame()
 			{
 				saveGame();
 				window->close();
+				exit(0);
 			}
 			if (!MultiplayerChat::getInstance()->getIsOpen() && !SendMoney::getInstance()->getIsOpen())
 			{
@@ -727,6 +728,7 @@ void Game::checkLoseGame()
 				{
 					saveGame();
 					window->close();
+					exit(0);
 					return;
 				}
 			}
@@ -1196,6 +1198,7 @@ void Game::checkMultiplayerConnection()
 					{
 						saveGame(); //Speichert das Spiel
 						window->close();
+						exit(0);
 					}
 				}
 				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
@@ -1219,6 +1222,7 @@ void Game::checkMultiplayerConnection()
 					{
 						saveGame(); //Speichert das Spiel
 						window->close();
+						exit(0);
 					}
 				}
 				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
@@ -1246,6 +1250,7 @@ void Game::checkMultiplayerConnection()
 					{
 						saveGame(); //Speichert das Spiel
 						window->close();
+						exit(0);
 					}
 				}
 				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
@@ -1271,6 +1276,7 @@ void Game::checkMultiplayerConnection()
 					{
 						saveGame(); //Speichert das Spiel
 						window->close();
+						exit(0);
 					}
 				}
 				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt

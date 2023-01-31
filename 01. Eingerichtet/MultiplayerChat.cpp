@@ -468,6 +468,7 @@ bool MultiplayerChat::chatCommand()
 					Game::getInstance()->saveGame();
 				}
 				window->close();
+				exit(0);
 			}
 		}
 		else if (str.find("immortal") != std::string::npos)

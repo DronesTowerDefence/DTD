@@ -23,6 +23,7 @@ int main()
 
 	Loadup* load = new Loadup(&window);
 	load->start();
+	delete load;
 
 	HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
 	HomeMenu::getInstance()->HomeMenuStart(); //Das HomeMenu wird aufgerufen/gestartet
