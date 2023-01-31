@@ -1,4 +1,4 @@
-# 5-Scrum-Team-DTD
+Drones Tower Defence
 DTD ist ein Tower Defense Spiel
 
 Jede Runde kommt eine bestimmte Anzahl an Drohnen.
