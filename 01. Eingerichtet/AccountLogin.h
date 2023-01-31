@@ -9,6 +9,7 @@ class AccountLogin
 private:
 
 	bool isClicked;
+	bool isTab;
 	bool accountLoginIsOpen;
 	bool accountLoginEmailIsClicked;
 	bool accountLoginPasswordIsClicked;

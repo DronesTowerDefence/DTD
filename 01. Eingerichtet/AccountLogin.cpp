@@ -12,6 +12,16 @@ int AccountLogin::checkClicked(Event*)
 	{
 		isClicked = true;
 	}
+	if (Controls::getTabIsPressed())
+	{
+		isTab = true;
+	}
+	if (isTab && !Controls::getTabIsPressed())
+	{
+		accountLoginEmailIsClicked = !accountLoginEmailIsClicked;
+		accountLoginPasswordIsClicked = !accountLoginPasswordIsClicked;
+		isTab = false;
+	}
 	if (accountLoginIsOpen && isClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = false;
@@ -125,7 +135,6 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 bool AccountLogin::openAccountLoginWindow(Event* event)
 {
-	// TODO: Benutzeroberfläche zur Eingabe der Email und des Passwortes
 	char newChar = '\0';
 	std::string email = "", password = "", antwort = "";
 	AccountServer* accServer = new AccountServer();
