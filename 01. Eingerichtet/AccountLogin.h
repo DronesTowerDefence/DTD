@@ -27,9 +27,13 @@ private:
 
 	Text* accountLoginEmailText;
 	Text* accountLoginPasswordText;
+	Text* accountLoginStatusText;
 
 	int checkClicked(Event*);
 	void draw();
+	bool accountLogin(Event*);
+	bool accountPage(Event*);
+
 	AccountLogin();
 
 public:

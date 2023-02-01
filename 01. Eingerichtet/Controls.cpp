@@ -4,6 +4,7 @@
 Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
 Clock Controls::mouseWheelMoveCooldownClock;
 
+bool Controls::escIsPressed = false;
 bool Controls::spaceIsPressed = false;
 bool Controls::shiftIsPressed = false;
 bool Controls::ctrlIsPressed = false;
@@ -46,6 +47,9 @@ char Controls::checkKeyboardInput(Event* event)
 		case Keyboard::BackSpace:
 			backSpaceIsPressed = true;
 			break;
+		case Keyboard::Escape:
+			escIsPressed = true;
+			break;
 		}
 	}
 	else if (event->type == Event::KeyReleased)
@@ -73,6 +77,9 @@ char Controls::checkKeyboardInput(Event* event)
 			break;
 		case Keyboard::BackSpace:
 			backSpaceIsPressed = false;
+			break;
+		case Keyboard::Escape:
+			escIsPressed = false;
 			break;
 		case Keyboard::Period:
 			c = '.';
@@ -297,6 +304,11 @@ void Controls::checkControls()
 #pragma endregion
 
 #pragma region getter
+
+bool Controls::getEscIsPressed()
+{
+	return escIsPressed;
+}
 
 bool Controls::getSpaceIsPressed()
 {

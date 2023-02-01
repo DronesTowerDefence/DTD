@@ -445,7 +445,6 @@ void HomeMenu::HomeMenuStart()
 	while (window->isOpen())
 	{
 		Event event;
-		while (!window->hasFocus());
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -594,7 +593,6 @@ bool HomeMenu::connect(Event event)
 
 		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
 		{
-			while (!window->hasFocus());
 			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 			{
 				if (event.type == Event::Closed)
@@ -614,7 +612,6 @@ bool HomeMenu::connect(Event event)
 
 		while (res->getSender()->connect(res->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
 		{
-			while (!window->hasFocus());
 			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 			{
 				if (event.type == Event::Closed)
@@ -639,7 +636,6 @@ bool HomeMenu::connect(Event event)
 
 		while (res->getSender()->connect(res->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
 		{
-			while (!window->hasFocus());
 			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 			{
 				if (event.type == Event::Closed)
@@ -660,7 +656,6 @@ bool HomeMenu::connect(Event event)
 
 		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
 		{
-			while (!window->hasFocus());
 			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
 			{
 				if (event.type == Event::Closed)

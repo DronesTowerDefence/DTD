@@ -2,6 +2,7 @@
 #include "HomeMenu.h"
 #include "Service.h"
 #include "Controls.h"
+#include "Loadup.h"
 
 
 int AccountLogin::checkClicked(Event*)
@@ -70,6 +71,7 @@ void AccountLogin::draw()
 		window->draw(*loginScreenExitButton);
 		window->draw(*accountLoginEmailText);
 		window->draw(*accountLoginPasswordText);
+		window->draw(*accountLoginStatusText);
 	}
 	if (accountLoginEmailIsClicked)
 	{
@@ -82,59 +84,7 @@ void AccountLogin::draw()
 	window->display();
 }
 
-AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
-{
-	window = _window;
-	res = _res;
-
-	isClicked = false;
-	isTab = false;
-	accountLoginIsOpen = false;
-	accountLoginEmailIsClicked = false;
-	accountLoginPasswordIsClicked = false;
-
-	loginScreen = new Sprite();
-	loginScreenExitButton = new Sprite();
-	loginScreenEmailButton = new RectangleShape();
-	loginScreenPasswordButton = new RectangleShape();
-
-	loginScreen->setTexture(*res->getAccountLoginBackground());
-	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
-
-	loginScreen->setPosition(Vector2f(600, 100));
-	loginScreenExitButton->setPosition(Vector2f(1300, 100));
-
-	font = new Font();
-	font->loadFromFile("fonts/arial.ttf");
-
-	accountLoginEmailText = new Text();
-	accountLoginEmailText->setFont(*font);
-	accountLoginEmailText->setPosition(Vector2f(700, 400));
-	accountLoginEmailText->setFillColor(Color::Black);
-	accountLoginEmailText->setCharacterSize(50);
-	accountLoginEmailText->setString("Deine E-Mail...");
-
-	accountLoginPasswordText = new Text();
-	accountLoginPasswordText->setFont(*font);
-	accountLoginPasswordText->setPosition(Vector2f(700, 500));
-	accountLoginPasswordText->setFillColor(Color::Black);
-	accountLoginPasswordText->setCharacterSize(50);
-	accountLoginPasswordText->setString("Dein Passwort...");
-
-	loginScreenEmailButton->setSize(Vector2f(400, 100));
-	loginScreenEmailButton->setPosition(accountLoginEmailText->getPosition());
-	loginScreenEmailButton->setFillColor(Color::Transparent);
-	loginScreenEmailButton->setOutlineColor(Color::Red);
-	loginScreenEmailButton->setOutlineThickness(4);
-
-	loginScreenPasswordButton->setSize(Vector2f(400, 100));
-	loginScreenPasswordButton->setPosition(accountLoginPasswordText->getPosition());
-	loginScreenPasswordButton->setFillColor(Color::Transparent);
-	loginScreenPasswordButton->setOutlineColor(Color::Red);
-	loginScreenPasswordButton->setOutlineThickness(4);
-}
-
-bool AccountLogin::openAccountLoginWindow(Event* event)
+bool AccountLogin::accountLogin(Event* event)
 {
 	char newChar = '\0';
 	std::string email = "", password = "", antwort = "";
@@ -153,7 +103,11 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 				exit(0);
 			}
 			newChar = Controls::checkKeyboardInput(event);
-			checkClicked(event);
+			checkClicked(event);			
+			if (Controls::getEscIsPressed())
+			{
+				accountLoginIsOpen = false;
+			}
 		}
 		draw();
 
@@ -208,17 +162,22 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 			antwort = accServer->sendLogin(email, password);
 			if (antwort == "0")
 			{
+				accountLoginStatusText->setString("Falsche Anmeldedaten");
 				std::cout << "Falsche Anmeldedaten" << std::endl;
 			}
 			else if (antwort == "-1")
 			{
-				std::cout << "Keine Verbindung zum Server" << std::endl;
+				accountLoginStatusText->setString("Keine Verbindung zum Server");
+				std::cout << "Keine Verbindung\nzum Server möglich" << std::endl;
 			}
 			else
 			{
+				accountLoginStatusText->setString("Erfolgreich!");
 				std::cout << antwort << std::endl;
 				accServer->createAccount(antwort);
+				draw();
 				accountLoginIsOpen = false;
+				sleep(sf::milliseconds(500));
 				return true;
 			}
 		}
@@ -227,4 +186,112 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 
 	accountLoginIsOpen = false;
 	return false;
+}
+
+bool AccountLogin::accountPage(Event* event)
+{
+	char newChar = '\0';
+
+	accountLoginIsOpen = true;
+	while (accountLoginIsOpen && window->isOpen())
+	{
+		Controls::checkControls();
+		while (window->pollEvent(*event))
+		{
+			if (event->type == Event::Closed)
+			{
+				window->close();
+				exit(0);
+			}
+			newChar = Controls::checkKeyboardInput(event);
+			checkClicked(event);
+		}
+		draw();
+	}
+
+	accountLoginIsOpen = false;
+	return false;
+}
+
+AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
+{
+	window = _window;
+	res = _res;
+
+	isClicked = false;
+	isTab = false;
+	accountLoginIsOpen = false;
+	accountLoginEmailIsClicked = false;
+	accountLoginPasswordIsClicked = false;
+
+	loginScreen = new Sprite();
+	loginScreenExitButton = new Sprite();
+	loginScreenEmailButton = new RectangleShape();
+	loginScreenPasswordButton = new RectangleShape();
+
+	loginScreen->setTexture(*res->getAccountLoginBackground());
+	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
+
+	loginScreen->setPosition(Vector2f(600, 100));
+	loginScreenExitButton->setPosition(Vector2f(1300, 100));
+
+	font = new Font();
+	font->loadFromFile("fonts/arial.ttf");
+
+	accountLoginEmailText = new Text();
+	accountLoginPasswordText = new Text();
+	accountLoginStatusText = new Text();
+
+	if (Loadup::usernameSuccessfull)
+	{
+
+	}
+	else
+	{
+		accountLoginEmailText->setFont(*font);
+		accountLoginEmailText->setPosition(Vector2f(700, 400));
+		accountLoginEmailText->setFillColor(Color::Black);
+		accountLoginEmailText->setCharacterSize(50);
+		accountLoginEmailText->setString("Deine E-Mail...");
+
+		accountLoginPasswordText->setFont(*font);
+		accountLoginPasswordText->setPosition(Vector2f(700, 500));
+		accountLoginPasswordText->setFillColor(Color::Black);
+		accountLoginPasswordText->setCharacterSize(50);
+		accountLoginPasswordText->setString("Dein Passwort...");
+
+		accountLoginStatusText->setFont(*font);
+		accountLoginStatusText->setPosition(Vector2f(700, 700));
+		accountLoginStatusText->setFillColor(Color::Black);
+		accountLoginStatusText->setCharacterSize(50);
+		accountLoginStatusText->setString("Enter zum anmelden");
+
+		loginScreenEmailButton->setSize(Vector2f(400, 100));
+		loginScreenEmailButton->setPosition(accountLoginEmailText->getPosition());
+		loginScreenEmailButton->setFillColor(Color::Transparent);
+		loginScreenEmailButton->setOutlineColor(Color::Red);
+		loginScreenEmailButton->setOutlineThickness(4);
+
+		loginScreenPasswordButton->setSize(Vector2f(400, 100));
+		loginScreenPasswordButton->setPosition(accountLoginPasswordText->getPosition());
+		loginScreenPasswordButton->setFillColor(Color::Transparent);
+		loginScreenPasswordButton->setOutlineColor(Color::Red);
+		loginScreenPasswordButton->setOutlineThickness(4);
+	}
+}
+
+bool AccountLogin::openAccountLoginWindow(Event* event)
+{
+	bool returnValue = false;
+
+	if (Loadup::usernameSuccessfull)
+	{
+		returnValue = accountPage(event);
+	}
+	else
+	{
+		returnValue = accountLogin(event);
+	}
+
+	return returnValue;
 }

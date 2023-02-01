@@ -5,7 +5,7 @@ bool Loadup::usernameSuccessfull = false;
 
 std::string Loadup::readUsernameFromFile()
 {
-	std::string username = "0";
+	std::string username = "";
 	char* buffer = new char[20];
 	std::ifstream file;
 
@@ -19,7 +19,9 @@ std::string Loadup::readUsernameFromFile()
 		username += buffer[i];
 	}
 
-	return username;
+	if (username.length() > 0)
+		return username;
+	else return "0";
 }
 
 void Loadup::setLoadingbar(float a)
@@ -67,16 +69,20 @@ void Loadup::start()
 	std::string username = readUsernameFromFile();
 	setLoadingbar(70);
 
-	username = accServer->checkUsername(username);
+	std::string usernameExist = accServer->checkUsername(username);
 	setLoadingbar(80);
 
-	if (username != "0" && username != "-1")
+	if (usernameExist == "1")
 	{
 		accServer->createAccount(username);
 		usernameSuccessfull = true;
 	}
 	else
 	{
+		if (username != "-1")
+		{
+			system("del saves\\user.sav");
+		}
 		accServer->createAccount("???");
 	}
 	setLoadingbar(90);
