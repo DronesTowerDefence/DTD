@@ -35,6 +35,17 @@ Account* Account::getAcc()
 	return m_acc;
 }
 
+bool Account::deleteAcc()
+{
+	if (m_acc != nullptr)
+	{
+		delete m_acc;
+		m_acc = nullptr;
+		return true;
+	}
+	else return false;
+}
+
 std::string Account::getAccName()
 {
 	return m_accName;

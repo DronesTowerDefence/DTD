@@ -57,6 +57,16 @@ int AccountLogin::checkClicked(Event*)
 			accountLoginEmailIsClicked = false;
 			return 0;
 		}
+
+		// SignInOutButton
+		pos = Service::getInstance()->getObjectPosition(signInOutButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(signInOutButton->getPosition() + Vector2f(signInOutButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			isEnter = true;
+			return 0;
+		}
 	}
 	return 0;
 }
@@ -71,6 +81,7 @@ void AccountLogin::draw()
 		window->draw(*loginScreenExitButton);
 		window->draw(*accountLoginEmailText);
 		window->draw(*accountLoginPasswordText);
+		window->draw(*signInOutButton);
 		window->draw(*accountLoginStatusText);
 	}
 	if (accountLoginEmailIsClicked)
@@ -103,10 +114,14 @@ bool AccountLogin::accountLogin(Event* event)
 				exit(0);
 			}
 			newChar = Controls::checkKeyboardInput(event);
-			checkClicked(event);			
+			checkClicked(event);
 			if (Controls::getEscIsPressed())
 			{
 				accountLoginIsOpen = false;
+			}
+			if (Controls::getEnterIsPressed())
+			{
+				isEnter = true;
 			}
 		}
 		draw();
@@ -157,7 +172,7 @@ bool AccountLogin::accountLogin(Event* event)
 			accountLoginPasswordText->setString("Dein Passwort...");
 		}
 
-		if (event->type == Event::KeyReleased && event->key.code == Keyboard::Enter)
+		if (isEnter)
 		{
 			antwort = accServer->sendLogin(email, password);
 			if (antwort == "0")
@@ -175,6 +190,7 @@ bool AccountLogin::accountLogin(Event* event)
 				accountLoginStatusText->setString("Erfolgreich!");
 				std::cout << antwort << std::endl;
 				accServer->createAccount(antwort);
+				Loadup::usernameSuccessfull = true;
 				draw();
 				accountLoginIsOpen = false;
 				sleep(sf::milliseconds(500));
@@ -191,6 +207,7 @@ bool AccountLogin::accountLogin(Event* event)
 bool AccountLogin::accountPage(Event* event)
 {
 	char newChar = '\0';
+	AccountServer* accServer = new AccountServer();
 
 	accountLoginIsOpen = true;
 	while (accountLoginIsOpen && window->isOpen())
@@ -205,8 +222,23 @@ bool AccountLogin::accountPage(Event* event)
 			}
 			newChar = Controls::checkKeyboardInput(event);
 			checkClicked(event);
+			if (Controls::getEnterIsPressed())
+			{
+				isEnter = true;
+			}
 		}
 		draw();
+
+
+		if (isEnter)
+		{
+			system("del saves\\user.sav");
+			Account::deleteAcc();
+			Loadup::usernameSuccessfull = false;
+			Account::createAcc("???");
+			return true;
+		}
+
 	}
 
 	accountLoginIsOpen = false;
@@ -220,12 +252,14 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 	isClicked = false;
 	isTab = false;
+	isEnter = false;
 	accountLoginIsOpen = false;
 	accountLoginEmailIsClicked = false;
 	accountLoginPasswordIsClicked = false;
 
 	loginScreen = new Sprite();
 	loginScreenExitButton = new Sprite();
+	signInOutButton = new Sprite();
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
 
@@ -234,6 +268,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 	loginScreen->setPosition(Vector2f(600, 100));
 	loginScreenExitButton->setPosition(Vector2f(1300, 100));
+	signInOutButton->setPosition(Vector2f(1100, 700));
 
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
@@ -244,10 +279,18 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 	if (Loadup::usernameSuccessfull)
 	{
+		signInOutButton->setTexture(*res->getAccountSignOutButtonTexture());
 
+		accountLoginEmailText->setFont(*font);
+		accountLoginEmailText->setPosition(Vector2f(700, 400));
+		accountLoginEmailText->setFillColor(Color::Black);
+		accountLoginEmailText->setCharacterSize(50);
+		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 	}
 	else
 	{
+		signInOutButton->setTexture(*res->getAccountSignInButtonTexture());
+
 		accountLoginEmailText->setFont(*font);
 		accountLoginEmailText->setPosition(Vector2f(700, 400));
 		accountLoginEmailText->setFillColor(Color::Black);

@@ -16,6 +16,7 @@ private:
 public:
 	static Account* createAcc(std::string userName);
 	static Account* getAcc();
+	static bool deleteAcc();
 	std::string getAccName();
 
 };

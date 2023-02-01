@@ -10,6 +10,10 @@ std::string Loadup::readUsernameFromFile()
 	std::ifstream file;
 
 	file.open("saves/user.sav");
+	if (file.fail())
+	{
+		return "0";
+	}
 	file.getline(buffer, 20, '\n');
 	file.close();
 

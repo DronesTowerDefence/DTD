@@ -10,6 +10,7 @@ private:
 
 	bool isClicked;
 	bool isTab;
+	bool isEnter;
 	bool accountLoginIsOpen;
 	bool accountLoginEmailIsClicked;
 	bool accountLoginPasswordIsClicked;
@@ -22,6 +23,7 @@ private:
 
 	Sprite* loginScreen;
 	Sprite* loginScreenExitButton;
+	Sprite* signInOutButton;
 
 	Font* font;
 
