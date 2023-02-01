@@ -55,7 +55,7 @@ void Loadingbar::setTextStyle(int style, int charSize, sf::Color textColor, sf::
 		text->setCharacterSize(charSize);
 		text->setFillColor(textColor);
 		text->setString(std::to_string(int(percentage)) + " %");
-		text->setPosition(sf::Vector2f((outline.getPosition().x + (outline.getSize().x / 2)) * 0.95, outline.getPosition().y * 1.1));
+		text->setPosition(sf::Vector2f((outline.getPosition().x + (outline.getSize().x / 2)) * 0.95, outline.getPosition().y * 1.025));
 		break;
 	}
 }

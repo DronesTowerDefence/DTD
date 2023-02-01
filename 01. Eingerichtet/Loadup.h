@@ -8,6 +8,7 @@ class Loadup
 private:
 	Loadingbar* loadingbar;
 	sf::RenderWindow* window;
+	sf::Font* font;
 
 	Loadup();
 	std::string readUsernameFromFile();

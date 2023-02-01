@@ -33,11 +33,14 @@ void Loadup::setLoadingbar(float a)
 Loadup::Loadup(sf::RenderWindow* _window)
 {
 	window = _window;
+	font = new sf::Font();
+	font->loadFromFile("fonts/arial.ttf");
 	loadingbar = new Loadingbar(
 		sf::Vector2f((window->getSize().x / 10), (window->getSize().y / 10) * 8),
 		sf::Vector2f((window->getSize().x / 10) * 9, (window->getSize().y / 10) * 9),
-		sf::Color::Black, 4, sf::Color::Blue
+		sf::Color::White, 4, sf::Color::Blue
 	);
+	loadingbar->setTextStyle(1, 50, Color::White, font);
 }
 
 void Loadup::start()
@@ -64,7 +67,10 @@ void Loadup::start()
 	std::string username = readUsernameFromFile();
 	setLoadingbar(70);
 
-	if (accServer->checkUsername(username) != "0")
+	username = accServer->checkUsername(username);
+	setLoadingbar(80);
+
+	if (username != "0" && username != "-1")
 	{
 		accServer->createAccount(username);
 		usernameSuccessfull = true;
@@ -73,10 +79,10 @@ void Loadup::start()
 	{
 		accServer->createAccount("???");
 	}
-	setLoadingbar(80);
+	setLoadingbar(90);
 
 	delete accServer;
-	setLoadingbar(90);
+	setLoadingbar(95);
 
 	setLoadingbar(100);
 

@@ -10,13 +10,15 @@ private:
 	sf::Time* timeout;
 	int httpVersion[2];
 
+	std::string send();
+
 public:
 	AccountServer();
 
 	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
 	/// </summary>
-	/// <param name="userName"></param>
+	/// <param name="userName">"0" = Kein Benutzer vorhanden, "-1" Keine Verbindung zum Server</param>
 	/// <returns>Pointer auf den Account wenn erfolgreich, ansonsten nullptr</returns>
 	Account* createAccount(std::string userName);
 

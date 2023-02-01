@@ -88,6 +88,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	res = _res;
 
 	isClicked = false;
+	isTab = false;
 	accountLoginIsOpen = false;
 	accountLoginEmailIsClicked = false;
 	accountLoginPasswordIsClicked = false;
@@ -158,7 +159,7 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 
 		if (accountLoginEmailIsClicked)
 		{
-			if (Controls::getBackSpaceIsPressed())
+			if (Controls::getBackSpaceIsPressed() && email.length() > 0)
 			{
 				email.erase(email.length() - 1);
 				accountLoginEmailText->setString(email);
@@ -172,9 +173,10 @@ bool AccountLogin::openAccountLoginWindow(Event* event)
 		}
 		else if (accountLoginPasswordIsClicked)
 		{
-			if (Controls::getBackSpaceIsPressed())
+			if (Controls::getBackSpaceIsPressed() && password.length() > 0)
 			{
 				password.erase(password.length() - 1);
+				accountLoginPasswordText->setString("");
 				for (int i = 0; i < password.length(); i++)
 				{
 					accountLoginPasswordText->setString(accountLoginPasswordText->getString() + "*");
