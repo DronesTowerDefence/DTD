@@ -116,6 +116,7 @@ private:
 	Texture accountSignInButtonTexture;
 	Texture accountSignOutButtonTexture;
 	Texture accountLoginBackground;
+	Texture accountProfilePictureTexture;
 
 	Image icon;
 
@@ -228,6 +229,7 @@ public:
 	Texture* getAccountSignInButtonTexture();
 	Texture* getAccountSignOutButtonTexture();
 	Texture* getAccountLoginBackground();
+	Texture* getAccountProfilePicture();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 	std::string getUpdateBeschreibungEins(int, int);
@@ -252,5 +254,7 @@ public:
 	/// </summary>
 	/// <param name="">flaot newMusicVolume</param>
 	void setMusicVolume(float);
+
+	void setAccountProfilePictureTexture(sf::Image*);
 };
 

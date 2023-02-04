@@ -6,26 +6,37 @@ Account* Account::m_acc = nullptr;
 Account::Account()
 {
 	m_accName = "???";
+	m_email = "0";
+	m_profileImage = nullptr;
 }
 
-Account::Account(std::string userName)
+Account::Account(std::string userName, std::string email, sf::Image* image)
 {
 	m_accName = userName;
+	m_email = email;
+	m_profileImage = new sf::Image();
+	*m_profileImage = Ressources::getInstance()->getAccountProfilePicture()->copyToImage();
 
-	if (userName != "???")
+	if (image != nullptr)
+	{
+		m_profileImage = image;
+		m_profileImage->saveToFile("saves/profilePicture.png");
+	}
+
+	if (userName != "???" && email != "0")
 	{
 		std::ofstream file("saves/user.sav");
-		file << userName;
+		file << userName << "\n" << email;
 	}
 }
 
-Account* Account::createAcc(std::string userName)
+Account* Account::createAcc(std::string userName, std::string email, sf::Image* image)
 {
 	if (m_acc != nullptr)
 	{
 		delete m_acc;
 	}
-	m_acc = new Account(userName);
+	m_acc = new Account(userName, email, image);
 
 	return m_acc;
 }
@@ -49,4 +60,14 @@ bool Account::deleteAcc()
 std::string Account::getAccName()
 {
 	return m_accName;
+}
+
+std::string Account::getEmail()
+{
+	return m_email;
+}
+
+sf::Image* Account::getProfileImage()
+{
+	return m_profileImage;
 }

@@ -10,6 +10,10 @@ private:
 	sf::Time* timeout;
 	int httpVersion[2];
 
+	/// <summary>
+	/// Sendet eine Request an den HTTP-Server
+	/// </summary>
+	/// <returns>Response Body | "-1" wenn nicht erfolgreich</returns>
 	std::string send();
 
 public:
@@ -20,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="userName">"0" = Kein Benutzer vorhanden, "-1" Keine Verbindung zum Server</param>
 	/// <returns>Pointer auf den Account wenn erfolgreich, ansonsten nullptr</returns>
-	Account* createAccount(std::string userName);
+	Account* createAccount(std::string userName, std::string email, sf::Image* profileImage);
 
 	/// <summary>
 	/// Sendet eine Request mit den Parametern an den HTTP-Server
@@ -43,6 +47,13 @@ public:
 	/// <param name="hostIP"></param>
 	/// <returns>GameID</returns>
 	std::string sendHostIP(std::string hostIP);
+
+	/// <summary>
+	/// Sendet eine Request mit dem Benutzernamen, um das dazugehörige Profilbild zu bekommen
+	/// </summary>
+	/// <param name="username"></param>
+	/// <returns>Das Profilbild als smfl Image</returns>
+	sf::Image* getProfilePicture(std::string username);
 
 	/// <summary>
 	/// Überprüft, ob der angegebene Benutzername existiert

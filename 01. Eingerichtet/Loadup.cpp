@@ -3,10 +3,10 @@
 
 bool Loadup::usernameSuccessfull = false;
 
-std::string Loadup::readUsernameFromFile()
+std::string Loadup::readFromUserFile(int line)
 {
-	std::string username = "";
-	char* buffer = new char[20];
+	std::string userData = "";
+	char* buffer = new char[40];
 	std::ifstream file;
 
 	file.open("saves/user.sav");
@@ -14,17 +14,20 @@ std::string Loadup::readUsernameFromFile()
 	{
 		return "0";
 	}
-	file.getline(buffer, 20, '\n');
+	for (int i = 0; i < line; i++)
+	{
+		file.getline(buffer, 40, '\n');
+	}
 	file.close();
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		if (buffer[i] == '\0') break;
-		username += buffer[i];
+		userData += buffer[i];
 	}
 
-	if (username.length() > 0)
-		return username;
+	if (userData.length() > 0)
+		return userData;
 	else return "0";
 }
 
@@ -56,29 +59,31 @@ void Loadup::start()
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
 	setLoadingbar(30);
 
-	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
-	credits->setTexture(*res->getCreditsTexture());
+	window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 	setLoadingbar(40);
 
+
+	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
+	credits->setTexture(*res->getCreditsTexture());
 	window->draw(*credits);
 	loadingbar->draw(window);
 	window->display();
-
-	window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 	setLoadingbar(50);
 
 	AccountServer* accServer = new AccountServer();
 	setLoadingbar(60);
 
-	std::string username = readUsernameFromFile();
-	setLoadingbar(70);
-
+	std::string username = readFromUserFile(1);
+	std::string email = readFromUserFile(2);
 	std::string usernameExist = accServer->checkUsername(username);
-	setLoadingbar(80);
+	setLoadingbar(70);
 
 	if (usernameExist == "1")
 	{
-		accServer->createAccount(username);
+		sf::Image* image = accServer->getProfilePicture(username);
+		accServer->createAccount(username, email, image);
+		setLoadingbar(80);
+
 		usernameSuccessfull = true;
 	}
 	else
@@ -87,7 +92,7 @@ void Loadup::start()
 		{
 			system("del saves\\user.sav");
 		}
-		accServer->createAccount("???");
+		accServer->createAccount("???", "\0", nullptr);
 	}
 	setLoadingbar(90);
 

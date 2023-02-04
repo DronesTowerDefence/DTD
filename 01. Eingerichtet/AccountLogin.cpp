@@ -83,6 +83,8 @@ void AccountLogin::draw()
 		window->draw(*accountLoginPasswordText);
 		window->draw(*signInOutButton);
 		window->draw(*accountLoginStatusText);
+		window->draw(*profilePicture);
+		window->draw(*profilePictureFrame);
 	}
 	if (accountLoginEmailIsClicked)
 	{
@@ -189,11 +191,12 @@ bool AccountLogin::accountLogin(Event* event)
 			{
 				accountLoginStatusText->setString("Erfolgreich!");
 				std::cout << antwort << std::endl;
-				accServer->createAccount(antwort);
+				accServer->createAccount(antwort, email, accServer->getProfilePicture(antwort));
+
 				Loadup::usernameSuccessfull = true;
 				draw();
-				accountLoginIsOpen = false;
 				sleep(sf::milliseconds(500));
+				accountLoginIsOpen = false;
 				return true;
 			}
 		}
@@ -229,13 +232,13 @@ bool AccountLogin::accountPage(Event* event)
 		}
 		draw();
 
-
 		if (isEnter)
 		{
 			system("del saves\\user.sav");
+			system("del saves\\profilePicture.png");
 			Account::deleteAcc();
 			Loadup::usernameSuccessfull = false;
-			Account::createAcc("???");
+			Account::createAcc("???", "\0", nullptr);
 			return true;
 		}
 
@@ -247,6 +250,8 @@ bool AccountLogin::accountPage(Event* event)
 
 AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 {
+	float profilePictureSize = 150.f;
+
 	window = _window;
 	res = _res;
 
@@ -260,15 +265,26 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	loginScreen = new Sprite();
 	loginScreenExitButton = new Sprite();
 	signInOutButton = new Sprite();
+	profilePicture = new Sprite();
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
+	profilePictureFrame = new RectangleShape();
 
 	loginScreen->setTexture(*res->getAccountLoginBackground());
 	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
+	profilePicture->setTexture(*res->getAccountProfilePicture());
+	profilePicture->setScale(Vector2f(profilePictureSize / float(res->getAccountProfilePicture()->getSize().x), profilePictureSize / float(res->getAccountProfilePicture()->getSize().y)));
 
 	loginScreen->setPosition(Vector2f(600, 100));
 	loginScreenExitButton->setPosition(Vector2f(1300, 100));
 	signInOutButton->setPosition(Vector2f(1100, 700));
+	profilePicture->setPosition(Vector2f(700, 150));
+	profilePictureFrame->setPosition(profilePicture->getPosition());
+
+	profilePictureFrame->setSize(Vector2f(profilePictureSize, profilePictureSize));
+	profilePictureFrame->setFillColor(Color::Transparent);
+	profilePictureFrame->setOutlineColor(Color::Black);
+	profilePictureFrame->setOutlineThickness(10);
 
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
@@ -277,36 +293,34 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountLoginPasswordText = new Text();
 	accountLoginStatusText = new Text();
 
+	accountLoginEmailText->setFont(*font);
+	accountLoginEmailText->setPosition(Vector2f(700, 350));
+	accountLoginEmailText->setFillColor(Color::Black);
+	accountLoginEmailText->setCharacterSize(50);
+
+	accountLoginPasswordText->setFont(*font);
+	accountLoginPasswordText->setPosition(Vector2f(700, 500));
+	accountLoginPasswordText->setFillColor(Color::Black);
+	accountLoginPasswordText->setCharacterSize(50);
+
 	if (Loadup::usernameSuccessfull)
 	{
 		signInOutButton->setTexture(*res->getAccountSignOutButtonTexture());
 
-		accountLoginEmailText->setFont(*font);
-		accountLoginEmailText->setPosition(Vector2f(700, 400));
-		accountLoginEmailText->setFillColor(Color::Black);
-		accountLoginEmailText->setCharacterSize(50);
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
+		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
 	}
 	else
 	{
 		signInOutButton->setTexture(*res->getAccountSignInButtonTexture());
 
-		accountLoginEmailText->setFont(*font);
-		accountLoginEmailText->setPosition(Vector2f(700, 400));
-		accountLoginEmailText->setFillColor(Color::Black);
-		accountLoginEmailText->setCharacterSize(50);
 		accountLoginEmailText->setString("Deine E-Mail...");
-
-		accountLoginPasswordText->setFont(*font);
-		accountLoginPasswordText->setPosition(Vector2f(700, 500));
-		accountLoginPasswordText->setFillColor(Color::Black);
-		accountLoginPasswordText->setCharacterSize(50);
 		accountLoginPasswordText->setString("Dein Passwort...");
 
 		accountLoginStatusText->setFont(*font);
 		accountLoginStatusText->setPosition(Vector2f(700, 700));
 		accountLoginStatusText->setFillColor(Color::Black);
-		accountLoginStatusText->setCharacterSize(50);
+		accountLoginStatusText->setCharacterSize(40);
 		accountLoginStatusText->setString("Enter zum anmelden");
 
 		loginScreenEmailButton->setSize(Vector2f(400, 100));

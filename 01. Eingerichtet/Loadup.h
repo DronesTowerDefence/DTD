@@ -11,7 +11,7 @@ private:
 	sf::Font* font;
 
 	Loadup();
-	std::string readUsernameFromFile();
+	std::string readFromUserFile(int line);
 	void setLoadingbar(float);
 public:
 	Loadup(sf::RenderWindow* _window);

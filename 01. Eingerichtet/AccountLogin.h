@@ -20,10 +20,12 @@ private:
 
 	RectangleShape* loginScreenEmailButton;
 	RectangleShape* loginScreenPasswordButton;
+	RectangleShape* profilePictureFrame;
 
 	Sprite* loginScreen;
 	Sprite* loginScreenExitButton;
 	Sprite* signInOutButton;
+	Sprite* profilePicture;
 
 	Font* font;
 

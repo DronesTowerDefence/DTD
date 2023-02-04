@@ -338,10 +338,11 @@ Ressources::Ressources()
 	sendMoneyButtonOpenTexture.loadFromFile("img/openSendMoneyButton.png");
 	sendMoneyBackgroundTexture.loadFromFile("img/sendMoneyBackground.png");
 
-	accountIconButtonTexture.loadFromFile("img/buttons/account/accountIcon.png");
-	accountSignInButtonTexture.loadFromFile("img/buttons/account/signInButton.png");
-	accountSignOutButtonTexture.loadFromFile("img/buttons/account/signOutButton.png");
-	accountLoginBackground.loadFromFile("img/buttons/account/accountLoginBackground.png");
+	accountIconButtonTexture.loadFromFile("img/account/accountIcon.png");
+	accountSignInButtonTexture.loadFromFile("img/account/signInButton.png");
+	accountSignOutButtonTexture.loadFromFile("img/account/signOutButton.png");
+	accountLoginBackground.loadFromFile("img/account/accountLoginBackground.png");
+	accountProfilePictureTexture.loadFromFile("img/account/defaultProfileImage.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -466,6 +467,10 @@ void Ressources::setMusicVolume(float v)
 	{
 		backgroundMusic[i].setVolume(v);
 	}
+}
+void Ressources::setAccountProfilePictureTexture(sf::Image* image)
+{
+	accountProfilePictureTexture.loadFromImage(*image);
 }
 void Ressources::doubleSpeed()
 {
@@ -867,6 +872,10 @@ Texture* Ressources::getAccountSignOutButtonTexture()
 Texture* Ressources::getAccountLoginBackground()
 {
 	return &accountLoginBackground;
+}
+Texture* Ressources::getAccountProfilePicture()
+{
+	return &accountProfilePictureTexture;
 }
 #pragma endregion
 
