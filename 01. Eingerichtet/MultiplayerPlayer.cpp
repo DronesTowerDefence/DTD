@@ -1,23 +1,22 @@
 #include "MultiplayerPlayer.h"
 
-MultiplayerPlayer::MultiplayerPlayer(std::string _playerName)
+TcpListener* MultiplayerPlayer::listener = new TcpListener();
+
+MultiplayerPlayer::MultiplayerPlayer()
 {
-	m_playerName = _playerName;
-	m_sender = new TcpSocket();
-	m_receiver = new TcpSocket();
+	m_playerName = "???";
+	m_socket = new TcpSocket();
 }
 
 void MultiplayerPlayer::resetSockets()
 {
-	delete m_sender;
-	delete m_receiver;
-	m_sender = new TcpSocket();
-	m_receiver = new TcpSocket();
+	delete m_socket;
+	m_socket = new TcpSocket();
 }
 
-bool MultiplayerPlayer::connect(std::string ip, int port)
+void MultiplayerPlayer::setUsername(std::string _username)
 {
-	return m_sender->connect(ip, port) == sf::Socket::Done;
+	m_playerName = _username;
 }
 
 std::string MultiplayerPlayer::getPlayerName()
@@ -25,12 +24,12 @@ std::string MultiplayerPlayer::getPlayerName()
 	return m_playerName;
 }
 
-TcpSocket* MultiplayerPlayer::getSender()
+TcpSocket* MultiplayerPlayer::getSocket()
 {
-	return m_sender;
+	return m_socket;
 }
 
-TcpSocket* MultiplayerPlayer::getReceiver()
+TcpListener* MultiplayerPlayer::getListener()
 {
-	return m_receiver;
+	return listener;
 }

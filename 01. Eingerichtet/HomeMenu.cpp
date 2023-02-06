@@ -1,5 +1,6 @@
 #include "HomeMenu.h"
 #include "Controls.h"
+#include "Multiplayer.h"
 
 HomeMenu* HomeMenu::instance = nullptr;
 
@@ -14,7 +15,7 @@ HomeMenu::HomeMenu()
 	window = nullptr;
 	res = Ressources::getInstance();
 	ipAdress = "";
-	ownIpAdress = IpAddress::getLocalAddress().toString();
+	gameID = "0000";
 
 	startButton = new Sprite;
 	font = new Font();
@@ -36,6 +37,8 @@ HomeMenu::HomeMenu()
 
 	ipAdressText = new Text();
 	credits = new Text();
+
+	multiplayerConnectThread = nullptr;
 
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -147,7 +150,6 @@ HomeMenu::HomeMenu()
 	animationIndex = 0;
 	animation = new Clock();
 	animation->restart();
-	timeUntilTestVersionEndClock = new Clock();
 
 	pointer->setSize(Vector2f(1920 * 0.1, 991 * 0.1));
 	pointer->setOutlineThickness(10);
@@ -161,14 +163,11 @@ HomeMenu::HomeMenu()
 	ipAdressText->setPosition(Vector2f(570, 696));
 	ipAdressText->setFillColor(Color::Black);
 	ipAdressText->setCharacterSize(50);
-
-	ownIpAdressText = new Text();
-	ownIpAdressText->setFont(*font);
-	ownIpAdressText->setPosition(Vector2f(570, 596));
-	ownIpAdressText->setFillColor(Color::Black);
-	ownIpAdressText->setCharacterSize(50);
-	ownIpAdressText->setString(ownIpAdress);
+	ipAdressText->setString(gameID);
 }
+#pragma endregion
+
+#pragma region Funktionen
 void HomeMenu::drawPublic()
 {
 	window->draw(*backround);
@@ -189,7 +188,6 @@ void HomeMenu::drawPublic()
 		window->draw(*paste);
 		window->draw(*ipAdressText);
 		window->draw(*host);
-		window->draw(*ownIpAdressText);
 		window->draw(*client);
 
 	}
@@ -209,9 +207,6 @@ void HomeMenu::drawPublic()
 		window->draw(*pointer);
 	}
 }
-#pragma endregion
-
-#pragma region Funktionen
 void HomeMenu::ipAdressInput(Event event) {
 
 	if (event.type == Event::KeyReleased)
@@ -220,7 +215,7 @@ void HomeMenu::ipAdressInput(Event event) {
 		{
 			ipAdress += Controls::checkKeyboardInput(&event);
 		}
-		ipAdressText->setString(ipAdress);
+		ipAdressText->setString(gameID);
 	}
 	if (event.key.code == Keyboard::BackSpace)
 	{
@@ -228,7 +223,7 @@ void HomeMenu::ipAdressInput(Event event) {
 		{
 			ipAdress.erase(ipAdress.size() - 1);
 		}
-		ipAdressText->setString(ipAdress);
+		ipAdressText->setString(gameID);
 	}
 }
 int  HomeMenu::CheckClicked(Event event)
@@ -267,33 +262,14 @@ int  HomeMenu::CheckClicked(Event event)
 		{
 			status = 2;
 			connected = true;
+			Multiplayer::initializeMultiplayer(true);
 
-			if (res->getListener()->listen(4567))
+			// Verbindungsaufbau mit Threads
+			/*if (multiplayerConnectThread == nullptr)
 			{
-				connected = false;
-			}
-
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
-			{
-				connected = false;
-			}
-			Packet p;
-			while (res->getReceiver()->receive(p) != Socket::Done);
-
-			std::string ip_client;
-			p >> ip_client;
-			res->setIpAddress(ip_client);
-
-			if (Ressources::getInstance()->getSender()->connect(ip_client, 4568) != sf::Socket::Done)
-			{
-				//connected = false;
-			}
-			Packet p5;
-			p5 << choseIndex;
-			Ressources::getInstance()->getSender()->send(p5);
-
-			res->getSender()->setBlocking(false);
-			res->getReceiver()->setBlocking(false);
+			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, true);
+			multiplayerConnectThread->launch();
+			}*/
 			return 2;
 		}
 
@@ -303,37 +279,16 @@ int  HomeMenu::CheckClicked(Event event)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			connected = true;
 			status = 3;
+			connected = true;
+			Multiplayer::initializeMultiplayer(false);
 
-			res->setIpAddress(ipAdress);
-
-			if (res->getSender()->connect(ipAdress, 4567) != sf::Socket::Done)
+			// Verbindungsaufbau mit Threads
+			/*if (multiplayerConnectThread == nullptr)
 			{
-				connected = false;
-			}
-
-			Packet p1;
-			p1 << ownIpAdress;
-			res->getSender()->send(p1);
-
-
-			if (res->getListener()->listen(4568))
-			{
-				connected = false;
-			}
-
-			if (res->getListener()->accept(*res->getReceiver()) != Socket::Done)
-			{
-				connected = false;
-			}
-			Packet p2;
-
-			while (res->getReceiver()->receive(p2));
-			p2 >> choseIndex;
-			res->getSender()->setBlocking(false);
-			res->getReceiver()->setBlocking(false);
-
+			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, false);
+			multiplayerConnectThread->launch();
+			}*/
 			return 3;
 		}
 
@@ -346,8 +301,6 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			return 1;
-
-
 		}
 
 		//Copy
@@ -369,7 +322,7 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			ipAdress = Clipboard::getString();
-			ipAdressText->setString(ipAdress);
+			ipAdressText->setString(gameID);
 			return 0;
 
 
@@ -486,44 +439,7 @@ void HomeMenu::HomeMenuStart()
 void HomeMenu::draw()
 {
 	window->clear();
-	window->draw(*backround);
-	window->draw(*sideMenu);
-	window->draw(*upperBorder);
-	window->draw(*titel);
-	window->draw(*drone);
-	window->draw(*choseText);
-	window->draw(*multiplayerMenue);
-	window->draw(*exitButton);
-	window->draw(*deleteSavesButton);
-	window->draw(*credits);
-	window->draw(*accountButton);
-
-	if (isMultiplayerOpen)
-	{
-		window->draw(*copy);
-		window->draw(*paste);
-		window->draw(*ipAdressText);
-		window->draw(*host);
-		window->draw(*ownIpAdressText);
-		window->draw(*client);
-
-	}
-	else
-		window->draw(*startButton);
-	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
-	{
-		window->draw(*map[i]);
-	}
-
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
-	{
-		window->draw(*towers[i]);
-	}
-	if (choseIndex > -1)
-	{
-		window->draw(*pointer);
-	}
-
+	drawPublic();
 	window->display();
 }
 bool HomeMenu::deleteSave(int index)
@@ -557,6 +473,10 @@ int HomeMenu::getChoseIndex()
 {
 	return choseIndex;
 }
+std::string HomeMenu::getIPAdress()
+{
+	return ipAdress;
+}
 #pragma endregion
 
 #pragma region setter
@@ -564,6 +484,13 @@ void HomeMenu::setWindow(RenderWindow* window)
 {
 	this->window = window;
 
+}
+void HomeMenu::setChoseIndex(int _choseIndex)
+{
+	if (_choseIndex >= 0)
+	{
+		choseIndex = _choseIndex;
+	}
 }
 void HomeMenu::setTowerTexture()
 {
@@ -580,100 +507,6 @@ void HomeMenu::setTowerTexture()
 		animation->restart();
 	}
 
-}
-bool HomeMenu::connect(Event event)
-{
-	res->getSender()->setBlocking(false);
-	res->getReceiver()->setBlocking(false);
-	res->getListener()->setBlocking(false);
-
-	if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
-	{
-		res->getListener()->listen(4567); //Horcht am Port
-
-		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
-		{
-			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-			{
-				if (event.type == Event::Closed)
-				{
-					window->close();
-					exit(0);
-					return 0;
-				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)	return false;
-			}
-		}
-
-		Packet p;
-		std::string ip_client;
-		p >> ip_client;
-		res->setIpAddress(ip_client);
-
-		while (res->getSender()->connect(res->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
-		{
-			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-			{
-				if (event.type == Event::Closed)
-				{
-					window->close();
-					exit(0);
-					return false;
-				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
-			}
-		}
-
-		Packet p5;
-		p5 << choseIndex;
-		Ressources::getInstance()->getSender()->send(p5);
-
-		return true;
-	}
-	else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
-	{
-		res->setIpAddress(ipAdress);
-
-		while (res->getSender()->connect(res->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
-		{
-			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-			{
-				if (event.type == Event::Closed)
-				{
-					window->close();
-					exit(0);
-					return false;
-				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
-			}
-		}
-
-		Packet p1;
-		p1 << ownIpAdress;
-		res->getSender()->send(p1);
-
-		res->getListener()->listen(4568); //Horcht am Port
-
-		while (res->getListener()->accept(*res->getReceiver()) != Socket::Done) //Stellt Verbindung her
-		{
-			while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-			{
-				if (event.type == Event::Closed)
-				{
-					window->close();
-					exit(0);
-					return false;
-				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) return false;
-			}
-		}
-
-		Packet p2;
-		while (res->getReceiver()->receive(p2));
-		p2 >> choseIndex;
-
-		return true;
-	}
 }
 #pragma endregion
 

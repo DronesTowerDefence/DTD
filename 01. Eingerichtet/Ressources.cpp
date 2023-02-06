@@ -355,9 +355,6 @@ Ressources::Ressources()
 	}
 
 	icon.loadFromFile("img/icon.png");
-	receiver = new TcpSocket();
-	sender = new TcpSocket();
-	listener = new TcpListener();
 
 	for (int i = 0; i < (sizeof(hitBuffer) / sizeof(*hitBuffer)); i++)
 	{
@@ -433,15 +430,6 @@ void Ressources::normalSpeed()
 	}
 
 	setSpeed();
-}
-void Ressources::newConnection()
-{
-	delete listener;
-	delete receiver;
-	delete sender;
-	sender = new TcpSocket();
-	receiver = new TcpSocket();
-	listener = new TcpListener();
 }
 void Ressources::moabDeath(Vector2f pos, int x, int y, int next, int rotation)
 {
@@ -679,18 +667,6 @@ Sound* Ressources::getShootSound(int a)
 Music* Ressources::getBackgroundMusic(int i)
 {
 	return &backgroundMusic[i];
-}
-TcpSocket* Ressources::getSender()
-{
-	return sender;
-}
-TcpSocket* Ressources::getReceiver()
-{
-	return receiver;
-}
-TcpListener* Ressources::getListener()
-{
-	return listener;
 }
 Texture* Ressources::getTowerTexture(int i, int j)
 {

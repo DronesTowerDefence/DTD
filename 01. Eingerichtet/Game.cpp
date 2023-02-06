@@ -1176,122 +1176,50 @@ void Game::checkMultiplayerConnection()
 		window->draw(waitText);
 		window->display();
 
-		p_ressources->newConnection();
-		p_ressources->getSender()->setBlocking(false);
-		p_ressources->getReceiver()->setBlocking(false);
-		p_ressources->getListener()->setBlocking(false);
+		Multiplayer::resetMultiplayerSockets();
+		Multiplayer::setBlocking(false);
 
 		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
 		{
-			p_ressources->getListener()->listen(4567); //Horcht am Port
+			Multiplayer::initializeMultiplayer(true);
 
-			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
+			// Verbindungsaufbau mit Threads
+			/*if (multiplayerConnectThread == nullptr)
 			{
-				if (!window->hasFocus())
-				{
-					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-					PauseMenu::getInstance()->checkPause(true);
-				}
-				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-				{
-					if (event.type == Event::Closed)
-					{
-						saveGame(); //Speichert das Spiel
-						window->close();
-						exit(0);
-					}
-				}
-				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-				{
-					status = 1;
-					p_ressources->newConnection();
-					return;
-				}
-			}
+			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, true);
+			multiplayerConnectThread->launch();
+			}*/
 
-			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4568) != Socket::Done) //Verbindet sich mit dem Client
+			if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 			{
-				if (!window->hasFocus())
-				{
-					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-					PauseMenu::getInstance()->checkPause(true);
-				}
-				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-				{
-					if (event.type == Event::Closed)
-					{
-						saveGame(); //Speichert das Spiel
-						window->close();
-						exit(0);
-					}
-				}
-				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-				{
-					status = 1;
-					p_ressources->newConnection();
-					return;
-				}
+				status = 1;
+				Multiplayer::resetMultiplayerSockets();
+				return;
 			}
-
 			multiplayerCheckConnectionClock.restart();
 		}
 		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
 		{
-			while (p_ressources->getSender()->connect(p_ressources->getIpAddress(), 4567) != Socket::Done) //Verbindet sich mit dem Host
+			Multiplayer::initializeMultiplayer(false);
+
+			// Verbindungsaufbau mit Threads
+			/*if (multiplayerConnectThread == nullptr)
 			{
-				if (!window->hasFocus())
-				{
-					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-					PauseMenu::getInstance()->checkPause(true);
-				}
-				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-				{
-					if (event.type == Event::Closed)
-					{
-						saveGame(); //Speichert das Spiel
-						window->close();
-						exit(0);
-					}
-				}
-				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-				{
-					status = 1;
-					p_ressources->newConnection();
-					return;
-				}
-			}
+			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, false);
+			multiplayerConnectThread->launch();
+			}*/
 
-			p_ressources->getListener()->listen(4568); //Horcht am Port
-
-			while (p_ressources->getListener()->accept(*p_ressources->getReceiver()) != Socket::Done) //Stellt Verbindung her
+			if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
 			{
-				if (!window->hasFocus())
-				{
-					PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-					PauseMenu::getInstance()->checkPause(true);
-				}
-				while (window->pollEvent(event)) //Überprüft, ob das Fenster geschlossen wird
-				{
-					if (event.type == Event::Closed)
-					{
-						saveGame(); //Speichert das Spiel
-						window->close();
-						exit(0);
-					}
-				}
-				if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-				{
-					status = 1;
-					p_ressources->newConnection();
-					return;
-				}
+				status = 1;
+				Multiplayer::resetMultiplayerSockets();
+				return;
 			}
-
 			multiplayerCheckConnectionClock.restart();
 		}
-
-
 	}
+
+
 }
 void Game::setDroneRow(int g)
 {

@@ -70,10 +70,6 @@ private:
 	Sound shootSound[1];
 
 	Music backgroundMusic[3];
-
-	TcpSocket* sender;
-	TcpSocket* receiver;
-	TcpListener* listener;
 		
 	Texture towerTexture[5][4];
 	Texture towerAliasTexture[5];
@@ -168,10 +164,6 @@ public:
 
 	Music* getBackgroundMusic(int);
 
-	TcpSocket* getSender();
-	TcpSocket* getReceiver();
-	TcpListener* getListener();
-
 	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);
 	Texture* getTowerPreviewTexture(int);
@@ -240,7 +232,6 @@ public:
 
 	void doubleSpeed();
 	void normalSpeed();
-	void newConnection();
 	void moabDeath(Vector2f pos, int x, int y, int next, int rotation);
 
 	/// <summary>

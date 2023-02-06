@@ -34,7 +34,6 @@ private:
 	bool isMultiplayerOpen;
 	
 	std::string ipAdress;
-	std::string ownIpAdress;
 	Vector2f positionTower[5];
 
 	RenderWindow* window;
@@ -61,13 +60,13 @@ private:
 	Sprite* accountButton;
 	
 	Clock* animation;
-	Clock* timeUntilTestVersionEndClock;
 	
 	Font *font;
 	Text *choseText;
 	Text *ipAdressText;
-	Text *ownIpAdressText;
 	Text* credits;
+
+	Thread* multiplayerConnectThread;
 
 	Ressources* res;
 	
@@ -83,7 +82,6 @@ private:
 	int CheckClicked(Event);
 	
 	void setTowerTexture();
-	bool connect(Event);
 	void draw();
 
 public:
@@ -95,7 +93,11 @@ public:
 
 	// bool checkTestVersionEnd();
 	int getChoseIndex();
+
+	std::string getIPAdress();
+
 	void setWindow(RenderWindow* window);
+	void setChoseIndex(int _choseIndex);
 
 	/// <summary>
 	/// Löscht den Spielstand zur aktuellen Map

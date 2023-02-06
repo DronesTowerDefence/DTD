@@ -5,31 +5,25 @@ class MultiplayerPlayer
 {
 private:
 	std::string m_playerName;
-	TcpSocket* m_sender;
-	TcpSocket* m_receiver;
+	TcpSocket* m_socket;
+	static TcpListener* listener;
 
 public:
 	/// <summary>
-	/// 
+	/// Erstellt einen Player für den Multiplayer
 	/// </summary>
-	/// <param name=""></param>
-	MultiplayerPlayer(std::string);
+	/// <param name="">playerName / userName</param>
+	MultiplayerPlayer();
 
 	/// <summary>
 	/// Erstellt den m_sender und m_receiver neu, ohne sich zu verbinden
 	/// </summary>
 	void resetSockets();
 
-	/// <summary>
-	/// Verbindet sich mit der angegebenen IP
-	/// </summary>
-	/// <param name="ip"></param>
-	/// <param name="port"></param>
-	/// <returns></returns>
-	bool connect(std::string ip, int port);
+	void setUsername(std::string _username);
 
 	std::string getPlayerName();
-	TcpSocket* getSender();
-	TcpSocket* getReceiver();
+	TcpSocket* getSocket();
+	static TcpListener* getListener();
 };
 

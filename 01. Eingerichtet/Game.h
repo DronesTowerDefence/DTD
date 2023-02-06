@@ -263,7 +263,7 @@ public:
 	/// <summary>
 	/// Gibt den Status zurück, ob Singleplayer/Host/Client
 	/// </summary>
-	/// <returns></returns>
+	/// <returns> 1=Single | 2=Host | 3=Client</returns>
 	int getStatus();
 
 	int getDroneRow();
@@ -329,7 +329,7 @@ public:
 	void sellTower(Tower* t);
 
 	/// <summary>
-	/// Überprüft die Multiplayer-Verbindung
+	/// TODO Überprüft die Multiplayer-Verbindung
 	/// </summary>
 	void checkMultiplayerConnection();
 

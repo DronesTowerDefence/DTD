@@ -2,6 +2,8 @@
 #include "Round.h"
 #include "MultiplayerPlayer.h"
 
+#define port 4567
+
 /**
 |Static-Class|
 Packet-Header:
@@ -14,6 +16,8 @@ static class Multiplayer
 private:
 	Multiplayer(); //Laut Internet unnötig die Konstruktoren bei einer statischen Klasse privat zu machen, aber habs ausprobiert, man muss es doch machen
 	Multiplayer(const Multiplayer&);
+
+	static bool send(sf::Packet* p, int from);
 
 public:
 
@@ -41,6 +45,11 @@ public:
 	/// Anzahl an Spielern (Im SP=0)
 	/// </summary>
 	static int multiplayerPlayerCount;
+
+	/// <summary>
+	/// Für Thread
+	/// </summary>
+	static bool initializeMultiplayerIsDone;
 
 	/// <summary>
 	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
@@ -104,5 +113,15 @@ public:
 	/// <summary>
 	/// Setzt alle Membervariablen etc zurück
 	/// </summary>
-	static void resetMultiplayer();
+	static void deleteMultiplayer();
+
+	static void resetMultiplayerSockets();
+
+	static void setBlocking(bool blocking);
+
+	/// <summary>
+	/// Baut eine Verbindung auf. Am besten als Thread ausführen
+	/// </summary>
+	/// <param name="isHost">False, wenn Client</param>
+	static void initializeMultiplayer(bool isHost);
 };
