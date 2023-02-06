@@ -42,8 +42,11 @@ void Loadup::setLoadingbar(float a)
 Loadup::Loadup(sf::RenderWindow* _window)
 {
 	window = _window;
+	done = false;
+
 	font = new sf::Font();
 	font->loadFromFile("fonts/arial.ttf");
+
 	loadingbar = new Loadingbar(
 		sf::Vector2f((window->getSize().x / 10), (window->getSize().y / 10) * 8),
 		sf::Vector2f((window->getSize().x / 10) * 9, (window->getSize().y / 10) * 9),
@@ -52,8 +55,10 @@ Loadup::Loadup(sf::RenderWindow* _window)
 	loadingbar->setTextStyle(1, 50, Color::White, font);
 }
 
-void Loadup::start()
+void Loadup::run()
 {
+	window->setActive(true); // Gibt der Funktion/dem Thread die Rechte an dem Fenster
+
 	setLoadingbar(10);
 
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
@@ -118,4 +123,10 @@ void Loadup::start()
 
 	delete credits;
 	delete loadingbar;
+	done = true;
+}
+
+bool Loadup::getDone()
+{
+	return done;
 }

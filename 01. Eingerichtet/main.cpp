@@ -21,8 +21,24 @@ int main()
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
+	Event event;
 	Loadup* load = new Loadup(&window);
-	load->start();
+
+	sf::Thread* thread = new sf::Thread(&Loadup::run, load); // Erstellt einen Thread mit Loadup::run als Einstiegspunkt
+	window.setActive(false); // Nimmt dem Hauptthread die Rechte an dem Fenster (wie die lock-Variable)
+	thread->launch(); // Startet den Thread
+
+	while (window.isOpen() && !load->getDone())
+	{
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window.close();
+				exit(0);
+			}
+		}
+	}
 	delete load;
 
 	HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
