@@ -326,22 +326,27 @@ void Multiplayer::setBlocking(bool blocking)
 void Multiplayer::initializeMultiplayer(bool isHost)
 {
 	initializeMultiplayerIsDone = false;
-	Packet p;
+	Packet p, p2, p3;
 	std::string str = "";
 
 	if (isHost)
 	{
 		MultiplayerPlayer::getListener()->listen(port);
 		p << HomeMenu::getInstance()->getChoseIndex();
+		p2 << Account::getAcc()->getAccName();
 
 		for (int i = 0; i < multiplayerPlayerCount; i++)
 		{
 			player[i] = new MultiplayerPlayer();
 			MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
 			player[i]->getSocket()->send(p);
+			player[i]->getSocket()->send(p2);
+			player[i]->getSocket()->receive(p3);
+			p3 >> str;
+			player[i]->setUsername(str);
+			p3.clear();
+			str.clear();
 		}
-
-		setBlocking(false);
 	}
 	else
 	{
@@ -351,9 +356,18 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		player[0]->getSocket()->receive(p);
 		p >> str;
 		HomeMenu::getInstance()->setChoseIndex(Service::stringToInt(str));
+		str.clear();
 
-		setBlocking(false);
+		player[0]->getSocket()->receive(p2);
+		p2 >> str;
+		player[0]->setUsername(str);
+		str.clear();
+
+		p3 << Account::getAcc()->getAccName();
+		player[0]->getSocket()->send(p3);
 	}
+
+	setBlocking(false);
 
 	initializeMultiplayerIsDone = true;
 }
