@@ -74,12 +74,12 @@ std::string AccountServer::sendGameID(std::string gameID)
 	return send();
 }
 
-std::string AccountServer::sendHostIP(std::string hostIP)
+std::string AccountServer::sendHostIP()
 {
 	request = new sf::Http::Request();
 
 	request->setField("Content-Type", "HostIP");
-	request->setBody(hostIP);
+	request->setBody("");
 
 	return send();
 }

@@ -135,6 +135,9 @@
     <ClCompile Include="Controls.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="MultiplayerGUI.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -210,6 +213,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Controls.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiplayerGUI.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

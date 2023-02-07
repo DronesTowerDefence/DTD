@@ -9,7 +9,7 @@
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
 5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
-10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden
+10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden, 13=MapChooseIndex, 14=PlayerName
 */
 static class Multiplayer
 {
@@ -40,6 +40,8 @@ public:
 	/// Array mit allen Spielern
 	/// </summary>
 	static MultiplayerPlayer* player[3];
+
+	static MultiplayerPlayer_light* playerLight[3];
 
 	/// <summary>
 	/// Anzahl an Spielern (Im SP=0)
@@ -106,6 +108,14 @@ public:
 	static bool send(int, Vector2f);
 
 	/// <summary>
+	/// !!ACHTUNG!! Sendet ein Packet, ohne Überprüfung der Parameter
+	/// </summary>
+	/// <param name="">Header</param>
+	/// <param name="">Inhalt</param>
+	/// <returns></returns>
+	static bool send(int, std::string);
+
+	/// <summary>
 	/// <para>Empfängt Packete und wendet sie an.</para>
 	/// </summary>
 	static void receive();
@@ -118,6 +128,8 @@ public:
 	static void resetMultiplayerSockets();
 
 	static void setBlocking(bool blocking);
+
+	static void updatePlayerCount();
 
 	/// <summary>
 	/// Baut eine Verbindung auf. Am besten als Thread ausführen

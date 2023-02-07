@@ -33,3 +33,18 @@ TcpListener* MultiplayerPlayer::getListener()
 {
 	return listener;
 }
+
+MultiplayerPlayer_light::MultiplayerPlayer_light()
+{
+	m_playerName = "P";
+}
+
+std::string MultiplayerPlayer_light::getPlayerName()
+{
+	return m_playerName;
+}
+
+void MultiplayerPlayer_light::setPlayerName(std::string s)
+{
+	m_playerName = s;
+}

@@ -27,3 +27,14 @@ public:
 	static TcpListener* getListener();
 };
 
+class MultiplayerPlayer_light
+{
+private:
+	std::string m_playerName;
+public:
+
+	MultiplayerPlayer_light();
+
+	std::string getPlayerName();
+	void setPlayerName(std::string);
+};

@@ -300,6 +300,7 @@ void Controls::checkControls()
 		mouseWheelMoveCooldownClock.restart();
 	}
 	backSpaceIsPressed = false;
+	enterIsPressed = false;
 }
 #pragma endregion
 

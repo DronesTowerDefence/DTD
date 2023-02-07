@@ -5,6 +5,7 @@
 #include "Account.h"
 #include "AccountServer.h"
 #include "AccountLogin.h"
+#include "MultiplayerGUI.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -25,15 +26,11 @@ private:
 	/// 3 = Client
 	/// </summary>
 	int status; 
-	
-	int multiplayerPlayerCount;
-	std::string gameID;
 
 	bool isClicked;
 	bool connected;
 	bool isMultiplayerOpen;
 	
-	std::string ipAdress;
 	Vector2f positionTower[5];
 
 	RenderWindow* window;
@@ -53,8 +50,6 @@ private:
 	Sprite* host;
 	Sprite* client;
 	Sprite* multiplayerMenue;
-	Sprite* copy;
-	Sprite* paste;
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
 	Sprite* accountButton;
@@ -63,18 +58,12 @@ private:
 	
 	Font *font;
 	Text *choseText;
-	Text *ipAdressText;
 	Text* credits;
 
-	Thread* multiplayerConnectThread;
+	MultiplayerGUI* multiplayerGUI;
 
 	Ressources* res;
 	
-	/// <summary>
-	/// Checkt, ob Zahlen 0-9 geklickt wird oder "." für die Eingabe der IP-Adersse
-	/// </summary>
-	/// <param name="event"></param>
-	void ipAdressInput(Event event);
 	/// <summary>
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
@@ -93,8 +82,8 @@ public:
 
 	// bool checkTestVersionEnd();
 	int getChoseIndex();
-
-	std::string getIPAdress();
+	MultiplayerGUI* getMultiplayerGUI();
+	int getStatus();
 
 	void setWindow(RenderWindow* window);
 	void setChoseIndex(int _choseIndex);
@@ -107,6 +96,8 @@ public:
 	bool deleteSave(int);
 
 	void HomeMenuStart();
+
+	void startGame();
 
 
 };

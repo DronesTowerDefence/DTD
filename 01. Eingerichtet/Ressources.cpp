@@ -343,6 +343,8 @@ Ressources::Ressources()
 	accountSignOutButtonTexture.loadFromFile("img/account/signOutButton.png");
 	accountLoginBackground.loadFromFile("img/account/accountLoginBackground.png");
 	accountProfilePictureTexture.loadFromFile("img/account/defaultProfileImage.png");
+	regulateMultiplayerPlayerCountTexture[0].loadFromFile("img/buttons/plusButton.png");
+	regulateMultiplayerPlayerCountTexture[1].loadFromFile("img/buttons/minusButton.png");
 
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
@@ -852,6 +854,14 @@ Texture* Ressources::getAccountLoginBackground()
 Texture* Ressources::getAccountProfilePicture()
 {
 	return &accountProfilePictureTexture;
+}
+Texture* Ressources::getregulateMultiplayerPlayerCountTexture(int i)
+{
+	if (i >= 0 && i <= 1)
+	{
+		return &regulateMultiplayerPlayerCountTexture[i];
+	}
+	return nullptr;
 }
 #pragma endregion
 

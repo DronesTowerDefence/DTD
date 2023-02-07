@@ -44,9 +44,8 @@ public:
 	/// <summary>
 	/// Sendet eine Request mit dem Parameter an den HTTP-Server
 	/// </summary>
-	/// <param name="hostIP"></param>
 	/// <returns>GameID</returns>
-	std::string sendHostIP(std::string hostIP);
+	std::string sendHostIP();
 
 	/// <summary>
 	/// Sendet eine Request mit dem Benutzernamen, um das dazugehörige Profilbild zu bekommen

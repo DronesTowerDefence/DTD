@@ -110,19 +110,20 @@ void Loadup::run()
 	window->draw(*credits);
 	window->display();
 
-	Event e;
-	while (!Mouse::isButtonPressed(Mouse::Left)) //Erst wenn die linke Maustaste gedrückt wird, geht es weiter
-	{
-		window->pollEvent(e);
-		if (e.Closed)
-		{
-			window->close();
-			exit(0);
-		}
-	}
+	//Event e;
+	//while (!Mouse::isButtonPressed(Mouse::Left)) //Erst wenn die linke Maustaste gedrückt wird, geht es weiter
+	//{
+	//	window->pollEvent(e);
+	//	if (e.Closed)
+	//	{
+	//		window->close();
+	//		exit(0);
+	//	}
+	//}
 
 	delete credits;
 	delete loadingbar;
+	window->setActive(false);
 	done = true;
 }
 

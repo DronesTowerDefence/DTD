@@ -113,6 +113,7 @@ private:
 	Texture accountSignOutButtonTexture;
 	Texture accountLoginBackground;
 	Texture accountProfilePictureTexture;
+	Texture regulateMultiplayerPlayerCountTexture[2];
 
 	Image icon;
 
@@ -222,6 +223,7 @@ public:
 	Texture* getAccountSignOutButtonTexture();
 	Texture* getAccountLoginBackground();
 	Texture* getAccountProfilePicture();
+	Texture* getregulateMultiplayerPlayerCountTexture(int);
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 	std::string getUpdateBeschreibungEins(int, int);

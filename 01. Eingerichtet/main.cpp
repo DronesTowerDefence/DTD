@@ -27,8 +27,8 @@ int main()
 	sf::Thread* thread = new sf::Thread(&Loadup::run, load); // Erstellt einen Thread mit Loadup::run als Einstiegspunkt
 	window.setActive(false); // Nimmt dem Hauptthread die Rechte an dem Fenster (wie die lock-Variable)
 	thread->launch(); // Startet den Thread
-
-	while (window.isOpen() && !load->getDone())
+	
+	while (window.isOpen() && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		while (window.pollEvent(event))
 		{
@@ -39,7 +39,10 @@ int main()
 			}
 		}
 	}
+	thread->terminate();
+	delete thread;
 	delete load;
+	window.setActive(true);
 
 	HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
 	HomeMenu::getInstance()->HomeMenuStart(); //Das HomeMenu wird aufgerufen/gestartet

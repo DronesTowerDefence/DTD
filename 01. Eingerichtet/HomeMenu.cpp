@@ -13,9 +13,8 @@ HomeMenu::HomeMenu()
 	callCount = 1;
 	isClicked = false;
 	window = nullptr;
+	multiplayerGUI = nullptr;
 	res = Ressources::getInstance();
-	ipAdress = "";
-	gameID = "0000";
 
 	startButton = new Sprite;
 	font = new Font();
@@ -23,8 +22,6 @@ HomeMenu::HomeMenu()
 	backround = new Sprite();
 	drone = new Sprite();
 	multiplayerMenue = new Sprite();
-	copy = new Sprite();
-	paste = new Sprite();
 	exitButton = new Sprite();
 	client = new Sprite();
 	host = new Sprite();
@@ -35,10 +32,7 @@ HomeMenu::HomeMenu()
 	pointer = new RectangleShape;
 	upperBorder = new RectangleShape();
 
-	ipAdressText = new Text();
 	credits = new Text();
-
-	multiplayerConnectThread = nullptr;
 
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -47,8 +41,6 @@ HomeMenu::HomeMenu()
 	backround->setTexture(*res->getHomeMenuBackgroundTexture());
 	drone->setTexture(*res->getDroneTexture(1, 0));;
 	multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
-	paste->setTexture(*res->getPasteTexture());
-	copy->setTexture(*res->getCopyTexture());
 	host->setTexture(*res->getButtonHostTexture());
 	client->setTexture(*res->getButtonClientTexture());
 	exitButton->setTexture(*res->getButtonExitTexture());
@@ -79,8 +71,6 @@ HomeMenu::HomeMenu()
 	drone->setPosition(Vector2f(0, 300));
 	host->setPosition(Vector2f(500, 450));
 	client->setPosition(Vector2f(750, 450));
-	copy->setPosition(Vector2f(500, 600));
-	paste->setPosition(Vector2f(500, 700));
 	multiplayerMenue->setPosition(Vector2f(500, 350));
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
@@ -158,12 +148,6 @@ HomeMenu::HomeMenu()
 
 	choseText = new Text("Wähle eine Karte aus:", *font, 30);
 	choseText->setPosition(Vector2f(25, 300));
-
-	ipAdressText->setFont(*font);
-	ipAdressText->setPosition(Vector2f(570, 696));
-	ipAdressText->setFillColor(Color::Black);
-	ipAdressText->setCharacterSize(50);
-	ipAdressText->setString(gameID);
 }
 #pragma endregion
 
@@ -184,12 +168,8 @@ void HomeMenu::drawPublic()
 
 	if (isMultiplayerOpen)
 	{
-		window->draw(*copy);
-		window->draw(*paste);
-		window->draw(*ipAdressText);
 		window->draw(*host);
 		window->draw(*client);
-
 	}
 	else
 		window->draw(*startButton);
@@ -205,25 +185,6 @@ void HomeMenu::drawPublic()
 	if (choseIndex > -1)
 	{
 		window->draw(*pointer);
-	}
-}
-void HomeMenu::ipAdressInput(Event event) {
-
-	if (event.type == Event::KeyReleased)
-	{
-		if (ipAdress.size() < 15)
-		{
-			ipAdress += Controls::checkKeyboardInput(&event);
-		}
-		ipAdressText->setString(gameID);
-	}
-	if (event.key.code == Keyboard::BackSpace)
-	{
-		if (ipAdress.size() > 0)
-		{
-			ipAdress.erase(ipAdress.size() - 1);
-		}
-		ipAdressText->setString(gameID);
 	}
 }
 int  HomeMenu::CheckClicked(Event event)
@@ -261,15 +222,11 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			status = 2;
-			connected = true;
-			Multiplayer::initializeMultiplayer(true);
+			
+			multiplayerGUI->start(true);
+			delete multiplayerGUI;
+			multiplayerGUI = new MultiplayerGUI(window);
 
-			// Verbindungsaufbau mit Threads
-			/*if (multiplayerConnectThread == nullptr)
-			{
-			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, true);
-			multiplayerConnectThread->launch();
-			}*/
 			return 2;
 		}
 
@@ -280,15 +237,11 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			status = 3;
-			connected = true;
-			Multiplayer::initializeMultiplayer(false);
+			
+			multiplayerGUI->start(false);
+			delete multiplayerGUI;
+			multiplayerGUI = new MultiplayerGUI(window);
 
-			// Verbindungsaufbau mit Threads
-			/*if (multiplayerConnectThread == nullptr)
-			{
-			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, false);
-			multiplayerConnectThread->launch();
-			}*/
 			return 3;
 		}
 
@@ -301,31 +254,6 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			return 1;
-		}
-
-		//Copy
-		pos = Service::getInstance()->getObjectPosition(copy->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(copy->getPosition() + Vector2f(50, 50));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			Clipboard::setString(IpAddress::getLocalAddress().toString());
-			return 0;
-		}
-
-
-
-		//Paste
-		pos = Service::getInstance()->getObjectPosition(paste->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(paste->getPosition() + Vector2f(50, 50));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			ipAdress = Clipboard::getString();
-			ipAdressText->setString(gameID);
-			return 0;
-
-
 		}
 
 		//MultiplayerMunue
@@ -344,8 +272,6 @@ int  HomeMenu::CheckClicked(Event event)
 			}
 			isMultiplayerOpen = !isMultiplayerOpen;
 			return 0;
-
-
 		}
 
 		//Exit
@@ -395,6 +321,8 @@ void HomeMenu::HomeMenuStart()
 	}
 	callCount++;
 
+	multiplayerGUI = new MultiplayerGUI(window);
+
 	while (window->isOpen())
 	{
 		Event event;
@@ -405,8 +333,6 @@ void HomeMenu::HomeMenuStart()
 				window->close();
 				exit(0);
 			}
-			ipAdressInput(event);
-
 		}
 
 		drone->move(2, 0);
@@ -432,6 +358,10 @@ void HomeMenu::HomeMenuStart()
 		draw();
 
 	}
+	startGame();
+}
+void HomeMenu::startGame()
+{
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);
 	Game::getInstance()->startGame();
@@ -473,9 +403,13 @@ int HomeMenu::getChoseIndex()
 {
 	return choseIndex;
 }
-std::string HomeMenu::getIPAdress()
+MultiplayerGUI* HomeMenu::getMultiplayerGUI()
 {
-	return ipAdress;
+	return multiplayerGUI;
+}
+int HomeMenu::getStatus()
+{
+	return status;
 }
 #pragma endregion
 

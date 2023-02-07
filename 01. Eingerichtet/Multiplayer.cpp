@@ -5,13 +5,14 @@ const Time Multiplayer::timeout = seconds(2.f);
 const Time Multiplayer::timeoutSend = seconds(Multiplayer::timeout / seconds(3.f));
 const Time Multiplayer::timeUntilSingleplayer = seconds(30.f);
 MultiplayerPlayer* Multiplayer::player[3] = { nullptr };
+MultiplayerPlayer_light* Multiplayer::playerLight[3] = { nullptr };
 int Multiplayer::multiplayerPlayerCount = 0;
 bool Multiplayer::initializeMultiplayerIsDone = false;
 
 bool Multiplayer::send(sf::Packet* p, int from)
 {
 	bool returnValue = false;
-	int status = Game::getInstance()->getStatus();
+	int status = HomeMenu::getInstance()->getStatus();
 
 	if (status == 2)
 	{
@@ -33,7 +34,7 @@ bool Multiplayer::send()
 {
 	Packet pac;
 	pac << 9; //Setzt den Header
-	return send(&pac, 0);
+	return send(&pac, -1);
 }
 
 bool Multiplayer::send(Tower* t, int _index)
@@ -50,7 +51,7 @@ bool Multiplayer::send(Tower* t, int _index)
 			pac << 2 << t->getId(); //Schreibt den Header und die Tower-ID in das Packet
 		}
 
-		return send(&pac, 0);
+		return send(&pac, -1);
 	}
 	else return false;
 }
@@ -63,7 +64,7 @@ bool Multiplayer::send(int t, int _index, int _updateIndex)
 
 		pac << 1 << t << _index << _updateIndex; //Schreibt den Header, den Updatepfad (1=Oberer, 2=Unterer) und den Index / die Stufe des Updates
 
-		return send(&pac, 0);
+		return send(&pac, -1);
 	}
 	else return false;
 }
@@ -73,7 +74,7 @@ bool Multiplayer::send(int t, int d)
 	Packet pac;
 	pac << 3 << d << t; //Schreibt den Header, die Tower-ID und die Drone-ID in das Packet
 
-	return send(&pac, 0);
+	return send(&pac, -1);
 }
 
 bool Multiplayer::send(int _index, bool _bool)
@@ -106,7 +107,7 @@ bool Multiplayer::send(int _index, bool _bool)
 	}
 	else return false;
 
-	return send(&pac, 0);
+	return send(&pac, -1);
 }
 
 bool Multiplayer::send(std::string mess)
@@ -115,7 +116,7 @@ bool Multiplayer::send(std::string mess)
 
 	pac << 10 << Game::getInstance()->getStatus() << mess; //TODO AccID
 
-	return send(&pac, 0);
+	return send(&pac, -1);
 }
 
 bool Multiplayer::send(int money)
@@ -123,7 +124,7 @@ bool Multiplayer::send(int money)
 	Packet pac;
 	pac << 12 << money;
 
-	return send(&pac, 0);
+	return send(&pac, -1);
 }
 
 bool Multiplayer::send(int index, Vector2f vector)
@@ -131,7 +132,14 @@ bool Multiplayer::send(int index, Vector2f vector)
 	Packet pac;
 	pac << 11 << index << int(vector.x) << int(vector.y);
 
-	return send(&pac, 0);
+	return send(&pac, -1);
+}
+
+bool Multiplayer::send(int i, std::string s)
+{
+	Packet pac;
+	pac << i << s;
+	return send(&pac, -1);
 }
 
 void Multiplayer::receive()
@@ -287,6 +295,17 @@ void Multiplayer::receive()
 				Round::getInstance()->addMoney(int1);
 				break;
 
+			case 13:
+				pac >> str;
+				HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(Service::stringToInt(str));
+				break;
+
+			case 14:
+				pac >> int1;
+				pac >> str;
+				Multiplayer::playerLight[int1]->setPlayerName(str);
+				break;
+
 			default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 				returnValue = false;
 				break;
@@ -323,16 +342,36 @@ void Multiplayer::setBlocking(bool blocking)
 	}
 }
 
+void Multiplayer::updatePlayerCount()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (i <= multiplayerPlayerCount) continue;
+
+		if (player[i] != nullptr)
+		{
+			delete player[i];
+			player[i] = nullptr;
+		}
+		if (playerLight[i] != nullptr)
+		{
+			delete playerLight[i];
+			playerLight[i] = nullptr;
+		}
+	}
+}
+
 void Multiplayer::initializeMultiplayer(bool isHost)
 {
 	initializeMultiplayerIsDone = false;
-	Packet p, p2, p3;
+	Packet p, p1, p2, p3, p4;
 	std::string str = "";
 
 	if (isHost)
 	{
 		MultiplayerPlayer::getListener()->listen(port);
 		p << HomeMenu::getInstance()->getChoseIndex();
+		p1 << Multiplayer::multiplayerPlayerCount;
 		p2 << Account::getAcc()->getAccName();
 
 		for (int i = 0; i < multiplayerPlayerCount; i++)
@@ -340,23 +379,35 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[i] = new MultiplayerPlayer();
 			MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
 			player[i]->getSocket()->send(p);
+			player[i]->getSocket()->send(p1);
 			player[i]->getSocket()->send(p2);
 			player[i]->getSocket()->receive(p3);
 			p3 >> str;
 			player[i]->setUsername(str);
+			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerNames(i, str);
 			p3.clear();
 			str.clear();
+		}
+		for (int i = 0; i < multiplayerPlayerCount; i++)
+		{
+			p4 << 14 << i << player[i]->getPlayerName();
+			send(&p4, -1);
+			p4.clear();
 		}
 	}
 	else
 	{
 		player[0] = new MultiplayerPlayer();
-		player[0]->getSocket()->connect(HomeMenu::getInstance()->getIPAdress(), port);
+		//player[0]->getSocket()->connect(HomeMenu::getInstance()->getMultiplayerGUI()->getHostIP(), port);
+		player[0]->getSocket()->connect("192.168.178.44", port); //TODO: nur zum testen
 
 		player[0]->getSocket()->receive(p);
 		p >> str;
 		HomeMenu::getInstance()->setChoseIndex(Service::stringToInt(str));
 		str.clear();
+
+		player[0]->getSocket()->receive(p1);
+		p1 >> Multiplayer::multiplayerPlayerCount;
 
 		player[0]->getSocket()->receive(p2);
 		p2 >> str;
@@ -365,6 +416,11 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 
 		p3 << Account::getAcc()->getAccName();
 		player[0]->getSocket()->send(p3);
+
+		for (int i = 0; i < multiplayerPlayerCount; i++)
+		{
+			playerLight[i] = new MultiplayerPlayer_light();
+		}
 	}
 
 	setBlocking(false);
