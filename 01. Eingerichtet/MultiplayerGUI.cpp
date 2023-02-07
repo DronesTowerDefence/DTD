@@ -170,13 +170,13 @@ void MultiplayerGUI::gameIDInput(Event* event) {
 
 bool MultiplayerGUI::updateLobby()
 {
-	if (!isHost)
+	if (!isHost && Multiplayer::initializeMultiplayerIsDone)
 	{
 		Multiplayer::receive();
 		// MapChooseIndex und playerLight werden in der receive-Funktion gesetzt
 	}
 
-	for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
+	for (int i = 0; i < Multiplayer::multiplayerPlayerCount + 1; i++)
 	{
 		if (isHost)
 		{
@@ -197,7 +197,7 @@ bool MultiplayerGUI::updateLobby()
 bool MultiplayerGUI::connect()
 {
 	// Verbindungsaufbau mit Threads
-	if (multiplayerConnectThread == nullptr)
+	if (multiplayerConnectThread == nullptr && !Multiplayer::initializeMultiplayerIsDone)
 	{
 		multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, isHost);
 		multiplayerConnectThread->launch();
@@ -338,13 +338,13 @@ bool MultiplayerGUI::start(bool _isHost)
 			if (isHost)
 			{
 				delete multiplayerConnectThread;
+				multiplayerConnectThread = nullptr;
 				Multiplayer::initializeMultiplayerIsDone = true;
 				HomeMenu::getInstance()->startGame();
 			}
 			else
 			{
 				isClientInHostLobby = connect();
-				std::cout << isClientInHostLobby << std::endl;
 			}
 			updateLobby();
 

@@ -145,6 +145,7 @@ HomeMenu::HomeMenu()
 	pointer->setOutlineThickness(10);
 	pointer->setOutlineColor(Color::Red);
 	pointer->setFillColor(Color::Transparent);
+	pointer->setPosition(-500, -500);
 
 	choseText = new Text("Wähle eine Karte aus:", *font, 30);
 	choseText->setPosition(Vector2f(25, 300));
@@ -222,7 +223,7 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			status = 2;
-			
+
 			multiplayerGUI->start(true);
 			delete multiplayerGUI;
 			multiplayerGUI = new MultiplayerGUI(window);
@@ -237,7 +238,7 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			status = 3;
-			
+
 			multiplayerGUI->start(false);
 			delete multiplayerGUI;
 			multiplayerGUI = new MultiplayerGUI(window);

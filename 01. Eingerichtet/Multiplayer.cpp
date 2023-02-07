@@ -160,6 +160,7 @@ void Multiplayer::receive()
 		{
 			pac.clear();
 			player[i]->getSocket()->receive(pac);
+			if (pac.getDataSize() <= 0) return;
 			send(&pac, i);
 			pac >> header; //Entpackt den Header
 
@@ -420,10 +421,11 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		p3 << Account::getAcc()->getAccName();
 		player[0]->getSocket()->send(p3);
 
-		for (int i = 0; i < multiplayerPlayerCount; i++)
+		for (int i = 0; i < multiplayerPlayerCount + 1; i++)
 		{
 			playerLight[i] = new MultiplayerPlayer_light();
 		}
+		playerLight[0]->setPlayerName(player[0]->getPlayerName());
 	}
 
 	setBlocking(false);
