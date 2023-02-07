@@ -348,7 +348,7 @@ bool MultiplayerGUI::start(bool _isHost)
 			if (isHost)
 			{
 				closeLobby();
-				HomeMenu::getInstance()->startGame();
+				startGame = true;
 			}
 			else
 			{

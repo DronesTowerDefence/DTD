@@ -347,11 +347,11 @@ void HomeMenu::HomeMenuStart()
 		{
 			break;
 		}
-		else if (clicked == 2 && choseIndex != -1 && connected)
+		else if (clicked == 2)
 		{
 			break;
 		}
-		else if (clicked == 3 && connected && choseIndex != -1)
+		else if (clicked == 3)
 		{
 			break;
 		}
