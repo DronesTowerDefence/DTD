@@ -310,6 +310,11 @@ void Multiplayer::receive()
 				Multiplayer::playerLight[int1]->setPlayerName(str);
 				break;
 
+			case 15:
+				pac >> str;
+				HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(Service::stringToInt(str));
+				break;
+
 			default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
 				returnValue = false;
 				break;
@@ -394,7 +399,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		}
 		for (int i = 0; i < multiplayerPlayerCount; i++)
 		{
-			p4 << 14 << i << player[i]->getPlayerName();
+			p4 << 14 << i + 1 << player[i]->getPlayerName();
 			send(&p4, -1);
 			p4.clear();
 		}

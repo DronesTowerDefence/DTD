@@ -8,8 +8,9 @@
 |Static-Class|
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
-5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung
-10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden, 13=MapChooseIndex, 14=PlayerName
+5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung,
+10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden, 13=MapChooseIndex, 14=PlayerName,
+15=MultiplayerPlayerCount
 */
 static class Multiplayer
 {

@@ -60,9 +60,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 			if (multiplayerPlayerCount < 4)
 			{
 				multiplayerPlayerCount++;
-				multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
-				Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
-				Multiplayer::updatePlayerCount();
+				setMultiplayerPlayerCount(multiplayerPlayerCount);
 			}
 			return true;
 		}
@@ -75,9 +73,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 			if (multiplayerPlayerCount > 1)
 			{
 				multiplayerPlayerCount--;
-				multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
-				Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
-				Multiplayer::updatePlayerCount();
+				setMultiplayerPlayerCount(multiplayerPlayerCount);
 			}
 			return true;
 		}
@@ -377,5 +373,19 @@ void MultiplayerGUI::setPlayerNames(int i, std::string s)
 	if (i >= 0 && i < 4)
 	{
 		playerNames[i]->setString(s);
+	}
+}
+
+void MultiplayerGUI::setMultiplayerPlayerCount(int i)
+{
+	if (i >= 0)
+	{
+		multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
+		if (isHost)
+		{
+			Multiplayer::send(15, std::to_string(multiplayerPlayerCount));
+		}
+		Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
+		Multiplayer::updatePlayerCount();
 	}
 }

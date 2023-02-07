@@ -49,5 +49,6 @@ public:
 
 	void setChooseIndex(int);
 	void setPlayerNames(int, std::string);
+	void setMultiplayerPlayerCount(int);
 };
 
