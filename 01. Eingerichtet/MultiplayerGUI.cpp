@@ -380,6 +380,7 @@ void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 {
 	if (i >= 0)
 	{
+		multiplayerPlayerCount = i;
 		multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
 		if (isHost)
 		{
