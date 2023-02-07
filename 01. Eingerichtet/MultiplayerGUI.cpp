@@ -131,7 +131,7 @@ void MultiplayerGUI::draw()
 				window->draw(*regulatePlayerCountButton[i]);
 			}
 		}
-		else
+		else if (!isClientInHostLobby)
 		{
 			window->draw(*pasteButton);
 		}
@@ -164,19 +164,22 @@ void MultiplayerGUI::gameIDInput(Event* event) {
 
 bool MultiplayerGUI::updateLobby()
 {
-	if (!isHost && Multiplayer::initializeMultiplayerIsDone)
+	if (isHost)
 	{
-		Multiplayer::receive();
-		// MapChooseIndex und playerLight werden in der receive-Funktion gesetzt
-	}
-
-	for (int i = 0; i < Multiplayer::multiplayerPlayerCount + 1; i++)
-	{
-		if (isHost)
+		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{
 			playerNames[i]->setString(Multiplayer::player[i]->getPlayerName());
 		}
-		else
+	}
+	else
+	{
+		if (Multiplayer::initializeMultiplayerIsDone)
+		{
+			Multiplayer::receive();
+			// MapChooseIndex und playerLight werden in der receive-Funktion gesetzt
+		}
+
+		for (int i = 0; i < Multiplayer::multiplayerPlayerCount + 1; i++)
 		{
 			if (Multiplayer::playerLight[i] != nullptr)
 			{
@@ -184,7 +187,6 @@ bool MultiplayerGUI::updateLobby()
 			}
 		}
 	}
-
 	return false;
 }
 
@@ -348,6 +350,7 @@ bool MultiplayerGUI::start(bool _isHost)
 			if (isHost)
 			{
 				closeLobby();
+				HomeMenu::getInstance()->setChoseIndex(mapChooseIndex);
 				startGame = true;
 			}
 			else

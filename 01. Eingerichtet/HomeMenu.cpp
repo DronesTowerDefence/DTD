@@ -365,7 +365,8 @@ void HomeMenu::startGame()
 {
 	if (status == 2)
 	{
-		Multiplayer::send(16, "");
+		std::string woIstDasEinBool = "dasIstEinString!";
+		Multiplayer::send(16, woIstDasEinBool);
 	}
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);

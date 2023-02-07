@@ -305,9 +305,12 @@ void Multiplayer::receive()
 				break;
 
 			case 14:
-				pac >> int1;
-				pac >> str;
-				Multiplayer::playerLight[int1]->setPlayerName(str);
+				if (HomeMenu::getInstance()->getStatus() == 3)
+				{
+					pac >> int1;
+					pac >> str;
+					Multiplayer::playerLight[int1]->setPlayerName(str);
+				}
 				break;
 
 			case 15:
