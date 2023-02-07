@@ -12,6 +12,7 @@ private:
 	bool isOpen;
 	bool isStart;
 	bool isClientInHostLobby;
+	bool startGame;
 	int multiplayerPlayerCount;
 	int mapChooseIndex;
 	std::string gameID;
@@ -39,6 +40,7 @@ private:
 	void gameIDInput(Event* event);
 	bool updateLobby();
 	bool connect();
+	bool closeLobby();
 
 public:
 	MultiplayerGUI(RenderWindow* _window);
@@ -50,5 +52,6 @@ public:
 	void setChooseIndex(int);
 	void setPlayerNames(int, std::string);
 	void setMultiplayerPlayerCount(int);
+	void setStartGame(bool);
 };
 

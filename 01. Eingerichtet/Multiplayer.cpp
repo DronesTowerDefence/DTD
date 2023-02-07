@@ -20,7 +20,7 @@ bool Multiplayer::send(sf::Packet* p, int from)
 	{
 		for (int i = 0; i < multiplayerPlayerCount; i++)
 		{
-			if (i == from) continue;
+			if (i == from || player[i] == nullptr) continue;
 			returnValue = (player[i]->getSocket()->send(*p) == Socket::Done);
 		}
 	}
@@ -313,6 +313,10 @@ void Multiplayer::receive()
 			case 15:
 				pac >> str;
 				HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(Service::stringToInt(str));
+				break;
+
+			case 16:
+				HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
 				break;
 
 			default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben

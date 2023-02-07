@@ -59,8 +59,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		{
 			if (multiplayerPlayerCount < 4)
 			{
-				multiplayerPlayerCount++;
-				setMultiplayerPlayerCount(multiplayerPlayerCount);
+				setMultiplayerPlayerCount(multiplayerPlayerCount + 1);
 			}
 			return true;
 		}
@@ -72,8 +71,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		{
 			if (multiplayerPlayerCount > 1)
 			{
-				multiplayerPlayerCount--;
-				setMultiplayerPlayerCount(multiplayerPlayerCount);
+				setMultiplayerPlayerCount(multiplayerPlayerCount - 1);
 			}
 			return true;
 		}
@@ -209,12 +207,28 @@ bool MultiplayerGUI::connect()
 	return Multiplayer::initializeMultiplayerIsDone;
 }
 
+bool MultiplayerGUI::closeLobby()
+{
+	if (!Multiplayer::initializeMultiplayerIsDone)
+	{
+		multiplayerConnectThread->terminate();
+
+	}
+
+	delete multiplayerConnectThread;
+	multiplayerConnectThread = nullptr;
+	Multiplayer::initializeMultiplayerIsDone = true;
+
+	return true;
+}
+
 MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 {
 	isClicked = false;
 	isHost = false;
 	isOpen = false;
 	isStart = false;
+	startGame = false;
 	multiplayerPlayerCount = 1;
 	mapChooseIndex = 0;
 	gameID = "0000";
@@ -333,9 +347,7 @@ bool MultiplayerGUI::start(bool _isHost)
 		{
 			if (isHost)
 			{
-				delete multiplayerConnectThread;
-				multiplayerConnectThread = nullptr;
-				Multiplayer::initializeMultiplayerIsDone = true;
+				closeLobby();
 				HomeMenu::getInstance()->startGame();
 			}
 			else
@@ -345,6 +357,8 @@ bool MultiplayerGUI::start(bool _isHost)
 			updateLobby();
 
 		}
+
+		if (startGame) return true;
 	}
 	return false;
 }
@@ -389,4 +403,9 @@ void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 		Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
 		Multiplayer::updatePlayerCount();
 	}
+}
+
+void MultiplayerGUI::setStartGame(bool b)
+{
+	startGame = b;
 }

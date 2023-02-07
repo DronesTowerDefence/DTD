@@ -363,6 +363,10 @@ void HomeMenu::HomeMenuStart()
 }
 void HomeMenu::startGame()
 {
+	if (status == 2)
+	{
+		Multiplayer::send(16, "");
+	}
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);
 	Game::getInstance()->startGame();
