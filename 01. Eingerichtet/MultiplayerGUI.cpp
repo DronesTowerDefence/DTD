@@ -204,11 +204,13 @@ bool MultiplayerGUI::connect()
 	}
 	else if (Multiplayer::initializeMultiplayerIsDone)
 	{
-		multiplayerConnectThread->terminate();
-		delete multiplayerConnectThread;
-		return true;
+		if (multiplayerConnectThread != nullptr)
+		{
+			delete multiplayerConnectThread;
+			multiplayerConnectThread = nullptr;
+		}
 	}
-	return false;
+	return Multiplayer::initializeMultiplayerIsDone;
 }
 
 MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
@@ -335,7 +337,6 @@ bool MultiplayerGUI::start(bool _isHost)
 		{
 			if (isHost)
 			{
-				multiplayerConnectThread->terminate();
 				delete multiplayerConnectThread;
 				Multiplayer::initializeMultiplayerIsDone = true;
 				HomeMenu::getInstance()->startGame();

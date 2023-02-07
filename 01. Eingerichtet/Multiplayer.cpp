@@ -385,7 +385,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[i]->getSocket()->receive(p3);
 			p3 >> str;
 			player[i]->setUsername(str);
-			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerNames(i, str);
+			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerNames(i + 1, str);
 			p3.clear();
 			str.clear();
 		}
