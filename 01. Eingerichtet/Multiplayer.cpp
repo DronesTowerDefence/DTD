@@ -11,6 +11,8 @@ bool Multiplayer::initializeMultiplayerIsDone = false;
 
 bool Multiplayer::send(sf::Packet* p, int from)
 {
+	if (p->getDataSize() <= 0) return false;
+
 	bool returnValue = false;
 	int status = HomeMenu::getInstance()->getStatus();
 
