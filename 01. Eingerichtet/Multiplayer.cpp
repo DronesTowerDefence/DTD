@@ -152,6 +152,7 @@ void Multiplayer::receive()
 
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
+		if (player[i] == nullptr)continue; //Als Host geht er alle durch, als Client nur den ersten
 		returnValue = true;
 		while (returnValue)
 		{

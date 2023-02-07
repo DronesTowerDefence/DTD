@@ -333,7 +333,6 @@ bool MultiplayerGUI::start(bool _isHost)
 
 		if (isStart)
 		{
-			updateLobby();
 			if (isHost)
 			{
 				multiplayerConnectThread->terminate();
@@ -344,7 +343,9 @@ bool MultiplayerGUI::start(bool _isHost)
 			else
 			{
 				isClientInHostLobby = connect();
+				std::cout << isClientInHostLobby << std::endl;
 			}
+			updateLobby();
 
 		}
 	}
