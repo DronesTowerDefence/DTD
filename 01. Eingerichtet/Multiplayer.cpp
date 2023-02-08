@@ -161,7 +161,10 @@ void Multiplayer::receive()
 			pac.clear();
 			player[i]->getSocket()->receive(pac);
 			if (pac.getDataSize() <= 0) return;
-			send(&pac, i);
+			if (HomeMenu::getInstance()->getStatus() == 2)
+			{
+				send(&pac, i);
+			}
 			pac >> header; //Entpackt den Header
 
 			switch (header)
