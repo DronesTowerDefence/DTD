@@ -224,11 +224,21 @@ int  HomeMenu::CheckClicked(Event event)
 		{
 			status = 2;
 
-			multiplayerGUI->start(true);
-			delete multiplayerGUI;
-			multiplayerGUI = new MultiplayerGUI(window);
+			if (multiplayerGUI->start(true))
+			{
+				delete multiplayerGUI;
+				multiplayerGUI = new MultiplayerGUI(window);
+				return 2;
+			}
+			else
+			{
+				delete multiplayerGUI;
+				multiplayerGUI = new MultiplayerGUI(window);
+				std::cout << "Multiplayer geschlossen" << std::endl;
+				status = 0;
+				return 0;
+			}
 
-			return 2;
 		}
 
 		//Client Clicked
@@ -239,11 +249,21 @@ int  HomeMenu::CheckClicked(Event event)
 		{
 			status = 3;
 
-			multiplayerGUI->start(false);
-			delete multiplayerGUI;
-			multiplayerGUI = new MultiplayerGUI(window);
+			if (multiplayerGUI->start(false))
+			{
+				delete multiplayerGUI;
+				multiplayerGUI = new MultiplayerGUI(window);
+				return 3;
+			}
+			else
+			{
+				delete multiplayerGUI;
+				multiplayerGUI = new MultiplayerGUI(window);
+				std::cout << "Multiplayer geschlossen" << std::endl;
+				status = 0;
+				return 0;
+			}
 
-			return 3;
 		}
 
 		//startclicked

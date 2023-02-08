@@ -44,6 +44,7 @@ private:
 
 public:
 	MultiplayerGUI(RenderWindow* _window);
+	~MultiplayerGUI();
 	bool start(bool _isHost);
 
 	std::string getGameID();

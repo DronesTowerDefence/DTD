@@ -184,8 +184,8 @@ bool AccountLogin::accountLogin(Event* event)
 			}
 			else if (antwort == "-1")
 			{
-				accountLoginStatusText->setString("Keine Verbindung zum Server");
-				std::cout << "Keine Verbindung\nzum Server möglich" << std::endl;
+				accountLoginStatusText->setString("Keine Verbindung\nzum Server");
+				std::cout << "Keine Verbindung zum Server möglich" << std::endl;
 			}
 			else
 			{

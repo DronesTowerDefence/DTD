@@ -346,6 +346,7 @@ void Multiplayer::deleteMultiplayer()
 
 void Multiplayer::resetMultiplayerSockets()
 {
+	MultiplayerPlayer::resetListener();
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
 		player[i]->resetSockets();

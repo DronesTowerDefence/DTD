@@ -8,10 +8,21 @@ MultiplayerPlayer::MultiplayerPlayer()
 	m_socket = new TcpSocket();
 }
 
+MultiplayerPlayer::~MultiplayerPlayer()
+{
+	delete m_socket;
+}
+
 void MultiplayerPlayer::resetSockets()
 {
 	delete m_socket;
 	m_socket = new TcpSocket();
+}
+
+void MultiplayerPlayer::resetListener()
+{
+	delete listener;
+	listener = new TcpListener();
 }
 
 void MultiplayerPlayer::setUsername(std::string _username)

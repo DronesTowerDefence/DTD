@@ -202,6 +202,7 @@ bool MultiplayerGUI::connect()
 	{
 		if (multiplayerConnectThread != nullptr)
 		{
+			// multiplayerConnectThread->terminate();
 			delete multiplayerConnectThread;
 			multiplayerConnectThread = nullptr;
 		}
@@ -313,8 +314,20 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 	playerNames[0]->setString(Account::getAcc()->getAccName());
 }
 
+MultiplayerGUI::~MultiplayerGUI()
+{
+	multiplayerConnectThread->terminate();
+	delete multiplayerConnectThread;
+	Multiplayer::resetMultiplayerSockets();
+	Multiplayer::deleteMultiplayer();
+}
+
 bool MultiplayerGUI::start(bool _isHost)
 {
+	if (Account::getAcc()->getAccName() == "???")
+	{
+		return false;
+	}
 	isHost = _isHost;
 	isOpen = true;
 

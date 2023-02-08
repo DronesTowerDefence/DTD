@@ -15,10 +15,17 @@ public:
 	/// <param name="">playerName / userName</param>
 	MultiplayerPlayer();
 
+	~MultiplayerPlayer();
+
 	/// <summary>
-	/// Erstellt den m_sender und m_receiver neu, ohne sich zu verbinden
+	/// Erstellt den m_socket neu, ohne sich zu verbinden
 	/// </summary>
 	void resetSockets();
+
+	/// <summary>
+	/// Erstellt den listener neu
+	/// </summary>
+	static void resetListener();
 
 	void setUsername(std::string _username);
 
