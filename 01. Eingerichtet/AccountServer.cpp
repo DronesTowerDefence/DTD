@@ -49,7 +49,7 @@ AccountServer::~AccountServer()
 		delete request;
 	if (response != nullptr)
 		delete response;
-	delete timeout
+	delete timeout;
 }
 
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
