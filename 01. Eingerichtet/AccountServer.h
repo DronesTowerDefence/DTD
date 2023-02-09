@@ -19,6 +19,8 @@ private:
 public:
 	AccountServer();
 
+	~AccountServer();
+
 	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
 	/// </summary>

@@ -316,6 +316,34 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 
 MultiplayerGUI::~MultiplayerGUI()
 {
+	if (accServer != nullptr)
+	{
+		delete accServer;
+	}
+	if (multiplayerConnectThread != nullptr)
+	{
+		delete multiplayerConnectThread;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (playerNames[i] != nullptr)
+			delete playerNames[i];
+		if (i < 2 && regulatePlayerCountButton != nullptr)
+			delete regulatePlayerCountButton[i];
+		if (i < 3 && maps[i] != nullptr)
+			delete maps[i];
+	}
+	delete background;
+	delete closeButton;
+	delete copyButton;
+	delete pasteButton;
+	delete startButton;
+	delete mapChoose;
+	delete font;
+	delete gameIDText;
+	delete multiplayerPlayerCountText;
+
 	multiplayerConnectThread->terminate();
 	delete multiplayerConnectThread;
 	Multiplayer::resetMultiplayerSockets();

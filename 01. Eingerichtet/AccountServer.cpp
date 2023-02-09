@@ -42,6 +42,16 @@ AccountServer::AccountServer()
 	response = nullptr;
 }
 
+AccountServer::~AccountServer()
+{
+	delete http;
+	if (request != nullptr)
+		delete request;
+	if (response != nullptr)
+		delete response;
+	delete timeout
+}
+
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
 {
 	if (userName == "0" || userName == "-1")

@@ -44,6 +44,8 @@ public:
 
 	AccountLogin(RenderWindow*, Ressources*);
 
+	~AccountLogin();
+
 	/// <summary>
 	/// Blockierend, öffnet den Anmelde-Bildschirm
 	/// </summary>

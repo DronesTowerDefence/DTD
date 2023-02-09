@@ -337,6 +337,21 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	}
 }
 
+AccountLogin::~AccountLogin()
+{
+	delete loginScreenEmailButton;
+	delete loginScreenPasswordButton;
+	delete profilePictureFrame;
+	delete loginScreen;
+	delete loginScreenExitButton;
+	delete signInOutButton;
+	delete profilePicture;
+	delete font;
+	delete accountLoginEmailText;
+	delete accountLoginPasswordText;
+	delete accountLoginStatusText;
+}
+
 bool AccountLogin::openAccountLoginWindow(Event* event)
 {
 	bool returnValue = false;
