@@ -64,13 +64,13 @@ Updates::Updates(Tower* tower)
 	information2->setTexture(*informationTexture);
 	background->setTexture(*backgroundTexture);
 
-	update1->setPosition(Vector2f(1745, 200));
-	update2->setPosition(Vector2f(1745, 350));
+	update1->setPosition(Vector2f(1745, 300));
+	update2->setPosition(Vector2f(1745, 450));
 	close->setPosition(Vector2f(1850, 25));
 	sell->setPosition(Vector2f(1745, 25));
-	information1->setPosition(Vector2f(1850, 200));
-	information2->setPosition(Vector2f(1850, 350));
-	background->setPosition(Vector2f(1395, 150));
+	information1->setPosition(Vector2f(1850, 300));
+	information2->setPosition(Vector2f(1850, 450));
+	background->setPosition(Vector2f(1395, 250));
 
 	close->setScale(Vector2f(0.5, 0.5));
 
@@ -80,8 +80,8 @@ Updates::Updates(Tower* tower)
 		shoowUpdate1[i] = new RectangleShape(Vector2f(10, 10));
 		shoowUpdate2[i] = new RectangleShape(Vector2f(10, 10));
 
-		shoowUpdate1[i]->setPosition(x, 180);
-		shoowUpdate2[i]->setPosition(x, 330);
+		shoowUpdate1[i]->setPosition(x, 280);
+		shoowUpdate2[i]->setPosition(x, 430);
 		shoowUpdate1[i]->setFillColor(Color::Green);
 		shoowUpdate2[i]->setFillColor(Color::Green);
 	}
@@ -94,11 +94,19 @@ Updates::Updates(Tower* tower)
 	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
 	price->setString(std::to_string((int)(tower->getValue() * 0.75f)) + " $");
 
+	towerOwnerText = new Text();
+	towerOwnerText->setFont(arial);
+	towerOwnerText->setCharacterSize(25);
+	towerOwnerText->setFillColor(Color::White);
+	towerOwnerText->setOutlineColor(Color::Black);
+	towerOwnerText->setOutlineThickness(2);
+	towerOwnerText->setString("Besitzer:\n" + tower->getOwnerName());
+	towerOwnerText->setPosition(1745, 180);
 
-	text1->setPosition(1745, 300);
-	text2->setPosition(1745, 450);
+	text1->setPosition(1745, 400);
+	text2->setPosition(1745, 550);
 	price->setPosition(1745, 100);
-	informationtext->setPosition(Vector2f(1435, 200));
+	informationtext->setPosition(Vector2f(1435, 300));
 
 
 	informationtext->setFont(arial);
@@ -134,6 +142,7 @@ void Updates::draw(RenderWindow* window)
 	window->draw(*text2);
 	window->draw(*sell);
 	window->draw(*price);
+	window->draw(*towerOwnerText);
 	for (int i = 0; i < 4; i++)
 	{
 		if (index1 > i)
