@@ -274,6 +274,7 @@ int  HomeMenu::CheckClicked(Event event)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
+			status = 1;
 			return 1;
 		}
 
@@ -451,6 +452,10 @@ void HomeMenu::setChoseIndex(int _choseIndex)
 	{
 		choseIndex = _choseIndex;
 	}
+}
+void HomeMenu::setStatus(int _status)
+{
+	status = _status;
 }
 void HomeMenu::setTowerTexture()
 {

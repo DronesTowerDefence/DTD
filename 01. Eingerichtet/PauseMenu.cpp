@@ -175,6 +175,7 @@ void PauseMenu::draw()
 {
 
 	//window->draw(edge);
+	//window->draw(*res->getBlackBackgroundSprite());
 	window->draw(background);
 	window->draw(text1);
 	window->draw(text2);

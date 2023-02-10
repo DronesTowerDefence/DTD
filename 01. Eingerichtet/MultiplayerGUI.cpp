@@ -104,6 +104,7 @@ void MultiplayerGUI::draw()
 
 	if (isOpen)
 	{
+		window->draw(*Ressources::getInstance()->getBlackBackgroundSprite());
 		window->draw(*background);
 		window->draw(*closeButton);
 		window->draw(*ipText);
@@ -284,6 +285,7 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 	mapChoose->setSize(Vector2f(maps[0]->getTexture()->getSize().x * maps[0]->getScale().x, maps[0]->getTexture()->getSize().y * maps[0]->getScale().y));
 	mapChoose->setPosition(maps[0]->getPosition());
 
+
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -315,6 +317,12 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 
 MultiplayerGUI::~MultiplayerGUI()
 {
+	if (!Multiplayer::initializeMultiplayerIsDone)
+	{
+		Multiplayer::multiplayerPlayerCount = 0;
+		HomeMenu::getInstance()->setStatus(1);
+	}
+
 	if (accServer != nullptr)
 	{
 		delete accServer;

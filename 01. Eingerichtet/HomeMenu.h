@@ -87,6 +87,7 @@ public:
 
 	void setWindow(RenderWindow* window);
 	void setChoseIndex(int _choseIndex);
+	void setStatus(int _status);
 
 	/// <summary>
 	/// Löscht den Spielstand zur aktuellen Map

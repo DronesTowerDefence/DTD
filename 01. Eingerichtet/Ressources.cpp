@@ -250,6 +250,8 @@ Ressources::Ressources()
 	droneLives[3] = 8;
 	droneLives[4] = 55;
 
+
+
 	for (float i = 0, j = 3; i < 4; i++, j -= 0.5)
 	{
 		multiplayerMoneySplit[int(i)] = j;
@@ -346,6 +348,8 @@ Ressources::Ressources()
 	regulateMultiplayerPlayerCountTexture[0].loadFromFile("img/buttons/plusButton.png");
 	regulateMultiplayerPlayerCountTexture[1].loadFromFile("img/buttons/minusButton.png");
 
+	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
+
 	buttonVolume[0].loadFromFile("img/buttons/volume/soundMuteButton.png");
 	buttonVolume[1].loadFromFile("img/buttons/volume/soundLowButton.png");
 	buttonVolume[2].loadFromFile("img/buttons/volume/soundMediumButton.png");
@@ -355,6 +359,10 @@ Ressources::Ressources()
 	{
 		map[i].loadFromFile("img/maps/map" + std::to_string(i) + ".png");
 	}
+
+	blackBackground.setTexture(blackBackgroundTexture);
+	blackBackground.setScale(Vector2f(10, 1));
+	blackBackground.setPosition(0, 0);
 
 	icon.loadFromFile("img/icon.png");
 
@@ -862,6 +870,14 @@ Texture* Ressources::getregulateMultiplayerPlayerCountTexture(int i)
 		return &regulateMultiplayerPlayerCountTexture[i];
 	}
 	return nullptr;
+}
+Texture* Ressources::getBlackBackgroundTexture()
+{
+	return &blackBackgroundTexture;
+}
+Sprite* Ressources::getBlackBackgroundSprite()
+{
+	return &blackBackground;
 }
 #pragma endregion
 

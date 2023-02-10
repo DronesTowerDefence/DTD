@@ -77,6 +77,7 @@ void AccountLogin::draw()
 	HomeMenu::getInstance()->drawPublic();
 	if (accountLoginIsOpen)
 	{
+		window->draw(*res->getBlackBackgroundSprite());
 		window->draw(*loginScreen);
 		window->draw(*loginScreenExitButton);
 		window->draw(*accountLoginEmailText);

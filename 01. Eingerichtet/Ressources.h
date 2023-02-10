@@ -114,6 +114,9 @@ private:
 	Texture accountLoginBackground;
 	Texture accountProfilePictureTexture;
 	Texture regulateMultiplayerPlayerCountTexture[2];
+	Texture blackBackgroundTexture;
+
+	Sprite blackBackground;
 
 	Image icon;
 
@@ -164,6 +167,7 @@ public:
 	Sound* getShootSound(int);
 
 	Music* getBackgroundMusic(int);
+
 
 	Texture* getTowerTexture(int, int);
 	Texture* getTowerAliasTexture(int);
@@ -224,6 +228,9 @@ public:
 	Texture* getAccountLoginBackground();
 	Texture* getAccountProfilePicture();
 	Texture* getregulateMultiplayerPlayerCountTexture(int);
+	Texture* getBlackBackgroundTexture();
+
+	Sprite* getBlackBackgroundSprite();
 
 	int* getDroneTypesInRound(int index); //Rückgabe der Drohnen in einer Runde | Mit +1 addieren bis 5 Drohnen da sind
 	std::string getUpdateBeschreibungEins(int, int);
