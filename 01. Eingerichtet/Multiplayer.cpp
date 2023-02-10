@@ -349,7 +349,8 @@ void Multiplayer::resetMultiplayerSockets()
 	MultiplayerPlayer::resetListener();
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
-		player[i]->resetSockets();
+		if (player[i] != nullptr)
+			player[i]->resetSockets();
 	}
 	initializeMultiplayerIsDone = false;
 }
@@ -418,8 +419,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	else
 	{
 		player[0] = new MultiplayerPlayer();
-		//player[0]->getSocket()->connect(HomeMenu::getInstance()->getMultiplayerGUI()->getHostIP(), port);
-		player[0]->getSocket()->connect("192.168.178.44", port); //TODO: nur zum testen
+		player[0]->getSocket()->connect(HomeMenu::getInstance()->getMultiplayerGUI()->getHostIP(), port);
 
 		player[0]->getSocket()->receive(p);
 		p >> str;

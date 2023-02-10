@@ -13,9 +13,9 @@ private:
 	bool isStart;
 	bool isClientInHostLobby;
 	bool startGame;
+	bool terminateThread;
 	int multiplayerPlayerCount;
 	int mapChooseIndex;
-	std::string gameID;
 	std::string hostIP;
 
 	RenderWindow* window;
@@ -31,13 +31,13 @@ private:
 	Sprite* maps[3];
 	RectangleShape* mapChoose;
 	Font* font;
-	Text* gameIDText;
+	Text* ipText;
 	Text* playerNames[4];
 	Text* multiplayerPlayerCountText;
 
 	bool checkClicked(Event* event);
 	void draw();
-	void gameIDInput(Event* event);
+	void ipAdressInput(Event* event);
 	bool updateLobby();
 	bool connect();
 	bool closeLobby();
@@ -47,7 +47,6 @@ public:
 	~MultiplayerGUI();
 	bool start(bool _isHost);
 
-	std::string getGameID();
 	std::string getHostIP();
 
 	void setChooseIndex(int);

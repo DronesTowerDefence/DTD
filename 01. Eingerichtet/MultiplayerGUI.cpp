@@ -29,7 +29,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		pos2 = Service::getInstance()->getObjectPosition(copyButton->getPosition() + Vector2f(50, 50));
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			Clipboard::setString(gameID);
+			Clipboard::setString(hostIP);
 			return true;
 		}
 
@@ -38,8 +38,8 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		pos2 = Service::getInstance()->getObjectPosition(pasteButton->getPosition() + Vector2f(50, 50));
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			gameID = Clipboard::getString();
-			gameIDText->setString("Spiel-ID: " + gameID);
+			hostIP = Clipboard::getString();
+			ipText->setString("IP-Adresse:\n" + hostIP);
 			return true;
 		}
 
@@ -106,7 +106,7 @@ void MultiplayerGUI::draw()
 	{
 		window->draw(*background);
 		window->draw(*closeButton);
-		window->draw(*gameIDText);
+		window->draw(*ipText);
 		window->draw(*copyButton);
 		window->draw(*startButton);
 
@@ -139,27 +139,27 @@ void MultiplayerGUI::draw()
 	window->display();
 }
 
-void MultiplayerGUI::gameIDInput(Event* event) {
+void MultiplayerGUI::ipAdressInput(Event* event) {
 
 	if (event->type == Event::KeyReleased)
 	{
-		if (gameID.length() < 4)
+		if (hostIP.length() < 15)
 		{
-			gameID += Controls::checkKeyboardInput(event);
+			hostIP += Controls::checkKeyboardInput(event);
 		}
-		if (gameID == "0000")
+		if (hostIP == "0")
 		{
-			gameID = Controls::checkKeyboardInput(event);
+			hostIP = Controls::checkKeyboardInput(event);
 		}
 	}
 	if (event->key.code == Keyboard::BackSpace)
 	{
-		if (gameID.length() > 0)
+		if (hostIP.length() > 0)
 		{
-			gameID.erase(gameID.size() - 1);
+			hostIP.erase(hostIP.size() - 1);
 		}
 	}
-	gameIDText->setString("Spiel-ID: " + gameID);
+	ipText->setString("IP-Adresse:\n" + hostIP);
 }
 
 bool MultiplayerGUI::updateLobby()
@@ -202,8 +202,8 @@ bool MultiplayerGUI::connect()
 	{
 		if (multiplayerConnectThread != nullptr)
 		{
-			// multiplayerConnectThread->terminate();
-			delete multiplayerConnectThread;
+			multiplayerConnectThread->terminate();
+			// delete multiplayerConnectThread;
 			multiplayerConnectThread = nullptr;
 		}
 	}
@@ -234,8 +234,7 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 	startGame = false;
 	multiplayerPlayerCount = 1;
 	mapChooseIndex = 0;
-	gameID = "0000";
-	hostIP = "000.000.000.00";
+	hostIP = IpAddress::getLocalAddress().toString();
 	window = _window;
 	accServer = new AccountServer();
 
@@ -288,12 +287,12 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
 
-	gameIDText = new Text();
-	gameIDText->setFont(*font);
-	gameIDText->setFillColor(Color::Black);
-	gameIDText->setCharacterSize(50);
-	gameIDText->setPosition(Vector2f(550, 500));
-	gameIDText->setString("Spiel-ID: " + gameID);
+	ipText = new Text();
+	ipText->setFont(*font);
+	ipText->setFillColor(Color::Black);
+	ipText->setCharacterSize(50);
+	ipText->setPosition(Vector2f(550, 470));
+	ipText->setString("IP-Adresse:\n" + hostIP);
 
 	multiplayerPlayerCountText = new Text();
 	multiplayerPlayerCountText->setFont(*font);
@@ -320,10 +319,11 @@ MultiplayerGUI::~MultiplayerGUI()
 	{
 		delete accServer;
 	}
-	if (multiplayerConnectThread != nullptr)
+	/*if (multiplayerConnectThread != nullptr)
 	{
+		multiplayerConnectThread->terminate();
 		delete multiplayerConnectThread;
-	}
+	}*/
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -341,11 +341,9 @@ MultiplayerGUI::~MultiplayerGUI()
 	delete startButton;
 	delete mapChoose;
 	delete font;
-	delete gameIDText;
+	delete ipText;
 	delete multiplayerPlayerCountText;
 
-	multiplayerConnectThread->terminate();
-	delete multiplayerConnectThread;
 	Multiplayer::resetMultiplayerSockets();
 	Multiplayer::deleteMultiplayer();
 }
@@ -359,11 +357,6 @@ bool MultiplayerGUI::start(bool _isHost)
 	isHost = _isHost;
 	isOpen = true;
 
-	if (isHost)
-	{
-		gameID = accServer->sendHostIP();
-	}
-
 	Event event;
 	while (window->isOpen() && isOpen)
 	{
@@ -374,7 +367,7 @@ bool MultiplayerGUI::start(bool _isHost)
 				window->close();
 				exit(0);
 			}
-			gameIDInput(&event);
+			ipAdressInput(&event);
 			checkClicked(&event);
 		}
 		draw();
@@ -404,12 +397,11 @@ bool MultiplayerGUI::start(bool _isHost)
 
 		if (startGame) return true;
 	}
+	if (multiplayerConnectThread != nullptr)
+	{
+		multiplayerConnectThread->terminate(); // Löscht den Thread (mehr oder weniger, aber delete kann nicht mehr benutzt werden)
+	}
 	return false;
-}
-
-std::string MultiplayerGUI::getGameID()
-{
-	return gameID;
 }
 
 std::string MultiplayerGUI::getHostIP()

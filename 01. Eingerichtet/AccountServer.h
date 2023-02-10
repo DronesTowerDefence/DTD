@@ -37,19 +37,6 @@ public:
 	std::string sendLogin(std::string email, std::string passwort);
 
 	/// <summary>
-	/// Sendet eine Request mit dem Parameter an den HTTP-Server
-	/// </summary>
-	/// <param name="gameID"></param>
-	/// <returns>HostIP</returns>
-	std::string sendGameID(std::string gameID);
-
-	/// <summary>
-	/// Sendet eine Request mit dem Parameter an den HTTP-Server
-	/// </summary>
-	/// <returns>GameID</returns>
-	std::string sendHostIP();
-
-	/// <summary>
 	/// Sendet eine Request mit dem Benutzernamen, um das dazugehörige Profilbild zu bekommen
 	/// </summary>
 	/// <param name="username"></param>

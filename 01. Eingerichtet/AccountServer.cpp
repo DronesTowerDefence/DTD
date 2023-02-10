@@ -74,26 +74,6 @@ std::string AccountServer::sendLogin(std::string email, std::string passwort)
 	return send();
 }
 
-std::string AccountServer::sendGameID(std::string gameID)
-{
-	request = new sf::Http::Request();
-
-	request->setField("Content-Type", "GameID");
-	request->setBody(gameID);
-
-	return send();
-}
-
-std::string AccountServer::sendHostIP()
-{
-	request = new sf::Http::Request();
-
-	request->setField("Content-Type", "HostIP");
-	request->setBody("");
-
-	return send();
-}
-
 sf::Image* AccountServer::getProfilePicture(std::string username)
 {
 	request = new sf::Http::Request();

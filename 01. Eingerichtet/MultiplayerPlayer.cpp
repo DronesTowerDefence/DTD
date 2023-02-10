@@ -15,8 +15,11 @@ MultiplayerPlayer::~MultiplayerPlayer()
 
 void MultiplayerPlayer::resetSockets()
 {
-	delete m_socket;
-	m_socket = new TcpSocket();
+	if (m_socket != nullptr)
+	{
+		delete m_socket;
+		m_socket = new TcpSocket();
+	}
 }
 
 void MultiplayerPlayer::resetListener()
