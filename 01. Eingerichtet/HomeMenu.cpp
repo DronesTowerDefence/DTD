@@ -216,68 +216,72 @@ int  HomeMenu::CheckClicked(Event event)
 		Ressources* res = Ressources::getInstance();
 
 		//Host clicked
-		mouse = Mouse::getPosition(*window);
-		pos = Service::getInstance()->getObjectPosition(host->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (isMultiplayerOpen)
 		{
-			status = 2;
+			mouse = Mouse::getPosition(*window);
+			pos = Service::getInstance()->getObjectPosition(host->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100));
 
-			if (multiplayerGUI->start(true))
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				delete multiplayerGUI;
-				multiplayerGUI = new MultiplayerGUI(window);
-				return 2;
-			}
-			else
-			{
-				delete multiplayerGUI;
-				multiplayerGUI = new MultiplayerGUI(window);
-				std::cout << "Multiplayer geschlossen" << std::endl;
-				status = 0;
-				return 0;
+				status = 2;
+
+				if (multiplayerGUI->start(true))
+				{
+					delete multiplayerGUI;
+					multiplayerGUI = new MultiplayerGUI(window);
+					return 2;
+				}
+				else
+				{
+					delete multiplayerGUI;
+					multiplayerGUI = new MultiplayerGUI(window);
+					std::cout << "Multiplayer geschlossen" << std::endl;
+					status = 0;
+					return 0;
+				}
+
 			}
 
+			//Client Clicked
+			pos = Service::getInstance()->getObjectPosition(client->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				status = 3;
+
+				if (multiplayerGUI->start(false))
+				{
+					delete multiplayerGUI;
+					multiplayerGUI = new MultiplayerGUI(window);
+					return 3;
+				}
+				else
+				{
+					delete multiplayerGUI;
+					multiplayerGUI = new MultiplayerGUI(window);
+					std::cout << "Multiplayer geschlossen" << std::endl;
+					status = 0;
+					return 0;
+				}
+
+			}
 		}
-
-		//Client Clicked
-		pos = Service::getInstance()->getObjectPosition(client->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		else
 		{
-			status = 3;
+			//startclicked
+			mouse = Mouse::getPosition(*window);
 
-			if (multiplayerGUI->start(false))
+			pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				delete multiplayerGUI;
-				multiplayerGUI = new MultiplayerGUI(window);
-				return 3;
+				status = 1;
+				return 1;
 			}
-			else
-			{
-				delete multiplayerGUI;
-				multiplayerGUI = new MultiplayerGUI(window);
-				std::cout << "Multiplayer geschlossen" << std::endl;
-				status = 0;
-				return 0;
-			}
-
 		}
-
-		//startclicked
-		mouse = Mouse::getPosition(*window);
-
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			status = 1;
-			return 1;
-		}
-
 		//MultiplayerMunue
 		pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50));
