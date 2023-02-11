@@ -30,7 +30,7 @@ Updates::Updates(Tower* tower)
 	textureUpdate2NoBuy = new Texture();
 	backgroundTexture->loadFromFile("img/sendMoneyBackground.png");
 	informationTexture->loadFromFile("img/buttons/infoButton.png");
-	informationTexture->loadFromFile("");
+
 	if (tower->getIndex() == 4)
 	{
 		textureUpdate1 = res->getUpdateTexture(0);
@@ -56,8 +56,15 @@ Updates::Updates(Tower* tower)
 	textureclose = res->getButtonCloseTexture();
 	textureSell = res->getButtonSellTexture();
 
+	if (Account::getAccName() != tower->getOwnerName())
+	{
+		textureUpdate1->loadFromImage(textureUpdate1NoBuy->copyToImage());
+		textureUpdate2->loadFromImage(textureUpdate2NoBuy->copyToImage());
+	}
+
 	update1->setTexture(*textureUpdate1);
 	update2->setTexture(*textureUpdate2);
+
 	close->setTexture(*textureclose);
 	sell->setTexture(*textureSell);
 	information1->setTexture(*informationTexture);
