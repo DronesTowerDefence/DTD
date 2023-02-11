@@ -335,23 +335,13 @@ void Multiplayer::receive()
 
 void Multiplayer::deleteMultiplayer()
 {
+	MultiplayerPlayer::resetListener();
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
 		delete player[i];
 		player[i] = nullptr;
 	}
 	multiplayerPlayerCount = 0;
-	initializeMultiplayerIsDone = false;
-}
-
-void Multiplayer::resetMultiplayerSockets()
-{
-	MultiplayerPlayer::resetListener();
-	for (int i = 0; i < multiplayerPlayerCount; i++)
-	{
-		if (player[i] != nullptr)
-			player[i]->resetSockets();
-	}
 	initializeMultiplayerIsDone = false;
 }
 

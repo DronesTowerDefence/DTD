@@ -384,7 +384,7 @@ bool MultiplayerChat::chatCommand()
 		{
 			if (str.size() == 14)
 			{
-				Multiplayer::resetMultiplayerSockets();
+				Multiplayer::deleteMultiplayer();
 				Game::getInstance()->setStatus(1);
 				output = "kicked all players and switched to singleplayer";
 			}

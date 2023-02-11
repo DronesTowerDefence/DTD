@@ -149,10 +149,6 @@ void MultiplayerGUI::ipAdressInput(Event* event) {
 		{
 			hostIP += Controls::checkKeyboardInput(event);
 		}
-		if (hostIP == "0")
-		{
-			hostIP = Controls::checkKeyboardInput(event);
-		}
 	}
 	if (event->key.code == Keyboard::BackSpace)
 	{
@@ -220,7 +216,7 @@ bool MultiplayerGUI::closeLobby()
 
 	}
 
-	delete multiplayerConnectThread;
+	// delete multiplayerConnectThread;
 	multiplayerConnectThread = nullptr;
 	Multiplayer::initializeMultiplayerIsDone = true;
 
@@ -353,8 +349,8 @@ MultiplayerGUI::~MultiplayerGUI()
 	delete ipText;
 	delete multiplayerPlayerCountText;
 
-	Multiplayer::resetMultiplayerSockets();
-	Multiplayer::deleteMultiplayer();
+	if (!Multiplayer::initializeMultiplayerIsDone)
+		Multiplayer::deleteMultiplayer();
 }
 
 bool MultiplayerGUI::start(bool _isHost)

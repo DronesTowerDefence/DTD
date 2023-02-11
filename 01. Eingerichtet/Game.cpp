@@ -1157,69 +1157,69 @@ void Game::addDroneCount(int dr)
 }
 void Game::checkMultiplayerConnection()
 {
-	if (multiplayerCheckConnectionSendClock.getElapsedTime() > Multiplayer::timeoutSend)
-	{
-		Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
-		multiplayerCheckConnectionSendClock.restart();
-	}
+	//if (multiplayerCheckConnectionSendClock.getElapsedTime() > Multiplayer::timeoutSend)
+	//{
+	//	Multiplayer::send(); //Sendet das Packet zum Überprüfen der Verbindung
+	//	multiplayerCheckConnectionSendClock.restart();
+	//}
 
-	if (multiplayerCheckConnectionClock.getElapsedTime() > Multiplayer::timeout)
-	{
-		Clock noConnectionPossibleClock;
-		Text waitText;
-		waitText.setFont(stdFont);
-		waitText.setCharacterSize(40);
-		waitText.setFillColor(Color::White);
-		waitText.setOutlineColor(Color::Black);
-		waitText.setOutlineThickness(2);
-		waitText.setPosition(Service::getInstance()->getObjectPosition(Vector2f(900, 500)));
-		waitText.setString("Verbindungsproblem!\nWarten auf anderen Spieler");
+	//if (multiplayerCheckConnectionClock.getElapsedTime() > Multiplayer::timeout)
+	//{
+	//	Clock noConnectionPossibleClock;
+	//	Text waitText;
+	//	waitText.setFont(stdFont);
+	//	waitText.setCharacterSize(40);
+	//	waitText.setFillColor(Color::White);
+	//	waitText.setOutlineColor(Color::Black);
+	//	waitText.setOutlineThickness(2);
+	//	waitText.setPosition(Service::getInstance()->getObjectPosition(Vector2f(900, 500)));
+	//	waitText.setString("Verbindungsproblem!\nWarten auf anderen Spieler");
 
-		window->draw(waitText);
-		window->display();
+	//	window->draw(waitText);
+	//	window->display();
 
-		Multiplayer::resetMultiplayerSockets();
-		Multiplayer::setBlocking(false);
+	//	Multiplayer::resetMultiplayerSockets();
+	//	Multiplayer::setBlocking(false);
 
-		if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
-		{
-			Multiplayer::initializeMultiplayer(true);
+	//	if (status == 2) //Erneuter Verbindungsaufbau, wenn Host
+	//	{
+	//		Multiplayer::initializeMultiplayer(true);
 
-			// Verbindungsaufbau mit Threads
-			/*if (multiplayerConnectThread == nullptr)
-			{
-			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, true);
-			multiplayerConnectThread->launch();
-			}*/
+	//		// Verbindungsaufbau mit Threads
+	//		/*if (multiplayerConnectThread == nullptr)
+	//		{
+	//		multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, true);
+	//		multiplayerConnectThread->launch();
+	//		}*/
 
-			if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-			{
-				status = 1;
-				Multiplayer::resetMultiplayerSockets();
-				return;
-			}
-			multiplayerCheckConnectionClock.restart();
-		}
-		else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
-		{
-			Multiplayer::initializeMultiplayer(false);
+	//		if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+	//		{
+	//			status = 1;
+	//			Multiplayer::resetMultiplayerSockets();
+	//			return;
+	//		}
+	//		multiplayerCheckConnectionClock.restart();
+	//	}
+	//	else if (status == 3) //Erneuter Verbindungsaufbau, wenn Client
+	//	{
+	//		Multiplayer::initializeMultiplayer(false);
 
-			// Verbindungsaufbau mit Threads
-			/*if (multiplayerConnectThread == nullptr)
-			{
-			multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, false);
-			multiplayerConnectThread->launch();
-			}*/
+	//		// Verbindungsaufbau mit Threads
+	//		/*if (multiplayerConnectThread == nullptr)
+	//		{
+	//		multiplayerConnectThread = new Thread(&Multiplayer::initializeMultiplayer, false);
+	//		multiplayerConnectThread->launch();
+	//		}*/
 
-			if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
-			{
-				status = 1;
-				Multiplayer::resetMultiplayerSockets();
-				return;
-			}
-			multiplayerCheckConnectionClock.restart();
-		}
-	}
+	//		if (noConnectionPossibleClock.getElapsedTime() > Multiplayer::timeUntilSingleplayer) //Nach einer bestimmten Zeit wird in den Singleplayer gewechselt
+	//		{
+	//			status = 1;
+	//			Multiplayer::resetMultiplayerSockets();
+	//			return;
+	//		}
+	//		multiplayerCheckConnectionClock.restart();
+	//	}
+	//}
 
 
 }

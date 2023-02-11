@@ -126,8 +126,6 @@ public:
 	/// </summary>
 	static void deleteMultiplayer();
 
-	static void resetMultiplayerSockets();
-
 	static void setBlocking(bool blocking);
 
 	static void updatePlayerCount();

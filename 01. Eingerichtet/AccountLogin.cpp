@@ -177,6 +177,7 @@ bool AccountLogin::accountLogin(Event* event)
 
 		if (isEnter)
 		{
+			isEnter = false;
 			antwort = accServer->sendLogin(email, password);
 			if (antwort == "0")
 			{
