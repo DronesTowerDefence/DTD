@@ -58,7 +58,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		pos2 = Service::getInstance()->getObjectPosition(regulatePlayerCountButton[1]->getPosition() + Vector2f(50, 50));
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			if (multiplayerPlayerCount < 4)
+			if (multiplayerPlayerCount < 3)
 			{
 				setMultiplayerPlayerCount(multiplayerPlayerCount + 1);
 			}
