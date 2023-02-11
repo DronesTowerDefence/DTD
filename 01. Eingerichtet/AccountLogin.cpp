@@ -238,7 +238,6 @@ bool AccountLogin::accountPage(Event* event)
 		if (isEnter)
 		{
 			system("del saves\\user.sav");
-			system("del saves\\profilePicture.png");
 			Account::deleteAcc();
 			Loadup::usernameSuccessfull = false;
 			Account::createAcc("???", "\0", nullptr);
@@ -266,25 +265,21 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountLoginPasswordIsClicked = false;
 
 	loginScreen = new Sprite();
-	loginScreenExitButton = new Sprite();
-	signInOutButton = new Sprite();
-	profilePicture = new Sprite();
-	loginScreenEmailButton = new RectangleShape();
-	loginScreenPasswordButton = new RectangleShape();
-	profilePictureFrame = new RectangleShape();
-	profilPictureTexture = nullptr;
-
 	loginScreen->setTexture(*res->getAccountLoginBackground());
-	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
-	profilePicture->setTexture(*res->getAccountProfilePicture());
-	profilePicture->setScale(Vector2f(profilePictureSize / float(res->getAccountProfilePicture()->getSize().x), profilePictureSize / float(res->getAccountProfilePicture()->getSize().y)));
-
 	loginScreen->setPosition(Vector2f(600, 100));
-	loginScreenExitButton->setPosition(Vector2f(1300, 100));
-	signInOutButton->setPosition(Vector2f(1100, 700));
-	profilePicture->setPosition(Vector2f(700, 150));
-	profilePictureFrame->setPosition(profilePicture->getPosition());
 
+	loginScreenExitButton = new Sprite();
+	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
+	loginScreenExitButton->setPosition(Vector2f(1300, 100));
+
+	signInOutButton = new Sprite();
+	signInOutButton->setPosition(Vector2f(1100, 700));
+
+	profilePicture = new Sprite();
+	profilePicture->setPosition(Vector2f(700, 150));
+
+	profilePictureFrame = new RectangleShape();
+	profilePictureFrame->setPosition(profilePicture->getPosition());
 	profilePictureFrame->setSize(Vector2f(profilePictureSize, profilePictureSize));
 	profilePictureFrame->setFillColor(Color::Transparent);
 	profilePictureFrame->setOutlineColor(Color::Black);
@@ -294,26 +289,29 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	font->loadFromFile("fonts/arial.ttf");
 
 	accountLoginEmailText = new Text();
-	accountLoginPasswordText = new Text();
-	accountLoginStatusText = new Text();
-
 	accountLoginEmailText->setFont(*font);
 	accountLoginEmailText->setPosition(Vector2f(700, 350));
 	accountLoginEmailText->setFillColor(Color::Black);
 	accountLoginEmailText->setCharacterSize(50);
 
+	accountLoginPasswordText = new Text();
 	accountLoginPasswordText->setFont(*font);
 	accountLoginPasswordText->setPosition(Vector2f(700, 500));
 	accountLoginPasswordText->setFillColor(Color::Black);
 	accountLoginPasswordText->setCharacterSize(50);
 
+
+	loginScreenEmailButton = new RectangleShape();
+	loginScreenPasswordButton = new RectangleShape();
+	profilPictureTexture = new Texture();
+	accountLoginStatusText = new Text();
+
+
 	if (Loadup::usernameSuccessfull)
 	{
 		signInOutButton->setTexture(*res->getAccountSignOutButtonTexture());
 
-		profilPictureTexture = new Texture();
 		profilPictureTexture->loadFromImage(*Account::getAcc()->getProfileImage());
-		profilePicture->setTexture(*profilPictureTexture);
 
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
@@ -321,6 +319,8 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	else
 	{
 		signInOutButton->setTexture(*res->getAccountSignInButtonTexture());
+
+		profilPictureTexture->loadFromImage(res->getAccountProfilePicture()->copyToImage());
 
 		accountLoginEmailText->setString("Deine E-Mail...");
 		accountLoginPasswordText->setString("Dein Passwort...");
@@ -343,6 +343,9 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		loginScreenPasswordButton->setOutlineColor(Color::Red);
 		loginScreenPasswordButton->setOutlineThickness(4);
 	}
+
+	profilePicture->setTexture(*profilPictureTexture);
+	profilePicture->setScale(Vector2f(profilePictureSize / float(profilPictureTexture->getSize().x), profilePictureSize / float(profilPictureTexture->getSize().y)));
 }
 
 AccountLogin::~AccountLogin()

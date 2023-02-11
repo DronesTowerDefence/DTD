@@ -58,15 +58,15 @@ bool Account::deleteAcc()
 
 std::string Account::getAccName()
 {
-	return m_accName;
+	return m_acc->m_accName;
 }
 
 std::string Account::getEmail()
 {
-	return m_email;
+	return m_acc->m_email;
 }
 
 sf::Image* Account::getProfileImage()
 {
-	return m_profileImage;
+	return m_acc->m_profileImage;
 }

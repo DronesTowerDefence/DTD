@@ -19,8 +19,8 @@ public:
 	static Account* createAcc(std::string userName, std::string email, sf::Image* image);
 	static Account* getAcc();
 	static bool deleteAcc();
-	std::string getAccName();
-	std::string getEmail();
-	sf::Image* getProfileImage();
+	static std::string getAccName();
+	static std::string getEmail();
+	static sf::Image* getProfileImage();
 };
 
