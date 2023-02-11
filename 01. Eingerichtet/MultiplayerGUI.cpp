@@ -2,6 +2,7 @@
 #include "Multiplayer.h"
 #include "HomeMenu.h"
 #include "Controls.h"
+#include "PopUpMessage.h"
 
 bool MultiplayerGUI::checkClicked(Event* event)
 {
@@ -360,6 +361,7 @@ bool MultiplayerGUI::start(bool _isHost)
 {
 	if (Account::getAcc()->getAccName() == "???")
 	{
+		new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
 		return false;
 	}
 	isHost = _isHost;

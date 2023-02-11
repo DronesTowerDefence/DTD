@@ -138,6 +138,9 @@
     <ClCompile Include="MultiplayerGUI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="PopUpMessage.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -216,6 +219,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="MultiplayerGUI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpMessage.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

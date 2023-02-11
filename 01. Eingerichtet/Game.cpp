@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Multiplayer.h"
 #include "Round.h"
+#include "PopUpMessage.h"
 
 Game* Game::instance = nullptr;
 
@@ -529,6 +530,7 @@ void Game::draw()
 	{
 		sidebar->draw(window); //Sidebar wird gedrawt
 	}
+	PopUpMessage::draw(window);
 	window->display();
 }
 void Game::checkShoot()

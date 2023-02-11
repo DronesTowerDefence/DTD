@@ -34,6 +34,7 @@
     <ClInclude Include="MultiplayerGUI.h" />
     <ClInclude Include="MultiplayerPlayer.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="PopUpMessage.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="MultiplayerGUI.cpp" />
     <ClCompile Include="MultiplayerPlayer.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="PopUpMessage.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ressources.cpp" />
     <ClCompile Include="Round.cpp" />

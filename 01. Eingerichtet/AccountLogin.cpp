@@ -190,9 +190,10 @@ bool AccountLogin::accountLogin(Event* event)
 			}
 			else
 			{
+				Image* profilImage = accServer->getProfilePicture(antwort);
 				accountLoginStatusText->setString("Erfolgreich!");
 				std::cout << antwort << std::endl;
-				accServer->createAccount(antwort, email, accServer->getProfilePicture(antwort));
+				accServer->createAccount(antwort, email, profilImage);
 
 				Loadup::usernameSuccessfull = true;
 				draw();

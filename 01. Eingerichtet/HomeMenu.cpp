@@ -1,6 +1,7 @@
 #include "HomeMenu.h"
 #include "Controls.h"
 #include "Multiplayer.h"
+#include "PopUpMessage.h"
 
 HomeMenu* HomeMenu::instance = nullptr;
 
@@ -236,7 +237,6 @@ int  HomeMenu::CheckClicked(Event event)
 				{
 					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
-					std::cout << "Multiplayer geschlossen" << std::endl;
 					status = 0;
 					return 0;
 				}
@@ -261,7 +261,6 @@ int  HomeMenu::CheckClicked(Event event)
 				{
 					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
-					std::cout << "Multiplayer geschlossen" << std::endl;
 					status = 0;
 					return 0;
 				}
@@ -291,12 +290,18 @@ int  HomeMenu::CheckClicked(Event event)
 			if (isMultiplayerOpen)
 			{
 				multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
+				isMultiplayerOpen = false;
 			}
 			else
 			{
+				if (Account::getAcc()->getAccName() == "???")
+				{
+					new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+					return 0;
+				}
 				multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(0));
+				isMultiplayerOpen = true;
 			}
-			isMultiplayerOpen = !isMultiplayerOpen;
 			return 0;
 		}
 
@@ -321,6 +326,7 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				deleteSave(i);
 			}
+			new PopUpMessage("Alle Spielstände gelöscht", sf::seconds(2));
 			return 0;
 		}
 
@@ -401,6 +407,7 @@ void HomeMenu::draw()
 {
 	window->clear();
 	drawPublic();
+	PopUpMessage::draw(window);
 	window->display();
 }
 bool HomeMenu::deleteSave(int index)

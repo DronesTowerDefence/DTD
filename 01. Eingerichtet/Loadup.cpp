@@ -1,4 +1,5 @@
 #include "Loadup.h"
+#include "PopUpMessage.h"
 #include <fstream>
 
 bool Loadup::usernameSuccessfull = false;
@@ -62,11 +63,11 @@ void Loadup::run()
 	setLoadingbar(10);
 
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
+	PopUpMessage::initializePopUpMessages();
 	setLoadingbar(30);
 
 	window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 	setLoadingbar(40);
-
 
 	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
 	credits->setTexture(*res->getCreditsTexture());

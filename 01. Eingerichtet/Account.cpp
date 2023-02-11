@@ -20,7 +20,6 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	if (image != nullptr)
 	{
 		m_profileImage = image;
-		m_profileImage->saveToFile("saves/profilePicture.png");
 	}
 
 	if (userName != "???" && email != "0")
