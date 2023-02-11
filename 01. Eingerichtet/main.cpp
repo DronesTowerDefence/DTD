@@ -22,13 +22,13 @@ int main()
 	window.setFramerateLimit(60);
 
 	Event event;
-	Loadup* load = new Loadup(&window);
+	Sprite sprite;
+	Loadup* load = new Loadup();
 
 	sf::Thread* thread = new sf::Thread(&Loadup::run, load); // Erstellt einen Thread mit Loadup::run als Einstiegspunkt
-	window.setActive(false); // Nimmt dem Hauptthread die Rechte an dem Fenster (wie die lock-Variable)
 	thread->launch(); // Startet den Thread
-	
-	while (window.isOpen() && !Mouse::isButtonPressed(Mouse::Left))
+
+	while (window.isOpen() && (!load->getDone() || !Mouse::isButtonPressed(Mouse::Left)))
 	{
 		while (window.pollEvent(event))
 		{
@@ -38,11 +38,14 @@ int main()
 				exit(0);
 			}
 		}
+		sprite.setTexture(load->getRenderTexture()->getTexture());
+		window.clear();
+		window.draw(sprite);
+		window.display();
 	}
 	thread->terminate();
 	delete thread;
 	delete load;
-	window.setActive(true);
 
 	HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
 	HomeMenu::getInstance()->HomeMenuStart(); //Das HomeMenu wird aufgerufen/gestartet

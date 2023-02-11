@@ -1,4 +1,5 @@
 #include "Loadingbar.h"
+#include <iostream>
 
 Loadingbar::Loadingbar(sf::Vector2f startPos, sf::Vector2f endPos, sf::Color outlineColor, int outlineThickness, sf::Color fillColor)
 {
@@ -27,13 +28,13 @@ void Loadingbar::updateBar()
 	}
 }
 
-void Loadingbar::draw(sf::RenderWindow* window)
+void Loadingbar::draw(sf::RenderTarget* render)
 {
-	window->draw(outline);
-	window->draw(loadingShape);
+	render->draw(outline);
+	render->draw(loadingShape);
 	if (text != nullptr)
 	{
-		window->draw(*text);
+		render->draw(*text);
 	}
 }
 

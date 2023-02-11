@@ -30,7 +30,7 @@ public:
 	/// Zeichnet den Ladebalken in das angegebene Fenster
 	/// </summary>
 	/// <param name=""></param>
-	void draw(sf::RenderWindow*);
+	void draw(sf::RenderTarget*);
 
 	/// <summary>
 	/// Erstellt einen Text im Ladebalken

@@ -34,15 +34,21 @@ std::string Loadup::readFromUserFile(int line)
 
 void Loadup::setLoadingbar(float a)
 {
+	loadingbar->setPercentage(a);
+
 	window->clear();
 	loadingbar->draw(window);
-	loadingbar->setPercentage(a);
 	window->display();
+
+	// Diese Zeile ist wichtig, da sonst die RenderTexture 'window' nicht richtig gedrawt wird
+	// Ka warum, aber so funktioniert es, sfml ist komisch
+	window->getTexture().copyToImage();
 }
 
-Loadup::Loadup(sf::RenderWindow* _window)
+Loadup::Loadup()
 {
-	window = _window;
+	window = new RenderTexture;
+	window->create(1920, 991);
 	done = false;
 
 	font = new sf::Font();
@@ -56,24 +62,24 @@ Loadup::Loadup(sf::RenderWindow* _window)
 	loadingbar->setTextStyle(1, 50, Color::White, font);
 }
 
+Loadup::~Loadup()
+{
+	delete loadingbar;
+}
+
 void Loadup::run()
 {
-	window->setActive(true); // Gibt der Funktion/dem Thread die Rechte an dem Fenster
-
 	setLoadingbar(10);
 
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
-	PopUpMessage::initializePopUpMessages();
 	setLoadingbar(30);
 
-	window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
+	PopUpMessage::initializePopUpMessages();
+	//window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 	setLoadingbar(40);
 
 	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
 	credits->setTexture(*res->getCreditsTexture());
-	window->draw(*credits);
-	loadingbar->draw(window);
-	window->display();
 	setLoadingbar(50);
 
 	AccountServer* accServer = new AccountServer();
@@ -103,32 +109,22 @@ void Loadup::run()
 	setLoadingbar(90);
 
 	delete accServer;
-	setLoadingbar(95);
-
 	setLoadingbar(100);
 
 	window->clear();
 	window->draw(*credits);
 	window->display();
 
-	//Event e;
-	//while (!Mouse::isButtonPressed(Mouse::Left)) //Erst wenn die linke Maustaste gedrückt wird, geht es weiter
-	//{
-	//	window->pollEvent(e);
-	//	if (e.Closed)
-	//	{
-	//		window->close();
-	//		exit(0);
-	//	}
-	//}
-
 	delete credits;
-	delete loadingbar;
-	window->setActive(false);
 	done = true;
 }
 
 bool Loadup::getDone()
 {
 	return done;
+}
+
+RenderTexture* Loadup::getRenderTexture()
+{
+	return window;
 }
