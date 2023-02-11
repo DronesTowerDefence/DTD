@@ -104,6 +104,8 @@ void Round::sellTower(Tower* a, bool b)
 
 	if (b || a->getOwnerName() == Account::getAcc()->getAccName())
 	{
+		Multiplayer::send(a, 1);
+
 		//Entfernt den Turm aus der Angriffs-Turm-Liste
 		for (auto i : allAttackTowers)
 		{
