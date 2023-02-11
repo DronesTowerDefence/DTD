@@ -199,32 +199,33 @@ int Updates::isClicked(RenderWindow* window)
 
 
 
-
-	pos = Service::getInstance()->getObjectPosition(update1->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100));
-
-	if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	if (tower->getOwnerName() == Account::getAcc()->getAccName())
 	{
-		if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
-		{
-			return 1;
-		}
+		pos = Service::getInstance()->getObjectPosition(update1->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(update1->getPosition() + Vector2f(100, 100));
 
-	}
-	else
-	{
-		pos = Service::getInstance()->getObjectPosition(update2->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100));
-
-		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
+			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
 			{
-				return 2;
+				return 1;
+			}
+
+		}
+		else
+		{
+			pos = Service::getInstance()->getObjectPosition(update2->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(update2->getPosition() + Vector2f(100, 100));
+
+			if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
+				{
+					return 2;
+				}
 			}
 		}
 	}
-
 
 	return -1;
 }
