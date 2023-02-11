@@ -194,6 +194,9 @@ void Updates::hover(RenderWindow* window)
 }
 int Updates::isClicked(RenderWindow* window)
 {
+	if (!window->hasFocus())
+		return 0;
+
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 

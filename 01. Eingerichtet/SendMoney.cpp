@@ -44,6 +44,8 @@ SendMoney::SendMoney()
 #pragma region Funktionen
 void SendMoney::checkClicked()
 {
+	if (!window->hasFocus())
+		return;
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = true;

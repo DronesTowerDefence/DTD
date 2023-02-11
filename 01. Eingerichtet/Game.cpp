@@ -352,6 +352,8 @@ void Game::moveDrohnes()
 }
 void Game::checkButtonClick()
 {
+	if (!window->hasFocus())
+		return;
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
 		if (newTower == nullptr /* || index == -1*/)

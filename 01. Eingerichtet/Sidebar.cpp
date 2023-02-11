@@ -64,6 +64,9 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 }
 int Sidebar::isClicked(sf::RenderWindow* window)
 {
+	if (!window->hasFocus())
+		return 0;
+
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 

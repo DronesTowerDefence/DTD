@@ -7,6 +7,8 @@
 
 int AccountLogin::checkClicked(Event*)
 {
+	if (!window->hasFocus())
+		return 0;
 	Vector2f pos = Vector2f(0, 0), pos2 = Vector2f(0, 0);
 	Vector2i mouse = Mouse::getPosition();
 	if (Mouse::isButtonPressed(Mouse::Left))

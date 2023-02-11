@@ -118,7 +118,8 @@ PauseMenu::PauseMenu() {
 #pragma region Funktionen
 void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 {
-
+	if (!window->hasFocus())
+		return;
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = true;

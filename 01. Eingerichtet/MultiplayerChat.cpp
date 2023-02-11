@@ -60,6 +60,8 @@ MultiplayerChat::MultiplayerChat()
 #pragma region Funktionen
 void MultiplayerChat::checkClicked()
 {
+	if (!window->hasFocus())
+		return;
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = true;

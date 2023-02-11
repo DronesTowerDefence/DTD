@@ -191,6 +191,8 @@ void HomeMenu::drawPublic()
 }
 int  HomeMenu::CheckClicked(Event event)
 {
+	if (!window->hasFocus())
+		return 0;
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = true;
