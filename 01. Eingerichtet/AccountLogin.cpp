@@ -272,6 +272,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
 	profilePictureFrame = new RectangleShape();
+	profilPictureTexture = nullptr;
 
 	loginScreen->setTexture(*res->getAccountLoginBackground());
 	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
@@ -309,6 +310,10 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	if (Loadup::usernameSuccessfull)
 	{
 		signInOutButton->setTexture(*res->getAccountSignOutButtonTexture());
+
+		profilPictureTexture = new Texture();
+		profilPictureTexture->loadFromImage(*Account::getAcc()->getProfileImage());
+		profilePicture->setTexture(*profilPictureTexture);
 
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());

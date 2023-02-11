@@ -86,16 +86,20 @@ sf::Image* AccountServer::getProfilePicture(std::string username)
 
 	if (str != "-1" && str != "0")
 	{
+		//// SFML Variante - funktioniert nicht
+		//sf::Image* image = new sf::Image();
+		//image->loadFromMemory(&str, str.length());
+		
 		// C++ Variante
-		/*std::ofstream file;
-		file.open("saves/test.png", std::ios::binary);
+		std::ofstream file;
+		file.open("saves/userProfilPicture.png", std::ios::binary);
 		file.write(str.c_str(), str.size());
-		file.close();*/
+		file.close();
 
-		// SFML Variante
-		sf::Image* image = new sf::Image();
-		image->loadFromMemory(&str, str.length());
-		//image->saveToFile("saves/test.png");
+		Image* image = new Image();
+		image->loadFromFile("saves/userProfilPicture.png");
+		system("del saves\\userProfilPicture.png");
+
 		return image;
 	}
 	else return nullptr;

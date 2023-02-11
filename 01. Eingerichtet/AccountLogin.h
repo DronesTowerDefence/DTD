@@ -28,6 +28,7 @@ private:
 	Sprite* profilePicture;
 
 	Font* font;
+	Texture* profilPictureTexture;
 
 	Text* accountLoginEmailText;
 	Text* accountLoginPasswordText;
