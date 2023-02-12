@@ -150,7 +150,10 @@ void MultiplayerGUI::ipAdressInput(Event* event) {
 	{
 		if (hostIP.length() < 15)
 		{
-			hostIP += Controls::checkKeyboardInput(event);
+			char c;
+			c = Controls::checkKeyboardInput(event);
+			if (c != '\0')
+				hostIP += c;
 		}
 	}
 	if (event->key.code == Keyboard::BackSpace)
@@ -399,6 +402,9 @@ bool MultiplayerGUI::start(bool _isHost)
 				ipAdressInput(&event);
 			}
 			checkClicked(&event);
+			Controls::checkKeyboardInput(&event);
+			if (Controls::getEnterIsPressed())
+				isStart = true;
 		}
 		draw();
 
