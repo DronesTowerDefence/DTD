@@ -185,6 +185,7 @@ bool MultiplayerGUI::updateLobby()
 			if (Multiplayer::playerLight[i] != nullptr)
 			{
 				playerNames[i]->setString(Multiplayer::playerLight[i]->getPlayerName());
+				setPlayerProfilePictures(i, Multiplayer::playerLight[i]->getProfileImage());
 			}
 		}
 	}
@@ -465,7 +466,7 @@ void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 
 		delete profilePictures[index];
 		profilePictures[index] = new Sprite();
-		profilePictures[index]->setPosition(900, 500 + index * 60);
+		profilePictures[index]->setPosition(1025, 500 + index * 60);
 		profilePictures[index]->setTexture(*profilePicturesTextures[index]);
 		profilePictures[index]->setScale(Vector2f(40 / float(profilePicturesTextures[index]->getSize().x), 40 / float(profilePicturesTextures[index]->getSize().y)));
 	}
