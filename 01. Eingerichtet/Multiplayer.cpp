@@ -435,7 +435,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			p6.clear();
 
 			p7 << 17 << i + 1;
-			for (int j = 0; j < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); j++)
+			// p7.append(player[i]->getProfilImage()->getPixelsPtr(), (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4));
+			for (int j = 0; j < (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4); j++)
 			{
 				p7 << player[i]->getProfilImage()->getPixelsPtr()[i];
 			}
@@ -471,7 +472,10 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		player[0]->setProfilImage(image);
 		str.clear();
 
-		p5 << Account::getProfileImage();
+		for (int i = 0; i < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); i++)
+		{
+			p5 << Account::getProfileImage()->getPixelsPtr()[i];
+		}
 		player[0]->getSocket()->send(p5);
 
 		for (int i = 0; i < multiplayerPlayerCount + 1; i++)
