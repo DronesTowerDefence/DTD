@@ -194,6 +194,10 @@ bool AccountLogin::accountLogin(Event* event)
 			else
 			{
 				Image* profilImage = accServer->getProfilePicture(antwort);
+				if (profilImage == nullptr)
+				{
+					profilImage = new Image(res->getAccountProfilePicture()->copyToImage());
+				}
 				accountLoginStatusText->setString("Erfolgreich!");
 				std::cout << antwort << std::endl;
 				accServer->createAccount(antwort, email, profilImage);
