@@ -123,6 +123,7 @@ void MultiplayerGUI::draw()
 			for (int i = 0; i < multiplayerPlayerCount + 1; i++)
 			{
 				window->draw(*playerNames[i]);
+				window->draw(*profilePictures[i]);
 			}
 			window->draw(*mapChoose);
 			window->draw(*multiplayerPlayerCountText);
@@ -277,6 +278,23 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 		maps[i]->setPosition(Vector2f(background->getPosition().x + 150 + i * (maps[i]->getTexture()->getSize().x * maps[i]->getScale().x + 50), background->getPosition().y + 100));
 	}
 
+
+	for (int i = 0; i < 4; i++)
+	{
+		profilePicturesTextures[i] = new Texture(*res->getAccountProfilePicture());
+		profilePictures[i] = new Sprite();
+		profilePictures[i]->setPosition(1025, 500 + i * 60);
+		profilePictures[i]->setTexture(*profilePicturesTextures[i]);
+		profilePictures[i]->setScale(Vector2f(40 / float(profilePicturesTextures[i]->getSize().x), 40 / float(profilePicturesTextures[i]->getSize().y)));
+	}
+	profilePicturesTextures[0] = new Texture();
+	profilePicturesTextures[0]->loadFromImage(*Account::getProfileImage());
+	profilePictures[0] = new Sprite();
+	profilePictures[0]->setPosition(1025, 500 + 0 * 60);
+	profilePictures[0]->setTexture(*profilePicturesTextures[0]);
+	profilePictures[0]->setScale(Vector2f(40 / float(profilePicturesTextures[0]->getSize().x), 40 / float(profilePicturesTextures[0]->getSize().y)));
+
+
 	mapChoose = new RectangleShape();
 	mapChoose->setFillColor(Color::Transparent);
 	mapChoose->setOutlineColor(Color::Red);
@@ -375,7 +393,10 @@ bool MultiplayerGUI::start(bool _isHost)
 				window->close();
 				exit(0);
 			}
-			ipAdressInput(&event);
+			if (!isHost)
+			{
+				ipAdressInput(&event);
+			}
 			checkClicked(&event);
 		}
 		draw();
@@ -431,6 +452,22 @@ void MultiplayerGUI::setPlayerNames(int i, std::string s)
 	if (i >= 0 && i < 4)
 	{
 		playerNames[i]->setString(s);
+	}
+}
+
+void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
+{
+	if (index >= 0 && index < 4)
+	{
+		delete profilePicturesTextures[index];
+		profilePicturesTextures[index] = new Texture();
+		profilePicturesTextures[index]->loadFromImage(*image);
+
+		delete profilePictures[index];
+		profilePictures[index] = new Sprite();
+		profilePictures[index]->setPosition(900, 500 + index * 60);
+		profilePictures[index]->setTexture(*profilePicturesTextures[index]);
+		profilePictures[index]->setScale(Vector2f(40 / float(profilePicturesTextures[index]->getSize().x), 40 / float(profilePicturesTextures[index]->getSize().y)));
 	}
 }
 

@@ -29,6 +29,8 @@ private:
 	Sprite* startButton;
 	Sprite* regulatePlayerCountButton[2];
 	Sprite* maps[3];
+	Sprite* profilePictures[4];
+	Texture* profilePicturesTextures[4];
 	RectangleShape* mapChoose;
 	Font* font;
 	Text* ipText;
@@ -51,6 +53,7 @@ public:
 
 	void setChooseIndex(int);
 	void setPlayerNames(int, std::string);
+	void setPlayerProfilePictures(int index, Image* image);
 	void setMultiplayerPlayerCount(int);
 	void setStartGame(bool);
 };

@@ -424,6 +424,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			image->loadFromMemory(p5.getData(), p5.getDataSize());
 			p5.clear();
 			player[i]->setProfilImage(image);
+			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(i + 1, image);
 			delete image;
 
 		}
