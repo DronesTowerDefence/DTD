@@ -337,10 +337,6 @@ void Multiplayer::receive()
 				image->create(x, y, int8);
 				playerLight[int1]->setProfileImage(image);
 				delete image;
-				for (int i = 0; i < x * y * 4; i++)
-				{
-					delete& int8[i];
-				}
 				break;
 
 			default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
