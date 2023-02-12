@@ -147,12 +147,12 @@ bool Multiplayer::send(int i, std::string s)
 void Multiplayer::receive()
 {
 	Packet pac, packet;
-	int header, int1, int2;
+	int header, int1, int2, x, y;
 	std::string str, username = "0";
 	Vector2f vector;
 	bool returnValue = true;
 	Image* image = new Image();
-	Uint8 int8 = 0;
+	Uint8* int8 = nullptr;
 
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
@@ -328,14 +328,19 @@ void Multiplayer::receive()
 				break;
 
 			case 17:
-				pac >> int1;
-				for (int i = 8 - 1; pac.getDataSize(); i++)
+				pac >> int1 >> x >> y;
+				int8 = new Uint8[x * y * 4];
+				for (int i = 0; i < x * y * 4; i++)
 				{
-					pac >> int8;
-					packet << int8;
+					pac >> int8[i];
 				}
-				image->loadFromMemory(packet.getData(), packet.getDataSize());
+				image->create(x, y, int8);
 				playerLight[int1]->setProfileImage(image);
+				delete image;
+				for (int i = 0; i < x * y * 4; i++)
+				{
+					delete& int8[i];
+				}
 				break;
 
 			default: //Wenn das Packet einen ungültigen Header enthält wird false zurück gegeben
@@ -390,7 +395,9 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	initializeMultiplayerIsDone = false;
 	Packet p, p1, p2, p3, p4, p5, p6, p7;
 	std::string str = "";
-	int* imageData;
+	int x, y;
+	Uint8* int8 = nullptr;
+	Image* image = new Image();
 
 	if (isHost)
 	{
@@ -398,6 +405,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		p << HomeMenu::getInstance()->getChoseIndex();
 		p1 << Multiplayer::multiplayerPlayerCount;
 		p2 << Account::getAcc()->getAccName();
+
+		p4 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
 		for (int i = 0; i < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); i++)
 		{
 			p4 << Account::getProfileImage()->getPixelsPtr()[i];
@@ -420,9 +429,14 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			send(&p4, -1); // Eigenes Profilbild
 
 			player[i]->getSocket()->receive(p5); // Profilbild des Spielers
-			Image* image = new Image();
-			image->loadFromMemory(p5.getData(), p5.getDataSize());
+			p5 >> x >> y;
+			int8 = new Uint8[x * y * 4];
+			for (int i = 0; i < x * y * 4; i++)
+			{
+				p5 >> int8[i];
+			}
 			p5.clear();
+			image->create(x, y, int8);
 			player[i]->setProfilImage(image);
 			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(i + 1, image);
 			delete image;
@@ -434,8 +448,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			send(&p6, -1); // Namen aller Mitspieler (über receive-Funktion)
 			p6.clear();
 
-			p7 << 17 << i + 1;
-			// p7.append(player[i]->getProfilImage()->getPixelsPtr(), (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4));
+			p7 << 17 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
 			for (int j = 0; j < (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4); j++)
 			{
 				p7 << player[i]->getProfilImage()->getPixelsPtr()[i];
@@ -466,12 +479,18 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		player[0]->getSocket()->send(p3);
 
 		player[0]->getSocket()->receive(p4);
-		p4 >> str;
-		Image* image = new Image();
-		image->loadFromMemory(p4.getData(), p4.getDataSize());
+		p4 >> x >> y;
+		int8 = new Uint8[x * y * 4];
+		for (int i = 0; i < x * y * 4; i++)
+		{
+			p4 >> int8[i];
+		}
+		p4.clear();
+		image->create(x, y, int8);
 		player[0]->setProfilImage(image);
-		str.clear();
+		delete image;
 
+		p5 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
 		for (int i = 0; i < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); i++)
 		{
 			p5 << Account::getProfileImage()->getPixelsPtr()[i];
