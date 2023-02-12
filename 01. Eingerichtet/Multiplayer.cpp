@@ -5,7 +5,7 @@ const Time Multiplayer::timeout = seconds(2.f);
 const Time Multiplayer::timeoutSend = seconds(Multiplayer::timeout / seconds(3.f));
 const Time Multiplayer::timeUntilSingleplayer = seconds(30.f);
 MultiplayerPlayer* Multiplayer::player[3] = { nullptr };
-MultiplayerPlayer_light* Multiplayer::playerLight[3] = { nullptr };
+MultiplayerPlayer_light* Multiplayer::playerLight[4] = { nullptr };
 int Multiplayer::multiplayerPlayerCount = 0;
 bool Multiplayer::initializeMultiplayerIsDone = false;
 
@@ -330,12 +330,13 @@ void Multiplayer::receive()
 			case 17:
 				pac >> int1 >> x >> y;
 				int8 = new Uint8[x * y * 4];
-				for (int i = 0; i < x * y * 4; i++)
+				for (int i = 0; i < (x * y * 4); i++)
 				{
 					pac >> int8[i];
 				}
 				image->create(x, y, int8);
-				playerLight[int1]->setProfileImage(image);
+				if (playerLight[int1] != nullptr)
+					playerLight[int1]->setProfileImage(image);
 				delete image;
 				break;
 
@@ -447,7 +448,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			p7 << 17 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
 			for (int j = 0; j < (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4); j++)
 			{
-				p7 << player[i]->getProfilImage()->getPixelsPtr()[i];
+				p7 << player[i]->getProfilImage()->getPixelsPtr()[j];
 			}
 			send(&p7, -1); // Profilbilder aller Mitspieler (über receive-Funktion)
 			p7.clear();
@@ -466,9 +467,15 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		player[0]->getSocket()->receive(p1);
 		p1 >> Multiplayer::multiplayerPlayerCount;
 
+		for (int i = 0; i < multiplayerPlayerCount + 1; i++)
+		{
+			playerLight[i] = new MultiplayerPlayer_light();
+		}
+
 		player[0]->getSocket()->receive(p2);
 		p2 >> str;
 		player[0]->setUsername(str);
+		playerLight[0]->setPlayerName(player[0]->getPlayerName());
 		str.clear();
 
 		p3 << Account::getAcc()->getAccName();
@@ -484,6 +491,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		p4.clear();
 		image->create(x, y, int8);
 		player[0]->setProfilImage(image);
+		playerLight[0]->setProfileImage(image);
+		HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(0, image);
 		delete image;
 
 		p5 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
@@ -492,13 +501,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			p5 << Account::getProfileImage()->getPixelsPtr()[i];
 		}
 		player[0]->getSocket()->send(p5);
-
-		for (int i = 0; i < multiplayerPlayerCount + 1; i++)
-		{
-			playerLight[i] = new MultiplayerPlayer_light();
-		}
-		playerLight[0]->setPlayerName(player[0]->getPlayerName());
-
 	}
 
 	setBlocking(false);

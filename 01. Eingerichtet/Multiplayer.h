@@ -42,7 +42,7 @@ public:
 	/// </summary>
 	static MultiplayerPlayer* player[3];
 
-	static MultiplayerPlayer_light* playerLight[3];
+	static MultiplayerPlayer_light* playerLight[4];
 
 	/// <summary>
 	/// Anzahl an Spielern (Im SP=0)
