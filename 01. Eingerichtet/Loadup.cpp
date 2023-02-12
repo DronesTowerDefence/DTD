@@ -93,6 +93,10 @@ void Loadup::run()
 	if (usernameExist == "1")
 	{
 		sf::Image* image = accServer->getProfilePicture(username);
+		if (image == nullptr)
+		{
+			image = new Image(res->getAccountProfilePicture()->copyToImage());
+		}
 		accServer->createAccount(username, email, image);
 		setLoadingbar(80);
 
