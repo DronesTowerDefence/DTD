@@ -1,5 +1,6 @@
 #include "Loadup.h"
 #include "PopUpMessage.h"
+#include "Achievements.h"
 #include <fstream>
 
 bool Loadup::usernameSuccessfull = false;
@@ -65,14 +66,16 @@ void Loadup::run()
 	setLoadingbar(20);
 
 	PopUpMessage::initializePopUpMessages();
-	//window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
 	setLoadingbar(30);
 
-	AccountServer* accServer = new AccountServer();
+	AchievementsContainer::createAchievements();
 	setLoadingbar(40);
 
-	std::string username = readFromUserFile(1);
+	AccountServer* accServer = new AccountServer();
 	setLoadingbar(50);
+
+	std::string username = readFromUserFile(1);
+	setLoadingbar(55);
 
 	std::string email = readFromUserFile(2);
 	setLoadingbar(60);

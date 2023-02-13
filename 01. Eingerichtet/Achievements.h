@@ -1,6 +1,8 @@
 #pragma once
 #include "Ressources.h"
 
+#define achievementCount 12
+
 class Achievement
 {
 private:

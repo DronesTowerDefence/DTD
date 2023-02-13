@@ -48,6 +48,7 @@ int main()
 		if (load->getDone())
 		{
 			credits->setTexture(*Ressources::getInstance()->getCreditsTexture());
+			window.setIcon(Ressources::getInstance()->getIcon().getSize().x, Ressources::getInstance()->getIcon().getSize().y, Ressources::getInstance()->getIcon().getPixelsPtr()); //Setzen des Icons
 		}
 	}
 	thread->terminate();

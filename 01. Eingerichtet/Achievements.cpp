@@ -43,6 +43,39 @@ int Achievement::getAchievementID()
 
 void AchievementsContainer::createAchievements()
 {
+	std::string _title = "";
+	int _value[3], _id;
+	char buffer[60];
+	std::ifstream file;
+	file.open("saves/achievements.sav");
+	if (file.fail())
+		return;
+	//Aufbau der Datei: id;title;value0;value1;value2;
+
+	for (int i = 0; i < achievementCount; i++)
+	{
+		file.get(buffer, 60, ';');
+		_id = std::stoi(buffer);
+		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+
+		file.get(buffer, 60, ';');
+		_title = buffer;
+		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+
+		file.get(buffer, 60, ';');
+		_value[0] = std::stoi(buffer);
+		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+
+		file.get(buffer, 60, ';');
+		_value[1] = std::stoi(buffer);
+		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+
+		file.get(buffer, 60, ';');
+		_value[2] = std::stoi(buffer);
+		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+
+		addAchievement(new Achievement(_title, _value[0], _value[1], _value[2], _id));
+	}
 
 }
 
