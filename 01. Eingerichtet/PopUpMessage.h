@@ -16,12 +16,13 @@ private:
 	PopUpMessage(); // Nicht benutzen
 	void run(); // Für Thread
 public:
+
 	/// <summary>
 	/// Erstellt eine PopUp-Nachricht als Thread
 	/// </summary>
 	/// <param name="_message">Anzuzeigende Nachricht (max. 34 chars)</param>
 	/// <param name="_time">Wie lange die Nachricht angezeigt werden soll</param>
-	PopUpMessage(std::string _message, Time _time);
+	PopUpMessage(std::string _message, Time _time = seconds(2));
 	~PopUpMessage();
 
 	/// <summary>
