@@ -11,16 +11,19 @@ private:
 	std::string m_accName;
 	std::string m_email;
 	sf::Image* m_profileImage;
+	int m_experience;
 
 	Account();
 	Account(std::string userName, std::string email, sf::Image* image);
 
 public:
 	static Account* createAcc(std::string userName, std::string email, sf::Image* image);
+	static bool setExperience(int _exp);
 	static Account* getAcc();
 	static bool deleteAcc();
 	static std::string getAccName();
 	static std::string getEmail();
 	static sf::Image* getProfileImage();
+	static int getExperience();
 };
 

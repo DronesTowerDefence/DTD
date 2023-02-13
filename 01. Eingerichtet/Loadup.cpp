@@ -35,10 +35,6 @@ std::string Loadup::readFromUserFile(int line)
 void Loadup::setLoadingbar(float a)
 {
 	loadingbar->setPercentage(a);
-
-	// Diese Zeile ist wichtig, da sonst die RenderTexture 'window' nicht richtig gedrawt wird
-	// Ka warum, aber so funktioniert es, sfml ist komisch
-	//window->getTexture().copyToImage();
 }
 
 Loadup::Loadup(RenderWindow* window)
@@ -91,8 +87,10 @@ void Loadup::run()
 		{
 			image = new Image(res->getAccountProfilePicture()->copyToImage());
 		}
-		accServer->createAccount(username, email, image);
+		int _xp = stoi(accServer->getXP(username));
 		setLoadingbar(80);
+		accServer->createAccount(username, email, image);
+		Account::setExperience(_xp);
 
 		usernameSuccessfull = true;
 	}
@@ -102,6 +100,7 @@ void Loadup::run()
 		{
 			system("del saves\\user.sav");
 		}
+		setLoadingbar(80);
 		accServer->createAccount("???", "\0", nullptr);
 	}
 	setLoadingbar(90);

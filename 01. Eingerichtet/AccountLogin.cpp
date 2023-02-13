@@ -3,7 +3,7 @@
 #include "Service.h"
 #include "Controls.h"
 #include "Loadup.h"
-
+#include "PopUpMessage.h"
 
 int AccountLogin::checkClicked(Event*)
 {
@@ -88,6 +88,7 @@ void AccountLogin::draw()
 		window->draw(*accountLoginStatusText);
 		window->draw(*profilePicture);
 		window->draw(*profilePictureFrame);
+		window->draw(*accountLevelText);
 	}
 	if (accountLoginEmailIsClicked)
 	{
@@ -184,12 +185,12 @@ bool AccountLogin::accountLogin(Event* event)
 			if (antwort == "0")
 			{
 				accountLoginStatusText->setString("Falsche Anmeldedaten");
-				std::cout << "Falsche Anmeldedaten" << std::endl;
+				new PopUpMessage("Falsche Anmeldedaten", sf::seconds(2));
 			}
 			else if (antwort == "-1")
 			{
 				accountLoginStatusText->setString("Keine Verbindung\nzum Server");
-				std::cout << "Keine Verbindung zum Server möglich" << std::endl;
+				new PopUpMessage("Keine Verbindung zum Server möglich", sf::seconds(2));
 			}
 			else
 			{
@@ -198,9 +199,16 @@ bool AccountLogin::accountLogin(Event* event)
 				{
 					profilImage = new Image(res->getAccountProfilePicture()->copyToImage());
 				}
-				accountLoginStatusText->setString("Erfolgreich!");
-				std::cout << antwort << std::endl;
 				accServer->createAccount(antwort, email, profilImage);
+
+				int expServer = stoi(accServer->getXP(Account::getAccName()));
+				if (expServer != 0 && expServer != -1)
+				{
+					Account::setExperience(expServer);
+				}
+
+				accountLoginStatusText->setString("Erfolgreich!");
+				new PopUpMessage("Erfolgreich!", seconds(2));
 
 				Loadup::usernameSuccessfull = true;
 				draw();
@@ -306,6 +314,13 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountLoginPasswordText->setFillColor(Color::Black);
 	accountLoginPasswordText->setCharacterSize(50);
 
+	accountLevelText = new Text();
+	accountLevelText->setFont(*font);
+	accountLevelText->setPosition(Vector2f(900, 200));
+	accountLevelText->setFillColor(Color::Black);
+	accountLevelText->setCharacterSize(50);
+	accountLevelText->setString("Level 1");
+
 
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
@@ -321,6 +336,11 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
+
+		if (Account::getExperience() / 1000 == 0)
+			accountLevelText->setString("Level 1");
+		else
+			accountLevelText->setString("Level " + std::to_string(Account::getExperience() / 1000));
 	}
 	else
 	{
@@ -348,6 +368,8 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		loginScreenPasswordButton->setFillColor(Color::Transparent);
 		loginScreenPasswordButton->setOutlineColor(Color::Red);
 		loginScreenPasswordButton->setOutlineThickness(4);
+
+		accountLevelText->setString("");
 	}
 
 	profilePicture->setTexture(*profilPictureTexture);

@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Projectile.h"
 #include "TowerSpawn.h"
+#include "AccountServer.h"
 using namespace sf;
 
 /**
@@ -56,6 +57,8 @@ private:
 	/// Pointer auf die Map
 	/// </summary>
 	Map* p_map;
+
+	AccountServer* accServer;
 
 	/// <summary>
 	/// Alle Punkte der Strecke in 20px eingeteilt

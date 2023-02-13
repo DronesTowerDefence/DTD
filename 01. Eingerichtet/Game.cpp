@@ -1317,6 +1317,7 @@ void Game::saveGame()
 
 	wdatei << "\n";
 	wdatei.close();
+	new PopUpMessage("Spiel gespeichert!", seconds(2));
 }
 #pragma endregion
 

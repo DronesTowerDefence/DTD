@@ -136,3 +136,21 @@ std::string AccountServer::getAchievement(std::string username)
 
 	return send();
 }
+
+std::string AccountServer::sendXP(std::string username, std::string xp)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "sendXP");
+	request->setBody(username + "&" + xp);
+
+	return send();
+}
+
+std::string AccountServer::getXP(std::string username)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "getXP");
+	request->setBody(username);
+
+	return send();
+}

@@ -63,5 +63,9 @@ public:
 	/// <param name="username"></param>
 	/// <returns>AchievementIDs mit '&' getrennt</returns>
 	std::string getAchievement(std::string username);
+
+	std::string sendXP(std::string username, std::string xp);
+
+	std::string getXP(std::string username);
 };
 

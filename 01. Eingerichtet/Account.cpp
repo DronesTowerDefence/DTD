@@ -16,6 +16,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	m_email = email;
 	m_profileImage = new sf::Image();
 	*m_profileImage = Ressources::getInstance()->getAccountProfilePicture()->copyToImage();
+	m_experience = 0;
 
 	if (image != nullptr)
 	{
@@ -25,7 +26,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	if (userName != "???" && email != "0")
 	{
 		std::ofstream file("saves/user.sav");
-		file << userName << "\n" << email;
+		file << userName << "\n" << email << "\n";
 	}
 }
 
@@ -38,6 +39,17 @@ Account* Account::createAcc(std::string userName, std::string email, sf::Image* 
 	m_acc = new Account(userName, email, image);
 
 	return m_acc;
+}
+
+bool Account::setExperience(int _exp)
+{
+	if (m_acc == nullptr)
+		return false;
+	else
+	{
+		m_acc->m_experience = _exp;
+		return true;
+	}
 }
 
 Account* Account::getAcc()
@@ -69,4 +81,9 @@ std::string Account::getEmail()
 sf::Image* Account::getProfileImage()
 {
 	return m_acc->m_profileImage;
+}
+
+int Account::getExperience()
+{
+	return m_acc->m_experience;
 }

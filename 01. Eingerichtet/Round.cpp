@@ -16,6 +16,7 @@ Round::Round()
 	won = false;
 	receivedFromHostNextRound = false;
 	p_map = nullptr;
+	accServer = nullptr;
 }
 
 Round::Round(Map* _p_map)
@@ -28,6 +29,7 @@ Round::Round(Map* _p_map)
 	won = false;
 	receivedFromHostNextRound = false;
 	p_map = _p_map;
+	accServer = new AccountServer();
 
 	//Eigentlich unnötig, da das eigentlich von der Ressourcen-Klasse abgelöst wurde, außerdem nur 3 groß und nicht 5
 	//Habe aber Angst es wegzumachen
@@ -168,6 +170,11 @@ void Round::nextRound()
 {
 	Game::getInstance()->saveGame(); //Speichert das Spiel am Ende jeder Runde
 	Game::getInstance()->setDroneCount(0); //Setzt den Zähler der Drohnen in der Game auf 0
+
+	if (Account::getAccName() != "???")
+	{
+		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+	}
 
 	//Startet eine neue Runde, je nachdem ob Host/Client/Singleplayer
 	if (Game::getInstance()->getStatus() == 1)
