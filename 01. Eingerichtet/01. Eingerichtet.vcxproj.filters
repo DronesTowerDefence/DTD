@@ -141,6 +141,9 @@
     <ClCompile Include="PopUpMessage.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Achievements.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -222,6 +225,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PopUpMessage.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Achievements.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

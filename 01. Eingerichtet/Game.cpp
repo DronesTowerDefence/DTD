@@ -1319,7 +1319,13 @@ void Game::saveGame()
 
 	wdatei << "\n";
 	wdatei.close();
-	new PopUpMessage("Spiel gespeichert!", seconds(2));
+
+	if (Account::getAccName() != "???")
+	{
+		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+	}
+
+	new PopUpMessage("Spiel gespeichert!");
 }
 #pragma endregion
 

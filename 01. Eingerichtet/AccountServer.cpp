@@ -12,8 +12,9 @@ std::string AccountServer::send()
 
 	response = new sf::Http::Response();
 	*response = http->sendRequest(*request, *timeout);
+	lastStatusCode = response->getStatus();
 
-	if (response->getStatus() != sf::Http::Response::Ok || response->getBody().length() < 1)
+	if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
 	{
 		returnStr = "-1";
 	}
@@ -35,6 +36,7 @@ AccountServer::AccountServer()
 	http = new sf::Http("http://www.dronesclient.dronestd.de/"); // https wird von sfml nicht unterstützt
 	httpVersion[0] = 1;
 	httpVersion[1] = 1;
+	lastStatusCode = 200;
 
 	timeout = new sf::Time();
 	*timeout = sf::seconds(10);
@@ -51,6 +53,11 @@ AccountServer::~AccountServer()
 	if (response != nullptr)
 		delete response;
 	delete timeout;
+}
+
+int AccountServer::getRequestLastStatusCode()
+{
+	return lastStatusCode;
 }
 
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
@@ -140,7 +147,7 @@ std::string AccountServer::getAchievement(std::string username)
 std::string AccountServer::sendXP(std::string username, std::string xp)
 {
 	request = new sf::Http::Request();
-	request->setField("Content-Type", "sendXP");
+	request->setField("Content-Type", "setXP");
 	request->setBody(username + "&" + xp);
 
 	return send();

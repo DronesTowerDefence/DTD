@@ -9,6 +9,7 @@ private:
 	sf::Http::Response* response;
 	sf::Time* timeout;
 	int httpVersion[2];
+	int lastStatusCode;
 
 	/// <summary>
 	/// Sendet eine Request an den HTTP-Server
@@ -18,8 +19,13 @@ private:
 
 public:
 	AccountServer();
-
 	~AccountServer();
+
+	/// <summary>
+	/// HTML-Statuscode (200 = OK)
+	/// </summary>
+	/// <returns></returns>
+	int getRequestLastStatusCode();
 
 	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
