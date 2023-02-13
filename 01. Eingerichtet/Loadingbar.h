@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <list>
+using namespace sf;
 
 /// <summary>
 /// Ein Ladebalken
@@ -50,6 +52,9 @@ public:
 	bool addPercentage(float _percentage);
 	bool setPercentage(float _percentage);
 	float getPercentage();
+	RectangleShape* getOutline();
+	RectangleShape* getLoadingShape();
+	Text* getText();
 
 };
 

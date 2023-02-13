@@ -96,3 +96,18 @@ float Loadingbar::getPercentage()
 {
 	return percentage;
 }
+
+RectangleShape* Loadingbar::getOutline()
+{
+	return &outline;
+}
+
+RectangleShape* Loadingbar::getLoadingShape()
+{
+	return &loadingShape;
+}
+
+Text* Loadingbar::getText()
+{
+	return text;
+}

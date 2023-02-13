@@ -36,19 +36,13 @@ void Loadup::setLoadingbar(float a)
 {
 	loadingbar->setPercentage(a);
 
-	window->clear();
-	loadingbar->draw(window);
-	window->display();
-
 	// Diese Zeile ist wichtig, da sonst die RenderTexture 'window' nicht richtig gedrawt wird
 	// Ka warum, aber so funktioniert es, sfml ist komisch
-	window->getTexture().copyToImage();
+	//window->getTexture().copyToImage();
 }
 
-Loadup::Loadup()
+Loadup::Loadup(RenderWindow* window)
 {
-	window = new RenderTexture;
-	window->create(1920, 991);
 	done = false;
 
 	font = new sf::Font();
@@ -72,21 +66,21 @@ void Loadup::run()
 	setLoadingbar(10);
 
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
-	setLoadingbar(30);
+	setLoadingbar(20);
 
 	PopUpMessage::initializePopUpMessages();
 	//window->setIcon(res->getIcon().getSize().x, res->getIcon().getSize().y, res->getIcon().getPixelsPtr()); //Setzen des Icons
-	setLoadingbar(40);
-
-	Sprite* credits = new Sprite(); //Neue Sprite für die Credits
-	credits->setTexture(*res->getCreditsTexture());
-	setLoadingbar(50);
+	setLoadingbar(30);
 
 	AccountServer* accServer = new AccountServer();
-	setLoadingbar(60);
+	setLoadingbar(40);
 
 	std::string username = readFromUserFile(1);
+	setLoadingbar(50);
+
 	std::string email = readFromUserFile(2);
+	setLoadingbar(60);
+
 	std::string usernameExist = accServer->checkUsername(username);
 	setLoadingbar(70);
 
@@ -115,11 +109,6 @@ void Loadup::run()
 	delete accServer;
 	setLoadingbar(100);
 
-	window->clear();
-	window->draw(*credits);
-	window->display();
-
-	delete credits;
 	done = true;
 }
 
@@ -128,7 +117,15 @@ bool Loadup::getDone()
 	return done;
 }
 
-RenderTexture* Loadup::getRenderTexture()
+RectangleShape* Loadup::getLoadingbarShapes()
 {
-	return window;
+	RectangleShape* a[2];
+	a[0] = loadingbar->getOutline();
+	a[1] = loadingbar->getLoadingShape();
+	return *a;
+}
+
+Text* Loadup::getLoadingbarText()
+{
+	return loadingbar->getText();
 }

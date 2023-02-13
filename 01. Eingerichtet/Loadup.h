@@ -7,18 +7,18 @@ class Loadup
 {
 private:
 	Loadingbar* loadingbar;
-	sf::RenderTexture* window;
 	sf::Font* font;
 	bool done;
 
 	std::string readFromUserFile(int line);
 	void setLoadingbar(float);
 public:
-	Loadup();
+	Loadup(RenderWindow* window);
 	~Loadup();
 	void run();
 	bool getDone();
-	RenderTexture* getRenderTexture();
+	RectangleShape* getLoadingbarShapes();
+	Text* getLoadingbarText();
 
 	static bool usernameSuccessfull;
 };

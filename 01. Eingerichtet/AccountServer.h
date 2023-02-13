@@ -50,5 +50,18 @@ public:
 	/// <returns></returns>
 	std::string checkUsername(std::string username);
 
+	/// <summary>
+	/// Sendet ein Achievement an den Server mit dem aktuell angemeldeten Benutzer
+	/// </summary>
+	/// <param name="achievementID"></param>
+	/// <returns>"1" wenn erfolgreich</returns>
+	std::string sendAchievement(std::string achievementID);
+
+	/// <summary>
+	/// Bekommt alle AchievemtIDs zu dem Benutzer
+	/// </summary>
+	/// <param name="username"></param>
+	/// <returns>AchievementIDs mit '&' getrennt</returns>
+	std::string getAchievement(std::string username);
 };
 

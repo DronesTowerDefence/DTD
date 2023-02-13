@@ -22,8 +22,8 @@ int main()
 	window.setFramerateLimit(60);
 
 	Event event;
-	Sprite sprite;
-	Loadup* load = new Loadup();
+	Loadup* load = new Loadup(&window);
+	Sprite* credits = new Sprite();
 
 	sf::Thread* thread = new sf::Thread(&Loadup::run, load); // Erstellt einen Thread mit Loadup::run als Einstiegspunkt
 	thread->launch(); // Startet den Thread
@@ -38,10 +38,17 @@ int main()
 				exit(0);
 			}
 		}
-		sprite.setTexture(load->getRenderTexture()->getTexture());
 		window.clear();
-		window.draw(sprite);
+		window.draw(load->getLoadingbarShapes()[0]);
+		window.draw(load->getLoadingbarShapes()[1]);
+		window.draw(*load->getLoadingbarText());
+		window.draw(*credits);
 		window.display();
+
+		if (load->getDone())
+		{
+			credits->setTexture(*Ressources::getInstance()->getCreditsTexture());
+		}
 	}
 	thread->terminate();
 	delete thread;

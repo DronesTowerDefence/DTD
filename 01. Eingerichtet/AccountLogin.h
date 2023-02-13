@@ -33,6 +33,7 @@ private:
 	Text* accountLoginEmailText;
 	Text* accountLoginPasswordText;
 	Text* accountLoginStatusText;
+	Text* accountLevelText;
 
 	int checkClicked(Event*);
 	void draw();
