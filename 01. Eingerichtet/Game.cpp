@@ -161,7 +161,7 @@ skipSettings:
 					std::string(buffer).copy(bufferValue1, length1, first + 1);
 					std::string(buffer).copy(bufferValue2, length2, second + 1);
 
-					newTower = new Tower(towerIndex, "1", Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
+					newTower = new Tower(towerIndex, Account::getAccName(), Vector2f(std::stof(bufferValue1), std::stof(bufferValue2)), p_map);
 
 					defaultCounter++;
 				}
