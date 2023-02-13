@@ -38,6 +38,7 @@ Game::Game()
 	toolbar.setPosition(1720, 0);
 	toolbar.setSize(Vector2f(200, 991));
 	isMouseClicked = false;
+	accServer = new AccountServer();
 	p_ressources->getBackgroundMusic(p_map->getIndex());
 	p_ressources->getBackgroundMusic(p_map->getIndex())->play();
 	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
@@ -190,7 +191,6 @@ skipSettings:
 	}
 	else return false;
 }
-
 bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getSpr()->getPosition().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
@@ -695,6 +695,8 @@ void Game::checkLoseGame()
 			gameOverWonText[1].setString(std::to_string(p_ressources->statistic_damage));
 			gameOverWonText[0].setPosition(Vector2f(1200, 440));
 			gameOverWonText[1].setPosition(Vector2f(1200, 530));
+			Account::setExperience(Account::getExperience() + 300);
+			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
 
 		//Setzen der Texturen

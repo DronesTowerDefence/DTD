@@ -165,6 +165,8 @@ private:
 	/// </summary>
 	TowerAlias* newTower;
 
+	AccountServer* accServer;
+
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
 	/// </summary>
