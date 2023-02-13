@@ -115,6 +115,8 @@ private:
 	Texture accountProfilePictureTexture;
 	Texture regulateMultiplayerPlayerCountTexture[2];
 	Texture blackBackgroundTexture;
+	Texture accountFriendsButtonTexture;
+	Texture achievementsButtonTexture;
 
 	Sprite blackBackground;
 
@@ -229,6 +231,8 @@ public:
 	Texture* getAccountProfilePicture();
 	Texture* getregulateMultiplayerPlayerCountTexture(int);
 	Texture* getBlackBackgroundTexture();
+	Texture* getAccountFriendsButtonTexture();
+	Texture* getAchievementsButtonTexture();
 
 	Sprite* getBlackBackgroundSprite();
 

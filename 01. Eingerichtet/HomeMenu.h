@@ -53,6 +53,8 @@ private:
 	Sprite* exitButton;
 	Sprite* deleteSavesButton;
 	Sprite* accountButton;
+	Sprite* accountFriendsMenuButton;
+	Sprite* achievementsButton;
 	
 	Clock* animation;
 	

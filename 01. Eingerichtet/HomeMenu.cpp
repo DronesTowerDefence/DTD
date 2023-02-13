@@ -28,6 +28,8 @@ HomeMenu::HomeMenu()
 	host = new Sprite();
 	deleteSavesButton = new Sprite();
 	accountButton = new Sprite();
+	accountFriendsMenuButton = new Sprite();
+	achievementsButton = new Sprite();
 
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
@@ -47,6 +49,8 @@ HomeMenu::HomeMenu()
 	exitButton->setTexture(*res->getButtonExitTexture());
 	deleteSavesButton->setTexture(*res->getDeleteAllSavesButtonTexture());
 	accountButton->setTexture(*res->getAccountIconButtonTexture());
+	accountFriendsMenuButton->setTexture(*res->getAccountFriendsButtonTexture());
+	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
 
 	credits->setCharacterSize(25);
 	credits->setFont(*font);
@@ -76,6 +80,8 @@ HomeMenu::HomeMenu()
 	exitButton->setPosition(Vector2f(20, 871));
 	deleteSavesButton->setPosition(Vector2f(1700, 900));
 	accountButton->setPosition(Vector2f(1770, 750));
+	accountFriendsMenuButton->setPosition(1770, 600);
+	achievementsButton->setPosition(1770, 450);
 
 	choseIndex = -1;
 
@@ -167,6 +173,8 @@ void HomeMenu::drawPublic()
 	window->draw(*deleteSavesButton);
 	window->draw(*credits);
 	window->draw(*accountButton);
+	window->draw(*accountFriendsMenuButton);
+	window->draw(*achievementsButton);
 
 	if (isMultiplayerOpen)
 	{
@@ -341,6 +349,26 @@ int  HomeMenu::CheckClicked(Event event)
 			AccountLogin* accLog = new AccountLogin(window, res);
 			accLog->openAccountLoginWindow(&event);
 			delete accLog;
+			return 0;
+		}
+
+		//AccountFriendsMenuButton
+		pos = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition() + Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			new PopUpMessage("AccountFriendsMenu clicked", seconds(2));
+			return 0;
+		}
+
+		//AchievementsButton
+		pos = Service::getInstance()->getObjectPosition(achievementsButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(achievementsButton->getPosition() + Vector2f(achievementsButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			new PopUpMessage("AchievementsButton clicked", seconds(2));
 			return 0;
 		}
 
