@@ -3,11 +3,13 @@
 #include "Round.h"
 #include "PopUpMessage.h"
 
+
 Game* Game::instance = nullptr;
 
 #pragma region Konstruktor
 Game::Game()
 {
+
 	doubleSpeed = false;
 	p_ressources = Ressources::getInstance();
 	stdFont.loadFromFile("fonts/arial.ttf");
@@ -15,6 +17,7 @@ Game::Game()
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
+
 
 	currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(0);
 	currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 1);
@@ -44,6 +47,7 @@ Game::Game()
 	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
 
 	//	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
+
 }
 #pragma endregion
 
@@ -191,6 +195,15 @@ skipSettings:
 	}
 	else return false;
 }
+bool Game::setDailyChanlange()
+{
+	round->setIndex(HomeMenu::getInstance()->getDaily()->getVon());
+	round->setHealth(HomeMenu::getInstance()->getDaily()->getLeben());
+	round->setMoney(HomeMenu::getInstance()->getDaily()->getGeld());
+	return true;
+}
+
+
 bool Game::towerAliasForbiddenPosition()
 {
 	if (newTower->getSpr()->getPosition().x < 1700 && Mouse::getPosition(*window).x < 1700) //Überprüfung ob auf der Sidebar
@@ -251,7 +264,15 @@ bool Game::towerAliasForbiddenPosition()
 }
 void Game::startGame()
 {
-	loadGame();
+
+	if (!HomeMenu::getInstance()->getDaily()->getIsDaily())
+	{
+		loadGame();
+	}
+	else
+	{
+		setDailyChanlange();
+	}
 
 	while (window->isOpen())
 	{
@@ -1157,6 +1178,7 @@ void Game::addDroneCount(int dr)
 {
 	droneCount += dr;
 }
+
 void Game::checkMultiplayerConnection()
 {
 	//if (multiplayerCheckConnectionSendClock.getElapsedTime() > Multiplayer::timeoutSend)
@@ -1272,60 +1294,65 @@ void Game::resetAll()
 }
 void Game::saveGame()
 {
-	system("md saves");
-	//Erstellt den Ordner, wo die Spielstände gespeichert werden,
-	//system("md saves >nul 2>&1");
-	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
-
-	std::ofstream wdatei;
-
-	wdatei.open("saves/settings.sav");
-	wdatei << "VolumeMusic=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
-	wdatei << "VolumeSound=\"" << PauseMenu::getInstance()->getSliderHelperSound() << "\"\n";
-	wdatei.close();
-
-
-	if (status != 1 || round->getIndex() <= 0)
+	//wenn man in der Daily ist, soll das Spiel nicht gespeichert werden
+	if (!HomeMenu::getInstance()->getDaily()->getIsDaily())
 	{
-		return;
+		system("md saves");
+		//Erstellt den Ordner, wo die Spielstände gespeichert werden,
+		//system("md saves >nul 2>&1");
+		//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
+
+		std::ofstream wdatei;
+
+		wdatei.open("saves/settings.sav");
+		wdatei << "VolumeMusic=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
+		wdatei << "VolumeSound=\"" << PauseMenu::getInstance()->getSliderHelperSound() << "\"\n";
+		wdatei.close();
+
+
+		if (status != 1 || round->getIndex() <= 0)
+		{
+			return;
+		}
+		else if ((round->getLost() || round->getWon()) && round->getIndex() > 0)
+		{
+			std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
+			const char* cmd_cc = cmd_s.c_str();
+			system(cmd_cc);
+			return;
+		}
+
+		std::string datei;
+		datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
+		datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
+
+		wdatei.open(datei);
+
+		wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
+		wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
+		wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
+		wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
+
+		int j = 0;
+		for (auto i : round->getAllTowers())
+		{
+			wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
+			wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
+			wdatei << "Tower" << j << "_Upgrade=\"" << i->getUpdates()->getIndex1() << "," << i->getUpdates()->getIndex2() << "\"\n";
+			j++;
+		}
+
+		wdatei << "\n";
+		wdatei.close();
+
+		if (Account::getAccName() != "???")
+		{
+			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+		}
+
+		new PopUpMessage("Spiel gespeichert!");
 	}
-	else if ((round->getLost() || round->getWon()) && round->getIndex() > 0)
-	{
-		std::string cmd_s = "del saves\\savegame" + std::to_string(p_map->getIndex()) + ".sav";
-		const char* cmd_cc = cmd_s.c_str();
-		system(cmd_cc);
-		return;
-	}
 
-	std::string datei;
-	datei = "saves/savegame" + std::to_string(p_map->getIndex()); //Dateiname
-	datei += ".sav"; //Dateiendung. Kann mit Text-Editor geöffnet werden
-
-	wdatei.open(datei);
-
-	wdatei << "Map.Index=\"" << p_map->getIndex() << "\"\n";
-	wdatei << "Round.Index=\"" << round->getIndex() << "\"\n";
-	wdatei << "Round.Money=\"" << round->getMoney() << "\"\n";
-	wdatei << "Round.Health=\"" << round->getHealth() << "\"\n";
-
-	int j = 0;
-	for (auto i : round->getAllTowers())
-	{
-		wdatei << "Tower" << j << "_index=\"" << i->getIndex() << "\"\n";
-		wdatei << "Tower" << j << "_position=\"" << i->getTowerPos().x << "," << i->getTowerPos().y << "\"\n";
-		wdatei << "Tower" << j << "_Upgrade=\"" << i->getUpdates()->getIndex1() << "," << i->getUpdates()->getIndex2() << "\"\n";
-		j++;
-	}
-
-	wdatei << "\n";
-	wdatei.close();
-
-	if (Account::getAccName() != "???")
-	{
-		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
-	}
-
-	new PopUpMessage("Spiel gespeichert!");
 }
 #pragma endregion
 

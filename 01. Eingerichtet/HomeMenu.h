@@ -12,12 +12,12 @@ using namespace sf;
 class HomeMenu
 {
 private:
-	
+
 	static HomeMenu* instance;
 	/// <summary>
 	/// Index für gewählte Map (wichtig für Rotation, Bewegung & Spawn der Drohnen)
 	/// </summary>
-	int choseIndex; 
+	int choseIndex;
 	int animationIndex;
 	int callCount;
 	/// <summary>
@@ -25,17 +25,17 @@ private:
 	/// 2 = Host
 	/// 3 = Client
 	/// </summary>
-	int status; 
+	int status;
 
 	bool isClicked;
 	bool connected;
 	bool isMultiplayerOpen;
-	
+
 	Vector2f positionTower[5];
 
 	RenderWindow* window;
-	
-	Texture* textureTower[5][4];	
+
+	Texture* textureTower[5][4];
 
 	RectangleShape* pointer;
 	RectangleShape* sideMenu;
@@ -55,29 +55,36 @@ private:
 	Sprite* accountButton;
 	Sprite* accountFriendsMenuButton;
 	Sprite* achievementsButton;
-	
+	Sprite* dailyButton;
+
 	Clock* animation;
-	
-	Font *font;
-	Text *choseText;
+
+	Font* font;
+	Text* choseText;
 	Text* credits;
 
 	MultiplayerGUI* multiplayerGUI;
 
+	AccountServer* accServer;
+
 	Ressources* res;
-	
+
+	Daily* daily;
+
 	/// <summary>
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
 	/// <returns></returns>
 	int CheckClicked(Event);
-	
+
+	std::string chalange;
+
 	void setTowerTexture();
 	void draw();
 
 public:
 	HomeMenu();
-	
+
 	void drawPublic();
 
 	static HomeMenu* getInstance();
@@ -102,6 +109,8 @@ public:
 
 	void startGame();
 
+	void loadDaily();
 
+	Daily* getDaily();
 };
 

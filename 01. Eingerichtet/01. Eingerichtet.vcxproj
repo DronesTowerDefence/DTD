@@ -24,6 +24,7 @@
     <ClInclude Include="AccountServer.h" />
     <ClInclude Include="Achievements.h" />
     <ClInclude Include="Controls.h" />
+    <ClInclude Include="Daily.h" />
     <ClInclude Include="Drone.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="AccountServer.cpp" />
     <ClCompile Include="Achievements.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="Daily.cpp" />
     <ClCompile Include="Drone.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HomeMenu.cpp" />

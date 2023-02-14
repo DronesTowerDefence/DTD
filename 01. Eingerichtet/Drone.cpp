@@ -109,7 +109,7 @@ void Drone::pass()
 	}
 	else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
 
-			drone.setRotation(90);
+		drone.setRotation(90);
 		if (nextPoint % 2 == 0) {
 
 			drone.move(50, 0);

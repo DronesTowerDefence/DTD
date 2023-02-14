@@ -1,5 +1,6 @@
 #include "Sidebar.h"
 #include "Round.h"
+#include "Game.h"
 #include <iostream>
 
 Sidebar* Sidebar::instance = nullptr;
@@ -53,7 +54,7 @@ bool Sidebar::isChangeSpeed(RenderWindow* window)
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
 	pos = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(100, 100)); 
+	pos2 = Service::getInstance()->getObjectPosition(doubleSpeed.getPosition() + Vector2f(100, 100));
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 	{
@@ -74,11 +75,13 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 	for (int i = 0; i < 5; i++) //Geht alle Türme durch
 	{
 		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50)); 
+		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50));
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) 
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			if (Round::getInstance()->submoney(price[i])) //Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
+			if (Round::getInstance()->submoney(price[i])
+				&& ((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || HomeMenu::getInstance()->getDaily()->getIsDaily()))
+				//Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
 			{
 				return i;
 			}
@@ -91,8 +94,10 @@ void Sidebar::draw(sf::RenderWindow* window)
 {
 	for (int i = 0; i < 5; i++)
 	{
-		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i))
+		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i) &&
+			((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || HomeMenu::getInstance()->getDaily()->getIsDaily()))
 		{
+
 			buttonSpr[i].setTexture(*res->getTowerPreviewTexture(i));
 		}
 		else

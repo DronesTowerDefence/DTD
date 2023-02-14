@@ -4,6 +4,7 @@
 #include "Ressources.h"
 #include "TowerAlias.h"
 #include "Service.h"
+#include "Daily.h";
 using namespace sf;
 
 class Sidebar

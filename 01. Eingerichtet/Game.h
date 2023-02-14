@@ -7,6 +7,7 @@
 #include "Tower.h"
 #include "MultiplayerChat.h"
 #include "SendMoney.h"
+#include "Daily.h"
 
 /**
 Das Hauptspiel, wo auf einer Map Drohnen sich bewegen und vom Spieler platzierte Türme auf diese Drohnen schießen
@@ -167,12 +168,15 @@ private:
 
 	AccountServer* accServer;
 
+
 	/// <summary>
 	/// Lädt einen gespeicherten Spielstand
 	/// </summary>
 	/// <param name="Map Index"></param>
 	/// <returns>Erfolgreich?</returns>
 	bool loadGame();
+
+	bool setDailyChanlange();
 
 	/// <summary>
 	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.
@@ -356,5 +360,6 @@ public:
 	/// </summary>
 	/// <param name="dr"> int | wird auf DroneCount addiert</param>
 	void addDroneCount(int dr);
+
 
 };

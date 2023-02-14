@@ -23,7 +23,7 @@ Round::Round(Map* _p_map)
 {
 	//Setzen der Attribute
 	money = 500; //Start-Geld
-	health =100; //Start-Leben
+	health = 100; //Start-Leben
 	index = 0; //Start-Runde
 	lost = false;
 	won = false;
@@ -55,7 +55,7 @@ void Round::setAllCoverablePoints()
 		if (pointIterator == 0)
 		{
 			mapPoint1 = p_map->getStart();  // Eingang der Map
- 			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Erster Eckpunkt der Map
+			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Erster Eckpunkt der Map
 		}
 		else
 		{
@@ -209,6 +209,10 @@ void Round::nextRound()
 	{
 		won = true;
 		HomeMenu::getInstance()->deleteSave(p_map->getIndex());
+	}
+	if (index == HomeMenu::getInstance()->getDaily()->getBis() && !lost)
+	{
+		won = true;
 	}
 }
 void Round::addMoney(int _money)

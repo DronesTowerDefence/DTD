@@ -73,5 +73,12 @@ public:
 	std::string sendXP(std::string username, std::string xp);
 
 	std::string getXP(std::string username);
+
+	/// <summary>
+	/// Ruft die Aktuelle Chanlage auf
+	/// </summary>
+	/// <returns></returns>
+
+	std::string getChalange();
 };
 

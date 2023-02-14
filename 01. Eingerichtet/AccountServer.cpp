@@ -161,3 +161,11 @@ std::string AccountServer::getXP(std::string username)
 
 	return send();
 }
+
+std::string AccountServer::getChalange()
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "getChalange");
+	
+	return send();
+}

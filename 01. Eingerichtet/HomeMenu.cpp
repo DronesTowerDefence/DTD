@@ -8,6 +8,9 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
+
+	daily = new Daily();
+	accServer = new AccountServer();
 	connected = false;
 	isMultiplayerOpen = false;
 	status = 1;
@@ -30,12 +33,14 @@ HomeMenu::HomeMenu()
 	accountButton = new Sprite();
 	accountFriendsMenuButton = new Sprite();
 	achievementsButton = new Sprite();
-
+	dailyButton = new Sprite();
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape;
 	upperBorder = new RectangleShape();
 
 	credits = new Text();
+
+	chalange = "";
 
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -51,6 +56,8 @@ HomeMenu::HomeMenu()
 	accountButton->setTexture(*res->getAccountIconButtonTexture());
 	accountFriendsMenuButton->setTexture(*res->getAccountFriendsButtonTexture());
 	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
+	dailyButton->setTexture(*res->getAccountFriendsButtonTexture());
+
 
 	credits->setCharacterSize(25);
 	credits->setFont(*font);
@@ -82,7 +89,7 @@ HomeMenu::HomeMenu()
 	accountButton->setPosition(Vector2f(1770, 750));
 	accountFriendsMenuButton->setPosition(1770, 600);
 	achievementsButton->setPosition(1770, 450);
-
+	dailyButton->setPosition(Vector2f(800, 350));
 	choseIndex = -1;
 
 	drone->setScale(2, 2);
@@ -175,7 +182,7 @@ void HomeMenu::drawPublic()
 	window->draw(*accountButton);
 	window->draw(*accountFriendsMenuButton);
 	window->draw(*achievementsButton);
-
+	window->draw(*dailyButton);
 	if (isMultiplayerOpen)
 	{
 		window->draw(*host);
@@ -315,6 +322,22 @@ int  HomeMenu::CheckClicked(Event event)
 			return 0;
 		}
 
+		// Daily
+		pos = Service::getInstance()->getObjectPosition(dailyButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(dailyButton->getPosition() + Vector2f(dailyButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			if (Account::getAcc()->getAccName() == "???")
+			{
+				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+				return 0;
+			}
+			loadDaily();
+			Game::getInstance()->setWindow(&*window);
+			Game::getInstance()->setStatus(1);
+			Game::getInstance()->startGame();
+		}
 		//Exit
 		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100));
@@ -432,6 +455,59 @@ void HomeMenu::startGame()
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);
 	Game::getInstance()->startGame();
+
+
+}
+void HomeMenu::loadDaily()
+{
+	std::string chalange = accServer->getChalange();
+
+	int pos[10];
+	pos[0] = chalange.find(";");
+	pos[1] = chalange.find(";", pos[0] + 1);
+	pos[2] = chalange.find(";", pos[1] + 1);
+	pos[3] = chalange.find(";", pos[2] + 1);
+	pos[4] = chalange.find(";", pos[3] + 1);
+	pos[5] = chalange.find(";", pos[4] + 1);
+	pos[6] = chalange.find(";", pos[5] + 1);
+	pos[7] = chalange.find(";", pos[6] + 1);
+	pos[8] = chalange.find(";", pos[7] + 1);
+	pos[9] = chalange.find(";", pos[8] + 1);
+	std::string tmp;
+
+	//Anfangsgeld
+	tmp = chalange.substr(0, pos[0]);
+	daily->setGeld(std::stoi(tmp));
+
+	//Startrunde
+	tmp = chalange.substr(pos[0] + 1, pos[1] - pos[0] - 1);
+	daily->setVon(std::stoi(tmp));
+
+	//endrunde
+	tmp = chalange.substr(pos[1] + 1, pos[2] - pos[1] - 1);
+	daily->setBis(std::stoi(tmp));
+
+	//Leben
+	tmp = chalange.substr(pos[2] + 1, pos[3] - pos[2] - 1);
+	daily->setLeben(std::stoi(tmp));
+
+	//karte
+	tmp = chalange.substr(pos[3] + 1, pos[4] - pos[3] - 1);
+	choseIndex = std::stoi(tmp);
+
+	//sind dir Türme erlaubt
+	for (int i = 0; i < 5; i++)
+	{
+		tmp = chalange.substr(pos[i + 4] + 1, pos[i + 5] - pos[i + 4] - 1);
+		if (tmp == "1") { daily->setIsTowerAllowed(0, true); }
+		else { daily->setIsTowerAllowed(i, false); };
+	}
+	daily->setIsDaily(true);
+
+}
+Daily* HomeMenu::getDaily()
+{
+	return daily;
 }
 void HomeMenu::draw()
 {
@@ -471,6 +547,7 @@ int HomeMenu::getChoseIndex()
 {
 	return choseIndex;
 }
+
 MultiplayerGUI* HomeMenu::getMultiplayerGUI()
 {
 	return multiplayerGUI;
@@ -494,6 +571,7 @@ void HomeMenu::setChoseIndex(int _choseIndex)
 		choseIndex = _choseIndex;
 	}
 }
+
 void HomeMenu::setStatus(int _status)
 {
 	status = _status;
