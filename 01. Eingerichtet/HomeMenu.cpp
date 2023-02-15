@@ -18,6 +18,7 @@ HomeMenu::HomeMenu()
 	isClicked = false;
 	window = nullptr;
 	multiplayerGUI = nullptr;
+	achievementGUI = nullptr;
 	res = Ressources::getInstance();
 
 	startButton = new Sprite;
@@ -391,7 +392,9 @@ int  HomeMenu::CheckClicked(Event event)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			new PopUpMessage("AchievementsButton clicked", seconds(2));
+			achievementGUI = new AchievementGUI(window);
+			achievementGUI->openAchievementGUI();
+			delete achievementGUI;
 			return 0;
 		}
 

@@ -6,6 +6,7 @@
 #include "AccountServer.h"
 #include "AccountLogin.h"
 #include "MultiplayerGUI.h"
+#include "AchievementGUI.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -64,6 +65,7 @@ private:
 	Text* credits;
 
 	MultiplayerGUI* multiplayerGUI;
+	AchievementGUI* achievementGUI;
 
 	AccountServer* accServer;
 

@@ -6,6 +6,8 @@ private:
 	static Clock mouseWheelMoveCooldownClock;
 	static Time mouseWheelMoveCooldownTime;
 
+	static bool arrowUpIsPressed;
+	static bool arrowDownIsPressed;
 	static bool escIsPressed;
 	static bool spaceIsPressed;
 	static bool shiftIsPressed;
@@ -21,6 +23,8 @@ private:
 
 public:
 
+	static bool getArrowUpIsPressed();
+	static bool getArrowDownIsPressed();
 	static bool getEscIsPressed();
 	static bool getSpaceIsPressed();
 	static bool getShiftIsPressed();
