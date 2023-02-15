@@ -315,6 +315,7 @@ void Controls::checkControls()
 	}
 	backSpaceIsPressed = false;
 	enterIsPressed = false;
+	escIsPressed = false;
 	arrowUpIsPressed = false;
 	arrowDownIsPressed = false;
 }

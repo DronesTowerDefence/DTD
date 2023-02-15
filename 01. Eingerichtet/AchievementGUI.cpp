@@ -208,6 +208,12 @@ bool AchievementGUI::openAchievementGUI()
 			}
 		}
 
+		if (Controls::getEscIsPressed())
+		{
+			isOpen = false;
+			Controls::checkControls();
+		}
+
 	}
 
 	return isOpen;
