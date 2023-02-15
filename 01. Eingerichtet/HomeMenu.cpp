@@ -460,45 +460,45 @@ void HomeMenu::startGame()
 }
 void HomeMenu::loadDaily()
 {
-	std::string chalange = accServer->getChalange();
+	std::string challenge = accServer->getChallenge();
 
 	int pos[10];
-	pos[0] = chalange.find(";");
-	pos[1] = chalange.find(";", pos[0] + 1);
-	pos[2] = chalange.find(";", pos[1] + 1);
-	pos[3] = chalange.find(";", pos[2] + 1);
-	pos[4] = chalange.find(";", pos[3] + 1);
-	pos[5] = chalange.find(";", pos[4] + 1);
-	pos[6] = chalange.find(";", pos[5] + 1);
-	pos[7] = chalange.find(";", pos[6] + 1);
-	pos[8] = chalange.find(";", pos[7] + 1);
-	pos[9] = chalange.find(";", pos[8] + 1);
+	pos[0] = challenge.find(";");
+	pos[1] = challenge.find(";", pos[0] + 1);
+	pos[2] = challenge.find(";", pos[1] + 1);
+	pos[3] = challenge.find(";", pos[2] + 1);
+	pos[4] = challenge.find(";", pos[3] + 1);
+	pos[5] = challenge.find(";", pos[4] + 1);
+	pos[6] = challenge.find(";", pos[5] + 1);
+	pos[7] = challenge.find(";", pos[6] + 1);
+	pos[8] = challenge.find(";", pos[7] + 1);
+	pos[9] = challenge.find(";", pos[8] + 1);
 	std::string tmp;
 
 	//Anfangsgeld
-	tmp = chalange.substr(0, pos[0]);
+	tmp = challenge.substr(0, pos[0]);
 	daily->setGeld(std::stoi(tmp));
 
 	//Startrunde
-	tmp = chalange.substr(pos[0] + 1, pos[1] - pos[0] - 1);
+	tmp = challenge.substr(pos[0] + 1, pos[1] - pos[0] - 1);
 	daily->setVon(std::stoi(tmp));
 
 	//endrunde
-	tmp = chalange.substr(pos[1] + 1, pos[2] - pos[1] - 1);
+	tmp = challenge.substr(pos[1] + 1, pos[2] - pos[1] - 1);
 	daily->setBis(std::stoi(tmp));
 
 	//Leben
-	tmp = chalange.substr(pos[2] + 1, pos[3] - pos[2] - 1);
+	tmp = challenge.substr(pos[2] + 1, pos[3] - pos[2] - 1);
 	daily->setLeben(std::stoi(tmp));
 
 	//karte
-	tmp = chalange.substr(pos[3] + 1, pos[4] - pos[3] - 1);
+	tmp = challenge.substr(pos[3] + 1, pos[4] - pos[3] - 1);
 	choseIndex = std::stoi(tmp);
 
 	//sind dir Türme erlaubt
 	for (int i = 0; i < 5; i++)
 	{
-		tmp = chalange.substr(pos[i + 4] + 1, pos[i + 5] - pos[i + 4] - 1);
+		tmp = challenge.substr(pos[i + 4] + 1, pos[i + 5] - pos[i + 4] - 1);
 		if (tmp == "1") { daily->setIsTowerAllowed(0, true); }
 		else { daily->setIsTowerAllowed(i, false); };
 	}

@@ -162,7 +162,7 @@ std::string AccountServer::getXP(std::string username)
 	return send();
 }
 
-std::string AccountServer::getChalange()
+std::string AccountServer::getChallenge()
 {
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "getChalange");

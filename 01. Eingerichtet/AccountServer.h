@@ -79,6 +79,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 
-	std::string getChalange();
+	std::string getChallenge();
 };
 

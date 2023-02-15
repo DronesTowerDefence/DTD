@@ -195,7 +195,7 @@ skipSettings:
 	}
 	else return false;
 }
-bool Game::setDailyChanlange()
+bool Game::setDailyChanllenge()
 {
 	round->setIndex(HomeMenu::getInstance()->getDaily()->getVon());
 	round->setHealth(HomeMenu::getInstance()->getDaily()->getLeben());
@@ -271,7 +271,7 @@ void Game::startGame()
 	}
 	else
 	{
-		setDailyChanlange();
+		setDailyChanllenge();
 	}
 
 	while (window->isOpen())

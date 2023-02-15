@@ -176,7 +176,7 @@ private:
 	/// <returns>Erfolgreich?</returns>
 	bool loadGame();
 
-	bool setDailyChanlange();
+	bool setDailyChanllenge();
 
 	/// <summary>
 	/// Überprüft, ob der towerAlias an einer verbotenen Position ist.

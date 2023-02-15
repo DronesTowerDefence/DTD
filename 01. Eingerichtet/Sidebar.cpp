@@ -80,7 +80,7 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			if (Round::getInstance()->submoney(price[i])
-				&& ((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || HomeMenu::getInstance()->getDaily()->getIsDaily()))
+				&& ((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || !HomeMenu::getInstance()->getDaily()->getIsDaily()))
 				//Wenn genug Geld vorhanden ist, wird es vom Geldstand abgezogen
 			{
 				return i;
@@ -95,7 +95,7 @@ void Sidebar::draw(sf::RenderWindow* window)
 	for (int i = 0; i < 5; i++)
 	{
 		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i) &&
-			((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || HomeMenu::getInstance()->getDaily()->getIsDaily()))
+			((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || !HomeMenu::getInstance()->getDaily()->getIsDaily()))
 		{
 
 			buttonSpr[i].setTexture(*res->getTowerPreviewTexture(i));
