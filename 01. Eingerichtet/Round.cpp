@@ -141,6 +141,10 @@ void Round::sellTower(Tower* a, bool b)
 
 		//Fügt den Wert des Turmes dem Spieler hinzu
 		addMoney(a->getValue() * 0.75);
+		if (!b)
+		{
+			AchievementsContainer::getAchievement(9)->addToCurrentValue(1);
+		}
 
 		delete a;
 		a = nullptr;
@@ -223,12 +227,13 @@ void Round::addMoney(int _money)
 bool Round::submoney(int _money)
 {
 	if (_money < 0)
-		return 0;
+		return false;
 	else if (money < _money)
-		return 0;
+		return false;
 
+	AchievementsContainer::getAchievement(3)->addToCurrentValue(_money);
 	money -= _money;
-	return 1;
+	return true;
 }
 void Round::addHealth(int _health)
 {

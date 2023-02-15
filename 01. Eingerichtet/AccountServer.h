@@ -21,6 +21,8 @@ public:
 	AccountServer();
 	~AccountServer();
 
+	static AccountServer* accountServerObject;
+
 	/// <summary>
 	/// HTML-Statuscode (200 = OK)
 	/// </summary>

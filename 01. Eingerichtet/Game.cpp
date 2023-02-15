@@ -46,8 +46,11 @@ Game::Game()
 	p_ressources->getBackgroundMusic(p_map->getIndex())->play();
 	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
 
-	//	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
-
+	AchievementsContainer::getAchievement(6)->addToCurrentValue(1);
+	if (status != 1)
+	{
+		AchievementsContainer::getAchievement(7)->addToCurrentValue(1);
+	}
 }
 #pragma endregion
 
@@ -703,6 +706,8 @@ void Game::checkLoseGame()
 		{
 			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
 			updateEco();
+
+			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
 			{

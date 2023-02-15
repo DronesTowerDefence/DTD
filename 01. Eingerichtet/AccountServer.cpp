@@ -2,6 +2,8 @@
 #include "AccountServer.h"
 #include <fstream>
 
+AccountServer* AccountServer::accountServerObject = new AccountServer();
+
 std::string AccountServer::send()
 {
 	std::string returnStr = "0";
@@ -146,9 +148,9 @@ std::string AccountServer::getAchievement(std::string username)
 
 std::string AccountServer::sendXP(std::string username, std::string xp)
 {
-	request = new sf::Http::Request();
-	request->setField("Content-Type", "setXP");
-	request->setBody(username + "&" + xp);
+	accountServerObject->request = new sf::Http::Request();
+	accountServerObject->request->setField("Content-Type", "setXP");
+	accountServerObject->request->setBody(username + "&" + xp);
 
 	return send();
 }

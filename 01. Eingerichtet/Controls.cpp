@@ -315,6 +315,8 @@ void Controls::checkControls()
 	}
 	backSpaceIsPressed = false;
 	enterIsPressed = false;
+	arrowUpIsPressed = false;
+	arrowDownIsPressed = false;
 }
 #pragma endregion
 

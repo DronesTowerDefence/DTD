@@ -117,6 +117,8 @@ private:
 	Texture blackBackgroundTexture;
 	Texture accountFriendsButtonTexture;
 	Texture achievementsButtonTexture;
+	Texture achievementEarnedYesSymbolTexture;
+	Texture achievementEarnedNotSymbolTexture;
 
 	Sprite blackBackground;
 
@@ -233,6 +235,8 @@ public:
 	Texture* getBlackBackgroundTexture();
 	Texture* getAccountFriendsButtonTexture();
 	Texture* getAchievementsButtonTexture();
+	Texture* getAchievementEarnedYesSymbolTexture();
+	Texture* getAchievementEarnedNotSymbolTexture();
 
 	Sprite* getBlackBackgroundSprite();
 

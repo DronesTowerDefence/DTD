@@ -3,12 +3,25 @@
 #include "PopUpMessage.h"
 #include "Controls.h"
 
-AchievementSprite::AchievementSprite(Achievement* a)
+AchievementTexture::AchievementTexture(Achievement* a)
 {
+	achievement = a;
+
 	background = new Sprite;
 	background->setTexture(*Ressources::getInstance()->getSendMoneyBackgroundTexture());
 	background->setPosition(0, 0);
 	background->setScale(3, 1);
+
+	earned = new Sprite();
+	earned->setPosition(1115, 40);
+	if (a->getUnlocked(2))
+	{
+		earned->setTexture(*Ressources::getInstance()->getAchievementEarnedYesSymbolTexture());
+	}
+	else
+	{
+		earned->setTexture(*Ressources::getInstance()->getAchievementEarnedNotSymbolTexture());
+	}
 
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
@@ -19,16 +32,16 @@ AchievementSprite::AchievementSprite(Achievement* a)
 	id->setOutlineThickness(4);
 	id->setOutlineColor(Color::Black);
 	id->setFont(*font);
-	id->setPosition(30, 50);
+	id->setPosition(30, 60);
 	id->setString(std::to_string(a->getAchievementID()));
 
 	title = new Text();
-	title->setCharacterSize(40);
+	title->setCharacterSize(35);
 	title->setFillColor(Color::White);
-	title->setOutlineThickness(4);
+	title->setOutlineThickness(3.5);
 	title->setOutlineColor(Color::Black);
 	title->setFont(*font);
-	title->setPosition(110, 50);
+	title->setPosition(110, 60);
 	title->setString(a->getTitle());
 
 	progress = new Text();
@@ -37,20 +50,17 @@ AchievementSprite::AchievementSprite(Achievement* a)
 	progress->setOutlineThickness(3);
 	progress->setOutlineColor(Color::Black);
 	progress->setFont(*font);
-	progress->setPosition(850, 50);
-	progress->setString("100000 / 100000");
+	progress->setPosition(900, 60);
 
-	earned = new Text();
-	earned->setCharacterSize(30);
-	earned->setFillColor(Color::White);
-	earned->setOutlineThickness(3);
-	earned->setOutlineColor(Color::Black);
-	earned->setFont(*font);
-	earned->setPosition(1150, 50);
-	earned->setString(std::to_string(a->getUnlocked()));
+	if (!a->getUnlocked(0))
+		progress->setString(std::to_string(a->getCurrentValue()) + " / " + std::to_string(a->getValue(0)));
+	else if (!a->getUnlocked(1))
+		progress->setString(std::to_string(a->getCurrentValue()) + " / " + std::to_string(a->getValue(1)));
+	else if (!a->getUnlocked(2))
+		progress->setString(std::to_string(a->getCurrentValue()) + " / " + std::to_string(a->getValue(2)));
 
 	texture = new RenderTexture;
-	texture->create(1200, 200);
+	texture->create(1300, 200);
 	texture->draw(*background);
 	texture->draw(*id);
 	texture->draw(*title);
@@ -58,15 +68,19 @@ AchievementSprite::AchievementSprite(Achievement* a)
 	texture->draw(*earned);
 	texture->display();
 
-	sprite = new Sprite();
-	sprite->setTexture(texture->getTexture());
-	sprite->setPosition(350, 150 * a->getAchievementID() - 70);
+	sprite = new Sprite(texture->getTexture());
 }
 
-Sprite* AchievementSprite::getDrawSprite()
+Sprite AchievementTexture::getSprite()
 {
-	return sprite;
+	return *sprite;
 }
+
+Achievement* AchievementTexture::getAchievement()
+{
+	return achievement;
+}
+
 
 
 void AchievementGUI::draw()
@@ -76,17 +90,9 @@ void AchievementGUI::draw()
 	window->draw(*Ressources::getInstance()->getBlackBackgroundSprite());
 	window->draw(*background);
 
-	/*int j = 0;
-	for (auto i : allAchievementSprites)
+	for (int i = 0; i < 5; i++)
 	{
-		if (j >= firstDisplayedEntry)
-			window->draw(*i);
-		j++;
-	}*/
-
-	for (auto i : drawSprites)
-	{
-		window->draw(*i);
+		window->draw(*drawSprites[i]);
 	}
 
 	window->draw(*closeButton);
@@ -118,12 +124,25 @@ void AchievementGUI::checkClicked(Event* event)
 	}
 }
 
+void AchievementGUI::updateDrawSprites()
+{
+	int i = 0;
+	for (auto j : allAchievementSprites)
+	{
+		if (j->getAchievement()->getAchievementID() >= firstIndex && i < 5)
+		{
+			drawSprites[i]->setTexture(*j->getSprite().getTexture());
+			i++;
+		}
+	}
+}
+
 AchievementGUI::AchievementGUI(RenderWindow* _window)
 {
 	window = _window;
 	isOpen = false;
 	isClicked = false;
-	firstDisplayedEntry = 0;
+	firstIndex = 1;
 
 	background = new Sprite();
 	background->setPosition(100, 50);
@@ -136,18 +155,19 @@ AchievementGUI::AchievementGUI(RenderWindow* _window)
 
 	for (int i = 1; i <= achievementCount; i++)
 	{
-		allAchievementSprites.push_back((new AchievementSprite(AchievementsContainer::getAchievement(i)))->getDrawSprite());
+		allAchievementSprites.push_back((new AchievementTexture(AchievementsContainer::getAchievement(i))));
 	}
 
 	int i = 0;
 	for (auto j : allAchievementSprites)
 	{
-		drawSprites.push_back(j);
-			i++;
+		drawSprites[i] = new Sprite(j->getSprite());
+		drawSprites[i]->setPosition(350, 150 * (i + 1) - 50);
+		//drawSprites[i]->setColor(Color::Red);
+		i++;
 		if (i == 5)
 			break;
 	}
-
 }
 
 bool AchievementGUI::openAchievementGUI()
@@ -155,8 +175,10 @@ bool AchievementGUI::openAchievementGUI()
 	isOpen = true;
 
 	Event event;
+
 	while (window->isOpen() && isOpen)
 	{
+		Controls::checkControls();
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -165,22 +187,25 @@ bool AchievementGUI::openAchievementGUI()
 				exit(0);
 			}
 			checkClicked(&event);
-			Controls::checkControls();
 			Controls::checkKeyboardInput(&event);
 		}
 		draw();
 
 		if (Controls::getArrowUpIsPressed())
 		{
-			firstDisplayedEntry--;
-			drawSprites.pop_back();
-			drawSprites.push_front(nullptr); //TODO
+			if (firstIndex > 0)
+			{
+				firstIndex--;
+				updateDrawSprites();
+			}
 		}
 		else if (Controls::getArrowDownIsPressed())
 		{
-			firstDisplayedEntry++;
-			drawSprites.pop_front();
-			drawSprites.push_back(nullptr); //TODO
+			if (firstIndex < achievementCount - 4)
+			{
+				firstIndex++;
+				updateDrawSprites();
+			}
 		}
 
 	}

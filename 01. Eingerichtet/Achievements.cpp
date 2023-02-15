@@ -1,26 +1,65 @@
 #include "Achievements.h"
+#include "Account.h"
 #include <fstream>
 
 std::list<Achievement*> AchievementsContainer::allAchievements;
 
 Achievement::Achievement(std::string _title, int _value0, int _value1, int _value2, int _id)
 {
-	m_unlocked = false;
+	m_unlocked[0] = false;
+	m_unlocked[1] = false;
+	m_unlocked[2] = false;
 	m_title = _title;
 	m_value[0] = _value0;
 	m_value[1] = _value1;
 	m_value[2] = _value2;
+	m_currentValue = 0;
 	m_achievementID = _id;
 }
 
-void Achievement::setUnlocked(bool _unlocked)
+void Achievement::checkAchievementValues()
 {
-	m_unlocked = _unlocked;
+	if (m_currentValue >= m_value[0] && !m_unlocked[0])
+	{
+		m_unlocked[0] = true;
+		Account::addExperience(400);
+	}
+	if (m_currentValue >= m_value[1] && m_unlocked[0] && !m_unlocked[1])
+	{
+		m_unlocked[1] = true;
+		Account::addExperience(500);
+	}
+	if (m_currentValue >= m_value[2] && m_unlocked[1] && !m_unlocked[2])
+	{
+		m_unlocked[2] = true;
+		Account::addExperience(600);
+	}
 }
 
-bool Achievement::getUnlocked()
+void Achievement::addToCurrentValue(int value)
 {
-	return m_unlocked;
+	if (value > 0)
+		m_currentValue += value;
+	checkAchievementValues();
+}
+
+void Achievement::setUnlocked(int index, bool _unlocked)
+{
+	if (index >= 0 && index < 3)
+		m_unlocked[index] = _unlocked;
+}
+
+void Achievement::setCurrentValue(int value)
+{
+	m_currentValue = value;
+	checkAchievementValues();
+}
+
+bool Achievement::getUnlocked(int index)
+{
+	if (index >= 0 && index < 3)
+		return m_unlocked[index];
+	else return false;
 }
 
 std::string Achievement::getTitle()
@@ -36,14 +75,14 @@ int Achievement::getValue(int index)
 		return 0;
 }
 
+int Achievement::getCurrentValue()
+{
+	return m_currentValue;
+}
+
 int Achievement::getAchievementID()
 {
 	return m_achievementID;
-}
-
-std::string Achievement::toString()
-{
-	return std::to_string(m_achievementID) + "-" + m_title + "-" + std::to_string(m_value[0]) + "-" + std::to_string(m_value[1]) + "-" + std::to_string(m_value[2]) + "-" + std::to_string(m_unlocked);
 }
 
 void AchievementsContainer::createAchievements()
@@ -54,8 +93,12 @@ void AchievementsContainer::createAchievements()
 	std::ifstream file;
 	file.open("saves/achievements.sav");
 	if (file.fail())
+	{
+		std::cout << " Fehler beim Laden der Achievements, Datei nicht gefunden.\n";
 		return;
+	}
 	//Aufbau der Datei: id;title;value0;value1;value2;
+	//# = ü | + = ö | _ = ä
 
 	for (int i = 0; i < achievementCount; i++)
 	{
@@ -66,6 +109,15 @@ void AchievementsContainer::createAchievements()
 
 		file.get(buffer, 60, ';');
 		_title = buffer;
+		for (int i = 0; i < _title.length(); i++)
+		{
+			if (_title[i] == '#')
+				_title[i] = 252;
+			else if (_title[i] == '+')
+				_title[i] = 246;
+			else if (_title[i] == '_')
+				_title[i] = 228;
+		}
 		for (int i = 0; i < 60; i++) buffer[i] = '\0';
 		file.get(c);
 

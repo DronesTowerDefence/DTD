@@ -1,5 +1,8 @@
 #include "Account.h"
+#include "AccountServer.h"
+#include "PopUpMessage.h"
 #include <fstream>
+#include <functional>
 
 Account* Account::m_acc = nullptr;
 
@@ -30,6 +33,12 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	}
 }
 
+void Account::sendXp()
+{
+	Thread* thread = new Thread(std::bind(&AccountServer::sendXP, AccountServer::accountServerObject, m_acc->m_accName, std::to_string(m_acc->m_experience)));
+	thread->launch();
+}
+
 Account* Account::createAcc(std::string userName, std::string email, sf::Image* image)
 {
 	if (m_acc != nullptr)
@@ -43,13 +52,26 @@ Account* Account::createAcc(std::string userName, std::string email, sf::Image* 
 
 bool Account::setExperience(int _exp)
 {
-	if (m_acc == nullptr)
-		return false;
-	else
+	if (m_acc != nullptr && _exp > 0 && m_acc->m_accName != invalidUsername)
 	{
 		m_acc->m_experience = _exp;
 		return true;
 	}
+	else
+		return false;
+
+}
+
+bool Account::addExperience(int _exp)
+{
+	if (m_acc != nullptr && _exp > 0 && m_acc->m_accName != invalidUsername)
+	{
+		new PopUpMessage(std::to_string(_exp) + " Erfahrung erhalten", seconds(1));
+		m_acc->m_experience += _exp;
+		sendXp();
+		return true;
+	}
+	else return false;
 }
 
 Account* Account::getAcc()

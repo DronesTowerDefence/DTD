@@ -168,6 +168,11 @@ bool Drone::takeDamage(int damage) {
 
 		Game::getInstance()->droneSpawn(droneType, drone.getPosition(), nextPoint); //Um Nachfolger zu spawnen
 
+		if (droneType == 4)
+		{
+			AchievementsContainer::getAchievement(10)->addToCurrentValue(1);
+		}
+
 		//Tod der ursprünglichen Drohne
 		delete this;
 		return true;
@@ -179,6 +184,7 @@ bool Drone::takeDamage(int damage) {
 	if (lives <= 0)
 	{
 		//True, wenn Drone tot ist
+		AchievementsContainer::getAchievement(1)->addToCurrentValue(1);
 		delete this;
 		return true;
 	}
