@@ -41,11 +41,16 @@ int Achievement::getAchievementID()
 	return m_achievementID;
 }
 
+std::string Achievement::toString()
+{
+	return std::to_string(m_achievementID) + "-" + m_title + "-" + std::to_string(m_value[0]) + "-" + std::to_string(m_value[1]) + "-" + std::to_string(m_value[2]) + "-" + std::to_string(m_unlocked);
+}
+
 void AchievementsContainer::createAchievements()
 {
 	std::string _title = "";
 	int _value[3], _id;
-	char buffer[60];
+	char buffer[60], c;
 	std::ifstream file;
 	file.open("saves/achievements.sav");
 	if (file.fail())
@@ -56,27 +61,32 @@ void AchievementsContainer::createAchievements()
 	{
 		file.get(buffer, 60, ';');
 		_id = std::stoi(buffer);
-		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+		for (int i = 0; i < 60; i++) buffer[i] = '\0';
+		file.get(c);
 
 		file.get(buffer, 60, ';');
 		_title = buffer;
-		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+		for (int i = 0; i < 60; i++) buffer[i] = '\0';
+		file.get(c);
 
 		file.get(buffer, 60, ';');
 		_value[0] = std::stoi(buffer);
-		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+		for (int i = 0; i < 60; i++) buffer[i] = '\0';
+		file.get(c);
 
 		file.get(buffer, 60, ';');
 		_value[1] = std::stoi(buffer);
-		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+		for (int i = 0; i < 60; i++) buffer[i] = '\0';
+		file.get(c);
 
 		file.get(buffer, 60, ';');
 		_value[2] = std::stoi(buffer);
-		for (int i = 0; i < 60; i++, buffer[i] = '\0');
+		for (int i = 0; i < 60; i++) buffer[i] = '\0';
+		file.get(c);
 
 		addAchievement(new Achievement(_title, _value[0], _value[1], _value[2], _id));
 	}
-
+	std::cout << allAchievements.size() << " von " << achievementCount << " Achievements geladen\n";
 }
 
 void AchievementsContainer::addAchievement(Achievement* _achievement)
@@ -84,7 +94,7 @@ void AchievementsContainer::addAchievement(Achievement* _achievement)
 	allAchievements.push_back(_achievement);
 }
 
-Achievement* AchievementsContainer::getAchievement(std::string _title, int _id)
+Achievement* AchievementsContainer::getAchievement(int _id, std::string _title)
 {
 	Achievement* returnValue = nullptr;
 	for (auto i : allAchievements)

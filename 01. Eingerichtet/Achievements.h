@@ -21,6 +21,12 @@ public:
 	std::string getTitle();
 	int getValue(int index);
 	int getAchievementID();
+
+	/// <summary>
+	/// Zum testen
+	/// </summary>
+	/// <returns></returns>
+	std::string toString();
 };
 
 static class AchievementsContainer
@@ -32,5 +38,5 @@ private:
 public:
 	static void createAchievements();
 	static void addAchievement(Achievement* _achievement);
-	static Achievement* getAchievement(std::string _title = "\0", int _id = -1);
+	static Achievement* getAchievement(int _id, std::string _title = "\0");
 };

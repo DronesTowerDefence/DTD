@@ -4,6 +4,8 @@
 Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
 Clock Controls::mouseWheelMoveCooldownClock;
 
+bool Controls::arrowUpIsPressed = false;
+bool Controls::arrowDownIsPressed = false;
 bool Controls::escIsPressed = false;
 bool Controls::spaceIsPressed = false;
 bool Controls::shiftIsPressed = false;
@@ -26,6 +28,12 @@ char Controls::checkKeyboardInput(Event* event)
 	{
 		switch (event->key.code)
 		{
+		case Keyboard::Up:
+			arrowUpIsPressed = true;
+			break;
+		case Keyboard::Down:
+			arrowDownIsPressed = true;
+			break;
 		case Keyboard::LShift:
 			shiftIsPressed = true;
 			break;
@@ -56,6 +64,12 @@ char Controls::checkKeyboardInput(Event* event)
 	{
 		switch (event->key.code)
 		{
+		case Keyboard::Up:
+			arrowUpIsPressed = false;
+			break;
+		case Keyboard::Down:
+			arrowDownIsPressed = false;
+			break;
 		case Keyboard::LShift:
 			shiftIsPressed = false;
 			break;
@@ -305,6 +319,16 @@ void Controls::checkControls()
 #pragma endregion
 
 #pragma region getter
+
+bool Controls::getArrowUpIsPressed()
+{
+	return arrowUpIsPressed;
+}
+
+bool Controls::getArrowDownIsPressed()
+{
+	return arrowDownIsPressed;
+}
 
 bool Controls::getEscIsPressed()
 {
