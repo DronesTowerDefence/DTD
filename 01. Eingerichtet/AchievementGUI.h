@@ -10,6 +10,7 @@ private:
 	Sprite* background;
 	Sprite* sprite;
 	Sprite* earned;
+	RectangleShape* milestoneProgress[3];
 	Font* font;
 	Text* id;
 	Text* title;

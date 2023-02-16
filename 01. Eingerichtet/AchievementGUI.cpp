@@ -23,6 +23,20 @@ AchievementTexture::AchievementTexture(Achievement* a)
 		earned->setTexture(*Ressources::getInstance()->getAchievementEarnedNotSymbolTexture());
 	}
 
+	for (int i = 0; i < 3; i++)
+	{
+		milestoneProgress[i] = new RectangleShape();
+		milestoneProgress[i]->setSize(Vector2f(20, 20));
+		milestoneProgress[i]->setFillColor(Color::Red);
+		milestoneProgress[i]->setOutlineColor(Color::Black);
+		milestoneProgress[i]->setOutlineThickness(3);
+		milestoneProgress[i]->setPosition(i * 30 + 900, 110);
+		if (a->getUnlocked(i))
+		{
+			milestoneProgress[i]->setFillColor(Color::Green);
+		}
+	}
+
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -66,6 +80,9 @@ AchievementTexture::AchievementTexture(Achievement* a)
 	texture->draw(*title);
 	texture->draw(*progress);
 	texture->draw(*earned);
+	texture->draw(*milestoneProgress[0]);
+	texture->draw(*milestoneProgress[1]);
+	texture->draw(*milestoneProgress[2]);
 	texture->display();
 
 	sprite = new Sprite(texture->getTexture());
