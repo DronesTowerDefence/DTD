@@ -54,8 +54,22 @@ void Achievement::setUnlocked(int index, bool _unlocked)
 
 void Achievement::setCurrentValue(int value)
 {
-	m_currentValue = value;
-	checkAchievementValues();
+	if (value > 0)
+	{
+		m_currentValue = value;
+		if (m_currentValue >= m_value[0] && !m_unlocked[0])
+		{
+			m_unlocked[0] = true;
+		}
+		if (m_currentValue >= m_value[1] && m_unlocked[0] && !m_unlocked[1])
+		{
+			m_unlocked[1] = true;
+		}
+		if (m_currentValue >= m_value[2] && m_unlocked[1] && !m_unlocked[2])
+		{
+			m_unlocked[2] = true;
+		}
+	}
 }
 
 bool Achievement::getUnlocked(int index)

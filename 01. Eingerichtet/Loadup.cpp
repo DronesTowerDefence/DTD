@@ -66,22 +66,21 @@ void Loadup::run()
 	setLoadingbar(20);
 
 	PopUpMessage::initializePopUpMessages();
+	AchievementsContainer::createAchievements();
 	setLoadingbar(30);
 
-	AchievementsContainer::createAchievements();
-	setLoadingbar(40);
 
 	AccountServer* accServer = new AccountServer();
-	setLoadingbar(50);
+	setLoadingbar(40);
 
 	std::string username = readFromUserFile(1);
-	setLoadingbar(55);
+	setLoadingbar(50);
 
 	std::string email = readFromUserFile(2);
-	setLoadingbar(60);
+	setLoadingbar(55);
 
 	std::string usernameExist = accServer->checkUsername(username);
-	setLoadingbar(70);
+	setLoadingbar(60);
 
 	if (usernameExist == "1")
 	{
@@ -91,7 +90,7 @@ void Loadup::run()
 			image = new Image(res->getAccountProfilePicture()->copyToImage());
 		}
 		int _xp = stoi(accServer->getXP(username));
-		setLoadingbar(80);
+		setLoadingbar(70);
 		accServer->createAccount(username, email, image);
 		Account::setExperience(_xp);
 
@@ -103,8 +102,41 @@ void Loadup::run()
 		{
 			system("del saves\\user.sav");
 		}
-		setLoadingbar(80);
+		setLoadingbar(70);
 		accServer->createAccount("???", "\0", nullptr);
+	}
+	setLoadingbar(80);
+
+
+	std::string allAchievementValues = accServer->getAchievement(Account::getAccName());
+	if (allAchievementValues != "0" && allAchievementValues != "-1")
+	{
+		int currentValue = 0, achievementID = 0, pos1 = 0, pos2 = 0, pos3 = 0;
+		std::string str = "";
+		Achievement* achievement = nullptr;
+
+		while (pos3 < allAchievementValues.length())
+		{
+			pos1 = allAchievementValues.find('_');
+			pos2 = allAchievementValues.find('&');
+			str = allAchievementValues.substr(pos3, pos1);
+			achievementID = std::stoi(str);
+			str = ""; pos1 = 0; pos2 = 0;
+
+			pos1 = allAchievementValues.find('_');
+			pos2 = allAchievementValues.find('&');
+			str = allAchievementValues.substr(pos1, pos2 - pos1);
+			currentValue = std::stoi(str);
+
+			pos3 = pos2;
+			str = ""; pos1 = 0; pos2 = 0; achievementID = 0; currentValue = 0;
+
+			achievement = AchievementsContainer::getAchievement(achievementID);
+			if (achievement != nullptr)
+			{
+				achievement->setCurrentValue(currentValue);
+			}
+		}
 	}
 	setLoadingbar(90);
 
