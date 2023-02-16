@@ -63,7 +63,7 @@ public:
 	/// </summary>
 	/// <param name="achievementID"></param>
 	/// <returns>"1" wenn erfolgreich</returns>
-	std::string sendAchievement(std::string achievementID);
+	std::string sendAchievement(int achievementID, int currentValue);
 
 	/// <summary>
 	/// Bekommt alle AchievemtIDs zu dem Benutzer

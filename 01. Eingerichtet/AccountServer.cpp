@@ -125,14 +125,14 @@ std::string AccountServer::checkUsername(std::string username)
 	return send();
 }
 
-std::string AccountServer::sendAchievement(std::string achievementID)
+std::string AccountServer::sendAchievement(int achievementID, int currentValue)
 {
 	if (Account::getAccName() == "???")
 		return "0";
 
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "sendAchievement");
-	request->setBody(Account::getAccName() + "&" + achievementID);
+	request->setBody(Account::getAccName() + "&" + std::to_string(achievementID) + "_" + std::to_string(currentValue));
 
 	return send();
 }
@@ -143,7 +143,7 @@ std::string AccountServer::getAchievement(std::string username)
 	request->setField("Content-Type", "getAchievement");
 	request->setBody(username);
 
-	return send();
+	return send(); //Antwort: achievementID_value&achievementID_value&achievementID_value...
 }
 
 std::string AccountServer::sendXP(std::string username, std::string xp)
