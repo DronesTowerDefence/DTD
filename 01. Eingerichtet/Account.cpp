@@ -35,7 +35,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 
 void Account::sendXp()
 {
-	Thread* thread = new Thread(std::bind(&AccountServer::sendXP, AccountServer::accountServerObject, m_acc->m_accName, std::to_string(m_acc->m_experience)));
+	Thread* thread = new Thread(std::bind(&AccountServer::sendXP, *AccountServer::getAccServerObj(), m_acc->m_accName, std::to_string(m_acc->m_experience)));
 	thread->launch();
 }
 

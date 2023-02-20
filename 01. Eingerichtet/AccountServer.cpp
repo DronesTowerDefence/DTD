@@ -2,7 +2,7 @@
 #include "AccountServer.h"
 #include <fstream>
 
-AccountServer* AccountServer::accountServerObject = new AccountServer();
+AccountServer* AccountServer::accountServerObject = nullptr;
 
 std::string AccountServer::send()
 {
@@ -57,6 +57,13 @@ AccountServer::~AccountServer()
 	delete timeout;
 }
 
+AccountServer* AccountServer::getAccServerObj()
+{
+	if (accountServerObject == nullptr)
+		accountServerObject = new AccountServer();
+	return accountServerObject;
+}
+
 int AccountServer::getRequestLastStatusCode()
 {
 	return lastStatusCode;
@@ -98,7 +105,7 @@ sf::Image* AccountServer::getProfilePicture(std::string username)
 		//// SFML Variante - funktioniert nicht
 		//sf::Image* image = new sf::Image();
 		//image->loadFromMemory(&str, str.length());
-		
+
 		// C++ Variante
 		std::ofstream file;
 		file.open("saves/userProfilPicture.png", std::ios::binary);
@@ -168,6 +175,6 @@ std::string AccountServer::getChallenge()
 {
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "getChalange");
-	
+
 	return send();
 }

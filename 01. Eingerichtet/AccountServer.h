@@ -17,11 +17,12 @@ private:
 	/// <returns>Response Body | "-1" wenn nicht erfolgreich</returns>
 	std::string send();
 
+	static AccountServer* accountServerObject;
 public:
 	AccountServer();
 	~AccountServer();
 
-	static AccountServer* accountServerObject;
+	static AccountServer* getAccServerObj();
 
 	/// <summary>
 	/// HTML-Statuscode (200 = OK)

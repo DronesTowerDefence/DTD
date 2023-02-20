@@ -117,25 +117,25 @@ void Loadup::run()
 
 		while (pos3 < allAchievementValues.length())
 		{
-			pos1 = allAchievementValues.find('_');
-			pos2 = allAchievementValues.find('&');
-			str = allAchievementValues.substr(pos3, pos1);
+			pos1 = allAchievementValues.find('_', pos3);
+			pos2 = allAchievementValues.find('&', pos3);
+			str = allAchievementValues.substr(pos3, pos1 - pos3);
 			achievementID = std::stoi(str);
 			str = ""; pos1 = 0; pos2 = 0;
 
-			pos1 = allAchievementValues.find('_');
-			pos2 = allAchievementValues.find('&');
-			str = allAchievementValues.substr(pos1, pos2 - pos1);
+			pos1 = allAchievementValues.find('_', pos3);
+			pos2 = allAchievementValues.find('&', pos3);
+			str = allAchievementValues.substr(pos1 + 1, pos2 - pos1 - 1);
 			currentValue = std::stoi(str);
 
-			pos3 = pos2;
-			str = ""; pos1 = 0; pos2 = 0; achievementID = 0; currentValue = 0;
+			pos3 = pos2 + 1;
 
 			achievement = AchievementsContainer::getAchievement(achievementID);
 			if (achievement != nullptr)
 			{
 				achievement->setCurrentValue(currentValue);
 			}
+			str = ""; pos1 = 0; pos2 = 0; achievementID = 0; currentValue = 0;
 		}
 	}
 	setLoadingbar(90);
