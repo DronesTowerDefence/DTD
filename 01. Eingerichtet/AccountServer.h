@@ -31,6 +31,12 @@ public:
 	int getRequestLastStatusCode();
 
 	/// <summary>
+	/// Um am Ende eines Spieles alle Achievements und XP an den Server zu senden
+	/// </summary>
+	/// <returns></returns>
+	static bool sendAllAchievementsAndXp();
+
+	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
 	/// </summary>
 	/// <param name="userName">"0" = Kein Benutzer vorhanden, "-1" Keine Verbindung zum Server</param>

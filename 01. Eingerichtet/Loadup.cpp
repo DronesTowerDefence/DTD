@@ -107,7 +107,6 @@ void Loadup::run()
 	}
 	setLoadingbar(80);
 
-
 	std::string allAchievementValues = accServer->getAchievement(Account::getAccName());
 	if (allAchievementValues != "0" && allAchievementValues != "-1")
 	{

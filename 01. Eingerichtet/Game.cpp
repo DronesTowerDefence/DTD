@@ -722,7 +722,7 @@ void Game::checkLoseGame()
 			gameOverWonText[0].setPosition(Vector2f(1200, 440));
 			gameOverWonText[1].setPosition(Vector2f(1200, 530));
 			Account::setExperience(Account::getExperience() + 300);
-			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
 
 		//Setzen der Texturen
@@ -1352,7 +1352,7 @@ void Game::saveGame()
 
 		if (Account::getAccName() != "???")
 		{
-			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
 
 		new PopUpMessage("Spiel gespeichert!");

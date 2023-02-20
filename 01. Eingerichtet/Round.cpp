@@ -178,7 +178,7 @@ void Round::nextRound()
 	if (Account::getAccName() != "???")
 	{
 		Account::setExperience(Account::getExperience() + 2);
-		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+		//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 	}
 
 	//Startet eine neue Runde, je nachdem ob Host/Client/Singleplayer

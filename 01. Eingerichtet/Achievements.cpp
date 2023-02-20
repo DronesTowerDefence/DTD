@@ -20,9 +20,9 @@ Achievement::Achievement(std::string _title, int _value0, int _value1, int _valu
 
 void Achievement::checkAchievementValues()
 {
-	AccountServer* accServer = new AccountServer();
+	/*AccountServer* accServer = new AccountServer();
 	accServer->sendAchievement(m_achievementID, m_currentValue);
-	delete accServer;
+	delete accServer;*/
 
 	if (m_currentValue >= m_value[0] && !m_unlocked[0])
 	{

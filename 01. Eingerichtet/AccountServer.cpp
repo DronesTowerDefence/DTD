@@ -1,5 +1,6 @@
 #include "Ressources.h"
 #include "AccountServer.h"
+#include "Achievements.h"
 #include <fstream>
 
 AccountServer* AccountServer::accountServerObject = nullptr;
@@ -67,6 +68,30 @@ AccountServer* AccountServer::getAccServerObj()
 int AccountServer::getRequestLastStatusCode()
 {
 	return lastStatusCode;
+}
+
+bool AccountServer::sendAllAchievementsAndXp()
+{
+	if (Account::getAccName() == invalidUsername)
+	{
+		return false;
+	}
+	else
+	{
+		AccountServer* accServer = new AccountServer();
+		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+		for (int i = 1; i <= achievementCount; i++)
+		{
+			Achievement* a = AchievementsContainer::getAchievement(i);
+			if (a->getUnlocked(0))
+			{
+				accServer->sendAchievement(a->getAchievementID(), a->getCurrentValue());
+			}
+			a = nullptr;
+		}
+
+		return true;
+	}
 }
 
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
