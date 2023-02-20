@@ -190,9 +190,6 @@ void AchievementsContainer::resetAllAchievements()
 	for (int i = 1; i <= achievementCount; i++)
 	{
 		getAchievement(i)->setCurrentValue(0);
-		/*getAchievement(i)->setUnlocked(0, false);
-		getAchievement(i)->setUnlocked(1, false);
-		getAchievement(i)->setUnlocked(2, false);*/
 	}
 }
 
