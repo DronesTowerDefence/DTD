@@ -57,7 +57,7 @@ private:
 
 	Vector2f flugzeugUpdate[4];
 
-	std::string towerName[5]; //Der Name des Turmes
+	std::string towerName[6]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
 	std::string updateBeschreibungEins[5][4];

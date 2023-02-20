@@ -58,6 +58,10 @@ private:
 	/// </summary>
 	int speed;
 
+	std::list<Vector3f> coverableArea;
+
+	Vector2f target;
+
 public:
 	~TowerSpawn();
 
@@ -66,7 +70,11 @@ public:
 	/// </summary>
 	/// <param name="1: Flugzeug"></param>
 	/// <param name="Pointer auf den zugehˆrigen Tower"></param>
-	TowerSpawn(int, Tower*);
+	TowerSpawn(int, Tower*,Vector2f);
+
+	void setCoverableArea();
+
+	std::list<Vector3f> getCoverableArea();
 
 	/// <summary>
 	/// Sprite des Flugzeuges
@@ -97,6 +105,8 @@ public:
 	/// </summary>
 	/// <param name="px pro Frame"></param>
 	void setSpeed(int);
+
+	void setMove();
 
 	/// <summary>
 	/// L‰sst das Objekt schieﬂen

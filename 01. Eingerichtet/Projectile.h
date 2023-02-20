@@ -66,6 +66,8 @@ private:
 	/// </summary>
 	Ressources* res;
 
+	TowerSpawn* towerspawn;
+
 public:
 	Projectile(Tower* _tower, Vector2f _targetstill);
 	/// <summary>
