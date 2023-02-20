@@ -28,4 +28,5 @@ Infos zu den Türmen:
 Unser Twitter:
 https://twitter.com/DRONESTD
 
-Dieses Spiel funktioniert nur unter Windows 10 vollständig.
+Dieses Spiel funktioniert nur unter Windows 10 (garantiert) vollständig.
+
