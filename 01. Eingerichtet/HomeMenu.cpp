@@ -406,7 +406,12 @@ void HomeMenu::HomeMenuStart()
 	if (callCount > 1)
 	{
 		delete Game::getInstance();
-		AccountServer::sendAllAchievementsAndXp();
+		new PopUpMessage("Synchronisiere Achievements");
+		if (AccountServer::sendAllAchievementsAndXp())
+		{
+			new PopUpMessage("Achievements synchronisiert");
+		}
+		else new PopUpMessage("Fehler beim Synchronisieren");
 	}
 	callCount++;
 

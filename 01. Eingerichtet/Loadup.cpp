@@ -107,36 +107,7 @@ void Loadup::run()
 	}
 	setLoadingbar(80);
 
-	std::string allAchievementValues = accServer->getAchievement(Account::getAccName());
-	if (allAchievementValues != "0" && allAchievementValues != "-1")
-	{
-		int currentValue = 0, achievementID = 0, pos1 = 0, pos2 = 0, pos3 = 0;
-		std::string str = "";
-		Achievement* achievement = nullptr;
-
-		while (pos3 < allAchievementValues.length())
-		{
-			pos1 = allAchievementValues.find('_', pos3);
-			pos2 = allAchievementValues.find('&', pos3);
-			str = allAchievementValues.substr(pos3, pos1 - pos3);
-			achievementID = std::stoi(str);
-			str = ""; pos1 = 0; pos2 = 0;
-
-			pos1 = allAchievementValues.find('_', pos3);
-			pos2 = allAchievementValues.find('&', pos3);
-			str = allAchievementValues.substr(pos1 + 1, pos2 - pos1 - 1);
-			currentValue = std::stoi(str);
-
-			pos3 = pos2 + 1;
-
-			achievement = AchievementsContainer::getAchievement(achievementID);
-			if (achievement != nullptr)
-			{
-				achievement->setCurrentValue(currentValue);
-			}
-			str = ""; pos1 = 0; pos2 = 0; achievementID = 0; currentValue = 0;
-		}
-	}
+	AchievementsContainer::getAchievementsFromServer();
 	setLoadingbar(90);
 
 	delete accServer;

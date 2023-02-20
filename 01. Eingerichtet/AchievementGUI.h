@@ -22,6 +22,7 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	AchievementTexture(Achievement*);
+	~AchievementTexture();
 
 	/// <summary>
 	/// Sollte nur benutzt werden um eine Kopie zu erstellen
@@ -50,6 +51,7 @@ private:
 
 public:
 	AchievementGUI(RenderWindow* _window);
+	~AchievementGUI();
 
 	/// <summary>
 	/// Öffnet das Achievement-Fenster

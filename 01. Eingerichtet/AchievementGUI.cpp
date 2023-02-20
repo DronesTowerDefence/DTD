@@ -72,6 +72,8 @@ AchievementTexture::AchievementTexture(Achievement* a)
 		progress->setString(std::to_string(a->getCurrentValue()) + " / " + std::to_string(a->getValue(1)));
 	else if (!a->getUnlocked(2))
 		progress->setString(std::to_string(a->getCurrentValue()) + " / " + std::to_string(a->getValue(2)));
+	else
+		progress->setString(std::to_string(a->getCurrentValue()));
 
 	texture = new RenderTexture;
 	texture->create(1300, 200);
@@ -86,6 +88,21 @@ AchievementTexture::AchievementTexture(Achievement* a)
 	texture->display();
 
 	sprite = new Sprite(texture->getTexture());
+}
+
+AchievementTexture::~AchievementTexture()
+{
+	delete texture;
+	delete background;
+	delete sprite;
+	delete earned;
+	delete milestoneProgress[0];
+	delete milestoneProgress[1];
+	delete milestoneProgress[2];
+	delete font;
+	delete id;
+	delete title;
+	delete progress;
 }
 
 Sprite AchievementTexture::getSprite()
@@ -185,6 +202,15 @@ AchievementGUI::AchievementGUI(RenderWindow* _window)
 		if (i == 5)
 			break;
 	}
+}
+
+AchievementGUI::~AchievementGUI()
+{
+	for (auto i : allAchievementSprites)
+	{
+		delete i;
+	}
+	allAchievementSprites.clear();
 }
 
 bool AchievementGUI::openAchievementGUI()

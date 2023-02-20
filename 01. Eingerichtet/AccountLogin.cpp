@@ -208,6 +208,8 @@ bool AccountLogin::accountLogin(Event* event)
 					Account::setExperience(expServer);
 				}
 
+				AchievementsContainer::getAchievementsFromServer();
+
 				accountLoginStatusText->setString("Erfolgreich!");
 				new PopUpMessage("Erfolgreich!", seconds(2));
 
@@ -216,6 +218,7 @@ bool AccountLogin::accountLogin(Event* event)
 				sleep(sf::milliseconds(500));
 				accountLoginIsOpen = false;
 				return true;
+
 			}
 		}
 
@@ -256,6 +259,7 @@ bool AccountLogin::accountPage(Event* event)
 			Account::deleteAcc();
 			Loadup::usernameSuccessfull = false;
 			Account::createAcc("???", "\0", nullptr);
+			AchievementsContainer::resetAllAchievements();
 			return true;
 		}
 

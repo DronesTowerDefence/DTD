@@ -44,4 +44,6 @@ public:
 	static void createAchievements();
 	static void addAchievement(Achievement* _achievement);
 	static Achievement* getAchievement(int _id, std::string _title = "\0");
+	static void resetAllAchievements();
+	static bool getAchievementsFromServer();
 };
