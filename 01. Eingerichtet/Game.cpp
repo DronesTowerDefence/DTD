@@ -457,7 +457,12 @@ void Game::checkTowerAlias()
 		{
 			isMouseClicked = true;
 		}
-
+		if (towerAliasForbiddenPosition()) {
+			newTower->getSpr()->setTexture(*p_ressources->getTowerAliasTexture(newTower->getIndex()));
+		}
+		if (!towerAliasForbiddenPosition()) {
+			newTower->getSpr()->setTexture(*p_ressources->getTowerNoBuyTexture(newTower->getIndex()));
+		}
 		newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
 		if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
 		{
