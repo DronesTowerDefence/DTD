@@ -1,8 +1,8 @@
 #include "HomeMenu.h"
-#include "Controls.h"
+//#include "Controls.h"
 #include "Multiplayer.h"
 #include "PopUpMessage.h"
-
+#include "Friends.h";
 HomeMenu* HomeMenu::instance = nullptr;
 
 #pragma region Konstruktor
@@ -382,8 +382,15 @@ int  HomeMenu::CheckClicked(Event event)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			new PopUpMessage("AccountFriendsMenu clicked", seconds(2));
-			return 0;
+			if (Account::getAcc()->getAccName() == "???")
+			{
+				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+				return 0;
+			}
+			else
+			{
+				FriendsGUI* fr = new FriendsGUI(window);
+			}
 		}
 
 		//AchievementsButton

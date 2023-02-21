@@ -15,11 +15,12 @@ private:
 	Text* id;
 	Text* title;
 	Text* progress;
+	
 
 public:
 	/// <summary>
 	/// Erstellt eine Sprite zu einem Achievement
-	/// </summary>
+	/// </summar
 	/// <param name=""></param>
 	AchievementTexture(Achievement*);
 	~AchievementTexture();

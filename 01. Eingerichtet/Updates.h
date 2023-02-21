@@ -62,7 +62,7 @@ public:
 	void hover(RenderWindow* window);
 
 	void draw(RenderWindow* window);
-	int isClicked(RenderWindow* window);
+	int isClicked(RenderWindow* window, Tower* tow);
 	bool IsClosed(RenderWindow* window);
 	bool isSell(RenderWindow* window);
 	void canBuy();

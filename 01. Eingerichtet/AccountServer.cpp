@@ -211,3 +211,12 @@ std::string AccountServer::wonChallenge(std::string unsername)
 
 	return send();
 }
+
+std::string AccountServer::getFriends(std::string unsername)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "seeFriendsList");
+	request->setBody(unsername);
+
+	return send();
+}

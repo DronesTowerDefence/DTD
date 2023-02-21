@@ -949,6 +949,7 @@ void Game::mainMenu()
 		Multiplayer::send(3, false);
 	}
 
+	HomeMenu::getInstance()->getDaily()->setIsDaily(false);
 	HomeMenu::getInstance()->HomeMenuStart();
 }
 void Game::restart()

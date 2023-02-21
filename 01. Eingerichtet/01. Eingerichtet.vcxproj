@@ -27,6 +27,7 @@
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Daily.h" />
     <ClInclude Include="Drone.h" />
+    <ClInclude Include="Friends.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HomeMenu.h" />
     <ClInclude Include="Loadingbar.h" />
@@ -59,6 +60,7 @@
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="Daily.cpp" />
     <ClCompile Include="Drone.cpp" />
+    <ClCompile Include="Friends.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HomeMenu.cpp" />
     <ClCompile Include="Loadingbar.cpp" />

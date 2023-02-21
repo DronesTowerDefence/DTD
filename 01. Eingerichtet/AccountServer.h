@@ -90,5 +90,9 @@ public:
 
 	std::string getChallenge();
 	std::string wonChallenge(std::string unsername);
+
+
+	std::string getFriends(std::string unsername);
+
 };
 

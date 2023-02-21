@@ -199,7 +199,7 @@ void Updates::hover(RenderWindow* window)
 		}
 	}
 }
-int Updates::isClicked(RenderWindow* window)
+int Updates::isClicked(RenderWindow* window, Tower* tow)
 {
 	if (!window->hasFocus())
 		return 0;
@@ -216,11 +216,7 @@ int Updates::isClicked(RenderWindow* window)
 
 		if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)))
-			{
-				return 1;
-			}
-
+			tow->Update1();
 		}
 		else
 		{
@@ -229,10 +225,7 @@ int Updates::isClicked(RenderWindow* window)
 
 			if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				if (Round::getInstance()->submoney(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)))
-				{
-					return 2;
-				}
+				tow->Update1();
 			}
 		}
 	}
