@@ -245,15 +245,14 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				status = 2;
 
+				multiplayerGUI = new MultiplayerGUI(window);
 				if (multiplayerGUI->start(true))
 				{
-					multiplayerGUI = new MultiplayerGUI(window);
 					delete multiplayerGUI;
 					return 2;
 				}
 				else
 				{
-					multiplayerGUI = new MultiplayerGUI(window);
 					delete multiplayerGUI;
 					status = 0;
 					return 0;
@@ -269,15 +268,14 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				status = 3;
 
+				multiplayerGUI = new MultiplayerGUI(window);
 				if (multiplayerGUI->start(false))
 				{
-					multiplayerGUI = new MultiplayerGUI(window);
 					delete multiplayerGUI;
 					return 3;
 				}
 				else
 				{
-					multiplayerGUI = new MultiplayerGUI(window);
 					delete multiplayerGUI;
 					status = 0;
 					return 0;
