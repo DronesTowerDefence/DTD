@@ -707,8 +707,8 @@ void Game::checkLoseGame()
 			updateEco();
 
 
-			std::cout << UniqueAchievement::getUniqueAchievement(11)->checkAchievement() << std::endl;
-			std::cout << UniqueAchievement::getUniqueAchievement(12)->checkAchievement() << std::endl;
+			UniqueAchievement::getUniqueAchievement(11)->checkAchievement();
+			UniqueAchievement::getUniqueAchievement(12)->checkAchievement();
 			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)

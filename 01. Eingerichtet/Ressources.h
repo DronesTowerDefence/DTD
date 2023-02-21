@@ -122,6 +122,7 @@ private:
 	Texture achievementsButtonTexture;
 	Texture achievementEarnedYesSymbolTexture;
 	Texture achievementEarnedNotSymbolTexture;
+	Texture startDailyButtonTexture;
 
 	Sprite blackBackground;
 
@@ -240,6 +241,7 @@ public:
 	Texture* getAchievementsButtonTexture();
 	Texture* getAchievementEarnedYesSymbolTexture();
 	Texture* getAchievementEarnedNotSymbolTexture();
+	Texture* getStartDailyButtonTexture();
 
 	Sprite* getBlackBackgroundSprite();
 
