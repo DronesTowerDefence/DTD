@@ -42,7 +42,7 @@ SendMoney::SendMoney()
 		background[i] = new Sprite();
 		playerName[i] = new Text();
 	}
-	if (Multiplayer::multiplayerPlayerCount > 1)
+	if (Multiplayer::multiplayerPlayerCount > 0)
 	{
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{

@@ -247,14 +247,14 @@ int  HomeMenu::CheckClicked(Event event)
 
 				if (multiplayerGUI->start(true))
 				{
-					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
+					delete multiplayerGUI;
 					return 2;
 				}
 				else
 				{
-					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
+					delete multiplayerGUI;
 					status = 0;
 					return 0;
 				}
@@ -271,14 +271,14 @@ int  HomeMenu::CheckClicked(Event event)
 
 				if (multiplayerGUI->start(false))
 				{
-					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
+					delete multiplayerGUI;
 					return 3;
 				}
 				else
 				{
-					delete multiplayerGUI;
 					multiplayerGUI = new MultiplayerGUI(window);
+					delete multiplayerGUI;
 					status = 0;
 					return 0;
 				}
@@ -414,8 +414,6 @@ void HomeMenu::HomeMenuStart()
 		else new PopUpMessage("Fehler beim Synchronisieren");
 	}
 	callCount++;
-
-	multiplayerGUI = new MultiplayerGUI(window);
 
 	while (window->isOpen())
 	{
