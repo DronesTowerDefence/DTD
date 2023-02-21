@@ -712,6 +712,9 @@ void Game::checkLoseGame()
 			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
 			updateEco();
 
+
+			std::cout << UniqueAchievement::getUniqueAchievement(11)->checkAchievement() << std::endl;
+			std::cout << UniqueAchievement::getUniqueAchievement(12)->checkAchievement() << std::endl;
 			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)

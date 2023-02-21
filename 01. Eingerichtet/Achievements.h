@@ -47,6 +47,7 @@ public:
 	UniqueAchievement(int achievementID);
 	bool checkAchievement();
 	void setCounter(int _counter);
+	void setTowerPlaced(int index, bool b = true);
 	int getCounter();
 	static UniqueAchievement* getUniqueAchievement(int achievementID);
 };

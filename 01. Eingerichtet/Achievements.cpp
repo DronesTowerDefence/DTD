@@ -137,7 +137,12 @@ bool UniqueAchievement::checkAchievement()
 		}
 
 		if (j == towerTypeCount)
+		{
+			p_achievement->addToCurrentValue(1);
+			if (p_achievement->getCurrentValue() <= p_achievement->getValue(0))
+				Account::addExperience(500);
 			return true;
+		}
 		else
 			return false;
 	}
@@ -152,7 +157,12 @@ bool UniqueAchievement::checkAchievement()
 		}
 
 		if (j == 1)
+		{
+			p_achievement->addToCurrentValue(1);
+			if (p_achievement->getCurrentValue() <= p_achievement->getValue(0))
+				Account::addExperience(500);
 			return true;
+		}
 		else
 			return false;
 	}
@@ -162,6 +172,11 @@ bool UniqueAchievement::checkAchievement()
 void UniqueAchievement::setCounter(int _counter)
 {
 	counter = _counter;
+}
+
+void UniqueAchievement::setTowerPlaced(int index, bool b)
+{
+	towerPlaced[index] = b;
 }
 
 int UniqueAchievement::getCounter()
