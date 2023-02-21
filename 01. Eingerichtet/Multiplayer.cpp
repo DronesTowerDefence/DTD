@@ -121,10 +121,10 @@ bool Multiplayer::send(std::string mess)
 	return send(&pac, -1);
 }
 
-bool Multiplayer::send(int money)
+bool Multiplayer::send(std::string name, int money)
 {
 	Packet pac;
-	pac << 12 << money;
+	pac << 12 << name << money;
 
 	return send(&pac, -1);
 }
@@ -300,8 +300,11 @@ void Multiplayer::receive()
 				break;
 
 			case 12:
-				pac >> int1;
-				Round::getInstance()->addMoney(int1);
+				pac >> str >> int1;
+				if (str == Account::getAccName())
+				{
+					Round::getInstance()->addMoney(int1);
+				}
 				break;
 
 			case 13:

@@ -159,8 +159,6 @@ bool UniqueAchievement::checkAchievement()
 		if (j == 1)
 		{
 			p_achievement->addToCurrentValue(1);
-			if (p_achievement->getCurrentValue() <= p_achievement->getValue(0))
-				Account::addExperience(500);
 			return true;
 		}
 		else

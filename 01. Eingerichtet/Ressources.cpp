@@ -351,6 +351,7 @@ Ressources::Ressources()
 	achievementsButtonTexture.loadFromFile("img/achievements/achievementsButton.png");
 	achievementEarnedYesSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolYes.png");
 	achievementEarnedNotSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolNot.png");
+	startDailyButtonTexture.loadFromFile("img/buttons/startDailyButton.png");
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -894,6 +895,10 @@ Texture* Ressources::getAchievementEarnedYesSymbolTexture()
 Texture* Ressources::getAchievementEarnedNotSymbolTexture()
 {
 	return &achievementEarnedNotSymbolTexture;
+}
+Texture* Ressources::getStartDailyButtonTexture()
+{
+	return &startDailyButtonTexture;
 }
 Sprite* Ressources::getBlackBackgroundSprite()
 {

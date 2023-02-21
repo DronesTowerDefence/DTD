@@ -281,12 +281,6 @@ void Game::startGame()
 	{
 		Multiplayer::receive();
 
-		if (!window->hasFocus())
-		{
-			PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-			PauseMenu::getInstance()->checkPause(true);
-		}
-
 		while (window->pollEvent(event))
 		{
 			if (event.type == Event::Closed)
@@ -713,8 +707,8 @@ void Game::checkLoseGame()
 			updateEco();
 
 
-			std::cout << UniqueAchievement::getUniqueAchievement(11)->checkAchievement() << std::endl;
-			std::cout << UniqueAchievement::getUniqueAchievement(12)->checkAchievement() << std::endl;
+			UniqueAchievement::getUniqueAchievement(11)->checkAchievement();
+			UniqueAchievement::getUniqueAchievement(12)->checkAchievement();
 			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
@@ -734,7 +728,7 @@ void Game::checkLoseGame()
 		}
 
 		//Setzen der Texturen
-		Vector2f gameOverPos(window->getSize().x / 2 - p_ressources->getGameWonTexture()->getSize().x / 2, window->getSize().y / 2 - p_ressources->getGameWonTexture()->getSize().y / 2);
+		Vector2f gameOverPos(1920 / 2 - p_ressources->getGameWonTexture()->getSize().x / 2, 991 / 2 - p_ressources->getGameWonTexture()->getSize().y / 2);
 		//gameOverPos: Rechnung, um das Bild in der Mitte vom Bildschirm zu haben
 
 		gameOverWonBackround.setPosition(gameOverPos);

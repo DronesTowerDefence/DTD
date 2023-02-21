@@ -57,7 +57,7 @@ HomeMenu::HomeMenu()
 	accountButton->setTexture(*res->getAccountIconButtonTexture());
 	accountFriendsMenuButton->setTexture(*res->getAccountFriendsButtonTexture());
 	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
-	dailyButton->setTexture(*res->getAccountFriendsButtonTexture());
+	dailyButton->setTexture(*res->getStartDailyButtonTexture());
 
 
 	credits->setCharacterSize(25);
@@ -79,7 +79,7 @@ HomeMenu::HomeMenu()
 	/*upperBorder->setOutlineColor(Color::Black);
 	upperBorder->setOutlineThickness(2.0);*/
 
-	startButton->setPosition(Vector2f(900, 700));
+	startButton->setPosition(Vector2f(700, 700));
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(0, 300));
 	host->setPosition(Vector2f(500, 450));
@@ -90,7 +90,7 @@ HomeMenu::HomeMenu()
 	accountButton->setPosition(Vector2f(1770, 750));
 	accountFriendsMenuButton->setPosition(1770, 600);
 	achievementsButton->setPosition(1770, 450);
-	dailyButton->setPosition(Vector2f(800, 350));
+	dailyButton->setPosition(Vector2f(900, 700));
 	choseIndex = -1;
 
 	drone->setScale(2, 2);
@@ -183,14 +183,17 @@ void HomeMenu::drawPublic()
 	window->draw(*accountButton);
 	window->draw(*accountFriendsMenuButton);
 	window->draw(*achievementsButton);
-	window->draw(*dailyButton);
+
 	if (isMultiplayerOpen)
 	{
 		window->draw(*host);
 		window->draw(*client);
 	}
 	else
+	{
 		window->draw(*startButton);
+		window->draw(*dailyButton);
+	}
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
@@ -245,16 +248,15 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				status = 2;
 
+				multiplayerGUI = new MultiplayerGUI(window);
 				if (multiplayerGUI->start(true))
 				{
 					delete multiplayerGUI;
-					multiplayerGUI = new MultiplayerGUI(window);
 					return 2;
 				}
 				else
 				{
 					delete multiplayerGUI;
-					multiplayerGUI = new MultiplayerGUI(window);
 					status = 0;
 					return 0;
 				}
@@ -269,16 +271,15 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				status = 3;
 
+				multiplayerGUI = new MultiplayerGUI(window);
 				if (multiplayerGUI->start(false))
 				{
 					delete multiplayerGUI;
-					multiplayerGUI = new MultiplayerGUI(window);
 					return 3;
 				}
 				else
 				{
 					delete multiplayerGUI;
-					multiplayerGUI = new MultiplayerGUI(window);
 					status = 0;
 					return 0;
 				}
@@ -297,6 +298,23 @@ int  HomeMenu::CheckClicked(Event event)
 			{
 				status = 1;
 				return 1;
+			}
+
+			// Daily
+			pos = Service::getInstance()->getObjectPosition(dailyButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(dailyButton->getPosition() + Vector2f(dailyButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				if (Account::getAcc()->getAccName() == "???")
+				{
+					new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+					return 0;
+				}
+				loadDaily();
+				Game::getInstance()->setWindow(&*window);
+				Game::getInstance()->setStatus(1);
+				Game::getInstance()->startGame();
 			}
 		}
 		//MultiplayerMunue
@@ -323,22 +341,6 @@ int  HomeMenu::CheckClicked(Event event)
 			return 0;
 		}
 
-		// Daily
-		pos = Service::getInstance()->getObjectPosition(dailyButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(dailyButton->getPosition() + Vector2f(dailyButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			if (Account::getAcc()->getAccName() == "???")
-			{
-				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
-				return 0;
-			}
-			loadDaily();
-			Game::getInstance()->setWindow(&*window);
-			Game::getInstance()->setStatus(1);
-			Game::getInstance()->startGame();
-		}
 		//Exit
 		pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100));
@@ -421,8 +423,6 @@ void HomeMenu::HomeMenuStart()
 		else new PopUpMessage("Fehler beim Synchronisieren");
 	}
 	callCount++;
-
-	multiplayerGUI = new MultiplayerGUI(window);
 
 	while (window->isOpen())
 	{
