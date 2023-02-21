@@ -104,7 +104,7 @@ public:
 	/// </summary>
 	/// <param name="">Geld Betrag</param>
 	/// <returns>True, wenn gesendet</returns>
-	static bool send(int);
+	static bool send(std::string, int);
 
 	static bool send(int, Vector2f);
 
