@@ -47,15 +47,22 @@ SendMoney::SendMoney()
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{
 			background[i]->setTexture(*res->getSendMoneyBackgroundTexture());
-			background[i]->setPosition(Vector2f(1295, 150));
+			background[i]->setPosition(Vector2f(1295, 150 + i * 110));
 
-			playerName[i]->setString(Multiplayer::playerLight[i]->getPlayerName());
+			if (Game::getInstance()->getStatus() == 2)
+			{
+				playerName[i]->setString(Multiplayer::player[i]->getPlayerName());
+			}
+			else if (Game::getInstance()->getStatus() == 3)
+			{
+				playerName[i]->setString(Multiplayer::playerLight[i]->getPlayerName());
+			}
 			playerName[i]->setFont(*font);
 			playerName[i]->setCharacterSize(30);
 			playerName[i]->setFillColor(Color::White);
 			playerName[i]->setOutlineThickness(3);
 			playerName[i]->setOutlineColor(Color::Black);
-			playerName[i]->setPosition(background[i]->getPosition());
+			playerName[i]->setPosition(background[i]->getPosition().x + 20, background[i]->getPosition().y + 10);
 		}
 
 		chooseShape = new RectangleShape();
