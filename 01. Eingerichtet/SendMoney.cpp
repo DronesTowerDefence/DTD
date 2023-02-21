@@ -89,12 +89,24 @@ void SendMoney::checkClicked()
 		{
 			pos = Service::getInstance()->getObjectPosition(buttonOpen->getPosition());
 			pos2 = Service::getInstance()->getObjectPosition(buttonOpen->getPosition() + Vector2f(100, 100));
-
 		}
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			isOpen = !isOpen;
+		}
+
+		if (isOpen)
+		{
+			for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
+			{
+				pos = Service::getInstance()->getObjectPosition(background[i]->getPosition());
+				pos2 = Service::getInstance()->getObjectPosition(background[i]->getPosition() + Vector2f(background[i]->getTexture()->getSize()));
+				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+				{
+					chooseShape->setPosition(background[i]->getPosition());
+				}
+			}
 		}
 
 	}
@@ -152,7 +164,7 @@ bool SendMoney::send()
 
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{
-			if (chooseShape->getPosition() == playerName[i]->getPosition())
+			if (chooseShape->getPosition() == background[i]->getPosition())
 			{
 				name = playerName[i]->getString();
 			}
