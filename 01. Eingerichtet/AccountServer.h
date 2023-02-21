@@ -17,15 +17,24 @@ private:
 	/// <returns>Response Body | "-1" wenn nicht erfolgreich</returns>
 	std::string send();
 
+	static AccountServer* accountServerObject;
 public:
 	AccountServer();
 	~AccountServer();
+
+	static AccountServer* getAccServerObj();
 
 	/// <summary>
 	/// HTML-Statuscode (200 = OK)
 	/// </summary>
 	/// <returns></returns>
 	int getRequestLastStatusCode();
+
+	/// <summary>
+	/// Um am Ende eines Spieles alle Achievements und XP an den Server zu senden
+	/// </summary>
+	/// <returns></returns>
+	static bool sendAllAchievementsAndXp();
 
 	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
@@ -61,7 +70,7 @@ public:
 	/// </summary>
 	/// <param name="achievementID"></param>
 	/// <returns>"1" wenn erfolgreich</returns>
-	std::string sendAchievement(std::string achievementID);
+	std::string sendAchievement(int achievementID, int currentValue);
 
 	/// <summary>
 	/// Bekommt alle AchievemtIDs zu dem Benutzer

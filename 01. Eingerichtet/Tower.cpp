@@ -16,6 +16,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 	//Ob der Index richtig ist
 	if (index >= 0 && index <= 4)
 	{
+		AchievementsContainer::getAchievement(2)->addToCurrentValue(1);
 		//Setzen der Attribute
 		index = _index;
 		ownerName = _ownerName;
@@ -95,6 +96,7 @@ bool Tower::generateMoney()
 		{
 			generationCooldown = true;
 			Round::getInstance()->addMoney(moneyGeneration);
+			AchievementsContainer::getAchievement(8)->addToCurrentValue(moneyGeneration);
 			res->statistic_moneyGeneration += moneyGeneration;
 		}
 		else if (generationTimer.getElapsedTime().asSeconds() > speed)
@@ -254,6 +256,7 @@ void Tower::Update1()
 				Multiplayer::send(id, 2, update->getIndex2());
 			}
 			update->setStringPrice();
+			AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 		}
 	}
 
@@ -296,6 +299,7 @@ void Tower::Update2()
 
 			}
 			update->setStringPrice();
+			AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 		}
 	}
 

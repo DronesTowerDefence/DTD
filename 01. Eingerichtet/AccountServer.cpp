@@ -1,6 +1,9 @@
 #include "Ressources.h"
 #include "AccountServer.h"
+#include "Achievements.h"
 #include <fstream>
+
+AccountServer* AccountServer::accountServerObject = nullptr;
 
 std::string AccountServer::send()
 {
@@ -55,9 +58,40 @@ AccountServer::~AccountServer()
 	delete timeout;
 }
 
+AccountServer* AccountServer::getAccServerObj()
+{
+	if (accountServerObject == nullptr)
+		accountServerObject = new AccountServer();
+	return accountServerObject;
+}
+
 int AccountServer::getRequestLastStatusCode()
 {
 	return lastStatusCode;
+}
+
+bool AccountServer::sendAllAchievementsAndXp()
+{
+	if (Account::getAccName() == invalidUsername)
+	{
+		return false;
+	}
+	else
+	{
+		AccountServer* accServer = new AccountServer();
+		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+		for (int i = 1; i <= achievementCount; i++)
+		{
+			Achievement* a = AchievementsContainer::getAchievement(i);
+			if (a->getUnlocked(0))
+			{
+				accServer->sendAchievement(a->getAchievementID(), a->getCurrentValue());
+			}
+			a = nullptr;
+		}
+
+		return true;
+	}
 }
 
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
@@ -96,7 +130,7 @@ sf::Image* AccountServer::getProfilePicture(std::string username)
 		//// SFML Variante - funktioniert nicht
 		//sf::Image* image = new sf::Image();
 		//image->loadFromMemory(&str, str.length());
-		
+
 		// C++ Variante
 		std::ofstream file;
 		file.open("saves/userProfilPicture.png", std::ios::binary);
@@ -123,14 +157,14 @@ std::string AccountServer::checkUsername(std::string username)
 	return send();
 }
 
-std::string AccountServer::sendAchievement(std::string achievementID)
+std::string AccountServer::sendAchievement(int achievementID, int currentValue)
 {
 	if (Account::getAccName() == "???")
 		return "0";
 
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "sendAchievement");
-	request->setBody(Account::getAccName() + "&" + achievementID);
+	request->setBody(Account::getAccName() + "&" + std::to_string(achievementID) + "_" + std::to_string(currentValue));
 
 	return send();
 }
@@ -141,7 +175,7 @@ std::string AccountServer::getAchievement(std::string username)
 	request->setField("Content-Type", "getAchievement");
 	request->setBody(username);
 
-	return send();
+	return send(); //Antwort: achievementID_value&achievementID_value&achievementID_value...
 }
 
 std::string AccountServer::sendXP(std::string username, std::string xp)
@@ -166,7 +200,7 @@ std::string AccountServer::getChallenge()
 {
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "getChalange");
-	
+
 	return send();
 }
 std::string AccountServer::wonChallenge(std::string unsername)

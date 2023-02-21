@@ -89,6 +89,7 @@ void AccountLogin::draw()
 		window->draw(*profilePicture);
 		window->draw(*profilePictureFrame);
 		window->draw(*accountLevelText);
+		window->draw(*accountXPText);
 	}
 	if (accountLoginEmailIsClicked)
 	{
@@ -207,6 +208,8 @@ bool AccountLogin::accountLogin(Event* event)
 					Account::setExperience(expServer);
 				}
 
+				AchievementsContainer::getAchievementsFromServer(Account::getAccName());
+
 				accountLoginStatusText->setString("Erfolgreich!");
 				new PopUpMessage("Erfolgreich!", seconds(2));
 
@@ -215,6 +218,7 @@ bool AccountLogin::accountLogin(Event* event)
 				sleep(sf::milliseconds(500));
 				accountLoginIsOpen = false;
 				return true;
+
 			}
 		}
 
@@ -255,6 +259,7 @@ bool AccountLogin::accountPage(Event* event)
 			Account::deleteAcc();
 			Loadup::usernameSuccessfull = false;
 			Account::createAcc("???", "\0", nullptr);
+			AchievementsContainer::resetAllAchievements();
 			return true;
 		}
 
@@ -321,6 +326,12 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountLevelText->setCharacterSize(50);
 	accountLevelText->setString("Level 1");
 
+	accountXPText = new Text();
+	accountXPText->setFont(*font);
+	accountXPText->setPosition(Vector2f(900, 250));
+	accountXPText->setFillColor(Color::Black);
+	accountXPText->setCharacterSize(30);
+	accountXPText->setString("0 / 1000");
 
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
@@ -336,6 +347,8 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
+
+		accountXPText->setString(std::to_string(Account::getExperience() % 1000) + " / 1000");
 
 		if (Account::getExperience() / 1000 == 0)
 			accountLevelText->setString("Level 1");

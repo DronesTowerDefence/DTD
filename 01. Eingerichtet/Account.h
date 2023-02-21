@@ -1,6 +1,8 @@
 #pragma once
 #include "Ressources.h"
 
+#define invalidUsername "???"
+
 /// <summary>
 /// Eigener Account
 /// </summary>
@@ -15,10 +17,12 @@ private:
 
 	Account();
 	Account(std::string userName, std::string email, sf::Image* image);
+	static void sendXp();
 
 public:
 	static Account* createAcc(std::string userName, std::string email, sf::Image* image);
 	static bool setExperience(int _exp);
+	static bool addExperience(int _exp);
 	static Account* getAcc();
 	static bool deleteAcc();
 	static std::string getAccName();

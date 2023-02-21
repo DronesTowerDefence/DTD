@@ -141,6 +141,10 @@ void Round::sellTower(Tower* a, bool b)
 
 		//Fügt den Wert des Turmes dem Spieler hinzu
 		addMoney(a->getValue() * 0.75);
+		if (!b)
+		{
+			AchievementsContainer::getAchievement(9)->addToCurrentValue(1);
+		}
 
 		delete a;
 		a = nullptr;
@@ -174,7 +178,7 @@ void Round::nextRound()
 	if (Account::getAccName() != "???")
 	{
 		Account::setExperience(Account::getExperience() + 2);
-		accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+		//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 	}
 
 	//Startet eine neue Runde, je nachdem ob Host/Client/Singleplayer
@@ -224,12 +228,13 @@ void Round::addMoney(int _money)
 bool Round::submoney(int _money)
 {
 	if (_money < 0)
-		return 0;
+		return false;
 	else if (money < _money)
-		return 0;
+		return false;
 
+	AchievementsContainer::getAchievement(3)->addToCurrentValue(_money);
 	money -= _money;
-	return 1;
+	return true;
 }
 void Round::addHealth(int _health)
 {

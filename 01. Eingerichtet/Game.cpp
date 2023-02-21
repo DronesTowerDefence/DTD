@@ -46,8 +46,11 @@ Game::Game()
 	p_ressources->getBackgroundMusic(p_map->getIndex())->play();
 	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
 
-	//	p_ressources->getBackgroundMusic(p_map->getIndex())->setLoop(true);
-
+	AchievementsContainer::getAchievement(6)->addToCurrentValue(1);
+	if (status != 1)
+	{
+		AchievementsContainer::getAchievement(7)->addToCurrentValue(1);
+	}
 }
 #pragma endregion
 
@@ -454,7 +457,12 @@ void Game::checkTowerAlias()
 		{
 			isMouseClicked = true;
 		}
-
+		if (towerAliasForbiddenPosition()) {
+			newTower->getSpr()->setTexture(*p_ressources->getTowerAliasTexture(newTower->getIndex()));
+		}
+		if (!towerAliasForbiddenPosition()) {
+			newTower->getSpr()->setTexture(*p_ressources->getTowerNoBuyTexture(newTower->getIndex()));
+		}
 		newTower->setPositionMouse(Mouse::getPosition(*window)); //Bewegt den TowerAlias an die Position der Maus
 		if (isMouseClicked && !Mouse::isButtonPressed(Mouse::Button::Left))
 		{
@@ -704,6 +712,8 @@ void Game::checkLoseGame()
 			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
 			updateEco();
 
+			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
+
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
 			{
 				gameOverWonText[i].setFont(stdFont);
@@ -717,7 +727,7 @@ void Game::checkLoseGame()
 			gameOverWonText[0].setPosition(Vector2f(1200, 440));
 			gameOverWonText[1].setPosition(Vector2f(1200, 530));
 			Account::setExperience(Account::getExperience() + 300);
-			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
 
 		//Setzen der Texturen
@@ -1347,7 +1357,7 @@ void Game::saveGame()
 
 		if (Account::getAccName() != "???")
 		{
-			accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
 
 		new PopUpMessage("Spiel gespeichert!");

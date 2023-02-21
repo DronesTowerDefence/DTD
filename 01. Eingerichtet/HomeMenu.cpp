@@ -21,9 +21,9 @@ HomeMenu::HomeMenu()
 	achievementGUI = nullptr;
 	res = Ressources::getInstance();
 
-	startButton = new Sprite;
+	startButton = new Sprite();
 	font = new Font();
-	titel = new Sprite;
+	titel = new Sprite();
 	backround = new Sprite();
 	drone = new Sprite();
 	multiplayerMenue = new Sprite();
@@ -36,7 +36,7 @@ HomeMenu::HomeMenu()
 	achievementsButton = new Sprite();
 	dailyButton = new Sprite();
 	sideMenu = new RectangleShape();
-	pointer = new RectangleShape;
+	pointer = new RectangleShape();
 	upperBorder = new RectangleShape();
 
 	credits = new Text();
@@ -406,6 +406,12 @@ void HomeMenu::HomeMenuStart()
 	if (callCount > 1)
 	{
 		delete Game::getInstance();
+		new PopUpMessage("Synchronisiere Achievements");
+		if (AccountServer::sendAllAchievementsAndXp())
+		{
+			new PopUpMessage("Achievements synchronisiert");
+		}
+		else new PopUpMessage("Fehler beim Synchronisieren");
 	}
 	callCount++;
 

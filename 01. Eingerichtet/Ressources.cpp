@@ -349,7 +349,8 @@ Ressources::Ressources()
 	regulateMultiplayerPlayerCountTexture[1].loadFromFile("img/buttons/minusButton.png");
 	accountFriendsButtonTexture.loadFromFile("img/account/friendsMenu/accountFriendsButton.png");
 	achievementsButtonTexture.loadFromFile("img/achievements/achievementsButton.png");
-
+	achievementEarnedYesSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolYes.png");
+	achievementEarnedNotSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolNot.png");
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -885,6 +886,14 @@ Texture* Ressources::getAccountFriendsButtonTexture()
 Texture* Ressources::getAchievementsButtonTexture()
 {
 	return &achievementsButtonTexture;
+}
+Texture* Ressources::getAchievementEarnedYesSymbolTexture()
+{
+	return &achievementEarnedYesSymbolTexture;
+}
+Texture* Ressources::getAchievementEarnedNotSymbolTexture()
+{
+	return &achievementEarnedNotSymbolTexture;
 }
 Sprite* Ressources::getBlackBackgroundSprite()
 {

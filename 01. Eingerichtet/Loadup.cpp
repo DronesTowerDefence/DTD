@@ -66,22 +66,21 @@ void Loadup::run()
 	setLoadingbar(20);
 
 	PopUpMessage::initializePopUpMessages();
+	AchievementsContainer::createAchievements();
 	setLoadingbar(30);
 
-	AchievementsContainer::createAchievements();
-	setLoadingbar(40);
 
 	AccountServer* accServer = new AccountServer();
-	setLoadingbar(50);
+	setLoadingbar(40);
 
 	std::string username = readFromUserFile(1);
-	setLoadingbar(55);
+	setLoadingbar(50);
 
 	std::string email = readFromUserFile(2);
-	setLoadingbar(60);
+	setLoadingbar(55);
 
 	std::string usernameExist = accServer->checkUsername(username);
-	setLoadingbar(70);
+	setLoadingbar(60);
 
 	if (usernameExist == "1")
 	{
@@ -91,7 +90,7 @@ void Loadup::run()
 			image = new Image(res->getAccountProfilePicture()->copyToImage());
 		}
 		int _xp = stoi(accServer->getXP(username));
-		setLoadingbar(80);
+		setLoadingbar(70);
 		accServer->createAccount(username, email, image);
 		Account::setExperience(_xp);
 
@@ -103,12 +102,17 @@ void Loadup::run()
 		{
 			system("del saves\\user.sav");
 		}
-		setLoadingbar(80);
+		setLoadingbar(70);
 		accServer->createAccount("???", "\0", nullptr);
 	}
+	setLoadingbar(80);
+
+	AchievementsContainer::getAchievementsFromServer(Account::getAccName());
 	setLoadingbar(90);
 
 	delete accServer;
+	new UniqueAchievement(11);
+	new UniqueAchievement(12);
 	setLoadingbar(100);
 
 	done = true;

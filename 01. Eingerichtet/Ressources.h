@@ -8,6 +8,9 @@
 #include <SFML/Network.hpp>
 using namespace sf;
 
+#define towerTypeCount 5
+#define droneTypeCount 5
+
 class Ressources
 {
 private:
@@ -117,6 +120,8 @@ private:
 	Texture blackBackgroundTexture;
 	Texture accountFriendsButtonTexture;
 	Texture achievementsButtonTexture;
+	Texture achievementEarnedYesSymbolTexture;
+	Texture achievementEarnedNotSymbolTexture;
 
 	Sprite blackBackground;
 
@@ -233,6 +238,8 @@ public:
 	Texture* getBlackBackgroundTexture();
 	Texture* getAccountFriendsButtonTexture();
 	Texture* getAchievementsButtonTexture();
+	Texture* getAchievementEarnedYesSymbolTexture();
+	Texture* getAchievementEarnedNotSymbolTexture();
 
 	Sprite* getBlackBackgroundSprite();
 
