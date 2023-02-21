@@ -197,7 +197,7 @@ skipSettings:
 }
 bool Game::setDailyChanllenge()
 {
-	round->setIndex(HomeMenu::getInstance()->getDaily()->getVon());
+	round->setIndex(HomeMenu::getInstance()->getDaily()->getVon() - 1);
 	round->setHealth(HomeMenu::getInstance()->getDaily()->getLeben());
 	round->setMoney(HomeMenu::getInstance()->getDaily()->getGeld());
 	return true;

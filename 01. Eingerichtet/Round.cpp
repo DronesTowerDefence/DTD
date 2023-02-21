@@ -212,6 +212,7 @@ void Round::nextRound()
 	}
 	if (index == HomeMenu::getInstance()->getDaily()->getBis() && !lost)
 	{
+		accServer->wonChallenge(Account::getAccName());
 		won = true;
 	}
 }

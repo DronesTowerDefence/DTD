@@ -80,5 +80,6 @@ public:
 	/// <returns></returns>
 
 	std::string getChallenge();
+	std::string wonChallenge(std::string unsername);
 };
 

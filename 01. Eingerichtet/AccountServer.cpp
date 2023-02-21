@@ -169,3 +169,11 @@ std::string AccountServer::getChallenge()
 	
 	return send();
 }
+std::string AccountServer::wonChallenge(std::string unsername)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "getChalange");
+	request->setBody(unsername );
+
+	return send();
+}

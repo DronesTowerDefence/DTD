@@ -502,7 +502,7 @@ void HomeMenu::loadDaily()
 	for (int i = 0; i < 5; i++)
 	{
 		tmp = challenge.substr(pos[i + 4] + 1, pos[i + 5] - pos[i + 4] - 1);
-		if (tmp == "1") { daily->setIsTowerAllowed(0, true); }
+		if (tmp == "1") { daily->setIsTowerAllowed(i, true); }
 		else { daily->setIsTowerAllowed(i, false); };
 	}
 	daily->setIsDaily(true);
