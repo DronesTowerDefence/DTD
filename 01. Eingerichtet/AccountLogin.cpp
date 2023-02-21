@@ -208,7 +208,7 @@ bool AccountLogin::accountLogin(Event* event)
 					Account::setExperience(expServer);
 				}
 
-				AchievementsContainer::getAchievementsFromServer();
+				AchievementsContainer::getAchievementsFromServer(Account::getAccName());
 
 				accountLoginStatusText->setString("Erfolgreich!");
 				new PopUpMessage("Erfolgreich!", seconds(2));

@@ -34,6 +34,24 @@ public:
 	int getAchievementID();
 };
 
+
+class UniqueAchievement
+{
+private:
+	static std::list<UniqueAchievement*> allUniqueAchievements;
+	Achievement* p_achievement;
+	int counter;
+	bool towerPlaced[towerTypeCount];
+
+public:
+	UniqueAchievement(int achievementID);
+	bool checkAchievement();
+	void setCounter(int _counter);
+	int getCounter();
+	static UniqueAchievement* getUniqueAchievement(int achievementID);
+};
+
+
 static class AchievementsContainer
 {
 private:
@@ -41,9 +59,33 @@ private:
 	AchievementsContainer();
 
 public:
+	/// <summary>
+	/// Ließt die Achievements aus der Datei
+	/// </summary>
 	static void createAchievements();
+
+	/// <summary>
+	/// Fügt ein Achievement der Liste hinzu
+	/// </summary>
+	/// <param name="_achievement"></param>
 	static void addAchievement(Achievement* _achievement);
+
+	/// <summary>
+	/// Nicht nullpbasiert!
+	/// </summary>
+	/// <param name="_id"></param>
+	/// <param name="_title"></param>
+	/// <returns></returns>
 	static Achievement* getAchievement(int _id, std::string _title = "\0");
+
+	/// <summary>
+	/// Setzt die Werte der Achievements zurück
+	/// </summary>
 	static void resetAllAchievements();
-	static bool getAchievementsFromServer();
+
+	/// <summary>
+	/// Setzt die Werte der Achievements vom Server
+	/// </summary>
+	/// <returns></returns>
+	static bool getAchievementsFromServer(std::string accName);
 };

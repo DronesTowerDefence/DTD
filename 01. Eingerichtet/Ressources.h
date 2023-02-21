@@ -8,6 +8,9 @@
 #include <SFML/Network.hpp>
 using namespace sf;
 
+#define towerTypeCount 5
+#define droneTypeCount 5
+
 class Ressources
 {
 private:

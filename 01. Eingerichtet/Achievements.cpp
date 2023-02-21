@@ -1,9 +1,11 @@
 #include "Achievements.h"
 #include "Account.h"
 #include "AccountServer.h"
+#include "Round.h"
 #include <fstream>
 
 std::list<Achievement*> AchievementsContainer::allAchievements;
+std::list<UniqueAchievement*> UniqueAchievement::allUniqueAchievements;
 
 Achievement::Achievement(std::string _title, int _value0, int _value1, int _value2, int _id)
 {
@@ -110,6 +112,78 @@ int Achievement::getAchievementID()
 	return m_achievementID;
 }
 
+
+UniqueAchievement::UniqueAchievement(int achievementID)
+{
+	allUniqueAchievements.push_back(this);
+	p_achievement = AchievementsContainer::getAchievement(achievementID);
+	counter = 0;
+	for (int i = 0; i < towerTypeCount; i++)
+	{
+		towerPlaced[i] = false;
+	}
+}
+
+bool UniqueAchievement::checkAchievement()
+{
+	if (p_achievement->getAchievementID() == 11)
+	{
+		//Jede Turmart
+		int j = 0;
+		for (int i = 0; i < towerTypeCount; i++)
+		{
+			if (towerPlaced[i])
+				j++;
+		}
+
+		if (j == towerTypeCount)
+			return true;
+		else
+			return false;
+	}
+	else if (p_achievement->getAchievementID() == 12)
+	{
+		//Nur eine Turmart
+		int j = 0;
+		for (int i = 0; i < towerTypeCount; i++)
+		{
+			if (towerPlaced[i])
+				j++;
+		}
+
+		if (j == 1)
+			return true;
+		else
+			return false;
+	}
+	else return false;
+}
+
+void UniqueAchievement::setCounter(int _counter)
+{
+	counter = _counter;
+}
+
+int UniqueAchievement::getCounter()
+{
+	return counter;
+}
+
+UniqueAchievement* UniqueAchievement::getUniqueAchievement(int achievementID)
+{
+	UniqueAchievement* uA = nullptr;
+	for (auto i : allUniqueAchievements)
+	{
+		if (i->p_achievement->getAchievementID() == achievementID)
+		{
+			uA = i;
+			break;
+		}
+	}
+	return uA;
+}
+
+
 void AchievementsContainer::createAchievements()
 {
 	std::string _title = "";
@@ -193,12 +267,12 @@ void AchievementsContainer::resetAllAchievements()
 	}
 }
 
-bool AchievementsContainer::getAchievementsFromServer()
+bool AchievementsContainer::getAchievementsFromServer(std::string accName)
 {
 	resetAllAchievements();
 
 	AccountServer* accServer = new AccountServer();
-	std::string allAchievementValues = accServer->getAchievement(Account::getAccName());
+	std::string allAchievementValues = accServer->getAchievement(accName);
 	delete accServer;
 
 	if (allAchievementValues != "0" && allAchievementValues != "-1")

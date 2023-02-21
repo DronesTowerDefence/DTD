@@ -107,10 +107,12 @@ void Loadup::run()
 	}
 	setLoadingbar(80);
 
-	AchievementsContainer::getAchievementsFromServer();
+	AchievementsContainer::getAchievementsFromServer(Account::getAccName());
 	setLoadingbar(90);
 
 	delete accServer;
+	new UniqueAchievement(11);
+	new UniqueAchievement(12);
 	setLoadingbar(100);
 
 	done = true;
