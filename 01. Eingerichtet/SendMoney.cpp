@@ -42,26 +42,29 @@ SendMoney::SendMoney()
 		background[i] = new Sprite();
 		playerName[i] = new Text();
 	}
-	for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
+	if (Multiplayer::multiplayerPlayerCount > 1)
 	{
-		background[i]->setTexture(*res->getSendMoneyBackgroundTexture());
-		background[i]->setPosition(Vector2f(1295, 150));
+		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
+		{
+			background[i]->setTexture(*res->getSendMoneyBackgroundTexture());
+			background[i]->setPosition(Vector2f(1295, 150));
 
-		playerName[i]->setString(Multiplayer::playerLight[i]->getPlayerName());
-		playerName[i]->setFont(*font);
-		playerName[i]->setCharacterSize(30);
-		playerName[i]->setFillColor(Color::White);
-		playerName[i]->setOutlineThickness(3);
-		playerName[i]->setOutlineColor(Color::Black);
-		playerName[i]->setPosition(background[i]->getPosition());
+			playerName[i]->setString(Multiplayer::playerLight[i]->getPlayerName());
+			playerName[i]->setFont(*font);
+			playerName[i]->setCharacterSize(30);
+			playerName[i]->setFillColor(Color::White);
+			playerName[i]->setOutlineThickness(3);
+			playerName[i]->setOutlineColor(Color::Black);
+			playerName[i]->setPosition(background[i]->getPosition());
+		}
+
+		chooseShape = new RectangleShape();
+		chooseShape->setFillColor(Color::Transparent);
+		chooseShape->setSize(Vector2f(res->getSendMoneyBackgroundTexture()->getSize()));
+		chooseShape->setOutlineColor(Color::Red);
+		chooseShape->setOutlineThickness(5);
+		chooseShape->setPosition(background[0]->getPosition());
 	}
-
-	chooseShape = new RectangleShape();
-	chooseShape->setFillColor(Color::Transparent);
-	chooseShape->setSize(Vector2f(res->getSendMoneyBackgroundTexture()->getSize()));
-	chooseShape->setOutlineColor(Color::Red);
-	chooseShape->setOutlineThickness(5);
-	chooseShape->setPosition(background[0]->getPosition());
 }
 #pragma endregion
 
