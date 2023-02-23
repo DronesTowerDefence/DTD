@@ -88,8 +88,11 @@ void AccountLogin::draw()
 		window->draw(*accountLoginStatusText);
 		window->draw(*profilePicture);
 		window->draw(*profilePictureFrame);
-		window->draw(*accountLevelText);
-		window->draw(*accountXPText);
+		if (Account::getAccName() != invalidUsername)
+		{
+			window->draw(*accountLevelText);
+			window->draw(*accountXPText);
+		}
 	}
 	if (accountLoginEmailIsClicked)
 	{

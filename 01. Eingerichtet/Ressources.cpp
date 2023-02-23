@@ -16,7 +16,7 @@ Ressources::Ressources()
 
 	//Datei wird initialisiert
 	std::ifstream ok;
-	ok.open("saves/round_data.csv", std::ios::in);
+	ok.open("data/round_data.csv", std::ios::in);
 
 
 
@@ -352,6 +352,7 @@ Ressources::Ressources()
 	achievementEarnedYesSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolYes.png");
 	achievementEarnedNotSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolNot.png");
 	startDailyButtonTexture.loadFromFile("img/buttons/startDailyButton.png");
+	openShopButtonTexture.loadFromFile("img/shop/openShopButton.png");
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -899,6 +900,10 @@ Texture* Ressources::getAchievementEarnedNotSymbolTexture()
 Texture* Ressources::getStartDailyButtonTexture()
 {
 	return &startDailyButtonTexture;
+}
+Texture* Ressources::getOpenShopButtonTexture()
+{
+	return &openShopButtonTexture;
 }
 Sprite* Ressources::getBlackBackgroundSprite()
 {

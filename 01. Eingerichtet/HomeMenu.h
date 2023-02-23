@@ -7,6 +7,7 @@
 #include "AccountLogin.h"
 #include "MultiplayerGUI.h"
 #include "AchievementGUI.h"
+#include "ShopGUI.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -57,6 +58,7 @@ private:
 	Sprite* accountFriendsMenuButton;
 	Sprite* achievementsButton;
 	Sprite* dailyButton;
+	Sprite* shopButton;
 
 	Clock* animation;
 
@@ -66,6 +68,7 @@ private:
 
 	MultiplayerGUI* multiplayerGUI;
 	AchievementGUI* achievementGUI;
+	ShopGUI* shopGUI;
 
 	AccountServer* accServer;
 
@@ -94,6 +97,7 @@ public:
 	// bool checkTestVersionEnd();
 	int getChoseIndex();
 	MultiplayerGUI* getMultiplayerGUI();
+	ShopGUI* getShopGUI();
 	int getStatus();
 
 	void setWindow(RenderWindow* window);

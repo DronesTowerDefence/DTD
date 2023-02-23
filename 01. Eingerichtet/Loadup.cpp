@@ -1,6 +1,7 @@
 #include "Loadup.h"
 #include "PopUpMessage.h"
 #include "Achievements.h"
+#include "ShopContent.h"
 #include <fstream>
 
 bool Loadup::usernameSuccessfull = false;
@@ -62,6 +63,7 @@ void Loadup::run()
 {
 	setLoadingbar(10);
 
+	std::string username = "0", email = "0", usernameExist = "0";
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
 	setLoadingbar(20);
 
@@ -69,18 +71,22 @@ void Loadup::run()
 	AchievementsContainer::createAchievements();
 	setLoadingbar(30);
 
-
 	AccountServer* accServer = new AccountServer();
 	setLoadingbar(40);
 
-	std::string username = readFromUserFile(1);
+	username = readFromUserFile(1);
 	setLoadingbar(50);
 
-	std::string email = readFromUserFile(2);
+	if (username == "0")
+		goto skipAccount;
+
+	email = readFromUserFile(2);
 	setLoadingbar(55);
 
-	std::string usernameExist = accServer->checkUsername(username);
+	usernameExist = accServer->checkUsername(username);
 	setLoadingbar(60);
+
+skipAccount:
 
 	if (usernameExist == "1")
 	{
@@ -107,14 +113,21 @@ void Loadup::run()
 	}
 	setLoadingbar(80);
 
-	AchievementsContainer::getAchievementsFromServer(Account::getAccName());
+	if (Account::getAccName() != invalidUsername)
+		AchievementsContainer::getAchievementsFromServer(Account::getAccName());
 	setLoadingbar(90);
 
 	delete accServer;
 	new UniqueAchievement(11);
 	new UniqueAchievement(12);
+	ShopContentData::createShopContentDataFromFile();
 	setLoadingbar(100);
 
+
+	Account::deleteAcc();
+	Account::createAcc("TestAcc", "test@email.com", nullptr);
+	usernameSuccessfull = true;
+	
 	done = true;
 }
 

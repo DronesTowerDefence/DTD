@@ -19,6 +19,7 @@ HomeMenu::HomeMenu()
 	window = nullptr;
 	multiplayerGUI = nullptr;
 	achievementGUI = nullptr;
+	shopGUI = nullptr;
 	res = Ressources::getInstance();
 
 	startButton = new Sprite();
@@ -164,6 +165,10 @@ HomeMenu::HomeMenu()
 
 	choseText = new Text("Wähle eine Karte aus:", *font, 30);
 	choseText->setPosition(Vector2f(25, 300));
+
+	shopButton = new Sprite();
+	shopButton->setTexture(*res->getOpenShopButtonTexture());
+	shopButton->setPosition(1770, 300);
 }
 #pragma endregion
 
@@ -183,6 +188,7 @@ void HomeMenu::drawPublic()
 	window->draw(*accountButton);
 	window->draw(*accountFriendsMenuButton);
 	window->draw(*achievementsButton);
+	window->draw(*shopButton);
 
 	if (isMultiplayerOpen)
 	{
@@ -384,7 +390,7 @@ int  HomeMenu::CheckClicked(Event event)
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			if (Account::getAcc()->getAccName() == "???")
+			if (Account::getAcc()->getAccName() == invalidUsername)
 			{
 				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
 				return 0;
@@ -404,6 +410,25 @@ int  HomeMenu::CheckClicked(Event event)
 			achievementGUI = new AchievementGUI(window);
 			achievementGUI->openAchievementGUI();
 			delete achievementGUI;
+			return 0;
+		}
+
+		//ShopButton
+		pos = Service::getInstance()->getObjectPosition(shopButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(shopButton->getPosition() + Vector2f(shopButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			if (Account::getAcc()->getAccName() == invalidUsername)
+			{
+				new PopUpMessage("Bitte vorher anmelden");
+			}
+			else
+			{
+				shopGUI = new ShopGUI(window);
+				shopGUI->openShop();
+				delete shopGUI;
+			}
 			return 0;
 		}
 
@@ -567,6 +592,10 @@ int HomeMenu::getChoseIndex()
 MultiplayerGUI* HomeMenu::getMultiplayerGUI()
 {
 	return multiplayerGUI;
+}
+ShopGUI* HomeMenu::getShopGUI()
+{
+	return shopGUI;
 }
 int HomeMenu::getStatus()
 {

@@ -20,6 +20,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	m_profileImage = new sf::Image();
 	*m_profileImage = Ressources::getInstance()->getAccountProfilePicture()->copyToImage();
 	m_experience = 0;
+	m_shopCoins = 0;
 
 	if (image != nullptr)
 	{
@@ -60,6 +61,16 @@ bool Account::setExperience(int _exp)
 	else
 		return false;
 
+}
+
+bool Account::setShopCoins(int _coins)
+{
+	if (_coins >= 0)
+	{
+		m_acc->m_shopCoins = _coins;
+		return true;
+	}
+	else return false;
 }
 
 bool Account::addExperience(int _exp)
@@ -108,4 +119,9 @@ sf::Image* Account::getProfileImage()
 int Account::getExperience()
 {
 	return m_acc->m_experience;
+}
+
+int Account::getShopCoins()
+{
+	return m_acc->m_shopCoins;
 }
