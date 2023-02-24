@@ -14,6 +14,7 @@
 *.sav
 savegame1.sav
 [].sav
+saves/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
