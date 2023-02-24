@@ -203,7 +203,7 @@ void AchievementsContainer::createAchievements()
 	int _value[3], _id;
 	char buffer[60], c;
 	std::ifstream file;
-	file.open("data/achievements.sav");
+	file.open("data/achievements.dronestd");
 	if (file.fail())
 	{
 		std::cout << " Fehler beim Laden der Achievements, Datei nicht gefunden.\n";

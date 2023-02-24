@@ -22,7 +22,7 @@ ShopContentData::ShopContentData(int id, int cost, std::string name, Texture* _t
 bool ShopContentData::createShopContentDataFromFile()
 {
 	std::ifstream file;
-	file.open("data/shopContent.sav");
+	file.open("data/shopContent.dronestd");
 	if (file.fail())
 	{
 		std::cout << " Fehler beim Laden der Shop-Daten, Datei nicht gefunden.\n";
