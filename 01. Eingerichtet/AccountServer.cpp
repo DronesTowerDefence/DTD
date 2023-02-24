@@ -196,6 +196,42 @@ std::string AccountServer::getXP(std::string username)
 	return send();
 }
 
+std::string AccountServer::sendCoins(std::string username, int _coins)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "sendCoins");
+	request->setBody(username + "&" + std::to_string(_coins));
+
+	return send();
+}
+
+std::string AccountServer::getCoins(std::string username)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "getCoins");
+	request->setBody(username);
+
+	return send();
+}
+
+std::string AccountServer::setShopContent(std::string username, int id)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "setShopContent");
+	request->setBody(username + "&" + std::to_string(id));
+
+	return send();
+}
+
+std::string AccountServer::getShopContent(std::string username)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "getShopContent");
+	request->setBody(username);
+
+	return send();
+}
+
 std::string AccountServer::getChallenge()
 {
 	request = new sf::Http::Request();
@@ -207,7 +243,7 @@ std::string AccountServer::wonChallenge(std::string unsername)
 {
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "getChalange");
-	request->setBody(unsername );
+	request->setBody(unsername);
 
 	return send();
 }

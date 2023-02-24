@@ -83,14 +83,20 @@ public:
 
 	std::string getXP(std::string username);
 
+	std::string sendCoins(std::string username, int _coins);
+
+	std::string getCoins(std::string username);
+
+	std::string setShopContent(std::string username, int id);
+
+	std::string getShopContent(std::string username);
+
 	/// <summary>
 	/// Ruft die Aktuelle Chanlage auf
 	/// </summary>
 	/// <returns></returns>
-
 	std::string getChallenge();
 	std::string wonChallenge(std::string unsername);
-
 
 	std::string getFriends(std::string unsername);
 

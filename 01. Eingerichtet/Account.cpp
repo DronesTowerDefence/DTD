@@ -8,8 +8,10 @@ Account* Account::m_acc = nullptr;
 
 Account::Account()
 {
-	m_accName = "???";
+	m_accName = invalidUsername;
 	m_email = "0";
+	m_experience = 0;
+	m_shopCoins = 0;
 	m_profileImage = nullptr;
 }
 
