@@ -45,7 +45,6 @@
     <ClInclude Include="SendMoney.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="ShopContent.h" />
-    <ClInclude Include="ShopFileHandler.h" />
     <ClInclude Include="ShopGUI.h" />
     <ClInclude Include="Sidebar.h" />
     <ClInclude Include="Tower.h" />
@@ -82,7 +81,6 @@
     <ClCompile Include="SendMoney.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="ShopContent.cpp" />
-    <ClCompile Include="ShopFileHandler.cpp" />
     <ClCompile Include="ShopGUI.cpp" />
     <ClCompile Include="Sidebar.cpp" />
     <ClCompile Include="Tower.cpp" />

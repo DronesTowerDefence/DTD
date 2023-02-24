@@ -2,13 +2,19 @@
 #include "HomeMenu.h"
 #include <fstream>
 
+std::list<ShopContentData*> ShopContentData::allShopContentData;
 
-ShopContentData::ShopContentData(int id, int cost, std::string name, int size)
+ShopContentData::ShopContentData(int id, int cost, std::string name, Texture* _texture)
 {
+	if (_texture->getSize().x == 0  && _texture->getSize().y == 0)
+	{
+		delete this;
+		return;
+	}
 	m_id = id;
 	m_cost = cost;
 	m_name = name;
-	m_size = size;
+	texture = _texture;
 	allShopContentData.push_back(this);
 	new ShopContentTexture(this);
 }
@@ -23,11 +29,12 @@ bool ShopContentData::createShopContentDataFromFile()
 		return false;
 	}
 
-	int _id = 0, _cost = 0, _textureSize = 0, pos1 = 0, pos2 = 0;
+	int _id = 0, _cost = 0, pos1 = 0, pos2 = 0;
 	std::string _name, str;
 	char buffer[50];
+	Texture* _texture = nullptr;
 
-	for (int i = 0; i < shopContentCount; i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _textureSize = 0, _cost = 0)
+	for (int i = 0; i < shopContentCount; i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _texture = nullptr, _cost = 0)
 	{
 		file.getline(buffer, 50);
 		str = buffer;
@@ -39,17 +46,16 @@ bool ShopContentData::createShopContentDataFromFile()
 		_name = str.substr(pos1 + 1, pos2 - pos1 - 1);
 
 		pos1 = str.find(';', pos2 + 1);
-		_textureSize = stoi(str.substr(pos2 + 1, pos1 - pos2 - 1));
+		_cost = stoi(str.substr(pos2 + 1, pos1 - pos2 - 1));
 
-		pos2 = str.find(';', pos1 + 1);
-		_cost = stoi(str.substr(pos1 + 1, pos2 - pos1 - 1));
-
-		new ShopContentData(_id, _cost, _name, _textureSize);
+		_texture = new Texture();
+		_texture->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/preview.png");
+		new ShopContentData(_id, _cost, _name, _texture);
 	}
 
 	file.close();
 
-	return true;
+	return (ShopContentData::allShopContentData.size() == shopContentCount);
 }
 
 int ShopContentData::getCost()
@@ -60,6 +66,11 @@ int ShopContentData::getCost()
 std::string ShopContentData::getName()
 {
 	return m_name;
+}
+
+Texture* ShopContentData::getTexture()
+{
+	return texture;
 }
 
 
@@ -89,11 +100,8 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 	costText->setOutlineThickness(3);
 	costText->setOutlineColor(Color::Black);
 
-	spriteTexture = new Texture();
-	spriteTexture->loadFromFile("img/tower0/tower0_0.png"); //TODO
-
 	contentSprite = new Sprite();
-	contentSprite->setTexture(*spriteTexture);
+	contentSprite->setTexture(*p_shopContentData->getTexture());
 	contentSprite->setPosition(50, 100);
 
 
@@ -108,6 +116,7 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 	sprite = new Sprite();
 	sprite->setTexture(texture->getTexture());
 	sprite->setPosition(0, 0);
+	sprite->setColor(Color::Red);
 
 	HomeMenu::getInstance()->getShopGUI()->addShopContent(this);
 }

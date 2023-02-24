@@ -153,6 +153,12 @@
     <ClCompile Include="Friends.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="ShopContent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopGUI.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -246,6 +252,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Friends.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopContent.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopGUI.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

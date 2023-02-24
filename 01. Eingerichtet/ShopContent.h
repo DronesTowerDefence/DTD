@@ -6,18 +6,19 @@
 class ShopContentData
 {
 private:
-	std::list<ShopContentData*> allShopContentData;
+	static std::list<ShopContentData*> allShopContentData;
 
 	int m_id;
 	int m_cost;
-	int m_size;
 	std::string m_name;
+	Texture* texture;
 
 public:
-	ShopContentData(int id, int cost, std::string name, int size);
+	ShopContentData(int id, int cost, std::string name, Texture* _texture);
 	static bool createShopContentDataFromFile();
 	int getCost();
 	std::string getName();
+	Texture* getTexture();
 };
 
 
@@ -28,7 +29,6 @@ private:
 	ShopContentData* p_shopContentData;
 
 	RenderTexture* texture;
-	Texture* spriteTexture;
 	Sprite* sprite;
 
 	Font* font;

@@ -69,6 +69,10 @@ void Loadup::run()
 
 	PopUpMessage::initializePopUpMessages();
 	AchievementsContainer::createAchievements();
+	if (!ShopContentData::createShopContentDataFromFile())
+	{
+		std::cout << "Fehler beim Laden des Shop-Contents" << std::endl;
+	}
 	setLoadingbar(30);
 
 	AccountServer* accServer = new AccountServer();
@@ -120,7 +124,6 @@ skipAccount:
 	delete accServer;
 	new UniqueAchievement(11);
 	new UniqueAchievement(12);
-	ShopContentData::createShopContentDataFromFile();
 	setLoadingbar(100);
 
 
