@@ -96,6 +96,7 @@ Updates::Updates(Tower* tower)
 	text1 = new Text();
 	text2 = new Text();
 	price = new Text();
+	TowerDamageCount = new Text();
 	informationtext = new Text();
 	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $");
 	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
@@ -115,11 +116,19 @@ Updates::Updates(Tower* tower)
 	price->setPosition(1745, 100);
 	informationtext->setPosition(Vector2f(1435, 300));
 
-
 	informationtext->setFont(arial);
 	text1->setFont(arial);
 	text2->setFont(arial);
 	price->setFont(arial);
+	
+	TowerDamageCount->setPosition(1745, 150);
+	TowerDamageCount->setFont(arial);
+	TowerDamageCount->setCharacterSize(25);
+	TowerDamageCount->setFillColor(Color::White);
+	TowerDamageCount->setOutlineColor(Color::Black);
+	TowerDamageCount->setOutlineThickness(2);
+
+
 
 	informationtext->setCharacterSize(20);
 	text1->setCharacterSize(20);
@@ -150,6 +159,8 @@ void Updates::draw(RenderWindow* window)
 	window->draw(*sell);
 	window->draw(*price);
 	window->draw(*towerOwnerText);
+	TowerDamageCount->setString("Schaden:" + std::to_string(tower->getDamageCount()));
+	window->draw(*TowerDamageCount);
 	for (int i = 0; i < 4; i++)
 	{
 		if (index1 > i)

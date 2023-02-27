@@ -176,6 +176,7 @@ void Projectile::moveProjectile()
 			if (tower->getRangeShape()->getGlobalBounds().intersects(i->getDroneSprite().getGlobalBounds()))
 			{
 				i->takeDamage(tower->getDamage());
+				tower->addDamageCount();
 			}
 		}
 		delete this;
@@ -193,6 +194,7 @@ void Projectile::collission()
 			{
 				i->takeDamage(tower->getDamage()); //Drohne nimmt Schaden
 				collided = true;
+				tower->addDamageCount();
 				delete this;
 			}
 		}

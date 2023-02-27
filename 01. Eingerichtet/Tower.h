@@ -161,6 +161,12 @@ private:
 	/// </summary>
 	Ressources* res;
 
+
+	/// <summary>
+	/// Wie viel Schaden hat der Turm gemacht
+	/// </summary>
+	int Damagecount;
+
 	/// <summary>
 	/// !! NICHT BENUTZEN !!
 	/// </summary>
@@ -210,6 +216,17 @@ public:
 	/// </summary>
 	/// <param name="float"></param>
 	float getValue();
+
+	/// <summary>
+	/// Return den gemachten Schaden des Turmes
+	/// </summary>
+	int getDamageCount();
+
+
+	/// <summary>
+	/// addiert den gemachten Schaden
+	/// </summary>
+	void addDamageCount();
 
 	/// <summary>
 	/// Return den userName des Besitzers

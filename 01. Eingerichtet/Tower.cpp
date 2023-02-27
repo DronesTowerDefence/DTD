@@ -24,6 +24,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 		ownerName = _ownerName;
 		id = globalId;
 		globalId++;
+		Damagecount = 0;
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
 		damage = res->getTowerDamage(index);
@@ -356,6 +357,9 @@ std::string Tower::getOwnerName()
 {
 	return ownerName;
 }
+int Tower::getDamageCount() {
+	return Damagecount;
+}
 Vector2f Tower::getTowerPos()
 {
 	return position;
@@ -423,6 +427,9 @@ void Tower::setProjektilSpeed(float speed)
 void Tower::setTowerChangeFrame(int frame)
 {
 	towerChangeFrame = frame;
+}
+void Tower::addDamageCount() {
+	Damagecount += damage;
 }
 void Tower::setUpdate(int _update1, int _update2)
 {
