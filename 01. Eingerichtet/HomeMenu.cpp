@@ -510,6 +510,12 @@ void HomeMenu::startGame()
 void HomeMenu::loadDaily()
 {
 	std::string challenge = accServer->getChallenge();
+	if (challenge == "-1")
+	{
+			daily->setIsDaily(false);
+			choseIndex = -1;
+			return;
+	}
 
 	int pos[10];
 	pos[0] = challenge.find(";");
@@ -552,13 +558,6 @@ void HomeMenu::loadDaily()
 		else { daily->setIsTowerAllowed(i, false); };
 	}
 	daily->setIsDaily(true);
-
-	if (choseIndex > 2 || choseIndex < 0)
-	{
-		daily->setIsDaily(false);
-		choseIndex = -1;
-	}
-
 }
 Daily* HomeMenu::getDaily()
 {
