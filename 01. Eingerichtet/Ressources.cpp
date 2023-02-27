@@ -79,7 +79,6 @@ Ressources::Ressources()
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 5;
-	towerCount = 6;
 	towerAttackTowerCount = 5;
 	towerMoneyTowerCount = 1;
 

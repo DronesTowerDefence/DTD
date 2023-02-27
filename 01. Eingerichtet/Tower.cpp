@@ -14,7 +14,7 @@ int Tower::globalId = 0;
 Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	//Ob der Index richtig ist
-	if (index >= 0 && index <= 4)
+	if (index >= 0 && index <= 5)
 	{
 		AchievementsContainer::getAchievement(2)->addToCurrentValue(1);
 		//Setzen der Attribute

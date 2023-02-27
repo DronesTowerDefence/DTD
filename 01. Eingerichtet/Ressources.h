@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 using namespace sf;
+#define towerCount 6
 
 class Ressources
 {
@@ -27,7 +28,6 @@ private:
 
 	int mapCount; //Wie viele Maps es gibt	
 	int droneCount; //Wie viele Drohnen-Typen es gibt
-	int towerCount; //Wie viele Turm-Typen es gibt
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
 	int towerProjectileIndex[6]; //Welches Projektil verwendet werden soll
