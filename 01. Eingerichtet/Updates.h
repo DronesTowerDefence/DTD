@@ -37,6 +37,7 @@ private:
 	Text* text2;
 	Text* price;
 	Text* towerOwnerText;
+	Text* TowerDamageCount;
 
 	Tower* tower;
 	Ressources* res;
