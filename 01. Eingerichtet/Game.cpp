@@ -706,10 +706,14 @@ void Game::checkLoseGame()
 			gameOverWonBackround.setTexture(*p_ressources->getGameWonTexture());
 			updateEco();
 
-
 			UniqueAchievement::getUniqueAchievement(11)->checkAchievement();
 			UniqueAchievement::getUniqueAchievement(12)->checkAchievement();
 			AchievementsContainer::getAchievement(5)->addToCurrentValue(1);
+
+			if (HomeMenu::getInstance()->getDaily()->getIsDaily())
+			{
+				AchievementsContainer::getAchievement(13)->addToCurrentValue(1);
+			}
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
 			{

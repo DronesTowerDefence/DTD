@@ -312,15 +312,23 @@ int  HomeMenu::CheckClicked(Event event)
 
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				if (Account::getAcc()->getAccName() == "???")
+				if (Account::getAcc()->getAccName() == invalidUsername)
 				{
 					new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
 					return 0;
 				}
 				loadDaily();
-				Game::getInstance()->setWindow(&*window);
-				Game::getInstance()->setStatus(1);
-				Game::getInstance()->startGame();
+				if (!daily->getIsDaily())
+				{
+					new PopUpMessage("Fehler bei der Daily");
+					return 0;
+				}
+				else
+				{
+					Game::getInstance()->setWindow(&*window);
+					Game::getInstance()->setStatus(1);
+					Game::getInstance()->startGame();
+				}
 			}
 		}
 		//MultiplayerMunue
@@ -544,6 +552,12 @@ void HomeMenu::loadDaily()
 		else { daily->setIsTowerAllowed(i, false); };
 	}
 	daily->setIsDaily(true);
+
+	if (choseIndex > 2 || choseIndex < 0)
+	{
+		daily->setIsDaily(false);
+		choseIndex = -1;
+	}
 
 }
 Daily* HomeMenu::getDaily()
