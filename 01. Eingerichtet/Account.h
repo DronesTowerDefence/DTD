@@ -19,8 +19,10 @@ private:
 	Account();
 	Account(std::string userName, std::string email, sf::Image* image);
 	static void sendXp();
+	static bool checkLevelUp();
 
 public:
+	static const int shopCoinsPerLevel = 800;
 	static Account* createAcc(std::string userName, std::string email, sf::Image* image);
 	static bool setExperience(int _exp);
 	static bool setShopCoins(int _coins);

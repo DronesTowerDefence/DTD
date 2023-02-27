@@ -103,6 +103,7 @@ skipAccount:
 		setLoadingbar(70);
 		accServer->createAccount(username, email, image);
 		Account::setExperience(_xp);
+		Account::setShopCoins(stoi(accServer->getCoins(username)));
 
 		usernameSuccessfull = true;
 	}
@@ -125,11 +126,6 @@ skipAccount:
 	new UniqueAchievement(11);
 	new UniqueAchievement(12);
 	setLoadingbar(100);
-
-
-	Account::deleteAcc();
-	Account::createAcc("TestAcc", "test@email.com", nullptr);
-	usernameSuccessfull = true;
 	
 	done = true;
 }
