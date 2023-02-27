@@ -218,7 +218,6 @@ void Round::nextRound()
 	{
 		accServer->wonChallenge(Account::getAccName());
 		won = true;
-		HomeMenu::getInstance()->getDaily()->setIsDaily(false);
 	}
 }
 void Round::addMoney(int _money)

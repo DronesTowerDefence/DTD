@@ -712,7 +712,7 @@ void Game::checkLoseGame()
 
 			if (HomeMenu::getInstance()->getDaily()->getIsDaily())
 			{
-				AchievementsContainer::getAchievement(13)->addToCurrentValue(1);
+ 				AchievementsContainer::getAchievement(13)->addToCurrentValue(1);
 			}
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
@@ -729,6 +729,7 @@ void Game::checkLoseGame()
 			gameOverWonText[1].setPosition(Vector2f(1200, 530));
 			Account::setExperience(Account::getExperience() + 300);
 			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
+			HomeMenu::getInstance()->getDaily()->setIsDaily(false);
 		}
 
 		//Setzen der Texturen

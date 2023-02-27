@@ -242,7 +242,7 @@ std::string AccountServer::getChallenge()
 std::string AccountServer::wonChallenge(std::string unsername)
 {
 	request = new sf::Http::Request();
-	request->setField("Content-Type", "getChalange");
+	request->setField("Content-Type", "getChallenge");
 	request->setBody(unsername);
 
 	return send();
