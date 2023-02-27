@@ -512,9 +512,9 @@ void HomeMenu::loadDaily()
 	std::string challenge = accServer->getChallenge();
 	if (challenge == "-1")
 	{
-			daily->setIsDaily(false);
-			choseIndex = -1;
-			return;
+		daily->setIsDaily(false);
+		choseIndex = -1;
+		return;
 	}
 
 	int pos[10];
@@ -548,7 +548,7 @@ void HomeMenu::loadDaily()
 
 	//karte
 	tmp = challenge.substr(pos[3] + 1, pos[4] - pos[3] - 1);
-	choseIndex = std::stoi(tmp);
+	choseIndex = std::stoi(tmp) - 1;
 
 	//sind dir Türme erlaubt
 	for (int i = 0; i < 5; i++)
