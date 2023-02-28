@@ -83,7 +83,7 @@ bool AccountServer::sendAllAchievementsAndXp()
 		for (int i = 1; i <= achievementCount; i++)
 		{
 			Achievement* a = AchievementsContainer::getAchievement(i);
-			if (a->getUnlocked(0))
+			if (a->getCurrentValue() > 0)
 			{
 				accServer->sendAchievement(a->getAchievementID(), a->getCurrentValue());
 			}
