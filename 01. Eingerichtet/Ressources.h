@@ -31,8 +31,8 @@ private:
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
 	int towerProjectileIndex[6]; //Welches Projektil verwendet werden soll
-	int towerPrice[6]; //Wie viel der Tower kostet
-	int towerChangeFrame[6]; //In Millisekunden
+	int towerPrice[towerCount]; //Wie viel der Tower kostet
+	int towerChangeFrame[towerCount]; //In Millisekunden
 	int towerUpgradePrice1[6][4]; //Preise der Upgrades des ersten Pfades
 	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
 	int towerSpawnSpeed[1];
@@ -43,11 +43,11 @@ private:
 	float multiplayerMoneySplit[4]; //Wie das Geld aufgeteilt wird. Der Index des Feldes ist die Spieleranzahl
 	float waitSubHealth;
 
-	float towerDamage[6]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
-	float towerSpeed[6]; //Wie schnell der Turm schießt, je kleiner desto schneller
-	float towerProjectileSpeed[6]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
-	float towerRange[6]; //Die Reichweite in der der Turm Drohnen angreifen kann
-	float towerMoneyGeneration[6]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
+	float towerDamage[towerCount]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
+	float towerSpeed[towerCount]; //Wie schnell der Turm schießt, je kleiner desto schneller
+	float towerProjectileSpeed[towerCount]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
+	float towerRange[towerCount]; //Die Reichweite in der der Turm Drohnen angreifen kann
+	float towerMoneyGeneration[towerCount]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
 	float towerUpdateDamage[6][4];
 	float towerUpdateSpeed[6][4];
 	float towerUpdateMoney[6][4];
@@ -71,7 +71,7 @@ private:
 
 	Music backgroundMusic[3];
 		
-	Texture towerTexture[5][4];
+	Texture towerTexture[towerCount][4];
 	Texture towerAliasTexture[5];
 	Texture towerPreviewTexture[5];
 	Texture towerNoBuyTexture[5];

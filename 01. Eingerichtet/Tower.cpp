@@ -111,7 +111,7 @@ bool Tower::generateMoney()
 bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 {
 	Projectile* p = nullptr;
-	if (index < 4)
+	if (index < towerCount)
 	{
 		if (!shootCooldown)
 		{

@@ -394,7 +394,7 @@ void Round::addTower(Tower* tower)
 {
 	allTowers.push_back(tower);
 
-	if (tower->getIndex() < 4)
+	if (tower->getIndex() < 4||tower->getIndex()>4)  //falls noch ein Money Tower hinzugefügt werden soll muss hier noch ein else if
 		allAttackTowers.push_back(tower);
 	else if (tower->getIndex() == 4)
 		allMoneyTowers.push_back(tower);
