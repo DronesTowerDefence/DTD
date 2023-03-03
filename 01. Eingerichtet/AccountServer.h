@@ -100,5 +100,7 @@ public:
 
 	std::string getFriends(std::string unsername);
 
+	std::string getIncomingFriendRequests(std::string username);
+
 };
 

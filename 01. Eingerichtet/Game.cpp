@@ -200,7 +200,8 @@ skipSettings:
 }
 bool Game::setDailyChanllenge()
 {
-	round->setIndex(HomeMenu::getInstance()->getDaily()->getVon() - 1);
+	int test = HomeMenu::getInstance()->getDaily()->getVon() - 1;
+	round->setIndex(test);
 	round->setHealth(HomeMenu::getInstance()->getDaily()->getLeben());
 	round->setMoney(HomeMenu::getInstance()->getDaily()->getGeld());
 	return true;
@@ -671,7 +672,7 @@ void Game::subRoundHealth()
 					break;
 				}
 			}
-
+				
 		}
 		round->restartDroneSubHealthTimer();
 	}
@@ -712,7 +713,7 @@ void Game::checkLoseGame()
 
 			if (HomeMenu::getInstance()->getDaily()->getIsDaily())
 			{
- 				AchievementsContainer::getAchievement(13)->addToCurrentValue(1);
+				AchievementsContainer::getAchievement(13)->addToCurrentValue(1);
 			}
 
 			for (int i = 0; i < (sizeof(gameOverWonText) / sizeof(*gameOverWonText)); i++)
@@ -929,7 +930,7 @@ void Game::shortcuts()
 		if (event.type == Event::KeyReleased)
 		{
 
-			if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27))
+			if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27) && (!HomeMenu::getInstance()->getDaily()->getIsDaily() || HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(event.key.code - 27))))
 			{
 				Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event.key.code - 27));
 				newTower = new TowerAlias(event.key.code - 27, p_map);
@@ -963,8 +964,12 @@ void Game::restart()
 	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 	resetAll();
 	p_map = new Map(mapIndex);
+
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
+
+	if (HomeMenu::getInstance()->getDaily()->getIsDaily()) setDailyChanllenge();
+	//ToDo setzten der Daily
 }
 void Game::sellTower(Tower* t)
 {

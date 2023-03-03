@@ -253,6 +253,13 @@ std::string AccountServer::getFriends(std::string unsername)
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "seeFriendsList");
 	request->setBody(unsername);
+	return send();
+}
 
+std::string AccountServer::getIncomingFriendRequests(std::string username)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "IncomingFriendRequests");
+	request->setBody(username);
 	return send();
 }

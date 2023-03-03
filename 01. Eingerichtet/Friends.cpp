@@ -21,8 +21,8 @@ FriendTexture::FriendTexture(Friends* friends)
 
 	ProfilePicture = new Sprite();
 	ProfilePicture->setTexture(*imageTexture);
-	ProfilePicture->setScale(Vector2f(150.f / float(imageTexture->getSize().x), 150.f / float(imageTexture->getSize().y)));
-
+	ProfilePicture->setScale(Vector2f(75.f / float(imageTexture->getSize().x), 75.f / float(imageTexture->getSize().y)));
+	ProfilePicture->setPosition(1000, 50);
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
 
@@ -32,12 +32,15 @@ FriendTexture::FriendTexture(Friends* friends)
 	name->setOutlineThickness(4);
 	name->setOutlineColor(Color::Black);
 	name->setFont(*font);
-	name->setPosition(30, 60);
+	name->setPosition(100, 60);
 	name->setString(friends->getName());
 
 
+
+
+
 	texture = new RenderTexture();
-	texture->create(1399, 200);
+	texture->create(1300, 200);
 
 	texture->draw(*background);
 	texture->draw(*ProfilePicture);
@@ -45,7 +48,8 @@ FriendTexture::FriendTexture(Friends* friends)
 	texture->display();
 
 	sprite = new Sprite(texture->getTexture());
-
+	background->setPosition(100, 50);
+	background->setScale(2.15, 1.11);
 }
 
 std::string Friends::getName()
@@ -66,6 +70,7 @@ Friends::Friends(std::string freund, Image* image)
 
 void FriendsGUI::start(RenderWindow* window)
 {
+	bool isClicked = false;
 	Event event;
 	while (window->isOpen())
 	{
@@ -79,6 +84,43 @@ void FriendsGUI::start(RenderWindow* window)
 		}
 		Scroll();
 		draw(window);
+
+		if (Mouse::isButtonPressed(Mouse::Left))
+		{
+			isClicked = true;
+		}
+		if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
+		{
+			Vector2f pos, pos2;
+			Vector2i mouse = Mouse::getPosition();
+			isClicked = false;
+
+			//Close
+			pos = Service::getInstance()->getObjectPosition(close->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(close->getPosition() + Vector2f(close->getTexture()->getSize()));
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				return;
+
+			}	// FriendsRrequest
+			pos = Service::getInstance()->getObjectPosition(openFriendsRequest->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(openFriendsRequest->getPosition() + Vector2f(openFriendsRequest->getTexture()->getSize()));
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				FriendsGUI* gui = new FriendsGUI(window, 1);
+
+			}
+
+			pos = Service::getInstance()->getObjectPosition(addFriend->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(addFriend->getPosition() + Vector2f(addFriend->getTexture()->getSize()));
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				FriendsGUI* gui = new FriendsGUI(window, 1);
+
+			}
+
+
+		}
 	}
 
 }
@@ -92,6 +134,9 @@ void FriendsGUI::draw(RenderWindow* window)
 	{
 		window->draw(*displayFriends[i]);
 	}
+	if (menuArt == 0) window->draw(*openFriendsRequest);
+	window->draw(*addFriend);
+	window->draw(*close);
 	window->display();
 }
 
@@ -129,8 +174,20 @@ void FriendsGUI::Scroll()
 	}
 }
 
-FriendsGUI::FriendsGUI(RenderWindow* window)
+FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
 {
+	this->menuArt = menuArt;
+	addFriend = new Sprite();
+	addFriend->setTexture(*Ressources::getInstance()->getAccountFriendsButtonTexture());
+	addFriend->setPosition(1600, 50);
+
+	openFriendsRequest = new Sprite();
+	openFriendsRequest->setTexture(*Ressources::getInstance()->getOpenChatButtonTexture());
+	openFriendsRequest->setPosition(1600, 150);
+
+	close = new Sprite();
+	close->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
+	close->setPosition(100, 50);
 
 	accServer = new AccountServer();
 	background = new Sprite();
@@ -149,8 +206,19 @@ FriendsGUI::FriendsGUI(RenderWindow* window)
 	{
 		displayFriends[i]->setPosition(350, 150 * (i + 1) - 50);
 	}
+	std::string freude = "";
+	switch (menuArt)
+	{
+	case 0:
+		freude = accServer->getFriends(Account::getAccName());
+		break;
+	case 1:
+		freude = accServer->getIncomingFriendRequests(Account::getAccName());
+		break;
+	default:
+		break;
+	};
 
-	std::string freude = accServer->getFriends(Account::getAccName());
 	std::size_t found = freude.find("&");
 	int counter = 0, pos = 0;
 	std::string username = "";

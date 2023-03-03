@@ -25,6 +25,7 @@ private:
 	Sprite* background;
 	Sprite* ProfilePicture;
 	Friends* friends;
+	
 public:
 	Sprite* getTexture();
 	FriendTexture(Friends* friends);
@@ -40,9 +41,11 @@ private:
 	int firstIndex;
 	void updateDrawSprite();
 	void Scroll();
-
+	Sprite* close;
 
 	AccountServer* accServer;
-
-public: FriendsGUI(RenderWindow* window);
+	Sprite* addFriend;
+	Sprite* openFriendsRequest;
+	int menuArt;
+public: FriendsGUI(RenderWindow* window , int menuArt);
 };

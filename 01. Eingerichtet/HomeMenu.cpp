@@ -405,7 +405,7 @@ int  HomeMenu::CheckClicked(Event event)
 			}
 			else
 			{
-				FriendsGUI* fr = new FriendsGUI(window);
+				FriendsGUI* fr = new FriendsGUI(window , 0);
 			}
 		}
 
