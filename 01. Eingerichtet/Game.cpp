@@ -200,10 +200,11 @@ skipSettings:
 }
 bool Game::setDailyChanllenge()
 {
-	int test = HomeMenu::getInstance()->getDaily()->getVon() - 1;
-	round->setIndex(test);
+	int newRoundIndex = HomeMenu::getInstance()->getDaily()->getVon() - 1;
+	round->setIndex(newRoundIndex);
 	round->setHealth(HomeMenu::getInstance()->getDaily()->getLeben());
 	round->setMoney(HomeMenu::getInstance()->getDaily()->getGeld());
+	this->currentRound = newRoundIndex - 1;
 	return true;
 }
 
@@ -672,7 +673,7 @@ void Game::subRoundHealth()
 					break;
 				}
 			}
-				
+
 		}
 		round->restartDroneSubHealthTimer();
 	}
@@ -964,7 +965,7 @@ void Game::restart()
 	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 	resetAll();
 	p_map = new Map(mapIndex);
-
+	
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 
