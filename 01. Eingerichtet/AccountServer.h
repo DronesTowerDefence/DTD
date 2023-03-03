@@ -102,5 +102,7 @@ public:
 
 	std::string getIncomingFriendRequests(std::string username);
 
+	std::string sendFriendRequest(std::string username, std::string friendname);
+	std::string deleteFriend(std::string username, std::string friendname);
 };
 

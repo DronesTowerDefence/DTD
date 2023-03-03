@@ -263,3 +263,19 @@ std::string AccountServer::getIncomingFriendRequests(std::string username)
 	request->setBody(username);
 	return send();
 }
+
+std::string AccountServer::sendFriendRequest(std::string username, std::string friendname)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "addFriend");
+	request->setBody(username + "&" + friendname);
+	return send();
+}
+
+std::string AccountServer::deleteFriend(std::string username, std::string friendname)
+{
+	request = new sf::Http::Request();
+	request->setField("Content-Type", "deleteFriend");
+	request->setBody(username + "&" + friendname);
+	return send();
+}

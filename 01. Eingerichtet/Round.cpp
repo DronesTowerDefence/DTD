@@ -214,7 +214,7 @@ void Round::nextRound()
 		won = true;
 		HomeMenu::getInstance()->deleteSave(p_map->getIndex());
 	}
-	if (index == HomeMenu::getInstance()->getDaily()->getBis() && !lost)
+	if (HomeMenu::getInstance()->getDaily()->getIsDaily() && index == HomeMenu::getInstance()->getDaily()->getBis() && !lost)
 	{
 		accServer->wonChallenge(Account::getAccName());
 		won = true;

@@ -11,6 +11,7 @@ public:
 	std::string getName();
 	Image* getImage();
 	Friends(std::string freund, Image* image);
+
 };
 
 class FriendTexture
@@ -23,12 +24,14 @@ private:
 	Text* name;
 	Sprite* sprite;
 	Sprite* background;
+	Sprite* close;
 	Sprite* ProfilePicture;
 	Friends* friends;
 	
 public:
 	Sprite* getTexture();
 	FriendTexture(Friends* friends);
+	Friends* getFriend();
 };
 
 class FriendsGUI {
@@ -42,10 +45,23 @@ private:
 	void updateDrawSprite();
 	void Scroll();
 	Sprite* close;
+	Sprite* closeEingabe;
+	Sprite* eingabeBackground;
+	Sprite* anfrageSenden;
 
 	AccountServer* accServer;
 	Sprite* addFriend;
 	Sprite* openFriendsRequest;
 	int menuArt;
-public: FriendsGUI(RenderWindow* window , int menuArt);
+
+	Text* AnzeigeText;
+	Font* font;
+	std::string text;
+	bool Eingabe;
+	
+	
+
+public:
+	void loadFriends();
+	FriendsGUI(RenderWindow* window , int menuArt);
 };

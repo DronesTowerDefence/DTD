@@ -1,6 +1,7 @@
 #include "Friends.h"
 #include "Controls.h"
 #include "HomeMenu.h"
+#include "PopUpMessage.h"
 
 Sprite* FriendTexture::getTexture()
 {
@@ -36,7 +37,10 @@ FriendTexture::FriendTexture(Friends* friends)
 	name->setString(friends->getName());
 
 
-
+	close = new Sprite();
+	close->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
+	close->setScale(.75, .75);
+	close->setPosition(900, 50);
 
 
 	texture = new RenderTexture();
@@ -45,11 +49,17 @@ FriendTexture::FriendTexture(Friends* friends)
 	texture->draw(*background);
 	texture->draw(*ProfilePicture);
 	texture->draw(*name);
+	texture->draw(*close);
 	texture->display();
 
 	sprite = new Sprite(texture->getTexture());
 	background->setPosition(100, 50);
 	background->setScale(2.15, 1.11);
+}
+
+Friends* FriendTexture::getFriend()
+{
+	return friends;
 }
 
 std::string Friends::getName()
@@ -81,19 +91,85 @@ void FriendsGUI::start(RenderWindow* window)
 				window->close();
 				exit(0);
 			}
+			if (Eingabe)
+			{
+				char zeichen = Controls::checkKeyboardInput(&event);
+
+				if (zeichen != '\0')
+				{
+					text += zeichen;
+				}
+				else if (Controls::getBackSpaceIsPressed())
+				{
+					if (text.length() > 0)
+						text = text.substr(0, text.length() - 1);
+				}
+				AnzeigeText->setString(text);
+
+			}
 		}
 		Scroll();
 		draw(window);
+
 
 		if (Mouse::isButtonPressed(Mouse::Left))
 		{
 			isClicked = true;
 		}
+
 		if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
 		{
 			Vector2f pos, pos2;
 			Vector2i mouse = Mouse::getPosition();
 			isClicked = false;
+			if (Eingabe)
+			{
+				//Close
+				pos = Service::getInstance()->getObjectPosition(closeEingabe->getPosition());
+				pos2 = Service::getInstance()->getObjectPosition(closeEingabe->getPosition() + Vector2f(closeEingabe->getTexture()->getSize()));
+				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+				{
+					Eingabe = false;
+				}
+				//Close
+				pos = Service::getInstance()->getObjectPosition(anfrageSenden->getPosition());
+				pos2 = Service::getInstance()->getObjectPosition(anfrageSenden->getPosition() + Vector2f(anfrageSenden->getTexture()->getSize()));
+				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+				{
+					std::string result = accServer->sendFriendRequest(Account::getAccName(), text);
+					if (result == "0")
+					{
+						new PopUpMessage("Nutzername konnte nicht gefunden werden");
+					}
+					else {
+						new PopUpMessage("Freundesanfrage gesendet");
+						Eingabe = false;
+					}
+					text = "";
+				}
+			}
+			for (int i = 0; i < 5 && i < allTexture.size(); i++)
+			{
+				pos = Service::getInstance()->getObjectPosition(Vector2f(900 + 350, 50 + (150 * (i + 1) - 50)));
+				pos2 = Service::getInstance()->getObjectPosition(Vector2f(900 + 350, 50 + (150 * (i + 1) - 50)) + Vector2f(75, 75));
+
+				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+				{
+
+					int counter = 0;
+					for (auto friends : allTexture)
+					{
+						if (counter == firstIndex + i)
+						{
+							accServer->deleteFriend(Account::getAccName(), friends->getFriend()->getName());
+							loadFriends();
+							break;
+
+						}
+						counter++;
+					}
+				}
+			}
 
 			//Close
 			pos = Service::getInstance()->getObjectPosition(close->getPosition());
@@ -102,21 +178,21 @@ void FriendsGUI::start(RenderWindow* window)
 			{
 				return;
 
-			}	// FriendsRrequest
+			}
+			// FriendsRrequest
 			pos = Service::getInstance()->getObjectPosition(openFriendsRequest->getPosition());
 			pos2 = Service::getInstance()->getObjectPosition(openFriendsRequest->getPosition() + Vector2f(openFriendsRequest->getTexture()->getSize()));
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
 				FriendsGUI* gui = new FriendsGUI(window, 1);
-
+				loadFriends();
 			}
 
 			pos = Service::getInstance()->getObjectPosition(addFriend->getPosition());
 			pos2 = Service::getInstance()->getObjectPosition(addFriend->getPosition() + Vector2f(addFriend->getTexture()->getSize()));
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				FriendsGUI* gui = new FriendsGUI(window, 1);
-
+				Eingabe = true;
 			}
 
 
@@ -135,8 +211,17 @@ void FriendsGUI::draw(RenderWindow* window)
 		window->draw(*displayFriends[i]);
 	}
 	if (menuArt == 0) window->draw(*openFriendsRequest);
+	if (Eingabe)
+	{
+		window->draw(*eingabeBackground);
+		window->draw(*AnzeigeText);
+		window->draw(*closeEingabe);
+		window->draw(*anfrageSenden);
+
+	}
 	window->draw(*addFriend);
 	window->draw(*close);
+	PopUpMessage::draw(window);
 	window->display();
 }
 
@@ -174,38 +259,8 @@ void FriendsGUI::Scroll()
 	}
 }
 
-FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
+void FriendsGUI::loadFriends()
 {
-	this->menuArt = menuArt;
-	addFriend = new Sprite();
-	addFriend->setTexture(*Ressources::getInstance()->getAccountFriendsButtonTexture());
-	addFriend->setPosition(1600, 50);
-
-	openFriendsRequest = new Sprite();
-	openFriendsRequest->setTexture(*Ressources::getInstance()->getOpenChatButtonTexture());
-	openFriendsRequest->setPosition(1600, 150);
-
-	close = new Sprite();
-	close->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
-	close->setPosition(100, 50);
-
-	accServer = new AccountServer();
-	background = new Sprite();
-	background->setPosition(100, 50);
-	background->setTexture(*Ressources::getInstance()->getAccountLoginBackground());
-	background->setScale(2.15, 1.11);
-	firstIndex = 0;
-
-	displayFriends[0] = new Sprite();
-	displayFriends[1] = new Sprite();
-	displayFriends[2] = new Sprite();
-	displayFriends[3] = new Sprite();
-	displayFriends[4] = new Sprite();
-	int i = 0;
-	for (int i = 0; i < 5; i++)
-	{
-		displayFriends[i]->setPosition(350, 150 * (i + 1) - 50);
-	}
 	std::string freude = "";
 	switch (menuArt)
 	{
@@ -222,6 +277,14 @@ FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
 	std::size_t found = freude.find("&");
 	int counter = 0, pos = 0;
 	std::string username = "";
+	if (!allTexture.empty())
+	{
+		for (auto test : allTexture)
+		{
+			delete test;
+		}
+	}
+	allTexture.clear();
 	while (found != std::string::npos)
 	{
 		username = freude.substr(pos, found - pos);
@@ -230,6 +293,70 @@ FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
 		found = freude.find("&", pos);
 	}
 	updateDrawSprite();
+}
+FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
+{
+
+	font = new Font();
+	font->loadFromFile("fonts/arial.ttf");
+	text = "";
+
+	AnzeigeText = new Text();
+
+	AnzeigeText->setPosition(800, 360);
+	AnzeigeText->setCharacterSize(40);
+	AnzeigeText->setFillColor(Color::White);
+	AnzeigeText->setOutlineThickness(4);
+	AnzeigeText->setOutlineColor(Color::Black);
+	AnzeigeText->setFont(*font);
+
+	Eingabe = false;
+
+	eingabeBackground = new Sprite();
+	eingabeBackground->setPosition(760, 340);
+	eingabeBackground->setTexture(*Ressources::getInstance()->getAccountLoginBackground());
+	eingabeBackground->setScale(.5, .5);
+
+	this->menuArt = menuArt;
+	addFriend = new Sprite();
+	addFriend->setTexture(*Ressources::getInstance()->getAccountFriendsButtonTexture());
+	addFriend->setPosition(1620, 688);
+
+	openFriendsRequest = new Sprite();
+	openFriendsRequest->setTexture(*Ressources::getInstance()->getOpenChatButtonTexture());
+	openFriendsRequest->setPosition(1620, 838);
+
+	close = new Sprite();
+	close->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
+	close->setPosition(1620, 50);
+
+	closeEingabe = new Sprite();
+	closeEingabe->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
+	closeEingabe->setPosition(1060, 340);
+
+	anfrageSenden = new Sprite();
+	anfrageSenden->setTexture(*Ressources::getInstance()->getButtonClientTexture());
+	anfrageSenden->setPosition(960, 640);
+
+	accServer = new AccountServer();
+
+	background = new Sprite();
+	background->setPosition(100, 50);
+	background->setTexture(*Ressources::getInstance()->getAccountLoginBackground());
+	background->setScale(2.15, 1.11);
+	firstIndex = 0;
+
+	displayFriends[0] = new Sprite();
+	displayFriends[1] = new Sprite();
+	displayFriends[2] = new Sprite();
+	displayFriends[3] = new Sprite();
+	displayFriends[4] = new Sprite();
+	int i = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		displayFriends[i]->setPosition(350, 150 * (i + 1) - 50);
+	}
+	loadFriends();
 	start(window);
 
 }
