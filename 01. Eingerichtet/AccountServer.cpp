@@ -1,5 +1,5 @@
-#include "Ressources.h"
 #include "AccountServer.h"
+#include "Ressources.h"
 #include "Achievements.h"
 #include "HomeMenu.h"
 #include "Controls.h"
@@ -7,12 +7,10 @@
 
 AccountServer* AccountServer::accountServerObject = nullptr;
 
-std::string AccountServer::sendToServer()
+void AccountServer::sendToServer()
 {
 	isDone = false;
 	lastResponse = "-2";
-
-	std::string returnStr = "0";
 
 	request->setMethod(sf::Http::Request::Post);
 	request->setHttpVersion(httpVersion[0], httpVersion[1]);
@@ -24,11 +22,11 @@ std::string AccountServer::sendToServer()
 
 	if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
 	{
-		returnStr = "-1";
+		lastResponse = "-1";
 	}
 	else
 	{
-		returnStr = response->getBody();
+		lastResponse = response->getBody();
 	}
 
 	delete response;
@@ -37,9 +35,6 @@ std::string AccountServer::sendToServer()
 	request = nullptr;
 
 	isDone = true;
-	lastResponse = returnStr;
-
-	return returnStr;
 }
 
 std::string AccountServer::send()
@@ -47,8 +42,7 @@ std::string AccountServer::send()
 	isDone = false;
 	lastResponse = "-2";
 
-	return sendToServer(); // Siehe Konstruktor
-	/*thread->launch();
+	thread->launch();
 
 	RenderWindow* window = HomeMenu::getInstance()->getWindow();
 	Event event;
@@ -102,7 +96,7 @@ std::string AccountServer::send()
 			}
 			window->draw(shape);
 		}
-	}*/
+	}
 
 	return lastResponse;
 }
@@ -117,7 +111,7 @@ AccountServer::AccountServer()
 	isDone = false;
 
 	thread = nullptr;
-	//thread = new Thread(&AccountServer::sendToServer, this); // TODO: Der Scheiﬂ funktioniert nicht, obwohl ich in der PopUp-Klasse das gleiche verwende
+	thread = new Thread(&AccountServer::sendToServer, this);
 
 	timeout = new sf::Time();
 	*timeout = sf::seconds(10);

@@ -14,7 +14,7 @@ private:
 	std::string lastResponse;
 	bool isDone;
 
-	std::string sendToServer();
+	void sendToServer();
 
 	/// <summary>
 	/// Sendet eine Request an den HTTP-Server
