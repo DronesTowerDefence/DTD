@@ -42,7 +42,7 @@ std::string AccountServer::send()
 	isDone = false;
 	lastResponse = "-2";
 
-	thread->launch();
+	/*thread->launch();
 
 	RenderWindow* window = HomeMenu::getInstance()->getWindow();
 	Event event;
@@ -96,7 +96,7 @@ std::string AccountServer::send()
 			}
 			window->draw(shape);
 		}
-	}
+	}*/
 
 	return lastResponse;
 }
