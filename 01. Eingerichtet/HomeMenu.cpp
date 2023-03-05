@@ -614,6 +614,10 @@ int HomeMenu::getStatus()
 {
 	return status;
 }
+RenderWindow* HomeMenu::getWindow()
+{
+	return window;
+}
 #pragma endregion
 
 #pragma region setter

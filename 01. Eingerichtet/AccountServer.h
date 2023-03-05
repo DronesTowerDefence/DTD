@@ -8,8 +8,13 @@ private:
 	sf::Http::Request* request;
 	sf::Http::Response* response;
 	sf::Time* timeout;
+	sf::Thread* thread;
 	int httpVersion[2];
 	int lastStatusCode;
+	std::string lastResponse;
+	bool isDone;
+
+	std::string sendToServer();
 
 	/// <summary>
 	/// Sendet eine Request an den HTTP-Server
@@ -31,6 +36,12 @@ public:
 	int getRequestLastStatusCode();
 
 	/// <summary>
+	/// Die letzte Antwort | "-2" wenn neue Antwort gerade erhalten wird
+	/// </summary>
+	/// <returns></returns>
+	std::string getLastResponse();
+
+	/// <summary>
 	/// Um am Ende eines Spieles alle Achievements und XP an den Server zu senden
 	/// </summary>
 	/// <returns></returns>
@@ -38,10 +49,10 @@ public:
 
 	/// <summary>
 	/// Erstellt einen Account aus den User-Infos, welche von der sendLogin-Funktionen erhalten werden
+	/// <param name="">Wenn keine angegeben, dann Standartaccount</param>
 	/// </summary>
-	/// <param name="userName">"0" = Kein Benutzer vorhanden, "-1" Keine Verbindung zum Server</param>
 	/// <returns>Pointer auf den Account wenn erfolgreich, ansonsten nullptr</returns>
-	Account* createAccount(std::string userName, std::string email, sf::Image* profileImage);
+	Account* createAccount(std::string userName = "???", std::string email = "?", sf::Image* profileImage = nullptr);
 
 	/// <summary>
 	/// Sendet eine Request mit den Parametern an den HTTP-Server

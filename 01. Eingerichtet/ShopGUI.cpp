@@ -1,6 +1,7 @@
 #include "ShopGUI.h"
 #include "Service.h"
 #include "HomeMenu.h"
+#include "PopUpMessage.h"
 
 std::list<ShopContentTexture*> ShopGUI::allShopContents;
 
@@ -26,6 +27,18 @@ void ShopGUI::checkClicked(Event*)
 			isOpen = false;
 			return;
 		}
+
+		//Shop-Content
+		for (auto i : allShopContents)
+		{
+			pos = Service::getInstance()->getObjectPosition(i->getSprite()->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(i->getSprite()->getPosition() + Vector2f(i->getSprite()->getTexture()->getSize()));
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				shopContentClicked(i);
+				return;
+			}
+		}
 	}
 }
 
@@ -38,16 +51,70 @@ void ShopGUI::draw()
 		window->draw(*Ressources::getInstance()->getBlackBackgroundSprite());
 		window->draw(*background);
 		window->draw(*closeButton);
+		window->draw(*coinsIcon);
 		window->draw(*headlineText);
 		window->draw(*shopCoinsText);
 
-		for (auto i : allShopContents)
+		if (allShopContents.size() > 0)
 		{
-			window->draw(*i->getSprite());
+			for (auto i : allShopContents)
+			{
+				window->draw(*i->getSprite());
+			}
 		}
+		else
+		{
+			window->draw(*emptyShop);
+		}
+
+		PopUpMessage::draw(window);
 
 		window->display();
 	}
+}
+
+bool ShopGUI::shopContentClicked(ShopContentTexture* sct)
+{
+	if (Account::getAccName() != invalidUsername)
+	{
+		ShopContentData* scd = sct->getShopContentData();
+
+		if (scd->getCost() <= Account::getShopCoins())
+		{
+			AccountServer* accServer = new AccountServer();
+			if (accServer->sendCoins(Account::getAccName(), Account::getShopCoins() - scd->getCost()) == "1")
+			{
+				Account::setShopCoins(Account::getShopCoins() - scd->getCost());
+
+				if (accServer->setShopContent(Account::getAccName(), scd->getID()) != "1") // Wenn Kauf nicht erfolgreich: Geld wiederbekommen
+				{
+					accServer->sendCoins(Account::getAccName(), Account::getShopCoins() + scd->getCost());
+					Account::setShopCoins(Account::getShopCoins() + scd->getCost());
+					delete accServer;
+					return false;
+				}
+				else //Gekauft
+				{
+					scd->setIsBought(true);
+					removeBoughtContent();
+					new PopUpMessage("\"" + scd->getName() + "\" gekauft!");
+				}
+				delete accServer;
+				return true;
+			}
+			else
+			{
+				new PopUpMessage("Keine Verbindung zum Server");
+			}
+			delete accServer;
+		}
+		else
+		{
+			new PopUpMessage("Zu wenig Coins");
+		}
+
+	}
+	return false;
 }
 
 ShopGUI::ShopGUI(RenderWindow* _window)
@@ -60,6 +127,10 @@ ShopGUI::ShopGUI(RenderWindow* _window)
 	background->setPosition(100, 50);
 	background->setTexture(*Ressources::getInstance()->getAccountLoginBackground());
 	background->setScale(2.15, 1.11);
+
+	coinsIcon = new Sprite();
+	coinsIcon->setPosition(1300, 117);
+	coinsIcon->setTexture(*Ressources::getInstance()->getShopCoinTexture());
 
 	closeButton = new Sprite();
 	closeButton->setPosition(1720, 50);
@@ -84,8 +155,17 @@ ShopGUI::ShopGUI(RenderWindow* _window)
 	shopCoinsText->setFillColor(Color::White);
 	shopCoinsText->setOutlineThickness(5);
 	shopCoinsText->setOutlineColor(Color::Black);
-	shopCoinsText->setPosition(1300, headlineText->getPosition().y);
-	shopCoinsText->setString("Coins: " + std::to_string(Account::getShopCoins()));
+	shopCoinsText->setPosition(headlineText->getPosition().x + 650, headlineText->getPosition().y);
+	shopCoinsText->setString("Coins:     " + std::to_string(Account::getShopCoins()));
+
+	emptyShop = new Text();
+	emptyShop->setFont(*font);
+	emptyShop->setCharacterSize(50);
+	emptyShop->setFillColor(Color::White);
+	emptyShop->setOutlineThickness(5);
+	emptyShop->setOutlineColor(Color::Black);
+	emptyShop->setPosition(500, 400);
+	emptyShop->setString("Hier ist momentan leider alles leer...\nBald kommt neuer Inhalt ;)");
 }
 
 bool ShopGUI::openShop()
@@ -111,7 +191,49 @@ bool ShopGUI::openShop()
 	return isOpen;
 }
 
+void ShopGUI::removeBoughtContent()
+{
+	// Entfernen des gekauften Contents aus der Liste
+	bool removed = true;
+	while (removed)
+	{
+		removed = false;
+		for (auto i : allShopContents)
+		{
+			if (i->getShopContentData()->getIsBought())
+			{
+				allShopContents.remove(i);
+				delete i;
+				removed = true;
+				break;
+			}
+		}
+	}
+
+	// Neue Positionierung des noch vorhandenen Contents
+	int index = 0;
+	for (auto i : allShopContents)
+	{
+		i->updateSpritePosition(index);
+		index++;
+	}
+}
+
 void ShopGUI::addShopContent(ShopContentTexture* sc)
 {
 	allShopContents.push_back(sc);
+}
+
+ShopContentTexture* ShopGUI::getShopContentTexture(int id)
+{
+	if (id >= 0 && id < shopContentCount)
+	{
+		for (auto i : allShopContents)
+		{
+			if (id == i->getShopContentData()->getID())
+			{
+				return i;
+			}
+		}
+	}
 }

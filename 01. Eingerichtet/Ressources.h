@@ -124,6 +124,7 @@ private:
 	Texture achievementEarnedNotSymbolTexture;
 	Texture startDailyButtonTexture;
 	Texture openShopButtonTexture;
+	Texture shopCoinTexture;
 
 	Sprite blackBackground;
 
@@ -135,6 +136,21 @@ public:
 	int statistic_damage;
 
 	static Ressources* getInstance();
+
+	/// <summary>
+	/// Setzt die Texturen des Turmes neu und löscht die alten
+	/// </summary>
+	/// <param name="towerID"></param>
+	/// <param name="textureArr">Array: 0-3:Tower | 4:Alias | 5:NoBuy | 6:Preview</param>
+	/// <returns></returns>
+	bool updateTowerTexture(int towerID, Texture* textureArr);
+
+	/// <summary>
+	/// Gegensatz zur updateTowerTexture. Es wird wieder die Standart-Textur verwendet
+	/// </summary>
+	/// <param name="towerID"></param>
+	/// <returns></returns>
+	bool setDefaultTowerTexture(int towerID);
 
 	int getMultiplayerPlayerCount();
 	int getMapCount();
@@ -244,6 +260,7 @@ public:
 	Texture* getAchievementEarnedNotSymbolTexture();
 	Texture* getStartDailyButtonTexture();
 	Texture* getOpenShopButtonTexture();
+	Texture* getShopCoinTexture();
 
 	Sprite* getBlackBackgroundSprite();
 

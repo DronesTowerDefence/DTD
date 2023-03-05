@@ -73,6 +73,10 @@ void Loadup::run()
 	{
 		std::cout << "Fehler beim Laden des Shop-Contents" << std::endl;
 	}
+	else
+	{
+		std::cout << "Shop-Content geladen!" << std::endl;
+	}
 	setLoadingbar(30);
 
 	AccountServer* accServer = new AccountServer();
@@ -85,10 +89,8 @@ void Loadup::run()
 		goto skipAccount;
 
 	email = readFromUserFile(2);
-	setLoadingbar(55);
-
 	usernameExist = accServer->checkUsername(username);
-	setLoadingbar(60);
+	setLoadingbar(55);
 
 skipAccount:
 
@@ -100,10 +102,13 @@ skipAccount:
 			image = new Image(res->getAccountProfilePicture()->copyToImage());
 		}
 		int _xp = stoi(accServer->getXP(username));
-		setLoadingbar(70);
 		accServer->createAccount(username, email, image);
+		setLoadingbar(60);
 		Account::setExperience(_xp);
 		Account::setShopCoins(stoi(accServer->getCoins(username)));
+		AchievementsContainer::getAchievementsFromServer(Account::getAccName());
+		ShopContentData::loadBoughtFromServerString(accServer->getShopContent(Account::getAccName()));
+		setLoadingbar(70);
 
 		usernameSuccessfull = true;
 	}
@@ -114,17 +119,15 @@ skipAccount:
 			system("del saves\\user.sav");
 		}
 		setLoadingbar(70);
-		accServer->createAccount("???", "\0", nullptr);
+		accServer->createAccount();
 	}
 	setLoadingbar(80);
 
-	if (Account::getAccName() != invalidUsername)
-		AchievementsContainer::getAchievementsFromServer(Account::getAccName());
+	new UniqueAchievement(11);
+	new UniqueAchievement(12);
 	setLoadingbar(90);
 
 	delete accServer;
-	new UniqueAchievement(11);
-	new UniqueAchievement(12);
 	setLoadingbar(100);
 	
 	done = true;

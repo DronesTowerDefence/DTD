@@ -99,6 +99,7 @@ public:
 	MultiplayerGUI* getMultiplayerGUI();
 	ShopGUI* getShopGUI();
 	int getStatus();
+	RenderWindow* getWindow();
 
 	void setWindow(RenderWindow* window);
 	void setChoseIndex(int _choseIndex);

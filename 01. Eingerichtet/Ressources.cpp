@@ -353,6 +353,7 @@ Ressources::Ressources()
 	achievementEarnedNotSymbolTexture.loadFromFile("img/achievements/achievementEarnedSymbolNot.png");
 	startDailyButtonTexture.loadFromFile("img/buttons/startDailyButton.png");
 	openShopButtonTexture.loadFromFile("img/shop/openShopButton.png");
+	shopCoinTexture.loadFromFile("img/shop/coinsIcon.png");
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -525,6 +526,38 @@ void Ressources::doubleSpeed()
 
 	setSpeed();
 
+}
+bool Ressources::updateTowerTexture(int towerID, Texture* textureArr)
+{
+	if (towerID >= 0 && towerID <= towerTypeCount && textureArr != nullptr)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			delete& towerTexture[towerID][i];
+			towerTexture[towerID][i] = textureArr[0];
+		}
+		*towerAliasTexture = textureArr[4];
+		*towerNoBuyTexture = textureArr[5];
+		*towerPreviewTexture = textureArr[6];
+		return true;
+	}
+	else return false;
+}
+bool Ressources::setDefaultTowerTexture(int towerID)
+{
+	if (towerID >= 0 && towerID < towerTypeCount)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			towerTexture[towerID][j].loadFromFile("img/tower" + std::to_string(towerID) + "/tower" + std::to_string(towerID) + "_" + std::to_string(j) + ".png");
+		}
+		towerAliasTexture[towerID].loadFromFile("img/tower" + std::to_string(towerID) + "/tower" + std::to_string(towerID) + "_alias.png");
+		towerPreviewTexture[towerID].loadFromFile("img/tower" + std::to_string(towerID) + "/tower" + std::to_string(towerID) + "_preview.png");
+		towerNoBuyTexture[towerID].loadFromFile("img/tower" + std::to_string(towerID) + "/tower" + std::to_string(towerID) + "_noBuy.png");
+
+		return true;
+	}
+	else return false;
 }
 #pragma endregion
 
@@ -904,6 +937,10 @@ Texture* Ressources::getStartDailyButtonTexture()
 Texture* Ressources::getOpenShopButtonTexture()
 {
 	return &openShopButtonTexture;
+}
+Texture* Ressources::getShopCoinTexture()
+{
+	return &shopCoinTexture;
 }
 Sprite* Ressources::getBlackBackgroundSprite()
 {

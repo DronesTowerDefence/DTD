@@ -1,12 +1,17 @@
 #include "Ressources.h"
 #include "AccountServer.h"
 #include "Achievements.h"
+#include "HomeMenu.h"
+#include "Controls.h"
 #include <fstream>
 
 AccountServer* AccountServer::accountServerObject = nullptr;
 
-std::string AccountServer::send()
+std::string AccountServer::sendToServer()
 {
+	isDone = false;
+	lastResponse = "-2";
+
 	std::string returnStr = "0";
 
 	request->setMethod(sf::Http::Request::Post);
@@ -31,7 +36,75 @@ std::string AccountServer::send()
 	response = nullptr;
 	request = nullptr;
 
+	isDone = true;
+	lastResponse = returnStr;
+
 	return returnStr;
+}
+
+std::string AccountServer::send()
+{
+	isDone = false;
+	lastResponse = "-2";
+
+	return sendToServer(); // Siehe Konstruktor
+	/*thread->launch();
+
+	RenderWindow* window = HomeMenu::getInstance()->getWindow();
+	Event event;
+
+	window->draw(*Ressources::getInstance()->getBlackBackgroundSprite());
+	window->display();
+
+	CircleShape shape;
+	shape.setPosition(1000, 400);
+	shape.setRadius(300);
+	shape.setFillColor(Color::Red);
+
+	bool changeColor = false;
+	bool userEnd = false;
+	Clock c;
+
+
+	while (window->isOpen() && !isDone)
+	{
+		while (window->pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window->close();
+				exit(0);
+			}
+			Controls::checkKeyboardInput(&event);
+
+			userEnd = Controls::getEscIsPressed();
+		}
+
+		if (userEnd)
+		{
+			thread->terminate();
+			return "-1";
+		}
+
+
+		if (c.getElapsedTime() >= milliseconds(500))
+		{
+			c.restart();
+			if (changeColor)
+			{
+				shape.setFillColor(Color::Red);
+				changeColor = false;
+			}
+			else
+			{
+				shape.setFillColor(Color::Blue);
+				changeColor = true;
+			}
+			window->draw(shape);
+		}
+	}*/
+
+	return lastResponse;
 }
 
 AccountServer::AccountServer()
@@ -40,6 +113,11 @@ AccountServer::AccountServer()
 	httpVersion[0] = 1;
 	httpVersion[1] = 1;
 	lastStatusCode = 200;
+	lastResponse = "-2";
+	isDone = false;
+
+	thread = nullptr;
+	//thread = new Thread(&AccountServer::sendToServer, this); // TODO: Der Scheiß funktioniert nicht, obwohl ich in der PopUp-Klasse das gleiche verwende
 
 	timeout = new sf::Time();
 	*timeout = sf::seconds(10);
@@ -68,6 +146,11 @@ AccountServer* AccountServer::getAccServerObj()
 int AccountServer::getRequestLastStatusCode()
 {
 	return lastStatusCode;
+}
+
+std::string AccountServer::getLastResponse()
+{
+	return lastResponse;
 }
 
 bool AccountServer::sendAllAchievementsAndXp()
@@ -199,7 +282,7 @@ std::string AccountServer::getXP(std::string username)
 std::string AccountServer::sendCoins(std::string username, int _coins)
 {
 	request = new sf::Http::Request();
-	request->setField("Content-Type", "sendCoins");
+	request->setField("Content-Type", "setCoins");
 	request->setBody(username + "&" + std::to_string(_coins));
 
 	return send();
