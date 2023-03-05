@@ -163,6 +163,11 @@ Texture* ShopContentData::getTexture()
 	return texture;
 }
 
+std::list<ShopContentData*> ShopContentData::getAllShopContentData()
+{
+	return allShopContentData;
+}
+
 
 
 ShopContentTexture::ShopContentTexture(ShopContentData* scd)
@@ -225,8 +230,8 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 	sprite->setTexture(texture->getTexture());
 	sprite->setPosition
 	(
-		startPositionX + texture->getSize().x * (scd->getID() % contentsPerRow) + distanzeToNextSprite, // X-Position
-		scd->getID() / contentsPerRow * (texture->getSize().y + distanzeToNextSprite) + startPositionY // Y-Position
+		startPositionX + texture->getSize().x * (scd->getID() % contentsPerRow) + distanceToNextSprite, // X-Position
+		scd->getID() / contentsPerRow * (texture->getSize().y + distanceToNextSprite) + startPositionY // Y-Position
 	);
 
 	HomeMenu::getInstance()->getShopGUI()->addShopContent(this);
@@ -236,8 +241,8 @@ void ShopContentTexture::updateSpritePosition(int listIndex)
 {
 	sprite->setPosition
 	(
-		startPositionX + texture->getSize().x * (listIndex % contentsPerRow) + distanzeToNextSprite, // X-Position
-		listIndex / contentsPerRow * (texture->getSize().y + distanzeToNextSprite) + startPositionY // Y-Position
+		startPositionX + texture->getSize().x * (listIndex % contentsPerRow) + distanceToNextSprite, // X-Position
+		listIndex / contentsPerRow * (texture->getSize().y + distanceToNextSprite) + startPositionY // Y-Position
 	);
 }
 

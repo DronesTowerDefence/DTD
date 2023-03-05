@@ -8,6 +8,7 @@
 #include "MultiplayerGUI.h"
 #include "AchievementGUI.h"
 #include "ShopGUI.h"
+#include "SkinsGUI.h"
 #include "SFML/Window/Clipboard.hpp"
 using namespace sf;
 
@@ -59,6 +60,7 @@ private:
 	Sprite* achievementsButton;
 	Sprite* dailyButton;
 	Sprite* shopButton;
+	Sprite* skinsButton;
 
 	Clock* animation;
 
@@ -69,8 +71,8 @@ private:
 	MultiplayerGUI* multiplayerGUI;
 	AchievementGUI* achievementGUI;
 	ShopGUI* shopGUI;
-
 	AccountServer* accServer;
+	SkinsGUI* skinsGUI;
 
 	Ressources* res;
 

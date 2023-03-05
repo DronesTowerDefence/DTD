@@ -159,6 +159,9 @@
     <ClCompile Include="ShopGUI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="SkinsGUI.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -260,8 +263,12 @@
     <ClInclude Include="ShopGUI.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="SkinsGUI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

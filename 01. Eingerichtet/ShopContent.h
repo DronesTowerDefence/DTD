@@ -46,6 +46,11 @@ public:
 	int getTypeType();
 	std::string getName();
 	Texture* getTexture();
+	/// <summary>
+	/// Kopie der Liste
+	/// </summary>
+	/// <returns></returns>
+	static std::list<ShopContentData*> getAllShopContentData();
 };
 
 
@@ -64,7 +69,7 @@ private:
 	Sprite* boughtSprite;
 	Sprite* contentSprite;
 
-	const int contentsPerRow = 4, distanzeToNextSprite = 50, startPositionX = 350, startPositionY = 240;
+	const int contentsPerRow = 4, distanceToNextSprite = 50, startPositionX = 350, startPositionY = 240;
 
 public:
 	ShopContentTexture(ShopContentData* scd);

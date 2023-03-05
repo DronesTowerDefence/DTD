@@ -47,6 +47,7 @@
     <ClInclude Include="ShopContent.h" />
     <ClInclude Include="ShopGUI.h" />
     <ClInclude Include="Sidebar.h" />
+    <ClInclude Include="SkinsGUI.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerAlias.h" />
     <ClInclude Include="TowerSpawn.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="ShopContent.cpp" />
     <ClCompile Include="ShopGUI.cpp" />
     <ClCompile Include="Sidebar.cpp" />
+    <ClCompile Include="SkinsGUI.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerAlias.cpp" />
     <ClCompile Include="TowerSpawn.cpp" />
@@ -91,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

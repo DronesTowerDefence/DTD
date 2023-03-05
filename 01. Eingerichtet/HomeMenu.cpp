@@ -20,6 +20,7 @@ HomeMenu::HomeMenu()
 	multiplayerGUI = nullptr;
 	achievementGUI = nullptr;
 	shopGUI = nullptr;
+	skinsGUI = nullptr;
 	res = Ressources::getInstance();
 
 	startButton = new Sprite();
@@ -169,6 +170,10 @@ HomeMenu::HomeMenu()
 	shopButton = new Sprite();
 	shopButton->setTexture(*res->getOpenShopButtonTexture());
 	shopButton->setPosition(1770, 300);
+
+	skinsButton = new Sprite();
+	skinsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	skinsButton->setPosition(1770, 150);
 }
 #pragma endregion
 
@@ -189,6 +194,7 @@ void HomeMenu::drawPublic()
 	window->draw(*accountFriendsMenuButton);
 	window->draw(*achievementsButton);
 	window->draw(*shopButton);
+	window->draw(*skinsButton);
 
 	if (isMultiplayerOpen)
 	{
@@ -405,7 +411,7 @@ int  HomeMenu::CheckClicked(Event event)
 			}
 			else
 			{
-				FriendsGUI* fr = new FriendsGUI(window , 0);
+				FriendsGUI* fr = new FriendsGUI(window, 0);
 			}
 		}
 
@@ -436,6 +442,25 @@ int  HomeMenu::CheckClicked(Event event)
 				shopGUI = new ShopGUI(window);
 				shopGUI->openShop();
 				delete shopGUI;
+			}
+			return 0;
+		}
+
+		//SkinsButton
+		pos = Service::getInstance()->getObjectPosition(skinsButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(skinsButton->getPosition() + Vector2f(skinsButton->getTexture()->getSize()));
+
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			if (Account::getAcc()->getAccName() == invalidUsername)
+			{
+				new PopUpMessage("Bitte vorher anmelden");
+			}
+			else
+			{
+				skinsGUI = new SkinsGUI(window);
+				skinsGUI->openGUI();
+				delete skinsGUI;
 			}
 			return 0;
 		}

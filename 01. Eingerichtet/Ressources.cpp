@@ -354,6 +354,7 @@ Ressources::Ressources()
 	startDailyButtonTexture.loadFromFile("img/buttons/startDailyButton.png");
 	openShopButtonTexture.loadFromFile("img/shop/openShopButton.png");
 	shopCoinTexture.loadFromFile("img/shop/coinsIcon.png");
+	skinEquipedIcon.loadFromFile("img/shop/equipedIcon.png");
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -533,7 +534,6 @@ bool Ressources::updateTowerTexture(int towerID, Texture* textureArr)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			delete& towerTexture[towerID][i];
 			towerTexture[towerID][i] = textureArr[0];
 		}
 		*towerAliasTexture = textureArr[4];
@@ -941,6 +941,10 @@ Texture* Ressources::getOpenShopButtonTexture()
 Texture* Ressources::getShopCoinTexture()
 {
 	return &shopCoinTexture;
+}
+Texture* Ressources::getSkinEquipedIcon()
+{
+	return &skinEquipedIcon;
 }
 Sprite* Ressources::getBlackBackgroundSprite()
 {

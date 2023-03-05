@@ -125,6 +125,7 @@ private:
 	Texture startDailyButtonTexture;
 	Texture openShopButtonTexture;
 	Texture shopCoinTexture;
+	Texture skinEquipedIcon;
 
 	Sprite blackBackground;
 
@@ -261,6 +262,7 @@ public:
 	Texture* getStartDailyButtonTexture();
 	Texture* getOpenShopButtonTexture();
 	Texture* getShopCoinTexture();
+	Texture* getSkinEquipedIcon();
 
 	Sprite* getBlackBackgroundSprite();
 

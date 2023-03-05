@@ -28,6 +28,15 @@ void ShopGUI::checkClicked(Event*)
 			return;
 		}
 
+		//CoinsIcon
+		pos = Service::getInstance()->getObjectPosition(coinsIcon->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(coinsIcon->getPosition() + Vector2f(coinsIcon->getTexture()->getSize()));
+		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		{
+			system("start https://www.dronestd.de/down/shop.html");
+			return;
+		}
+
 		//Shop-Content
 		for (auto i : allShopContents)
 		{
