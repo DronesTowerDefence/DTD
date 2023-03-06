@@ -181,6 +181,10 @@ bool ShopGUI::openShop()
 {
 	isOpen = true;
 
+	AccountServer* accServer = new AccountServer();
+	ShopContentData::loadBoughtFromServerString(accServer->getShopContent(Account::getAccName()));
+	delete accServer;
+
 	Event event;
 
 	while (window->isOpen() && isOpen)

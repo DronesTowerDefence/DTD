@@ -42,25 +42,45 @@ std::string AccountServer::send()
 	isDone = false;
 	lastResponse = "-2";
 
-	sendToServer();
+	thread->launch();
 
-	/*thread->launch();
+	Clock c;
+	while (c.getElapsedTime() < milliseconds(500))
+	{
+		if (isDone)
+			return lastResponse;
+	}
 
 	RenderWindow* window = HomeMenu::getInstance()->getWindow();
 	Event event;
 
+	Sprite* sprite = new Sprite();
+	sprite->setTexture(*Ressources::getInstance()->getSendMoneyBackgroundTexture());
+	sprite->setPosition(725, 385);
+	sprite->setScale(1.3, 1.2);
+
+	Font* font = new Font();
+	font->loadFromFile("fonts/arial.ttf");
+
+	Text* text = new Text();
+	text->setFont(*font);
+	text->setCharacterSize(40);
+	text->setFillColor(Color::White);
+	text->setOutlineColor(Color::Black);
+	text->setOutlineThickness(4);
+	text->setPosition(780, 430);
+	text->setString("Verbinde mit Server...\nESC zum Abbrechen");
+
 	window->draw(*Ressources::getInstance()->getBlackBackgroundSprite());
+	window->draw(*sprite);
+	window->draw(*text);
 	window->display();
 
-	CircleShape shape;
-	shape.setPosition(1000, 400);
-	shape.setRadius(300);
-	shape.setFillColor(Color::Red);
+	delete sprite;
+	delete font;
+	delete text;
 
-	bool changeColor = false;
 	bool userEnd = false;
-	Clock c;
-
 
 	while (window->isOpen() && !isDone)
 	{
@@ -72,33 +92,17 @@ std::string AccountServer::send()
 				exit(0);
 			}
 			Controls::checkKeyboardInput(&event);
-
 			userEnd = Controls::getEscIsPressed();
 		}
 
+		// Abbruch von User
 		if (userEnd)
 		{
+			isDone = true;
 			thread->terminate();
 			return "-1";
 		}
-
-
-		if (c.getElapsedTime() >= milliseconds(500))
-		{
-			c.restart();
-			if (changeColor)
-			{
-				shape.setFillColor(Color::Red);
-				changeColor = false;
-			}
-			else
-			{
-				shape.setFillColor(Color::Blue);
-				changeColor = true;
-			}
-			window->draw(shape);
-		}
-	}*/
+	}
 
 	return lastResponse;
 }

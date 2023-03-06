@@ -2,6 +2,7 @@
 #include "PopUpMessage.h"
 #include "Achievements.h"
 #include "ShopContent.h"
+#include "HomeMenu.h"
 #include <fstream>
 
 bool Loadup::usernameSuccessfull = false;
@@ -42,6 +43,7 @@ void Loadup::setLoadingbar(float a)
 Loadup::Loadup(RenderWindow* window)
 {
 	done = false;
+	this->window = window;
 
 	font = new sf::Font();
 	font->loadFromFile("fonts/arial.ttf");
@@ -66,6 +68,9 @@ void Loadup::run()
 	std::string username = "0", email = "0", usernameExist = "0";
 	Ressources* res = Ressources::getInstance(); //Erstellt die Ressourcen-Klasse
 	setLoadingbar(20);
+
+	HomeMenu::getInstance()->setWindow(window);
+	setLoadingbar(25);
 
 	PopUpMessage::initializePopUpMessages();
 	AchievementsContainer::createAchievements();

@@ -7,6 +7,7 @@ class Loadup
 {
 private:
 	Loadingbar* loadingbar;
+	RenderWindow* window;
 	sf::Font* font;
 	bool done;
 
