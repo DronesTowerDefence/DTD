@@ -42,6 +42,8 @@ std::string AccountServer::send()
 	isDone = false;
 	lastResponse = "-2";
 
+	sendToServer();
+
 	/*thread->launch();
 
 	RenderWindow* window = HomeMenu::getInstance()->getWindow();
