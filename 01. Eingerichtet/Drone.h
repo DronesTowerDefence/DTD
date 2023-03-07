@@ -33,9 +33,9 @@ private:
 	/// </summary>
 	int nextPoint;
 	/// <summary>
-	/// Leben der Drone : int
+	/// Leben der Drone : float
 	/// </summary>
-	int lives;
+	float lives;
 	/// <summary>
 	/// Drohnentyp für versch. Atrribute im Parameterkonstruktor : int
 	/// </summary>
@@ -109,8 +109,8 @@ public:
 	/// <summary>
 	/// Gibt die Anzahl der verbleibenden Leben der Drone zurück
 	/// </summary>
-	/// <returns>int lives</returns>
-	int getLives();
+	/// <returns>float lives</returns>
+	float getLives();
 
 	/// <summary>
 	/// Return den Index/Typspecifier/Dronetype der Drohne
@@ -167,7 +167,7 @@ public:
 	/// Setzt die Leben
 	/// </summary>
 	/// <param name=""></param>
-	void setLives(int);
+	void setLives(float);
 
 	/// <summary>
 	/// Bewegt die Drone, indem die aktuelle Position + die move-Werte * der Geschwindigkeit gesetzt wird
@@ -183,7 +183,7 @@ public:
 	/// Zieht Leben von der Drone ab (Standart-Lebenwert (WIP) = 3)
 	/// </summary>
 	/// <param name="int damage"></param>
-	bool takeDamage(int damage);
+	bool takeDamage(float damage);
 
 	~Drone();
 };

@@ -3,6 +3,7 @@
 #include "Achievements.h"
 #include "ShopContent.h"
 #include "HomeMenu.h"
+#include "Controls.h"
 #include <fstream>
 
 bool Loadup::usernameSuccessfull = false;
@@ -70,6 +71,7 @@ void Loadup::run()
 	setLoadingbar(20);
 
 	HomeMenu::getInstance()->setWindow(window);
+	Controls::initializeControls();
 	setLoadingbar(25);
 
 	PopUpMessage::initializePopUpMessages();

@@ -91,28 +91,28 @@ void MultiplayerChat::checkClicked()
 
 	}
 }
-void MultiplayerChat::checkInput(Event event)
+void MultiplayerChat::checkInput(Event* event)
 {
 	if (isOpen)
 	{
-		if (event.type == Event::KeyPressed && event.key.code == Keyboard::LShift)
+		if (event->type == Event::KeyPressed && event->key.code == Keyboard::LShift)
 		{
 			isShift = true;
 		}
-		else if (event.type == Event::KeyReleased && event.key.code == Keyboard::LShift)
+		else if (event->type == Event::KeyReleased && event->key.code == Keyboard::LShift)
 		{
 			isShift = false;
 		}
 
-		if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
+		if (event->type == Event::KeyReleased && event->key.code == Keyboard::Escape)
 		{
 			isOpen = false;
 		}
 
-		if (event.type == Event::KeyReleased)
+		if (event->type == Event::KeyReleased)
 		{
 			char tmp = '\0';
-			tmp = Controls::checkKeyboardInput(&event);
+			tmp = Controls::checkKeyboardInput(event);
 			if (isShift) tmp = std::toupper(tmp);
 
 			if (tmp != '\0')
@@ -150,11 +150,11 @@ void MultiplayerChat::checkInput(Event event)
 				chatInputText.setString(chatInput);
 			}
 
-			if (event.key.code == Keyboard::BackSpace && chatInput.size() > 0 && !inputDefaultText)
+			if (event->key.code == Keyboard::BackSpace && chatInput.size() > 0 && !inputDefaultText)
 			{
 				chatInput.erase(chatInput.size() - 1);
 			}
-			else if (event.key.code == Keyboard::Enter && chatInput.size() > 0 && !inputDefaultText)
+			else if (event->key.code == Keyboard::Enter && chatInput.size() > 0 && !inputDefaultText)
 			{
 				if (!chatCommand())
 				{
@@ -168,11 +168,11 @@ void MultiplayerChat::checkInput(Event event)
 				chatNavigationHorizontal = 0;
 			}
 
-			if (event.key.code == Keyboard::Up && chatNavigationVertical < chatText.size())
+			if (event->key.code == Keyboard::Up && chatNavigationVertical < chatText.size())
 			{
 				chatNavigationVertical++;
 			}
-			else if (event.key.code == Keyboard::Down && chatNavigationVertical > 0)
+			else if (event->key.code == Keyboard::Down && chatNavigationVertical > 0)
 			{
 				chatNavigationVertical--;
 				if (chatNavigationVertical == 0)
@@ -182,11 +182,11 @@ void MultiplayerChat::checkInput(Event event)
 				}
 			}
 
-			if (event.key.code == Keyboard::Right && chatNavigationHorizontal < chatInput.size())
+			if (event->key.code == Keyboard::Right && chatNavigationHorizontal < chatInput.size())
 			{
 				chatNavigationHorizontal++;
 			}
-			else if (event.key.code == Keyboard::Left && chatNavigationHorizontal > 0)
+			else if (event->key.code == Keyboard::Left && chatNavigationHorizontal > 0)
 			{
 				chatNavigationHorizontal--;
 			}

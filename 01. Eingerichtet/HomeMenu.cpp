@@ -1,5 +1,5 @@
 #include "HomeMenu.h"
-//#include "Controls.h"
+#include "Controls.h"
 #include "Multiplayer.h"
 #include "PopUpMessage.h"
 #include "Friends.h";
@@ -220,7 +220,7 @@ void HomeMenu::drawPublic()
 		window->draw(*pointer);
 	}
 }
-int  HomeMenu::CheckClicked(Event event)
+int  HomeMenu::CheckClicked(Event* event)
 {
 	if (!window->hasFocus())
 		return 0;
@@ -393,7 +393,7 @@ int  HomeMenu::CheckClicked(Event event)
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 			AccountLogin* accLog = new AccountLogin(window, res);
-			accLog->openAccountLoginWindow(&event);
+			accLog->openAccountLoginWindow(event);
 			delete accLog;
 			return 0;
 		}
@@ -482,12 +482,12 @@ void HomeMenu::HomeMenuStart()
 	}
 	callCount++;
 
+	Event* event = Controls::getEvent();
 	while (window->isOpen())
 	{
-		Event event;
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);

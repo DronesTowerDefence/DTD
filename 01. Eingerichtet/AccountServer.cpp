@@ -52,7 +52,7 @@ std::string AccountServer::send()
 	}
 
 	RenderWindow* window = HomeMenu::getInstance()->getWindow();
-	Event event;
+	Event* event = Controls::getEvent();
 
 	Sprite* sprite = new Sprite();
 	sprite->setTexture(*Ressources::getInstance()->getSendMoneyBackgroundTexture());
@@ -84,14 +84,14 @@ std::string AccountServer::send()
 
 	while (window->isOpen() && !isDone)
 	{
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
-			Controls::checkKeyboardInput(&event);
+			Controls::checkKeyboardInput(event);
 			userEnd = Controls::getEscIsPressed();
 		}
 

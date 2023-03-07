@@ -1,5 +1,6 @@
 #include "Multiplayer.h"
 #include "PauseMenu.h"
+#include "Controls.h"
 #include <iostream>
 
 
@@ -203,25 +204,25 @@ void PauseMenu::draw()
 	window->display();
 
 }
-void PauseMenu::checkPause(Event event1)
+void PauseMenu::checkPause(Event* event1)
 {
 	/*Vector2i mousePos;*/
-	if (event1.type == Event::KeyReleased && event1.key.code == Keyboard::Escape) { //Übergebenes Event wird geprüft auf ESC-Druck
+	if (event1->type == Event::KeyReleased && event1->key.code == Keyboard::Escape) { //Übergebenes Event wird geprüft auf ESC-Druck
 
 		Multiplayer::send(2, true);
 
 		while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 		{
 
-			Event event;
-			while (window->pollEvent(event))
+			Event* event = Controls::getEvent();
+			while (window->pollEvent(*event))
 			{
-				if (event.type == Event::Closed)
+				if (event->type == Event::Closed)
 				{
 					window->close();
 					exit(0);
 				}
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+				if (event->type == Event::KeyReleased && event->key.code == Keyboard::Escape) // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				{
 					Multiplayer::send(2, false);
 					return;
@@ -324,10 +325,10 @@ void PauseMenu::checkPause(bool isPaused)
 			if (!multiplayerIsPaused)
 				return;
 
-			Event event;
-			while (window->pollEvent(event))
+			Event* event = Controls::getEvent();
+			while (window->pollEvent(*event))
 			{
-				if (event.type == Event::Closed)
+				if (event->type == Event::Closed)
 				{
 					window->close();
 					exit(0);
@@ -430,15 +431,15 @@ void PauseMenu::checkPause()
 	while (window->isOpen())  //Fenster wird schon im Konstruktor übergeben und als Pointer gespeichert
 	{
 
-		Event event;
-		while (window->pollEvent(event))
+		Event* event = Controls::getEvent();
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
-			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape) { // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
+			if (event->type == Event::KeyReleased && event->key.code == Keyboard::Escape) { // Mit erneutem ESC-Druck wieder in Anfangs-whileschleife in Game.cpp
 				return;
 			}
 

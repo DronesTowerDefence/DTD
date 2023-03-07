@@ -387,22 +387,22 @@ bool MultiplayerGUI::start(bool _isHost)
 	isHost = _isHost;
 	isOpen = true;
 
-	Event event;
+	Event* event = Controls::getEvent();
 	while (window->isOpen() && isOpen)
 	{
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
 			if (!isHost)
 			{
-				ipAdressInput(&event);
+				ipAdressInput(event);
 			}
-			checkClicked(&event);
-			Controls::checkKeyboardInput(&event);
+			checkClicked(event);
+			Controls::checkKeyboardInput(event);
 			if (Controls::getEnterIsPressed())
 				isStart = true;
 		}

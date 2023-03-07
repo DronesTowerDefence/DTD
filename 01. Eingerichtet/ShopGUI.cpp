@@ -2,6 +2,7 @@
 #include "Service.h"
 #include "HomeMenu.h"
 #include "PopUpMessage.h"
+#include "Controls.h"
 
 std::list<ShopContentTexture*> ShopGUI::allShopContents;
 
@@ -185,18 +186,18 @@ bool ShopGUI::openShop()
 	ShopContentData::loadBoughtFromServerString(accServer->getShopContent(Account::getAccName()));
 	delete accServer;
 
-	Event event;
+	Event* event = Controls::getEvent();
 
 	while (window->isOpen() && isOpen)
 	{
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
-			checkClicked(&event);
+			checkClicked(event);
 		}
 		draw();
 	}

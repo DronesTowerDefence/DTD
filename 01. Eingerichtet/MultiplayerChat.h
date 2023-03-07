@@ -67,7 +67,7 @@ private:
 
 public:
 
-	void checkInput(Event);
+	void checkInput(Event*);
 	void checkChat();
 	void draw();
 	void addChatMessage(std::string, std::string);

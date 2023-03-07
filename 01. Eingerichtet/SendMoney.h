@@ -29,7 +29,7 @@ private:
 
 public:
 
-	bool checkInput(Event);
+	bool checkInput(Event*);
 	void checkSendMoney();
 	void draw();
 	static SendMoney* getInstance();
