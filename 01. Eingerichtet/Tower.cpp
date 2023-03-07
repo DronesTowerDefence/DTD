@@ -14,7 +14,7 @@ int Tower::globalId = 0;
 Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
 {
 	//Ob der Index richtig ist
-	if (_index >= 0 && _index <= 4)
+	if (_index >= 0 && _index <= 5)
 	{
 		UniqueAchievement::getUniqueAchievement(11)->setTowerPlaced(_index, true);
 		UniqueAchievement::getUniqueAchievement(12)->setTowerPlaced(_index, true);
