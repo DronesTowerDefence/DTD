@@ -30,7 +30,7 @@ Sidebar::Sidebar()
 	buttonText[2].setPosition(Vector2f(1757, 275));
 	buttonText[3].setPosition(Vector2f(1757, 380));
 	buttonText[4].setPosition(Vector2f(1757, 485));
-	buttonText[5].setPosition(Vector2f(1832, 380));
+	buttonText[5].setPosition(Vector2f(1757, 590));
 
 
 	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
@@ -38,7 +38,8 @@ Sidebar::Sidebar()
 	buttonSpr[2].setPosition(Vector2f(1762, 225));
 	buttonSpr[3].setPosition(Vector2f(1762, 330));
 	buttonSpr[4].setPosition(Vector2f(1762, 435));
-	buttonSpr[5].setPosition(Vector2f(1765, 450));
+	buttonSpr[5].setPosition(Vector2f(1762, 540));
+	
 
 
 	doubleSpeed.setTexture(*res->getButtonSpeedTexture());
@@ -72,7 +73,7 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 	Vector2f pos, pos2;
 
 
-	for (int i = 0; i < 5; i++) //Geht alle Türme durch
+	for (int i = 0; i < towerCount; i++) //Geht alle Türme durch
 	{
 		pos = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(buttonSpr[i].getPosition() + Vector2f(50, 50));
@@ -92,7 +93,7 @@ int Sidebar::isClicked(sf::RenderWindow* window)
 }
 void Sidebar::draw(sf::RenderWindow* window)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < towerCount; i++)
 	{
 		if (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(i) &&
 			((HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(i)) || !HomeMenu::getInstance()->getDaily()->getIsDaily()))

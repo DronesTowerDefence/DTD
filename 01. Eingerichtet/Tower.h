@@ -313,6 +313,8 @@ public:
 	/// <returns>bool</returns>
 	bool generateMoney();
 
+	String getName();
+
 	/// <summary>
 	/// Lässt den Turm auf eine Drohne schießen
 	/// </summary>
@@ -357,7 +359,7 @@ public:
 	/// Erstellt einen Spawn
 	/// </summary>
 	/// <param name="Typ = ">1: Flugzeug</param>
-	void spawnSpawn(int);
+	void spawnSpawn(int,Vector2f);
 
 	/// <summary>
 	/// Verkauft alle Spawns, die zum Turm gehören

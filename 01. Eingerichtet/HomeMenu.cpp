@@ -112,7 +112,7 @@ HomeMenu::HomeMenu()
 	positionTower[2] = Vector2f(1300, 550);
 	positionTower[3] = Vector2f(1300, 700);
 	positionTower[4] = Vector2f(1300, 850);
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	for (int i = 0; i <5; i++)
 	{
 
 		for (int x = 0; x < 4; x++)
@@ -145,7 +145,7 @@ HomeMenu::HomeMenu()
 	textureTower[4][2]->loadFromFile("img/tower4/tower4_2.png");
 	textureTower[4][3]->loadFromFile("img/tower4/tower4_3.png");
 
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	for (int i = 0; i <5; i++)
 	{
 		towers[i] = new Sprite();
 
@@ -211,7 +211,7 @@ void HomeMenu::drawPublic()
 		window->draw(*map[i]);
 	}
 
-	for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+	for (int i = 0; i < 5; i++)
 	{
 		window->draw(*towers[i]);
 	}
@@ -671,7 +671,7 @@ void HomeMenu::setTowerTexture()
 		if (animationIndex > 3)
 			animationIndex = 0;
 
-		for (int i = 0; i < Ressources::getInstance()->getTowerCount(); i++)
+		for (int i = 0; i < 5-1; i++)
 		{
 			towers[i]->setTexture(*textureTower[i][animationIndex]);
 		}

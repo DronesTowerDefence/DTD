@@ -35,6 +35,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	Round::getInstance()->addProjectile(this);
 	style = _style;
 	dronetarget = _target;
+	towerspawn = _towerspawn;
 
 	if (style == 0) {
 		move.x = _targetstill.x;
@@ -58,6 +59,9 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		break;
 	case 4:
 		projectilesprite.setTexture(*res->getProjectileTexture(1));
+		break;
+	case 5:
+		projectilesprite.setTexture(*res->getProjectileTexture(0));
 	}
 
 	//Wenn Flugzeug
@@ -132,23 +136,37 @@ void Projectile::operate()
 		}
 		break;
 	}
-
-
+	
 }
 
 void Projectile::targeting()
 {
-	for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
-	{
-		if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
+	//if (tower->getName() == "Blitzkugel") {
+	//	for (auto i : towerspawn->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
+	//	{
+	//		if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
+	//		{
+	//			if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
+	//			{
+	//				target = i;
+	//				return;
+	//			}
+	//		}
+	//	}
+	//}
+	/*else {*/
+		for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
 		{
-			if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
+			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
 			{
-				target = i;
-				return;
+				if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
+				{
+					target = i;
+					return;
+				}
 			}
 		}
-	}
+	//}
 }
 void Projectile::homing()
 {
@@ -165,7 +183,7 @@ void Projectile::homing()
 void Projectile::moveProjectile()
 {
 	//Bewegt das Projektil, abhängig vom Typ
-	if (style == 2 || style == 3)
+	if (style == 2 || style == 3||style==5)
 	{
 		homing();
 	}

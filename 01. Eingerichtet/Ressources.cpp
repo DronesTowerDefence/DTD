@@ -79,8 +79,7 @@ Ressources::Ressources()
 	multiplayerPlayerCount = 0;
 	mapCount = 3;
 	droneCount = 5;
-	towerCount = 5;
-	towerAttackTowerCount = 4;
+	towerAttackTowerCount = 5;
 	towerMoneyTowerCount = 1;
 
 	towerProjectileIndex[0] = 2;
@@ -88,58 +87,69 @@ Ressources::Ressources()
 	towerProjectileIndex[2] = 4;
 	towerProjectileIndex[3] = 0;
 	towerProjectileIndex[4] = 0;
+	towerProjectileIndex[5] = 5;
 
 	towerPrice[0] = 100;
 	towerPrice[1] = 175;
 	towerPrice[2] = 350;
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
+	towerPrice[5] = 1;
 
 	towerDamage[0] = 1;
 	towerDamage[1] = 2;
 	towerDamage[2] = 2;
 	towerDamage[3] = 3;
 	towerDamage[4] = 0;
+	towerDamage[5] = 0;
 
 	towerSpeed[0] = 1;
 	towerSpeed[1] = 1.5;
 	towerSpeed[2] = 1;
 	towerSpeed[3] = 1;
 	towerSpeed[4] = 4;
+	towerSpeed[5] = 1;
 
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
 	towerProjectileSpeed[2] = 4;
 	towerProjectileSpeed[3] = 0.05;
 	towerProjectileSpeed[4] = 0;
+	towerProjectileSpeed[5] = 1;
 
 	towerRange[0] = 100;
 	towerRange[1] = 200;
 	towerRange[2] = 100;
 	towerRange[3] = 300;
 	towerRange[4] = 0;
+	towerRange[5] = 200;
 
 	towerMoneyGeneration[0] = 0;
 	towerMoneyGeneration[1] = 0;
 	towerMoneyGeneration[2] = 0;
 	towerMoneyGeneration[3] = 0;
 	towerMoneyGeneration[4] = 10;
+	towerMoneyGeneration[5] = 0;
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
 	towerChangeFrame[2] = 200;
 	towerChangeFrame[3] = 300;
 	towerChangeFrame[4] = towerSpeed[4] * 1000;
+	towerChangeFrame[5] = 200;
+
 
 	towerName[0] = "Feuer-Turm";
 	towerName[1] = "Nagelfabrik";
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
+	towerName[5] = "Blitzkugel";
 
 	shootSoundCooldown = 0.5f;
 
 	towerSpawnSpeed[0] = 5;
+	towerSpawnSpeed[1] = 3;
 
 	ipAddress = "0"; //Standart-Initialisierung
 
@@ -258,7 +268,7 @@ Ressources::Ressources()
 
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < towerCount; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{

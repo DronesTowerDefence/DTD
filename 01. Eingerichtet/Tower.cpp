@@ -46,7 +46,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 
 		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
-			spawnSpawn(1);
+			spawnSpawn(1,Vector2f(0,0));
 			rangeShapePlane = new RectangleShape;
 			rangeShapePlane->setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
 			rangeShapePlane->setSize(Vector2f(range * 2, range * 2));
@@ -114,7 +114,7 @@ bool Tower::generateMoney()
 bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 {
 	Projectile* p = nullptr;
-	if (index < 4)
+	if (index < towerCount)
 	{
 		if (!shootCooldown)
 		{
@@ -136,6 +136,9 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 					i->shoot();
 					res->statistic_damage += damage;
 				}
+			}
+			else if (index == 5) {
+				spawnSpawn(2,d->getPosition());
 			}
 			else
 			{
@@ -317,9 +320,9 @@ void Tower::manageUpdate(RenderWindow* window)
 {
 	update->isClicked(window, this);
 }
-void Tower::spawnSpawn(int art)
+void Tower::spawnSpawn(int art,Vector2f target)
 {
-	boundSpawns.push_back(new TowerSpawn(art, this));
+	boundSpawns.push_back(new TowerSpawn(art, this,target));
 }
 void Tower::sellSpawns()
 {
@@ -340,6 +343,10 @@ int Tower::getIndex()
 int Tower::getRange()
 {
 	return range;
+}
+String Tower::getName()
+{
+	return res->getTowerName(index);
 }
 float Tower::getDamage()
 {
