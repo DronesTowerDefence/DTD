@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Round.h"
 #include "Ressources.h"
+#include <math.h>
 
 Ressources* Ressources::instance = nullptr;
 
@@ -96,18 +97,26 @@ Ressources::Ressources()
 	towerPrice[4] = 750;
 	towerPrice[5] = 1;
 
-	towerDamage[0] = 1;
-	towerDamage[1] = 2;
-	towerDamage[2] = 2;
-	towerDamage[3] = 3;
+	towerDamage[0] = 1.25f;
+	towerDamage[1] = 1.4f;
+	towerDamage[2] = 1.35f;
+	towerDamage[3] = 1, 45;
 	towerDamage[4] = 0;
 	towerDamage[5] = 0;
 
-	towerSpeed[0] = 1;
-	towerSpeed[1] = 1.5;
-	towerSpeed[2] = 1;
-	towerSpeed[3] = 1;
-	towerSpeed[4] = 4;
+	float startwert[6];
+	startwert[0] = 2.9f;
+	startwert[1] = 3;
+	startwert[2] = 3.35f;
+	startwert[3] = 3.8f;
+	startwert[4] = 4;
+	startwert[5] = 2.9f;
+
+	towerSpeed[0] = 2.8f;
+	towerSpeed[1] = 2.9f;
+	towerSpeed[2] = 3.25f;
+	towerSpeed[3] = 3.7f;
+	towerSpeed[4] = 3.9f;
 	towerSpeed[5] = 1;
 
 	towerProjectileSpeed[0] = 4;
@@ -128,7 +137,7 @@ Ressources::Ressources()
 	towerMoneyGeneration[1] = 0;
 	towerMoneyGeneration[2] = 0;
 	towerMoneyGeneration[3] = 0;
-	towerMoneyGeneration[4] = 10;
+	towerMoneyGeneration[4] = 4;
 	towerMoneyGeneration[5] = 0;
 
 	towerChangeFrame[0] = 300;
@@ -158,24 +167,18 @@ Ressources::Ressources()
 	flugzeugUpdate[2] = Vector2f(1, -1);
 	flugzeugUpdate[3] = Vector2f(-1, -1);
 
-	double p[6];
-	p[0] = 1.f / 8.f;
-	p[1] = 1.f / 7.f;
-	p[2] = 1.f / 6.f;
-	p[3] = 1.f / 5.f;
-	p[4] = 1.f / 5.f;
-	p[5] = 1.f / 5.f;
+
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
-	for (int j = 0; j < towerCount; j++, x = 1.5)
+	for (int j = 0; j < towerCount; j++)
 	{
-		for (int i = 0; i < 4; i++, x += 0.5)
+		for (int i = 0; i < 4; i++)
 		{
-			towerUpdateDamage[j][i] = towerDamage[j] + (towerDamage[j] * x);
-			berechneterSpeed = towerSpeed[j] - (towerSpeed[j] * p[j] * x);
-			towerUpdateSpeed[j][i] = berechneterSpeed;
-			towerUpdateMoneyGeneration[j][i] = towerMoneyGeneration[j] + (towerMoneyGeneration[j] * x);
+			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
+			berechneterSpeed = -0.1f * pow((i + 2), 2) + startwert[j];
+				towerUpdateSpeed[j][i] = berechneterSpeed;
+			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
 
 		}
