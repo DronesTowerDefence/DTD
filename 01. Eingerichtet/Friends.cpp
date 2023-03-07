@@ -81,19 +81,19 @@ Friends::Friends(std::string freund, Image* image)
 void FriendsGUI::start(RenderWindow* window)
 {
 	bool isClicked = false;
-	Event event;
+	Event* event = Controls::getEvent();
 	while (window->isOpen())
 	{
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
 			if (Eingabe)
 			{
-				char zeichen = Controls::checkKeyboardInput(&event);
+				char zeichen = Controls::checkKeyboardInput(event);
 
 				if (zeichen != '\0')
 				{

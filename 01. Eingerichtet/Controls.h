@@ -21,7 +21,13 @@ private:
 	static bool middleMouseIsClicked;
 	static int mouseWheel;
 
+	static bool initialized;
+	static Thread* thread;
+	static Event* event;
+	static void run();
+
 public:
+
 
 	static bool getArrowUpIsPressed();
 	static bool getArrowDownIsPressed();
@@ -38,6 +44,13 @@ public:
 	static bool getMiddleMouseIsClicked();
 	static int getMouseWheel();
 
+	static Event* getEvent();
+
+	/// <summary>
+	/// Starten der Controls, aufrufen nachdem das HomeMenu erstellt wurde
+	/// </summary>
+	/// <returns>Ob erfolgreich</returns>
+	static bool initializeControls();
 	static char checkKeyboardInput(Event*);
 	static Vector2i checkMouseClick(Event*);
 	static void checkControls();

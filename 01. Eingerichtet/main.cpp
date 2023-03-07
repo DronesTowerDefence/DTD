@@ -10,6 +10,7 @@
 #include <WinBase.h>
 #include "Loadup.h"
 #include "HomeMenu.h"
+#include "Controls.h"
 using namespace sf;
 
 
@@ -21,7 +22,7 @@ int main()
 	window.setPosition(Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
-	Event event;
+	Event* event = Controls::getEvent();
 	Loadup* load = new Loadup(&window);
 	Sprite* credits = new Sprite();
 
@@ -30,9 +31,9 @@ int main()
 
 	while (window.isOpen() && (!load->getDone() || !Mouse::isButtonPressed(Mouse::Left)))
 	{
-		while (window.pollEvent(event))
+		while (window.pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window.close();
 				exit(0);
@@ -55,7 +56,6 @@ int main()
 	delete thread;
 	delete load;
 
-	HomeMenu::getInstance()->setWindow(&window); //Das Fenster wird an das HomeMenu übergeben
 	HomeMenu::getInstance()->HomeMenuStart(); //Das HomeMenu wird aufgerufen/gestartet
 
 	window.close();

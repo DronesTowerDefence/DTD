@@ -1,6 +1,7 @@
 #include "SkinsGUI.h"
 #include "Service.h"
 #include "HomeMenu.h"
+#include "Controls.h"
 
 void SkinsGUI::createEquipedSprite(SkinsGUIDisplayedSkin* sgds)
 {
@@ -186,13 +187,13 @@ bool SkinsGUI::openGUI()
 
 	initialize();
 
-	Event event;
+	Event* event = Controls::getEvent();
 
 	while (window->isOpen() && isOpen)
 	{
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);

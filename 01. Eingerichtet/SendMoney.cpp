@@ -121,28 +121,28 @@ void SendMoney::checkClicked()
 
 	}
 }
-bool SendMoney::checkInput(Event event)
+bool SendMoney::checkInput(Event* event)
 {
 	if (isOpen)
 	{
-		if (event.type == Event::KeyReleased && isOpen)
+		if (event->type == Event::KeyReleased && isOpen)
 		{
-			if (event.key.code == Keyboard::Escape)
+			if (event->key.code == Keyboard::Escape)
 			{
 				isOpen = false;
 			}
-			else if ((event.key.code == Keyboard::BackSpace && input.size() > 0) || input.size() > maxSize)
+			else if ((event->key.code == Keyboard::BackSpace && input.size() > 0) || input.size() > maxSize)
 			{
 				input.erase(input.size() - 1);
 				inputText->setString(input);
 			}
-			else if (event.key.code == Keyboard::Enter && input.size() > 0)
+			else if (event->key.code == Keyboard::Enter && input.size() > 0)
 			{
 				send();
 			}
 
 			char tmp = '\0';
-			tmp = Controls::checkKeyboardInput(&event);
+			tmp = Controls::checkKeyboardInput(event);
 
 			if (tmp < 48 || tmp > 57)
 			{

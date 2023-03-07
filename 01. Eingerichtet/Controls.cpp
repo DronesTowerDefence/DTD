@@ -3,6 +3,9 @@
 
 Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
 Clock Controls::mouseWheelMoveCooldownClock;
+Thread* Controls::thread = new Thread(&Controls::run);
+Event* Controls::event = new Event();
+bool Controls::initialized = false;
 
 bool Controls::arrowUpIsPressed = false;
 bool Controls::arrowDownIsPressed = false;
@@ -20,6 +23,11 @@ bool Controls::middleMouseIsClicked = false;
 int Controls::mouseWheel = 0;
 
 #pragma region Funktionen
+bool Controls::initializeControls()
+{
+	thread->launch();
+	return initialized;
+}
 char Controls::checkKeyboardInput(Event* event)
 {
 	char c = '\0';
@@ -319,6 +327,15 @@ void Controls::checkControls()
 	arrowUpIsPressed = false;
 	arrowDownIsPressed = false;
 }
+void Controls::run()
+{
+	while (event->type != Event::Closed)
+	{
+		checkKeyboardInput(event);
+		checkMouseClick(event);
+		checkControls();
+	}
+}
 #pragma endregion
 
 #pragma region getter
@@ -391,6 +408,11 @@ bool Controls::getMiddleMouseIsClicked()
 int Controls::getMouseWheel()
 {
 	return mouseWheel;
+}
+
+Event* Controls::getEvent()
+{
+	return event;
 }
 
 #pragma endregion

@@ -77,7 +77,7 @@ public:
 		/// Überprüft, ob ESC gedrückt wird, und erstellt eine while-Schlife des Pause-Menu, falls es zutrifft (wird in Game::startGame() aufgerufen)
 	/// </summary>
 	/// <param name="">Event event</param>
-	void checkPause(Event);
+	void checkPause(Event*);
 
 	/// <summary>
 	/// !!NUR FÜR MULTIPLAYER-KLASSE!! Wenn der Host in das Pause-Menü geht soll der Client auch ins Pause-Menü gehen

@@ -124,7 +124,7 @@ private:
 	/// <summary>
 	/// Das event, welches z.B. auf einen Tastendruck überprüft
 	/// </summary>
-	Event event;
+	Event* event;
 
 	/// <summary>
 	/// Die Clock für die Überprüfung der Verbindung (empfangen)

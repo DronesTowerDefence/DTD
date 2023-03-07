@@ -217,20 +217,20 @@ bool AchievementGUI::openAchievementGUI()
 {
 	isOpen = true;
 
-	Event event;
+	Event* event = Controls::getEvent();
 
 	while (window->isOpen() && isOpen)
 	{
 		Controls::checkControls();
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				window->close();
 				exit(0);
 			}
-			checkClicked(&event);
-			Controls::checkKeyboardInput(&event);
+			checkClicked(event);
+			Controls::checkKeyboardInput(event);
 		}
 		draw();
 

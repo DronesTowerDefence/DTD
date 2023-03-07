@@ -2,6 +2,7 @@
 #include "Multiplayer.h"
 #include "Round.h"
 #include "PopUpMessage.h"
+#include "Controls.h"
 
 
 Game* Game::instance = nullptr;
@@ -17,7 +18,7 @@ Game::Game()
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 	newTower = nullptr;
-
+	event = Controls::getEvent();
 
 	currentDrones[0] = *Ressources::getInstance()->getDroneTypesInRound(0);
 	currentDrones[1] = *(Ressources::getInstance()->getDroneTypesInRound(0) + 1);
@@ -283,9 +284,9 @@ void Game::startGame()
 	{
 		Multiplayer::receive();
 
-		while (window->pollEvent(event))
+		while (window->pollEvent(*event))
 		{
-			if (event.type == Event::Closed)
+			if (event->type == Event::Closed)
 			{
 				saveGame();
 				window->close();
@@ -761,9 +762,9 @@ void Game::checkLoseGame()
 				PauseMenu::getInstance()->checkPause(true);
 			}
 
-			while (window->pollEvent(event))
+			while (window->pollEvent(*event))
 			{
-				if (event.type == Event::Closed)
+				if (event->type == Event::Closed)
 				{
 					saveGame();
 					window->close();
@@ -891,7 +892,7 @@ void Game::checkDroneCount()
 void Game::shortcuts()
 {
 	// Shortcuts
-	if (event.type == Event::KeyReleased && event.key.code == Keyboard::Space)
+	if (event->type == Event::KeyReleased && event->key.code == Keyboard::Space)
 	{
 		if (doubleSpeed)
 		{
@@ -907,17 +908,17 @@ void Game::shortcuts()
 
 	if (tower != nullptr)
 	{
-		if (event.type == Event::KeyReleased)
+		if (event->type == Event::KeyReleased)
 		{
-			if (event.key.code == Keyboard::Period)
+			if (event->key.code == Keyboard::Period)
 			{
 				tower->Update2();
 			}
-			else if (event.key.code == Keyboard::Comma)
+			else if (event->key.code == Keyboard::Comma)
 			{
 				tower->Update1();
 			}
-			else if (event.key.code == Keyboard::BackSpace)
+			else if (event->key.code == Keyboard::BackSpace)
 			{
 				Round::getInstance()->sellTower(tower, false);
 				Multiplayer::send(tower, 1);
@@ -928,13 +929,13 @@ void Game::shortcuts()
 	}
 	else if (newTower == nullptr && tower == nullptr)
 	{
-		if (event.type == Event::KeyReleased)
+		if (event->type == Event::KeyReleased)
 		{
 
-			if (event.key.code >= 27 && event.key.code < 27 + Ressources::getInstance()->getTowerCount() && (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event.key.code - 27) && (!HomeMenu::getInstance()->getDaily()->getIsDaily() || HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(event.key.code - 27))))
+			if (event->key.code >= 27 && event->key.code < 27 + Ressources::getInstance()->getTowerCount() && (Round::getInstance()->getMoney() >= Ressources::getInstance()->getTowerPrice(event->key.code - 27) && (!HomeMenu::getInstance()->getDaily()->getIsDaily() || HomeMenu::getInstance()->getDaily()->getIsDaily() && HomeMenu::getInstance()->getDaily()->getIsTowerAllowed(event->key.code - 27))))
 			{
-				Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event.key.code - 27));
-				newTower = new TowerAlias(event.key.code - 27, p_map);
+				Round::getInstance()->submoney(Ressources::getInstance()->getTowerPrice(event->key.code - 27));
+				newTower = new TowerAlias(event->key.code - 27, p_map);
 			}
 		}
 	}
@@ -1406,7 +1407,7 @@ Clock* Game::getMultiplayerCheckConnectionClock()
 }
 Event* Game::getEvent()
 {
-	return &event;
+	return event;
 }
 int Game::getStatus()
 {

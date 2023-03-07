@@ -82,7 +82,7 @@ private:
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
 	/// <returns></returns>
-	int CheckClicked(Event);
+	int CheckClicked(Event*);
 
 	std::string chalange;
 
