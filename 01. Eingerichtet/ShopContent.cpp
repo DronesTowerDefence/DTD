@@ -4,9 +4,9 @@
 
 std::list<ShopContentData*> ShopContentData::allShopContentData;
 
-ShopContentData::ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture* _texture)
+ShopContentData::ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture** _texture)
 {
-	if (_texture->getSize().x == 0 && _texture->getSize().y == 0)
+	if (_texture[0] == nullptr || _texture[0]->getSize().x == 0 && _texture[0]->getSize().y == 0)
 	{
 		delete this;
 		return;
@@ -18,7 +18,11 @@ ShopContentData::ShopContentData(int id, int cost, std::string name, int type, i
 	m_name = name;
 	m_typ = type;
 	m_typTypID = typeType;
-	texture = _texture;
+	for (int i = 0; i <= towerTextureCount; i++)
+	{
+		m_texture[i] = new Texture();
+		m_texture[i] = _texture[i];
+	}
 	allShopContentData.push_back(this);
 	new ShopContentTexture(this);
 }
@@ -37,10 +41,12 @@ bool ShopContentData::createShopContentDataFromFile()
 	int _id = 0, _cost = 0, _type = 0, _typeType = 0, pos1 = 0, pos2 = 0;
 	std::string _name, str;
 	char buffer[50];
-	Texture* _texture = nullptr;
+	Texture* _texture[towerTextureCount + 1] = { nullptr };
 
-	for (int i = 0; i < shopContentCount; i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _texture = nullptr, _cost = 0)
+	for (int i = 0; i < shopContentCount; i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _cost = 0)
 	{
+		for (int j = 0; j < towerTextureCount; _texture[j] = nullptr, j++);
+
 		file.getline(buffer, 50);
 		str = buffer;
 
@@ -59,18 +65,26 @@ bool ShopContentData::createShopContentDataFromFile()
 		pos1 = str.find(';', pos2 + 1);
 		_typeType = stoi(str.substr(pos2 + 1, pos1 - pos2 - 1));
 
-		_texture = new Texture();
 		if (_type == 0) // Tower
 		{
-			loadTextureSuccessfull = _texture->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/tower_preview.png");
+			for (int j = 0; j <= towerTextureCount; j++)
+			{
+				_texture[j] = new Texture();
+				loadTextureSuccessfull = _texture[j]->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/tower_" + std::to_string(j) + ".png");
+			}
 		}
 		else if (_type == 1) // Drone
 		{
-			loadTextureSuccessfull = _texture->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/drone_1.png");
+			for (int j = 0; j <= droneTextureCount; j++)
+			{
+				_texture[j] = new Texture();
+				loadTextureSuccessfull = _texture[j]->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/drone_" + std::to_string(j) + ".png");
+			}
 		}
 		else if (_type == 2) // Projectile
 		{
-			loadTextureSuccessfull = _texture->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/projectile.png");
+			_texture[0] = new Texture();
+			loadTextureSuccessfull = _texture[0]->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/projectile.png");
 		}
 
 		if (loadTextureSuccessfull)
@@ -158,9 +172,24 @@ std::string ShopContentData::getName()
 	return m_name;
 }
 
-Texture* ShopContentData::getTexture()
+Texture** ShopContentData::getTexture()
 {
-	return texture;
+	return m_texture;
+}
+
+Texture* ShopContentData::getPreviewTexture()
+{
+	switch (m_typ)
+	{
+	case 0:
+		return m_texture[towerTextureCount];
+	case 1:
+		return m_texture[droneTextureCount];
+	case 2:
+		return m_texture[0];
+	default:
+		return nullptr;
+	}
 }
 
 std::list<ShopContentData*> ShopContentData::getAllShopContentData()
@@ -206,7 +235,7 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 
 
 	contentSprite = new Sprite();
-	contentSprite->setTexture(*p_shopContentData->getTexture());
+	contentSprite->setTexture(*p_shopContentData->getPreviewTexture());
 	contentSprite->setPosition(0, 50);
 	contentSprite->setScale(4, 4);
 

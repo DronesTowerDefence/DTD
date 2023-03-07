@@ -30,10 +30,19 @@ private:
 	std::string m_name;
 
 	// Vorschau-Textur
-	Texture* texture;
+	Texture* m_texture[towerTextureCount + 1];
 
 public:
-	ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture* _texture);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="id">ID des Shopcontents</param>
+	/// <param name="cost">Kosten des Skins</param>
+	/// <param name="name">Name der Textur</param>
+	/// <param name="type">0:Tower | 1:Drone | 2:Projectile</param>
+	/// <param name="typeType">TowerType/DroneType/ProjectileType</param>
+	/// <param name="_texture">Array: 0-3:Tower | 4:Alias | 5:NoBuy | 6:Preview</param>
+	ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture** _texture);
 	static bool createShopContentDataFromFile();
 	static bool loadBoughtFromServerString(std::string);
 	void setIsBought(bool b = false);
@@ -45,7 +54,8 @@ public:
 	int getType();
 	int getTypeType();
 	std::string getName();
-	Texture* getTexture();
+	Texture** getTexture();
+	Texture* getPreviewTexture();
 	/// <summary>
 	/// Kopie der Liste
 	/// </summary>

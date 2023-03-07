@@ -234,7 +234,7 @@ SkinsGUI::SkinsGUIDisplayedSkin::SkinsGUIDisplayedSkin(Font* font, ShopContentDa
 	title->setStyle(sf::Text::Underlined);
 
 	contentPreview = new Sprite();
-	contentPreview->setTexture(*scd->getTexture());
+	contentPreview->setTexture(*scd->getPreviewTexture());
 	contentPreview->setPosition(0, 50);
 	contentPreview->setScale(4, 4);
 

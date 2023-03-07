@@ -528,17 +528,17 @@ void Ressources::doubleSpeed()
 	setSpeed();
 
 }
-bool Ressources::updateTowerTexture(int towerID, Texture* textureArr)
+bool Ressources::updateTowerTexture(int towerID, Texture** textureArr)
 {
 	if (towerID >= 0 && towerID <= towerTypeCount && textureArr != nullptr)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			towerTexture[towerID][i] = textureArr[0];
+			towerTexture[towerID][i] = *textureArr[i];
 		}
-		*towerAliasTexture = textureArr[4];
-		*towerNoBuyTexture = textureArr[5];
-		*towerPreviewTexture = textureArr[6];
+		towerAliasTexture[towerID] = *textureArr[4];
+		towerNoBuyTexture[towerID] = *textureArr[5];
+		towerPreviewTexture[towerID] = *textureArr[6];
 		return true;
 	}
 	else return false;

@@ -10,6 +10,8 @@ using namespace sf;
 
 #define towerTypeCount 5
 #define droneTypeCount 5
+#define towerTextureCount 6
+#define droneTextureCount 4
 
 class Ressources
 {
@@ -144,7 +146,7 @@ public:
 	/// <param name="towerID"></param>
 	/// <param name="textureArr">Array: 0-3:Tower | 4:Alias | 5:NoBuy | 6:Preview</param>
 	/// <returns></returns>
-	bool updateTowerTexture(int towerID, Texture* textureArr);
+	bool updateTowerTexture(int towerID, Texture** textureArr);
 
 	/// <summary>
 	/// Gegensatz zur updateTowerTexture. Es wird wieder die Standart-Textur verwendet
