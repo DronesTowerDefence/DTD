@@ -20,7 +20,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	speed = res->getDroneSpeed(typSpecifier);
 	nextPoint = 0;
 	//""
-	lives = res->getDroneLives(typSpecifier);
+	lives = float(res->getDroneLives(typSpecifier));
 	drone.setPosition(startPosition);
 	move_x = x;
 	move_y = y;
@@ -43,7 +43,7 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y, int nextPoi
 	speed = res->getDroneSpeed(typSpecifier);
 	nextPoint = nextPoint1;
 	//""
-	lives = res->getDroneLives(typSpecifier);
+	lives = float(res->getDroneLives(typSpecifier));
 	drone.setPosition(startPosition);
 	move_x = x;
 	move_y = y;
@@ -145,9 +145,13 @@ void Drone::pass()
 	//}
 }
 
-bool Drone::takeDamage(int damage) {
-	int livesDiff = lives;
+bool Drone::takeDamage(float damage) {
+	float livesDiff = lives;
 	lives = lives - damage;
+	//
+	if (int(livesDiff) == (int)lives) {
+		return false;
+	};
 	livesDiff -= lives;
 
 	res->getHitSound(0)->play();
@@ -188,13 +192,13 @@ bool Drone::takeDamage(int damage) {
 		delete this;
 		return true;
 	}
-	if (droneType == 4 && lives % 5 == 0)
+	if (droneType == 4 && int(lives) % 5 == 0)
 	{
-		if (lives == 40)
+		if (lives == 40.f)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 1));
-		else if (lives == 30)
+		else if (lives == 30.f)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 2));
-		else if (lives == 15)
+		else if (lives == 15.f)
 			drone.setTexture(*res->getDroneDmgTexture(droneType, 3));
 
 
@@ -215,7 +219,7 @@ int Drone::getNextPoint()
 {
 	return nextPoint;
 }
-int Drone::getLives()
+float Drone::getLives()
 {
 	return lives;
 }
@@ -304,7 +308,7 @@ void Drone::setMove(Vector2f v)
 	move_x = int(v.x);
 	move_y = int(v.y);
 }
-void Drone::setLives(int _lives)
+void Drone::setLives(float _lives)
 {
 	lives = _lives;
 }
