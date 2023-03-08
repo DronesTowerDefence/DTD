@@ -93,9 +93,9 @@ void FriendsGUI::start(RenderWindow* window)
 			}
 			if (Eingabe)
 			{
-				char zeichen = Controls::checkKeyboardInput(event);
+				std::string zeichen = Controls::checkKeyboardInput(event);
 
-				if (zeichen != '\0')
+				if (zeichen != "")
 				{
 					text += zeichen;
 				}

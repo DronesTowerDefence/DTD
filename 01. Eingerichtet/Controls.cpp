@@ -1,8 +1,11 @@
 #include "Ressources.h"
 #include "Controls.h"
+#include "SFML/Window/Clipboard.hpp"
 
 Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
+Time Controls::buttonPressedCooldownTime = milliseconds(20);
 Clock Controls::mouseWheelMoveCooldownClock;
+Clock Controls::buttonPressedCooldownClock;
 Thread* Controls::thread = new Thread(&Controls::run);
 Event* Controls::event = new Event();
 bool Controls::initialized = false;
@@ -21,19 +24,28 @@ bool Controls::rightMouseIsClicked = false;
 bool Controls::leftMouseIsClicked = false;
 bool Controls::middleMouseIsClicked = false;
 int Controls::mouseWheel = 0;
+std::string Controls::enteredString = "";
 
 #pragma region Funktionen
-bool Controls::initializeControls()
+void Controls::run()
 {
-	thread->launch();
-	return initialized;
+	while (event->type != Event::Closed)
+	{
+		sleep(milliseconds(10));
+		enteredString = checkKeyboardInput(event);
+		checkMouseClick(event);
+		checkControls();
+	}
 }
-char Controls::checkKeyboardInput(Event* event)
+std::string Controls::checkKeyboardInput(Event* event)
 {
 	char c = '\0';
+	std::string s = "";
 
 	if (event->type == Event::KeyPressed)
 	{
+		buttonPressedCooldownClock.restart();
+
 		switch (event->key.code)
 		{
 		case Keyboard::Up:
@@ -266,13 +278,24 @@ char Controls::checkKeyboardInput(Event* event)
 
 	if (shiftIsPressed)
 	{
-		return std::toupper(c);
+		s += std::toupper(c);
 	}
-	else if (ctrlIsPressed && altIsPressed && std::toupper(c) == 'Q')
+	else if (ctrlIsPressed && altIsPressed && c == 'q')
 	{
-		return '@';
+		s += '@';
 	}
-	else return c;
+	else if (ctrlIsPressed && c == 'v')
+	{
+		s += Clipboard::getString();
+	}
+	else if (c != '\0')
+	{
+		s += c;
+	}
+	else return "";
+
+
+	return s;
 }
 Vector2i Controls::checkMouseClick(Event* event)
 {
@@ -321,20 +344,20 @@ void Controls::checkControls()
 		mouseWheel = 0;
 		mouseWheelMoveCooldownClock.restart();
 	}
-	backSpaceIsPressed = false;
-	enterIsPressed = false;
-	escIsPressed = false;
-	arrowUpIsPressed = false;
-	arrowDownIsPressed = false;
-}
-void Controls::run()
-{
-	while (event->type != Event::Closed)
+	if (buttonPressedCooldownClock.getElapsedTime() >= buttonPressedCooldownTime)
 	{
-		checkKeyboardInput(event);
-		checkMouseClick(event);
-		checkControls();
+		buttonPressedCooldownClock.restart();
+		backSpaceIsPressed = false;
+		enterIsPressed = false;
+		escIsPressed = false;
+		arrowUpIsPressed = false;
+		arrowDownIsPressed = false;
 	}
+}
+bool Controls::initializeControls()
+{
+	thread->launch();
+	return initialized;
 }
 #pragma endregion
 
@@ -413,6 +436,11 @@ int Controls::getMouseWheel()
 Event* Controls::getEvent()
 {
 	return event;
+}
+
+std::string Controls::getEnteredString()
+{
+	return enteredString;
 }
 
 #pragma endregion

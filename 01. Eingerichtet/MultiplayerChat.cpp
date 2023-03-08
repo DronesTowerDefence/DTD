@@ -111,11 +111,10 @@ void MultiplayerChat::checkInput(Event* event)
 
 		if (event->type == Event::KeyReleased)
 		{
-			char tmp = '\0';
+			std::string tmp = "";
 			tmp = Controls::checkKeyboardInput(event);
-			if (isShift) tmp = std::toupper(tmp);
 
-			if (tmp != '\0')
+			if (tmp != "")
 			{
 				if (inputDefaultText)
 				{

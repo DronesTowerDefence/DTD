@@ -4,7 +4,9 @@ class Controls
 private:
 
 	static Clock mouseWheelMoveCooldownClock;
+	static Clock buttonPressedCooldownClock;
 	static Time mouseWheelMoveCooldownTime;
+	static Time buttonPressedCooldownTime; // Je niedriger, desto weniger kann man mit z.B. backspace löschen
 
 	static bool arrowUpIsPressed;
 	static bool arrowDownIsPressed;
@@ -20,13 +22,18 @@ private:
 	static bool leftMouseIsClicked;
 	static bool middleMouseIsClicked;
 	static int mouseWheel;
+	static std::string enteredString;
 
 	static bool initialized;
 	static Thread* thread;
 	static Event* event;
 	static void run();
 
+	static Vector2i checkMouseClick(Event*);
+	static void checkControls();
+
 public:
+	static std::string checkKeyboardInput(Event*);
 
 
 	static bool getArrowUpIsPressed();
@@ -47,12 +54,15 @@ public:
 	static Event* getEvent();
 
 	/// <summary>
+	/// Normalerweise ein einzelner char, außer bei strg+v
+	/// </summary>
+	/// <returns></returns>
+	static std::string getEnteredString();
+
+	/// <summary>
 	/// Starten der Controls, aufrufen nachdem das HomeMenu erstellt wurde
 	/// </summary>
 	/// <returns>Ob erfolgreich</returns>
 	static bool initializeControls();
-	static char checkKeyboardInput(Event*);
-	static Vector2i checkMouseClick(Event*);
-	static void checkControls();
 
 };

@@ -221,7 +221,6 @@ bool AchievementGUI::openAchievementGUI()
 
 	while (window->isOpen() && isOpen)
 	{
-		Controls::checkControls();
 		while (window->pollEvent(*event))
 		{
 			if (event->type == Event::Closed)
@@ -254,7 +253,6 @@ bool AchievementGUI::openAchievementGUI()
 		if (Controls::getEscIsPressed())
 		{
 			isOpen = false;
-			Controls::checkControls();
 		}
 
 	}

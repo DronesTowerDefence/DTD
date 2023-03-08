@@ -150,9 +150,9 @@ void MultiplayerGUI::ipAdressInput(Event* event) {
 	{
 		if (hostIP.length() < 15)
 		{
-			char c;
+			std::string c;
 			c = Controls::checkKeyboardInput(event);
-			if (c != '\0')
+			if (c != "")
 				hostIP += c;
 		}
 	}

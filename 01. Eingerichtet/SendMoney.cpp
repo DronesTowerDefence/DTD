@@ -141,17 +141,10 @@ bool SendMoney::checkInput(Event* event)
 				send();
 			}
 
-			char tmp = '\0';
+			std::string tmp = "";
 			tmp = Controls::checkKeyboardInput(event);
 
-			if (tmp < 48 || tmp > 57)
-			{
-				return false;
-			}
-			else
-			{
-				input += tmp;
-			}
+			input += Service::stringToInt(tmp);
 
 			inputText->setString(input);
 

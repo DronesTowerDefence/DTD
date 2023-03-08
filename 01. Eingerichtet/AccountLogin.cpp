@@ -107,7 +107,7 @@ void AccountLogin::draw()
 
 bool AccountLogin::accountLogin(Event* event)
 {
-	char newChar = '\0';
+	std::string newChar = "";
 	std::string email = "", password = "", antwort = "";
 	AccountServer* accServer = new AccountServer();
 
@@ -115,7 +115,6 @@ bool AccountLogin::accountLogin(Event* event)
 	accountLoginIsOpen = true;
 	while (accountLoginIsOpen && window->isOpen())
 	{
-		Controls::checkControls();
 		while (window->pollEvent(*event))
 		{
 			if (event->type == Event::Closed)
@@ -233,13 +232,12 @@ bool AccountLogin::accountLogin(Event* event)
 
 bool AccountLogin::accountPage(Event* event)
 {
-	char newChar = '\0';
+	std::string newChar = "";
 	AccountServer* accServer = new AccountServer();
 
 	accountLoginIsOpen = true;
 	while (accountLoginIsOpen && window->isOpen())
 	{
-		Controls::checkControls();
 		while (window->pollEvent(*event))
 		{
 			if (event->type == Event::Closed)
