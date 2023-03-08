@@ -130,8 +130,8 @@ std::string Controls::checkKeyboardInput(Event* event)
 		case Keyboard::Divide:
 			c = '/';
 			break;
-		case Keyboard::Equal:
-			c = '=';
+		case Keyboard::Equal: // Englisch/Deutsche Tastatur
+			c = '+';
 			break;
 		case Keyboard::Multiply:
 			c = '*';
