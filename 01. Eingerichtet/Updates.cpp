@@ -236,7 +236,7 @@ int Updates::isClicked(RenderWindow* window, Tower* tow)
 
 			if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				tow->Update1();
+				tow->Update2();
 			}
 		}
 	}
