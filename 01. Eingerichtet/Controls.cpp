@@ -283,7 +283,7 @@ std::string Controls::checkKeyboardInput(Event* event)
 		switch (c)
 		{
 		case '+': c = '*'; break;
-		case '\'': c = '\''; break;
+		case '#': c = '\''; break;
 		case ',': c = ';'; break;
 		case '.': c = ':'; break;
 		case '-': c = '_'; break;
