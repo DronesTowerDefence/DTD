@@ -35,11 +35,11 @@ private:
 	int droneCount; //Wie viele Drohnen-Typen es gibt
 	int towerAttackTowerCount;
 	int towerMoneyTowerCount;
-	int towerProjectileIndex[6]; //Welches Projektil verwendet werden soll
+	int towerProjectileIndex[towerCount]; //Welches Projektil verwendet werden soll
 	int towerPrice[towerCount]; //Wie viel der Tower kostet
 	int towerChangeFrame[towerCount]; //In Millisekunden
-	int towerUpgradePrice1[6][4]; //Preise der Upgrades des ersten Pfades
-	int towerUpgradePrice2[6][4]; //Preise der Upgrades des zweiten Pfades
+	int towerUpgradePrice1[towerCount][4]; //Preise der Upgrades des ersten Pfades
+	int towerUpgradePrice2[towerCount][4]; //Preise der Upgrades des zweiten Pfades
 	int towerSpawnSpeed[1];
 	int droneLives[5];
 	int droneTypesInRound[100][5]; //Genaue Drohnentypen in einer Runde
@@ -53,10 +53,10 @@ private:
 	float towerProjectileSpeed[towerCount]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float towerRange[towerCount]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[towerCount]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
-	float towerUpdateDamage[6][4];
-	float towerUpdateSpeed[6][4];
-	float towerUpdateMoney[6][4];
-	float towerUpdateMoneyGeneration[6][4];
+	float towerUpdateDamage[towerCount][4];
+	float towerUpdateSpeed[towerCount][4];
+	float towerUpdateMoney[towerCount][4];
+	float towerUpdateMoneyGeneration[towerCount][4];
 	float droneSpawnTime[100];
 	float droneSpeed[5];
 
@@ -77,9 +77,9 @@ private:
 	Music backgroundMusic[3];
 		
 	Texture towerTexture[towerCount][4];
-	Texture towerAliasTexture[5];
-	Texture towerPreviewTexture[5];
-	Texture towerNoBuyTexture[5];
+	Texture towerAliasTexture[towerCount];
+	Texture towerPreviewTexture[towerCount];
+	Texture towerNoBuyTexture[towerCount];
 	Texture updateTexture[5];
 	Texture updateNoBuyTexture[5];
 	Texture projectileTexture[3];
