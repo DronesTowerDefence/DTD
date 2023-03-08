@@ -33,6 +33,7 @@ private:
 	bool isClicked;
 	bool connected;
 	bool isMultiplayerOpen;
+	bool menuIsOpen;
 
 	Vector2f positionTower[5];
 
@@ -61,6 +62,7 @@ private:
 	Sprite* dailyButton;
 	Sprite* shopButton;
 	Sprite* skinsButton;
+	Sprite* openMenuButton;
 
 	Clock* animation;
 
@@ -73,10 +75,9 @@ private:
 	ShopGUI* shopGUI;
 	AccountServer* accServer;
 	SkinsGUI* skinsGUI;
+	Daily* daily;
 
 	Ressources* res;
-
-	Daily* daily;
 
 	/// <summary>
 	/// Checkt, ob etwas geklicht wurde

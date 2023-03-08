@@ -8,19 +8,20 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
-
 	daily = new Daily();
 	accServer = new AccountServer();
 	connected = false;
 	isMultiplayerOpen = false;
 	status = 1;
 	callCount = 1;
+	choseIndex = -1;
 	isClicked = false;
 	window = nullptr;
 	multiplayerGUI = nullptr;
 	achievementGUI = nullptr;
 	shopGUI = nullptr;
 	skinsGUI = nullptr;
+	menuIsOpen = false;
 	res = Ressources::getInstance();
 
 	startButton = new Sprite();
@@ -40,7 +41,6 @@ HomeMenu::HomeMenu()
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape();
 	upperBorder = new RectangleShape();
-
 	credits = new Text();
 
 	chalange = "";
@@ -50,7 +50,7 @@ HomeMenu::HomeMenu()
 	startButton->setTexture(*res->getButtonStartTexture());
 	titel->setTexture(*res->getTitleTextTexture());
 	backround->setTexture(*res->getHomeMenuBackgroundTexture());
-	drone->setTexture(*res->getDroneTexture(1, 0));;
+	drone->setTexture(*res->getDroneDmgTexture(1, 0));
 	multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
 	host->setTexture(*res->getButtonHostTexture());
 	client->setTexture(*res->getButtonClientTexture());
@@ -60,7 +60,6 @@ HomeMenu::HomeMenu()
 	accountFriendsMenuButton->setTexture(*res->getAccountFriendsButtonTexture());
 	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
 	dailyButton->setTexture(*res->getStartDailyButtonTexture());
-
 
 	credits->setCharacterSize(25);
 	credits->setFont(*font);
@@ -78,25 +77,22 @@ HomeMenu::HomeMenu()
 	upperBorder->setPosition(Vector2f(370.f, 0.f));
 	upperBorder->setFillColor(black);
 
-	/*upperBorder->setOutlineColor(Color::Black);
-	upperBorder->setOutlineThickness(2.0);*/
-
-	startButton->setPosition(Vector2f(700, 700));
 	titel->setPosition(Vector2f(0, 0));
-	drone->setPosition(Vector2f(0, 300));
-	host->setPosition(Vector2f(500, 450));
-	client->setPosition(Vector2f(750, 450));
-	multiplayerMenue->setPosition(Vector2f(500, 350));
-	exitButton->setPosition(Vector2f(20, 871));
-	deleteSavesButton->setPosition(Vector2f(1700, 900));
-	accountButton->setPosition(Vector2f(1770, 750));
-	accountFriendsMenuButton->setPosition(1770, 600);
-	achievementsButton->setPosition(1770, 450);
-	dailyButton->setPosition(Vector2f(900, 700));
-	choseIndex = -1;
+	drone->setPosition(Vector2f(150, 150));
+	startButton->setPosition(Vector2f(400, 550));
+	dailyButton->setPosition(Vector2f(575, 550));
+	multiplayerMenue->setPosition(Vector2f(750, 550));
+	host->setPosition(Vector2f(750, 650));
+	client->setPosition(Vector2f(750,775));
+	exitButton->setPosition(Vector2f(1800, 871));
+	deleteSavesButton->setPosition(Vector2f(75, 900));
+	accountButton->setPosition(Vector2f(1650, 851));
+	accountFriendsMenuButton->setPosition(1650, 721);
+	achievementsButton->setPosition(1650, 591);
 
-	drone->setScale(2, 2);
-	//
+	drone->setScale(3, 3);
+	drone->setRotation(90);
+	
 	int y = 400;
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, y += 150)
 	{
@@ -112,9 +108,8 @@ HomeMenu::HomeMenu()
 	positionTower[2] = Vector2f(1300, 550);
 	positionTower[3] = Vector2f(1300, 700);
 	positionTower[4] = Vector2f(1300, 850);
-	for (int i = 0; i <5; i++)
+	for (int i = 0; i < 5; i++)
 	{
-
 		for (int x = 0; x < 4; x++)
 		{
 			textureTower[i][x] = new Texture();
@@ -145,7 +140,7 @@ HomeMenu::HomeMenu()
 	textureTower[4][2]->loadFromFile("img/tower4/tower4_2.png");
 	textureTower[4][3]->loadFromFile("img/tower4/tower4_3.png");
 
-	for (int i = 0; i <5; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		towers[i] = new Sprite();
 
@@ -156,7 +151,6 @@ HomeMenu::HomeMenu()
 	}
 	animationIndex = 0;
 	animation = new Clock();
-	animation->restart();
 
 	pointer->setSize(Vector2f(1920 * 0.1, 991 * 0.1));
 	pointer->setOutlineThickness(10);
@@ -169,11 +163,15 @@ HomeMenu::HomeMenu()
 
 	shopButton = new Sprite();
 	shopButton->setTexture(*res->getOpenShopButtonTexture());
-	shopButton->setPosition(1770, 300);
+	shopButton->setPosition(1650, 461);
 
 	skinsButton = new Sprite();
 	skinsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
-	skinsButton->setPosition(1770, 150);
+	skinsButton->setPosition(1650, 331);
+
+	openMenuButton = new Sprite();
+	openMenuButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	openMenuButton->setPosition(1800, 721);
 }
 #pragma endregion
 
@@ -184,17 +182,22 @@ void HomeMenu::drawPublic()
 	window->draw(*sideMenu);
 	window->draw(*upperBorder);
 	window->draw(*titel);
-	window->draw(*drone);
+	//window->draw(*drone);
 	window->draw(*choseText);
 	window->draw(*multiplayerMenue);
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
 	window->draw(*credits);
-	window->draw(*accountButton);
-	window->draw(*accountFriendsMenuButton);
-	window->draw(*achievementsButton);
-	window->draw(*shopButton);
-	window->draw(*skinsButton);
+	window->draw(*openMenuButton);
+
+	if (menuIsOpen)
+	{
+		window->draw(*accountButton);
+		window->draw(*accountFriendsMenuButton);
+		window->draw(*achievementsButton);
+		window->draw(*shopButton);
+		window->draw(*skinsButton);
+	}
 
 	if (isMultiplayerOpen)
 	{
@@ -206,19 +209,21 @@ void HomeMenu::drawPublic()
 		window->draw(*startButton);
 		window->draw(*dailyButton);
 	}
+
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
 	{
 		window->draw(*map[i]);
-	}
-
-	for (int i = 0; i < 5; i++)
-	{
-		window->draw(*towers[i]);
 	}
 	if (choseIndex > -1)
 	{
 		window->draw(*pointer);
 	}
+
+	/*for (int i = 0; i < 5; i++)
+	{
+		window->draw(*towers[i]);
+	}*/
+
 }
 int  HomeMenu::CheckClicked(Event* event)
 {
@@ -386,85 +391,100 @@ int  HomeMenu::CheckClicked(Event* event)
 			return 0;
 		}
 
-		//AccountButton
-		pos = Service::getInstance()->getObjectPosition(accountButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountButton->getPosition() + Vector2f(accountButton->getTexture()->getSize()));
+
+
+
+		//MenuButton
+		pos = Service::getInstance()->getObjectPosition(openMenuButton->getPosition());
+		pos2 = Service::getInstance()->getObjectPosition(openMenuButton->getPosition() + Vector2f(openMenuButton->getTexture()->getSize()));
 
 		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
-			AccountLogin* accLog = new AccountLogin(window, res);
-			accLog->openAccountLoginWindow(event);
-			delete accLog;
+			menuIsOpen = !menuIsOpen;
 			return 0;
 		}
 
-		//AccountFriendsMenuButton
-		pos = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition() + Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (menuIsOpen)
 		{
-			if (Account::getAcc()->getAccName() == invalidUsername)
+			//AccountButton
+			pos = Service::getInstance()->getObjectPosition(accountButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(accountButton->getPosition() + Vector2f(accountButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+				AccountLogin* accLog = new AccountLogin(window, res);
+				accLog->openAccountLoginWindow(event);
+				delete accLog;
 				return 0;
 			}
-			else
+
+			//AccountFriendsMenuButton
+			pos = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition() + Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
-				FriendsGUI* fr = new FriendsGUI(window, 0);
+				if (Account::getAcc()->getAccName() == invalidUsername)
+				{
+					new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+					return 0;
+				}
+				else
+				{
+					FriendsGUI* fr = new FriendsGUI(window, 0);
+				}
+			}
+
+			//AchievementsButton
+			pos = Service::getInstance()->getObjectPosition(achievementsButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(achievementsButton->getPosition() + Vector2f(achievementsButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				achievementGUI = new AchievementGUI(window);
+				achievementGUI->openAchievementGUI();
+				delete achievementGUI;
+				return 0;
+			}
+
+			//ShopButton
+			pos = Service::getInstance()->getObjectPosition(shopButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(shopButton->getPosition() + Vector2f(shopButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				if (Account::getAcc()->getAccName() == invalidUsername)
+				{
+					new PopUpMessage("Bitte vorher anmelden");
+				}
+				else
+				{
+					shopGUI = new ShopGUI(window);
+					shopGUI->openShop();
+					delete shopGUI;
+				}
+				return 0;
+			}
+
+			//SkinsButton
+			pos = Service::getInstance()->getObjectPosition(skinsButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(skinsButton->getPosition() + Vector2f(skinsButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				if (Account::getAcc()->getAccName() == invalidUsername)
+				{
+					new PopUpMessage("Bitte vorher anmelden");
+				}
+				else
+				{
+					skinsGUI = new SkinsGUI(window);
+					skinsGUI->openGUI();
+					delete skinsGUI;
+				}
+				return 0;
 			}
 		}
-
-		//AchievementsButton
-		pos = Service::getInstance()->getObjectPosition(achievementsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(achievementsButton->getPosition() + Vector2f(achievementsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			achievementGUI = new AchievementGUI(window);
-			achievementGUI->openAchievementGUI();
-			delete achievementGUI;
-			return 0;
-		}
-
-		//ShopButton
-		pos = Service::getInstance()->getObjectPosition(shopButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(shopButton->getPosition() + Vector2f(shopButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			if (Account::getAcc()->getAccName() == invalidUsername)
-			{
-				new PopUpMessage("Bitte vorher anmelden");
-			}
-			else
-			{
-				shopGUI = new ShopGUI(window);
-				shopGUI->openShop();
-				delete shopGUI;
-			}
-			return 0;
-		}
-
-		//SkinsButton
-		pos = Service::getInstance()->getObjectPosition(skinsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(skinsButton->getPosition() + Vector2f(skinsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			if (Account::getAcc()->getAccName() == invalidUsername)
-			{
-				new PopUpMessage("Bitte vorher anmelden");
-			}
-			else
-			{
-				skinsGUI = new SkinsGUI(window);
-				skinsGUI->openGUI();
-				delete skinsGUI;
-			}
-			return 0;
-		}
-
 	}
 	return 0;
 }
@@ -483,6 +503,7 @@ void HomeMenu::HomeMenuStart()
 	callCount++;
 
 	Event* event = Controls::getEvent();
+	Vector2f droneMoveDirection(4,0);
 	while (window->isOpen())
 	{
 		while (window->pollEvent(*event))
@@ -494,12 +515,17 @@ void HomeMenu::HomeMenuStart()
 			}
 		}
 
-		drone->move(2, 0);
+		drone->move(droneMoveDirection);
 		setTowerTexture();
 		if (drone->getPosition().x > 1920)
 		{
-			drone->setPosition(Vector2f(0, 300));
+			droneMoveDirection = Vector2f(-4, 0);
 		}
+		else if(drone->getPosition().x < 150)
+		{
+			droneMoveDirection = Vector2f(4, 0);
+		}
+
 		int clicked = CheckClicked(event);
 		if (clicked == 1 && choseIndex != -1) // singleplayer
 		{
@@ -671,7 +697,7 @@ void HomeMenu::setTowerTexture()
 		if (animationIndex > 3)
 			animationIndex = 0;
 
-		for (int i = 0; i < 5-1; i++)
+		for (int i = 0; i < 5 - 1; i++)
 		{
 			towers[i]->setTexture(*textureTower[i][animationIndex]);
 		}
