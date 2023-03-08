@@ -18,6 +18,7 @@ private:
 	static bool enterIsPressed;
 	static bool tabIsPressed;
 	static bool backSpaceIsPressed;
+	static bool altGrIsPressed;
 	static bool rightMouseIsClicked;
 	static bool leftMouseIsClicked;
 	static bool middleMouseIsClicked;
@@ -46,6 +47,7 @@ public:
 	static bool getEnterIsPressed();
 	static bool getTabIsPressed();
 	static bool getBackSpaceIsPressed();
+	static bool getAltGrIsPressed();
 	static bool getRightMouseIsClicked();
 	static bool getLeftMouseIsClicked();
 	static bool getMiddleMouseIsClicked();

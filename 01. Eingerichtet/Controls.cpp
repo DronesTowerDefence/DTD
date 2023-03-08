@@ -20,6 +20,7 @@ bool Controls::altIsPressed = false;
 bool Controls::enterIsPressed = false;
 bool Controls::tabIsPressed = false;
 bool Controls::backSpaceIsPressed = false;
+bool Controls::altGrIsPressed = false;
 bool Controls::rightMouseIsClicked = false;
 bool Controls::leftMouseIsClicked = false;
 bool Controls::middleMouseIsClicked = false;
@@ -78,12 +79,18 @@ std::string Controls::checkKeyboardInput(Event* event)
 		case Keyboard::Escape:
 			escIsPressed = true;
 			break;
+		case 43:
+			altGrIsPressed = true;
+			break;
 		}
 	}
 	else if (event->type == Event::KeyReleased)
 	{
 		switch (event->key.code)
 		{
+		case 43:
+			altGrIsPressed = false;
+			break;
 		case Keyboard::Up:
 			arrowUpIsPressed = false;
 			break;
@@ -300,7 +307,8 @@ std::string Controls::checkKeyboardInput(Event* event)
 		}
 		s += c;
 	}
-	else if (ctrlIsPressed && altIsPressed && c == 'q')
+
+	else if (((ctrlIsPressed && altIsPressed) || altGrIsPressed) && c == 'q')
 	{
 		s += '@';
 	}
@@ -313,7 +321,6 @@ std::string Controls::checkKeyboardInput(Event* event)
 		s += c;
 	}
 	else return "";
-
 
 	return s;
 }
@@ -431,6 +438,11 @@ bool Controls::getTabIsPressed()
 bool Controls::getBackSpaceIsPressed()
 {
 	return backSpaceIsPressed;
+}
+
+bool Controls::getAltGrIsPressed()
+{
+	return altGrIsPressed;
 }
 
 bool Controls::getRightMouseIsClicked()
