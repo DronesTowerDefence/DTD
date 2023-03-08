@@ -2,6 +2,7 @@
 #include "Controls.h"
 #include "SFML/Window/Clipboard.hpp"
 
+
 Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
 Time Controls::buttonPressedCooldownTime = milliseconds(20);
 Clock Controls::mouseWheelMoveCooldownClock;
@@ -79,16 +80,18 @@ std::string Controls::checkKeyboardInput(Event* event)
 		case Keyboard::Escape:
 			escIsPressed = true;
 			break;
-		case 43:
+		case altgrKeyCode:
 			altGrIsPressed = true;
 			break;
 		}
 	}
 	else if (event->type == Event::KeyReleased)
 	{
+		//std::cout << "Key-Code: " << event->key.code << std::endl; // Zum testen um custom key codes zu machen
+
 		switch (event->key.code)
 		{
-		case 43:
+		case altgrKeyCode:
 			altGrIsPressed = false;
 			break;
 		case Keyboard::Up:
@@ -276,6 +279,9 @@ std::string Controls::checkKeyboardInput(Event* event)
 		case Keyboard::Z:
 			c = 'z';
 			break;
+		case highKeyCode:
+			c = '^';
+			break;
 
 
 		default:
@@ -294,6 +300,8 @@ std::string Controls::checkKeyboardInput(Event* event)
 		case ',': c = ';'; break;
 		case '.': c = ':'; break;
 		case '-': c = '_'; break;
+		case '<': c = '>'; break;
+		case '^': c = '°'; break;
 		case '1': c = '!'; break;
 		case '2': c = '"'; break;
 		case '3': c = '§'; break;
@@ -307,10 +315,16 @@ std::string Controls::checkKeyboardInput(Event* event)
 		}
 		s += c;
 	}
-
-	else if (((ctrlIsPressed && altIsPressed) || altGrIsPressed) && c == 'q')
+	else if ((ctrlIsPressed && altIsPressed) || altGrIsPressed)
 	{
-		s += '@';
+		switch (c)
+		{
+		case 'q': c = '@'; break;
+		case '+': c = '~'; break;
+		case '<': c = '|'; break;
+		}
+
+		s += c;
 	}
 	else if (ctrlIsPressed && c == 'v')
 	{

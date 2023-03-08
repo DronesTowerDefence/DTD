@@ -3,6 +3,9 @@ class Controls
 {
 private:
 
+	static const int altgrKeyCode = 43;
+	static const int highKeyCode = 53;
+
 	static Clock mouseWheelMoveCooldownClock;
 	static Clock buttonPressedCooldownClock;
 	static Time mouseWheelMoveCooldownTime;
