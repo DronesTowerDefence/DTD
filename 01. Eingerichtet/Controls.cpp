@@ -278,7 +278,27 @@ std::string Controls::checkKeyboardInput(Event* event)
 
 	if (shiftIsPressed)
 	{
-		s += std::toupper(c);
+		c = std::toupper(c);
+
+		switch (c)
+		{
+		case '+': c = '*'; break;
+		case '\'': c = '\''; break;
+		case ',': c = ';'; break;
+		case '.': c = ':'; break;
+		case '-': c = '_'; break;
+		case '1': c = '!'; break;
+		case '2': c = '"'; break;
+		case '3': c = '§'; break;
+		case '4': c = '$'; break;
+		case '5': c = '%'; break;
+		case '6': c = '&'; break;
+		case '7': c = '/'; break;
+		case '8': c = '('; break;
+		case '9': c = ')'; break;
+		case '0': c = '='; break;
+		}
+		s += c;
 	}
 	else if (ctrlIsPressed && altIsPressed && c == 'q')
 	{
