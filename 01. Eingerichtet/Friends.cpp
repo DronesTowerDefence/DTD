@@ -319,11 +319,11 @@ FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
 
 	this->menuArt = menuArt;
 	addFriend = new Sprite();
-	addFriend->setTexture(*Ressources::getInstance()->getAccountFriendsButtonTexture());
+	addFriend->setTexture(*Ressources::getInstance()->getAddFriendIconTexture());
 	addFriend->setPosition(1620, 688);
 
 	openFriendsRequest = new Sprite();
-	openFriendsRequest->setTexture(*Ressources::getInstance()->getOpenChatButtonTexture());
+	openFriendsRequest->setTexture(*Ressources::getInstance()->getRequestFriendIconTexture());
 	openFriendsRequest->setPosition(1620, 838);
 
 	close = new Sprite();
@@ -335,7 +335,7 @@ FriendsGUI::FriendsGUI(RenderWindow* window, int menuArt)
 	closeEingabe->setPosition(1060, 340);
 
 	anfrageSenden = new Sprite();
-	anfrageSenden->setTexture(*Ressources::getInstance()->getButtonClientTexture());
+	anfrageSenden->setTexture(*Ressources::getInstance()->getSendRequestFriendIconTexture());
 	anfrageSenden->setPosition(960, 640);
 
 	accServer = new AccountServer();

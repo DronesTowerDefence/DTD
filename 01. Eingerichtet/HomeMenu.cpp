@@ -84,7 +84,7 @@ HomeMenu::HomeMenu()
 	dailyButton->setPosition(Vector2f(575, 550));
 	multiplayerMenue->setPosition(Vector2f(750, 550));
 	host->setPosition(Vector2f(750, 650));
-	client->setPosition(Vector2f(750,775));
+	client->setPosition(Vector2f(750, 775));
 	exitButton->setPosition(Vector2f(1800, 871));
 	deleteSavesButton->setPosition(Vector2f(75, 900));
 	accountButton->setPosition(Vector2f(1650, 851));
@@ -93,7 +93,7 @@ HomeMenu::HomeMenu()
 
 	drone->setScale(3, 3);
 	drone->setRotation(90);
-	
+
 	int y = 400;
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, y += 150)
 	{
@@ -167,15 +167,15 @@ HomeMenu::HomeMenu()
 	shopButton->setPosition(1650, 461);
 
 	skinsButton = new Sprite();
-	skinsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	skinsButton->setTexture(*res->getSkinsMenuIconTexture());
 	skinsButton->setPosition(1650, 331);
 
 	creditsButton = new Sprite();
-	creditsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	creditsButton->setTexture(*res->getCreditsIconTexture());
 	creditsButton->setPosition(1650, 201);
 
 	openMenuButton = new Sprite();
-	openMenuButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	openMenuButton->setTexture(*res->getSettingsIconTexture());
 	openMenuButton->setPosition(1800, 721);
 }
 #pragma endregion
@@ -521,7 +521,7 @@ void HomeMenu::HomeMenuStart()
 	callCount++;
 
 	Event* event = Controls::getEvent();
-	Vector2f droneMoveDirection(4,0);
+	Vector2f droneMoveDirection(4, 0);
 	while (window->isOpen())
 	{
 		while (window->pollEvent(*event))
@@ -539,7 +539,7 @@ void HomeMenu::HomeMenuStart()
 		{
 			droneMoveDirection = Vector2f(-4, 0);
 		}
-		else if(drone->getPosition().x < 150)
+		else if (drone->getPosition().x < 150)
 		{
 			droneMoveDirection = Vector2f(4, 0);
 		}
@@ -586,7 +586,7 @@ void HomeMenu::loadDaily()
 		return;
 	}
 
-	int pos[10];
+	int pos[10] = { 0 };
 	pos[0] = challenge.find(";");
 	pos[1] = challenge.find(";", pos[0] + 1);
 	pos[2] = challenge.find(";", pos[1] + 1);

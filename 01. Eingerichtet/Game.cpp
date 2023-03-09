@@ -1317,9 +1317,8 @@ void Game::saveGame()
 	//wenn man in der Daily ist, soll das Spiel nicht gespeichert werden
 	if (!HomeMenu::getInstance()->getDaily()->getIsDaily())
 	{
-		system("md saves");
 		//Erstellt den Ordner, wo die Spielstände gespeichert werden,
-		//system("md saves >nul 2>&1");
+		system("md saves >nul 2>&1");
 		//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
 
 		std::ofstream wdatei;

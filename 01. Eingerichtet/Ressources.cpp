@@ -104,7 +104,7 @@ Ressources::Ressources()
 	towerDamage[4] = 0;
 	towerDamage[5] = 0;
 
-	float startwert[6];
+	float startwert[6] = { 0 };
 	startwert[0] = 2.9f;
 	startwert[1] = 3;
 	startwert[2] = 3.35f;
@@ -153,7 +153,7 @@ Ressources::Ressources()
 	towerName[2] = "EMP-Sender";
 	towerName[3] = "Flugzeug";
 	towerName[4] = "Goldmine";
-	towerName[5] = "Blitzkugel";
+	towerName[5] = "Sturm-Turm";
 
 	shootSoundCooldown = 0.5f;
 
@@ -177,7 +177,7 @@ Ressources::Ressources()
 		{
 			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
 			berechneterSpeed = -0.1f * pow((i + 2), 2) + startwert[j];
-				towerUpdateSpeed[j][i] = berechneterSpeed;
+			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
 
@@ -368,6 +368,14 @@ Ressources::Ressources()
 	openShopButtonTexture.loadFromFile("img/shop/openShopButton.png");
 	shopCoinTexture.loadFromFile("img/shop/coinsIcon.png");
 	skinEquipedIcon.loadFromFile("img/shop/equipedIcon.png");
+	settingsIcon.loadFromFile("img/buttons/settingsButton.png");
+	skinsMenuIcon.loadFromFile("img/buttons/skinsMenuButton.png");
+	creditsIcon.loadFromFile("img/buttons/creditsButton.png");
+	addFriendIcon.loadFromFile("img/account/friendsMenu/addFriendButton.png");
+	searchFriendIcon.loadFromFile("img/account/friendsMenu/searchFriendButton.png");
+	requestFriendIcon.loadFromFile("img/account/friendsMenu/requestFriendButton.png");
+	sendRequestFriendIcon.loadFromFile("img/account/friendsMenu/sendRequestButton.png");
+
 
 	blackBackgroundTexture.loadFromFile("img/blackBackground.png");
 
@@ -955,7 +963,35 @@ Texture* Ressources::getShopCoinTexture()
 {
 	return &shopCoinTexture;
 }
-Texture* Ressources::getSkinEquipedIcon()
+Texture* Ressources::getSettingsIconTexture()
+{
+	return &settingsIcon;
+}
+Texture* Ressources::getSkinsMenuIconTexture()
+{
+	return &skinsMenuIcon;
+}
+Texture* Ressources::getCreditsIconTexture()
+{
+	return &creditsIcon;
+}
+Texture* Ressources::getAddFriendIconTexture()
+{
+	return &addFriendIcon;
+}
+Texture* Ressources::getSearchFriendIconTexture()
+{
+	return &searchFriendIcon;
+}
+Texture* Ressources::getRequestFriendIconTexture()
+{
+	return &requestFriendIcon;
+}
+Texture* Ressources::getSendRequestFriendIconTexture()
+{
+	return &sendRequestFriendIcon;
+}
+Texture* Ressources::getSkinEquipedIconTexture()
 {
 	return &skinEquipedIcon;
 }

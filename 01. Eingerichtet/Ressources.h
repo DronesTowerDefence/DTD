@@ -128,6 +128,13 @@ private:
 	Texture openShopButtonTexture;
 	Texture shopCoinTexture;
 	Texture skinEquipedIcon;
+	Texture settingsIcon;
+	Texture skinsMenuIcon;
+	Texture creditsIcon;
+	Texture addFriendIcon;
+	Texture searchFriendIcon;
+	Texture requestFriendIcon;
+	Texture sendRequestFriendIcon;
 
 	Sprite blackBackground;
 
@@ -264,7 +271,14 @@ public:
 	Texture* getStartDailyButtonTexture();
 	Texture* getOpenShopButtonTexture();
 	Texture* getShopCoinTexture();
-	Texture* getSkinEquipedIcon();
+	Texture* getSkinEquipedIconTexture();
+	Texture* getSettingsIconTexture();
+	Texture* getSkinsMenuIconTexture();
+	Texture* getCreditsIconTexture();
+	Texture* getAddFriendIconTexture();
+	Texture* getSearchFriendIconTexture();
+	Texture* getRequestFriendIconTexture();
+	Texture* getSendRequestFriendIconTexture();
 
 	Sprite* getBlackBackgroundSprite();
 

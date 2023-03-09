@@ -7,7 +7,7 @@ void SkinsGUI::createEquipedSprite(SkinsGUIDisplayedSkin* sgds)
 {
 	Sprite* sprite = new Sprite();
 
-	sprite->setTexture(*Ressources::getInstance()->getSkinEquipedIcon());
+	sprite->setTexture(*Ressources::getInstance()->getSkinEquipedIconTexture());
 	sprite->setPosition(sgds->getSprite()->getPosition());
 	sprite->setScale
 	(
