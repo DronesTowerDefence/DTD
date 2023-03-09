@@ -21,6 +21,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	m_email = email;
 	m_profileImage = new sf::Image();
 	*m_profileImage = Ressources::getInstance()->getAccountProfilePicture()->copyToImage();
+	m_oldExperience = 0;
 	m_experience = 0;
 	m_shopCoins = 0;
 
@@ -36,15 +37,9 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 	}
 }
 
-void Account::sendXp()
-{
-	//Thread* thread = new Thread(std::bind(&AccountServer::sendXP, *AccountServer::getAccServerObj(), m_acc->m_accName, std::to_string(m_acc->m_experience)));
-	//thread->launch();
-}
-
 bool Account::checkLevelUp()
 {
-	return false;
+	return ((m_acc->m_experience / experiencePerLevel) > (m_acc->m_oldExperience / experiencePerLevel));
 }
 
 Account* Account::createAcc(std::string userName, std::string email, sf::Image* image)
@@ -63,6 +58,7 @@ bool Account::setExperience(int _exp)
 	if (m_acc != nullptr && _exp > 0 && m_acc->m_accName != invalidUsername)
 	{
 		m_acc->m_experience = _exp;
+		m_acc->m_oldExperience = _exp;
 		return true;
 	}
 	else
@@ -89,6 +85,7 @@ bool Account::addExperience(int _exp)
 		if (checkLevelUp())
 		{
 			m_acc->m_shopCoins += shopCoinsPerLevel;
+			new PopUpMessage(std::to_string(shopCoinsPerLevel) + " Shop-Coins erhalten!");
 			AccountServer::getAccServerObj()->sendCoins(m_acc->m_accName, m_acc->m_shopCoins);
 		}
 		return true;

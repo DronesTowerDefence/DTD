@@ -332,7 +332,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountXPText->setPosition(Vector2f(900, 250));
 	accountXPText->setFillColor(Color::Black);
 	accountXPText->setCharacterSize(30);
-	accountXPText->setString("0 / 1000");
+	accountXPText->setString("0 / 0");
 
 	loginScreenEmailButton = new RectangleShape();
 	loginScreenPasswordButton = new RectangleShape();
@@ -349,9 +349,9 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		accountLoginEmailText->setString("Nutzername:\n" + Account::getAcc()->getAccName());
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
 
-		accountXPText->setString(std::to_string(Account::getExperience() % 1000) + " / 1000");
+		accountXPText->setString(std::to_string(Account::getExperience() % Account::experiencePerLevel) + " / " + std::to_string(Account::experiencePerLevel));
 
-		if (Account::getExperience() / 1000 == 0)
+		if (Account::getExperience() / Account::experiencePerLevel == 0)
 			accountLevelText->setString("Level 1");
 		else
 			accountLevelText->setString("Level " + std::to_string(Account::getExperience() / 1000));

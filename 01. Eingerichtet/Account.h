@@ -13,16 +13,17 @@ private:
 	std::string m_accName;
 	std::string m_email;
 	sf::Image* m_profileImage;
+	int m_oldExperience;
 	int m_experience;
 	int m_shopCoins;
 
 	Account();
 	Account(std::string userName, std::string email, sf::Image* image);
-	static void sendXp();
 	static bool checkLevelUp();
 
 public:
 	static const int shopCoinsPerLevel = 800;
+	static const int experiencePerLevel = 1000;
 	static Account* createAcc(std::string userName, std::string email, sf::Image* image);
 	static bool setExperience(int _exp);
 	static bool setShopCoins(int _coins);
