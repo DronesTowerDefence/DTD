@@ -162,6 +162,9 @@
     <ClCompile Include="SkinsGUI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Credits.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drone.h">
@@ -264,6 +267,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="SkinsGUI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Credits.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

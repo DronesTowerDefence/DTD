@@ -21,6 +21,7 @@ HomeMenu::HomeMenu()
 	achievementGUI = nullptr;
 	shopGUI = nullptr;
 	skinsGUI = nullptr;
+	credits = nullptr;
 	menuIsOpen = false;
 	res = Ressources::getInstance();
 
@@ -41,7 +42,7 @@ HomeMenu::HomeMenu()
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape();
 	upperBorder = new RectangleShape();
-	credits = new Text();
+	creditsText = new Text();
 
 	chalange = "";
 
@@ -61,11 +62,11 @@ HomeMenu::HomeMenu()
 	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
 	dailyButton->setTexture(*res->getStartDailyButtonTexture());
 
-	credits->setCharacterSize(25);
-	credits->setFont(*font);
-	credits->setFillColor(Color::Black);
-	credits->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
-	credits->setPosition(Vector2f(650, 950));
+	creditsText->setCharacterSize(25);
+	creditsText->setFont(*font);
+	creditsText->setFillColor(Color::Black);
+	creditsText->setString("© Amon Sarfo, Daniel Schmidt, Jonas Eberhardt, Tim Scheunert");
+	creditsText->setPosition(Vector2f(650, 950));
 
 	Color black(0x2F2F2Fff);
 
@@ -169,6 +170,10 @@ HomeMenu::HomeMenu()
 	skinsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
 	skinsButton->setPosition(1650, 331);
 
+	creditsButton = new Sprite();
+	creditsButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
+	creditsButton->setPosition(1650, 201);
+
 	openMenuButton = new Sprite();
 	openMenuButton->setTexture(*res->getOpenShopButtonTexture()); //TODO
 	openMenuButton->setPosition(1800, 721);
@@ -187,7 +192,7 @@ void HomeMenu::drawPublic()
 	window->draw(*multiplayerMenue);
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
-	window->draw(*credits);
+	window->draw(*creditsText);
 	window->draw(*openMenuButton);
 
 	if (menuIsOpen)
@@ -197,6 +202,7 @@ void HomeMenu::drawPublic()
 		window->draw(*achievementsButton);
 		window->draw(*shopButton);
 		window->draw(*skinsButton);
+		window->draw(*creditsButton);
 	}
 
 	if (isMultiplayerOpen)
@@ -482,6 +488,18 @@ int  HomeMenu::CheckClicked(Event* event)
 					skinsGUI->openGUI();
 					delete skinsGUI;
 				}
+				return 0;
+			}
+
+			//CreditsButton
+			pos = Service::getInstance()->getObjectPosition(creditsButton->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(creditsButton->getPosition() + Vector2f(creditsButton->getTexture()->getSize()));
+
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+			{
+				credits = new Credits(window);
+				credits->openCredits();
+				delete credits;
 				return 0;
 			}
 		}
