@@ -6,9 +6,9 @@ private:
 	static const int altgrKeyCode = 43;
 	static const int highKeyCode = 53;
 
-	static Clock mouseWheelMoveCooldownClock;
+	static Clock mouseWheelCooldownClock;
 	static Clock buttonPressedCooldownClock;
-	static Time mouseWheelMoveCooldownTime;
+	static Time mouseWheelCooldownTime;
 	static Time buttonPressedCooldownTime; // Je niedriger, desto weniger kann man mit z.B. backspace löschen
 
 	static bool arrowUpIsPressed;
@@ -33,7 +33,7 @@ private:
 	static Event* event;
 	static void run();
 
-	static Vector2i checkMouseClick(Event*);
+	static Vector2i checkMouse(Event*);
 	static void checkControls();
 
 public:
@@ -54,6 +54,11 @@ public:
 	static bool getRightMouseIsClicked();
 	static bool getLeftMouseIsClicked();
 	static bool getMiddleMouseIsClicked();
+
+	/// <summary>
+	/// Mouse-Rad-Bewegung hoch/runter
+	/// </summary>
+	/// <returns>Positiv: hoch | Negativ: runter</returns>
 	static int getMouseWheel();
 
 	static Event* getEvent();

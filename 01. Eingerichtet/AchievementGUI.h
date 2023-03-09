@@ -43,6 +43,7 @@ private:
 	bool isOpen;
 	bool isClicked;
 	int firstIndex;
+	int cooldown;
 	Sprite* background;
 	Sprite* closeButton;
 

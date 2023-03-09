@@ -177,6 +177,7 @@ AchievementGUI::AchievementGUI(RenderWindow* _window)
 	isOpen = false;
 	isClicked = false;
 	firstIndex = 1;
+	cooldown = 0;
 
 	background = new Sprite();
 	background->setPosition(100, 50);
@@ -233,22 +234,29 @@ bool AchievementGUI::openAchievementGUI()
 		}
 		draw();
 
-		if (Controls::getArrowUpIsPressed())
+		if (cooldown == 0)
 		{
-			if (firstIndex > 0)
+			if (Controls::getArrowUpIsPressed() || Controls::getMouseWheel() > 0)
 			{
-				firstIndex--;
-				updateDrawSprites();
+				if (firstIndex > 0)
+				{
+					firstIndex--;
+					updateDrawSprites();
+				}
+			}
+			else if (Controls::getArrowDownIsPressed() || Controls::getMouseWheel() < 0)
+			{
+				if (firstIndex < achievementCount - 4)
+				{
+					firstIndex++;
+					updateDrawSprites();
+				}
 			}
 		}
-		else if (Controls::getArrowDownIsPressed())
-		{
-			if (firstIndex < achievementCount - 4)
-			{
-				firstIndex++;
-				updateDrawSprites();
-			}
-		}
+		cooldown++;
+		if (cooldown == 5)
+			cooldown = 0;
+
 
 		if (Controls::getEscIsPressed())
 		{

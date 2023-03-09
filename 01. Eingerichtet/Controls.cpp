@@ -2,11 +2,10 @@
 #include "Controls.h"
 #include "SFML/Window/Clipboard.hpp"
 
-
-Time Controls::mouseWheelMoveCooldownTime = milliseconds(120);
-Time Controls::buttonPressedCooldownTime = milliseconds(20);
-Clock Controls::mouseWheelMoveCooldownClock;
+Clock Controls::mouseWheelCooldownClock;
 Clock Controls::buttonPressedCooldownClock;
+Time Controls::mouseWheelCooldownTime = milliseconds(50);
+Time Controls::buttonPressedCooldownTime = milliseconds(20);
 Thread* Controls::thread = new Thread(&Controls::run);
 Event* Controls::event = new Event();
 bool Controls::initialized = false;
@@ -35,7 +34,7 @@ void Controls::run()
 	{
 		sleep(milliseconds(10));
 		enteredString = checkKeyboardInput(event);
-		checkMouseClick(event);
+		checkMouse(event);
 		checkControls();
 	}
 }
@@ -338,7 +337,7 @@ std::string Controls::checkKeyboardInput(Event* event)
 
 	return s;
 }
-Vector2i Controls::checkMouseClick(Event* event)
+Vector2i Controls::checkMouse(Event* event)
 {
 	if (event->type == Event::MouseButtonPressed)
 	{
@@ -370,20 +369,20 @@ Vector2i Controls::checkMouseClick(Event* event)
 			middleMouseIsClicked = false;
 		}
 	}
-	else if (event->type == Event::MouseWheelMoved)
+	else if (event->type == Event::MouseWheelScrolled)
 	{
-		mouseWheel = event->mouseWheel.delta;
-		mouseWheelMoveCooldownClock.restart();
+		mouseWheel = event->mouseWheelScroll.delta;
+		//mouseWheelCooldownClock.restart();
 	}
 
 	return Mouse::getPosition();
 }
 void Controls::checkControls()
 {
-	if (mouseWheelMoveCooldownClock.getElapsedTime() >= mouseWheelMoveCooldownTime)
+	if (mouseWheelCooldownClock.getElapsedTime() >= mouseWheelCooldownTime)
 	{
+		mouseWheelCooldownClock.restart();
 		mouseWheel = 0;
-		mouseWheelMoveCooldownClock.restart();
 	}
 	if (buttonPressedCooldownClock.getElapsedTime() >= buttonPressedCooldownTime)
 	{
