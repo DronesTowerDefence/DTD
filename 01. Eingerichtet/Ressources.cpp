@@ -171,9 +171,9 @@ Ressources::Ressources()
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
-	for (int j = 0; j < towerCount; j++)
+	for (int j = 0; j < towerCount; j++, x = 1.5)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++, x+= 0,5)
 		{
 			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
 			berechneterSpeed = -0.1f * pow((i + 2), 2) + startwert[j];
@@ -185,56 +185,55 @@ Ressources::Ressources()
 	}
 
 
-	updateBeschreibungEins[0][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[0][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[0][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[0][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
+	updateBeschreibungEins[0][1] = "Setzt den Schaden auf 1,95";
+	updateBeschreibungEins[0][2] = "Setzt den Schaden auf 2,44";
+	updateBeschreibungEins[0][3] = "Setzt den Schaden auf 3,05";
 
-	updateBeschreibungEins[1][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[1][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[1][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[1][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[1][0] = "Setzt den Schaden auf 1,96";
+	updateBeschreibungEins[1][1] = "Setzt den Schaden auf 2,74";
+	updateBeschreibungEins[1][2] = "Setzt den Schaden auf 3,84";
+	updateBeschreibungEins[1][3] = "Setzt den Schaden auf 5,38";
 
-	updateBeschreibungEins[2][0] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[2][1] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[2][2] = "Erhoeht dem aktuellen\n Schaden um 50%";
-	updateBeschreibungEins[2][3] = "Erhoeht dem aktuellen\n Schaden um 50%";
+	updateBeschreibungEins[2][0] = "Setzt den Schaden auf 1,82";
+	updateBeschreibungEins[2][1] = "Setzt den Schaden auf 2,46";
+	updateBeschreibungEins[2][2] = "Setzt den Schaden auf 3,32";
+	updateBeschreibungEins[2][3] = "Setzt den Schaden auf 4,48";
 
-	updateBeschreibungEins[3][0] = "Fuegt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][1] = "Fuegt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][2] = "Fuegt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][3] = "Fuegt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][0] = "Fügt eine Schussbahn hinzu";
+	updateBeschreibungEins[3][1] = "Fügt eine Schussbahn hinzu";
+	updateBeschreibungEins[3][2] = "Fügt eine Schussbahn hinzu";
+	updateBeschreibungEins[3][3] = "Fügt eine Schussbahn hinzu";
 
-	updateBeschreibungEins[0][0] = "Generiert 20% mehr Geld\n als zum beginn";
-	updateBeschreibungEins[0][1] = "Generiert 40% mehr Geld\n als zum beginn";
-	updateBeschreibungEins[0][2] = "Generiert 60% mehr Geld\n als zum beginn";
-	updateBeschreibungEins[0][3] = "Generiert 80% mehr Geld\n als zum beginn";
+	updateBeschreibungEins[4][0] = "Generiert 16 Geld";
+	updateBeschreibungEins[4][1] = "Generiert 64 Geld";
+	updateBeschreibungEins[4][2] = "Generiert 256 Geld";
+	updateBeschreibungEins[4][3] = "Generiert 1024 Geld";
 
+	updateBeschreibungZwei[0][0] = "Setzt die Angriffszeit auf 2,5";
+	updateBeschreibungZwei[0][1] = "Setzt die Angriffszeit auf 2";
+	updateBeschreibungZwei[0][2] = "Setzt die Angriffszeit auf 1,8";
+	updateBeschreibungZwei[0][3] = "Setzt die Angriffszeit auf 0,4";
 
-	updateBeschreibungZwei[0][0] = "Veringert die Angriffszeit\n um 12,5%";
-	updateBeschreibungZwei[0][1] = "Veringert die Angriffszeit\n um 25%";
-	updateBeschreibungZwei[0][2] = "Veringert die Angriffszeit\n um 37,5%";
-	updateBeschreibungZwei[0][3] = "Veringert die Angriffszeit\n um 50%";
+	updateBeschreibungZwei[1][0] = "Setzt die Angriffszeit auf 2,6";
+	updateBeschreibungZwei[1][1] = "Setzt die Angriffszeit auf 2,1";
+	updateBeschreibungZwei[1][2] = "Setzt die Angriffszeit auf 1,4";
+	updateBeschreibungZwei[1][3] = "Setzt die Angriffszeit auf 0,5";
 
-	updateBeschreibungZwei[1][0] = "Veringert die Angriffszeit\n um 14,29%";
-	updateBeschreibungZwei[1][1] = "Veringert die Angriffszeit\n um 28,57%";
-	updateBeschreibungZwei[1][2] = "Veringert die Angriffszeit\n um 42,85%";
-	updateBeschreibungZwei[1][3] = "Veringert die Angriffszeit\n um 57,14%";
+	updateBeschreibungZwei[2][0] = "Setzt die Angriffszeit auf 2,95";
+	updateBeschreibungZwei[2][1] = "Setzt die Angriffszeit auf 2,45";
+	updateBeschreibungZwei[2][2] = "Setzt die Angriffszeit auf 1,74";
+	updateBeschreibungZwei[2][3] = "Setzt die Angriffszeit auf 0,85";
 
-	updateBeschreibungZwei[2][0] = "Veringert die Angriffszeit\n um 16,67%";
-	updateBeschreibungZwei[2][1] = "Veringert die Angriffszeit\n um 33,33%";
-	updateBeschreibungZwei[2][2] = "Veringert die Angriffszeit\n um 50%";
-	updateBeschreibungZwei[2][3] = "Veringert die Angriffszeit\n um 66,66%";
+	updateBeschreibungZwei[3][0] = "Setzt die Angriffszeit auf 3,4";
+	updateBeschreibungZwei[3][1] = "Setzt die Angriffszeit auf 2,9";
+	updateBeschreibungZwei[3][2] = "Setzt die Angriffszeit auf 2,94";
+	updateBeschreibungZwei[3][3] = "Setzt die Angriffszeit auf 1,3";
 
-	updateBeschreibungZwei[3][0] = "Veringert die Angriffszeit\n um 20%";
-	updateBeschreibungZwei[3][1] = "Veringert die Angriffszeit\n um 40%";
-	updateBeschreibungZwei[3][2] = "Veringert die Angriffszeit\n um 60%";
-	updateBeschreibungZwei[3][3] = "Veringert die Angriffszeit\n um 80%";
-
-	updateBeschreibungZwei[4][0] = "Veringert die Angriffszeit\n um 20%";
-	updateBeschreibungZwei[4][1] = "Veringert die Angriffszeit\n um 40%";
-	updateBeschreibungZwei[4][2] = "Veringert die Angriffszeit\n um 60%";
-	updateBeschreibungZwei[4][3] = "Veringert die Angriffszeit\n um 80%";
+	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,6";
+	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,1";
+	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 2,4";
+	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf 1,4";
 
 
 

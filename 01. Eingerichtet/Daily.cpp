@@ -12,6 +12,7 @@ Daily::Daily()
 	isTowerAllowed[2] = false;
 	isTowerAllowed[3] = false;
 	isTowerAllowed[4] = false;
+	isTowerAllowed[5] = false;
 
 }
 
