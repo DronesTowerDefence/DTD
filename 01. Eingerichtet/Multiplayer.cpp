@@ -431,6 +431,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	//Solange nicht vom MultiplayGUI beendet (weil Spielstart)
 	while (checkMultiplayerConnect)
 	{
+	begin:
 		multiplayerPlayerCount = HomeMenu::getInstance()->getMultiplayerGUI()->getMultiplayerPlayerCount();
 		updatePlayerCount(isHost);
 
@@ -439,7 +440,12 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
 				p << HomeMenu::getInstance()->getChoseIndex();
-				player[i]->getSocket()->send(p); // Map-Auswahl
+				if (player[i]->getSocket()->send(p) != Socket::Done) // Map-Auswahl
+				{
+					delete player[i];
+					player[i] = nullptr;
+					goto begin;
+				}
 				p.clear();
 
 				p1 << Multiplayer::multiplayerPlayerCount;
