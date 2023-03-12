@@ -464,7 +464,7 @@ void MultiplayerGUI::setPlayerNames(int i, std::string s)
 }
 void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 {
-	if (index >= 0 && index < 4)
+	if (index >= 0 && index < 4 && image != nullptr && image->getSize().x > 0)
 	{
 		if (profilePicturesTextures[index] != nullptr)
 		{
