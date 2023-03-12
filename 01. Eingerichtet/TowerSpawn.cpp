@@ -67,15 +67,15 @@ void TowerSpawn::shoot()
 	if (index == 1)
 	{
 		//Schießt die Projektile in 4 Richtungen
-		new Projectile(nullptr, tower, this, 0, Vector2f(1, 0));
-		new Projectile(nullptr, tower, this, 0, Vector2f(-1, 0));
-		new Projectile(nullptr, tower, this, 0, Vector2f(0, 1));
-		new Projectile(nullptr, tower, this, 0, Vector2f(0, -1));
+		new Projectile(nullptr, tower, this, 0, Vector2f(1, 0), Vector2f(0, 0));
+		new Projectile(nullptr, tower, this, 0, Vector2f(-1, 0), Vector2f(0, 0));
+		new Projectile(nullptr, tower, this, 0, Vector2f(0, 1), Vector2f(0, 0));
+		new Projectile(nullptr, tower, this, 0, Vector2f(0, -1), Vector2f(0, 0));
 
 		//Für jedes Update schießt das Flugzeug in eine andere Richtung
 		for (int i = 0; i < tower->getUpdates()->getIndex1(); i++)
 		{
-			new Projectile(nullptr, tower, this, 0, Ressources::getInstance()->getFlugzeugUpdate(i));
+			new Projectile(nullptr, tower, this, 0, Ressources::getInstance()->getFlugzeugUpdate(i), Vector2f(0, 0));
 		}
 	}
 	if (index == 2) {
@@ -91,7 +91,7 @@ void TowerSpawn::shoot()
 			{
 				if (tmp->getGlobalBounds().intersects(d->getDroneSprite().getGlobalBounds()))
 				{
-					new Projectile(d, tower, this, 1, Vector2f(0, 0));
+					new Projectile(d, tower, this, 1, Vector2f(0, 0), Vector2f(0, 0));
 				}
 			}
 		}

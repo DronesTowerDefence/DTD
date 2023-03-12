@@ -92,6 +92,7 @@ void Credits::openCredits()
 				m_window->close();
 				exit(0);
 			}
+			Controls::checkKeyboardInput(event);
 			checkClicked();
 		}
 		draw();

@@ -11,7 +11,7 @@
 int Tower::globalId = 0;
 
 #pragma region Konstruktor
-Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4
+Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4,5
 {
 	//Ob der Index richtig ist
 	if (_index >= 0 && _index <= 5)
@@ -125,7 +125,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 			{
 				if (!coverableArea.empty())
 				{
-					p = new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0));
+					p = new Projectile(nullptr, this, nullptr, 3, Vector2f(0, 0), Vector2f(0, 0));
 					res->statistic_damage += damage;
 				}
 			}
@@ -137,12 +137,9 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 					res->statistic_damage += damage;
 				}
 			}
-			else if (index == 5) {
-				spawnSpawn(2,d->getPosition());
-			}
 			else
 			{
-				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+				Projectile* p = new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 				res->statistic_damage += damage;
 			}
 			if (Game::getInstance()->getStatus() == 2)
@@ -189,7 +186,7 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 
 			else
 			{
-				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+				new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 			}
 			return true;
 		}
@@ -366,6 +363,10 @@ std::string Tower::getOwnerName()
 }
 int Tower::getDamageCount() {
 	return Damagecount;
+}
+bool Tower::getCheckShoot()
+{
+	return shootCooldown;
 }
 Vector2f Tower::getTowerPos()
 {

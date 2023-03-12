@@ -102,7 +102,7 @@ Ressources::Ressources()
 	towerDamage[2] = 1.35f;
 	towerDamage[3] = 1.45;
 	towerDamage[4] = 0;
-	towerDamage[5] = 0;
+	towerDamage[5] = 1;
 
 	float startwert[6] = { 0 };
 	startwert[0] = 1.9f;
@@ -132,7 +132,7 @@ Ressources::Ressources()
 	towerProjectileSpeed[2] = 4;
 	towerProjectileSpeed[3] = 0.05;
 	towerProjectileSpeed[4] = 0;
-	towerProjectileSpeed[5] = 1;
+	towerProjectileSpeed[5] = 2;
 
 	towerRange[0] = 100;
 	towerRange[1] = 200;
