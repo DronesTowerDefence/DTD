@@ -151,6 +151,8 @@ public:
 	/// <param name="Vector2f position"></param>
 	void setSeed(float speed);
 
+	static void addToDroneIndex(int i);
+
 	/// <summary>
 	/// Setzt die Position der Drohne
 	/// </summary>
