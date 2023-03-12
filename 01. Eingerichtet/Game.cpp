@@ -305,13 +305,6 @@ void Game::startGame()
 		MultiplayerChat::getInstance()->checkChat();
 		SendMoney::getInstance()->checkSendMoney();
 
-		std::cout << "Runde: " << round->getIndex() << std::endl;
-		for (auto i : round->getAllDrones())
-		{
-			std::cout << i->getId() << ", ";
-		}
-		std::cout << std::endl << std::endl;
-
 		updateEco();
 		moveDrohnes();
 		checkDroneCount();
