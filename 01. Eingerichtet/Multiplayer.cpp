@@ -348,7 +348,7 @@ void Multiplayer::updatePlayerCount(bool isHost)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		if (i <= multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
+		if (i < multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
 		{
 			if (isHost)
 			{
@@ -466,7 +466,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				image->create(x, y, int8);
 				player[i]->setProfilImage(image);
 				HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(i + 1, image);
-				delete image;
 				image = new Image();
 
 			}
@@ -475,7 +474,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
 				p6 << 101 << i + 1 << player[i]->getPlayerName();
-				send(&p6, -1); // Namen aller Mitspieler (über receive-Funktion)
+				send(&p6, -1); // Namen aller Mitspieler
 				p6.clear();
 
 				p7 << 102 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
@@ -483,7 +482,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				{
 					p7 << player[i]->getProfilImage()->getPixelsPtr()[j];
 				}
-				send(&p7, -1); // Profilbilder aller Mitspieler (über receive-Funktion)
+				send(&p7, -1); // Profilbilder aller Mitspieler
 				p7.clear();
 			}
 		}
@@ -529,7 +528,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[0]->setProfilImage(image);
 			playerLight[0]->setProfileImage(image);
 			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(0, image);
-			delete image;
 			image = new Image();
 
 			player[0]->getSocket()->send(p5);
@@ -540,7 +538,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				p6 >> int2;
 				if (int2 == 101)
 				{
-					p6;
 					p6 >> int1;
 					p6 >> str;
 					playerLight[int1]->setPlayerName(str);
@@ -560,7 +557,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 					image->create(x, y, int8);
 					if (playerLight[int1] != nullptr)
 						playerLight[int1]->setProfileImage(image);
-					delete image;
 					image = new Image();
 				}
 				p7.clear();
