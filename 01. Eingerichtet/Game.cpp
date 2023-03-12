@@ -302,7 +302,6 @@ void Game::startGame()
 		}
 
 		Multiplayer::receive();
-		// HomeMenu::getInstance()->checkTestVersionEnd();
 		MultiplayerChat::getInstance()->checkChat();
 		SendMoney::getInstance()->checkSendMoney();
 

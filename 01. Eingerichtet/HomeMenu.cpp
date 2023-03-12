@@ -567,13 +567,12 @@ void HomeMenu::startGame()
 {
 	if (status == 2)
 	{
-		std::string woIstDasEinBool = "dasIstEinString!";
-		Multiplayer::send(16, woIstDasEinBool);
+		std::string str = "Spielstart";
+		Multiplayer::send(13, str);
 	}
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);
 	Game::getInstance()->startGame();
-
 
 }
 void HomeMenu::loadDaily()

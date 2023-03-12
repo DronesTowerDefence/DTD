@@ -91,7 +91,6 @@ bool MultiplayerGUI::checkClicked(Event* event)
 				{
 					mapChooseIndex = i;
 					mapChoose->setPosition(maps[i]->getPosition());
-					Multiplayer::send(13, std::to_string(mapChooseIndex));
 					return true;
 				}
 			}
@@ -177,12 +176,6 @@ bool MultiplayerGUI::updateLobby()
 	}
 	else
 	{
-		if (Multiplayer::initializeMultiplayerIsDone)
-		{
-			Multiplayer::receive();
-			// MapChooseIndex und playerLight werden in der receive-Funktion gesetzt
-		}
-
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount + 1; i++)
 		{
 			if (Multiplayer::playerLight[i] != nullptr)
@@ -219,17 +212,18 @@ bool MultiplayerGUI::closeLobby()
 {
 	if (!Multiplayer::initializeMultiplayerIsDone)
 	{
-		multiplayerConnectThread->terminate();
-
+		Multiplayer::checkMultiplayerConnect = false; //Sagt dem Thread, dass er zum Ende kommen soll
+		while (!Multiplayer::initializeMultiplayerIsDone); //Wartet, bis der Thread zu Ende ist
 	}
 
 	// delete multiplayerConnectThread;
+	multiplayerConnectThread->terminate();
 	multiplayerConnectThread = nullptr;
-	Multiplayer::initializeMultiplayerIsDone = true;
 
 	return true;
 }
 
+#pragma region Konstruktor/Destruktor
 MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 {
 	isClicked = false;
@@ -338,12 +332,6 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 
 MultiplayerGUI::~MultiplayerGUI()
 {
-	if (!Multiplayer::initializeMultiplayerIsDone)
-	{
-		Multiplayer::multiplayerPlayerCount = 0;
-		HomeMenu::getInstance()->setStatus(1);
-	}
-
 	if (accServer != nullptr)
 	{
 		delete accServer;
@@ -374,14 +362,18 @@ MultiplayerGUI::~MultiplayerGUI()
 	delete multiplayerPlayerCountText;
 
 	if (!Multiplayer::initializeMultiplayerIsDone)
+	{
 		Multiplayer::deleteMultiplayer();
+		HomeMenu::getInstance()->setStatus(1);
+	}
 }
+#pragma endregion
 
 bool MultiplayerGUI::start(bool _isHost)
 {
-	if (Account::getAcc()->getAccName() == "???")
+	if (Account::getAcc()->getAccName() == invalidUsername)
 	{
-		new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+		new PopUpMessage("Bitte vorher anmelden");
 		return false;
 	}
 	isHost = _isHost;
@@ -414,16 +406,15 @@ bool MultiplayerGUI::start(bool _isHost)
 			connect();
 		}
 
-
-		if (isStart)
+		if (isStart) //Button unten rechts gedrückt
 		{
-			if (isHost)
+			if (isHost) //Wenn Host, dann wird das Spiel gestartet
 			{
 				closeLobby();
 				HomeMenu::getInstance()->setChoseIndex(mapChooseIndex);
 				startGame = true;
 			}
-			else
+			else //Wenn Client, dann wird eine Verbindung zum Host aufgebaut
 			{
 				isClientInHostLobby = connect();
 			}
@@ -433,6 +424,7 @@ bool MultiplayerGUI::start(bool _isHost)
 
 		if (startGame) return true;
 	}
+
 	if (multiplayerConnectThread != nullptr)
 	{
 		multiplayerConnectThread->terminate(); // Löscht den Thread (mehr oder weniger, aber delete kann nicht mehr benutzt werden)
@@ -440,9 +432,15 @@ bool MultiplayerGUI::start(bool _isHost)
 	return false;
 }
 
+#pragma region getter/setter
 std::string MultiplayerGUI::getHostIP()
 {
 	return hostIP;
+}
+
+int MultiplayerGUI::getMultiplayerPlayerCount()
+{
+	return multiplayerPlayerCount;
 }
 
 void MultiplayerGUI::setChooseIndex(int i)
@@ -484,12 +482,6 @@ void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 	{
 		multiplayerPlayerCount = i;
 		multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
-		if (isHost)
-		{
-			Multiplayer::send(15, std::to_string(multiplayerPlayerCount));
-		}
-		Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
-		Multiplayer::updatePlayerCount();
 	}
 }
 
@@ -497,3 +489,4 @@ void MultiplayerGUI::setStartGame(bool b)
 {
 	startGame = b;
 }
+#pragma endregion
