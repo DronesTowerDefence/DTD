@@ -505,16 +505,21 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		{
 			p.clear(); p1.clear(); p2.clear(); p4.clear(); p6.clear(); p7.clear();
 
-			player[0]->getSocket()->receive(p);
-			p >> header >> int1;
-			if (header == 13) //Wenn Spielstart
+			header = 0;
+			while (header != 100)
 			{
-				HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
-				break;
-			}
-			else if (header == 100)
-			{
-				HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
+
+				player[0]->getSocket()->receive(p);
+				p >> header >> int1;
+				if (header == 13) //Wenn Spielstart
+				{
+					HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
+					break;
+				}
+				else if (header == 100)
+				{
+					HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
+				}
 			}
 
 			player[0]->getSocket()->receive(p1);
