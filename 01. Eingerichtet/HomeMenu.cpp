@@ -10,7 +10,6 @@ HomeMenu::HomeMenu()
 {
 	music.openFromFile("music/music.wav"); 
 	music.setLoop(true);
-	music.play();
 	daily = new Daily();
 	accServer = new AccountServer();
 	connected = false;
