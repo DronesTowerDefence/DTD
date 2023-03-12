@@ -348,22 +348,22 @@ void Multiplayer::updatePlayerCount(bool isHost)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		if (i < multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
+		if (isHost && i < multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
 		{
-			if (isHost)
+			if (player[i] == nullptr)
 			{
-				if (player[i] == nullptr)
-				{
-					player[i] = new MultiplayerPlayer();
-					MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
-				}
-			}
-			else
-			{
-				if (playerLight[i] == nullptr)
-					playerLight[i] = new MultiplayerPlayer_light();
+				player[i] = new MultiplayerPlayer();
+				MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
 			}
 		}
+		else if (!isHost && i <= multiplayerPlayerCount)
+		{
+			if (playerLight[i] == nullptr)
+			{
+				playerLight[i] = new MultiplayerPlayer_light();
+			}
+		}
+
 		else // Weniger Spieler (momentan zu viele Spieler)
 		{
 			//TODO dem Spieler sagen, dass der Host die Verbindung getrennt hat
@@ -502,11 +502,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[0]->getSocket()->receive(p1);
 			p1 >> multiplayerPlayerCount;
 			HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(multiplayerPlayerCount);
-
-			for (int i = 0; i < multiplayerPlayerCount + 1; i++)
-			{
-				playerLight[i] = new MultiplayerPlayer_light();
-			}
 
 			player[0]->getSocket()->receive(p2);
 			p2 >> str;
