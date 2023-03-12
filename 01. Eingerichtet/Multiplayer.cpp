@@ -168,13 +168,16 @@ void Multiplayer::receive()
 		{
 			pac.clear();
 			player[i]->getSocket()->receive(pac);
-			if (pac.getDataSize() <= 0) return;
+
+			if (pac.getDataSize() <= 0)
+				break;
+
 			if (HomeMenu::getInstance()->getStatus() == 2)
 			{
 				send(&pac, i);
 			}
 			pac >> header; //Entpackt den Header
-
+			std::cout << header << std::endl;
 			switch (header)
 			{
 			case 0: //Neuer Turm
