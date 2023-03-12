@@ -78,7 +78,7 @@ bool Game::loadGame()
 		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
 		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-		for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
+	for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
 
 		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
 		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
@@ -273,7 +273,7 @@ void Game::startGame()
 
 	if (!HomeMenu::getInstance()->getDaily()->getIsDaily())
 	{
-		loadGame();
+		//loadGame();
 	}
 	else
 	{
@@ -568,11 +568,7 @@ void Game::checkShoot()
 
 	for (auto t : round->getAllAttackTower())
 	{
-		if (t->getIndex() == 1)
-		{
-			t->shoot(nullptr);
-		}
-		else if (t->getIndex() == 3)
+		if (t->getIndex() == 1||t->getIndex()==3||t->getIndex() == 6)
 		{
 			t->shoot(nullptr);
 		}

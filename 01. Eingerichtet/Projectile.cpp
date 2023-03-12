@@ -35,7 +35,6 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	style = _style;
 	dronetarget = _target;
 	towerspawn = _towerspawn;
-	blitzhost = 0;
 	blitzcheck = true;
 
 	if (style == 0) {
@@ -47,7 +46,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	switch (_style)
 	{
 	case 0: {
-		if (towerspawn == nullptr) {
+		if (tower->getIndex()==5) {
 			projectilesprite.setTexture(*res->getProjectileTexture(3));
 		}
 		else {
@@ -104,11 +103,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	}
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
-	if (style == 5) {
-	blitzhost = 1;
-	
-	}
-	if (style == 0 && towerspawn == nullptr) {
+	if (style == 0 && tower->getIndex() == 5) {
 		speed /= 5;
 		projectilesprite.setPosition(_blitzpos);
 		blitzcooldown = 2;
@@ -122,6 +117,8 @@ void Projectile::operate()
 {
 	switch (style) {
 	case 0: {   //Fliegt einfach gerade
+		if (tower->getIndex() == 6)
+			speed /= 50;
 		moveProjectile();
 		break;
 	}
@@ -209,15 +206,35 @@ void Projectile::moveProjectile()
 		delete this;
 		return;
 	}
-	if (style == 5 && !blitzcheck && blitzhost==1) {
+	if (style == 5 && !blitzcheck) {
+
+		if (tower->getBlitzCount() == 5) {
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 1), projectilesprite.getPosition());
+		}
+		if (tower->getBlitzCount() == 6) {
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, -1), projectilesprite.getPosition());
+		}
+		if (tower->getBlitzCount() == 7) {
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, -1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 1), projectilesprite.getPosition());
+		}
+		if (tower->getBlitzCount() == 8) {
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, -1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 1), projectilesprite.getPosition());
+			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, -1), projectilesprite.getPosition());
+		}
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 0),projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 0), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, 1), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, -1), projectilesprite.getPosition());
 		blitzcheck = true;
 	}
-	else if(blitzclock.getElapsedTime().asSeconds() > 2) {
+	else if(blitzclock.getElapsedTime().asSeconds() > res->getNewProjectilTime(tower->getIndex(),tower->getUpdates()->getIndex1())) {
 		blitzcheck = false;
+		std::cout << res->getNewProjectilTime(tower->getIndex(), tower->getUpdates()->getIndex1()) << std::endl;
 		blitzclock.restart();
 	}
 	//std::cout << projectilesprite.getPosition().x << "  " << projectilesprite.getPosition().y << std::endl;

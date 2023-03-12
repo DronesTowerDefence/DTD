@@ -70,8 +70,6 @@ private:
 
 	int blitzcooldown;
 
-	int blitzhost;
-
 	bool blitzcheck;
 
 	Clock blitzclock;
