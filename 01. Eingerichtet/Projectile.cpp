@@ -6,7 +6,7 @@
 
 
 
-
+int Projectile::blitzcount = 1;
 
 #pragma region Konstruktor
 Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
@@ -25,7 +25,7 @@ Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
 
 
 }
-Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill)
+Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill,Vector2f _blitzpos)
 {
 	//Setzen der Attribute
 	speed = _tower->getProjectileSpeed();
@@ -36,6 +36,8 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	style = _style;
 	dronetarget = _target;
 	towerspawn = _towerspawn;
+	blitzhost = 0;
+	blitzcheck = true;
 
 	if (style == 0) {
 		move.x = _targetstill.x;
@@ -45,9 +47,15 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	//Setzt die typspezifische Textur
 	switch (_style)
 	{
-	case 0:
+	case 0: {
+		if (towerspawn == nullptr) {
+			projectilesprite.setTexture(*res->getProjectileTexture(3));
+		}
+		else {
 		projectilesprite.setTexture(*res->getProjectileTexture(0));//Feuerturm
+		}
 		break;
+	}
 	case 1:
 		projectilesprite.setTexture(*res->getProjectileTexture(0));
 		break;
@@ -61,11 +69,11 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setTexture(*res->getProjectileTexture(1));
 		break;
 	case 5:
-		projectilesprite.setTexture(*res->getProjectileTexture(0));
+		projectilesprite.setTexture(*res->getProjectileTexture(3));
 	}
 
 	//Wenn Flugzeug
-	if (_target == nullptr && style == 0)
+	if (towerspawn != nullptr && style == 0)
 	{
 		projectilesprite.setTexture(*res->getProjectileTexture(1));
 		Vector2f newPos;
@@ -97,7 +105,14 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	}
 	else
 		projectilesprite.setPosition(tower->getTowerPos());
-
+	if (style == 5) {
+	blitzhost = 1;
+	
+	}
+	if (style == 0 && towerspawn == nullptr) {
+		speed /= 5;
+		projectilesprite.setPosition(_blitzpos);
+	}
 	operate(); //Lässt das Projektil losfliegen
 }
 #pragma endregion
@@ -133,28 +148,19 @@ void Projectile::operate()
 				j++;
 			}
 			homing();
-		}
 		break;
+		}
+	case 5: {
+		targeting();
+		break;
+	}
 	}
 	
 }
 
 void Projectile::targeting()
 {
-	//if (tower->getName() == "Blitzkugel") {
-	//	for (auto i : towerspawn->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
-	//	{
-	//		if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
-	//		{
-	//			if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
-	//			{
-	//				target = i;
-	//				return;
-	//			}
-	//		}
-	//	}
-	//}
-	/*else {*/
+
 		for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
 		{
 			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
@@ -166,7 +172,10 @@ void Projectile::targeting()
 				}
 			}
 		}
-	//}
+		if (style == 5) {
+			move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
+			move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
+		}
 }
 void Projectile::homing()
 {
@@ -183,7 +192,7 @@ void Projectile::homing()
 void Projectile::moveProjectile()
 {
 	//Bewegt das Projektil, abhängig vom Typ
-	if (style == 2 || style == 3||style==5)
+	if (style == 2 || style == 3)
 	{
 		homing();
 	}
@@ -200,7 +209,32 @@ void Projectile::moveProjectile()
 		delete this;
 		return;
 	}
-	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / speed), projectilesprite.getPosition().y + (move.y / speed));
+	if (style == 5 && !blitzcheck && blitzhost==1) {
+		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
+		//std::cout << "1\n";
+		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
+		//std::cout << "2\n";
+		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
+		//std::cout << "3\n";
+		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
+		//std::cout << "4\n";
+		new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 0),projectilesprite.getPosition());
+		new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 0), projectilesprite.getPosition());
+		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, 1), projectilesprite.getPosition());
+		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, -1), projectilesprite.getPosition());
+		blitzcheck = true;
+	}
+	else if(blitzclock.getElapsedTime().asSeconds() > 2) {
+		blitzcheck = false;
+		blitzclock.restart();
+	}
+	//std::cout << projectilesprite.getPosition().x << "  " << projectilesprite.getPosition().y << std::endl;
+	if (style == 5) {
+	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / (speed*100)), projectilesprite.getPosition().y + (move.y / (speed*100)));
+	}
+	else
+		projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / speed), projectilesprite.getPosition().y + (move.y / speed));
+
 }
 void Projectile::collission()
 {

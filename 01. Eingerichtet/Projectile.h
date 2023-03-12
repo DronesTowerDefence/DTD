@@ -68,6 +68,16 @@ private:
 
 	TowerSpawn* towerspawn;
 
+	static int blitzcount;
+
+	int blitzhost;
+
+	bool blitzcheck;
+
+	Clock blitzclock;
+		
+	Vector2f blitzpos;
+
 public:
 	Projectile(Tower* _tower, Vector2f _targetstill);
 	/// <summary>
@@ -78,7 +88,7 @@ public:
 	/// <param name="">Wie Turm, nur wenn ein Spawn schieﬂt</param>
 	/// <param name="">Projektil-Typ</param>
 	/// <param name="">Position</param>
-	Projectile(Drone*, Tower*, TowerSpawn*, int, Vector2f);
+	Projectile(Drone*, Tower*, TowerSpawn*, int, Vector2f,Vector2f);
 
 	/// <summary>
 	/// 

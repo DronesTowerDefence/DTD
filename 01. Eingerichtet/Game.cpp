@@ -358,10 +358,11 @@ void Game::moveDrohnes()
 		p_map->checkChangeDirection(p);
 		p->move();
 	}
-
-	for (Projectile* i : round->getAllProjectiles())
-	{
-		i->moveProjectile();
+	if (!round->getAllProjectiles().empty()) {
+		for (Projectile* i : round->getAllProjectiles())
+		{
+			i->moveProjectile();
+		}
 	}
 	for (Projectile* i : round->getAllProjectiles())
 	{

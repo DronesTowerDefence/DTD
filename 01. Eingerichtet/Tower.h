@@ -222,6 +222,8 @@ public:
 	/// </summary>
 	int getDamageCount();
 
+	bool getCheckShoot();
+
 
 	/// <summary>
 	/// addiert den gemachten Schaden
