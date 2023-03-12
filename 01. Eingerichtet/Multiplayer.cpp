@@ -350,7 +350,8 @@ void Multiplayer::updatePlayerCount(bool isHost)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (isHost && i < multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
+		// Mehr Spieler (momentan zu wenig Spieler)
+		if (isHost && i < multiplayerPlayerCount)
 		{
 			if (player[i] == nullptr)
 			{
@@ -366,19 +367,17 @@ void Multiplayer::updatePlayerCount(bool isHost)
 			}
 		}
 
-		else // Weniger Spieler (momentan zu viele Spieler)
+		// Weniger Spieler (momentan zu viele Spieler)
+		else if (i < 3 && player[i] != nullptr)
 		{
 			//TODO dem Spieler sagen, dass der Host die Verbindung getrennt hat
-			if (player[i] != nullptr)
-			{
-				delete player[i];
-				player[i] = new MultiplayerPlayer();
-			}
-			if (playerLight[i] != nullptr)
-			{
-				delete playerLight[i];
-				playerLight[i] = new MultiplayerPlayer_light();
-			}
+			delete player[i];
+			player[i] = new MultiplayerPlayer();
+		}
+		else if (i < 4 && playerLight[i] != nullptr)
+		{
+			delete playerLight[i];
+			playerLight[i] = new MultiplayerPlayer_light();
 		}
 	}
 }
