@@ -186,6 +186,7 @@ bool SendMoney::send()
 }
 void SendMoney::checkSendMoney()
 {
+	return; //TODO
 	if (Game::getInstance()->getStatus() != 1)
 	{
 		checkClicked();

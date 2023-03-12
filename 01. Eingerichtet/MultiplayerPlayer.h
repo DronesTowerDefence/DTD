@@ -1,6 +1,7 @@
 #pragma once
 #include "Ressources.h"
 
+// Für Host (Für die Kommunikation mit anderem Spieler)
 class MultiplayerPlayer
 {
 private:
@@ -13,13 +14,12 @@ public:
 	/// <summary>
 	/// Erstellt einen Player für den Multiplayer
 	/// </summary>
-	/// <param name="">playerName / userName</param>
 	MultiplayerPlayer();
 
 	~MultiplayerPlayer();
 
 	/// <summary>
-	/// Erstellt den m_socket neu, ohne sich zu verbinden
+	/// Erstellt den socket neu, ohne sich zu verbinden
 	/// </summary>
 	void resetSockets();
 
@@ -35,8 +35,10 @@ public:
 	TcpSocket* getSocket();
 	Image* getProfilImage();
 	static TcpListener* getListener();
+	
 };
 
+// Für Client (Nur zum Anzeigen der Spieler)
 class MultiplayerPlayer_light
 {
 private:

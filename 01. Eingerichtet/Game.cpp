@@ -302,10 +302,8 @@ void Game::startGame()
 		}
 
 		Multiplayer::receive();
-		// HomeMenu::getInstance()->checkTestVersionEnd();
 		MultiplayerChat::getInstance()->checkChat();
 		SendMoney::getInstance()->checkSendMoney();
-
 
 		updateEco();
 		moveDrohnes();
@@ -408,7 +406,7 @@ void Game::checkButtonClick()
 			else
 			{
 				Ressources::getInstance()->doubleSpeed();
-				Multiplayer::send(5, false);
+				Multiplayer::send(5, true);
 			}
 			doubleSpeed = !doubleSpeed;
 			Sidebar::getInstance()->setSpeedButton(doubleSpeed);
@@ -894,10 +892,12 @@ void Game::shortcuts()
 		if (doubleSpeed)
 		{
 			Ressources::getInstance()->normalSpeed();
+			Multiplayer::send(5, false);
 		}
 		else
 		{
 			Ressources::getInstance()->doubleSpeed();
+			Multiplayer::send(5, true);
 		}
 		doubleSpeed = !doubleSpeed;
 		Sidebar::getInstance()->setSpeedButton(doubleSpeed);

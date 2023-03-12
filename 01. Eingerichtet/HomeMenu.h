@@ -104,7 +104,15 @@ public:
 	int getChoseIndex();
 	MultiplayerGUI* getMultiplayerGUI();
 	ShopGUI* getShopGUI();
+
+	/// <summary>
+	/// 1=Single
+	/// 2=Host
+	/// 3=Client
+	/// </summary>
+	/// <returns></returns>
 	int getStatus();
+
 	RenderWindow* getWindow();
 
 	void setWindow(RenderWindow* window);
