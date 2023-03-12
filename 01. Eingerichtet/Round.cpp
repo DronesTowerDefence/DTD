@@ -195,10 +195,10 @@ void Round::nextRound()
 	else if (Game::getInstance()->getStatus() == 3)
 	{
 		receivedFromHostNextRound = false;
-		if (index == 1)
+		/*if (index == 1)
 		{
-			Drone::addToDroneIndex(1);
-		}
+			Drone::addToDroneIndex(2);
+		}*/
 
 		if (!allDrones.empty())
 		{
