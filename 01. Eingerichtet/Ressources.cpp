@@ -78,7 +78,7 @@ Ressources::Ressources()
 	isDoubleSpeed = 0; //Doppelte Geschwindigkeit
 
 	multiplayerPlayerCount = 0;
-	mapCount = 3;
+	mapCount = 4;
 	droneCount = 5;
 	towerAttackTowerCount = 6;
 	towerMoneyTowerCount = 1;

@@ -62,7 +62,11 @@ void Round::setAllCoverablePoints()
 			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1); //Nächster Eckpunkt der Map
 			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Nächster Eckpunkt der Map
 		}
-
+		if (p_map->getIndex() == 3)
+		{
+			mapPoint1.x -= 40;
+			mapPoint2.x -= 40;
+		}
 		pointIterator++; //Bei welchem Eckpunkt die for-Schleife ist
 
 		//Möglichkeiten, wie die beiden Eckpunkte liegen (untereinander(rechts-links / links-rechts) / nebeneinander(oben-unten / unten-oben))
@@ -395,7 +399,7 @@ void Round::addTower(Tower* tower)
 {
 	allTowers.push_back(tower);
 
-	if (tower->getIndex() < 4||tower->getIndex()>4)  //falls noch ein Money Tower hinzugefügt werden soll muss hier noch ein else if
+	if (tower->getIndex() < 4 || tower->getIndex() > 4)  //falls noch ein Money Tower hinzugefügt werden soll muss hier noch ein else if
 		allAttackTowers.push_back(tower);
 	else if (tower->getIndex() == 4)
 		allMoneyTowers.push_back(tower);

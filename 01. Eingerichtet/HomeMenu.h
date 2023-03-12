@@ -37,7 +37,7 @@ private:
 	bool menuIsOpen;
 
 	Vector2f positionTower[5];
-
+	Music music;
 	RenderWindow* window;
 
 	Texture* textureTower[5][4];
@@ -48,7 +48,7 @@ private:
 
 	Sprite* startButton;
 	Sprite* towers[5];
-	Sprite* map[3];
+	Sprite* map[4];
 	Sprite* titel;
 	Sprite* backround;
 	Sprite* drone;

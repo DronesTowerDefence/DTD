@@ -8,6 +8,9 @@ HomeMenu* HomeMenu::instance = nullptr;
 #pragma region Konstruktor
 HomeMenu::HomeMenu()
 {
+	music.openFromFile("music/music.wav"); 
+	music.setLoop(true);
+	music.play();
 	daily = new Daily();
 	accServer = new AccountServer();
 	connected = false;
@@ -94,7 +97,7 @@ HomeMenu::HomeMenu()
 	drone->setScale(3, 3);
 	drone->setRotation(90);
 
-	int y = 400;
+	int y = 300;
 	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++, y += 150)
 	{
 		map[i] = new Sprite;
@@ -160,7 +163,7 @@ HomeMenu::HomeMenu()
 	pointer->setPosition(-500, -500);
 
 	choseText = new Text("Wähle eine Karte aus:", *font, 30);
-	choseText->setPosition(Vector2f(25, 300));
+	choseText->setPosition(Vector2f(25, 200));
 
 	shopButton = new Sprite();
 	shopButton->setTexture(*res->getOpenShopButtonTexture());
@@ -320,6 +323,7 @@ int  HomeMenu::CheckClicked(Event* event)
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
 				status = 1;
+				music.stop();
 				return 1;
 			}
 
@@ -508,6 +512,7 @@ int  HomeMenu::CheckClicked(Event* event)
 }
 void HomeMenu::HomeMenuStart()
 {
+	music.play();
 	if (callCount > 1)
 	{
 		delete Game::getInstance();

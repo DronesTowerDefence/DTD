@@ -58,6 +58,24 @@ Map::Map(int index)
 		start = Vector2f(-50, 66);
 		startMove = Vector2f(1, 0);
 		wayPointCount = 9;
+
+	case 3:
+		points.push_back(new Waypoint(Vector2f(150, 450), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(390, 450), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(390, 660), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(1550, 660), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(1550, 160), Vector2f(-1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(950, 160), Vector2f(0, 1), 2));
+		points.push_back(new Waypoint(Vector2f(950, 660), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(1550, 660), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(1550, 160), Vector2f(-1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(910, 160), Vector2f(0, 1), 2));
+		points.push_back(new Waypoint(Vector2f(910, 830), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(224, 830), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(224, -50), Vector2f(0, -1), 2));
+		start = Vector2f(150, -50);
+		startMove = Vector2f(0, 1);
+		wayPointCount = 13;
 	}
 }
 #pragma endregion

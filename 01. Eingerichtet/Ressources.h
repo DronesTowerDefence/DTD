@@ -76,7 +76,7 @@ private:
 	Sound hitSound[1];
 	Sound shootSound[1];
 
-	Music backgroundMusic[3];
+	Music backgroundMusic[4];
 		
 	Texture towerTexture[towerCount][4];
 	Texture towerAliasTexture[towerCount];
