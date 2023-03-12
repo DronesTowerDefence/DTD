@@ -448,7 +448,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				}
 				p.clear();
 
-				p1 << Multiplayer::multiplayerPlayerCount;
+				std::cout << multiplayerPlayerCount << std::endl;
+				p1 << multiplayerPlayerCount;
 				player[i]->getSocket()->send(p1); // Spieleranzahl
 				p1.clear();
 
@@ -510,6 +511,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[0]->getSocket()->receive(p1);
 			p1 >> multiplayerPlayerCount;
 			HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(multiplayerPlayerCount);
+			std::cout << multiplayerPlayerCount << std::endl;
 
 			player[0]->getSocket()->receive(p2);
 			p2 >> str;
