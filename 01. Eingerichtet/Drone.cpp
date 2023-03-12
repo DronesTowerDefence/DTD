@@ -26,7 +26,6 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
-	std::cout << id << std::endl;
 
 	if (HomeMenu::getInstance()->getChoseIndex() != 0) {
 		drone.setRotation(90);
