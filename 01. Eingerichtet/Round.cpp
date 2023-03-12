@@ -172,6 +172,7 @@ void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
 }
 void Round::nextRound()
 {
+	system("cls");
 	Game::getInstance()->saveGame(); //Speichert das Spiel am Ende jeder Runde
 	Game::getInstance()->setDroneCount(0); //Setzt den Zähler der Drohnen in der Game auf 0
 
