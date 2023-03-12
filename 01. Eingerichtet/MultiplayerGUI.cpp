@@ -416,7 +416,8 @@ bool MultiplayerGUI::start(bool _isHost)
 			}
 			else //Wenn Client, dann wird eine Verbindung zum Host aufgebaut
 			{
-				isClientInHostLobby = connect();
+				connect();
+				isClientInHostLobby = Multiplayer::player[0] != nullptr;
 			}
 			updateLobby();
 
