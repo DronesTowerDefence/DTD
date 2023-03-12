@@ -443,13 +443,12 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				p << 100 << HomeMenu::getInstance()->getChoseIndex();
 				if (player[i]->getSocket()->send(p) != Socket::Done) // Map-Auswahl
 				{
-					delete player[i];
+					/*delete player[i];
 					player[i] = nullptr;
-					goto begin;
+					goto begin;*/
 				}
 				p.clear();
 
-				std::cout << multiplayerPlayerCount << std::endl;
 				p1 << 101 << multiplayerPlayerCount;
 				player[i]->getSocket()->send(p1); // Spieleranzahl
 				p1.clear();
