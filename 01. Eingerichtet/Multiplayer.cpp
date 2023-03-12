@@ -118,7 +118,7 @@ bool Multiplayer::send(std::string mess)
 {
 	Packet pac;
 
-	pac << 10 << Game::getInstance()->getStatus() << mess; //TODO AccID
+	pac << 10 << Account::getAccName() << mess;
 
 	return send(&pac);
 }
@@ -177,7 +177,6 @@ void Multiplayer::receive()
 				send(&pac, i);
 			}
 			pac >> header; //Entpackt den Header
-			std::cout << header << std::endl;
 			switch (header)
 			{
 			case 0: //Neuer Turm
