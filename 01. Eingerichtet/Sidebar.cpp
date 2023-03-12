@@ -31,6 +31,7 @@ Sidebar::Sidebar()
 	buttonText[3].setPosition(Vector2f(1757, 380));
 	buttonText[4].setPosition(Vector2f(1757, 485));
 	buttonText[5].setPosition(Vector2f(1757, 590));
+	buttonText[6].setPosition(Vector2f(1757, 695));
 
 
 	buttonSpr[0].setPosition(Vector2f(1762, 15)); //Position der Buttons
@@ -39,6 +40,7 @@ Sidebar::Sidebar()
 	buttonSpr[3].setPosition(Vector2f(1762, 330));
 	buttonSpr[4].setPosition(Vector2f(1762, 435));
 	buttonSpr[5].setPosition(Vector2f(1762, 540));
+	buttonSpr[6].setPosition(Vector2f(1762, 645));
 	
 
 

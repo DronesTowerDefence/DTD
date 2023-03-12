@@ -12,12 +12,12 @@ class Sidebar
 private:
 	//Map* p_map;
 	static Sidebar* instance;
-	float price[6]; //Wie viel die Tower kosten
-	Sprite buttonSpr[6];
+	float price[towerCount]; //Wie viel die Tower kosten
+	Sprite buttonSpr[towerCount];
 	Sprite doubleSpeed;
 
 	Font buttonTextFont;
-	Text buttonText[6];
+	Text buttonText[towerCount];
 
 	Ressources* res;
 

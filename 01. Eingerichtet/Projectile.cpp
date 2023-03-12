@@ -6,7 +6,6 @@
 
 
 
-int Projectile::blitzcount = 1;
 
 #pragma region Konstruktor
 Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
@@ -112,6 +111,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	if (style == 0 && towerspawn == nullptr) {
 		speed /= 5;
 		projectilesprite.setPosition(_blitzpos);
+		blitzcooldown = 2;
 	}
 	operate(); //Lässt das Projektil losfliegen
 }
@@ -210,14 +210,6 @@ void Projectile::moveProjectile()
 		return;
 	}
 	if (style == 5 && !blitzcheck && blitzhost==1) {
-		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
-		//std::cout << "1\n";
-		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
-		//std::cout << "2\n";
-		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
-		//std::cout << "3\n";
-		//new Projectile(nullptr, tower, nullptr, 5, this->getProjectileSprite()->getPosition());
-		//std::cout << "4\n";
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 0),projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 0), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, 1), projectilesprite.getPosition());
@@ -276,6 +268,10 @@ void Projectile::setmove()
 {
 	move.x = -1 * (tower->getTowerPos().x - target.x);
 	move.y = -1 * (tower->getTowerPos().y - target.y);
+}
+void Projectile::setBlitzcooldown(int a)
+{
+	blitzcooldown = a;
 }
 #pragma endregion
 

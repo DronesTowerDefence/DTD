@@ -7,7 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 using namespace sf;
-#define towerCount 6
+#define towerCount 7
 
 #define towerTypeCount 5
 #define droneTypeCount 5
@@ -62,7 +62,7 @@ private:
 
 	Vector2f flugzeugUpdate[4];
 
-	std::string towerName[6]; //Der Name des Turmes
+	std::string towerName[towerCount]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
 	std::string updateBeschreibungEins[5][4];

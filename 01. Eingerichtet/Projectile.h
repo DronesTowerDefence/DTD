@@ -68,7 +68,7 @@ private:
 
 	TowerSpawn* towerspawn;
 
-	static int blitzcount;
+	int blitzcooldown;
 
 	int blitzhost;
 
@@ -108,6 +108,8 @@ public:
 	/// Setzt die Bewegungsrichtung
 	/// </summary>
 	void setmove();
+
+	void setBlitzcooldown(int);
 
 	/// <summary>
 	/// Feuert den Schuss ab, wird am Ende des Konstruktors aufgerufen
