@@ -342,7 +342,10 @@ void Multiplayer::setBlocking(bool blocking)
 {
 	for (int i = 0; i < multiplayerPlayerCount; i++)
 	{
-		player[i]->getSocket()->setBlocking(blocking);
+		if (player[i] != nullptr)
+		{
+			player[i]->getSocket()->setBlocking(blocking);
+		}
 	}
 }
 
@@ -595,7 +598,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		}
 	}
 
-	end:
+end:
 
 	setBlocking(false);
 
