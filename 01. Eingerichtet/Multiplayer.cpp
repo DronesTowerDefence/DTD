@@ -507,12 +507,12 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			header = 0;
 			while (header != 100)
 			{
-
 				player[0]->getSocket()->receive(p);
 				p >> header >> int1;
 				if (header == 13) //Wenn Spielstart
 				{
 					HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
+					checkMultiplayerConnect = false;
 					break;
 				}
 				else if (header == 100)
