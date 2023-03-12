@@ -201,7 +201,7 @@ void Round::nextRound()
 			allDrones.clear();
 		}
 	}
-
+	addMoney(150);
 	//Löscht alle Projektile
 	if (!allProjectiles.empty())
 	{

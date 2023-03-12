@@ -100,24 +100,32 @@ Ressources::Ressources()
 	towerDamage[0] = 1.25f;
 	towerDamage[1] = 1.4f;
 	towerDamage[2] = 1.35f;
-	towerDamage[3] = 1, 45;
+	towerDamage[3] = 1.45;
 	towerDamage[4] = 0;
 	towerDamage[5] = 0;
 
 	float startwert[6] = { 0 };
-	startwert[0] = 2.9f;
-	startwert[1] = 3;
-	startwert[2] = 3.35f;
-	startwert[3] = 3.8f;
+	startwert[0] = 1.9f;
+	startwert[1] = 2.4f;
+	startwert[2] = 3.8f;
+	startwert[3] = 3;
 	startwert[4] = 4;
 	startwert[5] = 2.9f;
 
-	towerSpeed[0] = 2.8f;
-	towerSpeed[1] = 2.9f;
-	towerSpeed[2] = 3.25f;
-	towerSpeed[3] = 3.7f;
-	towerSpeed[4] = 3.9f;
-	towerSpeed[5] = 1;
+
+	float faktor[6] = { 0 };
+	faktor[0] = 0.085f;
+	faktor[1] = 0.11f;
+	faktor[2] = 0.12f;
+	faktor[3] = 0.13f;
+	faktor[4] = 0.1f;
+	faktor[5] = 2.9f;
+	towerSpeed[0] = startwert[0];
+	towerSpeed[1] = startwert[1];
+	towerSpeed[2] = startwert[2];
+	towerSpeed[3] = startwert[3];
+	towerSpeed[4] = startwert[4];
+	towerSpeed[5] = startwert[5];
 
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
@@ -173,10 +181,10 @@ Ressources::Ressources()
 	//Setzt speed und Schaden
 	for (int j = 0; j < towerCount; j++, x = 1.5)
 	{
-		for (int i = 0; i < 4; i++, x+= 0,5)
+		for (int i = 0; i < 4; i++, x += 0.5)
 		{
 			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
-			berechneterSpeed = -0.1f * pow((i + 2), 2) + startwert[j];
+			berechneterSpeed = -faktor[j] * pow((i + 1), 2) + startwert[j];
 			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
@@ -186,59 +194,45 @@ Ressources::Ressources()
 
 
 	updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
-	updateBeschreibungEins[0][1] = "Setzt den Schaden auf 1,95";
-	updateBeschreibungEins[0][2] = "Setzt den Schaden auf 2,44";
+	updateBeschreibungEins[0][2] = "Setzt den Schaden auf 1,95";
+	updateBeschreibungEins[0][1] = "Setzt den Schaden auf 2,44";
 	updateBeschreibungEins[0][3] = "Setzt den Schaden auf 3,05";
-
 	updateBeschreibungEins[1][0] = "Setzt den Schaden auf 1,96";
 	updateBeschreibungEins[1][1] = "Setzt den Schaden auf 2,74";
 	updateBeschreibungEins[1][2] = "Setzt den Schaden auf 3,84";
 	updateBeschreibungEins[1][3] = "Setzt den Schaden auf 5,38";
-
 	updateBeschreibungEins[2][0] = "Setzt den Schaden auf 1,82";
 	updateBeschreibungEins[2][1] = "Setzt den Schaden auf 2,46";
 	updateBeschreibungEins[2][2] = "Setzt den Schaden auf 3,32";
 	updateBeschreibungEins[2][3] = "Setzt den Schaden auf 4,48";
-
-	updateBeschreibungEins[3][0] = "Fügt eine Schussbahn hinzu";
-	updateBeschreibungEins[3][1] = "Fügt eine Schussbahn hinzu";
-	updateBeschreibungEins[3][2] = "Fügt eine Schussbahn hinzu";
-	updateBeschreibungEins[3][3] = "Fügt eine Schussbahn hinzu";
-
-	updateBeschreibungEins[4][0] = "Generiert 16 Geld";
-	updateBeschreibungEins[4][1] = "Generiert 64 Geld";
-	updateBeschreibungEins[4][2] = "Generiert 256 Geld";
-	updateBeschreibungEins[4][3] = "Generiert 1024 Geld";
-
-	updateBeschreibungZwei[0][0] = "Setzt die Angriffszeit auf 2,5";
-	updateBeschreibungZwei[0][1] = "Setzt die Angriffszeit auf 2";
-	updateBeschreibungZwei[0][2] = "Setzt die Angriffszeit auf 1,8";
-	updateBeschreibungZwei[0][3] = "Setzt die Angriffszeit auf 0,4";
-
-	updateBeschreibungZwei[1][0] = "Setzt die Angriffszeit auf 2,6";
-	updateBeschreibungZwei[1][1] = "Setzt die Angriffszeit auf 2,1";
-	updateBeschreibungZwei[1][2] = "Setzt die Angriffszeit auf 1,4";
-	updateBeschreibungZwei[1][3] = "Setzt die Angriffszeit auf 0,5";
-
-	updateBeschreibungZwei[2][0] = "Setzt die Angriffszeit auf 2,95";
-	updateBeschreibungZwei[2][1] = "Setzt die Angriffszeit auf 2,45";
-	updateBeschreibungZwei[2][2] = "Setzt die Angriffszeit auf 1,74";
-	updateBeschreibungZwei[2][3] = "Setzt die Angriffszeit auf 0,85";
-
-	updateBeschreibungZwei[3][0] = "Setzt die Angriffszeit auf 3,4";
-	updateBeschreibungZwei[3][1] = "Setzt die Angriffszeit auf 2,9";
-	updateBeschreibungZwei[3][2] = "Setzt die Angriffszeit auf 2,94";
-	updateBeschreibungZwei[3][3] = "Setzt die Angriffszeit auf 1,3";
-
-	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,6";
-	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,1";
-	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 2,4";
-	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf 1,4";
-
-
-
-
-
+	updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
+	updateBeschreibungEins[4][1] = "Generiert 4096$ Geld";
+	updateBeschreibungEins[4][2] = "Generiert -2147483648$ Geld";
+	updateBeschreibungEins[4][3] = "Generiert -2147483648$ Geld";
+	updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf1,81";
+	updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf1,56";
+	updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf1,13";
+	updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf0,54";
+	updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf2,29";
+	updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf1,96";
+	updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf1,41";
+	updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf0,64";
+	updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf3,68";
+	updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf3,32";
+	updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf2,72";
+	updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf1,88";
+	updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf2,87";
+	updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf2,48";
+	updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf1,83";
+	updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf0,92";
+	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf3,9";
+	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf3,6";
+	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf3,1";
+	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf2,4";
 
 	// 0 = Schwarz
 	// 1 = Blau

@@ -98,8 +98,23 @@ Updates::Updates(Tower* tower)
 	price = new Text();
 	TowerDamageCount = new Text();
 	informationtext = new Text();
-	text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $");
-	text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
+	if (index1 == 4)
+	{
+		text1->setString("CLOSE");
+	}
+	else
+	{
+		text1->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(tower->getIndex(), index1)) + " $");
+	}
+
+	if (index2 == 4)
+	{
+		text2->setString("CLOSE");
+	}
+	else
+	{
+		text2->setString(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice2(tower->getIndex(), index2)) + " $");
+	}
 	price->setString(std::to_string((int)(tower->getValue() * 0.75f)) + " $");
 
 	towerOwnerText = new Text();
@@ -120,7 +135,7 @@ Updates::Updates(Tower* tower)
 	text1->setFont(arial);
 	text2->setFont(arial);
 	price->setFont(arial);
-	
+
 	TowerDamageCount->setPosition(1745, 150);
 	TowerDamageCount->setFont(arial);
 	TowerDamageCount->setCharacterSize(25);

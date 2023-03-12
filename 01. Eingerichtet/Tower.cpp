@@ -285,7 +285,7 @@ void Tower::Update2()
 				update->setIsClosed2(true);
 			}
 
-			if (update->getIndex2() < 4 && update->getIsClosed2())
+			if (update->getIndex2() < 4 && !update->getIsClosed2())
 			{
 				update->setText2(std::to_string(Ressources::getInstance()->getTowerUpgradesPrice1(index, update->getIndex2())) + " $");
 			}
