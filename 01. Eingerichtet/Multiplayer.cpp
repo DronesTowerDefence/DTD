@@ -353,7 +353,10 @@ void Multiplayer::updatePlayerCount(bool isHost)
 			if (isHost)
 			{
 				if (player[i] == nullptr)
+				{
 					player[i] = new MultiplayerPlayer();
+					MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
+				}
 			}
 			else
 			{
@@ -433,8 +436,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		{
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
-				MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
-
 				p << HomeMenu::getInstance()->getChoseIndex();
 				player[i]->getSocket()->send(p); // Map-Auswahl
 				p.clear();
@@ -493,7 +494,10 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			player[0]->getSocket()->receive(p);
 			p >> int1;
 			if (int1 == 13) //Wenn Spielstart
+			{
+				HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
 				break;
+			}
 			HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
 
 			player[0]->getSocket()->receive(p1);
