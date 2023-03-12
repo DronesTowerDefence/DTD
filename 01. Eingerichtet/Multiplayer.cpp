@@ -433,7 +433,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	{
 	begin:
 		multiplayerPlayerCount = HomeMenu::getInstance()->getMultiplayerGUI()->getMultiplayerPlayerCount();
-		setBlocking(true);
 		updatePlayerCount(isHost);
 		setBlocking(false);
 
@@ -590,8 +589,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				}
 				p7.clear();
 			}
-
 		}
+		setBlocking(true);
 	}
 
 
