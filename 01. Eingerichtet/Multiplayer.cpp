@@ -357,6 +357,7 @@ void Multiplayer::updatePlayerCount(bool isHost)
 				player[i] = new MultiplayerPlayer();
 				setBlocking(false);
 				MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
+				setBlocking(true);
 			}
 		}
 		else if (!isHost && i <= multiplayerPlayerCount)
