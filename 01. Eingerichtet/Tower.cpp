@@ -174,7 +174,7 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 	if (_isClient && Game::getInstance()->getStatus() == 3)
 	{
 		//std::cout << "TowerID: " << id << "\tDroneID: " << d->getId() << std::endl;
-		if (index < 4)
+		if (index < towerCount)
 		{
 			if (index != 1)
 				Game::getInstance()->playShootSound();
