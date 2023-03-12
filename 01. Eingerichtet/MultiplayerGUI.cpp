@@ -89,8 +89,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 					maps[i]->getTexture()->getSize().x * maps[i]->getScale().x, maps[i]->getTexture()->getSize().y * maps[i]->getScale().y));
 				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 				{
-					mapChooseIndex = i;
-					mapChoose->setPosition(maps[i]->getPosition());
+					setChooseIndex(i);
 					return true;
 				}
 			}
@@ -213,6 +212,8 @@ bool MultiplayerGUI::closeLobby()
 	if (!Multiplayer::initializeMultiplayerIsDone)
 	{
 		Multiplayer::checkMultiplayerConnect = false; //Sagt dem Thread, dass er zum Ende kommen soll
+		new PopUpMessage("Starte Spiel...");
+		draw();
 		while (!Multiplayer::initializeMultiplayerIsDone); //Wartet, bis der Thread zu Ende ist
 	}
 
@@ -406,7 +407,7 @@ bool MultiplayerGUI::start(bool _isHost)
 			connect();
 		}
 
-		if (isStart) //Button unten rechts gedrückt
+		if (isStart) //Button unten links gedrückt
 		{
 			if (isHost) //Wenn Host, dann wird das Spiel gestartet
 			{
@@ -420,7 +421,6 @@ bool MultiplayerGUI::start(bool _isHost)
 				isClientInHostLobby = Multiplayer::player[0] != nullptr;
 			}
 			updateLobby();
-
 		}
 
 		if (startGame) return true;
@@ -438,21 +438,19 @@ std::string MultiplayerGUI::getHostIP()
 {
 	return hostIP;
 }
-
 int MultiplayerGUI::getMultiplayerPlayerCount()
 {
 	return multiplayerPlayerCount;
 }
-
 void MultiplayerGUI::setChooseIndex(int i)
 {
 	if (i >= 0)
 	{
 		mapChooseIndex = i;
 		mapChoose->setPosition(maps[i]->getPosition());
+		HomeMenu::getInstance()->setChoseIndex(i);
 	}
 }
-
 void MultiplayerGUI::setPlayerNames(int i, std::string s)
 {
 	if (i >= 0 && i < 4)
@@ -460,7 +458,6 @@ void MultiplayerGUI::setPlayerNames(int i, std::string s)
 		playerNames[i]->setString(s);
 	}
 }
-
 void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 {
 	if (index >= 0 && index < 4)
@@ -476,7 +473,6 @@ void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 		profilePictures[index]->setScale(Vector2f(40 / float(profilePicturesTextures[index]->getSize().x), 40 / float(profilePicturesTextures[index]->getSize().y)));
 	}
 }
-
 void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 {
 	if (i >= 0)
@@ -485,7 +481,6 @@ void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 		multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
 	}
 }
-
 void MultiplayerGUI::setStartGame(bool b)
 {
 	startGame = b;

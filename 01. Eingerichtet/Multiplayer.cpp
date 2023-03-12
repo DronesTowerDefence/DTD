@@ -399,8 +399,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	if (isHost)
 	{
 		MultiplayerPlayer::getListener()->listen(port);
-		p << HomeMenu::getInstance()->getChoseIndex();
-		p1 << Multiplayer::multiplayerPlayerCount;
+
 		p2 << Account::getAcc()->getAccName();
 
 		p4 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
@@ -435,9 +434,17 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
 				MultiplayerPlayer::getListener()->accept(*player[i]->getSocket());
+
+				p << HomeMenu::getInstance()->getChoseIndex();
 				player[i]->getSocket()->send(p); // Map-Auswahl
+				p.clear();
+
+				p1 << Multiplayer::multiplayerPlayerCount;
 				player[i]->getSocket()->send(p1); // Spieleranzahl
+				p1.clear();
+
 				player[i]->getSocket()->send(p2); // Eigener Name
+
 				player[i]->getSocket()->receive(p3); // Name des anderen Spielers
 				p3 >> str;
 				player[i]->setUsername(str);
@@ -485,8 +492,9 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 
 			player[0]->getSocket()->receive(p);
 			p >> int1;
-			HomeMenu::getInstance()->setChoseIndex(int1);
-			str.clear();
+			if (int1 == 13) //Wenn Spielstart
+				break;
+			HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
 
 			player[0]->getSocket()->receive(p1);
 			p1 >> multiplayerPlayerCount;
