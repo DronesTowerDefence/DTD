@@ -212,13 +212,14 @@ bool MultiplayerGUI::closeLobby()
 	if (!Multiplayer::initializeMultiplayerIsDone)
 	{
 		Multiplayer::checkMultiplayerConnect = false; //Sagt dem Thread, dass er zum Ende kommen soll
+		new PopUpMessage("Spiel wird gestartet...");
+		draw();
 		while (!Multiplayer::initializeMultiplayerIsDone); //Wartet, bis der Thread zu Ende ist
 	}
 
-	// delete multiplayerConnectThread;
-	multiplayerConnectThread->terminate();
+	//delete multiplayerConnectThread;
+	//multiplayerConnectThread->terminate();
 	multiplayerConnectThread = nullptr;
-
 	return true;
 }
 
@@ -427,7 +428,7 @@ bool MultiplayerGUI::start(bool _isHost)
 
 	if (multiplayerConnectThread != nullptr)
 	{
-		multiplayerConnectThread->terminate(); // Löscht den Thread (mehr oder weniger, aber delete kann nicht mehr benutzt werden)
+		Multiplayer::checkMultiplayerConnect = false; //Beendet den Multiplayer-Thread
 	}
 	return false;
 }

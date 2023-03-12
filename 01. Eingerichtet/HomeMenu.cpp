@@ -572,6 +572,7 @@ void HomeMenu::startGame()
 	}
 	Game::getInstance()->setWindow(&*window);
 	Game::getInstance()->setStatus(status);
+	std::cout << "Spielstart" << std::endl;
 	Game::getInstance()->startGame();
 
 }

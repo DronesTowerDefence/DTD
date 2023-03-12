@@ -107,7 +107,7 @@ bool Multiplayer::send(int _index, bool _bool)
 	}
 	else if (_index == 5)
 	{
-		pac << 8; //doubleSpeed-Header
+		pac << 8 << _bool; //doubleSpeed-Header
 	}
 	else return false;
 
@@ -156,6 +156,7 @@ void Multiplayer::receive()
 	std::string str, username = "0";
 	Vector2f vector;
 	bool returnValue = true;
+	bool isDoubleSpeed = false;
 	Image* image = new Image();
 	Uint8* int8 = nullptr;
 
@@ -271,13 +272,14 @@ void Multiplayer::receive()
 				break;
 
 			case 8: //Doppelte Geschwindigkeit
-				if (Game::getInstance()->getDoubleSpeed()) //Wenn doppelte Geschwindigkeit...
+				pac >> isDoubleSpeed; //True wenn auf doubleSpeed
+				if (isDoubleSpeed) //Ob auf double Speed
 				{
-					Ressources::getInstance()->normalSpeed(); //... wird auf normale Geschwindigkeit gesetzt
+					Ressources::getInstance()->doubleSpeed();
 				}
 				else
 				{
-					Ressources::getInstance()->doubleSpeed(); //Ansonsten auf doppelte Geschwindigkeit
+					Ressources::getInstance()->normalSpeed();
 				}
 				Game::getInstance()->setDoubleSpeed(!Game::getInstance()->getDoubleSpeed());
 				Sidebar::getInstance()->setSpeedButton(Game::getInstance()->getDoubleSpeed());
