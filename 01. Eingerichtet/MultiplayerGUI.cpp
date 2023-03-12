@@ -110,7 +110,11 @@ void MultiplayerGUI::draw()
 		window->draw(*closeButton);
 		window->draw(*ipText);
 		window->draw(*copyButton);
-		window->draw(*startButton);
+
+		if (isHost && !isClientInHostLobby)
+		{
+			window->draw(*startButton);
+		}
 
 		if (isClientInHostLobby || isHost)
 		{
