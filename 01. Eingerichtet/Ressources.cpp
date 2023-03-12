@@ -114,7 +114,7 @@ Ressources::Ressources()
 	startwert[2] = 3.8f;
 	startwert[3] = 3;
 	startwert[4] = 4;
-	startwert[5] = 2.9f;
+	startwert[5] = 4;
 
 
 	float faktor[6] = { 0 };
@@ -123,7 +123,7 @@ Ressources::Ressources()
 	faktor[2] = 0.12f;
 	faktor[3] = 0.13f;
 	faktor[4] = 0.1f;
-	faktor[5] = 2.9f;
+	faktor[5] = 0.2f;
 	towerSpeed[0] = startwert[0];
 	towerSpeed[1] = startwert[1];
 	towerSpeed[2] = startwert[2];

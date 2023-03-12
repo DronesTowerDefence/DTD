@@ -96,7 +96,7 @@ private:
 	Texture buttonSpeedTexture;
 	Texture buttonSpeedPressedTexture;
 	Texture buttonSellTexture;
-	Texture map[3];
+	Texture map[4];
 	Texture gameOverScreen;
 	Texture gameWonScreen;
 	Texture titleTextTexture;
