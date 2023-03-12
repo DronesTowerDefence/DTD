@@ -46,7 +46,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 
 		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
-			spawnSpawn(1,Vector2f(0,0));
+			spawnSpawn(1, Vector2f(0, 0));
 			rangeShapePlane = new RectangleShape;
 			rangeShapePlane->setPosition(position.x - range + 25, position.y - range + 25); //Damit die Mitte des Kreises auf der Mitte des Turmes ist
 			rangeShapePlane->setSize(Vector2f(range * 2, range * 2));
@@ -243,22 +243,31 @@ void Tower::Update1()
 
 			if (!update->getIsClosed1())
 			{
+				// Flugzeug
 				if (index == 3)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					Multiplayer::send(id, 1, update->getIndex1());
 				}
+				//Feuerturm, Nagelfabrik, Emp-Sender
 				else if (index < 4)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
 					Multiplayer::send(id, 1, update->getIndex1());
 				}
+				//Goldmine
 				else if (index == 4)
 				{
-					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-					speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
-					Multiplayer::send(id, 2, update->getIndex2());
+					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+					speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
+					Multiplayer::send(id, 1, update->getIndex1());
+				}
+				else if (index == 5)
+				{
+					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+					blitzcount++;
+					Multiplayer::send(id, 1, update->getIndex2());
 				}
 				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
@@ -293,18 +302,26 @@ void Tower::Update2()
 
 			if (!update->getIsClosed2())
 			{
+				//Feuerturm; Nagelfabrik; EMP-Sender; Flugzeug;
 				if (index < 4)
 				{
 					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 					damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);
 					Multiplayer::send(id, 2, update->getIndex2());
 				}
+				//Goldmine
 				else if (index == 4)
 				{
-					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-					moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex1() - 1);
+					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+					moneyGeneration = res->getTowerUpdateMoneyGeneration(index, update->getIndex2() - 1);
 					Multiplayer::send(id, 2, update->getIndex2());
 
+				}
+				else if (index == 5)
+				{
+					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
+					//Ist hier zeit für neue Blitze
+					speed = res->getNewProjectilTime(index, update->getIndex2());
 				}
 				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
@@ -317,9 +334,9 @@ void Tower::manageUpdate(RenderWindow* window)
 {
 	update->isClicked(window, this);
 }
-void Tower::spawnSpawn(int art,Vector2f target)
+void Tower::spawnSpawn(int art, Vector2f target)
 {
-	boundSpawns.push_back(new TowerSpawn(art, this,target));
+	boundSpawns.push_back(new TowerSpawn(art, this, target));
 }
 void Tower::sellSpawns()
 {
@@ -336,6 +353,10 @@ void Tower::sellSpawns()
 int Tower::getIndex()
 {
 	return index;
+}
+int Tower::getBlitzCount()
+{
+	return blitzcount;
 }
 int Tower::getRange()
 {

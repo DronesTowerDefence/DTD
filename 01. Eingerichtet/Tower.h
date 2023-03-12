@@ -17,6 +17,8 @@ Index:
 2: EMP-Sender
 3: Flugzeug
 4: Goldmine
+5: Blitz
+6: minigun
 */
 class Tower
 {
@@ -168,6 +170,10 @@ private:
 	int Damagecount;
 
 	/// <summary>
+	/// anzahl wieviele Projekile
+	/// </summary>
+	int blitzcount;
+	/// <summary>
 	/// !! NICHT BENUTZEN !!
 	/// </summary>
 	Tower();
@@ -193,6 +199,8 @@ public:
 	/// <returns>int</returns>
 	int getIndex();
 
+
+	int getBlitzCount();
 	/// <summary>
 	/// Den Radius der Reichweite
 	/// </summary>

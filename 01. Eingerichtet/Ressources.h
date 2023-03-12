@@ -53,9 +53,11 @@ private:
 	float towerProjectileSpeed[towerCount]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
 	float towerRange[towerCount]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[towerCount]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
+	float towernewProjectilTime[towerCount]; 
 	float towerUpdateDamage[towerCount][4];
 	float towerUpdateSpeed[towerCount][4];
 	float towerUpdateMoney[towerCount][4];
+	float towerUpdateNewProjectilTime[towerCount][4];
 	float towerUpdateMoneyGeneration[towerCount][4];
 	float droneSpawnTime[100];
 	float droneSpeed[5];
@@ -187,6 +189,8 @@ public:
 	float getTowerUpdateSpeed(int, int);
 	float getDroneSpeed(int);
 	float getTowerUpdateMoneyGeneration(int i, int j);
+	float getNewProjectilTime(int i, int j);
+
 	float getDroneSpawnTime();
 	float getWaitSubHealth();
 	bool getDoubleSpeed();

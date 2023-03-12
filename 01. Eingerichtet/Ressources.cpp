@@ -155,6 +155,14 @@ Ressources::Ressources()
 	towerMoneyGeneration[5] = 0;
 	towerMoneyGeneration[6] = 0;
 
+	towernewProjectilTime[0] = 0;
+	towernewProjectilTime[1] = 0;
+	towernewProjectilTime[2] = 0;
+	towernewProjectilTime[3] = 0;
+	towernewProjectilTime[4] = 0;
+	towernewProjectilTime[5] = 0;
+	towernewProjectilTime[6] = 0;
+
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
 	towerChangeFrame[2] = 200;
@@ -197,7 +205,7 @@ Ressources::Ressources()
 			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
-
+			towerUpdateNewProjectilTime[j][i] = -faktor[j] * pow((i + 1), 2) + startwert[j];
 		}
 	}
 
@@ -219,9 +227,9 @@ Ressources::Ressources()
 	updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
 	updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
 	updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
-	updateBeschreibungEins[4][1] = "Generiert 4096$ Geld";
-	updateBeschreibungEins[4][2] = "Generiert -2147483648$ Geld";
-	updateBeschreibungEins[4][3] = "Generiert -2147483648$ Geld";
+	updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
+	updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
+	updateBeschreibungEins[4][3] = "Generiert 1024 Geld";
 	updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf1,81";
 	updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf1,56";
 	updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf1,13";
@@ -692,6 +700,10 @@ float Ressources::getDroneSpeed(int i)
 float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 {
 	return towerUpdateMoneyGeneration[i][j];
+}
+float Ressources::getNewProjectilTime(int i, int j)
+{
+	return towerUpdateNewProjectilTime[i][j];
 }
 float Ressources::getDroneSpawnTime()
 {
