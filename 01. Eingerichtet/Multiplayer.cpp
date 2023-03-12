@@ -570,7 +570,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				{
 					p6 >> int1;
 					p6 >> str;
-					playerLight[int1]->setPlayerName(str);
+					if (playerLight[int1] != nullptr)
+						playerLight[int1]->setPlayerName(str);
 				}
 				p6.clear();
 
