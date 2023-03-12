@@ -70,6 +70,15 @@ int AccountLogin::checkClicked(Event*)
 			return 0;
 		}
 	}
+
+	if (Controls::getEscIsPressed())
+	{
+		accountLoginIsOpen = false;
+	}
+	if (Controls::getEnterIsPressed())
+	{
+		isEnter = true;
+	}
 	return 0;
 }
 
@@ -124,14 +133,6 @@ bool AccountLogin::accountLogin(Event* event)
 			}
 			newChar = Controls::checkKeyboardInput(event);
 			checkClicked(event);
-			if (Controls::getEscIsPressed())
-			{
-				accountLoginIsOpen = false;
-			}
-			if (Controls::getEnterIsPressed())
-			{
-				isEnter = true;
-			}
 		}
 		draw();
 
