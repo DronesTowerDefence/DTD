@@ -397,7 +397,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		p7; /* Alle Profilbilder */
 
 	std::string str = "";
-	int x, y, int1, int2;
+	int x, y, int1, header;
 	Uint8* int8 = nullptr;
 	Image* image = new Image();
 
@@ -405,9 +405,9 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	{
 		MultiplayerPlayer::getListener()->listen(port);
 
-		p2 << Account::getAcc()->getAccName();
+		p2 << 102 << Account::getAcc()->getAccName();
 
-		p4 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
+		p4 << 104 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
 		for (int i = 0; i < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); i++)
 		{
 			p4 << Account::getProfileImage()->getPixelsPtr()[i];
@@ -418,9 +418,9 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		player[0] = new MultiplayerPlayer();
 		player[0]->getSocket()->connect(HomeMenu::getInstance()->getMultiplayerGUI()->getHostIP(), port);
 
-		p3 << Account::getAcc()->getAccName();
+		p3 << 103 << Account::getAcc()->getAccName();
 
-		p5 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
+		p5 << 105 << Account::getProfileImage()->getSize().x << Account::getProfileImage()->getSize().y;
 		for (int i = 0; i < (Account::getProfileImage()->getSize().x * Account::getProfileImage()->getSize().y * 4); i++)
 		{
 			p5 << Account::getProfileImage()->getPixelsPtr()[i];
@@ -433,13 +433,15 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 	{
 	begin:
 		multiplayerPlayerCount = HomeMenu::getInstance()->getMultiplayerGUI()->getMultiplayerPlayerCount();
+		setBlocking(true);
 		updatePlayerCount(isHost);
+		setBlocking(false);
 
 		if (isHost)
 		{
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
-				p << HomeMenu::getInstance()->getChoseIndex();
+				p << 100 << HomeMenu::getInstance()->getChoseIndex();
 				if (player[i]->getSocket()->send(p) != Socket::Done) // Map-Auswahl
 				{
 					delete player[i];
@@ -449,44 +451,51 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				p.clear();
 
 				std::cout << multiplayerPlayerCount << std::endl;
-				p1 << multiplayerPlayerCount;
+				p1 << 101 << multiplayerPlayerCount;
 				player[i]->getSocket()->send(p1); // Spieleranzahl
 				p1.clear();
 
 				player[i]->getSocket()->send(p2); // Eigener Name
 
 				player[i]->getSocket()->receive(p3); // Name des anderen Spielers
-				p3 >> str;
-				player[i]->setUsername(str);
-				HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerNames(i + 1, str);
+				p3 >> header >> str;
+				if (header == 103)
+				{
+					player[i]->setUsername(str);
+					HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerNames(i + 1, str);
+				}
 				p3.clear();
 				str.clear();
 
 				send(&p4, -1); // Eigenes Profilbild
 
 				player[i]->getSocket()->receive(p5); // Profilbild des Spielers
-				p5 >> x >> y;
-				int8 = new Uint8[x * y * 4];
-				for (int i = 0; i < x * y * 4; i++)
+				p5 >> header;
+				if (header == 105)
 				{
-					p5 >> int8[i];
+					p5 >> x >> y;
+					int8 = new Uint8[x * y * 4];
+					for (int i = 0; i < x * y * 4; i++)
+					{
+						p5 >> int8[i];
+					}
+					p5.clear();
+					image->create(x, y, int8);
+					player[i]->setProfilImage(image);
+					HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(i + 1, image);
+					image = new Image();
 				}
-				p5.clear();
-				image->create(x, y, int8);
-				player[i]->setProfilImage(image);
-				HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(i + 1, image);
-				image = new Image();
 
 			}
 
 			// Alle Client Infos an die Clients verteilen
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
-				p6 << 101 << i + 1 << player[i]->getPlayerName();
+				p6 << 106 << i + 1 << player[i]->getPlayerName();
 				send(&p6, -1); // Namen aller Mitspieler
 				p6.clear();
 
-				p7 << 102 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
+				p7 << 107 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
 				for (int j = 0; j < (player[i]->getProfilImage()->getSize().x * player[i]->getProfilImage()->getSize().y * 4); j++)
 				{
 					p7 << player[i]->getProfilImage()->getPixelsPtr()[j];
@@ -500,48 +509,63 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			p.clear(); p1.clear(); p2.clear(); p4.clear(); p6.clear(); p7.clear();
 
 			player[0]->getSocket()->receive(p);
-			p >> int1;
-			if (int1 == 13) //Wenn Spielstart
+			p >> header >> int1;
+			if (header == 13) //Wenn Spielstart
 			{
 				HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
 				break;
 			}
-			HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
+			else if (header == 100)
+			{
+				HomeMenu::getInstance()->getMultiplayerGUI()->setChooseIndex(int1);
+			}
 
 			player[0]->getSocket()->receive(p1);
-			p1 >> multiplayerPlayerCount;
-			HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(multiplayerPlayerCount);
-			std::cout << multiplayerPlayerCount << std::endl;
+			p1 >> header;
+			if (header == 101)
+			{
+				p1 >> multiplayerPlayerCount;
+				HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(multiplayerPlayerCount);
+				std::cout << multiplayerPlayerCount << std::endl;
+			}
 
 			player[0]->getSocket()->receive(p2);
-			p2 >> str;
-			player[0]->setUsername(str);
-			playerLight[0]->setPlayerName(player[0]->getPlayerName());
-			str.clear();
+			p2 >> header;
+			if (header == 102)
+			{
+				p2 >> str;
+				player[0]->setUsername(str);
+				playerLight[0]->setPlayerName(player[0]->getPlayerName());
+				str.clear();
+			}
 
 			player[0]->getSocket()->send(p3);
 
 			player[0]->getSocket()->receive(p4);
-			p4 >> x >> y;
-			int8 = new Uint8[x * y * 4];
-			for (int i = 0; i < x * y * 4; i++)
+			p4 >> header;
+			if (header == 104)
 			{
-				p4 >> int8[i];
+				p4 >> x >> y;
+				int8 = new Uint8[x * y * 4];
+				for (int i = 0; i < x * y * 4; i++)
+				{
+					p4 >> int8[i];
+				}
+				p4.clear();
+				image->create(x, y, int8);
+				player[0]->setProfilImage(image);
+				playerLight[0]->setProfileImage(image);
+				HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(0, image);
+				image = new Image();
 			}
-			p4.clear();
-			image->create(x, y, int8);
-			player[0]->setProfilImage(image);
-			playerLight[0]->setProfileImage(image);
-			HomeMenu::getInstance()->getMultiplayerGUI()->setPlayerProfilePictures(0, image);
-			image = new Image();
 
 			player[0]->getSocket()->send(p5);
 
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
 				player[0]->getSocket()->receive(p6);
-				p6 >> int2;
-				if (int2 == 101)
+				p6 >> header;
+				if (header == 106)
 				{
 					p6 >> int1;
 					p6 >> str;
@@ -550,8 +574,8 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				p6.clear();
 
 				player[0]->getSocket()->receive(p7);
-				p7 >> int2;
-				if (int2 == 102)
+				p7 >> header;
+				if (header == 107)
 				{
 					p7 >> int1 >> x >> y;
 					int8 = new Uint8[x * y * 4];
