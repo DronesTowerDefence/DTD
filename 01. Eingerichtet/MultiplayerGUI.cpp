@@ -212,8 +212,6 @@ bool MultiplayerGUI::closeLobby()
 	if (!Multiplayer::initializeMultiplayerIsDone)
 	{
 		Multiplayer::checkMultiplayerConnect = false; //Sagt dem Thread, dass er zum Ende kommen soll
-		new PopUpMessage("Starte Spiel...");
-		draw();
 		while (!Multiplayer::initializeMultiplayerIsDone); //Wartet, bis der Thread zu Ende ist
 	}
 
@@ -380,6 +378,8 @@ bool MultiplayerGUI::start(bool _isHost)
 	isHost = _isHost;
 	isOpen = true;
 
+	setChooseIndex(0);
+
 	Event* event = Controls::getEvent();
 	while (window->isOpen() && isOpen)
 	{
@@ -412,7 +412,6 @@ bool MultiplayerGUI::start(bool _isHost)
 			if (isHost) //Wenn Host, dann wird das Spiel gestartet
 			{
 				closeLobby();
-				HomeMenu::getInstance()->setChoseIndex(mapChooseIndex);
 				startGame = true;
 			}
 			else //Wenn Client, dann wird eine Verbindung zum Host aufgebaut
