@@ -466,11 +466,17 @@ void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 {
 	if (index >= 0 && index < 4)
 	{
-		delete profilePicturesTextures[index];
+		if (profilePicturesTextures[index] != nullptr)
+		{
+			delete profilePicturesTextures[index];
+		}
 		profilePicturesTextures[index] = new Texture();
 		profilePicturesTextures[index]->loadFromImage(*image);
 
-		delete profilePictures[index];
+		if (profilePictures[index] != nullptr)
+		{
+			delete profilePictures[index];
+		}
 		profilePictures[index] = new Sprite();
 		profilePictures[index]->setPosition(1025, 500 + index * 60);
 		profilePictures[index]->setTexture(*profilePicturesTextures[index]);
