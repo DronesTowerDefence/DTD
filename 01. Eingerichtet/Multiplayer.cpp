@@ -463,7 +463,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				p3.clear();
 				str.clear();
 
-				send(&p4, -1); // Eigenes Profilbild
+				player[i]->getSocket()->send(p4); // Eigenes Profilbild
 
 				player[i]->getSocket()->receive(p5); // Profilbild des Spielers
 				p5 >> header;
@@ -488,7 +488,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			for (int i = 0; i < multiplayerPlayerCount; i++)
 			{
 				p6 << 106 << i + 1 << player[i]->getPlayerName();
-				send(&p6, -1); // Namen aller Mitspieler
+				send(&p6); // Namen aller Mitspieler
 				p6.clear();
 
 				p7 << 107 << i + 1 << player[i]->getProfilImage()->getSize().x << player[i]->getProfilImage()->getSize().y;
@@ -496,7 +496,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				{
 					p7 << player[i]->getProfilImage()->getPixelsPtr()[j];
 				}
-				send(&p7, -1); // Profilbilder aller Mitspieler
+				send(&p7); // Profilbilder aller Mitspieler
 				p7.clear();
 			}
 		}
@@ -527,7 +527,6 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 			{
 				p1 >> multiplayerPlayerCount;
 				HomeMenu::getInstance()->getMultiplayerGUI()->setMultiplayerPlayerCount(multiplayerPlayerCount);
-				std::cout << multiplayerPlayerCount << std::endl;
 			}
 
 			player[0]->getSocket()->receive(p2);
