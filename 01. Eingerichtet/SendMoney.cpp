@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "SendMoney.h"
 #include "Controls.h"
-#include "PopUpMessage.h"
 
 SendMoney* SendMoney::instance = nullptr;
 
@@ -187,7 +186,6 @@ bool SendMoney::send()
 }
 void SendMoney::checkSendMoney()
 {
-	new PopUpMessage("Work in Progress...");
 	return; //TODO
 	if (Game::getInstance()->getStatus() != 1)
 	{
