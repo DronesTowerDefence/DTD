@@ -348,7 +348,7 @@ void Multiplayer::setBlocking(bool blocking)
 
 void Multiplayer::updatePlayerCount(bool isHost)
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (isHost && i < multiplayerPlayerCount) // Mehr Spieler (momentan zu wenig Spieler)
 		{
