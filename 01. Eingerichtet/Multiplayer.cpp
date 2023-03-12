@@ -513,7 +513,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 				{
 					HomeMenu::getInstance()->getMultiplayerGUI()->setStartGame(true);
 					checkMultiplayerConnect = false;
-					std::cout << "ja" << std::endl;
+					goto end;
 					break;
 				}
 				else if (header == 100)
@@ -595,6 +595,7 @@ void Multiplayer::initializeMultiplayer(bool isHost)
 		}
 	}
 
+	end:
 
 	setBlocking(false);
 
