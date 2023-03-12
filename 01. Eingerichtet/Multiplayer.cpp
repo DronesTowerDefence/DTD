@@ -372,12 +372,12 @@ void Multiplayer::updatePlayerCount(bool isHost)
 			if (player[i] != nullptr)
 			{
 				delete player[i];
-				player[i] = nullptr;
+				player[i] = new MultiplayerPlayer();
 			}
 			if (playerLight[i] != nullptr)
 			{
 				delete playerLight[i];
-				playerLight[i] = nullptr;
+				playerLight[i] = new MultiplayerPlayer_light();
 			}
 		}
 	}
