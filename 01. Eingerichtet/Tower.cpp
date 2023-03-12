@@ -188,6 +188,9 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 					i->shoot();
 				}
 			}
+			else if (index == 6) {
+				new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
+			}
 
 			else
 			{
