@@ -759,7 +759,7 @@ void Game::checkLoseGame()
 			if (!window->hasFocus())
 			{
 				PauseMenu::getInstance()->setMultiplayerIsPaused(true);
-				PauseMenu::getInstance()->checkPause(true);
+				//PauseMenu::getInstance()->checkPause(true); 
 			}
 
 			while (window->pollEvent(*event))
