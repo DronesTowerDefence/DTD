@@ -164,6 +164,15 @@ public:
 	/// <returns></returns>
 	bool setDefaultTowerTexture(int towerID);
 
+	/// <summary>
+	/// Setzt die Texturen des TowerSpawns neu
+	/// </summary>
+	/// <param name="spawnID"></param>
+	/// <returns></returns>
+	bool updateTowerSpawnTexture(int spawnID, Texture texture);
+
+	bool setDefaultTowerSpawnTexture(int spawnID);
+
 	int getMultiplayerPlayerCount();
 	int getMapCount();
 	int getDroneCount();

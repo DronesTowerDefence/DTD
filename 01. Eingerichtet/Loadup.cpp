@@ -82,7 +82,7 @@ void Loadup::run()
 	}
 	else
 	{
-		std::cout << "Shop-Content geladen!" << std::endl;
+		std::cout << ShopContentData::getAllShopContentData().size() << " Shop-Contents geladen!" << std::endl;
 	}
 	setLoadingbar(30);
 

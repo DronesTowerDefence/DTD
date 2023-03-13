@@ -62,6 +62,7 @@ SendMoney::SendMoney()
 			playerName[i]->setFillColor(Color::White);
 			playerName[i]->setOutlineThickness(3);
 			playerName[i]->setOutlineColor(Color::Black);
+			playerName[i]->setStyle(Text::Underlined);
 			playerName[i]->setPosition(background[i]->getPosition().x + 35, background[i]->getPosition().y + 25);
 		}
 

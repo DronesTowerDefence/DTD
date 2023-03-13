@@ -234,7 +234,7 @@ void Projectile::moveProjectile()
 	}
 	else if(blitzclock.getElapsedTime().asSeconds() > res->getNewProjectilTime(tower->getIndex(),tower->getUpdates()->getIndex1())) {
 		blitzcheck = false;
-		std::cout << res->getNewProjectilTime(tower->getIndex(), tower->getUpdates()->getIndex1()) << std::endl;
+		//std::cout << res->getNewProjectilTime(tower->getIndex(), tower->getUpdates()->getIndex1()) << std::endl;
 		blitzclock.restart();
 	}
 	//std::cout << projectilesprite.getPosition().x << "  " << projectilesprite.getPosition().y << std::endl;

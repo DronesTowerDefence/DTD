@@ -1,7 +1,7 @@
 #pragma once
 #include "Ressources.h"
 
-#define shopContentCount 5
+#define shopContentCount 6
 
 class ShopContentData
 {

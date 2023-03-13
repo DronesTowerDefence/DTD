@@ -67,6 +67,10 @@ bool SkinsGUI::checkClicked()
 					{
 						Ressources::getInstance()->setDefaultTowerTexture(scd->getTypeType());
 					}
+					else if (scd->getType() == 3)
+					{
+						Ressources::getInstance()->setDefaultTowerSpawnTexture(scd->getTypeType());
+					}
 				}
 				else
 				{
@@ -75,6 +79,10 @@ bool SkinsGUI::checkClicked()
 					if (scd->getType() == 0)
 					{
 						Ressources::getInstance()->updateTowerTexture(scd->getTypeType(), scd->getTexture());
+					}
+					else if (scd->getType() == 3)
+					{
+						Ressources::getInstance()->updateTowerSpawnTexture(scd->getTypeType(), **scd->getTexture());
 					}
 				}
 				return true;

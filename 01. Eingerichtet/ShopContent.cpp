@@ -18,10 +18,27 @@ ShopContentData::ShopContentData(int id, int cost, std::string name, int type, i
 	m_name = name;
 	m_typ = type;
 	m_typTypID = typeType;
-	for (int i = 0; i <= towerTextureCount; i++)
+
+	if (m_typ == 0)
 	{
-		m_texture[i] = new Texture();
-		m_texture[i] = _texture[i];
+		for (int i = 0; i <= towerTextureCount; i++)
+		{
+			m_texture[i] = new Texture();
+			m_texture[i] = _texture[i];
+		}
+	}
+	else if (m_typ == 1)
+	{
+		//TODO
+	}
+	else if (m_typ == 2)
+	{
+		//TODO
+	}
+	else if (m_typ == 3)
+	{
+		m_texture[0] = new Texture();
+		m_texture[0] = _texture[0];
 	}
 	allShopContentData.push_back(this);
 	new ShopContentTexture(this);
@@ -85,6 +102,11 @@ bool ShopContentData::createShopContentDataFromFile()
 		{
 			_texture[0] = new Texture();
 			loadTextureSuccessfull = _texture[0]->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/projectile.png");
+		}
+		else if (_type == 3) // TowerSpawn
+		{
+			_texture[0] = new Texture();
+			loadTextureSuccessfull = _texture[0]->loadFromFile("img/shop/shopContentTextures/content" + std::to_string(i) + "/towerSpawn.png");
 		}
 
 		if (loadTextureSuccessfull)
@@ -186,6 +208,8 @@ Texture* ShopContentData::getPreviewTexture()
 	case 1:
 		return m_texture[droneTextureCount];
 	case 2:
+		return m_texture[0];
+	case 3:
 		return m_texture[0];
 	default:
 		return nullptr;

@@ -98,7 +98,7 @@ Ressources::Ressources()
 	towerPrice[4] = 750;
 	towerPrice[5] = 375;
 	towerPrice[6] = 600;
-	
+
 
 	towerDamage[0] = 1.25f;
 	towerDamage[1] = 1.4f;
@@ -603,6 +603,24 @@ Ressources* Ressources::getInstance()
 		instance = new Ressources;
 	}
 	return instance;
+}
+bool Ressources::updateTowerSpawnTexture(int spawnID, Texture texture)
+{
+	if (spawnID >= 0)
+	{
+		spawnTexture[spawnID] = texture;
+		return true;
+	}
+	return false;
+}
+bool Ressources::setDefaultTowerSpawnTexture(int spawnID)
+{
+	if (spawnID >= 0)
+	{
+		spawnTexture[spawnID].loadFromFile("img/towerSpawn/towerSpawn" + std::to_string(spawnID) + ".png");
+		return true;
+	}
+	return false;
 }
 int Ressources::getMultiplayerPlayerCount()
 {
