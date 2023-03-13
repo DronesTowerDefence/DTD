@@ -121,8 +121,8 @@ Ressources::Ressources()
 	startwert[4][1] = 0;
 	startwert[5][0] = 4;
 	startwert[5][1] = 0;
-	startwert[6][0] = 3;
-	startwert[6][1] = 1;
+	startwert[6][0] = 1;
+	startwert[6][1] = 3;
 
 
 	float faktor[6][2] = { 0 };
@@ -138,8 +138,8 @@ Ressources::Ressources()
 	faktor[4][1] = 0;
 	faktor[5][0] = 0.2;
 	faktor[5][1] = 0;
-	faktor[5][0] = 0.05;
-	faktor[5][1] = 0.3;
+	faktor[6][0] = 0.05;
+	faktor[6][1] = 0.3;
 
 
 	towerSpeed[0] = startwert[0][0];
@@ -239,6 +239,7 @@ Ressources::Ressources()
 		}
 	}
 
+		updateSpreay[6][3] = 0;
 
 	updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
 	updateBeschreibungEins[0][2] = "Setzt den Schaden auf 1,95";
