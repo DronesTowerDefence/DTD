@@ -615,9 +615,9 @@ Tower::~Tower()
 	{
 		for (auto i : boundSpawns)
 		{
-			Round::getInstance()->deleteTowerSpawn(i);
-			delete i;
+			//delete i;
 		}
+		boundSpawns.clear();
 	}
 
 	//Löscht die Updates
