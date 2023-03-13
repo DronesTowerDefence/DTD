@@ -75,7 +75,7 @@ Credits::Credits(RenderWindow* _window)
 	}
 	m_creditText[0]->setString("Turm-Skin-Design:\n\"DreamTheDuck\"");
 	m_creditText[0]->setPosition(600, 200);
-	m_creditText[1]->setString("Musik:\Louisa Schmidt");
+	m_creditText[1]->setString("Musik:\nLouisa Schmidt");
 	m_creditText[1]->setPosition(600, 600);
 }
 
