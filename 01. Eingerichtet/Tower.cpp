@@ -44,7 +44,8 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 		generationCooldown = false;
 		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
-
+		blitzcount = 4;
+		projectiltime = res->getNewProjectilTime(index);
 		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
 			spawnSpawn(1, Vector2f(0, 0));
@@ -347,7 +348,7 @@ void Tower::Update2()
 				{
 					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 					//Ist hier zeit für neue Blitze
-					speed = res->getNewProjectilTime(index, update->getIndex2());
+					projectiltime = res->getNewProjectilTime(index, update->getIndex2()-1);
 				}
 				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
@@ -414,6 +415,10 @@ int Tower::getDamageCount() {
 bool Tower::getCheckShoot()
 {
 	return shootCooldown;
+}
+float Tower::getProjectileTime()
+{
+	return projectiltime;
 }
 Vector2f Tower::getTowerPos()
 {

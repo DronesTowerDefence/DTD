@@ -185,6 +185,7 @@ public:
 	int getTowerUpgradesPrice1(int, int);
 	int getTowerUpgradesPrice2(int, int);
 	int getDroneLives(int);
+	float getNewProjectilTime(int);
 	int getDroneCountInRound();
 
 	float getShootSoundCooldown();
