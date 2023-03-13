@@ -96,7 +96,7 @@ Ressources::Ressources()
 	towerPrice[2] = 350;
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
-	towerPrice[5] = 2000;
+	towerPrice[5] =	800;
 	towerPrice[6] = 600;
 
 
@@ -125,7 +125,7 @@ Ressources::Ressources()
 	startwert[6][1] = 3;
 
 
-	float faktor[6][2] = { 0 };
+	float faktor[7][2] = { 0 };
 	faktor[0][0] = 0.085f;
 	faktor[0][1] = 0.0;
 	faktor[1][0] = 0.11f;
@@ -352,14 +352,14 @@ Ressources::Ressources()
 	updateTexture[3].loadFromFile("img/upgrades/upgradeDamage.png");
 	updateTexture[4].loadFromFile("img/upgrades/upgradePlane.png");
 	updateTexture[5].loadFromFile("img/upgrades/upgradeStorm.png");
-	updateTexture[6].loadFromFile("img/upgrades/upgradeStreuung.png"); //upgradeStreuung_noBuy.png
+	updateTexture[6].loadFromFile("img/upgrades/upgradeStreuung.png"); 
 	updateNoBuyTexture[0].loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
 	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
 	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradePlane_noBuy.png");
-	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradeStorm_noBuy.png");
-	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradeStreuung_noBuy.png");
+	updateNoBuyTexture[5].loadFromFile("img/upgrades/upgradeStorm_noBuy.png");
+	updateNoBuyTexture[6].loadFromFile("img/upgrades/upgradeStreuung_noBuy.png");
 
 
 

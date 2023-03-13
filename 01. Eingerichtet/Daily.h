@@ -7,7 +7,7 @@ private:
 	int leben;
 	int geld;
 	bool isDaily;
-	bool isTowerAllowed[6];
+	bool isTowerAllowed[7];
 public:
 	Daily();
 
