@@ -273,7 +273,7 @@ void Game::startGame()
 
 	if (!HomeMenu::getInstance()->getDaily()->getIsDaily())
 	{
-		//loadGame();
+		loadGame();
 	}
 	else
 	{
