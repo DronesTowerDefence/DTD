@@ -96,7 +96,7 @@ Ressources::Ressources()
 	towerPrice[2] = 350;
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
-	towerPrice[5] = 375;
+	towerPrice[5] = 2000;
 	towerPrice[6] = 600;
 
 
@@ -188,8 +188,8 @@ Ressources::Ressources()
 	towernewProjectilTime[2] = 0;
 	towernewProjectilTime[3] = 0;
 	towernewProjectilTime[4] = 0;
-	towernewProjectilTime[5] = 0;
-	towernewProjectilTime[6] = 2;
+	towernewProjectilTime[5] = 2;
+	towernewProjectilTime[6] = 0;
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;
@@ -697,6 +697,10 @@ int Ressources::getTowerUpgradesPrice2(int i, int j)
 int Ressources::getDroneLives(int i)
 {
 	return droneLives[i];
+}
+float Ressources::getNewProjectilTime(int i)
+{
+ 	return towernewProjectilTime[i];
 }
 int Ressources::getDroneCountInRound()
 {

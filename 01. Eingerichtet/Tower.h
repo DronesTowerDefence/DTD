@@ -180,6 +180,9 @@ private:
 	/// <summary>
 	/// !! NICHT BENUTZEN !!
 	/// </summary>
+	
+	float projectiltime;
+
 	Tower();
 
 	/// <summary>
@@ -203,6 +206,7 @@ public:
 	/// <returns>int</returns>
 	int getIndex();
 
+	float getProjectileTime();
 	float getSpray();
 
 	int getBlitzCount();
@@ -236,7 +240,7 @@ public:
 	int getDamageCount();
 
 	bool getCheckShoot();
-
+    
 
 	/// <summary>
 	/// addiert den gemachten Schaden

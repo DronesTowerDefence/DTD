@@ -24,7 +24,7 @@ Projectile::Projectile(Tower* _tower, Vector2f _targetstill)
 
 
 }
-Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill,Vector2f _blitzpos)
+Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, int _style, Vector2f _targetstill, Vector2f _blitzpos)
 {
 	//Setzen der Attribute
 	speed = _tower->getProjectileSpeed();
@@ -46,11 +46,11 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 	switch (_style)
 	{
 	case 0: {
-		if (tower->getIndex()==5) {
+		if (tower->getIndex() == 5) {
 			projectilesprite.setTexture(*res->getProjectileTexture(3));
 		}
 		else {
-		projectilesprite.setTexture(*res->getProjectileTexture(0));//Feuerturm
+			projectilesprite.setTexture(*res->getProjectileTexture(0));//Feuerturm
 		}
 		break;
 	}
@@ -102,7 +102,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setPosition(newPos);
 	}
 	else
-		projectilesprite.setPosition(tower->getTowerPos().x+(tower->getTowerSpr().getScale().x/2), tower->getTowerPos().y + (tower->getTowerSpr().getScale().y / 2));
+		projectilesprite.setPosition(tower->getTowerPos().x + (tower->getTowerSpr().getScale().x / 2), tower->getTowerPos().y + (tower->getTowerSpr().getScale().y / 2));
 	if (style == 0 && tower->getIndex() == 5) {
 		speed /= 5;
 		projectilesprite.setPosition(_blitzpos);
@@ -124,7 +124,6 @@ void Projectile::operate()
 			k /= 10;
 			if (r < 5)
 				k *= -1;
-			//std::cout << r << std::endl;
 			speed /= 50;
 			if (move.x == 0)
 				move.x = k;
@@ -157,34 +156,34 @@ void Projectile::operate()
 				j++;
 			}
 			homing();
-		break;
+			break;
 		}
 	case 5: {
 		targeting();
 		break;
 	}
 	}
-	
+
 }
 
 void Projectile::targeting()
 {
 
-		for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
+	for (auto i : tower->getCoverableArea()) //Geht die Punkte der abdeckbaren Punkte durch
+	{
+		if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
 		{
-			if (dronetarget->getNextPosition(i.z / speed).x - i.x<20 && dronetarget->getNextPosition(i.z / speed).x - i.x> -20) //Suchen, wo die Drohne und das Projektil sich treffen
+			if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
 			{
-				if (dronetarget->getNextPosition(i.z / speed).y - i.y<20 && dronetarget->getNextPosition(i.z / speed).y - i.y > -20)
-				{
-					target = i;
-					return;
-				}
+				target = i;
+				return;
 			}
 		}
-		if (style == 5) {
-			move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
-			move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
-		}
+	}
+	if (style == 5) {
+		move.x = -1 * (projectilesprite.getPosition().x - dronetarget->getPosition().x);
+		move.y = -1 * (projectilesprite.getPosition().y - dronetarget->getPosition().y);
+	}
 }
 void Projectile::homing()
 {
@@ -218,6 +217,14 @@ void Projectile::moveProjectile()
 		delete this;
 		return;
 	}
+	
+	int update = tower->getUpdates()->getIndex2()-1;
+	float ms=0;
+	if (update== - 1)
+	{
+	}
+
+	std::cout << tower->getProjectileTime() << std::endl;
 	if (style == 5 && !blitzcheck) {
 
 		if (tower->getBlitzCount() == 5) {
@@ -238,18 +245,18 @@ void Projectile::moveProjectile()
 			new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 1), projectilesprite.getPosition());
 			new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, -1), projectilesprite.getPosition());
 		}
-		new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 0),projectilesprite.getPosition());
+		new Projectile(nullptr, tower, nullptr, 0, Vector2f(1, 0), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(-1, 0), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, 1), projectilesprite.getPosition());
 		new Projectile(nullptr, tower, nullptr, 0, Vector2f(0, -1), projectilesprite.getPosition());
 		blitzcheck = true;
 	}
-	else if(blitzclock.getElapsedTime().asSeconds() > res->getNewProjectilTime(tower->getIndex(),tower->getUpdates()->getIndex1())) {
+	else if (blitzclock.getElapsedTime().asSeconds() > tower->getProjectileTime()) {
 		blitzcheck = false;
 		blitzclock.restart();
 	}
 	if (style == 5) {
-	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / (speed*100)), projectilesprite.getPosition().y + (move.y / (speed*100)));
+		projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / (speed * 100)), projectilesprite.getPosition().y + (move.y / (speed * 100)));
 	}
 	else
 		projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / speed), projectilesprite.getPosition().y + (move.y / speed));

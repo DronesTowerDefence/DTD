@@ -51,10 +51,10 @@ private:
 	float towerDamage[towerCount]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[towerCount]; //Wie schnell der Turm schießt, je kleiner desto schneller
 	float towerProjectileSpeed[towerCount]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
-	float spray[towerCount]; 
+	float spray[towerCount];
 	float towerRange[towerCount]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[towerCount]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
-	float towernewProjectilTime[towerCount]; 
+	float towernewProjectilTime[towerCount];
 	float towerUpdateDamage[towerCount][4];
 	float towerUpdateSpeed[towerCount][4];
 	float towerUpdateMoney[towerCount][4];
@@ -69,8 +69,8 @@ private:
 	std::string towerName[towerCount]; //Der Name des Turmes
 	std::string ipAddress; //Ip des Hosts
 
-	std::string updateBeschreibungEins[5][4];
-	std::string updateBeschreibungZwei[5][4];
+	std::string updateBeschreibungEins[7][4];
+	std::string updateBeschreibungZwei[7][4];
 
 	SoundBuffer hitBuffer[1];
 	SoundBuffer shootBuffer[1];
@@ -79,7 +79,7 @@ private:
 	Sound shootSound[1];
 
 	Music backgroundMusic[4];
-		
+
 	Texture towerTexture[towerCount][4];
 	Texture towerAliasTexture[towerCount];
 	Texture towerPreviewTexture[towerCount];
@@ -187,6 +187,7 @@ public:
 	int getTowerUpgradesPrice1(int, int);
 	int getTowerUpgradesPrice2(int, int);
 	int getDroneLives(int);
+	float getNewProjectilTime(int);
 	int getDroneCountInRound();
 	float getSpray(int);
 
