@@ -10,6 +10,7 @@ HomeMenu::HomeMenu()
 {
 	music.openFromFile("music/music.wav"); 
 	music.setLoop(true);
+	music.play();
 	daily = new Daily();
 	accServer = new AccountServer();
 	connected = false;
@@ -512,6 +513,7 @@ int  HomeMenu::CheckClicked(Event* event)
 }
 void HomeMenu::HomeMenuStart()
 {
+	if (music.getStatus() !=  music.Playing)
 	music.play();
 	if (callCount > 1)
 	{
@@ -570,6 +572,7 @@ void HomeMenu::HomeMenuStart()
 }
 void HomeMenu::startGame()
 {
+	music.stop();
 	if (status == 2)
 	{
 		std::string str = "Spielstart";
