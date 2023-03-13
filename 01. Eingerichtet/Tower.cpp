@@ -14,7 +14,7 @@ int Tower::globalId = 0;
 Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4,5
 {
 	//Ob der Index richtig ist
-	if (_index >= 0 && _index <= 5)
+	if (_index >= 0 && _index <= 6)
 	{
 		UniqueAchievement::getUniqueAchievement(11)->setTowerPlaced(_index, true);
 		UniqueAchievement::getUniqueAchievement(12)->setTowerPlaced(_index, true);
@@ -137,9 +137,12 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 					res->statistic_damage += damage;
 				}
 			}
+			else if (index == 6) {
+				p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
+			}
 			else
 			{
-				Projectile* p = new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
+				p = new Projectile(d, this, nullptr, res->getTowerProjectileIndex(index), Vector2f(0, 0), Vector2f(0, 0)); //Konstruktor von Projektil aufrufen
 				res->statistic_damage += damage;
 			}
 			if (Game::getInstance()->getStatus() == 2)
@@ -150,6 +153,7 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 				}
 				else if (d != nullptr)
 				{
+					//std::cout << "TowerID: " << id << "\tDroneID: " << d->getId() << std::endl;
 					Multiplayer::send(id, d->getId());
 				}
 				else
@@ -172,7 +176,8 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 {
 	if (_isClient && Game::getInstance()->getStatus() == 3)
 	{
-		if (index < 4)
+		//std::cout << "TowerID: " << id << "\tDroneID: " << d->getId() << std::endl;
+		if (index < towerCount)
 		{
 			if (index != 1)
 				Game::getInstance()->playShootSound();
@@ -182,6 +187,9 @@ bool Tower::shoot(Drone* d, bool _isClient) //Tower schießt Drone ab
 				{
 					i->shoot();
 				}
+			}
+			else if (index == 6) {
+				new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
 			}
 
 			else

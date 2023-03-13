@@ -5,12 +5,19 @@
 #define port 4567
 
 /**
-|Static-Class|
+| Static-Class |
+
+Die Clients kommunizieren nur über den Host. Sie wissen also nicht, wie viele Mitspieler es tatsächlich gibt.
+Der Host muss diese Infos (Name, Bild, etc.) an die Clients senden.
+
+Wenn ein Client z.B. einen Turm platziert sendet er diese Info an den Host, der Host leitet diese Info dann an alle
+Clients, außer an den von welchem er die Info bekommen hat, weiter.
+
+
 Packet-Header:
 0=Neuer Turm, 1=Update, 2=Turm verkauft, 3=Drohne nimmt Schaden, 4=Leben&Runde,
 5=Verloren, 6=PauseMenu, 7=HomeMenu/Restart, 8=Doppelte Geschwindigkeit, 9=Verbindungsüberprüfung,
-10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden, 13=MapChooseIndex, 14=PlayerName,
-15=MultiplayerPlayerCount, 16=Spielstart, 17=Profilbild
+10=ChatMessage, 11=Nagelhaufen wird platziert, 12=Geld senden, 13=Spielstart
 */
 static class Multiplayer
 {
@@ -18,45 +25,35 @@ private:
 	Multiplayer(); //Laut Internet unnötig die Konstruktoren bei einer statischen Klasse privat zu machen, aber habs ausprobiert, man muss es doch machen
 	Multiplayer(const Multiplayer&);
 
-	static bool send(sf::Packet* p, int from);
+	static bool send(sf::Packet* p, int from = -1);
 
 public:
 
-	/// <summary>
-	/// Zeit, wann die Verbindung als abgebrochen gilt
-	/// </summary>
+	// Zeit, wann die Verbindung als abgebrochen gilt
 	static const Time timeout;
 
-	/// <summary>
-	/// Zeit, in welchen Abständen die Überprüfungspackete gesendet werden sollen
-	/// </summary>
+	// Zeit, in welchen Abständen die Überprüfungspackete gesendet werden sollen
 	static const Time timeoutSend;
 
-	/// <summary>
-	/// Zeit, wann bei keiner Verbindung in den Singleplayer gewechselt wird
-	/// </summary>
+	// Zeit, wann bei keiner Verbindung in den Singleplayer gewechselt wird
 	static const Time timeUntilSingleplayer;
 
-	/// <summary>
-	/// Array mit allen Spielern
-	/// </summary>
+	// Für Host (Für die Kommunikation mit anderem Spieler). Wenn Client dann: player[0]=host
 	static MultiplayerPlayer* player[3];
 
+	// Für Client (Nur zum Anzeigen der Spieler)
 	static MultiplayerPlayer_light* playerLight[4];
 
-	/// <summary>
-	/// Anzahl an Spielern (Im SP=0)
-	/// </summary>
+	// Anzahl an Spielern (Im SP=0)
 	static int multiplayerPlayerCount;
 
-	/// <summary>
-	/// Für Thread
-	/// </summary>
+	// Für Thread
 	static bool initializeMultiplayerIsDone;
 
-	/// <summary>
-	/// Sendet ein minimales Packet, um die Verbindung zu überprüfen
-	/// </summary>
+	// Für Thread, läuft solange bis false
+	static bool checkMultiplayerConnect;
+
+	// Sendet ein minimales Packet, um die Verbindung zu überprüfen
 	static bool send();
 
 	/// <summary>
@@ -106,7 +103,13 @@ public:
 	/// <returns>True, wenn gesendet</returns>
 	static bool send(std::string, int);
 
-	static bool send(int, Vector2f);
+	/// <summary>
+	/// Nagelhaufen wird platziert
+	/// </summary>
+	/// <param name=""></param>
+	/// <param name=""></param>
+	/// <returns></returns>
+	static bool send(int turmID, Vector2f pos);
 
 	/// <summary>
 	/// !!ACHTUNG!! Sendet ein Packet, ohne Überprüfung der Parameter
@@ -128,10 +131,10 @@ public:
 
 	static void setBlocking(bool blocking);
 
-	static void updatePlayerCount();
+	static void updatePlayerCount(bool isHost);
 
 	/// <summary>
-	/// Baut eine Verbindung auf. Am besten als Thread ausführen
+	/// Baut eine Verbindung auf. Nur für MultiplayerGUI
 	/// </summary>
 	/// <param name="isHost">False, wenn Client</param>
 	static void initializeMultiplayer(bool isHost);

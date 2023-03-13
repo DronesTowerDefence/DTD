@@ -88,7 +88,9 @@ void MultiplayerPlayer_light::setPlayerName(std::string s)
 
 void MultiplayerPlayer_light::setProfileImage(Image* image)
 {
-	if (m_profileImage != nullptr)
+	if (m_profileImage != nullptr && image != nullptr && image->getSize().x > 0)
+	{
 		delete m_profileImage;
-	m_profileImage = new Image(*image);
+		m_profileImage = new Image(*image);
+	}
 }

@@ -176,10 +176,11 @@ void Round::deleteTowerSpawn(TowerSpawn* towerspawn)
 }
 void Round::nextRound()
 {
+	system("cls");
 	Game::getInstance()->saveGame(); //Speichert das Spiel am Ende jeder Runde
 	Game::getInstance()->setDroneCount(0); //Setzt den Zähler der Drohnen in der Game auf 0
 
-	if (Account::getAccName() != "???")
+	if (Account::getAccName() != invalidUsername)
 	{
 		Account::setExperience(Account::getExperience() + 2);
 		//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
@@ -199,6 +200,10 @@ void Round::nextRound()
 	else if (Game::getInstance()->getStatus() == 3)
 	{
 		receivedFromHostNextRound = false;
+		/*if (index == 1)
+		{
+			Drone::addToDroneIndex(2);
+		}*/
 
 		if (!allDrones.empty())
 		{

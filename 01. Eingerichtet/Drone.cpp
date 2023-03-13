@@ -297,6 +297,10 @@ void Drone::setSeed(float speed)
 {
 	this->speed = speed;
 }
+void Drone::addToDroneIndex(int i)
+{
+	droneID += i;
+}
 void Drone::setPosition(Vector2f position)
 {
 

@@ -108,13 +108,14 @@ Ressources::Ressources()
 	towerDamage[5] = 1;
 	towerDamage[6] = 1;
 
-	float startwert[6] = { 0 };
+	float startwert[towerCount] = { 0 };
 	startwert[0] = 1.9f;
 	startwert[1] = 2.4f;
 	startwert[2] = 3.8f;
 	startwert[3] = 3;
 	startwert[4] = 4;
 	startwert[5] = 4;
+	startwert[6] = 0.3;
 
 
 	float faktor[6] = { 0 };
@@ -130,6 +131,7 @@ Ressources::Ressources()
 	towerSpeed[3] = startwert[3];
 	towerSpeed[4] = startwert[4];
 	towerSpeed[5] = startwert[5];
+	towerSpeed[6] = startwert[6];
 
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
@@ -137,7 +139,7 @@ Ressources::Ressources()
 	towerProjectileSpeed[3] = 0.05;
 	towerProjectileSpeed[4] = 0;
 	towerProjectileSpeed[5] = 2;
-	towerProjectileSpeed[6] = 2;
+	towerProjectileSpeed[6] = 1;
 
 	towerRange[0] = 100;
 	towerRange[1] = 200;
@@ -161,7 +163,7 @@ Ressources::Ressources()
 	towernewProjectilTime[3] = 0;
 	towernewProjectilTime[4] = 0;
 	towernewProjectilTime[5] = 0;
-	towernewProjectilTime[6] = 0;
+	towernewProjectilTime[6] = 2;
 
 	towerChangeFrame[0] = 300;
 	towerChangeFrame[1] = 300;

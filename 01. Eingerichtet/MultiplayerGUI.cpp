@@ -89,9 +89,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 					maps[i]->getTexture()->getSize().x * maps[i]->getScale().x, maps[i]->getTexture()->getSize().y * maps[i]->getScale().y));
 				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 				{
-					mapChooseIndex = i;
-					mapChoose->setPosition(maps[i]->getPosition());
-					Multiplayer::send(13, std::to_string(mapChooseIndex));
+					setChooseIndex(i);
 					return true;
 				}
 			}
@@ -112,7 +110,11 @@ void MultiplayerGUI::draw()
 		window->draw(*closeButton);
 		window->draw(*ipText);
 		window->draw(*copyButton);
-		window->draw(*startButton);
+
+		if (isHost || !isClientInHostLobby)
+		{
+			window->draw(*startButton);
+		}
 
 		if (isClientInHostLobby || isHost)
 		{
@@ -177,12 +179,6 @@ bool MultiplayerGUI::updateLobby()
 	}
 	else
 	{
-		if (Multiplayer::initializeMultiplayerIsDone)
-		{
-			Multiplayer::receive();
-			// MapChooseIndex und playerLight werden in der receive-Funktion gesetzt
-		}
-
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount + 1; i++)
 		{
 			if (Multiplayer::playerLight[i] != nullptr)
@@ -219,17 +215,19 @@ bool MultiplayerGUI::closeLobby()
 {
 	if (!Multiplayer::initializeMultiplayerIsDone)
 	{
-		multiplayerConnectThread->terminate();
-
+		Multiplayer::checkMultiplayerConnect = false; //Sagt dem Thread, dass er zum Ende kommen soll
+		new PopUpMessage("Spiel wird gestartet...");
+		draw();
+		while (!Multiplayer::initializeMultiplayerIsDone); //Wartet, bis der Thread zu Ende ist
 	}
 
-	// delete multiplayerConnectThread;
+	//delete multiplayerConnectThread;
+	//multiplayerConnectThread->terminate();
 	multiplayerConnectThread = nullptr;
-	Multiplayer::initializeMultiplayerIsDone = true;
-
 	return true;
 }
 
+#pragma region Konstruktor/Destruktor
 MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 {
 	isClicked = false;
@@ -338,12 +336,6 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 
 MultiplayerGUI::~MultiplayerGUI()
 {
-	if (!Multiplayer::initializeMultiplayerIsDone)
-	{
-		Multiplayer::multiplayerPlayerCount = 0;
-		HomeMenu::getInstance()->setStatus(1);
-	}
-
 	if (accServer != nullptr)
 	{
 		delete accServer;
@@ -374,18 +366,24 @@ MultiplayerGUI::~MultiplayerGUI()
 	delete multiplayerPlayerCountText;
 
 	if (!Multiplayer::initializeMultiplayerIsDone)
+	{
 		Multiplayer::deleteMultiplayer();
+		HomeMenu::getInstance()->setStatus(1);
+	}
 }
+#pragma endregion
 
 bool MultiplayerGUI::start(bool _isHost)
 {
-	if (Account::getAcc()->getAccName() == "???")
+	if (Account::getAcc()->getAccName() == invalidUsername)
 	{
-		new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
+		new PopUpMessage("Bitte vorher anmelden");
 		return false;
 	}
 	isHost = _isHost;
 	isOpen = true;
+
+	setChooseIndex(0);
 
 	Event* event = Controls::getEvent();
 	while (window->isOpen() && isOpen)
@@ -414,46 +412,49 @@ bool MultiplayerGUI::start(bool _isHost)
 			connect();
 		}
 
-
-		if (isStart)
+		if (isStart) //Button unten links gedrückt
 		{
-			if (isHost)
+			if (isHost) //Wenn Host, dann wird das Spiel gestartet
 			{
 				closeLobby();
-				HomeMenu::getInstance()->setChoseIndex(mapChooseIndex);
 				startGame = true;
 			}
-			else
+			else //Wenn Client, dann wird eine Verbindung zum Host aufgebaut
 			{
-				isClientInHostLobby = connect();
+				connect();
+				isClientInHostLobby = Multiplayer::player[0] != nullptr;
 			}
 			updateLobby();
-
 		}
 
 		if (startGame) return true;
 	}
+
 	if (multiplayerConnectThread != nullptr)
 	{
-		multiplayerConnectThread->terminate(); // Löscht den Thread (mehr oder weniger, aber delete kann nicht mehr benutzt werden)
+		Multiplayer::checkMultiplayerConnect = false; //Beendet den Multiplayer-Thread
 	}
 	return false;
 }
 
+#pragma region getter/setter
 std::string MultiplayerGUI::getHostIP()
 {
 	return hostIP;
 }
-
+int MultiplayerGUI::getMultiplayerPlayerCount()
+{
+	return multiplayerPlayerCount;
+}
 void MultiplayerGUI::setChooseIndex(int i)
 {
 	if (i >= 0)
 	{
 		mapChooseIndex = i;
 		mapChoose->setPosition(maps[i]->getPosition());
+		HomeMenu::getInstance()->setChoseIndex(i);
 	}
 }
-
 void MultiplayerGUI::setPlayerNames(int i, std::string s)
 {
 	if (i >= 0 && i < 4)
@@ -461,39 +462,37 @@ void MultiplayerGUI::setPlayerNames(int i, std::string s)
 		playerNames[i]->setString(s);
 	}
 }
-
 void MultiplayerGUI::setPlayerProfilePictures(int index, Image* image)
 {
-	if (index >= 0 && index < 4)
+	if (index >= 0 && index < 4 && image != nullptr && image->getSize().x > 0 && image->getSize().x < 1000)
 	{
-		delete profilePicturesTextures[index];
+		if (profilePicturesTextures[index] != nullptr)
+		{
+			delete profilePicturesTextures[index];
+		}
 		profilePicturesTextures[index] = new Texture();
 		profilePicturesTextures[index]->loadFromImage(*image);
 
-		delete profilePictures[index];
+		if (profilePictures[index] != nullptr)
+		{
+			delete profilePictures[index];
+		}
 		profilePictures[index] = new Sprite();
 		profilePictures[index]->setPosition(1025, 500 + index * 60);
 		profilePictures[index]->setTexture(*profilePicturesTextures[index]);
 		profilePictures[index]->setScale(Vector2f(40 / float(profilePicturesTextures[index]->getSize().x), 40 / float(profilePicturesTextures[index]->getSize().y)));
 	}
 }
-
 void MultiplayerGUI::setMultiplayerPlayerCount(int i)
 {
 	if (i >= 0)
 	{
 		multiplayerPlayerCount = i;
 		multiplayerPlayerCountText->setString(std::to_string(multiplayerPlayerCount));
-		if (isHost)
-		{
-			Multiplayer::send(15, std::to_string(multiplayerPlayerCount));
-		}
-		Multiplayer::multiplayerPlayerCount = multiplayerPlayerCount;
-		Multiplayer::updatePlayerCount();
 	}
 }
-
 void MultiplayerGUI::setStartGame(bool b)
 {
 	startGame = b;
 }
+#pragma endregion
