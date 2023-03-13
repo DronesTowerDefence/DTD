@@ -171,6 +171,8 @@ private:
 	/// </summary>
 	int Damagecount;
 
+
+	float spray;
 	/// <summary>
 	/// anzahl wieviele Projekile
 	/// </summary>
@@ -201,6 +203,7 @@ public:
 	/// <returns>int</returns>
 	int getIndex();
 
+	float getSpray();
 
 	int getBlitzCount();
 	/// <summary>

@@ -51,12 +51,14 @@ private:
 	float towerDamage[towerCount]; //Wie viel Schaden der Turm mit einem Schuss anrichtet
 	float towerSpeed[towerCount]; //Wie schnell der Turm schießt, je kleiner desto schneller
 	float towerProjectileSpeed[towerCount]; //Wie schnell das Projektil fliegt, je kleiner desto schneller (minimal-Wert 1)
+	float spray[towerCount]; 
 	float towerRange[towerCount]; //Die Reichweite in der der Turm Drohnen angreifen kann
 	float towerMoneyGeneration[towerCount]; //Wie viel Geld in einem bestimmten Zeitraum (Speed) generiert wird
 	float towernewProjectilTime[towerCount]; 
 	float towerUpdateDamage[towerCount][4];
 	float towerUpdateSpeed[towerCount][4];
 	float towerUpdateMoney[towerCount][4];
+	float updateSpreay[towerCount][4];
 	float towerUpdateNewProjectilTime[towerCount][4];
 	float towerUpdateMoneyGeneration[towerCount][4];
 	float droneSpawnTime[100];
@@ -186,6 +188,7 @@ public:
 	int getTowerUpgradesPrice2(int, int);
 	int getDroneLives(int);
 	int getDroneCountInRound();
+	float getSpray(int);
 
 	float getShootSoundCooldown();
 	float getMultiplayerMoneySplit();
@@ -199,6 +202,7 @@ public:
 	float getDroneSpeed(int);
 	float getTowerUpdateMoneyGeneration(int i, int j);
 	float getNewProjectilTime(int i, int j);
+	float getSprayUpdate(int i, int j);
 
 	float getDroneSpawnTime();
 	float getWaitSubHealth();

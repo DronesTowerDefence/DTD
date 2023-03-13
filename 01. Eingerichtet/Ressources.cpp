@@ -108,30 +108,47 @@ Ressources::Ressources()
 	towerDamage[5] = 1.0f;
 	towerDamage[6] = 1.0f;
 
-	float startwert[towerCount] = { 0 };
-	startwert[0] = 1.9f;
-	startwert[1] = 2.4f;
-	startwert[2] = 3.8f;
-	startwert[3] = 3;
-	startwert[4] = 4;
-	startwert[5] = 4;
-	startwert[6] = 0.3;
+	float startwert[towerCount][2] = { 0 };
+	startwert[0][0] = 1.9f;
+	startwert[1][1] = 0;
+	startwert[1][0] = 2.4f;
+	startwert[1][1] = 0;
+	startwert[2][0] = 3.8f;
+	startwert[2][1] = 0;
+	startwert[3][0] = 3;
+	startwert[3][1] = 0;
+	startwert[4][0] = 4;
+	startwert[4][1] = 0;
+	startwert[5][0] = 4;
+	startwert[5][1] = 0;
+	startwert[6][0] = 3;
+	startwert[6][1] = 1;
 
 
-	float faktor[6] = { 0 };
-	faktor[0] = 0.085f;
-	faktor[1] = 0.11f;
-	faktor[2] = 0.12f;
-	faktor[3] = 0.13f;
-	faktor[4] = 0.1f;
-	faktor[5] = 0.2f;
-	towerSpeed[0] = startwert[0];
-	towerSpeed[1] = startwert[1];
-	towerSpeed[2] = startwert[2];
-	towerSpeed[3] = startwert[3];
-	towerSpeed[4] = startwert[4];
-	towerSpeed[5] = startwert[5];
-	towerSpeed[6] = startwert[6];
+	float faktor[6][2] = { 0 };
+	faktor[0][0] = 0.085f;
+	faktor[0][1] = 0.0;
+	faktor[1][0] = 0.11f;
+	faktor[1][1] = 0;
+	faktor[2][0] = 0.12f;
+	faktor[2][1] = 0;
+	faktor[3][0] = 0.13f;
+	faktor[3][1] = 0;
+	faktor[4][0] = 0.1;
+	faktor[4][1] = 0;
+	faktor[5][0] = 0.2;
+	faktor[5][1] = 0;
+	faktor[5][0] = 0.05;
+	faktor[5][1] = 0.3;
+
+
+	towerSpeed[0] = startwert[0][0];
+	towerSpeed[1] = startwert[1][0];
+	towerSpeed[2] = startwert[2][0];
+	towerSpeed[3] = startwert[3][0];
+	towerSpeed[4] = startwert[4][0];
+	towerSpeed[5] = startwert[5][0];
+	towerSpeed[6] = startwert[6][0];
 
 	towerProjectileSpeed[0] = 4;
 	towerProjectileSpeed[1] = 4;
@@ -148,6 +165,15 @@ Ressources::Ressources()
 	towerRange[4] = 0;
 	towerRange[5] = 200;
 	towerRange[6] = 0;
+
+
+	spray[0] = 0;
+	spray[1] = 0;
+	spray[2] = 0;
+	spray[3] = 0;
+	spray[4] = 0;
+	spray[5] = 0;
+	spray[6] = 0;
 
 	towerMoneyGeneration[0] = 0;
 	towerMoneyGeneration[1] = 0;
@@ -203,11 +229,13 @@ Ressources::Ressources()
 		for (int i = 0; i < 4; i++, x += 0.5)
 		{
 			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
-			berechneterSpeed = -faktor[j] * pow((i + 1), 2) + startwert[j];
+			berechneterSpeed = -faktor[j][0] * pow((i + 1), 2) + startwert[j][0];
 			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);
 			towerUpgradePrice2[j][i] = towerUpgradePrice1[j][i] = towerPrice[j] + (towerPrice[j] * x);
-			towerUpdateNewProjectilTime[j][i] = -faktor[j] * pow((i + 1), 2) + startwert[j];
+			towerUpdateNewProjectilTime[j][i] = -faktor[j][0] * pow((i + 1), 2) + startwert[j][0];
+			updateSpreay[j][i] = -faktor[j][1] * pow((i + 1), 2) + startwert[j][1];
+
 		}
 	}
 
@@ -675,6 +703,11 @@ int Ressources::getDroneCountInRound()
 	return droneCountInRound[Round::getInstance()->getIndex()];
 }
 
+float Ressources::getSpray(int i)
+{
+	return spray[i];
+}
+
 float Ressources::getShootSoundCooldown()
 {
 	return shootSoundCooldown;
@@ -724,6 +757,10 @@ float Ressources::getTowerUpdateMoneyGeneration(int i, int j)
 float Ressources::getNewProjectilTime(int i, int j)
 {
 	return towerUpdateNewProjectilTime[i][j];
+}
+float Ressources::getSprayUpdate(int i, int j)
+{
+	return updateSpreay[i][j];
 }
 float Ressources::getDroneSpawnTime()
 {

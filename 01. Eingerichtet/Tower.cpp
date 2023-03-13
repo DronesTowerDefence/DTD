@@ -44,6 +44,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 		generationCooldown = false;
 		towerSpr.setTexture(*res->getTowerTexture(index, animationCounter));
 		towerSpr.setPosition(position);
+		spray = res->getSpray(index);
 
 		if (index == 3) //Wenn Flugzeug, dann Flugbahn, statt Kreis
 		{
@@ -275,8 +276,8 @@ void Tower::Update1()
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					Multiplayer::send(id, 1, update->getIndex1());
 				}
-				//Feuerturm, Nagelfabrik, Emp-Sender
-				else if (index < 4)
+				//Feuerturm, Nagelfabrik, Emp-Sender; minígun
+				else if (index < 4|| index == 6)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
@@ -295,6 +296,7 @@ void Tower::Update1()
 					blitzcount++;
 					Multiplayer::send(id, 1, update->getIndex2());
 				}
+				
 				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 			}
@@ -349,7 +351,12 @@ void Tower::Update2()
 					//Ist hier zeit für neue Blitze
 					speed = res->getNewProjectilTime(index, update->getIndex2());
 				}
-				update->setStringPrice();
+				else if (index == 6)
+				{
+					value += res->getTowerUpgradesPrice1(index, update->getIndex2() - 1);
+					spray = res->getSprayUpdate(index, update->getIndex2() - 1);
+					Multiplayer::send(id, 1, update->getIndex2());
+				}update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 			}
 		}
@@ -379,6 +386,10 @@ void Tower::sellSpawns()
 int Tower::getIndex()
 {
 	return index;
+}
+float Tower::getSpray()
+{
+	return spray;
 }
 int Tower::getBlitzCount()
 {

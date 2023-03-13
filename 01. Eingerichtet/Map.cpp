@@ -69,10 +69,10 @@ Map::Map(int index)
 		points.push_back(new Waypoint(Vector2f(950, 660), Vector2f(1, 0), 3));
 		points.push_back(new Waypoint(Vector2f(1550, 660), Vector2f(0, -1), 1));
 		points.push_back(new Waypoint(Vector2f(1550, 160), Vector2f(-1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(910, 160), Vector2f(0, 1), 2));
-		points.push_back(new Waypoint(Vector2f(910, 830), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(224, 830), Vector2f(0, -1), 2));
-		points.push_back(new Waypoint(Vector2f(224, -50), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(950, 160), Vector2f(0, 1), 2));
+		points.push_back(new Waypoint(Vector2f(950, 830), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(244, 830), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(244, -50), Vector2f(0, -1), 4));
 		start = Vector2f(150, -50);
 		startMove = Vector2f(0, 1);
 		wayPointCount = 13;
