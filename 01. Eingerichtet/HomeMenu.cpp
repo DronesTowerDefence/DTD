@@ -345,6 +345,7 @@ int  HomeMenu::CheckClicked(Event* event)
 				}
 				else
 				{
+					music.stop();
 					Game::getInstance()->setWindow(&*window);
 					Game::getInstance()->setStatus(1);
 					Game::getInstance()->startGame();

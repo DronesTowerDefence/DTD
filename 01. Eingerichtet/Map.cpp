@@ -58,7 +58,7 @@ Map::Map(int index)
 		start = Vector2f(-50, 66);
 		startMove = Vector2f(1, 0);
 		wayPointCount = 9;
-
+		break;
 	case 3:
 		points.push_back(new Waypoint(Vector2f(150, 450), Vector2f(1, 0), 3));
 		points.push_back(new Waypoint(Vector2f(390, 450), Vector2f(0, 1), 1));
