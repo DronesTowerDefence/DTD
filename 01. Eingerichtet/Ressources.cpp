@@ -173,7 +173,7 @@ Ressources::Ressources()
 	spray[3] = 0;
 	spray[4] = 0;
 	spray[5] = 0;
-	spray[6] = 0;
+	spray[6] = 3;
 
 	towerMoneyGeneration[0] = 0;
 	towerMoneyGeneration[1] = 0;

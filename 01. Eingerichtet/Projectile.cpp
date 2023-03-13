@@ -118,17 +118,19 @@ void Projectile::operate()
 	switch (style) {
 	case 0: {   //Fliegt einfach gerade
 		if (tower->getIndex() == 6) {
+			if (tower->getSpray() != 0) {
 			srand((unsigned)time(NULL));
-			float k = rand() % 5;
+			float k = rand() % int(tower->getSpray()*10);
 			int r = rand() % 10;
-			k /= 10;
+			k /= 100;
 			if (r < 5)
 				k *= -1;
-			speed /= 50;
 			if (move.x == 0)
 				move.x = k;
 			else
 				move.y = k;
+			}
+			speed /= 50;
 		}
 		moveProjectile();
 		break;
@@ -218,13 +220,9 @@ void Projectile::moveProjectile()
 		return;
 	}
 	
-	int update = tower->getUpdates()->getIndex2()-1;
-	float ms=0;
-	if (update== - 1)
-	{
-	}
 
-	std::cout << tower->getProjectileTime() << std::endl;
+
+	//std::cout << tower->getProjectileTime() << std::endl;
 	if (style == 5 && !blitzcheck) {
 
 		if (tower->getBlitzCount() == 5) {

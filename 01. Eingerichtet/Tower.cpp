@@ -586,7 +586,7 @@ Tower::~Tower()
 	}
 
 	//Löscht sich selbst aus der Liste
-	if (index < res->getTowerCount())
+	if (index < towerCount)
 	{
 		if (!r->getAllAttackTower().empty())
 		{
@@ -615,6 +615,7 @@ Tower::~Tower()
 	{
 		for (auto i : boundSpawns)
 		{
+			Round::getInstance()->deleteTowerSpawn(i);
 			delete i;
 		}
 	}
