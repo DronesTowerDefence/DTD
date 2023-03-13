@@ -97,7 +97,7 @@ Ressources::Ressources()
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
 	towerPrice[5] = 2000;
-	towerPrice[6] = 600;
+	towerPrice[6] = 6;
 
 
 	towerDamage[0] = 1.25f;
@@ -125,7 +125,7 @@ Ressources::Ressources()
 	startwert[6][1] = 3;
 
 
-	float faktor[6][2] = { 0 };
+	float faktor[7][2] = { 0 };
 	faktor[0][0] = 0.085f;
 	faktor[0][1] = 0.0;
 	faktor[1][0] = 0.11f;
@@ -173,7 +173,7 @@ Ressources::Ressources()
 	spray[3] = 0;
 	spray[4] = 0;
 	spray[5] = 0;
-	spray[6] = 0;
+	spray[6] = 3;
 
 	towerMoneyGeneration[0] = 0;
 	towerMoneyGeneration[1] = 0;
