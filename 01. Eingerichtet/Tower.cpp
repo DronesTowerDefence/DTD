@@ -11,7 +11,7 @@
 int Tower::globalId = 0;
 
 #pragma region Konstruktor
-Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4,5
+Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neuen Turm kaufen; 0,1,2,3,4,5,6
 {
 	//Ob der Index richtig ist
 	if (_index >= 0 && _index <= 6)
@@ -25,6 +25,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 		id = globalId;
 		globalId++;
 		Damagecount = 0;
+		rotCount = 1;
 		Round::getInstance()->addTower(this);
 		res = Ressources::getInstance();
 		damage = res->getTowerDamage(index);
@@ -138,7 +139,24 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 				}
 			}
 			else if (index == 6) {
-				p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
+				switch (rotCount) {
+				case 1: {
+					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, -1), Vector2f(0, 0));
+					break;
+				}
+				case 2: {
+					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(1, 0), Vector2f(0, 0));
+					break;
+				}
+				case 3: {
+					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
+					break;
+				}
+				case 4: {
+					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(-1, 0), Vector2f(0, 0));
+					break;
+				}
+				}
 			}
 			else
 			{
@@ -515,6 +533,20 @@ void Tower::setUpdate(int _update1, int _update2)
 			speed = res->getTowerUpdateSpeed(index, update->getIndex2() - 1);
 		}
 	}
+}
+
+void Tower::addRotCount()
+{
+	rotCount++;
+	if (rotCount > 4)
+		rotCount = 1;
+}
+
+void Tower::subRotCount()
+{
+	rotCount--;
+	if (rotCount < 1)
+		rotCount = 4;
 }
 
 #pragma endregion

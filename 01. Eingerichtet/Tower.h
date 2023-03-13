@@ -48,6 +48,8 @@ private:
 	/// </summary>
 	int id;
 
+	int rotCount;
+
 	/// <summary>
 	/// Wie viel Schaden der Turm mit einem Schuss anrichtet
 	/// </summary>
@@ -316,6 +318,9 @@ public:
 	/// <param name="">Update1</param>
 	/// <param name="">Update2</param>
 	void setUpdate(int, int);
+
+	void addRotCount();
+	void subRotCount();
 
 	/// <summary>
 	/// Generiert Geld. Funktioniert nur bei MoneyTowers

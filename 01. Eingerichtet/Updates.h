@@ -22,12 +22,16 @@ private:
 	RectangleShape* shoowUpdate1[4];
 	RectangleShape* shoowUpdate2[4];
 
+	Texture* texRArrow;
+	Texture* texLArrow;
 	Texture* textureUpdate1;
 	Texture* textureUpdate1NoBuy;
 	Texture* textureUpdate2;
 	Texture* textureUpdate2NoBuy;
 	Texture* textureclose;
 	Texture* textureSell;
+	Sprite* rArrow;
+	Sprite* lArrow;
 	Sprite* close;
 	Sprite* sell;
 	Sprite* update2;

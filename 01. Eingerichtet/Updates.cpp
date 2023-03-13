@@ -25,6 +25,18 @@ Updates::Updates(Tower* tower)
 	textureUpdate2 = new Texture();
 	textureclose = new Texture();
 	textureSell = new Texture();
+	if (tower->getIndex() == 6) {
+		rArrow = new Sprite();
+		lArrow = new Sprite();
+		texRArrow = new Texture();
+		texLArrow = new Texture();
+		texRArrow->loadFromFile("img/tower6/R.png");
+		texLArrow->loadFromFile("img/tower6/L.png");
+		rArrow->setTexture(*texRArrow);
+		lArrow->setTexture(*texLArrow);
+		rArrow->setPosition(Vector2f(1745, 600));
+		lArrow->setPosition(Vector2f(1745, 720));
+	}
 
 	textureUpdate1NoBuy = new Texture();
 	textureUpdate2NoBuy = new Texture();
@@ -190,6 +202,10 @@ void Updates::draw(RenderWindow* window)
 	}
 	window->draw(*information1);
 	window->draw(*information2);
+	if (tower->getIndex() == 6) {
+		window->draw(*rArrow);
+		window->draw(*lArrow);
+	}
 
 }
 void Updates::hover(RenderWindow* window)
@@ -253,6 +269,21 @@ int Updates::isClicked(RenderWindow* window, Tower* tow)
 			{
 				tow->Update2();
 			}
+		}
+		if (tower->getIndex() == 6) {
+			pos = Service::getInstance()->getObjectPosition(rArrow->getPosition()); 
+			pos2 = Service::getInstance()->getObjectPosition(rArrow->getPosition() + Vector2f(100, 100));
+			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) {
+				tower->addRotCount();
+			}
+			else {
+				pos = Service::getInstance()->getObjectPosition(lArrow->getPosition());
+				pos2 = Service::getInstance()->getObjectPosition(lArrow->getPosition() + Vector2f(100, 100));
+				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) {
+					tower->subRotCount();
+				}
+			}
+
 		}
 	}
 

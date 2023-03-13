@@ -102,7 +102,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setPosition(newPos);
 	}
 	else
-		projectilesprite.setPosition(tower->getTowerPos());
+		projectilesprite.setPosition(tower->getTowerPos().x+(tower->getTowerSpr().getScale().x/2), tower->getTowerPos().y + (tower->getTowerSpr().getScale().y / 2));
 	if (style == 0 && tower->getIndex() == 5) {
 		speed /= 5;
 		projectilesprite.setPosition(_blitzpos);
@@ -117,8 +117,20 @@ void Projectile::operate()
 {
 	switch (style) {
 	case 0: {   //Fliegt einfach gerade
-		if (tower->getIndex() == 6)
+		if (tower->getIndex() == 6) {
+			srand((unsigned)time(NULL));
+			float k = rand() % 5;
+			int r = rand() % 10;
+			k /= 10;
+			if (r < 5)
+				k *= -1;
+			std::cout << r << std::endl;
 			speed /= 50;
+			if (move.x == 0)
+				move.x = k;
+			else
+				move.y = k;
+		}
 		moveProjectile();
 		break;
 	}
@@ -234,10 +246,8 @@ void Projectile::moveProjectile()
 	}
 	else if(blitzclock.getElapsedTime().asSeconds() > res->getNewProjectilTime(tower->getIndex(),tower->getUpdates()->getIndex1())) {
 		blitzcheck = false;
-		//std::cout << res->getNewProjectilTime(tower->getIndex(), tower->getUpdates()->getIndex1()) << std::endl;
 		blitzclock.restart();
 	}
-	//std::cout << projectilesprite.getPosition().x << "  " << projectilesprite.getPosition().y << std::endl;
 	if (style == 5) {
 	projectilesprite.setPosition(projectilesprite.getPosition().x + (move.x / (speed*100)), projectilesprite.getPosition().y + (move.y / (speed*100)));
 	}
