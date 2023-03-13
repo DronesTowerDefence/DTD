@@ -241,46 +241,64 @@ Ressources::Ressources()
 
 		updateSpreay[6][3] = 0;
 
-	updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
-	updateBeschreibungEins[0][2] = "Setzt den Schaden auf 1,95";
-	updateBeschreibungEins[0][1] = "Setzt den Schaden auf 2,44";
-	updateBeschreibungEins[0][3] = "Setzt den Schaden auf 3,05";
-	updateBeschreibungEins[1][0] = "Setzt den Schaden auf 1,96";
-	updateBeschreibungEins[1][1] = "Setzt den Schaden auf 2,74";
-	updateBeschreibungEins[1][2] = "Setzt den Schaden auf 3,84";
-	updateBeschreibungEins[1][3] = "Setzt den Schaden auf 5,38";
-	updateBeschreibungEins[2][0] = "Setzt den Schaden auf 1,82";
-	updateBeschreibungEins[2][1] = "Setzt den Schaden auf 2,46";
-	updateBeschreibungEins[2][2] = "Setzt den Schaden auf 3,32";
-	updateBeschreibungEins[2][3] = "Setzt den Schaden auf 4,48";
-	updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
-	updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
-	updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
-	updateBeschreibungEins[4][3] = "Generiert 1024 Geld";
-	updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf1,81";
-	updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf1,56";
-	updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf1,13";
-	updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf0,54";
-	updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf2,29";
-	updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf1,96";
-	updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf1,41";
-	updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf0,64";
-	updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf3,68";
-	updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf3,32";
-	updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf2,72";
-	updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf1,88";
-	updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf2,87";
-	updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf2,48";
-	updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf1,83";
-	updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf0,92";
-	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf3,9";
-	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf3,6";
-	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf3,1";
-	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf2,4";
+		updateBeschreibungEins[0][0] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[0][2] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[0][1] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[0][3] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[1][0] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[1][1] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[1][2] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[1][3] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[2][0] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[2][1] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[2][2] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[2][3] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
+		updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
+		updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
+		updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
+		updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
+		updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
+		updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
+		updateBeschreibungEins[4][3] = "Generiert 1024$ Geld";
+		updateBeschreibungEins[5][0] = "Fügt eine Richtung hinzu";
+		updateBeschreibungEins[5][1] = "Fügt eine Richtung hinzu";
+		updateBeschreibungEins[5][2] = "Fügt eine Richtung hinzu";
+		updateBeschreibungEins[5][3] = "Fügt eine Richtung hinzu";
+		updateBeschreibungEins[6][0] = "Setzt die Streuung auf 2,7";
+		updateBeschreibungEins[6][1] = "Setzt die Streuung auf 1,8";
+		updateBeschreibungEins[6][2] = "Setzt die Streuung auf 0,3";
+		updateBeschreibungEins[6][3] = "Setzt die Streuung auf 0";
+		updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf1,81";
+		updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf1,56";
+		updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf1,13";
+		updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf0,54";
+		updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf2,29";
+		updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf1,96";
+		updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf1,41";
+		updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf0,64";
+		updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf3,68";
+		updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf3,32";
+		updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf2,72";
+		updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf1,88";
+		updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf2,87";
+		updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf2,48";
+		updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf1,83";
+		updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf0,92";
+		updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf3,9";
+		updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf3,6";
+		updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf3,1";
+		updateBeschreibungZwei[4][3] = "Sendet neue Blitze nach 0,8 aus";
+		updateBeschreibungZwei[5][0] = "Sendet neue Blitze nach 3,8 aus";
+		updateBeschreibungZwei[5][1] = "Sendet neue Blitze nach 3,2 aus";
+		updateBeschreibungZwei[5][2] = "Sendet neue Blitze nach 2,2 aus";
+		updateBeschreibungZwei[5][3] = "Sendet neue Blitze nach 0,8 aus";
+		updateBeschreibungZwei[6][0] = "Setzt die Regenerationszeit auf 3,8";
+		updateBeschreibungZwei[6][1] = "Setzt die Regenerationszeit auf 3,2";
+		updateBeschreibungZwei[6][2] = "Setzt die Regenerationszeit auf 2,2";
+		updateBeschreibungZwei[6][3] = "Setzt die Regenerationszeit auf 0,8";
+
+
 
 	// 0 = Schwarz
 	// 1 = Blau
@@ -333,11 +351,15 @@ Ressources::Ressources()
 	updateTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed.png");
 	updateTexture[3].loadFromFile("img/upgrades/upgradeDamage.png");
 	updateTexture[4].loadFromFile("img/upgrades/upgradePlane.png");
+	updateTexture[5].loadFromFile("img/upgrades/upgradeStorm.png");
+	updateTexture[6].loadFromFile("img/upgrades/upgradeStreuung.png"); //upgradeStreuung_noBuy.png
 	updateNoBuyTexture[0].loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
 	updateNoBuyTexture[3].loadFromFile("img/upgrades/upgradeDamage_noBuy.png");
 	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradePlane_noBuy.png");
+	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradeStorm_noBuy.png");
+	updateNoBuyTexture[4].loadFromFile("img/upgrades/upgradeStreuung_noBuy.png");
 
 
 

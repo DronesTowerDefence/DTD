@@ -84,8 +84,8 @@ private:
 	Texture towerAliasTexture[towerCount];
 	Texture towerPreviewTexture[towerCount];
 	Texture towerNoBuyTexture[towerCount];
-	Texture updateTexture[5];
-	Texture updateNoBuyTexture[5];
+	Texture updateTexture[7];
+	Texture updateNoBuyTexture[6];
 	Texture projectileTexture[4];
 	Texture spawnTexture[1];
 	Texture droneTexture[4][2];

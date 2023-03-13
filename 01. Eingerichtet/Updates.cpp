@@ -57,6 +57,20 @@ Updates::Updates(Tower* tower)
 		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
 		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
 	}
+	else if (tower->getIndex() == 5)
+	{
+		textureUpdate1 = res->getUpdateTexture(5);
+		textureUpdate2 = res->getUpdateTexture(2);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
+	}
+	else if (tower->getIndex() == 6)
+	{
+		textureUpdate1 = res->getUpdateTexture(6);
+		textureUpdate2 = res->getUpdateTexture(2);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
+	}
 	else
 	{
 		textureUpdate1 = res->getUpdateTexture(2);
@@ -271,7 +285,7 @@ int Updates::isClicked(RenderWindow* window, Tower* tow)
 			}
 		}
 		if (tower->getIndex() == 6) {
-			pos = Service::getInstance()->getObjectPosition(rArrow->getPosition()); 
+			pos = Service::getInstance()->getObjectPosition(rArrow->getPosition());
 			pos2 = Service::getInstance()->getObjectPosition(rArrow->getPosition() + Vector2f(100, 100));
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) {
 				tower->addRotCount();
