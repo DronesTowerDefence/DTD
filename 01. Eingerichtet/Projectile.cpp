@@ -124,7 +124,7 @@ void Projectile::operate()
 			k /= 10;
 			if (r < 5)
 				k *= -1;
-			std::cout << r << std::endl;
+			//std::cout << r << std::endl;
 			speed /= 50;
 			if (move.x == 0)
 				move.x = k;
