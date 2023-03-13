@@ -96,17 +96,17 @@ Ressources::Ressources()
 	towerPrice[2] = 350;
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
-	towerPrice[5] = 1;
-	towerPrice[6] = 1;
+	towerPrice[5] = 375;
+	towerPrice[6] = 600;
 	
 
 	towerDamage[0] = 1.25f;
 	towerDamage[1] = 1.4f;
 	towerDamage[2] = 1.35f;
 	towerDamage[3] = 1.45;
-	towerDamage[4] = 0;
-	towerDamage[5] = 1;
-	towerDamage[6] = 1;
+	towerDamage[4] = 0.0f;
+	towerDamage[5] = 1.0f;
+	towerDamage[6] = 1.0f;
 
 	float startwert[towerCount] = { 0 };
 	startwert[0] = 1.9f;
