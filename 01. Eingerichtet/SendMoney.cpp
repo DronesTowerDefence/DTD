@@ -62,7 +62,7 @@ SendMoney::SendMoney()
 			playerName[i]->setFillColor(Color::White);
 			playerName[i]->setOutlineThickness(3);
 			playerName[i]->setOutlineColor(Color::Black);
-			playerName[i]->setPosition(background[i]->getPosition().x + 20, background[i]->getPosition().y + 10);
+			playerName[i]->setPosition(background[i]->getPosition().x + 35, background[i]->getPosition().y + 25);
 		}
 
 		chooseShape = new RectangleShape();
@@ -144,26 +144,24 @@ bool SendMoney::checkInput(Event* event)
 			std::string tmp = "";
 			tmp = Controls::checkKeyboardInput(event);
 
-			input += Service::stringToInt(tmp);
-
-			inputText->setString(input);
+			if (tmp[0] >= 48 && tmp[0] <= 57)
+			{
+				input += tmp;
+				inputText->setString(input);
+			}
 
 			return true;
 		}
 	}
 	else return false;
 }
-
 bool SendMoney::send()
 {
-	int arrLen = input.size();
-	char* arr = new char[arrLen];
-	strcpy_s(arr, arrLen + 1, input.c_str());
-	inputAsInt = Service::getInstance()->stringToInt(arr);
+	inputAsInt = Service::getInstance()->stringToInt(input);
 
 	if (inputAsInt > 0 && Round::getInstance()->getMoney() >= inputAsInt)
 	{
-		std::string name = "???";
+		std::string name = invalidUsername;
 
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{
@@ -186,7 +184,7 @@ bool SendMoney::send()
 }
 void SendMoney::checkSendMoney()
 {
-	return; //TODO
+	//return; //TODO
 	if (Game::getInstance()->getStatus() != 1)
 	{
 		checkClicked();
