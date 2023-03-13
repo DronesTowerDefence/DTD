@@ -64,6 +64,8 @@ Loadup::~Loadup()
 
 void Loadup::run()
 {
+	system("md saves >nul 2>&1");
+	//wenn der Ordner bereits existiert, wird eine Fehlermeldung zurückgegeben, diese wird aber mit ">nul 2>&1" unterdrückt
 	setLoadingbar(10);
 
 	std::string username = "0", email = "0", usernameExist = "0";
