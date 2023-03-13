@@ -1,10 +1,11 @@
 #include "MultiplayerPlayer.h"
+#include "Account.h"
 
 TcpListener* MultiplayerPlayer::listener = new TcpListener();
 
 MultiplayerPlayer::MultiplayerPlayer()
 {
-	m_playerName = "???";
+	m_playerName = invalidUsername;
 	m_socket = new TcpSocket();
 	m_profileImage = new Image(Ressources::getInstance()->getAccountProfilePicture()->copyToImage());
 }

@@ -1361,7 +1361,7 @@ void Game::saveGame()
 		wdatei << "\n";
 		wdatei.close();
 
-		if (Account::getAccName() != "???")
+		if (Account::getAccName() != invalidUsername)
 		{
 			//accServer->sendXP(Account::getAccName(), std::to_string(Account::getExperience()));
 		}
