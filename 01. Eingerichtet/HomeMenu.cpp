@@ -366,7 +366,7 @@ int  HomeMenu::CheckClicked(Event* event)
 			}
 			else
 			{
-				if (Account::getAcc()->getAccName() == "???")
+				if (Account::getAcc()->getAccName() == invalidUsername)
 				{
 					new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
 					return 0;

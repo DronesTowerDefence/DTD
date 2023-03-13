@@ -260,7 +260,7 @@ bool AccountLogin::accountPage(Event* event)
 			system("del saves\\user.sav");
 			Account::deleteAcc();
 			Loadup::usernameSuccessfull = false;
-			Account::createAcc("???", "\0", nullptr);
+			Account::createAcc();
 			AchievementsContainer::resetAllAchievements();
 			return true;
 		}

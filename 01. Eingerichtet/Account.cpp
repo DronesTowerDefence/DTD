@@ -30,7 +30,7 @@ Account::Account(std::string userName, std::string email, sf::Image* image)
 		m_profileImage = image;
 	}
 
-	if (userName != "???" && email != "0")
+	if (userName != invalidUsername && email != "0")
 	{
 		std::ofstream file("saves/user.sav");
 		file << userName << "\n" << email << "\n";
@@ -53,12 +53,12 @@ Account* Account::createAcc(std::string userName, std::string email, sf::Image* 
 	return m_acc;
 }
 
-bool Account::setExperience(int _exp)
+bool Account::setExperience(int _exp, Account* acc)
 {
-	if (m_acc != nullptr && _exp > 0 && m_acc->m_accName != invalidUsername)
+	if (acc != nullptr && _exp > 0 && acc->m_accName != invalidUsername)
 	{
-		m_acc->m_experience = _exp;
-		m_acc->m_oldExperience = _exp;
+		acc->m_experience = _exp;
+		acc->m_oldExperience = _exp;
 		return true;
 	}
 	else
@@ -66,27 +66,27 @@ bool Account::setExperience(int _exp)
 
 }
 
-bool Account::setShopCoins(int _coins)
+bool Account::setShopCoins(int _coins, Account* acc)
 {
 	if (_coins >= 0)
 	{
-		m_acc->m_shopCoins = _coins;
+		acc->m_shopCoins = _coins;
 		return true;
 	}
 	else return false;
 }
 
-bool Account::addExperience(int _exp)
+bool Account::addExperience(int _exp, Account* acc)
 {
-	if (m_acc != nullptr && _exp > 0 && m_acc->m_accName != invalidUsername)
+	if (acc != nullptr && _exp > 0 && acc->m_accName != invalidUsername)
 	{
 		new PopUpMessage(std::to_string(_exp) + " Erfahrung erhalten", seconds(1));
-		m_acc->m_experience += _exp;
+		acc->m_experience += _exp;
 		if (checkLevelUp())
 		{
-			m_acc->m_shopCoins += shopCoinsPerLevel;
+			acc->m_shopCoins += shopCoinsPerLevel;
 			new PopUpMessage(std::to_string(shopCoinsPerLevel) + " Shop-Coins erhalten!");
-			AccountServer::getAccServerObj()->sendCoins(m_acc->m_accName, m_acc->m_shopCoins);
+			AccountServer::getAccServerObj()->sendCoins(acc->m_accName, acc->m_shopCoins);
 		}
 		return true;
 	}
@@ -109,27 +109,27 @@ bool Account::deleteAcc()
 	else return false;
 }
 
-std::string Account::getAccName()
+std::string Account::getAccName(Account* acc)
 {
-	return m_acc->m_accName;
+	return acc->m_accName;
 }
 
-std::string Account::getEmail()
+std::string Account::getEmail(Account* acc)
 {
-	return m_acc->m_email;
+	return acc->m_email;
 }
 
-sf::Image* Account::getProfileImage()
+sf::Image* Account::getProfileImage(Account* acc)
 {
-	return m_acc->m_profileImage;
+	return acc->m_profileImage;
 }
 
-int Account::getExperience()
+int Account::getExperience(Account* acc)
 {
-	return m_acc->m_experience;
+	return acc->m_experience;
 }
 
-int Account::getShopCoins()
+int Account::getShopCoins(Account* acc)
 {
-	return m_acc->m_shopCoins;
+	return acc->m_shopCoins;
 }

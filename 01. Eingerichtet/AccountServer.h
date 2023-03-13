@@ -7,9 +7,7 @@ private:
 	sf::Http* http;
 	sf::Http::Request* request;
 	sf::Http::Response* response;
-	sf::Time* timeout;
 	sf::Thread* thread;
-	int httpVersion[2];
 	int lastStatusCode;
 	std::string lastResponse;
 	bool isDone;
@@ -52,7 +50,7 @@ public:
 	/// <param name="">Wenn keine angegeben, dann Standartaccount</param>
 	/// </summary>
 	/// <returns>Pointer auf den Account wenn erfolgreich, ansonsten nullptr</returns>
-	Account* createAccount(std::string userName = "???", std::string email = "?", sf::Image* profileImage = nullptr);
+	Account* createAccount(std::string userName = invalidUsername, std::string email = "0", sf::Image* profileImage = nullptr);
 
 	/// <summary>
 	/// Sendet eine Request mit den Parametern an den HTTP-Server
