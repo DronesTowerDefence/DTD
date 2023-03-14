@@ -241,18 +241,18 @@ Ressources::Ressources()
 
 		updateSpreay[6][3] = 0;
 
-		updateBeschreibungEins[0][0] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[0][2] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[0][1] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[0][3] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[1][0] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[1][1] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[1][2] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[1][3] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[2][0] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[2][1] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[2][2] = "Setzt den Schaden auf 0";
-		updateBeschreibungEins[2][3] = "Setzt den Schaden auf 0";
+		updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
+		updateBeschreibungEins[0][2] = "Setzt den Schaden auf 1,95";
+		updateBeschreibungEins[0][1] = "Setzt den Schaden auf 2,44";
+		updateBeschreibungEins[0][3] = "Setzt den Schaden auf 3,05";
+		updateBeschreibungEins[1][0] = "Setzt den Schaden auf 1,96";
+		updateBeschreibungEins[1][1] = "Setzt den Schaden auf 2,74";
+		updateBeschreibungEins[1][2] = "Setzt den Schaden auf 3,84";
+		updateBeschreibungEins[1][3] = "Setzt den Schaden auf 5,38";
+		updateBeschreibungEins[2][0] = "Setzt den Schaden auf 1,82";
+		updateBeschreibungEins[2][1] = "Setzt den Schaden auf 2,46";
+		updateBeschreibungEins[2][2] = "Setzt den Schaden auf 3,32";
+		updateBeschreibungEins[2][3] = "Setzt den Schaden auf 4,48";
 		updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
 		updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
 		updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
@@ -269,25 +269,25 @@ Ressources::Ressources()
 		updateBeschreibungEins[6][1] = "Setzt die Streuung auf 1,8";
 		updateBeschreibungEins[6][2] = "Setzt die Streuung auf 0,3";
 		updateBeschreibungEins[6][3] = "Setzt die Streuung auf 0";
-		updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf1,81";
-		updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf1,56";
-		updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf1,13";
-		updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf0,54";
-		updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf2,29";
-		updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf1,96";
-		updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf1,41";
-		updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf0,64";
-		updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf3,68";
-		updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf3,32";
-		updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf2,72";
-		updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf1,88";
-		updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf2,87";
-		updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf2,48";
-		updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf1,83";
-		updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf0,92";
-		updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf3,9";
-		updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf3,6";
-		updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf3,1";
+		updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf 1,81";
+		updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf 1,56";
+		updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf 1,13";
+		updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf 0,54";
+		updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf 2,29";
+		updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf 1,96";
+		updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf 1,41";
+		updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf 0,64";
+		updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf 3,68";
+		updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf 3,32";
+		updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf 2,72";
+		updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf 1,88";
+		updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf 2,87";
+		updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf 2,48";
+		updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf 1,83";
+		updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf 0,92";
+		updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,9";
+		updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,6";
+		updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 3,1";
 		updateBeschreibungZwei[4][3] = "Sendet neue Blitze nach 0,8 aus";
 		updateBeschreibungZwei[5][0] = "Sendet neue Blitze nach 3,8 aus";
 		updateBeschreibungZwei[5][1] = "Sendet neue Blitze nach 3,2 aus";
@@ -297,6 +297,8 @@ Ressources::Ressources()
 		updateBeschreibungZwei[6][1] = "Setzt die Regenerationszeit auf 3,2";
 		updateBeschreibungZwei[6][2] = "Setzt die Regenerationszeit auf 2,2";
 		updateBeschreibungZwei[6][3] = "Setzt die Regenerationszeit auf 0,8";
+
+
 
 
 
