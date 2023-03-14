@@ -65,40 +65,40 @@ bool Game::loadGame()
 	bool settingsFirstVolume = true;
 	immortalMode = false;
 
-	std::ifstream* FileTestSettings = new std::ifstream("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-	if (FileTestSettings->fail())
-	{
-		FileTestSettings->close();
-		goto skipSettings;
-	}
+	//std::ifstream* FileTestSettings = new std::ifstream("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
+	//if (FileTestSettings->fail())
+	//{
+		//FileTestSettings->close();
+	//	goto skipSettings;
+	//}
 
-	rdatei.open("saves/settings.sav");
-	while (!rdatei.eof())
-	{
-		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
-		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
-
-	for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
-
-		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
-		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
-		length1 = second - first - 1;
-		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
-
-		if (settingsFirstVolume)
-		{
-			PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
-			settingsFirstVolume = false;
-		}
-		else
-		{
-			PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
-		}
-	}
-	rdatei.close();
-
-
-skipSettings:
+//	rdatei.open("saves/settings.sav");
+//	while (!rdatei.eof())
+//	{
+//		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
+//		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
+//
+//		for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
+//
+//		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
+//		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
+//		length1 = second - first - 1;
+//		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
+//
+//		if (settingsFirstVolume)
+//		{
+//			PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
+//			settingsFirstVolume = false;
+//		}
+//		else
+//		{
+//			PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
+//		}
+//	}
+//	rdatei.close();
+//
+//
+//skipSettings:
 
 	if (status == 1)
 	{
@@ -566,7 +566,7 @@ void Game::checkShoot()
 
 	for (auto t : round->getAllAttackTower())
 	{
-		if (t->getIndex() == 1||t->getIndex()==3||t->getIndex() == 6)
+		if (t->getIndex() == 1 || t->getIndex() == 3 || t->getIndex() == 6)
 		{
 			t->shoot(nullptr);
 		}
@@ -963,7 +963,7 @@ void Game::restart()
 	int mapIndex = p_map->getIndex(); //Zurücksetzen aller Klassen/Objekte
 	resetAll();
 	p_map = new Map(mapIndex);
-	
+
 	round = Round::getInstance(p_map);
 	sidebar = Sidebar::getInstance();
 
@@ -1320,10 +1320,10 @@ void Game::saveGame()
 
 		std::ofstream wdatei;
 
-		wdatei.open("saves/settings.sav");
-		wdatei << "VolumeMusic=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
-		wdatei << "VolumeSound=\"" << PauseMenu::getInstance()->getSliderHelperSound() << "\"\n";
-		wdatei.close();
+		//wdatei.open("saves/settings.sav");
+		//wdatei << "VolumeMusic=\"" << PauseMenu::getInstance()->getsliderHelperMusic() << "\"\n";
+		//wdatei << "VolumeSound=\"" << PauseMenu::getInstance()->getSliderHelperSound() << "\"\n";
+		//wdatei.close();
 
 
 		if (status != 1 || round->getIndex() <= 0)
