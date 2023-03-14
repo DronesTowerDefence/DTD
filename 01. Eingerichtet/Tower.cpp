@@ -145,18 +145,22 @@ bool Tower::shoot(Drone* d) //Tower schießt Drone ab
 				switch (rotCount) {
 				case 1: {
 					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, -1), Vector2f(0, 0));
+					towerSpr.setRotation(0);
 					break;
 				}
 				case 2: {
 					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(1, 0), Vector2f(0, 0));
+					towerSpr.setRotation(90);
 					break;
 				}
 				case 3: {
 					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(0, 1), Vector2f(0, 0));
+					towerSpr.setRotation(180);
 					break;
 				}
 				case 4: {
 					p = new Projectile(nullptr, this, nullptr, 0, Vector2f(-1, 0), Vector2f(0, 0));
+					towerSpr.setRotation(270);
 					break;
 				}
 				}
