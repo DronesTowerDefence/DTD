@@ -96,7 +96,7 @@ Ressources::Ressources()
 	towerPrice[2] = 350;
 	towerPrice[3] = 400;
 	towerPrice[4] = 750;
-	towerPrice[5] =	800;
+	towerPrice[5] = 800;
 	towerPrice[6] = 600;
 
 
@@ -239,65 +239,68 @@ Ressources::Ressources()
 		}
 	}
 
-		updateSpreay[6][3] = 0;
+	updateSpreay[6][3] = 0;
 
-		updateBeschreibungEins[0][0] = "Setzt den Schaden auf 1,56";
-		updateBeschreibungEins[0][2] = "Setzt den Schaden auf 1,95";
-		updateBeschreibungEins[0][1] = "Setzt den Schaden auf 2,44";
-		updateBeschreibungEins[0][3] = "Setzt den Schaden auf 3,05";
-		updateBeschreibungEins[1][0] = "Setzt den Schaden auf 1,96";
-		updateBeschreibungEins[1][1] = "Setzt den Schaden auf 2,74";
-		updateBeschreibungEins[1][2] = "Setzt den Schaden auf 3,84";
-		updateBeschreibungEins[1][3] = "Setzt den Schaden auf 5,38";
-		updateBeschreibungEins[2][0] = "Setzt den Schaden auf 1,82";
-		updateBeschreibungEins[2][1] = "Setzt den Schaden auf 2,46";
-		updateBeschreibungEins[2][2] = "Setzt den Schaden auf 3,32";
-		updateBeschreibungEins[2][3] = "Setzt den Schaden auf 4,48";
-		updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
-		updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
-		updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
-		updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
-		updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
-		updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
-		updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
-		updateBeschreibungEins[4][3] = "Generiert 1024$ Geld";
-		updateBeschreibungEins[5][0] = "Fügt eine Richtung hinzu";
-		updateBeschreibungEins[5][1] = "Fügt eine Richtung hinzu";
-		updateBeschreibungEins[5][2] = "Fügt eine Richtung hinzu";
-		updateBeschreibungEins[5][3] = "Fügt eine Richtung hinzu";
-		updateBeschreibungEins[6][0] = "Setzt die Streuung auf 2,7";
-		updateBeschreibungEins[6][1] = "Setzt die Streuung auf 1,8";
-		updateBeschreibungEins[6][2] = "Setzt die Streuung auf 0,3";
-		updateBeschreibungEins[6][3] = "Setzt die Streuung auf 0";
-		updateBeschreibungZwei[0][0] = "Setzt die Regenerationszeit auf 1,81";
-		updateBeschreibungZwei[0][1] = "Setzt die Regenerationszeit auf 1,56";
-		updateBeschreibungZwei[0][2] = "Setzt die Regenerationszeit auf 1,13";
-		updateBeschreibungZwei[0][3] = "Setzt die Regenerationszeit auf 0,54";
-		updateBeschreibungZwei[1][0] = "Setzt die Regenerationszeit auf 2,29";
-		updateBeschreibungZwei[1][1] = "Setzt die Regenerationszeit auf 1,96";
-		updateBeschreibungZwei[1][2] = "Setzt die Regenerationszeit auf 1,41";
-		updateBeschreibungZwei[1][3] = "Setzt die Regenerationszeit auf 0,64";
-		updateBeschreibungZwei[2][0] = "Setzt die Regenerationszeit auf 3,68";
-		updateBeschreibungZwei[2][1] = "Setzt die Regenerationszeit auf 3,32";
-		updateBeschreibungZwei[2][2] = "Setzt die Regenerationszeit auf 2,72";
-		updateBeschreibungZwei[2][3] = "Setzt die Regenerationszeit auf 1,88";
-		updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf 2,87";
-		updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf 2,48";
-		updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf 1,83";
-		updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf 0,92";
-		updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,9";
-		updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,6";
-		updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 3,1";
-		updateBeschreibungZwei[4][3] = "Sendet neue Blitze nach 0,8 aus";
-		updateBeschreibungZwei[5][0] = "Sendet neue Blitze nach 3,8 aus";
-		updateBeschreibungZwei[5][1] = "Sendet neue Blitze nach 3,2 aus";
-		updateBeschreibungZwei[5][2] = "Sendet neue Blitze nach 2,2 aus";
-		updateBeschreibungZwei[5][3] = "Sendet neue Blitze nach 0,8 aus";
-		updateBeschreibungZwei[6][0] = "Setzt die Regenerationszeit auf 3,8";
-		updateBeschreibungZwei[6][1] = "Setzt die Regenerationszeit auf 3,2";
-		updateBeschreibungZwei[6][2] = "Setzt die Regenerationszeit auf 2,2";
-		updateBeschreibungZwei[6][3] = "Setzt die Regenerationszeit auf 0,8";
+	updateBeschreibungEins[0][0] = "Setzt die Regenerationszeit auf 1,81";
+	updateBeschreibungEins[0][1] = "Setzt die Regenerationszeit auf 1,56";
+	updateBeschreibungEins[0][2] = "Setzt die Regenerationszeit auf 1,13";
+	updateBeschreibungEins[0][3] = "Setzt die Regenerationszeit auf 0,54";
+	updateBeschreibungEins[1][0] = "Setzt die Regenerationszeit auf 2,29";
+	updateBeschreibungEins[1][1] = "Setzt die Regenerationszeit auf 1,96";
+	updateBeschreibungEins[1][2] = "Setzt die Regenerationszeit auf 1,41";
+	updateBeschreibungEins[1][3] = "Setzt die Regenerationszeit auf 0,64";
+	updateBeschreibungEins[2][0] = "Setzt die Regenerationszeit auf 3,68";
+	updateBeschreibungEins[2][1] = "Setzt die Regenerationszeit auf 3,32";
+	updateBeschreibungEins[2][2] = "Setzt die Regenerationszeit auf 2,72";
+	updateBeschreibungEins[2][3] = "Setzt die Regenerationszeit auf 1,88";
+	updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
+	updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
+	updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
+	updateBeschreibungEins[4][3] = "Generiert 1024$ Geld";
 
+
+	updateBeschreibungZwei[0][0] = "Setzt den Schaden auf 1,56";
+	updateBeschreibungZwei[0][2] = "Setzt den Schaden auf 1,95";
+	updateBeschreibungZwei[0][1] = "Setzt den Schaden auf 2,44";
+	updateBeschreibungZwei[0][3] = "Setzt den Schaden auf 3,05";
+	updateBeschreibungZwei[1][0] = "Setzt den Schaden auf 1,96";
+	updateBeschreibungZwei[1][1] = "Setzt den Schaden auf 2,74";
+	updateBeschreibungZwei[1][2] = "Setzt den Schaden auf 3,84";
+	updateBeschreibungZwei[1][3] = "Setzt den Schaden auf 5,38";
+	updateBeschreibungZwei[2][0] = "Setzt den Schaden auf 1,82";
+	updateBeschreibungZwei[2][1] = "Setzt den Schaden auf 2,46";
+	updateBeschreibungZwei[2][2] = "Setzt den Schaden auf 3,32";
+	updateBeschreibungZwei[2][3] = "Setzt den Schaden auf 4,48";
+	updateBeschreibungEins[5][0] = "Sendet neue Blitze nach 3,8 aus";
+	updateBeschreibungEins[5][1] = "Sendet neue Blitze nach 3,2 aus";
+	updateBeschreibungEins[5][2] = "Sendet neue Blitze nach 2,2 aus";
+	updateBeschreibungEins[5][3] = "Sendet neue Blitze nach 0,8 aus";
+	updateBeschreibungEins[6][0] = "Setzt die Regenerationszeit auf 3,8";
+	updateBeschreibungEins[6][1] = "Setzt die Regenerationszeit auf 3,2";
+	updateBeschreibungEins[6][2] = "Setzt die Regenerationszeit auf 2,2";
+	updateBeschreibungEins[6][3] = "Setzt die Regenerationszeit auf 0,8";
+
+
+	updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf 2,87";
+	updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf 2,48";
+	updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf 1,83";
+	updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf 0,92";
+	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,9";
+	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,6";
+	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 3,1";
+	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf 2,4";
+	updateBeschreibungZwei[5][0] = "Fügt eine Richtung hinzu";
+	updateBeschreibungZwei[5][1] = "Fügt eine Richtung hinzu";
+	updateBeschreibungZwei[5][2] = "Fügt eine Richtung hinzu";
+	updateBeschreibungZwei[5][3] = "Fügt eine Richtung hinzu";
+	updateBeschreibungZwei[6][0] = "Setzt die Streuung auf 2,7";
+	updateBeschreibungZwei[6][1] = "Setzt die Streuung auf 1,8";
+	updateBeschreibungZwei[6][2] = "Setzt die Streuung auf 0,3";
+	updateBeschreibungZwei[6][3] = "Setzt die Streuung auf 0";
 
 
 
@@ -354,7 +357,7 @@ Ressources::Ressources()
 	updateTexture[3].loadFromFile("img/upgrades/upgradeDamage.png");
 	updateTexture[4].loadFromFile("img/upgrades/upgradePlane.png");
 	updateTexture[5].loadFromFile("img/upgrades/upgradeStorm.png");
-	updateTexture[6].loadFromFile("img/upgrades/upgradeStreuung.png"); 
+	updateTexture[6].loadFromFile("img/upgrades/upgradeStreuung.png");
 	updateNoBuyTexture[0].loadFromFile("img/upgrades/upgradeMoney_noBuy.png");
 	updateNoBuyTexture[1].loadFromFile("img/upgrades/upgradeMoneyTime_noBuy.png");
 	updateNoBuyTexture[2].loadFromFile("img/upgrades/upgradeAttackspeed_noBuy.png");
@@ -488,35 +491,20 @@ void Ressources::normalSpeed()
 
 	waitSubHealth *= 2;
 
-	towerSpeed[0] *= 2;
-	towerSpeed[1] *= 2;
-	towerSpeed[2] *= 2;
-	towerSpeed[3] *= 2;
-	towerSpeed[4] *= 2;
-	towerSpeed[5] *= 2;
+	for (int i = 0; i < towerCount; i++)
+	{
+		towerSpeed[i] *= 2;
+		towerProjectileSpeed[i] *= 2;
+		towerChangeFrame[i] *= 2;
+		towernewProjectilTime[i] *= 2;
 
-	towerProjectileSpeed[0] *= 2;
-	towerProjectileSpeed[1] *= 2;
-	towerProjectileSpeed[2] *= 2;
-	towerProjectileSpeed[3] *= 2;
-	towerProjectileSpeed[4] *= 2;
-	towerProjectileSpeed[5] *= 2;
-
-
-	towerChangeFrame[0] *= 2;
-	towerChangeFrame[1] *= 2;
-	towerChangeFrame[2] *= 2;
-	towerChangeFrame[3] *= 2;
-	towerChangeFrame[4] *= 2;
-	towerChangeFrame[5] *= 2;
-
+	}
 
 	for (int j = 0; j < towerCount; j++)
 	{
 		for (int i = 0; i < 4; i++)
 		{
 			towerUpdateSpeed[j][i] *= 2;
-
 		}
 	}
 
@@ -571,24 +559,15 @@ void Ressources::doubleSpeed()
 	Game::getInstance()->setShootClockSpeed(1);
 
 	waitSubHealth /= 2;
-	towerSpeed[0] /= 2;
-	towerSpeed[1] /= 2;
-	towerSpeed[2] /= 2;
-	towerSpeed[3] /= 2;
-	towerSpeed[4] /= 2;
-	towerSpeed[5] /= 2;
 
-	towerProjectileSpeed[0] /= 2;
-	towerProjectileSpeed[1] /= 2;
-	towerProjectileSpeed[2] /= 2;
-	towerProjectileSpeed[3] /= 2;
-	towerProjectileSpeed[4] /= 2;
+	for (int i = 0; i < towerCount; i++)
+	{
+		towerSpeed[i] /= 2;
+		towerChangeFrame[i] /= 2;
+		towerProjectileSpeed[i] /= 2;
+		towernewProjectilTime[i] /= 2;
+	}
 
-	towerChangeFrame[0] /= 2;
-	towerChangeFrame[1] /= 2;
-	towerChangeFrame[2] /= 2;
-	towerChangeFrame[3] /= 2;
-	towerChangeFrame[4] /= 2;
 	for (int j = 0; j < towerCount; j++)
 	{
 		for (int i = 0; i < 4; i++)
@@ -725,7 +704,7 @@ int Ressources::getDroneLives(int i)
 }
 float Ressources::getNewProjectilTime(int i)
 {
- 	return towernewProjectilTime[i];
+	return towernewProjectilTime[i];
 }
 int Ressources::getDroneCountInRound()
 {
@@ -1110,10 +1089,12 @@ void Ressources::setSpeed()
 		if (i->getUpdates()->getIndex1() == 0)
 		{
 			i->setSpeed(res->getTowerSpeed(i->getIndex()));	//standart
+			i->setProjectileTime(res->getNewProjectilTime(i->getIndex()));
 		}
 		else
 		{
-			i->setSpeed(res->getTowerUpdateSpeed(i->getIndex(), i->getUpdates()->getIndex1()));	//standart
+			i->setSpeed(res->getTowerUpdateSpeed(i->getIndex(), i->getUpdates()->getIndex1() - 1));	//standart
+			i->setProjectileTime(res->getNewProjectilTime(i->getIndex(), i->getUpdates()->getIndex1() - 1));	//standart
 		}
 		i->setProjektilSpeed(res->getTowerProjectileSpeed(i->getIndex()));
 	}

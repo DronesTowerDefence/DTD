@@ -253,6 +253,8 @@ public:
 	/// <returns></returns>
 	std::string getOwnerName();
 
+	float setProjectileTime(float time);
+
 	/// <summary>
 	/// Return die Position des Towers
 	/// </summary>

@@ -59,17 +59,17 @@ Updates::Updates(Tower* tower)
 	}
 	else if (tower->getIndex() == 5)
 	{
-		textureUpdate1 = res->getUpdateTexture(5);
-		textureUpdate2 = res->getUpdateTexture(2);
-		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
-		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
+		textureUpdate1 = res->getUpdateTexture(2);
+		textureUpdate2 = res->getUpdateTexture(5);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(2);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(5);
 	}
 	else if (tower->getIndex() == 6)
 	{
-		textureUpdate1 = res->getUpdateTexture(6);
-		textureUpdate2 = res->getUpdateTexture(2);
-		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
-		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
+		textureUpdate1 = res->getUpdateTexture(2);
+		textureUpdate2 = res->getUpdateTexture(6);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(2);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(6);
 	}
 	else
 	{
@@ -243,7 +243,7 @@ void Updates::hover(RenderWindow* window)
 		pos = Service::getInstance()->getObjectPosition(information2->getPosition());
 		pos2 = Service::getInstance()->getObjectPosition(information2->getPosition() + Vector2f(100, 100));
 
-		if (index1 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (index2 < 4 && (mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 		{
 
 			informationtext->setString(Ressources::getInstance()->getUpdateBeschreibungZwei(tower->getIndex(), index2));

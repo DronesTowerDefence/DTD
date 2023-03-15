@@ -593,7 +593,7 @@ void HomeMenu::loadDaily()
 		return;
 	}
 
-	int pos[11] = { 0 };
+	int pos[12] = { 0 };
 	pos[0] = challenge.find(";");
 	pos[1] = challenge.find(";", pos[0] + 1);
 	pos[2] = challenge.find(";", pos[1] + 1);
@@ -605,6 +605,7 @@ void HomeMenu::loadDaily()
 	pos[8] = challenge.find(";", pos[7] + 1);
 	pos[9] = challenge.find(";", pos[8] + 1);
 	pos[10] = challenge.find(";", pos[9] + 1);
+	pos[11] = challenge.find(";", pos[10] + 1);
 	std::string tmp;
 
 	//Anfangsgeld
@@ -628,7 +629,7 @@ void HomeMenu::loadDaily()
 	choseIndex = std::stoi(tmp) - 1;
 
 	//sind dir Türme erlaubt
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		tmp = challenge.substr(pos[i + 4] + 1, pos[i + 5] - pos[i + 4] - 1);
 		if (tmp == "1") { daily->setIsTowerAllowed(i, true); }

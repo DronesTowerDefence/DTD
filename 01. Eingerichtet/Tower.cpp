@@ -283,7 +283,7 @@ void Tower::Update1()
 					Multiplayer::send(id, 1, update->getIndex1());
 				}
 				//Feuerturm, Nagelfabrik, Emp-Sender; minígun
-				else if (index < 4|| index == 6)
+				else if (index < 4 || index == 6)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
@@ -299,10 +299,10 @@ void Tower::Update1()
 				else if (index == 5)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-					blitzcount++;
-					Multiplayer::send(id, 1, update->getIndex2());
+					//Ist hier zeit für neue Blitze
+					projectiltime = res->getNewProjectilTime(index, update->getIndex1() - 1);
 				}
-				
+
 				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 			}
@@ -351,18 +351,21 @@ void Tower::Update2()
 					Multiplayer::send(id, 2, update->getIndex2());
 
 				}
+
 				else if (index == 5)
 				{
-					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
-					//Ist hier zeit für neue Blitze
-					projectiltime = res->getNewProjectilTime(index, update->getIndex2()-1);
+					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
+					blitzcount++;
+					Multiplayer::send(id, 1, update->getIndex1());
 				}
+
 				else if (index == 6)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex2() - 1);
 					spray = res->getSprayUpdate(index, update->getIndex2() - 1);
 					Multiplayer::send(id, 1, update->getIndex2());
-				}update->setStringPrice();
+				}
+				update->setStringPrice();
 				AchievementsContainer::getAchievement(4)->addToCurrentValue(1);
 			}
 		}
@@ -435,6 +438,11 @@ bool Tower::getCheckShoot()
 float Tower::getProjectileTime()
 {
 	return projectiltime;
+}
+
+float Tower::setProjectileTime(float time)
+{
+	return projectiltime = time;
 }
 Vector2f Tower::getTowerPos()
 {
