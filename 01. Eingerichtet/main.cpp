@@ -14,7 +14,6 @@
 using namespace sf;
 
 
-// int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszArgument, int nCmdShow) //Damit die Konsole nicht mehr da ist
 int main()
 {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE); // Damit die Konsole nicht mehr da ist. Bleibt jetzt auch bei system() weg.
