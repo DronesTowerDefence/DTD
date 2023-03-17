@@ -110,34 +110,34 @@ Ressources::Ressources()
 
 	float startwert[towerCount][2] = { 0 };
 	startwert[0][0] = 1.9f;
-	startwert[1][1] = 0;
+	startwert[1][1] = 1.25f;
 	startwert[1][0] = 2.4f;
-	startwert[1][1] = 0;
+	startwert[1][1] = 2;
 	startwert[2][0] = 3.8f;
-	startwert[2][1] = 0;
+	startwert[2][1] = 2;
 	startwert[3][0] = 3;
-	startwert[3][1] = 0;
+	startwert[3][1] = 5;
 	startwert[4][0] = 4;
-	startwert[4][1] = 0;
+	startwert[4][1] = 4;
 	startwert[5][0] = 4;
-	startwert[5][1] = 0;
+	startwert[5][1] = 6;
 	startwert[6][0] = 1;
 	startwert[6][1] = 3;
 
 
 	float faktor[7][2] = { 0 };
 	faktor[0][0] = 0.085f;
-	faktor[0][1] = 0.0;
+	faktor[0][1] = 1.f/6.f;
 	faktor[1][0] = 0.11f;
-	faktor[1][1] = 0;
+	faktor[1][1] = 0.25f;
 	faktor[2][0] = 0.12f;
-	faktor[2][1] = 0;
+	faktor[2][1] = 0.3f;
 	faktor[3][0] = 0.13f;
-	faktor[3][1] = 0;
-	faktor[4][0] = 0.1;
-	faktor[4][1] = 0;
+	faktor[3][1] = 0.1f;
+	faktor[4][0] = 0.1f;
+	faktor[4][1] = 2;
 	faktor[5][0] = 0.2;
-	faktor[5][1] = 0;
+	faktor[5][1] = 1.f/7.f;
 	faktor[6][0] = 0.05;
 	faktor[6][1] = 0.3;
 
@@ -228,7 +228,7 @@ Ressources::Ressources()
 	{
 		for (int i = 0; i < 4; i++, x += 0.5)
 		{
-			towerUpdateDamage[j][i] = pow(towerDamage[j], i + 2);
+			towerUpdateDamage[j][i] = faktor[j][1] * (i + 1) * (i + 1) + startwert[j][1];
 			berechneterSpeed = -faktor[j][0] * pow((i + 1), 2) + startwert[j][0];
 			towerUpdateSpeed[j][i] = berechneterSpeed;
 			towerUpdateMoneyGeneration[j][i] = pow(towerDamage[j], i + 2);

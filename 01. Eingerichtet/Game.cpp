@@ -64,36 +64,36 @@ bool Game::loadGame()
 	bool settingsFirstVolume = true;
 	immortalMode = false;
 
-	//std::ifstream rFileSettings("saves/settings.sav");
-	//if (!rFileSettings.fail())
-	//{
-	//	while (!rFileSettings.eof())
-	//	{
-	//		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
-	//		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
+	std::ifstream rFileSettings("saves/settings.sav");
+	if (!rFileSettings.fail())
+	{
+		while (!rFileSettings.eof())
+		{
+			for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
+			for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-	//		for (int i = 0; buffer[i] != '\n'; i++) //Holt sich den Inhalt der Datei
-	//		{
-	//			rFileSettings.get(buffer[i]);
-	//		}
+			for (int i = 0; buffer[i] != '\n'; i++) //Holt sich den Inhalt der Datei
+			{
+				rFileSettings.get(buffer[i]);
+			}
 
-	//		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
-	//		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
-	//		length1 = second - first - 1;
-	//		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
+			first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
+			second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
+			length1 = second - first - 1;
+			std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
 
-	//		if (settingsFirstVolume)
-	//		{
-	//			PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
-	//			settingsFirstVolume = false;
-	//		}
-	//		else
-	//		{
-	//			PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
-	//		}
-	//	}
-	//}
-	//rFileSettings.close();
+			if (settingsFirstVolume)
+			{
+				PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
+				settingsFirstVolume = false;
+			}
+			else
+			{
+				PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
+			}
+		}
+	}
+	rFileSettings.close();
 
 	if (status == 1)
 	{
