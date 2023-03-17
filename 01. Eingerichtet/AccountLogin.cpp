@@ -143,10 +143,10 @@ bool AccountLogin::accountLogin(Event* event)
 				email.erase(email.length() - 1);
 				accountLoginEmailText->setString(email);
 			}
-			if (newChar != "\0")
+			if (newChar[0] != '\0')
 			{
 				email += newChar;
-				newChar = "\0";
+				newChar = '\0';
 				accountLoginEmailText->setString(email);
 			}
 		}
@@ -161,10 +161,10 @@ bool AccountLogin::accountLogin(Event* event)
 					accountLoginPasswordText->setString(accountLoginPasswordText->getString() + "*");
 				}
 			}
-			if (newChar != "\0")
+			if (newChar[0] != '\0')
 			{
 				password += newChar;
-				newChar = "\0";
+				newChar = '\0';
 				accountLoginPasswordText->setString("");
 				for (int i = 0; i < password.length(); i++)
 				{
