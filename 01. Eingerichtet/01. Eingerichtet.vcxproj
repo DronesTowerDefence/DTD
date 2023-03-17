@@ -41,6 +41,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PopUpMessage.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Ressources.h" />
     <ClInclude Include="Round.h" />
     <ClInclude Include="SendMoney.h" />
@@ -96,6 +97,9 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -58,60 +58,51 @@ Game::Game()
 #pragma region Funktionen
 bool Game::loadGame()
 {
-	std::ifstream rdatei;
-	char bufferValue1[30], bufferValue2[30], buffer[50];
+	char bufferValue1[30] = { 0 }, bufferValue2[30] = { 0 }, buffer[50] = { 0 };
 	Tower* newTower = nullptr;
 	int counter = 0, defaultCounter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
 	bool settingsFirstVolume = true;
 	immortalMode = false;
 
-	//std::ifstream* FileTestSettings = new std::ifstream("saves/settings.sav"); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-	//if (FileTestSettings->fail())
+	//std::ifstream rFileSettings("saves/settings.sav");
+	//if (!rFileSettings.fail())
 	//{
-		//FileTestSettings->close();
-	//	goto skipSettings;
-	//}
+	//	while (!rFileSettings.eof())
+	//	{
+	//		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
+	//		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-//	rdatei.open("saves/settings.sav");
-//	while (!rdatei.eof())
-//	{
-//		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
-//		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
-//
-//		for (int i = 0; buffer[i] != '\n'; i++, rdatei.get(buffer[i])); //Holt sich den Inhalt der Datei
-//
-//		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
-//		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
-//		length1 = second - first - 1;
-//		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
-//
-//		if (settingsFirstVolume)
-//		{
-//			PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
-//			settingsFirstVolume = false;
-//		}
-//		else
-//		{
-//			PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
-//		}
-//	}
-//	rdatei.close();
-//
-//
-//skipSettings:
+	//		for (int i = 0; buffer[i] != '\n'; i++) //Holt sich den Inhalt der Datei
+	//		{
+	//			rFileSettings.get(buffer[i]);
+	//		}
+
+	//		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
+	//		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
+	//		length1 = second - first - 1;
+	//		std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
+
+	//		if (settingsFirstVolume)
+	//		{
+	//			PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
+	//			settingsFirstVolume = false;
+	//		}
+	//		else
+	//		{
+	//			PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
+	//		}
+	//	}
+	//}
+	//rFileSettings.close();
 
 	if (status == 1)
 	{
-		std::string datei; //Dateipfad
-		datei = "saves/savegame" + std::to_string(p_map->getIndex());
-		datei += ".sav";
-
-		std::ifstream* FileTest = new std::ifstream(datei); //Überprüft ob die Datei existiert, wenn nicht, wird false zurückgegeben
-		if (FileTest->fail())
+		std::ifstream rdatei("saves/savegame" + std::to_string(p_map->getIndex()) + ".sav");
+		if (rdatei.fail())
+		{
+			rdatei.close();
 			return false;
-
-		FileTest->close();
-		rdatei.open(datei);
+		}
 
 		while (!rdatei.eof())
 		{
