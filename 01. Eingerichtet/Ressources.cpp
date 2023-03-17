@@ -224,7 +224,7 @@ Ressources::Ressources()
 	float berechneterSpeed;
 	float x = 1.5;
 	//Setzt speed und Schaden
-	for (int j = 0; j < towerCount; j++, x = 1.5)
+	for (int j = 0; j < towerCount; j++, x = 0.5)
 	{
 		for (int i = 0; i < 4; i++, x += 0.5)
 		{
