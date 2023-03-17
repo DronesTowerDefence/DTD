@@ -72,7 +72,10 @@ bool Game::loadGame()
 	//		for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
 	//		for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-	//		for (int i = 0; buffer[i] != '\n'; i++, rFileSettings.get(buffer[i])); //Holt sich den Inhalt der Datei
+	//		for (int i = 0; buffer[i] != '\n'; i++) //Holt sich den Inhalt der Datei
+	//		{
+	//			rFileSettings.get(buffer[i]);
+	//		}
 
 	//		first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
 	//		second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
