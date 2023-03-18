@@ -253,28 +253,14 @@ Ressources::Ressources()
 	updateBeschreibungEins[2][1] = "Setzt die Regenerationszeit auf 3,32";
 	updateBeschreibungEins[2][2] = "Setzt die Regenerationszeit auf 2,72";
 	updateBeschreibungEins[2][3] = "Setzt die Regenerationszeit auf 1,88";
-	updateBeschreibungEins[3][0] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][1] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][2] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[3][3] = "Fügt eine Schussrichtung hinzu";
-	updateBeschreibungEins[4][0] = "Generiert 16$ Geld";
-	updateBeschreibungEins[4][1] = "Generiert 64$ Geld";
-	updateBeschreibungEins[4][2] = "Generiert 256$ Geld";
-	updateBeschreibungEins[4][3] = "Generiert 1024$ Geld";
-
-
-	updateBeschreibungZwei[0][0] = "Setzt den Schaden auf 1,56";
-	updateBeschreibungZwei[0][2] = "Setzt den Schaden auf 1,95";
-	updateBeschreibungZwei[0][1] = "Setzt den Schaden auf 2,44";
-	updateBeschreibungZwei[0][3] = "Setzt den Schaden auf 3,05";
-	updateBeschreibungZwei[1][0] = "Setzt den Schaden auf 1,96";
-	updateBeschreibungZwei[1][1] = "Setzt den Schaden auf 2,74";
-	updateBeschreibungZwei[1][2] = "Setzt den Schaden auf 3,84";
-	updateBeschreibungZwei[1][3] = "Setzt den Schaden auf 5,38";
-	updateBeschreibungZwei[2][0] = "Setzt den Schaden auf 1,82";
-	updateBeschreibungZwei[2][1] = "Setzt den Schaden auf 2,46";
-	updateBeschreibungZwei[2][2] = "Setzt den Schaden auf 3,32";
-	updateBeschreibungZwei[2][3] = "Setzt den Schaden auf 4,48";
+	updateBeschreibungEins[3][0] = "Setzt die Regenerationszeit auf 2,87";
+	updateBeschreibungEins[3][1] = "Setzt die Regenerationszeit auf 2,48";
+	updateBeschreibungEins[3][2] = "Setzt die Regenerationszeit auf 1,83";
+	updateBeschreibungEins[3][3] = "Setzt die Regenerationszeit auf 0,92";
+	updateBeschreibungEins[4][0] = "Setzt die Regenerationszeit auf 3,9";
+	updateBeschreibungEins[4][1] = "Setzt die Regenerationszeit auf 3,6";
+	updateBeschreibungEins[4][2] = "Setzt die Regenerationszeit auf 3,1";
+	updateBeschreibungEins[4][3] = "Setzt die Regenerationszeit auf 2,4";
 	updateBeschreibungEins[5][0] = "Sendet neue Blitze nach 3,8 aus";
 	updateBeschreibungEins[5][1] = "Sendet neue Blitze nach 3,2 aus";
 	updateBeschreibungEins[5][2] = "Sendet neue Blitze nach 2,2 aus";
@@ -283,16 +269,28 @@ Ressources::Ressources()
 	updateBeschreibungEins[6][1] = "Setzt die Regenerationszeit auf 3,2";
 	updateBeschreibungEins[6][2] = "Setzt die Regenerationszeit auf 2,2";
 	updateBeschreibungEins[6][3] = "Setzt die Regenerationszeit auf 0,8";
-
-
-	updateBeschreibungZwei[3][0] = "Setzt die Regenerationszeit auf 2,87";
-	updateBeschreibungZwei[3][1] = "Setzt die Regenerationszeit auf 2,48";
-	updateBeschreibungZwei[3][2] = "Setzt die Regenerationszeit auf 1,83";
-	updateBeschreibungZwei[3][3] = "Setzt die Regenerationszeit auf 0,92";
-	updateBeschreibungZwei[4][0] = "Setzt die Regenerationszeit auf 3,9";
-	updateBeschreibungZwei[4][1] = "Setzt die Regenerationszeit auf 3,6";
-	updateBeschreibungZwei[4][2] = "Setzt die Regenerationszeit auf 3,1";
-	updateBeschreibungZwei[4][3] = "Setzt die Regenerationszeit auf 2,4";
+	
+	
+	updateBeschreibungZwei[0][0] = "Setzt den Schaden auf 0,16666667";
+	updateBeschreibungZwei[0][2] = "Setzt den Schaden auf 0,6666667";
+	updateBeschreibungZwei[0][1] = "Setzt den Schaden auf 1,5";
+	updateBeschreibungZwei[0][3] = "Setzt den Schaden auf 2,6666667";
+	updateBeschreibungZwei[1][0] = "Setzt den Schaden auf 2,25";
+	updateBeschreibungZwei[1][1] = "Setzt den Schaden auf 3";
+	updateBeschreibungZwei[1][2] = "Setzt den Schaden auf 4,25";
+	updateBeschreibungZwei[1][3] = "Setzt den Schaden auf 6";
+	updateBeschreibungZwei[2][0] = "Setzt den Schaden auf 2,3";
+	updateBeschreibungZwei[2][1] = "Setzt den Schaden auf 3,2";
+	updateBeschreibungZwei[2][2] = "Setzt den Schaden auf 4,7";
+	updateBeschreibungZwei[2][3] = "Setzt den Schaden auf 6,8";
+	updateBeschreibungZwei[3][0] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungZwei[3][1] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungZwei[3][2] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungZwei[3][3] = "Fügt eine Schussrichtung hinzu";
+	updateBeschreibungZwei[4][0] = "Generiert 16$ Geld";
+	updateBeschreibungZwei[4][1] = "Generiert 64$ Geld";
+	updateBeschreibungZwei[4][2] = "Generiert 256$ Geld";
+	updateBeschreibungZwei[4][3] = "Generiert 1024$ Geld";
 	updateBeschreibungZwei[5][0] = "Fügt eine Richtung hinzu";
 	updateBeschreibungZwei[5][1] = "Fügt eine Richtung hinzu";
 	updateBeschreibungZwei[5][2] = "Fügt eine Richtung hinzu";
@@ -301,6 +299,9 @@ Ressources::Ressources()
 	updateBeschreibungZwei[6][1] = "Setzt die Streuung auf 1,8";
 	updateBeschreibungZwei[6][2] = "Setzt die Streuung auf 0,3";
 	updateBeschreibungZwei[6][3] = "Setzt die Streuung auf 0";
+
+
+
 
 
 

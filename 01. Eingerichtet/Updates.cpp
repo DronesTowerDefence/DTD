@@ -45,17 +45,17 @@ Updates::Updates(Tower* tower)
 
 	if (tower->getIndex() == 4)
 	{
-		textureUpdate1 = res->getUpdateTexture(0);
-		textureUpdate2 = res->getUpdateTexture(1);
-		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(0);
-		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(1);
+		textureUpdate1 = res->getUpdateTexture(1);
+		textureUpdate2 = res->getUpdateTexture(0);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(1);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(0);
 	}
 	else if (tower->getIndex() == 3)
 	{
-		textureUpdate1 = res->getUpdateTexture(4);
-		textureUpdate2 = res->getUpdateTexture(3);
-		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(4);
-		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(3);
+		textureUpdate1 = res->getUpdateTexture(2);
+		textureUpdate2 = res->getUpdateTexture(4);
+		textureUpdate1NoBuy = res->getUpdateNoBuyTexture(2);
+		textureUpdate2NoBuy = res->getUpdateNoBuyTexture(4);
 	}
 	else if (tower->getIndex() == 5)
 	{
