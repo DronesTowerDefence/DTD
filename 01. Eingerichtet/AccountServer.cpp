@@ -20,6 +20,8 @@ void AccountServer::sendToServer()
 	*response = http->sendRequest(*request, seconds(7));
 	lastStatusCode = response->getStatus();
 
+	std::cout << lastStatusCode << std::endl;
+
 	if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
 	{
 		lastResponse = "-1";
@@ -109,7 +111,7 @@ std::string AccountServer::send()
 
 AccountServer::AccountServer()
 {
-	http = new sf::Http("http://www.dronesclient.dronestd.de/"); // https wird von sfml nicht unterstützt
+	http = new sf::Http("http://client.dronestd.de/"); // https wird von sfml nicht unterstützt
 	lastStatusCode = 200;
 	lastResponse = "-2";
 	isDone = false;
