@@ -130,7 +130,7 @@ AccountServer::~AccountServer()
 		delete response;
 }
 
-
+//Test
 AccountServer* AccountServer::getAccServerObj()
 {
 	if (accountServerObject == nullptr)
