@@ -71,7 +71,7 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 		}
 		if (index == 6)
 		{
-			
+
 
 		}
 		towerSpr.setOrigin(25, 25);
@@ -246,7 +246,7 @@ bool Tower::isClicked(RenderWindow* window)
 {
 	Vector2i mouse = Mouse::getPosition(*window);
 	Vector2f pos, pos2;
-	pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition()); //Holt sich die Position des Turmes i
+	pos = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(-20, -20)); //Holt sich die Position des Turmes i
 	pos2 = Service::getInstance()->getObjectPosition(towerSpr.getPosition() + Vector2f(50, 50)); //Holt sich die Position des Turmes i + 50 wegen der Größe
 
 	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
@@ -282,14 +282,8 @@ void Tower::Update1()
 
 			if (!update->getIsClosed1())
 			{
-				// Flugzeug
-				if (index == 3)
-				{
-					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
-					Multiplayer::send(id, 1, update->getIndex1());
-				}
-				//Feuerturm, Nagelfabrik, Emp-Sender; minígun
-				else if (index < 4 || index == 6)
+				//Feuerturm, Nagelfabrik, Emp-Sender; minígun // flugzeug
+				if (index < 4 || index == 6)
 				{
 					value += res->getTowerUpgradesPrice1(index, update->getIndex1() - 1);
 					speed = res->getTowerUpdateSpeed(index, update->getIndex1() - 1);
@@ -342,8 +336,13 @@ void Tower::Update2()
 
 			if (!update->getIsClosed2())
 			{
+				if (index == 3)
+				{
+					value += res->getTowerUpgradesPrice1(index, update->getIndex2() - 1);
+					Multiplayer::send(id, 1, update->getIndex2());
+				}
 				//Feuerturm; Nagelfabrik; EMP-Sender; Flugzeug;
-				if (index < 4)
+				else	if (index < 4)
 				{
 					value += res->getTowerUpgradesPrice2(index, update->getIndex2() - 1);
 					damage = res->getTowerUpdateDamage(index, update->getIndex2() - 1);

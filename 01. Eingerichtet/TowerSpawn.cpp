@@ -73,7 +73,7 @@ void TowerSpawn::shoot()
 		new Projectile(nullptr, tower, this, 0, Vector2f(0, -1), Vector2f(0, 0));
 
 		//Für jedes Update schießt das Flugzeug in eine andere Richtung
-		for (int i = 0; i < tower->getUpdates()->getIndex1(); i++)
+		for (int i = 0; i < tower->getUpdates()->getIndex2(); i++)
 		{
 			new Projectile(nullptr, tower, this, 0, Ressources::getInstance()->getFlugzeugUpdate(i), Vector2f(0, 0));
 		}
