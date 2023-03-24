@@ -61,6 +61,7 @@ Projectile::Projectile(Drone* _target, Tower* _tower, TowerSpawn* _towerspawn, i
 		projectilesprite.setTexture(*res->getProjectileTexture(0));
 		break;
 	case 3:
+		projectilesprite.setOrigin(12.5,12.5);
 		projectilesprite.setTexture(*res->getProjectileTexture(2));//Nagelwerfer
 		break;
 	case 4:

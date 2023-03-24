@@ -16,64 +16,64 @@ Map::Map(int index)
 	switch (index)
 	{
 	case 0:
-		points.push_back(new Waypoint(Vector2f(4 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(11 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
-		points.push_back(new Waypoint(Vector2f(18 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(25 * 40 - 20, 19 * 40 + 31), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 19 * 40 + 31), Vector2f(0, -1), 1));
-		points.push_back(new Waypoint(Vector2f(32 * 40 - 20, 4 * 40 + 31), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 4 * 40 + 31), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(39 * 40 - 20, 991), Vector2f(0, 1), 3));
+		points.push_back(new Waypoint(Vector2f(4 * 40, 4 * 40 + 31 + 20), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(11 * 40, 4 * 40 + 31 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(11 * 40, 19 * 40 + 31 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(18 * 40, 19 * 40 + 31 + 20), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(18 * 40, 4 * 40 + 31 + 20), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(25 * 40, 4 * 40 + 31 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(25 * 40, 19 * 40 + 31 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(32 * 40, 19 * 40 + 31 + 20), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(32 * 40, 4 * 40 + 31 + 20), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(39 * 40, 4 * 40 + 31 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(39 * 40, 991 + 20), Vector2f(0, 1), 3));
 		wayPointCount = 11;
 
-		start = Vector2f(4 * 40 - 20, 27 * 40);
+		start = Vector2f(4 * 40, 27 * 40 + 20);
 		startMove = Vector2f(0, -1);
 		break;
 
 	case 1:
-		points.push_back(new Waypoint(Vector2f(1470, 210), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(1470, 830), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(380, 830), Vector2f(0, -1), 2));
-		points.push_back(new Waypoint(Vector2f(330, 390), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(1270, 390), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(1270, 570), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(-50, 570), Vector2f(-1, 0), 2));
-		start = Vector2f(-50, 210);
+		points.push_back(new Waypoint(Vector2f(1470 + 20, 210 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(1470 + 20, 830 + 20), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(350 , 830 + 20), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(330 + 20, 410), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(1270 + 20, 410), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(1270 + 20, 570 + 20), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(-50 + 20, 570 + 20), Vector2f(-1, 0), 2));
+		start = Vector2f(-50 +20, 210 + 20);
 		startMove = Vector2f(1, 0);
 		wayPointCount = 7;
 		break;
 	case 2:
-		points.push_back(new Waypoint(Vector2f(435, 66), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(435, 507), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(877, 507), Vector2f(0, -1), 1));
-		points.push_back(new Waypoint(Vector2f(877, 66), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(1318, 66), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(1318, 799), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(715, 799), Vector2f(0, -1), 2));
-		points.push_back(new Waypoint(Vector2f(665, 189), Vector2f(1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(1720, 189), Vector2f(1, 0), 4));
-		start = Vector2f(-50, 66);
+ 		points.push_back(new Waypoint(Vector2f(435 + 20, 66 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(435 + 20, 507 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(877 + 20, 507 + 20), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(877 + 20, 66 + 20), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(1318 + 20, 66 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(1318 + 20, 799 + 20), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(685, 799 + 20), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(685, 189 + 30), Vector2f(1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(1720 + 20, 189 + 20), Vector2f(1, 0), 1));
+		start = Vector2f(-50+20, 66 + 20);
 		startMove = Vector2f(1, 0);
 		wayPointCount = 9;
 		break;
 	case 3:
-		points.push_back(new Waypoint(Vector2f(150, 450), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(390, 450), Vector2f(0, 1), 1));
-		points.push_back(new Waypoint(Vector2f(390, 660), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(1550, 660), Vector2f(0, -1), 1));
-		points.push_back(new Waypoint(Vector2f(1550, 160), Vector2f(-1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(950, 160), Vector2f(0, 1), 2));
-		points.push_back(new Waypoint(Vector2f(950, 660), Vector2f(1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(1550, 660), Vector2f(0, -1), 1));
-		points.push_back(new Waypoint(Vector2f(1550, 160), Vector2f(-1, 0), 4));
-		points.push_back(new Waypoint(Vector2f(950, 160), Vector2f(0, 1), 2));
-		points.push_back(new Waypoint(Vector2f(950, 830), Vector2f(-1, 0), 3));
-		points.push_back(new Waypoint(Vector2f(244, 830), Vector2f(0, -1), 2));
-		points.push_back(new Waypoint(Vector2f(244, -50), Vector2f(0, -1), 4));
-		start = Vector2f(150, -50);
+		points.push_back(new Waypoint(Vector2f(130, 450 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(370 , 450 + 20), Vector2f(0, 1), 1));
+		points.push_back(new Waypoint(Vector2f(370 , 660 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(1530 , 660 + 20), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(1530 , 160 + 20), Vector2f(-1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(930 , 160 + 20), Vector2f(0, 1), 2));
+		points.push_back(new Waypoint(Vector2f(930 , 660 + 20), Vector2f(1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(1530, 660 + 20), Vector2f(0, -1), 1));
+		points.push_back(new Waypoint(Vector2f(1530, 160 + 20), Vector2f(-1, 0), 4));
+		points.push_back(new Waypoint(Vector2f(930 , 160 + 20), Vector2f(0, 1), 2));
+		points.push_back(new Waypoint(Vector2f(930 , 830 + 20), Vector2f(-1, 0), 3));
+		points.push_back(new Waypoint(Vector2f(224 , 830 + 20), Vector2f(0, -1), 2));
+		points.push_back(new Waypoint(Vector2f(224 , -50 + 20), Vector2f(0, -1), 4));
+		start = Vector2f(130 , -50 + 20);
 		startMove = Vector2f(0, 1);
 		wayPointCount = 13;
 	}

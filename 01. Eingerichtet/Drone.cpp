@@ -26,10 +26,11 @@ Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y)
 	move_y = y;
 	id = droneID;
 	droneID++;
-
+	drone.setOrigin(drone.getTexture()->getSize().x/2, drone.getTexture()->getSize().y / 2);
 	if (HomeMenu::getInstance()->getChoseIndex() != 0) {
 		drone.setRotation(90);
 	}
+
 }
 
 Drone::Drone(int typSpecifier, Vector2f startPosition, int x, int y, int nextPoint1, int rotation)
@@ -68,73 +69,107 @@ void Drone::pass()
 
 
 	nextPoint++;
-
-
-	if (HomeMenu::getInstance()->getChoseIndex() == 0) {
-
-
-		if (nextPoint % 2 == 0) {
-
-			drone.setRotation(0);
+	Waypoint next = *Game::getInstance()->getMap()->getWaypoint(nextPoint );
+	Waypoint last = *Game::getInstance()->getMap()->getWaypoint(nextPoint -1);
+	if (last.getCondition() == 4)
+	{
+		if (next.getCondition() == 1)
+		{
+			drone.rotate(90);
 		}
-		else {
-			drone.setRotation(90);
-			drone.move(50, 0);
+		else if (next.getCondition() == 2)
+		{
+			drone.rotate(-90);
+
 		}
-		return;
+	}
+	else if (last.getCondition() == 1)
+	{
+		if (next.getCondition() == 3)
+		{
+			drone.rotate(90);
+		}
+		else if (next.getCondition() == 4)
+		{
+			drone.rotate(-90);
+
+		}
+	}
+	else if (last.getCondition() == 2)
+	{
+		if (next.getCondition() == 4)
+		{
+			drone.rotate(90);
+		}
+		else if (next.getCondition() == 3)
+		{
+			drone.rotate(-90);
+
+		}
+	}
+
+	else if (last.getCondition() == 3)
+	{
+		if (next.getCondition() == 1)
+		{
+			drone.rotate(-90);
+		}
+		else if (next.getCondition() == 2)
+		{
+			drone.rotate(90);
+		}
 	}
 
 
-
-	else if (HomeMenu::getInstance()->getChoseIndex() == 1) {
-
+	//if (HomeMenu::getInstance()->getChoseIndex() == 1) {
 
 
 
-		if (nextPoint % 2 == 0) {
 
-			drone.setRotation(90.f);
-			drone.move(50.f, 0.f);
-		}
-		else {
-			drone.setRotation(0.f);
+	//	if (nextPoint % 2 == 0) {
 
-		}
+	//		drone.setRotation(90.f);
+	//		drone.move(50.f, 0.f);
+	//	}
+	//	else {
+	//		drone.setRotation(0.f);
 
-		if (nextPoint == 3) {
-			drone.setRotation(360.f); // unnötig?!
-			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
-		}
+	//	}
 
-	}
-	else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
+	//	if (nextPoint == 3) {
+	//		drone.setRotation(360.f); // unnötig?!
+	//		//			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
+	//	}
 
-		drone.setRotation(90);
-		if (nextPoint % 2 == 0) {
+	//}
+	//else if (HomeMenu::getInstance()->getChoseIndex() == 2) {
 
-			drone.move(50, 0);
-		}
-		else {
-			drone.setRotation(0);
-		}
+	//	drone.setRotation(90);
+	//	if (nextPoint % 2 == 0) {
 
-		if (nextPoint == 7) {
-			drone.setRotation(360.f);  // unnötig?!
-			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
-		}
+	//		drone.move(50, 0);
+	//	}
+	//	else {
+	//		drone.setRotation(0);
+	//	}
 
-		if (nextPoint == 8) {
-			drone.setRotation(90.f);
+	//	if (nextPoint == 7) {
+	//		drone.setRotation(360.f);  // unnötig?!
+	//		//	drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
+	//	}
 
-		}
+	//	if (nextPoint == 8) {
+	//		drone.setRotation(90.f);
+
+	//	}
 
 
 
-		//next Point wird nie auf 8 erhöht => Wird die Fuunktion nicht mehr aufgerufen? Aber WARUM
+//next Point wird nie auf 8 erhöht => Wird die Fuunktion nicht mehr aufgerufen? Aber WARUM
 
-	}
+	//}
 
-	
+
 
 
 

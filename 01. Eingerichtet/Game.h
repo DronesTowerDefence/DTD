@@ -240,6 +240,7 @@ private:
 public:
 	~Game();
 
+	Map* getMap();
 	/// <summary>
 	/// Singleton
 	/// </summary>

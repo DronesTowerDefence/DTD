@@ -62,11 +62,11 @@ void Round::setAllCoverablePoints()
 			mapPoint1 = p_map->getWaypointAsVector(pointIterator - 1); //Nächster Eckpunkt der Map
 			mapPoint2 = p_map->getWaypointAsVector(pointIterator); //Nächster Eckpunkt der Map
 		}
-		if (p_map->getIndex() == 3)
+		/*if (p_map->getIndex() == 3)
 		{
 			mapPoint1.x -= 40;
 			mapPoint2.x -= 40;
-		}
+		}*/
 		pointIterator++; //Bei welchem Eckpunkt die for-Schleife ist
 
 		//Möglichkeiten, wie die beiden Eckpunkte liegen (untereinander(rechts-links / links-rechts) / nebeneinander(oben-unten / unten-oben))

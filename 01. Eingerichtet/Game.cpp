@@ -243,7 +243,7 @@ bool Game::towerAliasForbiddenPosition()
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 
-			collisionShape->setPosition(i);
+			collisionShape->setPosition(i + Vector2f(-20,-20));
 			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
 				return 0;
 		}
@@ -1444,5 +1444,9 @@ Game::~Game()
 {
 	resetAll();
 	instance = nullptr;
+}
+Map* Game::getMap()
+{
+	return p_map	;
 }
 #pragma endregion
