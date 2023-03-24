@@ -42,7 +42,7 @@ float Service::stringToFloat(std::string str)
 	for (int i = 0, a = 0, b = 0; i < str.size(); i++)
 	{
 		// Wenn etwas anderes als eine Zahl, Komma oder Punkt im String ist
-		if ((str[i] >= 48 && str[i] <= 57) || str[i] == 46 || str[i] == 44)
+		if ((str[i] < 48 && str[i] > 57) && str[i] != 46 && str[i] != 44)
 			return 0.0f;
 
 		a = 0;
