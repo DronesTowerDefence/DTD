@@ -96,7 +96,7 @@ public:
 
 	std::string getCoins(std::string username);
 
-	std::string setShopContent(std::string username, int id);
+	std::string sendShopContent(std::string username, int id);
 
 	std::string getShopContent(std::string username);
 

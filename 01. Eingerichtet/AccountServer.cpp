@@ -20,8 +20,6 @@ void AccountServer::sendToServer()
 	*response = http->sendRequest(*request, seconds(7));
 	lastStatusCode = response->getStatus();
 
-	std::cout << lastStatusCode << std::endl;
-
 	if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
 	{
 		lastResponse = "-1";
@@ -149,6 +147,19 @@ std::string AccountServer::getLastResponse()
 	return lastResponse;
 }
 
+Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
+{
+	if (userName == "0" || userName == "-1")
+	{
+		return nullptr;
+	}
+	else
+	{
+		return Account::createAcc(userName, email, profileImage);
+	}
+}
+
+
 bool AccountServer::sendAllAchievementsAndXp()
 {
 	if (Account::getAccName() == invalidUsername)
@@ -170,18 +181,6 @@ bool AccountServer::sendAllAchievementsAndXp()
 		}
 
 		return true;
-	}
-}
-
-Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
-{
-	if (userName == "0" || userName == "-1")
-	{
-		return nullptr;
-	}
-	else
-	{
-		return Account::createAcc(userName, email, profileImage);
 	}
 }
 
@@ -282,7 +281,7 @@ std::string AccountServer::getCoins(std::string username)
 	return send();
 }
 
-std::string AccountServer::setShopContent(std::string username, int id)
+std::string AccountServer::sendShopContent(std::string username, int id)
 {
 	request = new sf::Http::Request();
 	request->setField("Content-Type", "setShopContent");
@@ -304,6 +303,7 @@ std::string AccountServer::getChallenge()
 	request->setField("Content-Type", "getChalange");
 	return send();
 }
+
 std::string AccountServer::wonChallenge(std::string unsername)
 {
 	request = new sf::Http::Request();

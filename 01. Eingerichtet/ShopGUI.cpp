@@ -96,7 +96,7 @@ bool ShopGUI::shopContentClicked(ShopContentTexture* sct)
 			{
 				Account::setShopCoins(Account::getShopCoins() - scd->getCost());
 
-				if (accServer->setShopContent(Account::getAccName(), scd->getID()) != "1") // Wenn Kauf nicht erfolgreich: Geld wiederbekommen
+				if (accServer->sendShopContent(Account::getAccName(), scd->getID()) != "1") // Wenn Kauf nicht erfolgreich: Geld wiederbekommen
 				{
 					accServer->sendCoins(Account::getAccName(), Account::getShopCoins() + scd->getCost());
 					Account::setShopCoins(Account::getShopCoins() + scd->getCost());
