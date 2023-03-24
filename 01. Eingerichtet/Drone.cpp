@@ -102,7 +102,7 @@ void Drone::pass()
 		}
 
 		if (nextPoint == 3) {
-			drone.setRotation(360.f);
+			drone.setRotation(360.f); // unnötig?!
 			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
 		}
 
@@ -119,7 +119,7 @@ void Drone::pass()
 		}
 
 		if (nextPoint == 7) {
-			drone.setRotation(360.f);
+			drone.setRotation(360.f);  // unnötig?!
 			drone.setPosition(drone.getPosition() + Vector2f(-50.f, 0.f));
 		}
 
@@ -134,6 +134,7 @@ void Drone::pass()
 
 	}
 
+	
 
 
 

@@ -69,7 +69,12 @@ Tower::Tower(int _index, std::string _ownerName, Vector2f pos, Map* n_map) //Neu
 			rangeShape.setOutlineThickness(5);
 			setCoverableArea();
 		}
+		if (index == 6)
+		{
+			towerSpr.setOrigin(25, 25);
+			towerSpr.setPosition(towerSpr.getPosition().x + 25, towerSpr.getPosition().y + 25);
 
+		}
 		update = new Updates(this); //Erstellung der dazugehörigen Upgrade-Möglichkeiten
 
 	}
