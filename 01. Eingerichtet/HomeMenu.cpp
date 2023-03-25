@@ -505,6 +505,10 @@ void HomeMenu::HomeMenuStart()
 		{
 			break;
 		}
+		else if (clicked == 1 && choseIndex == -1)
+		{
+			new PopUpMessage("Bitte vorher eine Karte auswählen");
+		}
 		else if (clicked == 2)
 		{
 			break;

@@ -7,77 +7,71 @@
 
 int AccountLogin::checkClicked(Event*)
 {
-	if (!window->hasFocus())
-		return 0;
-	Vector2f pos = Vector2f(0, 0), pos2 = Vector2f(0, 0);
-	Vector2i mouse = Mouse::getPosition();
-	if (Mouse::isButtonPressed(Mouse::Left))
+	if (window->hasFocus())
 	{
-		isClicked = true;
-	}
-	if (Controls::getTabIsPressed())
-	{
-		isTab = true;
-	}
-	if (isTab && !Controls::getTabIsPressed())
-	{
-		accountLoginEmailIsClicked = !accountLoginEmailIsClicked;
-		accountLoginPasswordIsClicked = !accountLoginPasswordIsClicked;
-		isTab = false;
-	}
-	if (accountLoginIsOpen && isClicked && !Mouse::isButtonPressed(Mouse::Left))
-	{
-		isClicked = false;
-		//X-Button
-		pos = Service::getInstance()->getObjectPosition(loginScreenExitButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(loginScreenExitButton->getPosition() + Vector2f(loginScreenExitButton->getTexture()->getSize()));
+		Vector2i mouse = Mouse::getPosition();
 
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (Mouse::isButtonPressed(Mouse::Left))
+		{
+			isClicked = true;
+		}
+		if (Controls::getTabIsPressed())
+		{
+			isTab = true;
+		}
+		if (isTab && !Controls::getTabIsPressed())
+		{
+			passwordButtonIsClicked = !passwordButtonIsClicked;
+			isTab = false;
+		}
+		if (Controls::getEscIsPressed())
 		{
 			accountLoginIsOpen = false;
-			return 0;
 		}
-
-		// Email-Feld
-		pos = Service::getInstance()->getObjectPosition(loginScreenEmailButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(loginScreenEmailButton->getPosition() + Vector2f(loginScreenEmailButton->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			accountLoginEmailIsClicked = true;
-			accountLoginPasswordIsClicked = false;
-			return 0;
-		}
-
-		// Passwort-Feld
-		pos = Service::getInstance()->getObjectPosition(loginScreenPasswordButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(loginScreenPasswordButton->getPosition() + Vector2f(loginScreenPasswordButton->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			accountLoginPasswordIsClicked = true;
-			accountLoginEmailIsClicked = false;
-			return 0;
-		}
-
-		// SignInOutButton
-		pos = Service::getInstance()->getObjectPosition(signInOutButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(signInOutButton->getPosition() + Vector2f(signInOutButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (Controls::getEnterIsPressed())
 		{
 			isEnter = true;
-			return 0;
 		}
-	}
+		if (accountLoginIsOpen && isClicked && !Mouse::isButtonPressed(Mouse::Left))
+		{
+			isClicked = false;
 
-	if (Controls::getEscIsPressed())
-	{
-		accountLoginIsOpen = false;
-	}
-	if (Controls::getEnterIsPressed())
-	{
-		isEnter = true;
+			Vector2f pos = Vector2f(0, 0), pos2 = Vector2f(0, 0);
+
+			//X-Button
+			if (loginScreenExitButton->checkHover(mouse))
+			{
+				accountLoginIsOpen = false;
+				return 0;
+			}
+
+			// Email-Feld
+			if (loginScreenEmailButton->checkHover(mouse))
+			{
+				passwordButtonIsClicked = false;
+				return 0;
+			}
+
+			// Passwort-Feld
+			if (loginScreenPasswordButton->checkHover(mouse))
+			{
+				passwordButtonIsClicked = true;
+				return 0;
+			}
+
+			// SignInOutButton
+			if (signInOutButton->checkHover(mouse))
+			{
+				isEnter = true;
+				return 0;
+			}
+		}
+
+		loginScreenEmailButton->checkHover(mouse);
+		loginScreenPasswordButton->checkHover(mouse);
+		signInOutButton->checkHover(mouse);
+		loginScreenExitButton->checkHover(mouse);
+
 	}
 	return 0;
 }
@@ -97,19 +91,25 @@ void AccountLogin::draw()
 		window->draw(*accountLoginStatusText);
 		window->draw(*profilePicture);
 		window->draw(*profilePictureFrame);
+		window->draw(*loginScreenEmailButton);
+		window->draw(*loginScreenPasswordButton);
+		window->draw(*chooseFrame);
 		if (Account::getAccName() != invalidUsername)
 		{
 			window->draw(*accountLevelText);
 			window->draw(*accountXPText);
 		}
 	}
-	if (accountLoginEmailIsClicked)
+	if (chooseFrame != nullptr)
 	{
-		window->draw(*loginScreenEmailButton);
-	}
-	else if (accountLoginPasswordIsClicked)
-	{
-		window->draw(*loginScreenPasswordButton);
+		if (passwordButtonIsClicked)
+		{
+			chooseFrame->setPosition(loginScreenPasswordButton->getPosition());
+		}
+		else
+		{
+			chooseFrame->setPosition(loginScreenEmailButton->getPosition());
+		}
 	}
 	window->display();
 }
@@ -136,7 +136,7 @@ bool AccountLogin::accountLogin(Event* event)
 		}
 		draw();
 
-		if (accountLoginEmailIsClicked)
+		if (!passwordButtonIsClicked)
 		{
 			if (Controls::getBackSpaceIsPressed() && email.length() > 0)
 			{
@@ -150,7 +150,7 @@ bool AccountLogin::accountLogin(Event* event)
 				accountLoginEmailText->setString(email);
 			}
 		}
-		else if (accountLoginPasswordIsClicked)
+		else
 		{
 			if (Controls::getBackSpaceIsPressed() && password.length() > 0)
 			{
@@ -173,11 +173,11 @@ bool AccountLogin::accountLogin(Event* event)
 			}
 		}
 
-		if (email.length() == 0 && !accountLoginEmailIsClicked)
+		if (email.length() == 0 && passwordButtonIsClicked)
 		{
 			accountLoginEmailText->setString("Deine E-Mail...");
 		}
-		if (password.length() == 0 && !accountLoginPasswordIsClicked)
+		if (password.length() == 0 && !passwordButtonIsClicked)
 		{
 			accountLoginPasswordText->setString("Dein Passwort...");
 		}
@@ -282,19 +282,14 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	isTab = false;
 	isEnter = false;
 	accountLoginIsOpen = false;
-	accountLoginEmailIsClicked = false;
-	accountLoginPasswordIsClicked = false;
+	passwordButtonIsClicked = false;
 
 	loginScreen = new Sprite();
 	loginScreen->setTexture(*res->getAccountLoginBackground());
 	loginScreen->setPosition(Vector2f(600, 100));
 
-	loginScreenExitButton = new Sprite();
-	loginScreenExitButton->setTexture(*res->getButtonCloseTexture());
-	loginScreenExitButton->setPosition(Vector2f(1300, 100));
-
-	signInOutButton = new Sprite();
-	signInOutButton->setPosition(Vector2f(1100, 700));
+	loginScreenExitButton = new Button(Vector2f(1300, 100), res->getButtonCloseTexture());
+	signInOutButton = new Button(Vector2f(1100, 700), res->getAccountSignOutButtonTexture());
 
 	profilePicture = new Sprite();
 	profilePicture->setPosition(Vector2f(700, 150));
@@ -335,15 +330,17 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	accountXPText->setCharacterSize(30);
 	accountXPText->setString("0 / 0");
 
-	loginScreenEmailButton = new RectangleShape();
-	loginScreenPasswordButton = new RectangleShape();
+	loginScreenEmailButton = nullptr;
+	loginScreenPasswordButton = nullptr;
+	chooseFrame = nullptr;
+
 	profilPictureTexture = new Texture();
 	accountLoginStatusText = new Text();
 
 
 	if (Loadup::usernameSuccessfull)
 	{
-		signInOutButton->setTexture(*res->getAccountSignOutButtonTexture());
+		signInOutButton->setTexture(res->getAccountSignOutButtonTexture());
 
 		profilPictureTexture->loadFromImage(*Account::getAcc()->getProfileImage());
 
@@ -359,7 +356,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	}
 	else
 	{
-		signInOutButton->setTexture(*res->getAccountSignInButtonTexture());
+		signInOutButton->setTexture(res->getAccountSignInButtonTexture());
 
 		profilPictureTexture->loadFromImage(res->getAccountProfilePicture()->copyToImage());
 
@@ -372,17 +369,14 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		accountLoginStatusText->setCharacterSize(40);
 		accountLoginStatusText->setString("Enter zum anmelden");
 
-		loginScreenEmailButton->setSize(Vector2f(400, 100));
-		loginScreenEmailButton->setPosition(accountLoginEmailText->getPosition());
-		loginScreenEmailButton->setFillColor(Color::Transparent);
-		loginScreenEmailButton->setOutlineColor(Color::Red);
-		loginScreenEmailButton->setOutlineThickness(4);
+		loginScreenEmailButton = new Button(accountLoginEmailText->getPosition(), Vector2f(400, 100));
+		loginScreenPasswordButton = new Button(accountLoginPasswordText->getPosition(), Vector2f(400, 100));
 
-		loginScreenPasswordButton->setSize(Vector2f(400, 100));
-		loginScreenPasswordButton->setPosition(accountLoginPasswordText->getPosition());
-		loginScreenPasswordButton->setFillColor(Color::Transparent);
-		loginScreenPasswordButton->setOutlineColor(Color::Red);
-		loginScreenPasswordButton->setOutlineThickness(4);
+		chooseFrame = new RectangleShape(Vector2f(400, 100));
+		chooseFrame->setPosition(loginScreenEmailButton->getPosition());
+		chooseFrame->setFillColor(Color::Transparent);
+		chooseFrame->setOutlineColor(Color::Red);
+		chooseFrame->setOutlineThickness(4);
 
 		accountLevelText->setString("");
 	}
@@ -396,6 +390,7 @@ AccountLogin::~AccountLogin()
 	delete loginScreenEmailButton;
 	delete loginScreenPasswordButton;
 	delete profilePictureFrame;
+	delete chooseFrame;
 	delete loginScreen;
 	delete loginScreenExitButton;
 	delete signInOutButton;

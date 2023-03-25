@@ -19,6 +19,24 @@ Button::Button(Vector2f _position, Texture* _texture, Vector2f _textureScale)
 
 	drawHover = false;
 }
+Button::Button(Vector2f position, Vector2f size, Color color)
+{
+	texture = new Texture();
+	texture->create(size.x, size.y);
+
+	sprite = new Sprite(*texture);
+	sprite->setPosition(position);
+	sprite->setColor(color);
+
+	hoverColor = new Color(0, 0, 0, 80);
+
+	hoverShape = new RectangleShape();
+	hoverShape->setFillColor(*hoverColor);
+	hoverShape->setPosition(sprite->getPosition());
+	hoverShape->setSize(Vector2f(texture->getSize()));
+
+	drawHover = false;
+}
 Button::~Button()
 {
 	delete texture;

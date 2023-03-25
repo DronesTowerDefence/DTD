@@ -1,6 +1,6 @@
 #pragma once
 #include "Ressources.h"
-#include <SFML/Graphics.hpp>
+#include "Button.h"
 
 using namespace sf;
 
@@ -12,20 +12,21 @@ private:
 	bool isTab;
 	bool isEnter;
 	bool accountLoginIsOpen;
-	bool accountLoginEmailIsClicked;
-	bool accountLoginPasswordIsClicked;
+	bool passwordButtonIsClicked;
 
 	RenderWindow* window;
 	Ressources* res;
 
-	RectangleShape* loginScreenEmailButton;
-	RectangleShape* loginScreenPasswordButton;
 	RectangleShape* profilePictureFrame;
+	RectangleShape* chooseFrame;
 
 	Sprite* loginScreen;
-	Sprite* loginScreenExitButton;
-	Sprite* signInOutButton;
 	Sprite* profilePicture;
+
+	Button* loginScreenEmailButton;
+	Button* loginScreenPasswordButton;
+	Button* loginScreenExitButton;
+	Button* signInOutButton;
 
 	Font* font;
 	Texture* profilPictureTexture;

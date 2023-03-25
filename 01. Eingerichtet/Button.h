@@ -15,9 +15,16 @@ private:
 
 	Button();
 public:
+	// Für Sprites
 	Button(Vector2f position, Texture* texture, Vector2f textureScale = Vector2f(1, 1));
+
+	// Für RectangleShapes
+	Button(Vector2f position, Vector2f size, Color color = Color::Transparent);
+
+	// Destruktor
 	~Button();
 
+	// Überprüft, ob sich die Mouse über dem Button befindet
 	bool checkHover(Vector2i mousePosition);
 
 	void setTexture(Texture* texture, Vector2f textureScale = Vector2f(1,1));
