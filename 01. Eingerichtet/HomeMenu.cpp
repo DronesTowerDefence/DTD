@@ -28,20 +28,26 @@ HomeMenu::HomeMenu()
 	menuIsOpen = false;
 	res = Ressources::getInstance();
 
-	startButton = new Sprite();
 	font = new Font();
 	titel = new Sprite();
 	backround = new Sprite();
 	drone = new Sprite();
-	multiplayerMenue = new Sprite();
-	exitButton = new Sprite();
-	client = new Sprite();
-	host = new Sprite();
-	deleteSavesButton = new Sprite();
-	accountButton = new Sprite();
-	accountFriendsMenuButton = new Sprite();
-	achievementsButton = new Sprite();
-	dailyButton = new Sprite();
+
+	startButton = new Button(Vector2f(400, 550), res->getButtonStartTexture());
+	multiplayerMenueButton = new Button(Vector2f(750, 550), res->getButtonMultiplayerTexture(1));
+	exitButton = new Button(Vector2f(1800, 871), res->getButtonExitTexture());
+	clientButton = new Button(Vector2f(750, 775), res->getButtonClientTexture());
+	hostButton = new Button(Vector2f(750, 650), res->getButtonHostTexture());
+	deleteSavesButton = new Button(Vector2f(75, 900), res->getDeleteAllSavesButtonTexture());
+	accountButton = new Button(Vector2f(1650, 851), res->getAccountIconButtonTexture());
+	accountFriendsMenuButton = new Button(Vector2f(1650, 721), res->getAccountFriendsButtonTexture());
+	achievementsButton = new Button(Vector2f(1650, 591), res->getAchievementsButtonTexture());
+	dailyButton = new Button(Vector2f(575, 550), res->getStartDailyButtonTexture());
+	shopButton = new Button(Vector2f(1650, 461), res->getOpenShopButtonTexture());
+	skinsButton = new Button(Vector2f(1650, 331), res->getSkinsMenuIconTexture());
+	creditsButton = new Button(Vector2f(1650, 201), res->getCreditsIconTexture());
+	openMenuButton = new Button(Vector2f(1800, 721), res->getSettingsIconTexture());
+
 	sideMenu = new RectangleShape();
 	pointer = new RectangleShape();
 	upperBorder = new RectangleShape();
@@ -51,19 +57,9 @@ HomeMenu::HomeMenu()
 
 	font->loadFromFile("fonts/arial.ttf");
 
-	startButton->setTexture(*res->getButtonStartTexture());
 	titel->setTexture(*res->getTitleTextTexture());
 	backround->setTexture(*res->getHomeMenuBackgroundTexture());
 	drone->setTexture(*res->getDroneDmgTexture(1, 0));
-	multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
-	host->setTexture(*res->getButtonHostTexture());
-	client->setTexture(*res->getButtonClientTexture());
-	exitButton->setTexture(*res->getButtonExitTexture());
-	deleteSavesButton->setTexture(*res->getDeleteAllSavesButtonTexture());
-	accountButton->setTexture(*res->getAccountIconButtonTexture());
-	accountFriendsMenuButton->setTexture(*res->getAccountFriendsButtonTexture());
-	achievementsButton->setTexture(*res->getAchievementsButtonTexture());
-	dailyButton->setTexture(*res->getStartDailyButtonTexture());
 
 	creditsText->setCharacterSize(25);
 	creditsText->setFont(*font);
@@ -83,16 +79,6 @@ HomeMenu::HomeMenu()
 
 	titel->setPosition(Vector2f(0, 0));
 	drone->setPosition(Vector2f(150, 150));
-	startButton->setPosition(Vector2f(400, 550));
-	dailyButton->setPosition(Vector2f(575, 550));
-	multiplayerMenue->setPosition(Vector2f(750, 550));
-	host->setPosition(Vector2f(750, 650));
-	client->setPosition(Vector2f(750, 775));
-	exitButton->setPosition(Vector2f(1800, 871));
-	deleteSavesButton->setPosition(Vector2f(75, 900));
-	accountButton->setPosition(Vector2f(1650, 851));
-	accountFriendsMenuButton->setPosition(1650, 721);
-	achievementsButton->setPosition(1650, 591);
 
 	drone->setScale(3, 3);
 	drone->setRotation(90);
@@ -164,30 +150,6 @@ HomeMenu::HomeMenu()
 
 	choseText = new Text("Wähle eine Karte aus:", *font, 30);
 	choseText->setPosition(Vector2f(25, 200));
-
-	shopButton = new Sprite();
-	shopButton->setTexture(*res->getOpenShopButtonTexture());
-	shopButton->setPosition(1650, 461);
-
-	skinsButton = new Sprite();
-	skinsButton->setTexture(*res->getSkinsMenuIconTexture());
-	skinsButton->setPosition(1650, 331);
-
-	creditsButton = new Sprite();
-	creditsButton->setTexture(*res->getCreditsIconTexture());
-	creditsButton->setPosition(1650, 201);
-
-	openMenuButton = new Sprite();
-	openMenuButton->setTexture(*res->getSettingsIconTexture());
-	openMenuButton->setPosition(1800, 721);
-
-
-	drawHover = false;
-
-	hoverColor = new Color(0, 0, 0, 80);
-
-	hoverShape = new RectangleShape();
-	hoverShape->setFillColor(*hoverColor);
 }
 #pragma endregion
 
@@ -200,10 +162,11 @@ void HomeMenu::drawPublic()
 	window->draw(*titel);
 	//window->draw(*drone);
 	window->draw(*choseText);
-	window->draw(*multiplayerMenue);
+	window->draw(*creditsText);
+
+	window->draw(*multiplayerMenueButton);
 	window->draw(*exitButton);
 	window->draw(*deleteSavesButton);
-	window->draw(*creditsText);
 	window->draw(*openMenuButton);
 
 	if (menuIsOpen)
@@ -218,8 +181,8 @@ void HomeMenu::drawPublic()
 
 	if (isMultiplayerOpen)
 	{
-		window->draw(*host);
-		window->draw(*client);
+		window->draw(*hostButton);
+		window->draw(*clientButton);
 	}
 	else
 	{
@@ -234,11 +197,6 @@ void HomeMenu::drawPublic()
 	if (choseIndex > -1)
 	{
 		window->draw(*pointer);
-	}
-
-	if (drawHover)
-	{
-		window->draw(*hoverShape);
 	}
 
 	/*for (int i = 0; i < 5; i++)
@@ -264,11 +222,14 @@ int  HomeMenu::CheckClicked(Event* event)
 }
 int HomeMenu::checkButtonClick(Event* event)
 {
-	//map clicked;
 	isClicked = false;
 	Vector2i mouse = Mouse::getPosition(*window);
+	Ressources* res = Ressources::getInstance();
+
+	// TODO
+	//map clicked;
 	Vector2f pos, pos2;
-	for (int i = 0; i < Ressources::getInstance()->getMapCount(); i++)
+	for (int i = 0; i < res->getMapCount(); i++)
 	{
 
 		pos = Service::getInstance()->getObjectPosition(map[i]->getPosition());
@@ -281,16 +242,11 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 	}
 
-	Ressources* res = Ressources::getInstance();
 
 	//Host clicked
 	if (isMultiplayerOpen)
 	{
-		mouse = Mouse::getPosition(*window);
-		pos = Service::getInstance()->getObjectPosition(host->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (hostButton->checkHover(mouse))
 		{
 			status = 2;
 
@@ -310,10 +266,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//Client Clicked
-		pos = Service::getInstance()->getObjectPosition(client->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (clientButton->checkHover(mouse))
 		{
 			status = 3;
 
@@ -335,12 +288,7 @@ int HomeMenu::checkButtonClick(Event* event)
 	else
 	{
 		//startclicked
-		mouse = Mouse::getPosition(*window);
-
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (startButton->checkHover(mouse))
 		{
 			status = 1;
 			music.stop();
@@ -348,10 +296,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		// Daily
-		pos = Service::getInstance()->getObjectPosition(dailyButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(dailyButton->getPosition() + Vector2f(dailyButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (dailyButton->checkHover(mouse))
 		{
 			if (Account::getAcc()->getAccName() == invalidUsername)
 			{
@@ -374,14 +319,11 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 	}
 	//MultiplayerMunue
-	pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	if (multiplayerMenueButton->checkHover(mouse))
 	{
 		if (isMultiplayerOpen)
 		{
-			multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(1));
+			multiplayerMenueButton->setTexture(res->getButtonMultiplayerTexture(1));
 			isMultiplayerOpen = false;
 		}
 		else
@@ -391,17 +333,14 @@ int HomeMenu::checkButtonClick(Event* event)
 				new PopUpMessage("Bitte vorher anmelden", sf::seconds(2));
 				return 0;
 			}
-			multiplayerMenue->setTexture(*res->getButtonMultiplayerTexture(0));
+			multiplayerMenueButton->setTexture(res->getButtonMultiplayerTexture(0));
 			isMultiplayerOpen = true;
 		}
 		return 0;
 	}
 
 	//Exit
-	pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	if (exitButton->checkHover(mouse))
 	{
 		window->close();
 		exit(0);
@@ -409,10 +348,7 @@ int HomeMenu::checkButtonClick(Event* event)
 	}
 
 	//DeleteSaves
-	pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	if (deleteSavesButton->checkHover(mouse))
 	{
 		for (int i = 0; i < res->getMapCount(); i++)
 		{
@@ -422,14 +358,8 @@ int HomeMenu::checkButtonClick(Event* event)
 		return 0;
 	}
 
-
-
-
 	//MenuButton
-	pos = Service::getInstance()->getObjectPosition(openMenuButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(openMenuButton->getPosition() + Vector2f(openMenuButton->getTexture()->getSize()));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+	if (openMenuButton->checkHover(mouse))
 	{
 		menuIsOpen = !menuIsOpen;
 		return 0;
@@ -438,10 +368,7 @@ int HomeMenu::checkButtonClick(Event* event)
 	if (menuIsOpen)
 	{
 		//AccountButton
-		pos = Service::getInstance()->getObjectPosition(accountButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountButton->getPosition() + Vector2f(accountButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (accountButton->checkHover(mouse))
 		{
 			AccountLogin* accLog = new AccountLogin(window, res);
 			accLog->openAccountLoginWindow(event);
@@ -450,10 +377,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//AccountFriendsMenuButton
-		pos = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition() + Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (accountFriendsMenuButton->checkHover(mouse))
 		{
 			if (Account::getAcc()->getAccName() == invalidUsername)
 			{
@@ -467,10 +391,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//AchievementsButton
-		pos = Service::getInstance()->getObjectPosition(achievementsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(achievementsButton->getPosition() + Vector2f(achievementsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (achievementsButton->checkHover(mouse))
 		{
 			achievementGUI = new AchievementGUI(window);
 			achievementGUI->openAchievementGUI();
@@ -479,10 +400,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//ShopButton
-		pos = Service::getInstance()->getObjectPosition(shopButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(shopButton->getPosition() + Vector2f(shopButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (shopButton->checkHover(mouse))
 		{
 			if (Account::getAcc()->getAccName() == invalidUsername)
 			{
@@ -498,10 +416,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//SkinsButton
-		pos = Service::getInstance()->getObjectPosition(skinsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(skinsButton->getPosition() + Vector2f(skinsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (skinsButton->checkHover(mouse))
 		{
 			if (Account::getAcc()->getAccName() == invalidUsername)
 			{
@@ -517,10 +432,7 @@ int HomeMenu::checkButtonClick(Event* event)
 		}
 
 		//CreditsButton
-		pos = Service::getInstance()->getObjectPosition(creditsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(creditsButton->getPosition() + Vector2f(creditsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (creditsButton->checkHover(mouse))
 		{
 			credits = new Credits(window);
 			credits->openCredits();
@@ -531,215 +443,22 @@ int HomeMenu::checkButtonClick(Event* event)
 }
 void HomeMenu::checkButtonHover()
 {
-	Vector2f pos, pos2;
-	Vector2i mouse = Mouse::getPosition();
-	Ressources* res = Ressources::getInstance();
+	Vector2i mouse = Mouse::getPosition(*window);
 
-	drawHover = false;
-
-	//map clicked;
-	for (int i = 0; i < res->getMapCount(); i++)
-	{
-		pos = Service::getInstance()->getObjectPosition(map[i]->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(map[i]->getPosition() + Vector2f(1920 * 0.1, 991 * 0.1));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(map[i]->getPosition());
-			hoverShape->setSize(Vector2f(map[i]->getTexture()->getSize().x* map[i]->getScale().x, map[i]->getTexture()->getSize().y * map[i]->getScale().y));
-			drawHover = true;
-			return;
-		}
-	}
-
-	//Host clicked
-	if (isMultiplayerOpen)
-	{
-		mouse = Mouse::getPosition(*window);
-		pos = Service::getInstance()->getObjectPosition(host->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(host->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(host->getPosition());
-			hoverShape->setSize(Vector2f(host->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-		//Client Clicked
-		pos = Service::getInstance()->getObjectPosition(client->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(client->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(client->getPosition());
-			hoverShape->setSize(Vector2f(client->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-	}
-	else
-	{
-		//startclicked
-		mouse = Mouse::getPosition(*window);
-
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(100, 100));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(startButton->getPosition());
-			hoverShape->setSize(Vector2f(startButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		// Daily
-		pos = Service::getInstance()->getObjectPosition(dailyButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(dailyButton->getPosition() + Vector2f(dailyButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(dailyButton->getPosition());
-			hoverShape->setSize(Vector2f(dailyButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-	}
-	//MultiplayerMunue
-	pos = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(multiplayerMenue->getPosition() + Vector2f(250, 50));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-	{
-		hoverShape->setPosition(multiplayerMenue->getPosition());
-		hoverShape->setSize(Vector2f(multiplayerMenue->getTexture()->getSize()));
-		drawHover = true;
-	}
-
-
-	//Exit
-	pos = Service::getInstance()->getObjectPosition(exitButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(exitButton->getPosition() + Vector2f(100, 100));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-	{
-		hoverShape->setPosition(exitButton->getPosition());
-		hoverShape->setSize(Vector2f(exitButton->getTexture()->getSize()));
-		drawHover = true;
-	}
-
-
-	//DeleteSaves
-	pos = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(deleteSavesButton->getPosition() + Vector2f(200, 50));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-	{
-		hoverShape->setPosition(deleteSavesButton->getPosition());
-		hoverShape->setSize(Vector2f(deleteSavesButton->getTexture()->getSize()));
-		drawHover = true;
-		return;
-	}
-
-
-	//MenuButton
-	pos = Service::getInstance()->getObjectPosition(openMenuButton->getPosition());
-	pos2 = Service::getInstance()->getObjectPosition(openMenuButton->getPosition() + Vector2f(openMenuButton->getTexture()->getSize()));
-
-	if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-	{
-		hoverShape->setPosition(openMenuButton->getPosition());
-		hoverShape->setSize(Vector2f(openMenuButton->getTexture()->getSize()));
-		drawHover = true;
-		return;
-	}
-
-
-	if (menuIsOpen)
-	{
-		//AccountButton
-		pos = Service::getInstance()->getObjectPosition(accountButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountButton->getPosition() + Vector2f(accountButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(accountButton->getPosition());
-			hoverShape->setSize(Vector2f(accountButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		//AccountFriendsMenuButton
-		pos = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(accountFriendsMenuButton->getPosition() + Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(accountFriendsMenuButton->getPosition());
-			hoverShape->setSize(Vector2f(accountFriendsMenuButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		//AchievementsButton
-		pos = Service::getInstance()->getObjectPosition(achievementsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(achievementsButton->getPosition() + Vector2f(achievementsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(achievementsButton->getPosition());
-			hoverShape->setSize(Vector2f(achievementsButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		//ShopButton
-		pos = Service::getInstance()->getObjectPosition(shopButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(shopButton->getPosition() + Vector2f(shopButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(shopButton->getPosition());
-			hoverShape->setSize(Vector2f(shopButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		//SkinsButton
-		pos = Service::getInstance()->getObjectPosition(skinsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(skinsButton->getPosition() + Vector2f(skinsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(skinsButton->getPosition());
-			hoverShape->setSize(Vector2f(skinsButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-
-		//CreditsButton
-		pos = Service::getInstance()->getObjectPosition(creditsButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(creditsButton->getPosition() + Vector2f(creditsButton->getTexture()->getSize()));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			hoverShape->setPosition(creditsButton->getPosition());
-			hoverShape->setSize(Vector2f(creditsButton->getTexture()->getSize()));
-			drawHover = true;
-			return;
-		}
-
-	}
+	startButton->checkHover(mouse);
+	hostButton->checkHover(mouse);
+	clientButton->checkHover(mouse);
+	multiplayerMenueButton->checkHover(mouse);
+	exitButton->checkHover(mouse);
+	deleteSavesButton->checkHover(mouse);
+	accountButton->checkHover(mouse);
+	accountFriendsMenuButton->checkHover(mouse);
+	achievementsButton->checkHover(mouse);
+	dailyButton->checkHover(mouse);
+	shopButton->checkHover(mouse);
+	skinsButton->checkHover(mouse);
+	creditsButton->checkHover(mouse);
+	openMenuButton->checkHover(mouse);
 }
 void HomeMenu::HomeMenuStart()
 {

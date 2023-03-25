@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SFML/Window/Clipboard.hpp"
 #include "Game.h"
 #include "Service.h"
 #include "Account.h"
@@ -10,7 +11,7 @@
 #include "ShopGUI.h"
 #include "SkinsGUI.h"
 #include "Credits.h"
-#include "SFML/Window/Clipboard.hpp"
+#include "Button.h"
 using namespace sf;
 
 class HomeMenu
@@ -35,7 +36,6 @@ private:
 	bool connected;
 	bool isMultiplayerOpen;
 	bool menuIsOpen;
-	bool drawHover;
 
 	Vector2f positionTower[5];
 	Music music;
@@ -46,35 +46,33 @@ private:
 	RectangleShape* pointer;
 	RectangleShape* sideMenu;
 	RectangleShape* upperBorder;
-	RectangleShape* hoverShape;
 
-	Sprite* startButton;
 	Sprite* towers[5];
 	Sprite* map[4];
 	Sprite* titel;
 	Sprite* backround;
 	Sprite* drone;
-	Sprite* host;
-	Sprite* client;
-	Sprite* multiplayerMenue;
-	Sprite* exitButton;
-	Sprite* deleteSavesButton;
-	Sprite* accountButton;
-	Sprite* accountFriendsMenuButton;
-	Sprite* achievementsButton;
-	Sprite* dailyButton;
-	Sprite* shopButton;
-	Sprite* skinsButton;
-	Sprite* creditsButton;
-	Sprite* openMenuButton;
+
+	Button* startButton;
+	Button* hostButton;
+	Button* clientButton;
+	Button* multiplayerMenueButton;
+	Button* exitButton;
+	Button* deleteSavesButton;
+	Button* accountButton;
+	Button* accountFriendsMenuButton;
+	Button* achievementsButton;
+	Button* dailyButton;
+	Button* shopButton;
+	Button* skinsButton;
+	Button* creditsButton;
+	Button* openMenuButton;
 
 	Clock* animation;
 
 	Font* font;
 	Text* choseText;
 	Text* creditsText;
-
-	Color* hoverColor;
 
 	MultiplayerGUI* multiplayerGUI;
 	AchievementGUI* achievementGUI;
