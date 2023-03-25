@@ -61,36 +61,33 @@ bool Game::loadGame()
 	char bufferValue1[30] = { 0 }, bufferValue2[30] = { 0 }, buffer[50] = { 0 };
 	Tower* newTower = nullptr;
 	int counter = 0, defaultCounter = 0, first = 0, second = 0, third = 0, length1 = 0, length2 = 0, towerIndex = 0;
-	bool settingsFirstVolume = true;
+	bool settingsLineCount = 0;
 	immortalMode = false;
 
 	std::ifstream rFileSettings("saves/settings.sav");
 	if (!rFileSettings.fail())
 	{
-		while (!rFileSettings.eof())
+		while (!rFileSettings.eof() && settingsLineCount < 2)
 		{
 			for (int i = 0; i < 49; i++, buffer[i] = '\0'); //Löscht den Inhalt der Buffer
 			for (int i = 0; i < 19; i++, bufferValue1[i] = '\0');
 
-			for (int i = 0; buffer[i] != '\n'; i++) //Holt sich den Inhalt der Datei
-			{
-				rFileSettings.get(buffer[i]);
-			}
+			rFileSettings.getline(buffer, 50, '\n'); //Holt sich eine Zeile der Datei
 
 			first = std::string(buffer).find("\""); //Sucht das erste Gänsefüßchen
 			second = std::string(buffer).find("\"", first + 1); //Sucht das zweite Gänsefüßchen
 			length1 = second - first - 1;
 			std::string(buffer).copy(bufferValue1, length1, first + 1); //Kopiert das was zwischen den beiden Gänsefüßchen steht in einen anderen string
 
-			if (settingsFirstVolume)
+			if (settingsLineCount == 0)
 			{
 				PauseMenu::getInstance()->setsliderHelperMusic(Service::stringToFloat(bufferValue1));
-				settingsFirstVolume = false;
 			}
-			else
+			else if (settingsLineCount == 1)
 			{
 				PauseMenu::getInstance()->setSliderHelperSound(Service::stringToFloat(bufferValue1));
 			}
+			settingsLineCount++;
 		}
 	}
 	rFileSettings.close();
@@ -243,7 +240,7 @@ bool Game::towerAliasForbiddenPosition()
 		for (auto i : round->getAllCoverablePoints()) //Überprüfung ob auf der Strecke
 		{
 
-			collisionShape->setPosition(i + Vector2f(-20,-20));
+			collisionShape->setPosition(i + Vector2f(-20, -20));
 			if (newTower->getSpr()->getGlobalBounds().intersects(collisionShape->getGlobalBounds()))
 				return 0;
 		}
@@ -1447,6 +1444,6 @@ Game::~Game()
 }
 Map* Game::getMap()
 {
-	return p_map	;
+	return p_map;
 }
 #pragma endregion
