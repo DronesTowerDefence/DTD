@@ -17,6 +17,7 @@ using namespace sf;
 int main()
 {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE); // Damit die Konsole nicht mehr da ist. Bleibt jetzt auch bei system() weg.
+	//::ShowWindow(::GetConsoleWindow(), SW_SHOW); // Damit die Konsole wieder da ist.
 
 	RenderWindow window(VideoMode(1920, 991), "DronesTowerDefence");
 

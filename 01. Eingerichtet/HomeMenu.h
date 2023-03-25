@@ -35,6 +35,7 @@ private:
 	bool connected;
 	bool isMultiplayerOpen;
 	bool menuIsOpen;
+	bool drawHover;
 
 	Vector2f positionTower[5];
 	Music music;
@@ -45,6 +46,7 @@ private:
 	RectangleShape* pointer;
 	RectangleShape* sideMenu;
 	RectangleShape* upperBorder;
+	RectangleShape* hoverShape;
 
 	Sprite* startButton;
 	Sprite* towers[5];
@@ -72,6 +74,8 @@ private:
 	Text* choseText;
 	Text* creditsText;
 
+	Color* hoverColor;
+
 	MultiplayerGUI* multiplayerGUI;
 	AchievementGUI* achievementGUI;
 	ShopGUI* shopGUI;
@@ -82,11 +86,14 @@ private:
 
 	Ressources* res;
 
+
 	/// <summary>
 	/// Checkt, ob etwas geklicht wurde
 	/// </summary>
 	/// <returns></returns>
 	int CheckClicked(Event*);
+	int checkButtonClick(Event*);
+	void checkButtonHover();
 
 	std::string chalange;
 
