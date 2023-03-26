@@ -91,10 +91,14 @@ void AccountLogin::draw()
 		window->draw(*accountLoginStatusText);
 		window->draw(*profilePicture);
 		window->draw(*profilePictureFrame);
-		window->draw(*loginScreenEmailButton);
-		window->draw(*loginScreenPasswordButton);
-		window->draw(*chooseFrame);
-		if (Account::getAccName() != invalidUsername)
+
+		if (Account::getAccName() == invalidUsername)
+		{
+			window->draw(*loginScreenEmailButton);
+			window->draw(*loginScreenPasswordButton);
+			window->draw(*chooseFrame);
+		}
+		else
 		{
 			window->draw(*accountLevelText);
 			window->draw(*accountXPText);
@@ -337,6 +341,13 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 	profilPictureTexture = new Texture();
 	accountLoginStatusText = new Text();
 
+	chooseFrame = new RectangleShape(Vector2f(400, 100));
+	chooseFrame->setFillColor(Color::Transparent);
+	chooseFrame->setOutlineColor(Color::Red);
+	chooseFrame->setOutlineThickness(4);
+
+	loginScreenEmailButton = new Button(accountLoginEmailText->getPosition(), Vector2f(400, 100));
+	loginScreenPasswordButton = new Button(accountLoginPasswordText->getPosition(), Vector2f(400, 100));
 
 	if (Loadup::usernameSuccessfull)
 	{
@@ -369,14 +380,8 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		accountLoginStatusText->setCharacterSize(40);
 		accountLoginStatusText->setString("Enter zum anmelden");
 
-		loginScreenEmailButton = new Button(accountLoginEmailText->getPosition(), Vector2f(400, 100));
-		loginScreenPasswordButton = new Button(accountLoginPasswordText->getPosition(), Vector2f(400, 100));
 
-		chooseFrame = new RectangleShape(Vector2f(400, 100));
 		chooseFrame->setPosition(loginScreenEmailButton->getPosition());
-		chooseFrame->setFillColor(Color::Transparent);
-		chooseFrame->setOutlineColor(Color::Red);
-		chooseFrame->setOutlineThickness(4);
 
 		accountLevelText->setString("");
 	}
