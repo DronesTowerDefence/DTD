@@ -44,12 +44,8 @@ PauseMenu::PauseMenu() {
 	background.setPosition(530.f, 150.f);
 	background.setScale(Vector2f(float(1.36), float(0.7)));
 
-
-
 	//Socials
-	twitter.setTexture(*res->getSocialsTwitterTexture());
-	twitter.setScale(Vector2f(float(0.15), float(0.15)));
-	twitter.setPosition(Vector2f(1130.f, 175.f));
+	twitter = new Button(Vector2f(1130.f, 175.f), res->getSocialsTwitterTexture(), Vector2f(0.15f, 0.15f));
 
 	socialsBorder.setFillColor(Color::Transparent);
 	socialsBorder.setOutlineColor(Color::Black);
@@ -58,16 +54,10 @@ PauseMenu::PauseMenu() {
 	socialsBorder.setPosition(1120.f, 165.f);
 
 	//Buttons
-	homebtn.setTexture(*res->getButtonHomeTexture());
-	homebtn.setPosition(Vector2f(630.f, 750.f));
-
-
-	playbtn.setTexture(*res->getButtonStartTexture());
-	playbtn.setPosition(Vector2f(1030.f, 750.f));
-
+	homebtn = new Button(Vector2f(630.f, 750.f), res->getButtonHomeTexture());
+	playbtn = new Button(Vector2f(1030.f, 750.f), res->getButtonStartTexture());
 	mutebtnTexture = res->getButtonVolume(2);
-	mutebtn.setTexture(*mutebtnTexture);
-	mutebtn.setPosition(Vector2f(1050.f, 475.f));
+	mutebtn = new Button(Vector2f(1050.f, 475.f), mutebtnTexture);
 
 	//Überschriften
 	text1.setFont(font);
@@ -95,9 +85,9 @@ PauseMenu::PauseMenu() {
 
 	}
 
-	btnoutlines[0].setPosition(homebtn.getPosition());
-	btnoutlines[1].setPosition(playbtn.getPosition());
-	btnoutlines[2].setPosition(mutebtn.getPosition());
+	btnoutlines[0].setPosition(homebtn->getPosition());
+	btnoutlines[1].setPosition(playbtn->getPosition());
+	btnoutlines[2].setPosition(mutebtn->getPosition());
 
 	//
 
@@ -121,6 +111,9 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 {
 	if (!window->hasFocus())
 		return;
+
+	mouse = Mouse::getPosition(*window);
+
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = true;
@@ -128,65 +121,56 @@ void PauseMenu::click() //WIP (WORK IN PROGRESS), noch nicht in Benutzung
 	if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = false;
-		mouse = Mouse::getPosition(*window);
-
 
 		//twitter
-		pos = Service::getInstance()->getObjectPosition(twitter.getPosition()); //Holt sich die Position des Turmes i
-		pos2 = Service::getInstance()->getObjectPosition(twitter.getPosition() + Vector2f(77.f, 77.f)); //Holt sich die Position des Turmes i + 50 wegen der Größe
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) //Ob der Turm i geklickt wurde
+		if (twitter->checkHover(mouse))
 		{
 			system("start www.twitter.com/DronesTD");
 		}
 
-
 		//Home Button
-		pos = Service::getInstance()->getObjectPosition(homebtn.getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(homebtn.getPosition() + Vector2f(100.f, 100.f));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (homebtn->checkHover(mouse))
 		{
 			Game::getInstance()->mainMenu();
 		}
 
 		//Resume - Button Weiter
-		pos = Service::getInstance()->getObjectPosition(playbtn.getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(playbtn.getPosition() + Vector2f(100.f, 100.f));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (playbtn->checkHover(mouse))
 		{
 			play = true;
 			Multiplayer::send(2, false);
 		}
+
 		//mute button
-
-		pos = Service::getInstance()->getObjectPosition(mutebtn.getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(mutebtn.getPosition() + Vector2f(100.f, 100.f));
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y)) {
-			if (mute == true) {
+		if (mutebtn->checkHover(mouse))
+		{
+			if (mute == true)
+			{
 				mute = false;
 				return;
 			}
 			mute = true;
 		}
 	}
+
+	twitter->checkHover(mouse);
+	homebtn->checkHover(mouse);
+	playbtn->checkHover(mouse);
+	mutebtn->checkHover(mouse);
 }
 void PauseMenu::draw()
 {
-
 	//window->draw(edge);
 	//window->draw(*res->getBlackBackgroundSprite());
 	window->draw(background);
 	window->draw(text1);
 	window->draw(text2);
-	window->draw(twitter);
+	window->draw(*twitter);
 	window->draw(socialsBorder);
-	window->draw(homebtn);
-	window->draw(playbtn);
+	window->draw(*homebtn);
+	window->draw(*playbtn);
 
-	window->draw(mutebtn);
+	window->draw(*mutebtn);
 
 	for (int i = 0; i < 3; i++) {
 		window->draw(btnoutlines[i]);
@@ -294,7 +278,7 @@ void PauseMenu::checkPause(Event* event1)
 				res->setSfxVolumeRessources(0.0f);
 				res->setMusicVolume(0.0f);
 			}
-			mutebtn.setTexture(*mutebtnTexture);
+			mutebtn->setTexture(mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
@@ -406,7 +390,7 @@ void PauseMenu::checkPause(bool isPaused)
 				res->setSfxVolumeRessources(0.0f);
 				res->setMusicVolume(0.0f);
 			}
-			mutebtn.setTexture(*mutebtnTexture);
+			mutebtn->setTexture(mutebtnTexture);
 
 			/*mousePos = Mouse::getPosition();
 			mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/
@@ -509,7 +493,7 @@ void PauseMenu::checkPause()
 			res->setSfxVolumeRessources(0.0f);
 			res->setMusicVolume(0.0f);
 		}
-		mutebtn.setTexture(*mutebtnTexture);
+		mutebtn->setTexture(mutebtnTexture);
 
 		/*mousePos = Mouse::getPosition();
 		mouse.setPosition(Vector2f(float(mousePos.x),float(mousePos.y)));*/

@@ -8,6 +8,7 @@
 #include "MultiplayerChat.h"
 #include "SendMoney.h"
 #include "Daily.h"
+#include "Button.h"
 
 /**
 Das Hauptspiel, wo auf einer Map Drohnen sich bewegen und vom Spieler platzierte Türme auf diese Drohnen schießen
@@ -84,12 +85,12 @@ private:
 	/// <summary>
 	/// Die Sprite des Neustart-Knopfes
 	/// </summary>
-	Sprite restartButton;
+	Button* restartButton;
 
 	/// <summary>
 	/// Die Sprite des Hauptmenü-Knopfes
 	/// </summary>
-	Sprite homeButton;
+	Button* homeButton;
 
 	/// <summary>
 	/// Wann die Musik wechselt

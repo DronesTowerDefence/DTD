@@ -407,7 +407,6 @@ void Game::checkButtonClick()
 		}
 		if (tower != nullptr)
 		{
-
 			tower->manageUpdate(window);
 
 			if (tower->getUpdates()->IsClosed(window))
@@ -422,6 +421,8 @@ void Game::checkButtonClick()
 		}
 		Sidebar::getInstance()->isChangeSpeed(window);
 	}
+
+	sidebar->checkHover(window);
 
 	if (tower != nullptr)
 	{
@@ -520,14 +521,14 @@ void Game::draw()
 	if (round->getLost())
 	{
 		window->draw(gameOverWonBackround);
-		window->draw(homeButton);
-		window->draw(restartButton);
+		window->draw(*homeButton);
+		window->draw(*restartButton);
 	}
 	else if (round->getWon())
 	{
 		window->draw(gameOverWonBackround);
-		window->draw(homeButton);
-		window->draw(restartButton);
+		window->draw(*homeButton);
+		window->draw(*restartButton);
 	}
 
 	window->draw(eco);
@@ -724,11 +725,13 @@ void Game::checkLoseGame()
 
 		gameOverWonBackround.setPosition(gameOverPos);
 
-		homeButton.setTexture(*p_ressources->getButtonHomeTexture());
-		homeButton.setPosition(Vector2f(760, 650));
+		if (homeButton != nullptr)
+			delete homeButton;
+		homeButton = new Button(Vector2f(760, 650), p_ressources->getButtonHomeTexture());
 
-		restartButton.setTexture(*p_ressources->getButtonRestartTexture());
-		restartButton.setPosition(Vector2f(1060, 650));
+		if (restartButton != nullptr)
+			delete restartButton;
+		restartButton = new Button(Vector2f(1060, 650), p_ressources->getButtonRestartTexture());
 
 		Vector2i mousePos = Vector2i(0, 0);
 
@@ -758,8 +761,8 @@ void Game::checkLoseGame()
 
 			//Draw
 			window->draw(gameOverWonBackround);
-			window->draw(homeButton);
-			window->draw(restartButton);
+			window->draw(*homeButton);
+			window->draw(*restartButton);
 
 			if (round->getLost())
 			{
@@ -780,26 +783,22 @@ void Game::checkLoseGame()
 
 			if (Mouse::isButtonPressed(Mouse::Left))
 			{
-				Vector2f homeButtonPos, homeButtonPos2, restartButtonPos, restartButtonPos2;
 				Service* serv = Service::getInstance();
-				homeButtonPos = serv->getObjectPosition(homeButton.getPosition());
-				homeButtonPos2 = serv->getObjectPosition(homeButton.getPosition() + Vector2f(100.f, 100.f));
-				restartButtonPos = serv->getObjectPosition(restartButton.getPosition());
-				restartButtonPos2 = serv->getObjectPosition(restartButton.getPosition() + Vector2f(100.f, 100.f));
 
-				if ((mousePos.x >= homeButtonPos.x && mousePos.x <= homeButtonPos2.x) &&
-					(mousePos.y >= homeButtonPos.y && mousePos.y <= homeButtonPos2.y)) //Wenn home
+				if (homeButton->checkHover(mousePos)) //Wenn home
 				{
 					mainMenu();
 					return;
 				}
-				else if ((mousePos.x >= restartButtonPos.x && mousePos.x <= restartButtonPos2.x) &&
-					(mousePos.y >= restartButtonPos.y && mousePos.y <= restartButtonPos2.y)) //Wenn restart
+				else if (restartButton->checkHover(mousePos)) //Wenn restart
 				{
 					restart();
 					return;
 				}
 			}
+
+			homeButton->checkHover(mousePos);
+			homeButton->checkHover(mousePos);
 		}
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Ressources.h"
 #include "ShopContent.h"
+#include "Button.h"
 
 class SkinsGUI
 {
@@ -35,7 +36,7 @@ private:
 	Text* headlineText;
 	Text* emptyText;
 	Sprite* background;
-	Sprite* closeButton;
+	Button* closeButton;
 	std::list<Sprite*> allEquipedSprites;
 
 	void createEquipedSprite(SkinsGUIDisplayedSkin*);

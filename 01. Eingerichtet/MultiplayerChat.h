@@ -1,5 +1,6 @@
 #pragma once
 #include "Ressources.h"
+#include "Button.h"
 
 /*
 Hilfsklasse für die MultiplayerChat-Klasse um mehrere Daten in einer Liste zu speichern
@@ -55,8 +56,8 @@ private:
 	RectangleShape rightChatBorder;
 	RectangleShape bottomChatBorder;
 
-	Sprite buttonOpen;
-	Sprite buttonClose;
+	Button* buttonOpen;
+	Button* buttonClose;
 	Sprite chatBackground;
 
 	MultiplayerChat();

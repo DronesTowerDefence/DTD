@@ -45,15 +45,11 @@ MultiplayerChat::MultiplayerChat()
 	chatOutputText.setOutlineThickness(3);
 	chatOutputText.setOutlineColor(Color::Black);
 
-	buttonOpen.setTexture(*res->getOpenChatButtonTexture());
-	buttonOpen.setPosition(Vector2f(1595, 25));
-
-	buttonClose.setTexture(*res->getButtonCloseTexture());
-	buttonClose.setPosition(Vector2f(1595, 25));
+	buttonOpen = new Button(Vector2f(1595, 25), res->getOpenChatButtonTexture());
+	buttonClose = new Button(Vector2f(1595, 25), res->getButtonCloseTexture());
 
 	chatBackground.setTexture(*res->getMultiplayerChatBackgroundTexture());
 	chatBackground.setPosition(Vector2f(1295, 25));
-
 }
 #pragma endregion
 
@@ -62,6 +58,9 @@ void MultiplayerChat::checkClicked()
 {
 	if (!window->hasFocus())
 		return;
+
+	Vector2i mouse = Mouse::getPosition(*window);
+
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = true;
@@ -69,27 +68,19 @@ void MultiplayerChat::checkClicked()
 	if (mouseClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = false;
-		Vector2i mouse = Mouse::getPosition(*window);
-		Vector2f pos, pos2;
 
-		if (isOpen)
+		if (!isOpen && buttonOpen->checkHover(mouse))
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonClose.getPosition());
-			pos2 = Service::getInstance()->getObjectPosition(buttonClose.getPosition() + Vector2f(100, 100));
+			isOpen = true;
 		}
-		else
+		else if (isOpen && buttonClose->checkHover(mouse))
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonOpen.getPosition());
-			pos2 = Service::getInstance()->getObjectPosition(buttonOpen.getPosition() + Vector2f(100, 100));
-
+			isOpen = false;
 		}
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			isOpen = !isOpen;
-		}
-
 	}
+
+	buttonOpen->checkHover(mouse);
+	buttonClose->checkHover(mouse);
 }
 void MultiplayerChat::checkInput(Event* event)
 {
@@ -407,7 +398,7 @@ bool MultiplayerChat::chatCommand()
 			{
 				for (auto i : Round::getInstance()->getAllTowers())
 				{
-					Round::getInstance()->sellTower(i,false);
+					Round::getInstance()->sellTower(i, false);
 				}
 				output = "sold all towers";
 			}
@@ -510,13 +501,13 @@ void MultiplayerChat::draw()
 		window->draw(chatBackground);
 		window->draw(chatOutputText);
 		window->draw(chatInputText);
-		window->draw(buttonClose);
+		window->draw(*buttonClose);
 		//window->draw(bottomChatBorder);
 		//window->draw(rightChatBorder);
 	}
 	else
 	{
-		window->draw(buttonOpen);
+		window->draw(*buttonOpen);
 	}
 }
 void MultiplayerChat::addChatMessage(std::string _username, std::string _message)

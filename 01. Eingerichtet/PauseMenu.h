@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Game.h"
 #include "Service.h"
+#include "Button.h"
 using namespace sf;
 class PauseMenu
 {
@@ -24,10 +25,10 @@ class PauseMenu
 	Texture* mutebtnTexture;
 
 	Sprite background;
-	Sprite twitter;
-	Sprite homebtn;
-	Sprite playbtn;
-	Sprite mutebtn;
+	Button* twitter;
+	Button* homebtn;
+	Button* playbtn;
+	Button* mutebtn;
 	
 	RectangleShape edge;
 	RectangleShape musicSlider;

@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "Button.h"
 using namespace sf;
 
 class Tower;
@@ -12,8 +13,6 @@ private:
 	bool showinformation;
 	Sprite* background;
 	Texture* backgroundTexture;
-	Sprite* information1;
-	Sprite* information2;
 	Texture* informationTexture;
 	
 	bool isClosed1;
@@ -30,12 +29,16 @@ private:
 	Texture* textureUpdate2NoBuy;
 	Texture* textureclose;
 	Texture* textureSell;
-	Sprite* rArrow;
-	Sprite* lArrow;
-	Sprite* close;
-	Sprite* sell;
-	Sprite* update2;
-	Sprite* update1;
+
+	Button* information1;
+	Button* information2;
+	Button* rArrow;
+	Button* lArrow;
+	Button* close;
+	Button* sell;
+	Button* update2;
+	Button* update1;
+
 	Font arial;
 	Text* text1;
 	Text* text2;

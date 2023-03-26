@@ -8,6 +8,9 @@ bool MultiplayerGUI::checkClicked(Event* event)
 {
 	if (!window->hasFocus())
 		return 0;
+
+	Vector2i mouse = Mouse::getPosition();
+
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = true;
@@ -15,31 +18,24 @@ bool MultiplayerGUI::checkClicked(Event* event)
 	if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		Vector2f pos, pos2;
-		Vector2i mouse = Mouse::getPosition();
 		isClicked = false;
 
 		//Close
-		pos = Service::getInstance()->getObjectPosition(closeButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(closeButton->getPosition() + Vector2f(closeButton->getTexture()->getSize()));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (closeButton->checkHover(mouse))
 		{
 			isOpen = false;
 			return true;
 		}
 
 		//Copy
-		pos = Service::getInstance()->getObjectPosition(copyButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(copyButton->getPosition() + Vector2f(50, 50));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (copyButton->checkHover(mouse))
 		{
 			Clipboard::setString(hostIP);
 			return true;
 		}
 
 		//Paste
-		pos = Service::getInstance()->getObjectPosition(pasteButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(pasteButton->getPosition() + Vector2f(50, 50));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (pasteButton->checkHover(mouse))
 		{
 			hostIP = Clipboard::getString();
 			ipText->setString("IP-Adresse:\n" + hostIP);
@@ -47,18 +43,14 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		}
 
 		//Start
-		pos = Service::getInstance()->getObjectPosition(startButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(startButton->getPosition() + Vector2f(200, 100));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (startButton->checkHover(mouse))
 		{
 			isStart = true;
 			return true;
 		}
 
 		//Plus
-		pos = Service::getInstance()->getObjectPosition(regulatePlayerCountButton[1]->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(regulatePlayerCountButton[1]->getPosition() + Vector2f(50, 50));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (regulatePlayerCountButton[1]->checkHover(mouse))
 		{
 			if (multiplayerPlayerCount < 3)
 			{
@@ -68,9 +60,7 @@ bool MultiplayerGUI::checkClicked(Event* event)
 		}
 
 		//Minus
-		pos = Service::getInstance()->getObjectPosition(regulatePlayerCountButton[0]->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(regulatePlayerCountButton[0]->getPosition() + Vector2f(50, 50));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (regulatePlayerCountButton[0]->checkHover(mouse))
 		{
 			if (multiplayerPlayerCount > 1)
 			{
@@ -95,6 +85,15 @@ bool MultiplayerGUI::checkClicked(Event* event)
 			}
 		}
 	}
+
+	closeButton->checkHover(mouse);
+	copyButton->checkHover(mouse);
+	pasteButton->checkHover(mouse);
+	startButton->checkHover(mouse);
+	regulatePlayerCountButton[1]->checkHover(mouse);
+	regulatePlayerCountButton[0]->checkHover(mouse);
+
+
 	return false;
 }
 
@@ -249,28 +248,15 @@ MultiplayerGUI::MultiplayerGUI(RenderWindow* _window)
 	background->setScale(Vector2f(1.5, 1));
 	background->setPosition(Vector2f(360, 100));
 
-	closeButton = new Sprite();
-	closeButton->setTexture(*res->getButtonCloseTexture());
-	closeButton->setPosition(Vector2f((background->getPosition().x + background->getTexture()->getSize().x * background->getScale().x - closeButton->getTexture()->getSize().x), (background->getPosition().y)));
+	closeButton = new Button(Vector2f((background->getPosition().x + background->getTexture()->getSize().x * background->getScale().x - res->getButtonCloseTexture()->getSize().x), (background->getPosition().y)),
+		res->getButtonCloseTexture());
 
-	pasteButton = new Sprite();
-	pasteButton->setTexture(*res->getPasteTexture());
-	pasteButton->setPosition(Vector2f(650, 600));
+	pasteButton = new Button(Vector2f(650, 600), res->getPasteTexture());
+	copyButton = new Button(Vector2f(550, 600), res->getCopyTexture());
+	startButton = new Button(Vector2f(550, 700), res->getButtonClientTexture());
 
-	copyButton = new Sprite();
-	copyButton->setTexture(*res->getCopyTexture());
-	copyButton->setPosition(Vector2f(550, 600));
-
-	startButton = new Sprite();
-	startButton->setTexture(*res->getButtonClientTexture());
-	startButton->setPosition(550, 700);
-
-	regulatePlayerCountButton[0] = new Sprite();
-	regulatePlayerCountButton[1] = new Sprite();
-	regulatePlayerCountButton[0]->setTexture(*res->getregulateMultiplayerPlayerCountTexture(1));
-	regulatePlayerCountButton[1]->setTexture(*res->getregulateMultiplayerPlayerCountTexture(0));
-	regulatePlayerCountButton[0]->setPosition(Vector2f(520, 380));
-	regulatePlayerCountButton[1]->setPosition(Vector2f(650, 380));
+	regulatePlayerCountButton[0] = new Button(Vector2f(520, 380), res->getregulateMultiplayerPlayerCountTexture(1));
+	regulatePlayerCountButton[1] = new Button(Vector2f(650, 380), res->getregulateMultiplayerPlayerCountTexture(0));
 
 	for (int i = 0; i < 3; i++)
 	{

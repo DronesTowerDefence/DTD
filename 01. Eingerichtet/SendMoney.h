@@ -1,5 +1,6 @@
 #pragma once
-#include "ressources.h"
+#include "Ressources.h"
+#include "Button.h"
 
 class SendMoney
 {
@@ -13,9 +14,9 @@ private:
 	Text* inputText;
 	Text* playerName[3];
 	RectangleShape* chooseShape;
-	Sprite* background[3];
-	Sprite* buttonOpen;
-	Sprite* buttonClose;
+	Button* background[3];
+	Button* buttonOpen;
+	Button* buttonClose;
 
 	std::string input;
 	int inputAsInt;

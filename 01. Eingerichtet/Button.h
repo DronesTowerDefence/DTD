@@ -30,5 +30,6 @@ public:
 	void setTexture(Texture* texture, Vector2f textureScale = Vector2f(1,1));
 	bool getIsHover();
 	Vector2f getPosition();
+	Vector2u getSize();
 };
 

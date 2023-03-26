@@ -137,25 +137,25 @@ void AchievementGUI::checkClicked(Event* event)
 {
 	if (!window->hasFocus())
 		return;
+
+	Vector2i mouse = Mouse::getPosition();
+
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		isClicked = true;
 	}
 	if (isClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
-		Vector2f pos, pos2;
-		Vector2i mouse = Mouse::getPosition();
 		isClicked = false;
 
 		//Close
-		pos = Service::getInstance()->getObjectPosition(closeButton->getPosition());
-		pos2 = Service::getInstance()->getObjectPosition(closeButton->getPosition() + Vector2f(closeButton->getTexture()->getSize()));
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+		if (closeButton->checkHover(mouse))
 		{
 			isOpen = false;
 			return;
 		}
 	}
+	closeButton->checkHover(mouse);
 }
 
 void AchievementGUI::updateDrawSprites()
@@ -184,9 +184,7 @@ AchievementGUI::AchievementGUI(RenderWindow* _window)
 	background->setTexture(*Ressources::getInstance()->getAccountLoginBackground());
 	background->setScale(2.15, 1.11);
 
-	closeButton = new Sprite();
-	closeButton->setPosition(1720, 50);
-	closeButton->setTexture(*Ressources::getInstance()->getButtonCloseTexture());
+	closeButton = new Button(Vector2f(1720, 50), Ressources::getInstance()->getButtonCloseTexture());
 
 	for (int i = 1; i <= achievementCount; i++)
 	{

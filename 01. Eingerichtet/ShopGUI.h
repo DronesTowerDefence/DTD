@@ -1,6 +1,7 @@
 #pragma once
 #include "Ressources.h"
 #include "ShopContent.h"
+#include "Button.h"
 
 class ShopGUI
 {
@@ -12,8 +13,8 @@ private:
 	bool isClicked;
 
 	Sprite* background;
-	Sprite* coinsIcon;
-	Sprite* closeButton;
+	Button* coinsIcon;
+	Button* closeButton;
 
 	Font* font;
 	Text* headlineText;

@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "AccountServer.h"
+#include "Button.h"
 using namespace sf;
 
 class MultiplayerGUI
@@ -41,12 +42,14 @@ private:
 	AccountServer* accServer;
 	Thread* multiplayerConnectThread;
 
+
+	Button* closeButton;
+	Button* copyButton;
+	Button* pasteButton;
+	Button* startButton;
+	Button* regulatePlayerCountButton[2];
+
 	Sprite* background;
-	Sprite* closeButton;
-	Sprite* copyButton;
-	Sprite* pasteButton;
-	Sprite* startButton;
-	Sprite* regulatePlayerCountButton[2];
 	Sprite* maps[3];
 	Sprite* profilePictures[4];
 	Texture* profilePicturesTextures[4];

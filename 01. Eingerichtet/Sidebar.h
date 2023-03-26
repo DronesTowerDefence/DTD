@@ -5,6 +5,7 @@
 #include "TowerAlias.h"
 #include "Service.h"
 #include "Daily.h"
+#include "Button.h"
 using namespace sf;
 
 class Sidebar
@@ -13,8 +14,8 @@ private:
 	//Map* p_map;
 	static Sidebar* instance;
 	float price[towerCount]; //Wie viel die Tower kosten
-	Sprite buttonSpr[towerCount];
-	Sprite doubleSpeed;
+	Button* buttonSpr[towerCount];
+	Button* doubleSpeed;
 
 	Font buttonTextFont;
 	Text buttonText[towerCount];
@@ -32,6 +33,8 @@ public:
 	/// </summary>
 	/// <returns>Instance</returns>
 	static Sidebar* getInstance(/*Map**/);
+
+	void checkHover(RenderWindow* window);
 
 	bool isChangeSpeed(RenderWindow* window);
 	/// <summary>

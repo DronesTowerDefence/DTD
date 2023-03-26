@@ -15,7 +15,7 @@ Button::Button(Vector2f _position, Texture* _texture, Vector2f _textureScale)
 	hoverShape = new RectangleShape();
 	hoverShape->setFillColor(*hoverColor);
 	hoverShape->setPosition(sprite->getPosition());
-	hoverShape->setSize(Vector2f(texture->getSize()));
+	hoverShape->setSize(Vector2f(texture->getSize().x * _textureScale.x, texture->getSize().y * _textureScale.y));
 
 	drawHover = false;
 }
@@ -85,5 +85,9 @@ bool Button::getIsHover()
 Vector2f Button::getPosition()
 {
 	return sprite->getPosition();
+}
+Vector2u Button::getSize()
+{
+	return texture->getSize();
 }
 #pragma endregion

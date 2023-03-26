@@ -29,25 +29,18 @@ SendMoney::SendMoney()
 	inputText->setOutlineColor(Color::Black);
 	inputText->setPosition(Vector2f(1335, 200));
 
-	buttonOpen = new Sprite();
-	buttonOpen->setTexture(*res->getSendMoneyButtonOpenTexture());
-	buttonOpen->setPosition(Vector2f(1595, 150));
-
-	buttonClose = new Sprite();
-	buttonClose->setTexture(*res->getButtonCloseTexture());
-	buttonClose->setPosition(Vector2f(1595, 150));
+	buttonOpen = new Button(Vector2f(1595, 150), res->getSendMoneyButtonOpenTexture());
+	buttonClose = new Button(Vector2f(1595, 150), res->getButtonCloseTexture());
 
 	for (int i = 0; i < 3; i++)
 	{
-		background[i] = new Sprite();
 		playerName[i] = new Text();
 	}
 	if (Multiplayer::multiplayerPlayerCount > 0)
 	{
 		for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 		{
-			background[i]->setTexture(*res->getSendMoneyBackgroundTexture());
-			background[i]->setPosition(Vector2f(1295, 150 + i * 110));
+			background[i] = new Button(Vector2f(1295, 150 + i * 110), res->getSendMoneyBackgroundTexture());
 
 			if (Game::getInstance()->getStatus() == 2)
 			{
@@ -81,6 +74,9 @@ void SendMoney::checkClicked()
 {
 	if (!window->hasFocus())
 		return;
+
+	Vector2i mouse = Mouse::getPosition(*window);
+
 	if (Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = true;
@@ -88,38 +84,34 @@ void SendMoney::checkClicked()
 	if (mouseClicked && !Mouse::isButtonPressed(Mouse::Left))
 	{
 		mouseClicked = false;
-		Vector2i mouse = Mouse::getPosition(*window);
 		Vector2f pos, pos2;
 
-		if (isOpen)
+		if (!isOpen && buttonOpen->checkHover(mouse))
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonClose->getPosition());
-			pos2 = Service::getInstance()->getObjectPosition(buttonClose->getPosition() + Vector2f(100, 100));
+			isOpen = true;
 		}
-		else
+		else if (isOpen && buttonClose->checkHover(mouse))
 		{
-			pos = Service::getInstance()->getObjectPosition(buttonOpen->getPosition());
-			pos2 = Service::getInstance()->getObjectPosition(buttonOpen->getPosition() + Vector2f(100, 100));
-		}
-
-		if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
-		{
-			isOpen = !isOpen;
+			isOpen = false;
 		}
 
 		if (isOpen)
 		{
 			for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
 			{
-				pos = Service::getInstance()->getObjectPosition(background[i]->getPosition());
-				pos2 = Service::getInstance()->getObjectPosition(background[i]->getPosition() + Vector2f(background[i]->getTexture()->getSize()));
-				if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
+				if (background[i]->checkHover(mouse))
 				{
 					chooseShape->setPosition(background[i]->getPosition());
 				}
 			}
 		}
+	}
 
+	buttonClose->checkHover(mouse);
+	buttonOpen->checkHover(mouse);
+	for (int i = 0; i < Multiplayer::multiplayerPlayerCount; i++)
+	{
+		background[i]->checkHover(mouse);
 	}
 }
 bool SendMoney::checkInput(Event* event)

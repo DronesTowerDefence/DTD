@@ -1,6 +1,7 @@
 #pragma once
 #include "Ressources.h"
 #include "Achievements.h"
+#include "Button.h"
 
 class AchievementTexture
 {
@@ -45,7 +46,7 @@ private:
 	int firstIndex;
 	int cooldown;
 	Sprite* background;
-	Sprite* closeButton;
+	Button* closeButton;
 
 	void draw();
 	void checkClicked(Event*);
