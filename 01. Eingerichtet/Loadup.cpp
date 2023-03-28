@@ -111,11 +111,15 @@ skipAccount:
 			image = new Image(res->getAccountProfilePicture()->copyToImage());
 		}
 		int _xp = stoi(accServer->getXP(username));
-		accServer->createAccount(username, email, image);
 		setLoadingbar(60);
+		accServer->createAccount(username, email, image);
+		setLoadingbar(62);
 		Account::setExperience(_xp);
+		setLoadingbar(64);
 		Account::setShopCoins(stoi(accServer->getCoins(username)));
+		setLoadingbar(66);
 		AchievementsContainer::getAchievementsFromServer(Account::getAccName());
+		setLoadingbar(68);
 		ShopContentData::loadBoughtFromServerString(accServer->getShopContent(Account::getAccName()));
 		setLoadingbar(70);
 

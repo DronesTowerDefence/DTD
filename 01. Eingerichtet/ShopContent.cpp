@@ -122,7 +122,7 @@ bool ShopContentData::createShopContentDataFromFile()
 
 bool ShopContentData::loadBoughtFromServerString(std::string str)
 {
-	if (str != "0" && str != "-1")
+	if (str != "0" && str != "-1" && str.length() > 1)
 	{
 		int _id = 0, pos1 = 0, pos2 = 0;
 		while (str.length() > pos2)
