@@ -246,7 +246,7 @@ void ShopGUI::addShopContent(ShopContentTexture* sc)
 
 ShopContentTexture* ShopGUI::getShopContentTexture(int id)
 {
-	if (id >= 0 && id < shopContentCount)
+	if (id >= 0 && id < ShopContentData::getShopContentCount())
 	{
 		for (auto i : allShopContents)
 		{

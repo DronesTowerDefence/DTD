@@ -1,12 +1,12 @@
 #pragma once
 #include "Ressources.h"
 
-#define shopContentCount 4
-
 class ShopContentData
 {
 private:
 	static std::list<ShopContentData*> allShopContentData;
+
+	static int shopContentCount;
 
 	// Ob von User gekauft
 	bool m_isBought;
@@ -45,6 +45,7 @@ public:
 	ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture** _texture);
 	static bool createShopContentDataFromFile();
 	static bool loadBoughtFromServerString(std::string);
+	static int getShopContentCount();
 	void setIsBought(bool b = false);
 	void setIsEquiped(bool b = false);
 	bool getIsBought();

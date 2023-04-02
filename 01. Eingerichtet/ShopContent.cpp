@@ -5,6 +5,7 @@
 #pragma region ShopContentData
 
 std::list<ShopContentData*> ShopContentData::allShopContentData;
+int ShopContentData::shopContentCount = 0;
 
 ShopContentData::ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture** _texture)
 {
@@ -62,8 +63,9 @@ bool ShopContentData::createShopContentDataFromFile()
 	char buffer[50];
 	Texture* _texture[towerTextureCount + 1] = { nullptr };
 
-	for (int i = 0; i < shopContentCount; i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _cost = 0)
+	for (int i = 0; !file.eof(); i++, pos1 = 0, pos2 = 0, _id = 0, _name = "", _cost = 0)
 	{
+		shopContentCount++;
 		for (int j = 0; j < towerTextureCount; _texture[j] = nullptr, j++);
 
 		file.getline(buffer, 50);
@@ -149,6 +151,11 @@ bool ShopContentData::loadBoughtFromServerString(std::string str)
 		return true;
 	}
 	else return false;
+}
+
+int ShopContentData::getShopContentCount()
+{
+	return shopContentCount;
 }
 
 void ShopContentData::setIsBought(bool b)
