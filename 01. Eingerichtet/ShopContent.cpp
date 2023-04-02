@@ -2,6 +2,8 @@
 #include "HomeMenu.h"
 #include <fstream>
 
+#pragma region ShopContentData
+
 std::list<ShopContentData*> ShopContentData::allShopContentData;
 
 ShopContentData::ShopContentData(int id, int cost, std::string name, int type, int typeType, Texture** _texture)
@@ -221,18 +223,35 @@ std::list<ShopContentData*> ShopContentData::getAllShopContentData()
 	return allShopContentData;
 }
 
+#pragma endregion
 
+#pragma region ShopContentTexture
+
+void ShopContentTexture::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(*headlineText, states);
+	if (p_shopContentData->getIsBought())
+	{
+		target.draw(*boughtSprite, states);
+	}
+	else
+	{
+		target.draw(*costText, states);
+	}
+	target.draw(*contentSprite, states);
+}
 
 ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 {
 	p_shopContentData = scd;
+
+	position = Vector2f(0, 0);
 
 	font = new Font();
 	font->loadFromFile("fonts/arial.ttf");
 
 	headlineText = new Text();
 	headlineText->setFont(*font);
-	headlineText->setPosition(10, 0);
 	headlineText->setString(p_shopContentData->getName());
 	headlineText->setCharacterSize(30);
 	headlineText->setFillColor(Color::White);
@@ -241,7 +260,6 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 
 	costText = new Text();
 	costText->setFont(*font);
-	costText->setPosition(20, 260);
 	costText->setString(std::to_string(p_shopContentData->getCost()) + " Coins");
 	costText->setCharacterSize(30);
 	costText->setFillColor(Color::White);
@@ -249,7 +267,6 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 	costText->setOutlineColor(Color::Black);
 
 	boughtSprite = new Sprite();
-	boughtSprite->setPosition(0, 50);
 	if (scd->getIsBought())
 	{
 		boughtSprite->setTexture(*Ressources::getInstance()->getAchievementEarnedNotSymbolTexture());
@@ -257,54 +274,43 @@ ShopContentTexture::ShopContentTexture(ShopContentData* scd)
 
 	//boughtSprite->setTexture(*Ressources::getInstance()->getAchievementEarnedYesSymbolTexture());
 
-
 	contentSprite = new Sprite();
 	contentSprite->setTexture(*p_shopContentData->getPreviewTexture());
-	contentSprite->setPosition(0, 50);
-	contentSprite->setScale(4, 4);
+	//contentSprite->setScale(4, 4);
+	contentSprite->setScale(200 / float(contentSprite->getTexture()->getSize().x), 200 / float(contentSprite->getTexture()->getSize().y));
 
-
-	texture = new RenderTexture();
-	texture->create(300, 300);
-
-	texture->draw(*headlineText);
-	if (scd->getIsBought())
-	{
-		texture->draw(*boughtSprite);
-	}
-	else
-	{
-		texture->draw(*costText);
-	}
-	texture->draw(*contentSprite);
-	texture->display();
-
-	sprite = new Sprite();
-	sprite->setTexture(texture->getTexture());
-	sprite->setPosition
-	(
-		startPositionX + texture->getSize().x * (scd->getID() % contentsPerRow) + distanceToNextSprite, // X-Position
-		scd->getID() / contentsPerRow * (texture->getSize().y + distanceToNextSprite) + startPositionY // Y-Position
-	);
+	updatePosition(scd->getID());
 
 	HomeMenu::getInstance()->getShopGUI()->addShopContent(this);
 }
 
-void ShopContentTexture::updateSpritePosition(int listIndex)
+void ShopContentTexture::updatePosition(int listIndex)
 {
-	sprite->setPosition
-	(
-		startPositionX + texture->getSize().x * (listIndex % contentsPerRow) + distanceToNextSprite, // X-Position
-		listIndex / contentsPerRow * (texture->getSize().y + distanceToNextSprite) + startPositionY // Y-Position
-	);
-}
+	if (listIndex >= 0)
+	{
+		position.x = startPosition.x + maxSize.x * (listIndex % contentsPerRow) + distanceToNextSprite; // X-Position
+		position.y = listIndex / contentsPerRow * (maxSize.y + distanceToNextSprite) + startPosition.y; // Y-Position | Warnung ist wichtig, darf nicht in float konvertiert werden!
 
-Sprite* ShopContentTexture::getSprite()
-{
-	return sprite;
+		headlineText->setPosition(headlineTextPos + position);
+		costText->setPosition(costTextPos + position);
+		boughtSprite->setPosition(boughtSpritePos + position);
+		contentSprite->setPosition(contentSpritePos + position);
+	}
 }
 
 ShopContentData* ShopContentTexture::getShopContentData()
 {
 	return p_shopContentData;
 }
+
+Vector2f ShopContentTexture::getPosition()
+{
+	return position;
+}
+
+Vector2f ShopContentTexture::getSize()
+{
+	return maxSize;
+}
+
+#pragma endregion

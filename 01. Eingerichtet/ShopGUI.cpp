@@ -39,8 +39,8 @@ void ShopGUI::checkClicked(Event*)
 		//Shop-Content
 		for (auto i : allShopContents)
 		{
-			pos = Service::getInstance()->getObjectPosition(i->getSprite()->getPosition());
-			pos2 = Service::getInstance()->getObjectPosition(i->getSprite()->getPosition() + Vector2f(i->getSprite()->getTexture()->getSize()));
+			pos = Service::getInstance()->getObjectPosition(i->getPosition());
+			pos2 = Service::getInstance()->getObjectPosition(i->getPosition() + Vector2f(i->getSize()));
 			if ((mouse.x >= pos.x && mouse.x <= pos2.x) && (mouse.y >= pos.y && mouse.y <= pos2.y))
 			{
 				shopContentClicked(i);
@@ -70,7 +70,7 @@ void ShopGUI::draw()
 		{
 			for (auto i : allShopContents)
 			{
-				window->draw(*i->getSprite());
+				window->draw(*i);
 			}
 		}
 		else
@@ -179,7 +179,17 @@ bool ShopGUI::openShop()
 	isOpen = true;
 
 	AccountServer* accServer = new AccountServer();
-	ShopContentData::loadBoughtFromServerString(accServer->getShopContent(Account::getAccName()));
+	accServer->getShopContent(Account::getAccName());
+	if (accServer->checkIfResponseIsValid())
+	{
+		ShopContentData::loadBoughtFromServerString(accServer->getLastResponse());
+	}
+
+	accServer->getCoins(Account::getAccName());
+	if (accServer->checkIfResponseIsValid())
+	{
+		Account::setShopCoins(stoi(accServer->getLastResponse()));
+	}
 	delete accServer;
 
 	Event* event = Controls::getEvent();
@@ -224,7 +234,7 @@ void ShopGUI::removeBoughtContent()
 	int index = 0;
 	for (auto i : allShopContents)
 	{
-		i->updateSpritePosition(index);
+		i->updatePosition(index);
 		index++;
 	}
 }

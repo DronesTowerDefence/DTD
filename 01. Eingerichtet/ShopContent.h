@@ -64,14 +64,11 @@ public:
 };
 
 
-class ShopContentTexture
+class ShopContentTexture : public sf::Drawable
 {
 private:
 
 	ShopContentData* p_shopContentData;
-
-	RenderTexture* texture;
-	Sprite* sprite;
 
 	Font* font;
 	Text* headlineText;
@@ -79,16 +76,25 @@ private:
 	Sprite* boughtSprite;
 	Sprite* contentSprite;
 
-	const int contentsPerRow = 4, distanceToNextSprite = 50, startPositionX = 350, startPositionY = 240;
+	Vector2f position;
+
+	const Vector2f startPosition = Vector2f(350, 240), maxSize = Vector2f(300, 300), headlineTextPos = Vector2f(10, 0), costTextPos = Vector2f(20, 260), boughtSpritePos = Vector2f(0, 50), contentSpritePos = Vector2f(0, 50);
+	const int contentsPerRow = 4, distanceToNextSprite = 50;
+
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
 	ShopContentTexture(ShopContentData* scd);
+
 	/// <summary>
 	/// Anordnung nicht mehr nach id sondern nach Index aus der ShopGUI::allShopContents Liste
 	/// </summary>
 	/// <param name="listIndex"></param>
-	void updateSpritePosition(int listIndex);
-	Sprite* getSprite();
+	void updatePosition(int listIndex);
+
 	ShopContentData* getShopContentData();
+	Vector2f getPosition();
+	Vector2f getSize();
 };
 

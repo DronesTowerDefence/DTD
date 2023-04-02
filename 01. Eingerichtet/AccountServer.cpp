@@ -147,6 +147,11 @@ std::string AccountServer::getLastResponse()
 	return lastResponse;
 }
 
+bool AccountServer::checkIfResponseIsValid()
+{
+	return (lastResponse != "0" && lastResponse != "-1");
+}
+
 Account* AccountServer::createAccount(std::string userName, std::string email, sf::Image* profileImage)
 {
 	if (userName == "0" || userName == "-1")

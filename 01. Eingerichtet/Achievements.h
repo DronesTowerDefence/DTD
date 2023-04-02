@@ -53,7 +53,7 @@ public:
 };
 
 
-static class AchievementsContainer
+class AchievementsContainer
 {
 private:
 	static std::list<Achievement*> allAchievements;

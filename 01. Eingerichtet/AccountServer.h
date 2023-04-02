@@ -40,6 +40,12 @@ public:
 	std::string getLastResponse();
 
 	/// <summary>
+	/// Überprüft ob der die letzte Antwort gültig ist. Ob also kein "0" oder "-1" zurückgekommen ist
+	/// </summary>
+	/// <returns></returns>
+	bool checkIfResponseIsValid();
+
+	/// <summary>
 	/// Um am Ende eines Spieles alle Achievements und XP an den Server zu senden
 	/// </summary>
 	/// <returns></returns>
