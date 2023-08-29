@@ -4,15 +4,25 @@
 class AccountServer
 {
 private:
+	static const std::string defaultUrl;
+
 	sf::Http* http;
 	sf::Http::Request* request;
 	sf::Http::Response* response;
 	sf::Thread* thread;
 	int lastStatusCode;
 	std::string lastResponse;
+	std::string uri;
 	bool isDone;
 
 	void sendToServer();
+
+	/// <summary>
+	/// Updates the url (http object and uri for request)
+	/// </summary>
+	/// <param name="newUrl">: e.g. "http://client.dronestd.de"</param>
+	/// <returns>If url was updated</returns>
+	bool updateURL(std::string newUrl);
 
 	/// <summary>
 	/// Sendet eine Request an den HTTP-Server

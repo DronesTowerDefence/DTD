@@ -6,21 +6,56 @@
 #include <fstream>
 
 AccountServer* AccountServer::accountServerObject = nullptr;
+const std::string AccountServer::defaultUrl = "http://client.dronestd.de/"; // https wird von sfml nicht unterstützt
 
+#pragma region Konstruktor/Destruktor
+AccountServer::AccountServer()
+{
+	http = new sf::Http(defaultUrl);
+	lastStatusCode = 200;
+	lastResponse = "-2";
+	uri = "/";
+	isDone = false;
+
+	thread = nullptr;
+	thread = new Thread(&AccountServer::sendToServer, this);
+
+	request = nullptr;
+	response = nullptr;
+}
+
+AccountServer::~AccountServer()
+{
+	delete http;
+	if (request != nullptr)
+		delete request;
+	if (response != nullptr)
+		delete response;
+}
+#pragma endregion
+
+#pragma region Funktionen
 void AccountServer::sendToServer()
 {
+start:
 	isDone = false;
 	lastResponse = "-2";
-
-	request->setMethod(sf::Http::Request::Post);
-	request->setHttpVersion(1, 1);
-	request->setField("From", "Drones-Client");
 
 	response = new sf::Http::Response();
 	*response = http->sendRequest(*request, seconds(7));
 	lastStatusCode = response->getStatus();
 
-	if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
+	//std::cout << "1: " << std::endl << lastStatusCode << std::endl << lastResponse << std::endl;
+	if (lastStatusCode == sf::Http::Response::MovedTemporarily || lastStatusCode == sf::Http::Response::MovedPermanently)
+	{
+		updateURL(response->getField("Location"));
+		goto start;
+	}
+	else if (lastStatusCode != sf::Http::Response::Ok || response->getBody().length() < 1)
+	{
+		lastResponse = "-1";
+	}
+	else if (response->getBody() == "-1") // Unbekannter Wert bei Header 'Content-Type' oder Header existiert nicht
 	{
 		lastResponse = "-1";
 	}
@@ -28,6 +63,8 @@ void AccountServer::sendToServer()
 	{
 		lastResponse = response->getBody();
 	}
+
+	//std::cout << "2: " << std::endl << lastStatusCode << std::endl << lastResponse << std::endl;
 
 	delete response;
 	delete request;
@@ -37,8 +74,39 @@ void AccountServer::sendToServer()
 	isDone = true;
 }
 
+bool AccountServer::updateURL(std::string newUrl)
+{
+	//std::cout << newUrl << std::endl;
+	if (newUrl.compare("http://") <= 0 || newUrl.length() < 10)
+		return false;
+
+	std::string host = "";
+	int pos = 0;
+	for (int i = 0, j = 0; i < newUrl.length() && j < 3; i++)
+	{
+		host += newUrl[i];
+		if (newUrl[i] == '/')
+		{
+			j++;
+			pos = i;
+		}
+	}
+	http->setHost(host);
+	uri = newUrl.substr(pos);
+	if (request != nullptr)
+	{
+		request->setUri(uri);
+	}
+	//std::cout << "NEW: " << host << "\t" << uri << std::endl;
+	return true;
+}
+
 std::string AccountServer::send()
 {
+	request->setMethod(sf::Http::Request::Post);
+	request->setHttpVersion(1, 1);
+	request->setField("From", "Drones-Client");
+	request->setUri(uri);
 	isDone = false;
 	lastResponse = "-2";
 
@@ -107,46 +175,6 @@ std::string AccountServer::send()
 	return lastResponse;
 }
 
-AccountServer::AccountServer()
-{
-	http = new sf::Http("http://client.dronestd.de/"); // https wird von sfml nicht unterstützt
-	lastStatusCode = 200;
-	lastResponse = "-2";
-	isDone = false;
-
-	thread = nullptr;
-	thread = new Thread(&AccountServer::sendToServer, this);
-
-	request = nullptr;
-	response = nullptr;
-}
-
-AccountServer::~AccountServer()
-{
-	delete http;
-	if (request != nullptr)
-		delete request;
-	if (response != nullptr)
-		delete response;
-}
-
-AccountServer* AccountServer::getAccServerObj()
-{
-	if (accountServerObject == nullptr)
-		accountServerObject = new AccountServer();
-	return accountServerObject;
-}
-
-int AccountServer::getRequestLastStatusCode()
-{
-	return lastStatusCode;
-}
-
-std::string AccountServer::getLastResponse()
-{
-	return lastResponse;
-}
-
 bool AccountServer::checkIfResponseIsValid()
 {
 	return (lastResponse != "0" && lastResponse != "-1");
@@ -164,7 +192,9 @@ Account* AccountServer::createAccount(std::string userName, std::string email, s
 	}
 }
 
+#pragma endregion
 
+#pragma region send-Funktionen
 bool AccountServer::sendAllAchievementsAndXp()
 {
 	if (Account::getAccName() == invalidUsername)
@@ -348,3 +378,23 @@ std::string AccountServer::deleteFriend(std::string username, std::string friend
 	request->setBody(username + "&" + friendname);
 	return send();
 }
+#pragma endregion
+
+#pragma region getter/setter
+AccountServer* AccountServer::getAccServerObj()
+{
+	if (accountServerObject == nullptr)
+		accountServerObject = new AccountServer();
+	return accountServerObject;
+}
+
+int AccountServer::getRequestLastStatusCode()
+{
+	return lastStatusCode;
+}
+
+std::string AccountServer::getLastResponse()
+{
+	return lastResponse;
+}
+#pragma endregion

@@ -359,11 +359,7 @@ AccountLogin::AccountLogin(RenderWindow* _window, Ressources* _res)
 		accountLoginPasswordText->setString("E-Mail:\n" + Account::getAcc()->getEmail());
 
 		accountXPText->setString(std::to_string(Account::getExperience() % Account::experiencePerLevel) + " / " + std::to_string(Account::experiencePerLevel));
-
-		if (Account::getExperience() / Account::experiencePerLevel == 0)
-			accountLevelText->setString("Level 1");
-		else
-			accountLevelText->setString("Level " + std::to_string(Account::getExperience() / 1000));
+		accountLevelText->setString("Level " + std::to_string(Account::getExperience() / Account::experiencePerLevel + 1));
 	}
 	else
 	{
